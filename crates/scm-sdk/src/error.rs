@@ -93,6 +93,17 @@ impl Error {
         self.status = Some(status);
         self
     }
+    pub(crate) fn with_response_metadata(
+        mut self,
+        status: u16,
+        request_id: Option<String>,
+    ) -> Self {
+        self.status = Some(status);
+        if self.request_id.is_none() {
+            self.request_id = request_id;
+        }
+        self
+    }
     pub(crate) fn with_metadata(
         mut self,
         request_id: Option<String>,

@@ -247,38 +247,37 @@ impl SseStream {
                     match self.finish_line() {
                         Ok(Some(event)) => {
                             self.active()?;
+                            // Frozen parser recognizes the chat sentinel before
+                            // interpreting an untrusted event name.
+                            if self.policy == TerminalPolicy::DoneMarker && event.data == "[DONE]" {
+                                self.close();
+                                return Ok(None);
+                            }
                             if event.event == "error" {
                                 let error = self.error(ErrorKind::Protocol);
                                 return Err(self.fail(error));
                             }
-                            match self.policy {
-                                TerminalPolicy::DoneMarker if event.data == "[DONE]" => {
+                            if self.policy == TerminalPolicy::Responses {
+                                let value: Value = match event.json() {
+                                    Ok(value) => value,
+                                    Err(error) => return Err(self.fail(error)),
+                                };
+                                let Some(kind) = value
+                                    .get("type")
+                                    .and_then(Value::as_str)
+                                    .filter(|value| !value.is_empty())
+                                else {
+                                    let error = self.error(ErrorKind::Protocol);
+                                    return Err(self.fail(error));
+                                };
+                                if matches!(
+                                    kind,
+                                    "response.completed"
+                                        | "response.failed"
+                                        | "response.incomplete"
+                                ) {
                                     self.close();
-                                    return Ok(None);
                                 }
-                                TerminalPolicy::Responses => {
-                                    let value: Value = match event.json() {
-                                        Ok(value) => value,
-                                        Err(error) => return Err(self.fail(error)),
-                                    };
-                                    let Some(kind) = value
-                                        .get("type")
-                                        .and_then(Value::as_str)
-                                        .filter(|value| !value.is_empty())
-                                    else {
-                                        let error = self.error(ErrorKind::Protocol);
-                                        return Err(self.fail(error));
-                                    };
-                                    if matches!(
-                                        kind,
-                                        "response.completed"
-                                            | "response.failed"
-                                            | "response.incomplete"
-                                    ) {
-                                        self.close();
-                                    }
-                                }
-                                _ => {}
                             }
                             return Ok(Some(event));
                         }

@@ -129,6 +129,23 @@ async fn fields_multiline_comments_ids_retry_empty_data_and_eof() {
 }
 
 #[tokio::test]
+async fn done_marker_takes_precedence_over_error_event_name_as_in_frozen_parser() {
+    let fixture = response_fixture(
+        vec![Ok(Bytes::from_static(b"event: error\ndata: [DONE]\n\n"))],
+        Some("text/event-stream"),
+        true,
+        false,
+        Limits::default(),
+    )
+    .await;
+    let mut stream = SseStream::new(fixture.response, 1024, TerminalPolicy::DoneMarker).unwrap();
+    assert!(stream.next().await.unwrap().is_none());
+    assert_eq!(fixture.drops.load(Ordering::SeqCst), 1);
+    assert_eq!(fixture.permits.available_permits(), 1);
+    assert!(stream.next().await.unwrap().is_none());
+}
+
+#[tokio::test]
 async fn bom_crlf_and_utf8_survive_every_two_chunk_split() {
     let input="\u{feff}: comment\r\nevent: delta\r\ndata: {\"text\":\"café 👋\"}\r\n\r\ndata: [DONE]\r\n\r\n".as_bytes();
     for split in 0..=input.len() {

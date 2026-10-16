@@ -16,6 +16,10 @@ SOURCE = ROOT / "contracts/typescript.json"
 OUT = ROOT / "crates/scm-sdk/src/models"
 FAMILIES = {"airs::scan": "scan", "airs::management": "management", "airs::model_security": "model_security", "airs::red_team": "red_team", "airs::gateway": "gateway", "airs::agentguard": "agentguard", "dlp": "dlp", "shared::iam": "iam", "shared": "shared"}
 KEYWORDS = set("as async await break const continue crate dyn else enum extern false fn for if impl in let loop match mod move mut pub ref return self Self static struct super trait true type unsafe use where while abstract become box do final macro override priv typeof unsized virtual yield try gen".split())
+UNION_PINS = ROOT / "contracts/native-union-variants.json"
+STRING_CHECKS = {"min", "max", "uuid", "email", "url", "datetime", "regex"}
+NUMBER_CHECKS = {"int", "finite", "min", "max", "multipleOf"}
+REGEX_SOURCES = {r"^[A-Za-z0-9][A-Za-z0-9_-]*$",r"^[^,\s]+__[^,\s]+$",r"^[a-zA-Z0-9_-]+$",r"^\d+$"}
 TRANSFORM_MESSAGE = {"s008858", "s008913", "s008972", "s009658"}
 
 
@@ -235,6 +239,7 @@ class Generator:
         self.family_exports = {family: set() for family in FAMILIES.values()}
         self.schema_models = []
         self.model_rows = []
+        self.union_rows = []
         # Root schemas receive stable public names before nested names are allocated.
         for name, entry in self.schemas.items():
             native = pascal(name.removesuffix("Schema"))
@@ -488,7 +493,7 @@ class Generator:
                 child, _ = self.normalize(self.deref(ref))
                 if child["kind"] == "ZodLiteral" and isinstance(child["value"], str):
                     strings.append(child["value"])
-            body = self.enum(name, strings) if len(strings) == len(variants) else self.union(name, variants)
+            body = self.enum(name, strings) if len(strings) == len(variants) else self.union(name, variants, sid)
         else:
             target = self.rust_type(sid, name + "Value", root=True)
             if target.startswith("Vec<"):
@@ -496,8 +501,9 @@ class Generator:
             body = f"#[derive(Clone, PartialEq, Serialize, Deserialize)]\n#[serde(transparent)]\npub struct {name}({target});\nimpl {name}{{pub fn new(value:{target})->Self{{Self(value)}}pub fn as_inner(&self)->&{target}{{&self.0}}pub fn into_inner(self)->{target}{{self.0}}}}\n"
         self.declarations[name] = f"/// Native typed contract for frozen schema `{sid}`. Validate wire constraints with `validation::parse`.\n" + body + self.debug(name)
 
-    def union(self, name, variants):
+    def union(self, name, variants, schema):
         types = []
+        branches = []
         for index, ref in enumerate(variants):
             sid=self.deref(ref)
             node,_=self.normalize(sid)
@@ -511,6 +517,8 @@ class Generator:
                 typed = f"Box<{typed}>"
             if typed not in types:
                 types.append(typed)
+            branches.append({"sourceIndex":index+1,"schema":sid,"rustVariant":"Variant"+str(types.index(typed)+1),"rustType":typed})
+        self.union_rows.append({"rustType":name,"schema":schema,"branches":branches})
         return f"#[derive(Clone, PartialEq, Serialize, Deserialize)]\n#[serde(untagged)]\n#[non_exhaustive]\npub enum {name}{{" + "".join(f"Variant{index+1}({typed})," for index, typed in enumerate(types)) + "Unknown(JsonValue)}\n"
 
     def generate(self, only=None):
@@ -597,6 +605,7 @@ class Generator:
                     if not targets or not all(target in self.used for target in targets):raise ValueError("Integration configuration union references missing typed models")
                     self.used.add(name)
                     self.declarations[name]=f"#[derive(Clone,PartialEq,Serialize,Deserialize)]\n#[serde(untagged)]\n#[non_exhaustive]\npub enum {name}{{"+"".join(f"Variant{i+1}({target})," for i,target in enumerate(targets))+"Unknown(JsonValue)}\n"+self.debug(name)
+                    self.union_rows.append({"rustType":name,"sourceType":entry["type"]["$ref"],"branches":[{"sourceIndex":index+1,"sourceType":next(row["type"]["$ref"] for row in self.exports if row["name"]==target and row.get("type")),"rustVariant":"Variant"+str(index+1),"rustType":target} for index,target in enumerate(targets)]})
                     self.model_rows.append({"export":name,"rustType":name,"status":"typed_union"})
                 elif name in {"JsonNullable","GatewayOpenValue"}:
                     target="Patch<T>" if name=="JsonNullable" else "OpenString<T>"
@@ -693,6 +702,18 @@ class Generator:
                 self.names[sid]=name;self.used.add(name);known[entry["type"]["$ref"]]=sid
                 self.emit(sid,name);self.family_exports[family].add(name)
                 row.update(status="typed_source_model",rustType=name,validation="source-only type; owning client validates its operation contract")
+            elif family=="dlp":
+                mapping={
+                    "DlpNamespaceOptions":"crate::dlp::DlpClient","DlpProfilesClientOptions":"crate::Client",
+                    "DataPatternsClientOptions":"crate::Client","DataProfilesClientOptions":"crate::Client","DictionariesClientOptions":"crate::Client","DataFilteringProfilesClientOptions":"crate::Client",
+                    "DataPatternListParams":"crate::dlp::DataPatternListParams","DataProfileListParams":"crate::dlp::DataProfileListParams","DictionaryListParams":"crate::dlp::DictionaryListParams","DataFilteringProfileListParams":"crate::dlp::DataFilteringProfileListParams",
+                    "DataPatternListAllParams":"crate::dlp::DataPatternListParams","DataProfileListAllParams":"crate::dlp::DataProfileListParams","DictionaryListAllParams":"crate::dlp::DictionaryListParams","DataFilteringProfileListAllParams":"crate::dlp::DataFilteringProfileListParams",
+                    "DictionaryFileInput":"crate::dlp::models::BinaryFile","DictionaryUploadParams":"crate::dlp::DictionaryUpload","DictionaryGetParams":"Option<bool>",
+                }
+                if name not in mapping:raise ValueError(f"DLP native behavioral adapter lacks an explicit mapping: {name}")
+                row.update(status="native_client_mapping",rustType=mapping[name],reason="Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions")
+            elif name in {"GetTokenOptions","OAuthManagementClientOptions","IamScopesClientOptions"}:
+                row.update(status="native_client_mapping",rustType="crate::airs::management::GetTokenOptions" if name=="GetTokenOptions" else "crate::Client",reason="Implemented management token request or explicit OAuth client configuration")
             elif name in {"ContentOptions","ScanCallOptions","SyncScanOptions"}:
                 target={"ContentOptions":"crate::airs::scan::ContentBuilder","ScanCallOptions":"crate::RequestOptions","SyncScanOptions":"crate::airs::scan::SyncScanOptions"}[name]
                 row.update(status="native_client_mapping",rustType=target,reason="Implemented native scan builder or per-call deadline/cancellation/retry options")
@@ -704,7 +725,57 @@ class Generator:
             self.model_rows.append(row)
 
 
+def validate_graph_contract(inventory, validator_source=None):
+    """Refuse unimplemented nested checks and key normalization at generation time."""
+    nodes=inventory["schemas"]["definitions"]
+    actual={kind:{check["kind"] for node in nodes.values() if node["kind"]==kind for check in node.get("checks",[])} for kind in ["ZodString","ZodNumber"]}
+    if actual["ZodString"]!=STRING_CHECKS or actual["ZodNumber"]!=NUMBER_CHECKS:
+        raise ValueError("Schema string/number check kinds differ from the reviewed native implementation")
+    regexes=set()
+    for sid,node in nodes.items():
+        for check in node.get("checks",[]):
+            if check["kind"]=="regex":
+                regex=check.get("regex",{})
+                if regex.get("flags")!="":raise ValueError(f"Unsupported regex flags in {sid}")
+                regexes.add(regex.get("$regexp"))
+    if regexes!=REGEX_SOURCES:raise ValueError("Regex sources differ from the reviewed native implementation")
+    source=validator_source if validator_source is not None else (ROOT/"crates/scm-sdk/src/validation.rs").read_text()
+    def implemented(function,next_function):
+        body=source.split("fn "+function+"(",1)[1].split("fn "+next_function+"(",1)[0]
+        return set(re.findall(r'^\s*"([^"\n]+)"\s*=>',body,re.M))
+    if implemented("check_string","check_number")!=STRING_CHECKS or implemented("check_number","multiple_of")!=NUMBER_CHECKS:
+        raise ValueError("Native validator check dispatch differs from the reviewed inventory")
+    pattern_body=source.split("fn patterns(",1)[1].split("fn email(",1)[0]
+    native_regexes={value for value in re.findall(r'r"([^"\n]+)"',pattern_body) if value.startswith("^")}
+    if native_regexes!=REGEX_SOURCES:raise ValueError("Native regex implementations differ from the reviewed inventory")
+    def refs(value):
+        if isinstance(value,dict):
+            if "$ref" in value:yield value["$ref"]
+            for child in value.values():yield from refs(child)
+        elif isinstance(value,list):
+            for child in value:yield from refs(child)
+    record_keys=0
+    for sid,node in nodes.items():
+        if node["kind"]!="ZodRecord":continue
+        record_keys+=1;pending=[node["key"]["$ref"]];seen=set()
+        while pending:
+            child=pending.pop()
+            if child in seen:continue
+            seen.add(child);definition=nodes[child]
+            if definition["kind"] in {"ZodEffects","ZodDefault","ZodPipeline","ZodCatch"} or definition.get("coerce"):
+                raise ValueError(f"Record key normalization needs an explicit native implementation: {sid}/{child}")
+            pending.extend(ref for ref in refs(definition) if ref in nodes)
+    return {"stringChecks":sorted(STRING_CHECKS),"numberChecks":sorted(NUMBER_CHECKS),"regexSources":sorted(REGEX_SOURCES),"recordKeys":record_keys,"recordKeyPolicy":"No effects, defaults, pipelines, catches or coercion in record key graphs"}
+
+def union_contract(generator):
+    return {"schemaVersion":1,"baselineCommit":generator.inventory["baseline"]["commit"],"unions":sorted(generator.union_rows,key=lambda row:row["rustType"])}
+
+def verify_union_pins(actual, expected):
+    if actual!=expected:raise ValueError("Public positional union identity differs from the committed pins; an explicit API migration and reviewed pin update are required")
+
+
 def compact_graph(inventory):
+    validate_graph_contract(inventory)
     roots = {}
     for root in inventory["schemas"]["roots"]:
         roots[root["source"]["file"] + "#" + root["name"]] = root["schema"]["$ref"]
@@ -816,6 +887,7 @@ def main():
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--only", choices=FAMILIES.values(), help="Development-only initial family slice")
     parser.add_argument("--graph-only", action="store_true")
+    parser.add_argument("--initialize-union-pins",action="store_true",help="Create the first reviewed positional-union ledger; refuses to overwrite an existing ledger")
     parser.add_argument("--verify-fixtures",action="store_true",help="Build a separate native consumer and roundtrip all successful frozen oracle cases")
     args = parser.parse_args()
     if args.verify_fixtures:
@@ -828,6 +900,13 @@ def main():
     if not args.graph_only:
         generator = Generator(inventory)
         rust = generator.generate(args.only)
+        if not args.only:
+            pins=union_contract(generator)
+            if args.initialize_union_pins:
+                if args.check or UNION_PINS.exists():raise ValueError("Union pins already exist or initialization requested in check mode")
+                UNION_PINS.write_text(json.dumps(pins,indent=2)+"\n")
+            if not UNION_PINS.is_file():raise ValueError("Reviewed positional union pins are missing; initialize once before review")
+            verify_union_pins(pins,json.loads(UNION_PINS.read_text()))
         formatter = shutil.which("rustfmt") or str(pathlib.Path.home() / ".cargo/bin/rustfmt")
         for file, content in rust.items():
             result = subprocess.run([formatter, "+1.99.0", "--edition", "2024"], input=content, text=True, capture_output=True)
@@ -837,7 +916,7 @@ def main():
         unresolved = [row for row in generator.model_rows if row["status"].startswith("pending_")]
         if not args.only and unresolved:
             raise ValueError(f"Known source models lack a typed adapter: {[row['export'] for row in unresolved]}")
-        ledger = {"schemaVersion": 1, "baselineCommit": inventory["baseline"]["commit"], "sourceSha256": sha(SOURCE.read_bytes()), "generatorSha256": sha(pathlib.Path(__file__).read_bytes()), "partialFamily": args.only, "semanticRegistry": "contracts/native-semantics.json", "nativeBoundaries": [{"schema":sid,"rustType":"BinaryFile" if "z.instanceof(Blob)" in node.get("semanticSource",{}).get("source",{}).get("text","") else "crate::validation::NativeDate" if node["kind"]=="ZodDate" else "crate::Transport" if sid=="s000009" else "crate::RequestOptions"} for sid,node in inventory["schemas"]["definitions"].items() if node["kind"]=="ZodDate" or sid in {"s000009","s000014"} or "z.instanceof(Blob)" in node.get("semanticSource",{}).get("source",{}).get("text","")], "transformOutputs": [{"schema":sid,"representation":"object with required message string" if sid in TRANSFORM_MESSAGE else "array unwrapped from data envelope" if sid=="s002084" else "object with required type string and preserved additional JSON fields"} for sid in sorted(TRANSFORM_MESSAGE|{"s002084","s006118"})], "schemas": generator.schema_models, "modelExports": generator.model_rows, "generatedDeclarations": len(generator.declarations), "aliases": len(generator.aliases), "deferred": [row for row in generator.model_rows if row["status"].startswith(("pending_","deferred_"))]}
+        ledger = {"schemaVersion": 1, "baselineCommit": inventory["baseline"]["commit"], "sourceSha256": sha(SOURCE.read_bytes()), "generatorSha256": sha(pathlib.Path(__file__).read_bytes()), "partialFamily": args.only, "structuralChecks":validate_graph_contract(inventory), "unionVariantPins":"contracts/native-union-variants.json", "unionVariantPinsSha256":sha(UNION_PINS.read_bytes()) if UNION_PINS.is_file() else None, "semanticRegistry": "contracts/native-semantics.json", "nativeBoundaries": [{"schema":sid,"rustType":"BinaryFile" if "z.instanceof(Blob)" in node.get("semanticSource",{}).get("source",{}).get("text","") else "crate::validation::NativeDate" if node["kind"]=="ZodDate" else "crate::Transport" if sid=="s000009" else "crate::RequestOptions"} for sid,node in inventory["schemas"]["definitions"].items() if node["kind"]=="ZodDate" or sid in {"s000009","s000014"} or "z.instanceof(Blob)" in node.get("semanticSource",{}).get("source",{}).get("text","")], "transformOutputs": [{"schema":sid,"representation":"object with required message string" if sid in TRANSFORM_MESSAGE else "array unwrapped from data envelope" if sid=="s002084" else "object with required type string and preserved additional JSON fields"} for sid in sorted(TRANSFORM_MESSAGE|{"s002084","s006118"})], "schemas": generator.schema_models, "modelExports": generator.model_rows, "generatedDeclarations": len(generator.declarations), "aliases": len(generator.aliases), "deferred": [row for row in generator.model_rows if row["status"].startswith(("pending_","deferred_"))]}
         outputs[ROOT / "contracts/native-models.json"] = json.dumps(ledger, indent=2) + "\n"
     for file, content in outputs.items():
         if args.check:

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "passed": false,
+  "checkedAt": "2026-10-16T12:23:00.123673+00:00",
+  "rustInputsSha256": "5eb1278810a93e3dfa4210d230a78b1fa759161fd68c11c08217c37cbf24013f",
+  "sourceUnchanged": true,
+  "cargoLockSha256": "d604da97963250a5e3a984f6c864dffdbbd060d971aa8fd7298538877bfb13fe",
+  "toolchain": "1.99.0",
+  "featureSet": "iam",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "execution": "native_checks_and_tests",
+  "os": "Linux",
+  "machine": "x86_64",
+  "rustcVersion": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-musl\nrelease: 1.99.0\nLLVM version: 23.1.1\n",
+  "cargoVersion": "cargo 1.99.0 (5f94df478 2026-08-27)\nrelease: 1.99.0\ncommit-hash: 5f94df4789f005f9a352888e8355ffc645b7ed0e\ncommit-date: 2026-08-27\nhost: x86_64-unknown-linux-musl\nlibgit2: 1.9.6 (sys:0.21.0 vendored)\nlibcurl: 8.21.0-DEV (sys:0.4.90+curl-8.21.0 vendored ssl:OpenSSL/3.6.3)\nssl: OpenSSL 3.6.3 9 Jun 2026\nos: Alpine Linux 3.24.1 [64-bit]\n",
+  "packagedNoticesMatch": true,
+  "limitations": [
+    "This report covers the recorded native host and feature set. It makes no claim about other targets or live service acceptance."
+  ],
+  "checks": [
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 1.314
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "check",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--target",
+        "x86_64-unknown-linux-musl",
+        "--no-default-features",
+        "--features",
+        "iam"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "    Checking scm-sdk v0.1.0 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\nwarning: enum `AuthKind` is never used\n   --> crates/scm-sdk/src/engine.rs:200:17\n    |\n200 | pub(crate) enum AuthKind {\n    |                 ^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\nwarning: method `require_auth` is never used\n   --> crates/scm-sdk/src/engine.rs:439:19\n    |\n347 | impl Client {\n    | ----------- method in this implementation\n...\n439 |     pub(crate) fn require_auth(&self, kind: AuthKind) -> Result<()> {\n    |                   ^^^^^^^^^^^^\n\nwarning: `scm-sdk` (lib) generated 2 warnings\nwarning: `scm-sdk` (lib test) generated 2 warnings (2 duplicates)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 38.23s\n",
+      "duration_seconds": 38.252
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--target",
+        "x86_64-unknown-linux-musl",
+        "--no-default-features",
+        "--features",
+        "iam",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 101,
+      "stdout": "",
+      "stderr": "    Checking scm-sdk v0.1.0 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\nerror: enum `AuthKind` is never used\n   --> crates/scm-sdk/src/engine.rs:200:17\n    |\n200 | pub(crate) enum AuthKind {\n    |                 ^^^^^^^^\n    |\n    = note: `-D dead-code` implied by `-D warnings`\n    = help: to override `-D warnings` add `#[expect(dead_code)]` or `#[allow(dead_code)]`\n\nerror: method `require_auth` is never used\n   --> crates/scm-sdk/src/engine.rs:439:19\n    |\n347 | impl Client {\n    | ----------- method in this implementation\n...\n439 |     pub(crate) fn require_auth(&self, kind: AuthKind) -> Result<()> {\n    |                   ^^^^^^^^^^^^\n\nerror: could not compile `scm-sdk` (lib) due to 2 previous errors\nwarning: build failed, waiting for other jobs to finish...\nerror: could not compile `scm-sdk` (lib test) due to 2 previous errors\n",
+      "duration_seconds": 40.023
+    }
+  ]
+}

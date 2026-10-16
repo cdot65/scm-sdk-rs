@@ -8,16 +8,19 @@ Implementation proceeds through the gated [phases](docs/PHASES.md), following th
 records actual progress and Claude Code reviews. Implementation, independent
 contract verification, and live acceptance are measured separately.
 
-Current state: Phases 1 and 2 passed Claude Code review at 9/10. Phase 3 adds native
-typed models, validation, scanning, and representative OAuth and streaming clients;
-it is undergoing verification and review. The remaining product clients follow
-in their owning phases. No SDK release is available yet.
+Current state: Phases 1–3 passed Claude Code review at 9/10 and are pushed.
+Phase 4 implements management, canonical DLP/IAM, and bounded pagination; it is
+undergoing verification and review. Model Security, Red Team, full Gateway,
+experimental capabilities, and qualification follow in order. No SDK release is
+available yet.
 
 The [foundation interface](docs/FOUNDATION.md) describes explicit authentication,
 transport injection, cancellation, resource limits, and safe error handling.
 See [development](docs/DEVELOPMENT.md) for native checks and CI coverage.
 The [model contracts](docs/MODELS.md), [validator](docs/VALIDATION.md), and
 [streaming interface](docs/STREAMING.md) describe the native data boundaries.
+Product guides cover [management](docs/MANAGEMENT.md), [DLP](docs/DLP.md),
+[IAM](docs/IAM.md), and [pagination and partial collections](docs/PAGINATION.md).
 
 ## Development contracts
 

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.bindWorkspace",
+      "feature": "iam",
+      "namespace": "shared::iam::IamScopesClient",
+      "methods": [
+        "bind_workspace"
+      ],
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::bind_is_additive_and_idempotent_without_dropping_existing_metadata"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy.",
+        "Validate workspace slug before the initial GET; share one deadline/cancellation token across read and replacement; no inferred mutation replay safety."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.create",
+      "feature": "iam",
+      "namespace": "shared::iam::IamScopesClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::create_defaults_and_update_full_replacement_match_frozen_wire_bodies"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.delete",
+      "feature": "iam",
+      "namespace": "shared::iam::IamScopesClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::experimental_delete_uses_exact_route_and_preserves_service_rejection"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy.",
+        "Retain experimental live-unverified DELETE status; 404/405 is a service rejection."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.get",
+      "feature": "iam",
+      "namespace": "shared::iam::IamScopesClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::list_and_get_retain_observed_unknown_fields_and_derive_tenant_header"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.list",
+      "feature": "iam",
+      "namespace": "shared::iam::IamScopesClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::list_and_get_retain_observed_unknown_fields_and_derive_tenant_header"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.update",
+      "feature": "iam",
+      "namespace": "shared::iam::IamScopesClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::create_defaults_and_update_full_replacement_match_frozen_wire_bodies"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

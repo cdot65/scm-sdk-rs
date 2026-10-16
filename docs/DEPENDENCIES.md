@@ -26,13 +26,13 @@ This foundation snapshot describes the resolved `Cargo.lock` and `cargo metadata
 | `zeroize` | 1.9.1 | 1.85 | Apache-2.0 OR MIT |
 | `flate2`, test dependency | 1.1.10 | 1.67.0 | MIT OR Apache-2.0 |
 
-The metadata also contains transitive `base64` 0.23.1; it does not replace the SDK's direct 0.22.1 dependency. `tracing` remains an HTTP-stack transitive dependency; SDK instrumentation arrives with its implementation. Native `models`, `scan`, `management`, and `gateway` features now gate contracts/client behavior; `reqwest-transport` remains the optional network adapter. The validator's regex, exact JavaScript floating-number formatting, and calendar parsing use the added dependencies above.
+The metadata also contains transitive `base64` 0.23.1; it does not replace the SDK's direct 0.22.1 dependency. `tracing` remains an HTTP-stack transitive dependency; SDK instrumentation arrives with its implementation. Native `models`, `scan`, `management`, `dlp`, `iam`, and `gateway` features now gate contracts/client behavior; `reqwest-transport` remains the optional network adapter. The validator's regex, exact JavaScript floating-number formatting, and calendar parsing use the added dependencies above.
 
 The highest declared Rust minimum in the current resolved graph is 1.88, from ICU 2.3 components used by URL/IDNA. This supports choosing workspace MSRV 1.88; successful checks on Rust 1.88.0 provide the executable proof. Declared minimum versions alone do not prove source compatibility.
 
 ## HTTP, cryptography, compression, and native code
 
-Reqwest enables `rustls`, `http2`, `stream`, `gzip`, and `system-proxy`, with its default features disabled. The resolved transport uses `rustls` 0.23.46, `aws-lc-rs` 1.18.2, and `aws-lc-sys` 0.46.0. The selected AWS-LC features are `aws-lc-sys` and `prebuilt-nasm`; FIPS features are absent. No OpenSSL/native-tls dependency is selected by the default SDK transport.
+Reqwest enables `rustls`, `http2`, `stream`, `gzip`, and `system-proxy`, with its default features disabled. The resolved transport uses `rustls` 0.23.46, `aws-lc-rs` 1.18.2, and `aws-lc-sys` 0.46.0. The selected AWS-LC features are `aws-lc-sys` and `prebuilt-nasm`; FIPS features are absent. No OpenSSL/native-tls TLS implementation is selected by the default SDK transport. Transitive [`openssl-probe`](https://github.com/rustls/openssl-probe#readme) only discovers CA certificate paths for Linux root loading; it does not link or implement OpenSSL TLS.
 
 AWS-LC contains native C/assembly and FFI. The pinned non-FIPS version builds with a native C/C++ compiler and provides generated bindings; CMake, Go, and bindgen are not requirements of this configuration. The graph contains the `cmake` helper crate, which does not establish that a CMake executable is needed for this selected build. Windows x86_64 can use the selected prebuilt NASM fallback; installing NASM permits source assembly compilation. Different downstream feature unification or FIPS selection can change requirements. These facts come from the [pinned AWS-LC Rust README](https://docs.rs/crate/aws-lc-rs/1.18.2/source/README.md).
 

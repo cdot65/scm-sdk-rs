@@ -111,8 +111,25 @@ impl RawRequest {
         self.replay_safe = true;
         self
     }
+    #[cfg(feature = "dlp")]
+    pub(crate) fn content_type(mut self, value: &str) -> Result<Self> {
+        value
+            .parse::<mime::Mime>()
+            .map_err(|_| Error::new(ErrorKind::Validation))?;
+        self.headers.insert(
+            http::header::CONTENT_TYPE,
+            HeaderValue::from_str(value).map_err(|_| Error::new(ErrorKind::Validation))?,
+        );
+        Ok(self)
+    }
     pub(crate) fn json<T: Serialize>(self, value: &T, limit: usize) -> Result<Self> {
-        self.body(serialize_bounded(value, limit)?, "application/json")
+        let content_type = self
+            .headers
+            .get(http::header::CONTENT_TYPE)
+            .and_then(|value| value.to_str().ok())
+            .unwrap_or("application/json")
+            .to_owned();
+        self.body(serialize_bounded(value, limit)?, &content_type)
     }
 }
 fn forbidden_header(name: &str) -> bool {
@@ -160,11 +177,30 @@ impl fmt::Debug for RawRequest {
 pub struct Client {
     inner: Arc<Inner>,
 }
-#[cfg(any(feature = "scan", feature = "management", feature = "gateway"))]
+struct BufferedResponse {
+    body: Bytes,
+    status: u16,
+    request_id: Option<String>,
+}
+impl BufferedResponse {
+    fn annotate(&self, error: Error) -> Error {
+        error
+            .with_status(self.status)
+            .with_metadata(self.request_id.clone(), None, None)
+            .with_outcome(RemoteOutcome::Unknown)
+    }
+}
+#[cfg(any(
+    feature = "scan",
+    feature = "management",
+    feature = "gateway",
+    feature = "dlp",
+    feature = "iam"
+))]
 pub(crate) enum AuthKind {
     #[cfg(feature = "scan")]
     Scan,
-    #[cfg(feature = "management")]
+    #[cfg(any(feature = "management", feature = "dlp", feature = "iam"))]
     OAuth,
     #[cfg(feature = "gateway")]
     Runtime,
@@ -318,8 +354,17 @@ impl Client {
     pub fn validation_limits(&self) -> Option<&crate::validation::ValidationLimits> {
         self.inner.validation.as_ref()
     }
-    #[cfg(any(feature = "scan", feature = "management", feature = "gateway"))]
-    fn contract_limits(&self, max_bytes: usize) -> Result<crate::validation::ValidationLimits> {
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam"
+    ))]
+    pub(crate) fn contract_limits(
+        &self,
+        max_bytes: usize,
+    ) -> Result<crate::validation::ValidationLimits> {
         let mut limits = self.inner.validation.clone().map_or_else(
             || crate::validation::ValidationLimits::for_bytes(max_bytes),
             Ok,
@@ -334,12 +379,68 @@ impl Client {
     pub fn endpoint(&self) -> &Endpoint {
         &self.inner.endpoint
     }
-    #[cfg(any(feature = "scan", feature = "management", feature = "gateway"))]
+    /// Immutable OAuth identity, when this client uses a service-token provider.
+    pub fn oauth_context(&self) -> Option<&AuthContext> {
+        match &self.inner.auth {
+            Authentication::OAuth { provider, .. } => Some(provider.context()),
+            _ => None,
+        }
+    }
+    /// Select an additional explicit endpoint without broadening destination admission.
+    /// The new client shares authentication, transport, limits, cancellation, and permits.
+    pub fn with_endpoint(&self, endpoint: Endpoint) -> Result<Self> {
+        self.inner
+            .policy
+            .check(endpoint.url(), DestinationPurpose::Api)
+            .map_err(|_| Error::new(ErrorKind::Destination))?;
+        Ok(self.scoped(endpoint, self.inner.auth.clone()))
+    }
+    /// Bind or omit the tenant routing header using the provider's immutable identity.
+    /// Product clients that require tenant routing enable it in their constructor.
+    pub fn with_tsg_header(&self, enabled: bool) -> Result<Self> {
+        let Authentication::OAuth { provider, .. } = &self.inner.auth else {
+            return Err(Error::new(ErrorKind::Configuration));
+        };
+        Ok(self.scoped(
+            self.inner.endpoint.clone(),
+            Authentication::oauth(Arc::clone(provider), enabled),
+        ))
+    }
+    fn scoped(&self, endpoint: Endpoint, auth: Authentication) -> Self {
+        Self {
+            inner: Arc::new(Inner {
+                endpoint,
+                auth,
+                transport: Arc::clone(&self.inner.transport),
+                policy: Arc::clone(&self.inner.policy),
+                limits: self.inner.limits.clone(),
+                session: self.inner.session.clone(),
+                permits: Arc::clone(&self.inner.permits),
+                validation: self.inner.validation.clone(),
+            }),
+        }
+    }
+    pub(crate) fn operation_options(
+        &self,
+        options: Option<&RequestOptions>,
+    ) -> Result<RequestOptions> {
+        options.cloned().map_or_else(
+            || RequestOptions::with_timeout(self.inner.limits.operation_timeout),
+            Ok,
+        )
+    }
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam"
+    ))]
     pub(crate) fn require_auth(&self, kind: AuthKind) -> Result<()> {
         let valid = match kind {
             #[cfg(feature = "scan")]
             AuthKind::Scan => matches!(&self.inner.auth, Authentication::Scan { .. }),
-            #[cfg(feature = "management")]
+            #[cfg(any(feature = "management", feature = "dlp", feature = "iam"))]
             AuthKind::OAuth => matches!(&self.inner.auth, Authentication::OAuth { .. }),
             #[cfg(feature = "gateway")]
             AuthKind::Runtime => matches!(&self.inner.auth, Authentication::RuntimeKey { .. }),
@@ -350,7 +451,68 @@ impl Client {
             Err(Error::new(ErrorKind::Configuration))
         }
     }
-    #[cfg(any(feature = "scan", feature = "gateway"))]
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam"
+    ))]
+    pub(crate) async fn validated_json<T: Serialize>(
+        &self,
+        body: &T,
+        schema: &str,
+        options: &RequestOptions,
+    ) -> Result<Bytes> {
+        options
+            .run(&self.inner.session, async {
+                let bytes = serialize_bounded(body, self.inner.limits.max_request_bytes)?;
+                let value = serde_json::from_slice(&bytes)
+                    .map_err(|_| Error::new(ErrorKind::Validation))?;
+                let value = normalize_contract(
+                    schema,
+                    value,
+                    crate::validation::Mode::Request,
+                    &self.contract_limits(self.inner.limits.max_request_bytes)?,
+                )?;
+                serialize_bounded(&value, self.inner.limits.max_request_bytes)
+            })
+            .await
+    }
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam"
+    ))]
+    async fn prepare_model<T: Serialize>(
+        &self,
+        request: RawRequest,
+        body: &T,
+        schema: &str,
+        options: &RequestOptions,
+    ) -> Result<RawRequest> {
+        let name = request.name;
+        let bytes = self
+            .validated_json(body, schema, options)
+            .await
+            .map_err(|e| e.with_operation(name))?;
+        let content_type = request
+            .headers
+            .get(http::header::CONTENT_TYPE)
+            .and_then(|v| v.to_str().ok())
+            .unwrap_or("application/json")
+            .to_owned();
+        request.body(bytes, &content_type)
+    }
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam"
+    ))]
     pub(crate) async fn send_model<T: Serialize, R: DeserializeOwned>(
         &self,
         request: RawRequest,
@@ -359,30 +521,20 @@ impl Client {
         response_schema: &str,
         options: Option<&RequestOptions>,
     ) -> Result<R> {
-        let options = options.cloned().map_or_else(
-            || RequestOptions::with_timeout(self.inner.limits.operation_timeout),
-            Ok,
-        )?;
-        let name = request.name;
-        let request = options
-            .run(&self.inner.session, async {
-                let bytes = serialize_bounded(body, self.inner.limits.max_request_bytes)?;
-                let value = serde_json::from_slice(&bytes)
-                    .map_err(|_| Error::new(ErrorKind::Validation))?;
-                let value = normalize_contract(
-                    request_schema,
-                    value,
-                    crate::validation::Mode::Request,
-                    &self.contract_limits(self.inner.limits.max_request_bytes)?,
-                )?;
-                request.json(&value, self.inner.limits.max_request_bytes)
-            })
-            .await
-            .map_err(|e| e.with_operation(name))?;
+        let options = self.operation_options(options)?;
+        let request = self
+            .prepare_model(request, body, request_schema, &options)
+            .await?;
         self.send_contract(request, response_schema, Some(&options))
             .await
     }
-    #[cfg(any(feature = "scan", feature = "management", feature = "gateway"))]
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam"
+    ))]
     pub(crate) async fn send_contract<R: DeserializeOwned>(
         &self,
         request: RawRequest,
@@ -390,15 +542,53 @@ impl Client {
         options: Option<&RequestOptions>,
     ) -> Result<R> {
         let name = request.name;
-        let options = options.cloned().map_or_else(
-            || RequestOptions::with_timeout(self.inner.limits.operation_timeout),
-            Ok,
-        )?;
-        let bytes = self.send_bytes(request, Some(&options)).await?;
+        let options = self.operation_options(options)?;
+        let response = self.send_buffered(request, Some(&options)).await?;
+        self.decode_contract(&response, schema, &options)
+            .await
+            .map_err(|e| response.annotate(e).with_operation(name))
+    }
+    #[cfg(feature = "dlp")]
+    pub(crate) async fn send_optional_contract<R: DeserializeOwned>(
+        &self,
+        request: RawRequest,
+        schema: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<Option<R>> {
+        let name = request.name;
+        let options = self.operation_options(options)?;
+        let response = self.send_buffered(request, Some(&options)).await?;
+        if response.body.is_empty() {
+            return Ok(None);
+        }
+        self.decode_contract(&response, schema, &options)
+            .await
+            .map(Some)
+            .map_err(|e| response.annotate(e).with_operation(name))
+    }
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam"
+    ))]
+    async fn decode_contract<R: DeserializeOwned>(
+        &self,
+        response: &BufferedResponse,
+        schema: &str,
+        options: &RequestOptions,
+    ) -> Result<R> {
         options
             .run(&self.inner.session, async {
+                // The frozen request engine hydrates empty JSON successes as {}.
+                let body = if response.body.is_empty() {
+                    b"{}".as_slice()
+                } else {
+                    response.body.as_ref()
+                };
                 let value =
-                    serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Decode))?;
+                    serde_json::from_slice(body).map_err(|_| Error::new(ErrorKind::Decode))?;
                 let value = normalize_contract(
                     schema,
                     value,
@@ -415,7 +605,6 @@ impl Client {
                 serde_json::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
             })
             .await
-            .map_err(|e| e.with_operation(name).with_outcome(RemoteOutcome::Unknown))
     }
     #[cfg(feature = "gateway")]
     pub(crate) async fn send_model_stream<T: Serialize, R: DeserializeOwned>(
@@ -526,6 +715,7 @@ impl Client {
                 if headers_exceed(&headers) {
                     return Err(Error::new(ErrorKind::Limit));
                 }
+                options.run(&self.inner.session, async { Ok(()) }).await?;
                 sent.store(true, Ordering::Relaxed);
                 let mut response = self
                     .inner
@@ -590,6 +780,15 @@ impl Client {
         request: RawRequest,
         options: Option<&RequestOptions>,
     ) -> Result<Bytes> {
+        self.send_buffered(request, options)
+            .await
+            .map(|response| response.body)
+    }
+    async fn send_buffered(
+        &self,
+        request: RawRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<BufferedResponse> {
         let default_options;
         let options = match options {
             Some(v) => v,
@@ -602,6 +801,7 @@ impl Client {
         let name = request.name;
         let (url, body) = self.preflight(&request)?;
         let sent = AtomicBool::new(false);
+        let received = std::sync::Mutex::new(None::<(u16, Option<String>)>);
         let max_retries = options
             .retry_limit()
             .unwrap_or(self.inner.limits.max_retries);
@@ -615,6 +815,9 @@ impl Client {
             let mut retries = 0;
             let mut refreshed = false;
             loop {
+                if let Ok(mut slot) = received.lock() {
+                    *slot = None;
+                }
                 let mut headers = request.headers.clone();
                 let generation = self
                     .inner
@@ -624,6 +827,7 @@ impl Client {
                 if headers_exceed(&headers) {
                     return Err(Error::new(ErrorKind::Limit));
                 }
+                options.run(&self.inner.session, async { Ok(()) }).await?;
                 sent.store(true, Ordering::Relaxed);
                 let prepared = TransportRequest::new(
                     request.method.clone(),
@@ -648,6 +852,10 @@ impl Client {
                     }
                 };
                 let status = response.status;
+                let request_id = error_metadata(&response.headers, None).0;
+                if let Ok(mut slot) = received.lock() {
+                    *slot = Some((status.as_u16(), request_id.clone()));
+                }
                 if status.is_redirection() {
                     return Err(Error::new(ErrorKind::Destination)
                         .with_status(status.as_u16())
@@ -655,8 +863,14 @@ impl Client {
                 }
                 let delay = retry_after(&response.headers);
                 if status.is_success() {
-                    return read_limited(&mut response.body, self.inner.limits.max_response_bytes)
-                        .await;
+                    let body =
+                        read_limited(&mut response.body, self.inner.limits.max_response_bytes)
+                            .await?;
+                    return Ok(BufferedResponse {
+                        body,
+                        status: status.as_u16(),
+                        request_id,
+                    });
                 }
                 // Read only a bounded amount; never retain or format arbitrary upstream bodies.
                 let error_body =
@@ -700,6 +914,13 @@ impl Client {
                 } else {
                     e.remote_outcome()
                 };
+            let e = if let Some((status, request_id)) =
+                received.lock().ok().and_then(|slot| slot.clone())
+            {
+                e.with_response_metadata(status, request_id)
+            } else {
+                e
+            };
             e.with_operation(name).with_outcome(outcome)
         })
     }
@@ -709,17 +930,19 @@ impl Client {
         options: Option<&RequestOptions>,
     ) -> Result<R> {
         let name = request.name;
-        let options = match options {
-            Some(v) => v.clone(),
-            None => RequestOptions::with_timeout(self.inner.limits.operation_timeout)?,
-        };
-        let body = self.send_bytes(request, Some(&options)).await?;
+        let options = self.operation_options(options)?;
+        let response = self.send_buffered(request, Some(&options)).await?;
         options
             .run(&self.inner.session, async {
-                serde_json::from_slice(&body).map_err(|_| Error::new(ErrorKind::Decode))
+                serde_json::from_slice(if response.body.is_empty() {
+                    b"{}"
+                } else {
+                    &response.body
+                })
+                .map_err(|_| Error::new(ErrorKind::Decode))
             })
             .await
-            .map_err(|e| e.with_operation(name).with_outcome(RemoteOutcome::Unknown))
+            .map_err(|e| response.annotate(e).with_operation(name))
     }
     pub async fn send_optional_json<R: DeserializeOwned>(
         &self,
@@ -727,22 +950,19 @@ impl Client {
         options: Option<&RequestOptions>,
     ) -> Result<Option<R>> {
         let name = request.name;
-        let options = match options {
-            Some(v) => v.clone(),
-            None => RequestOptions::with_timeout(self.inner.limits.operation_timeout)?,
-        };
-        let body = self.send_bytes(request, Some(&options)).await?;
-        if body.is_empty() {
+        let options = self.operation_options(options)?;
+        let response = self.send_buffered(request, Some(&options)).await?;
+        if response.body.is_empty() {
             return Ok(None);
         }
         options
             .run(&self.inner.session, async {
-                serde_json::from_slice(&body)
+                serde_json::from_slice(&response.body)
                     .map(Some)
                     .map_err(|_| Error::new(ErrorKind::Decode))
             })
             .await
-            .map_err(|e| e.with_operation(name).with_outcome(RemoteOutcome::Unknown))
+            .map_err(|e| response.annotate(e).with_operation(name))
     }
     pub async fn send_empty(
         &self,
@@ -764,7 +984,13 @@ fn auth_rejection(status: StatusCode, headers: &HeaderMap) -> bool {
         || (status == StatusCode::FORBIDDEN
             && headers.get("x-opa-decision").is_none_or(|v| v != "false"))
 }
-#[cfg(any(feature = "scan", feature = "management", feature = "gateway"))]
+#[cfg(any(
+    feature = "scan",
+    feature = "management",
+    feature = "gateway",
+    feature = "dlp",
+    feature = "iam"
+))]
 fn normalize_contract(
     schema: &str,
     value: serde_json::Value,

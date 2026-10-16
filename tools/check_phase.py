@@ -69,6 +69,20 @@ def commands_for(phase):
             ["python", "tools/generate_models.py", "--verify-fixtures"],
             ["python", "scripts/check-package.py"],
         ]
+    if phase == 4:
+        # Preserve historical phase-3 child reports; cumulative regression checks
+        # bind their new executions to the active phase's separate report paths.
+        previous = [[value.replace("phase-03-rust-", "phase-04-rust-") for value in command]
+                    for command in commands_for(3)]
+        for command in previous:
+            if command == ["python", "tools/native_operations.py", "--check"]:
+                command.extend(["--require-through-phase", "4"])
+        return previous + [
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_model_generation.py", "-v"],
+            *[["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", feature,
+               "--output", f"docs/checks/phase-04-rust-1.99.0-{feature}.json"]
+              for feature in ("dlp", "iam")],
+        ]
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "verifiedInPhase": 4,
+  "operations": [
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.getToken",
+      "feature": "core",
+      "namespace": "auth::OAuthProvider",
+      "methods": [
+        "get_token"
+      ],
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.clearToken",
+      "feature": "core",
+      "namespace": "auth::OAuthProvider",
+      "methods": [
+        "clear"
+      ],
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Clear also invalidates pending refresh epochs so late responses cannot restore a cleared token."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpired",
+      "feature": "core",
+      "namespace": "auth::OAuthProvider",
+      "methods": [
+        "is_token_expired"
+      ],
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpiringSoon",
+      "feature": "core",
+      "namespace": "auth::OAuthProvider",
+      "methods": [
+        "is_token_expiring_soon"
+      ],
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.getTokenInfo",
+      "feature": "core",
+      "namespace": "auth::OAuthProvider",
+      "methods": [
+        "token_info"
+      ],
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

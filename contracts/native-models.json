@@ -2,8 +2,36 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "sourceSha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
-  "generatorSha256": "386e0ca04333c2986e8806044766b397b34601660facdf40df4b31f9506e4d0a",
+  "generatorSha256": "04af1e2c90a38aa15fbca2a9eafc97a1b242a96d6cd24415c2feb9b930b08d8b",
   "partialFamily": null,
+  "structuralChecks": {
+    "stringChecks": [
+      "datetime",
+      "email",
+      "max",
+      "min",
+      "regex",
+      "url",
+      "uuid"
+    ],
+    "numberChecks": [
+      "finite",
+      "int",
+      "max",
+      "min",
+      "multipleOf"
+    ],
+    "regexSources": [
+      "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+      "^[^,\\s]+__[^,\\s]+$",
+      "^[a-zA-Z0-9_-]+$",
+      "^\\d+$"
+    ],
+    "recordKeys": 96,
+    "recordKeyPolicy": "No effects, defaults, pipelines, catches or coercion in record key graphs"
+  },
+  "unionVariantPins": "contracts/native-union-variants.json",
+  "unionVariantPinsSha256": "fe35fd85c9f12830d876eb30d8246db3b25bb7e2d358d3efebdc69d0aac58738",
   "semanticRegistry": "contracts/native-semantics.json",
   "nativeBoundaries": [
     {
@@ -15053,9 +15081,9 @@
         "$ref": "t003235"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DataFilteringProfileListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataFilteringProfileListParams",
@@ -15064,9 +15092,9 @@
         "$ref": "t003236"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DataFilteringProfileListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataFilteringProfilesClientOptions",
@@ -15075,9 +15103,9 @@
         "$ref": "t003299"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataPatternListAllParams",
@@ -15086,9 +15114,9 @@
         "$ref": "t003310"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DataPatternListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataPatternListParams",
@@ -15097,9 +15125,9 @@
         "$ref": "t003311"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DataPatternListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataPatternsClientOptions",
@@ -15108,9 +15136,9 @@
         "$ref": "t003352"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataProfileListAllParams",
@@ -15119,9 +15147,9 @@
         "$ref": "t003362"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DataProfileListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataProfileListParams",
@@ -15130,9 +15158,9 @@
         "$ref": "t003363"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DataProfileListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DataProfilesClientOptions",
@@ -15141,9 +15169,9 @@
         "$ref": "t003381"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DeploymentProfileListOptions",
@@ -15174,9 +15202,9 @@
         "$ref": "t003579"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DictionaryFileInput",
@@ -15185,9 +15213,9 @@
         "$ref": "t003524"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::models::BinaryFile",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DictionaryGetParams",
@@ -15196,9 +15224,9 @@
         "$ref": "t003567"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "Option<bool>",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DictionaryListAllParams",
@@ -15207,9 +15235,9 @@
         "$ref": "t003573"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DictionaryListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DictionaryListParams",
@@ -15218,9 +15246,9 @@
         "$ref": "t003568"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DictionaryListParams",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DictionaryUploadParams",
@@ -15229,9 +15257,9 @@
         "$ref": "t003523"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DictionaryUpload",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DlpNamespaceOptions",
@@ -15240,9 +15268,9 @@
         "$ref": "t003601"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::dlp::DlpClient",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "DlpProfilesClientOptions",
@@ -15251,9 +15279,9 @@
         "$ref": "t003608"
       },
       "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "reason": "Canonical DLP client/input adapter; list-all caps use explicit CollectOptions and request lifecycle uses RequestOptions"
     },
     {
       "export": "GatewayChatCompletion",
@@ -15471,9 +15499,9 @@
         "$ref": "t003914"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::GetTokenOptions",
+      "reason": "Implemented management token request or explicit OAuth client configuration"
     },
     {
       "export": "GoalListOptions",
@@ -15504,9 +15532,9 @@
         "$ref": "t003952"
       },
       "namespace": "shared::iam",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "reason": "Implemented management token request or explicit OAuth client configuration"
     },
     {
       "export": "IamScopeUpdateInput",
@@ -15823,9 +15851,9 @@
         "$ref": "t004393"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "reason": "Implemented management token request or explicit OAuth client configuration"
     },
     {
       "export": "PaginationOptions",
@@ -16668,105 +16696,6 @@
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
-      "export": "DataFilteringProfileListAllParams",
-      "source": "src/management/dlp/data-filtering-profiles.ts",
-      "sourceType": {
-        "$ref": "t003235"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataFilteringProfileListParams",
-      "source": "src/management/dlp/data-filtering-profiles.ts",
-      "sourceType": {
-        "$ref": "t003236"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataFilteringProfilesClientOptions",
-      "source": "src/management/dlp/data-filtering-profiles.ts",
-      "sourceType": {
-        "$ref": "t003299"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataPatternListAllParams",
-      "source": "src/management/dlp/data-patterns.ts",
-      "sourceType": {
-        "$ref": "t003310"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataPatternListParams",
-      "source": "src/management/dlp/data-patterns.ts",
-      "sourceType": {
-        "$ref": "t003311"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataPatternsClientOptions",
-      "source": "src/management/dlp/data-patterns.ts",
-      "sourceType": {
-        "$ref": "t003352"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataProfileListAllParams",
-      "source": "src/management/dlp/data-profiles.ts",
-      "sourceType": {
-        "$ref": "t003362"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataProfileListParams",
-      "source": "src/management/dlp/data-profiles.ts",
-      "sourceType": {
-        "$ref": "t003363"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DataProfilesClientOptions",
-      "source": "src/management/dlp/data-profiles.ts",
-      "sourceType": {
-        "$ref": "t003381"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
       "export": "DeploymentProfileListOptions",
       "source": "src/management/deployment-profiles.ts",
       "sourceType": {
@@ -16784,94 +16713,6 @@
         "$ref": "t003442"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DictionariesClientOptions",
-      "source": "src/management/dlp/dictionaries.ts",
-      "sourceType": {
-        "$ref": "t003579"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DictionaryFileInput",
-      "source": "src/management/dlp/dictionaries.ts",
-      "sourceType": {
-        "$ref": "t003524"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DictionaryGetParams",
-      "source": "src/management/dlp/dictionaries.ts",
-      "sourceType": {
-        "$ref": "t003567"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DictionaryListAllParams",
-      "source": "src/management/dlp/dictionaries.ts",
-      "sourceType": {
-        "$ref": "t003573"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DictionaryListParams",
-      "source": "src/management/dlp/dictionaries.ts",
-      "sourceType": {
-        "$ref": "t003568"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DictionaryUploadParams",
-      "source": "src/management/dlp/dictionaries.ts",
-      "sourceType": {
-        "$ref": "t003523"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DlpNamespaceOptions",
-      "source": "src/management/dlp/index.ts",
-      "sourceType": {
-        "$ref": "t003601"
-      },
-      "namespace": "dlp",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DlpProfilesClientOptions",
-      "source": "src/management/dlp-profiles.ts",
-      "sourceType": {
-        "$ref": "t003608"
-      },
-      "namespace": "dlp",
       "status": "deferred_client_adapter",
       "owningPhase": 4,
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
@@ -16976,17 +16817,6 @@
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
-      "export": "GetTokenOptions",
-      "source": "src/management/oauth-management.ts",
-      "sourceType": {
-        "$ref": "t003914"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
       "export": "GoalListOptions",
       "source": "src/red-team/reports-client.ts",
       "sourceType": {
@@ -16995,17 +16825,6 @@
       "namespace": "airs::red_team",
       "status": "deferred_client_adapter",
       "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "IamScopesClientOptions",
-      "source": "src/iam/scopes-client.ts",
-      "sourceType": {
-        "$ref": "t003952"
-      },
-      "namespace": "shared::iam",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
@@ -17299,17 +17118,6 @@
       "source": "src/management/oauth-client.ts",
       "sourceType": {
         "$ref": "t004384"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "OAuthManagementClientOptions",
-      "source": "src/management/oauth-management.ts",
-      "sourceType": {
-        "$ref": "t004393"
       },
       "namespace": "airs::management",
       "status": "deferred_client_adapter",

@@ -153,6 +153,7 @@ pub struct TokenLease {
     generation: u64,
     expires_at: Instant,
     refresh_at: Instant,
+    expires_at_wall: std::time::SystemTime,
 }
 
 impl TokenLease {
@@ -179,11 +180,15 @@ impl TokenLease {
         }
         // Short-lived tokens remain usable: refresh buffer is at most 20% of TTL.
         let buffer = std::cmp::min(Duration::from_secs(30), valid_for / 5);
+        let expires_at_wall = std::time::SystemTime::now()
+            .checked_add(expires_at.saturating_duration_since(Instant::now()))
+            .ok_or_else(|| Error::new(ErrorKind::Authentication))?;
         Ok(Self {
             token,
             generation,
             expires_at,
             refresh_at: expires_at - buffer,
+            expires_at_wall,
         })
     }
 
@@ -225,6 +230,11 @@ pub struct TokenInfo {
     pub generation: Option<u64>,
     pub remaining: Option<Duration>,
     pub refresh_in_progress: bool,
+    pub is_valid: bool,
+    pub is_expired: bool,
+    pub is_expiring_soon: bool,
+    /// Wall-clock expiry snapshot; cache validity uses a monotonic clock.
+    pub expires_at: Option<std::time::SystemTime>,
 }
 
 /// Service-token integration point; provider implementations own credential policy.
@@ -302,21 +312,62 @@ impl OAuthProvider {
         Ok(())
     }
 
+    /// Fetch or reuse a token lease under the caller's budget (30 seconds by default).
+    pub async fn get_token(&self, options: Option<&RequestOptions>) -> Result<TokenLease> {
+        let options = options
+            .cloned()
+            .map_or_else(|| RequestOptions::with_timeout(MAX_REFRESH_TIME), Ok)?;
+        self.token(&options).await
+    }
+
+    pub fn is_token_expired(&self) -> Result<bool> {
+        Ok(self.token_info()?.is_expired)
+    }
+
+    /// A custom duration is compared directly, avoiding timestamp overflow.
+    pub fn is_token_expiring_soon(&self, buffer: Option<Duration>) -> Result<bool> {
+        let cache = self
+            .inner
+            .cache
+            .lock()
+            .map_err(|_| Error::new(ErrorKind::Authentication))?;
+        Ok(cache.token.as_ref().is_none_or(|token| match buffer {
+            Some(buffer) => token.remaining() <= buffer,
+            None => !token.usable(),
+        }))
+    }
+
     pub fn token_info(&self) -> Result<TokenInfo> {
         let cache = self
             .inner
             .cache
             .lock()
             .map_err(|_| Error::new(ErrorKind::Authentication))?;
+        let now = Instant::now();
+        let is_expired = cache
+            .token
+            .as_ref()
+            .is_none_or(|token| token.expires_at <= now);
+        let is_expiring_soon = cache
+            .token
+            .as_ref()
+            .is_none_or(|token| token.refresh_at <= now);
         Ok(TokenInfo {
             cached: cache.token.is_some(),
             generation: cache.token.as_ref().map(TokenLease::generation),
-            remaining: cache.token.as_ref().map(TokenLease::remaining),
+            remaining: cache
+                .token
+                .as_ref()
+                .map(|token| token.expires_at.saturating_duration_since(now)),
             refresh_in_progress: cache
                 .pending
                 .as_ref()
                 .and_then(|pending| pending.future.upgrade())
                 .is_some(),
+            is_valid: cache.token.is_some() && !is_expiring_soon,
+            is_expired,
+            is_expiring_soon,
+            expires_at: cache.token.as_ref().map(|token| token.expires_at_wall),
         })
     }
 
@@ -799,6 +850,38 @@ mod tests {
     }
     fn options() -> RequestOptions {
         RequestOptions::with_timeout(Duration::from_secs(60)).unwrap()
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn public_lifecycle_reports_expiry_buffer_and_clear_without_secrets() {
+        let transport = FakeTransport::new(false, vec![token("lifecycle-secret", 100)]);
+        let provider = provider(Arc::clone(&transport));
+        assert!(provider.is_token_expired().unwrap());
+        assert!(provider.is_token_expiring_soon(None).unwrap());
+        let absent = provider.token_info().unwrap();
+        assert!(!absent.cached && !absent.is_valid && absent.is_expired);
+        assert!(absent.expires_at.is_none());
+        let lease = provider.get_token(None).await.unwrap();
+        assert_eq!(lease.secret().expose(), "lifecycle-secret");
+        assert!(!provider.is_token_expired().unwrap());
+        assert!(!provider.is_token_expiring_soon(None).unwrap());
+        assert!(
+            provider
+                .is_token_expiring_soon(Some(Duration::from_secs(101)))
+                .unwrap()
+        );
+        let current = provider.token_info().unwrap();
+        assert!(current.cached && current.is_valid && !current.is_expired);
+        assert!(current.expires_at.is_some());
+        assert!(!format!("{current:?} {lease:?}").contains("lifecycle-secret"));
+        tokio::time::advance(Duration::from_secs(81)).await;
+        let soon = provider.token_info().unwrap();
+        assert!(!soon.is_expired && soon.is_expiring_soon && !soon.is_valid);
+        tokio::time::advance(Duration::from_secs(19)).await;
+        assert!(provider.is_token_expired().unwrap());
+        provider.clear().unwrap();
+        assert!(!provider.token_info().unwrap().cached);
+        assert_eq!(transport.count(), 1);
     }
 
     #[tokio::test]

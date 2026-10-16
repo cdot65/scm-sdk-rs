@@ -1,0 +1,976 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.create",
+      "feature": "management",
+      "namespace": "airs.management.api_keys",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.delete",
+      "feature": "management",
+      "namespace": "airs.management.api_keys",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.list",
+      "feature": "management",
+      "namespace": "airs.management.api_keys",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.listAll",
+      "feature": "management",
+      "namespace": "airs.management.api_keys",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.listForToken",
+      "feature": "management",
+      "namespace": "airs.management.api_keys",
+      "methods": [
+        "list_for_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.regenerate",
+      "feature": "management",
+      "namespace": "airs.management.api_keys",
+      "methods": [
+        "regenerate"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.delete",
+      "feature": "management",
+      "namespace": "airs.management.customer_apps",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.get",
+      "feature": "management",
+      "namespace": "airs.management.customer_apps",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.list",
+      "feature": "management",
+      "namespace": "airs.management.customer_apps",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.listAll",
+      "feature": "management",
+      "namespace": "airs.management.customer_apps",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.listForToken",
+      "feature": "management",
+      "namespace": "airs.management.customer_apps",
+      "methods": [
+        "list_for_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.update",
+      "feature": "management",
+      "namespace": "airs.management.customer_apps",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.application",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "application"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "application_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationViolationBreakdown",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "application_violation_breakdown"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationViolationBreakdownRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "application_violation_breakdown_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsOverview",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "applications_overview"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Runtime query checks enforce source-declared windows/time units and positive/nonnegative safe page integers before authentication."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsOverviewRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "applications_overview_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents.",
+        "Runtime query checks enforce source-declared windows/time units and positive/nonnegative safe page integers before authentication."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsViolationsTrend",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "applications_violations_trend"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsViolationsTrendRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "applications_violations_trend_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.appsList",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "apps_list"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.appsListRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "apps_list_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.scanContent",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "scan_content"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.scanContentRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "scan_content_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.session",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "session"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "session_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionTransaction",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "session_transaction"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionTransactionRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "session_transaction_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsChart",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "sessions_chart"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsChartRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "sessions_chart_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsOverview",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "sessions_overview"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsOverviewRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "sessions_overview_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.topApplicationsViolations",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "top_applications_violations"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.topApplicationsViolationsRaw",
+      "feature": "management",
+      "namespace": "airs.management.dashboard",
+      "methods": [
+        "top_applications_violations_raw"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/deployment-profiles.ts:DeploymentProfilesClient.list",
+      "feature": "management",
+      "namespace": "airs.management.deployment_profiles",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::deployment_legacy_dlp_and_scan_log_methods_match_frozen_dialects"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp-profiles.ts:DlpProfilesClient.list",
+      "feature": "management",
+      "namespace": "airs.management.dlp_profiles",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::deployment_legacy_dlp_and_scan_log_methods_match_frozen_dialects"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.create",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.delete",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.forceDelete",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "force_delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.get",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.getByName",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "get_by_name"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.list",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.listAll",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.listForToken",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "list_for_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.update",
+      "feature": "management",
+      "namespace": "airs.management.profiles",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/scan-logs.ts:ScanLogsClient.query",
+      "feature": "management",
+      "namespace": "airs.management.scan_logs",
+      "methods": [
+        "query"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::deployment_legacy_dlp_and_scan_log_methods_match_frozen_dialects"
+      ],
+      "deliberateDifferences": [
+        "Typed positive safe integer interval/page parameters; legacy empty body hydration remains compatible and is not zero-activity evidence.",
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.create",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.delete",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.forceDelete",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "force_delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.forceDeleteWithAudit",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "force_delete_with_audit"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.get",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.getByName",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "get_by_name"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.list",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "latest_only fails on incomplete walks; first-seen name order and first revision ties are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.listAll",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.listForToken",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "list_for_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.update",
+      "feature": "management",
+      "namespace": "airs.management.topics",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

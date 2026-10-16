@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 4,
+  "active_phase": 5,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -126,12 +126,25 @@
       "review_advisories": [
         {
           "source": "docs/reviews/phase-02-attempt-02.json",
-          "status": "implemented_pending_phase_review",
+          "status": "accepted_by_phase_3_review",
           "scope": "Combined outgoing header bounds; explicit403 refresh difference; TLS rootstore/verifier dependency review.",
           "evidence": [
             "crates/scm-sdk/src/config.rs",
             "crates/scm-sdk/src/engine.rs",
             "docs/DEPENDENCIES.md"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-03-attempt-02.json",
+          "status": "implemented_pending_phase_4_review",
+          "scope": "Machine-recorded deliberate differences and owning phases; generation check/regex/record-key inventory; pinned union identities; BinaryFile bounds documentation; SSE sentinel precedence.",
+          "evidence": [
+            "tools/native_operations.py",
+            "tools/test_native_operations.py",
+            "tools/test_model_generation.py",
+            "contracts/native-union-variants.json",
+            "docs/MODELS.md",
+            "crates/scm-sdk/src/streaming/sse.rs"
           ]
         }
       ],
@@ -176,13 +189,71 @@
     {
       "id": 4,
       "name": "Management and shared modules",
-      "status": "in_progress",
-      "reviews": []
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-04-attempt-01.json"
+      ],
+      "scope_evidence": [
+        "docs/MANAGEMENT.md",
+        "docs/DLP.md",
+        "docs/IAM.md",
+        "docs/PAGINATION.md",
+        "contracts/native-operations.json",
+        "contracts/native-operation-mappings/management.json",
+        "contracts/native-operation-mappings/dlp.json",
+        "contracts/native-operation-mappings/iam.json",
+        "contracts/native-operation-mappings/oauth-management.json",
+        "contracts/native-operation-mappings/oauth-provider.json"
+      ],
+      "live_acceptance": "pending_phase_8",
+      "implemented_scope": {
+        "managementMethods": 87,
+        "iamMethods": 6,
+        "status": "implemented_pending_review",
+        "scope": "All93 owning-family methods; cumulative native ledger99 includes scans4 and two partial representativeGateway operations whose real owner remainsPhase6."
+      },
+      "deliberate_differences": [
+        "Explicitly bounded/truncated/partial collections replace silent or unbounded array collection.",
+        "DLP and dashboard endpoint overrides retain the existing caller admission policy.",
+        "Request and cursor inputs have documented native resource bounds and redacted formatting."
+      ],
+      "qualification_followups": [
+        {
+          "id": "packaged-unit-tests",
+          "due_phase": 8,
+          "status": "pending",
+          "scope": "Consumer archive currently builds independently. A repository-only models unit test includes the full external oracle corpus; qualify and make archive unit testing independent without bundling the47MiB development corpus."
+        }
+      ],
+      "accepted_source_sha256": "50fd6e8a79bbcb21749754d400aeb2e49f35e9a5c1077215e79db6ede8146ce1",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-04-attempt-01.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-04.json"
+          ],
+          "source_sha256": "50fd6e8a79bbcb21749754d400aeb2e49f35e9a5c1077215e79db6ede8146ce1"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-04-attempt-01.json"
+          ]
+        }
+      }
     },
     {
       "id": 5,
       "name": "Model Security and Red Team",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": []
     },
     {

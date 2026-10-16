@@ -159,3 +159,29 @@ permit/body release, redirects, invalid JSON, deadlines, and redaction. Exact
 executed compiler, feature, command, and outcome evidence lives in
 `docs/checks/phase-02.json` and its linked native reports. Live service acceptance
 is a separate qualification milestone.
+
+## Phase 4 shared client additions
+
+`Client::with_endpoint` selects an explicit additional API base under the existing
+admission policy. It shares the provider, transport, session, limiter, and limits.
+Configure an `OriginPolicy` that admits all intended service origins at creation;
+rebinding cannot widen it. `with_tsg_header` derives the routing header exclusively
+from the immutable OAuth identity. Dashboard and IAM enable this scoped header.
+Canonical DLP access uses its own explicitly admitted endpoint.
+
+Buffered decode, validation, response-limit, and body-deadline failures preserve
+known HTTP status and allowlisted correlation metadata. Arbitrary upstream text
+is not retained. JSON successes with empty bodies hydrate `{}`, following the
+frozen engine; explicitly optional response operations return `None` instead.
+Cancellation/session/deadline checks after authentication prevent dispatch when a
+provider cancels the call synchronously.
+
+`OAuthProvider::get_token`, `clear`, `is_token_expired`,
+`is_token_expiring_soon`, and `token_info` provide all five frozen lifecycle
+methods. One monotonic instant determines each metadata snapshot; wall-clock
+expiry is informational. Custom expiring-soon duration comparisons cannot
+overflow timestamps. Provider constructor buffer configuration and metadata
+subscriptions remain Phase 7 capabilities.
+
+See [pagination](PAGINATION.md) for collection bounds and partial errors, and
+[DLP](DLP.md) for bounded native multipart uploads and merge-patch behavior.

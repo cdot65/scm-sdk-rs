@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/management/oauth-management.ts:OAuthManagementClient.getAccessToken",
+      "feature": "management",
+      "namespace": "airs::management::OAuthManagementClient",
+      "methods": [
+        "get_access_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/oauth_management.rs",
+      "tests": [
+        "crates/scm-sdk/tests/oauth_management_contracts.rs::token_request_preserves_exact_ttl_dialect_body_and_unknown_response_fields"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Invalidate takes &Secret; options and generated response formatting are redacted. FiniteNumber constrains TTL to finite numeric values."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-management.ts:OAuthManagementClient.invalidateToken",
+      "feature": "management",
+      "namespace": "airs::management::OAuthManagementClient",
+      "methods": [
+        "invalidate_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/management/oauth_management.rs",
+      "tests": [
+        "crates/scm-sdk/tests/oauth_management_contracts.rs::invalidation_encodes_secret_query_exactly_and_returns_json_string"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Invalidate takes &Secret; options and generated response formatting are redacted. FiniteNumber constrains TTL to finite numeric values."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

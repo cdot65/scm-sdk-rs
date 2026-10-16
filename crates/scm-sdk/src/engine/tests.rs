@@ -21,6 +21,7 @@ enum Reply {
         dropped: Arc<AtomicUsize>,
     },
     BrokenBody,
+    PendingMetadata(StatusCode, HeaderMap),
     LocalFailure(ErrorKind),
 }
 fn ok() -> Reply {
@@ -101,6 +102,11 @@ impl Transport for Scripted {
                         body,
                     ))
                 }
+                Reply::PendingMetadata(status, headers) => Ok(TransportResponse::new(
+                    status,
+                    headers,
+                    Box::pin(futures_util::stream::pending()),
+                )),
             }
         })
     }
@@ -121,6 +127,176 @@ fn fast_limits() -> Limits {
         max_retry_delay: Duration::from_secs(5),
         ..Limits::default()
     }
+}
+
+#[tokio::test]
+async fn successful_decode_failures_preserve_status_and_allowlisted_correlation() {
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        "x-correlation-id",
+        HeaderValue::from_static("safe-request-123"),
+    );
+    let transport = Scripted::new(vec![Reply::Http(
+        StatusCode::CREATED,
+        headers,
+        Bytes::from_static(b"upstream-private-secret"),
+    )]);
+    let error = client(transport)
+        .send_json::<serde_json::Value>(RawRequest::new(Method::POST, "create"), None)
+        .await
+        .unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Decode);
+    assert_eq!(error.status(), Some(201));
+    assert_eq!(error.request_id(), Some("safe-request-123"));
+    assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+    let formatted = format!("{error:?} {error}");
+    assert!(!formatted.contains("upstream-private-secret"));
+    assert!(!formatted.contains("safe-request-123"));
+}
+
+#[tokio::test]
+async fn successful_body_limits_keep_status_and_correlation() {
+    let mut headers = HeaderMap::new();
+    headers.insert("x-request-id", HeaderValue::from_static("bounded-123"));
+    let transport = Scripted::new(vec![Reply::Http(
+        StatusCode::MULTI_STATUS,
+        headers,
+        Bytes::from_static(b"12345"),
+    )]);
+    let client = Client::builder(endpoint())
+        .transport(transport)
+        .limits(Limits {
+            max_response_bytes: 3,
+            ..fast_limits()
+        })
+        .build()
+        .unwrap();
+    let error = client.send_bytes(read(), None).await.unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Limit);
+    assert_eq!(error.status(), Some(207));
+    assert_eq!(error.request_id(), Some("bounded-123"));
+    assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+}
+
+#[tokio::test(start_paused = true)]
+async fn deadline_after_response_headers_retains_status_and_correlation() {
+    let mut headers = HeaderMap::new();
+    headers.insert("x-request-id", HeaderValue::from_static("deadline-123"));
+    let transport = Scripted::new(vec![Reply::PendingMetadata(StatusCode::CREATED, headers)]);
+    let options = RequestOptions::with_timeout(Duration::from_secs(1)).unwrap();
+    let error = client(transport)
+        .send_bytes(RawRequest::new(Method::POST, "write"), Some(&options))
+        .await
+        .unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Deadline);
+    assert_eq!(error.status(), Some(201));
+    assert_eq!(error.request_id(), Some("deadline-123"));
+    assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+}
+
+#[tokio::test]
+async fn empty_json_success_hydrates_an_object_and_optional_json_preserves_absence() {
+    let transport = Scripted::new(vec![status(204), status(204)]);
+    let client = client(transport);
+    assert_eq!(
+        client
+            .send_json::<serde_json::Value>(read(), None)
+            .await
+            .unwrap(),
+        serde_json::json!({})
+    );
+    assert!(
+        client
+            .send_optional_json::<serde_json::Value>(read(), None)
+            .await
+            .unwrap()
+            .is_none()
+    );
+}
+
+#[cfg(feature = "management")]
+#[tokio::test]
+async fn typed_empty_response_hydration_and_decode_metadata_follow_the_named_contract() {
+    let mut headers = HeaderMap::new();
+    headers.insert("x-request-id", HeaderValue::from_static("typed-123"));
+    let transport = Scripted::new(vec![
+        status(204),
+        Reply::Http(
+            StatusCode::OK,
+            headers,
+            Bytes::from_static(b"{\"ai_profiles\":false}"),
+        ),
+    ]);
+    let client = client(transport);
+    let value: serde_json::Value = client
+        .send_contract(read(), "PolicyLatencySchema", None)
+        .await
+        .unwrap();
+    assert_eq!(value, serde_json::json!({}));
+    let error = client
+        .send_contract::<serde_json::Value>(read(), "SecurityProfileListResponseSchema", None)
+        .await
+        .unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Decode);
+    assert_eq!(error.status(), Some(200));
+    assert_eq!(error.request_id(), Some("typed-123"));
+}
+
+#[tokio::test(start_paused = true)]
+async fn rebinding_endpoints_preserves_policy_provider_cancellation_and_shared_capacity() {
+    let other = Endpoint::parse("https://other.example/scoped").unwrap();
+    let transport = Scripted::new(vec![ok(), ok()]);
+    let provider = CountingToken::new();
+    let client = Client::builder(endpoint())
+        .transport(transport.clone())
+        .authentication(Authentication::oauth(provider.clone(), false))
+        .destination_policy(Arc::new(OriginPolicy::new([endpoint(), other.clone()])))
+        .limits(Limits {
+            max_concurrency: 1,
+            ..fast_limits()
+        })
+        .build()
+        .unwrap();
+    let child = client
+        .with_endpoint(other)
+        .unwrap()
+        .with_tsg_header(true)
+        .unwrap();
+    assert_eq!(
+        child.oauth_context().unwrap().tsg_id(),
+        client.oauth_context().unwrap().tsg_id()
+    );
+    let mut response = child.send_stream(read(), None).await.unwrap();
+    let options = RequestOptions::with_timeout(Duration::from_millis(10)).unwrap();
+    assert_eq!(
+        client
+            .send_bytes(read(), Some(&options))
+            .await
+            .unwrap_err()
+            .kind(),
+        ErrorKind::Deadline
+    );
+    assert_eq!(transport.count(), 1);
+    assert_eq!(provider.calls.load(Ordering::SeqCst), 1);
+    assert_eq!(
+        transport.requests.lock().unwrap()[0]
+            .headers()
+            .get("x-tsg-id")
+            .unwrap(),
+        provider.context().tsg_id()
+    );
+    response.close();
+    client.session().cancel();
+    assert_eq!(
+        child.send_bytes(read(), None).await.unwrap_err().kind(),
+        ErrorKind::Cancelled
+    );
+    let unlisted = Endpoint::parse("https://unlisted.example").unwrap();
+    assert_eq!(
+        client.with_endpoint(unlisted).unwrap_err().kind(),
+        ErrorKind::Destination
+    );
+    assert_eq!(transport.count(), 1);
 }
 
 #[tokio::test]

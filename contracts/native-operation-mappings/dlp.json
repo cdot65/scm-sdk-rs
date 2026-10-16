@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.get",
+      "feature": "dlp",
+      "namespace": "dlp::DataFilteringProfilesClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.list",
+      "feature": "dlp",
+      "namespace": "dlp::DataFilteringProfilesClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.listAll",
+      "feature": "dlp",
+      "namespace": "dlp::DataFilteringProfilesClient",
+      "methods": [
+        "list_all",
+        "list_pages",
+        "list_items"
+      ],
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.replace",
+      "feature": "dlp",
+      "namespace": "dlp::DataFilteringProfilesClient",
+      "methods": [
+        "replace"
+      ],
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.create",
+      "feature": "dlp",
+      "namespace": "dlp::DataPatternsClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.delete",
+      "feature": "dlp",
+      "namespace": "dlp::DataPatternsClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.get",
+      "feature": "dlp",
+      "namespace": "dlp::DataPatternsClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.list",
+      "feature": "dlp",
+      "namespace": "dlp::DataPatternsClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.listAll",
+      "feature": "dlp",
+      "namespace": "dlp::DataPatternsClient",
+      "methods": [
+        "list_all",
+        "list_pages",
+        "list_items"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.patch",
+      "feature": "dlp",
+      "namespace": "dlp::DataPatternsClient",
+      "methods": [
+        "patch"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.replace",
+      "feature": "dlp",
+      "namespace": "dlp::DataPatternsClient",
+      "methods": [
+        "replace"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.create",
+      "feature": "dlp",
+      "namespace": "dlp::DataProfilesClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.get",
+      "feature": "dlp",
+      "namespace": "dlp::DataProfilesClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.list",
+      "feature": "dlp",
+      "namespace": "dlp::DataProfilesClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.listAll",
+      "feature": "dlp",
+      "namespace": "dlp::DataProfilesClient",
+      "methods": [
+        "list_all",
+        "list_pages",
+        "list_items"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.patch",
+      "feature": "dlp",
+      "namespace": "dlp::DataProfilesClient",
+      "methods": [
+        "patch"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.replace",
+      "feature": "dlp",
+      "namespace": "dlp::DataProfilesClient",
+      "methods": [
+        "replace"
+      ],
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.create",
+      "feature": "dlp",
+      "namespace": "dlp::DictionariesClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.delete",
+      "feature": "dlp",
+      "namespace": "dlp::DictionariesClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.get",
+      "feature": "dlp",
+      "namespace": "dlp::DictionariesClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.list",
+      "feature": "dlp",
+      "namespace": "dlp::DictionariesClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.listAll",
+      "feature": "dlp",
+      "namespace": "dlp::DictionariesClient",
+      "methods": [
+        "list_all",
+        "list_pages",
+        "list_items"
+      ],
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.patch",
+      "feature": "dlp",
+      "namespace": "dlp::DictionariesClient",
+      "methods": [
+        "patch"
+      ],
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.replace",
+      "feature": "dlp",
+      "namespace": "dlp::DictionariesClient",
+      "methods": [
+        "replace"
+      ],
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 4,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ pub mod auth;
 pub mod config;
 pub mod data;
 pub mod error;
+pub mod pagination;
 pub mod secret;
 pub mod streaming;
 pub mod transport;
@@ -17,24 +18,14 @@ pub mod validation;
 #[cfg(feature = "models")]
 pub mod airs;
 #[cfg(feature = "models")]
+pub mod dlp;
+#[cfg(feature = "models")]
 mod models;
 #[cfg(feature = "models")]
-pub mod dlp {
-    pub mod models {
-        pub use crate::models::dlp::*;
-    }
-}
-#[cfg(feature = "models")]
-pub mod shared {
-    pub mod models {
-        pub use crate::models::shared::*;
-    }
-    pub mod iam {
-        pub mod models {
-            pub use crate::models::iam::*;
-        }
-    }
-}
+pub mod shared;
+
+#[cfg(feature = "dlp")]
+mod multipart;
 
 mod engine;
 

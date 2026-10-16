@@ -24,6 +24,8 @@ one completion policy:
 An SSE event name alone cannot establish a Responses terminal. Required terminal
 policies fail explicitly when HTTP ends early. An unfinished data frame fails
 under every policy, including `Eof`. A failed stream retains its sanitized error.
+The chat `[DONE]` sentinel takes precedence over a named `error` event, matching
+the frozen parser; a Responses stream still requires its typed terminal.
 Full product event-schema validation belongs to the corresponding typed client;
 recognizing a framing terminator does not establish successful service execution.
 

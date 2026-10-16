@@ -53,7 +53,13 @@ Literal discriminator types enforce exact values when decoded. Numeric literal c
 
 Extensions cannot override or duplicate known fields: each object serializer checks all extension keys before it begins serializing the map. All generated types, builders, enum unknowns, extensions, and shared model containers redact their contents in `Debug`. Explicit getters, public fields, and serialization intentionally expose values to the caller; applications choose how to handle them.
 
-`BinaryFile` owns bounded bytes and optional filename/MIME metadata. Filename setters reject controls, path separators and quoted header injection; MIME setters require valid header-safe ASCII. `validate(max_bytes)` applies the operation's byte limit. Native binary validators recognize all six frozen Blob boundaries. Date, caller transport, and cancellation inputs use their explicit native validator adapters instead of JSON lookalikes. Multipart and realtime operation implementation belongs to its owning phase.
+`BinaryFile` owns bytes and optional filename/MIME metadata. Construction does not impose a byte ceiling; the owning operation calls `validate(max_bytes)` and bounds the complete encoded request before authentication. Filename setters reject controls, path separators and quoted header injection; MIME setters require valid header-safe ASCII. `validate(max_bytes)` applies the operation's byte limit. Native binary validators recognize all six frozen Blob boundaries. Date, caller transport, and cancellation inputs use their explicit native validator adapters instead of JSON lookalikes. Multipart and realtime operation implementation belongs to its owning phase.
+
+## Union compatibility and generator guards
+
+Public unions currently use positional names such as `Variant10`. These names are part of the Rust API. `contracts/native-union-variants.json` pins every source branch index, schema/type identity, native variant name and contained Rust type. Normal generation refuses a reorder, replacement, or removal. Any future pin change needs an explicit API migration and review; the one-time initialization command refuses to overwrite an existing ledger.
+
+Generation also compares every nested string/number check kind and regex source with the implemented native dispatcher. New checks, patterns or regex flags fail generation. Record key schemas are required to contain no effects, defaults, pipelines, catches or coercion, because the current native record adapter preserves the original string keys. Tamper regressions exercise all of these guards.
 
 ## Reproduction and evidence
 

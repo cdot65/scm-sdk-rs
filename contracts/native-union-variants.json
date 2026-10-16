@@ -1,0 +1,3690 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "unions": [
+    {
+      "rustType": "ApiKeyDeleteResponse",
+      "schema": "s008857",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s008858",
+          "rustVariant": "Variant1",
+          "rustType": "ApiKeyDeleteResponseVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s008860",
+          "rustVariant": "Variant2",
+          "rustType": "ApiKeyDeleteResponseVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "AttackMultiTurnDetailResponseOutputs",
+      "schema": "s011419",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s011420",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<Vec<AttackMultiTurnOutput>>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s011422",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<AttackMultiTurnOutput>"
+        }
+      ]
+    },
+    {
+      "rustType": "AuditResponseCreatedAt",
+      "schema": "s008026",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s008027",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s008028",
+          "rustVariant": "Variant2",
+          "rustType": "AuditResponseCreatedAtVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "AuditResponseUpdatedAt",
+      "schema": "s008034",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s008035",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s008036",
+          "rustVariant": "Variant2",
+          "rustType": "AuditResponseUpdatedAtVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "AuthConfig",
+      "schema": "s010748",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010716",
+          "rustVariant": "Variant1",
+          "rustType": "HeadersAuthConfig"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010721",
+          "rustVariant": "Variant2",
+          "rustType": "BasicAuthAuthConfig"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s010730",
+          "rustVariant": "Variant3",
+          "rustType": "OAuth2AuthConfig"
+        }
+      ]
+    },
+    {
+      "rustType": "AuthConfigRequest",
+      "schema": "s010749",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010716",
+          "rustVariant": "Variant1",
+          "rustType": "HeadersAuthConfig"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010750",
+          "rustVariant": "Variant2",
+          "rustType": "AuthConfigRequestVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s010755",
+          "rustVariant": "Variant3",
+          "rustType": "AuthConfigRequestVariant3"
+        }
+      ]
+    },
+    {
+      "rustType": "ConnectionParams",
+      "schema": "s010827",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010824",
+          "rustVariant": "Variant1",
+          "rustType": "WebSocketConnectionParams"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010821",
+          "rustVariant": "Variant2",
+          "rustType": "StreamingConnectionParams"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s010789",
+          "rustVariant": "Variant3",
+          "rustType": "RestConnectionParams"
+        }
+      ]
+    },
+    {
+      "rustType": "ConnectionParamsRequest",
+      "schema": "s010828",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010821",
+          "rustVariant": "Variant1",
+          "rustType": "StreamingConnectionParams"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010829",
+          "rustVariant": "Variant2",
+          "rustType": "ConnectionParamsRequestVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s010789",
+          "rustVariant": "Variant3",
+          "rustType": "RestConnectionParams"
+        }
+      ]
+    },
+    {
+      "rustType": "CustomRuleCondition",
+      "schema": "s009692",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s009673",
+          "rustVariant": "Variant1",
+          "rustType": "LabelCondition"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s009681",
+          "rustVariant": "Variant2",
+          "rustType": "RuleResultCondition"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s009687",
+          "rustVariant": "Variant3",
+          "rustType": "Box<ConditionGroup>"
+        }
+      ]
+    },
+    {
+      "rustType": "CustomerAppDeleteResponse",
+      "schema": "s008971",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s008972",
+          "rustVariant": "Variant1",
+          "rustType": "CustomerAppDeleteResponseVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s008974",
+          "rustVariant": "Variant2",
+          "rustType": "CustomerAppDeleteResponseVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s008933",
+          "rustVariant": "Variant3",
+          "rustType": "CustomerApp"
+        }
+      ]
+    },
+    {
+      "rustType": "DeleteProfileResponse",
+      "schema": "s009657",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s009658",
+          "rustVariant": "Variant1",
+          "rustType": "DeleteProfileResponseVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s009660",
+          "rustVariant": "Variant2",
+          "rustType": "DeleteProfileResponseVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "DeleteTopicResponse",
+      "schema": "s008912",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s008913",
+          "rustVariant": "Variant1",
+          "rustType": "DeleteTopicResponseVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s008915",
+          "rustVariant": "Variant2",
+          "rustType": "DeleteTopicResponseVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "DetectionRule",
+      "schema": "s008539",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s008529",
+          "rustVariant": "Variant1",
+          "rustType": "DefaultTreeDetectionRule"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s008534",
+          "rustVariant": "Variant2",
+          "rustType": "MultiProfileDetectionRule"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayApiKeyCreateRequest",
+      "schema": "s006322",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s006320",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayUserApiKeyCreateRequest"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s006300",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayServiceApiKeyCreateRequest"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayApiKeyCreateResponseData",
+      "schema": "s006947",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s006948",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayApiKeyCreateResponseDataVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s006956",
+          "rustVariant": "Variant2",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s006957",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayApiKeyCreateResponseDataVariant3"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s006958",
+          "rustVariant": "Variant4",
+          "rustType": "bool"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s006959",
+          "rustVariant": "Variant5",
+          "rustType": "Vec<JsonValue>"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s006961",
+          "rustVariant": "Variant6",
+          "rustType": "()"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayCatalogGuardrailParameters",
+      "schema": "s000224",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s000225",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayJWTParameters"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s000238",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayModelWhitelistParameters"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s000242",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayRegexMatchParameters"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s000247",
+          "rustVariant": "Variant4",
+          "rustType": "GatewaySentenceCountParameters"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s000255",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayWordCountParameters"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s000263",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayCharacterCountParameters"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s000271",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayJSONSchemaParameters"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s000277",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayJSONKeysParameters"
+        },
+        {
+          "sourceIndex": 9,
+          "schema": "s000282",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayContainsParameters"
+        },
+        {
+          "sourceIndex": 10,
+          "schema": "s000287",
+          "rustVariant": "Variant10",
+          "rustType": "GatewayValidUrlsParameters"
+        },
+        {
+          "sourceIndex": 11,
+          "schema": "s000293",
+          "rustVariant": "Variant11",
+          "rustType": "GatewayContainsCodeParameters"
+        },
+        {
+          "sourceIndex": 12,
+          "schema": "s000298",
+          "rustVariant": "Variant12",
+          "rustType": "GatewayWebhookParameters"
+        },
+        {
+          "sourceIndex": 13,
+          "schema": "s000308",
+          "rustVariant": "Variant13",
+          "rustType": "GatewayEndsWithParameters"
+        },
+        {
+          "sourceIndex": 14,
+          "schema": "s000313",
+          "rustVariant": "Variant14",
+          "rustType": "GatewayUppercaseParameters"
+        },
+        {
+          "sourceIndex": 15,
+          "schema": "s000317",
+          "rustVariant": "Variant15",
+          "rustType": "GatewayRequiredMetadataKeysParameters"
+        },
+        {
+          "sourceIndex": 16,
+          "schema": "s000322",
+          "rustVariant": "Variant16",
+          "rustType": "GatewayAllowedRequestTypesParameters"
+        },
+        {
+          "sourceIndex": 17,
+          "schema": "s000330",
+          "rustVariant": "Variant17",
+          "rustType": "GatewaySydeGuardParameters"
+        },
+        {
+          "sourceIndex": 18,
+          "schema": "s000340",
+          "rustVariant": "Variant18",
+          "rustType": "GatewayAporiaParameters"
+        },
+        {
+          "sourceIndex": 19,
+          "schema": "s000345",
+          "rustVariant": "Variant19",
+          "rustType": "GatewayPillarScanParameters"
+        },
+        {
+          "sourceIndex": 20,
+          "schema": "s000351",
+          "rustVariant": "Variant20",
+          "rustType": "GatewayPatronusParameters"
+        },
+        {
+          "sourceIndex": 21,
+          "schema": "s000357",
+          "rustVariant": "Variant21",
+          "rustType": "GatewayPatronusCustomParameters"
+        },
+        {
+          "sourceIndex": 22,
+          "schema": "s000362",
+          "rustVariant": "Variant22",
+          "rustType": "GatewayPortkeyModerationParameters"
+        },
+        {
+          "sourceIndex": 23,
+          "schema": "s000368",
+          "rustVariant": "Variant23",
+          "rustType": "GatewayPortkeyLanguageParameters"
+        },
+        {
+          "sourceIndex": 24,
+          "schema": "s000376",
+          "rustVariant": "Variant24",
+          "rustType": "GatewayPortkeyPIIParameters"
+        },
+        {
+          "sourceIndex": 25,
+          "schema": "s000384",
+          "rustVariant": "Variant25",
+          "rustType": "GatewayMistralModerationParameters"
+        },
+        {
+          "sourceIndex": 26,
+          "schema": "s000390",
+          "rustVariant": "Variant26",
+          "rustType": "GatewayBedrockGuardParameters"
+        },
+        {
+          "sourceIndex": 27,
+          "schema": "s000398",
+          "rustVariant": "Variant27",
+          "rustType": "GatewayPromptfooParameters"
+        },
+        {
+          "sourceIndex": 28,
+          "schema": "s000404",
+          "rustVariant": "Variant28",
+          "rustType": "GatewayAcuvityScanParameters"
+        },
+        {
+          "sourceIndex": 29,
+          "schema": "s000450",
+          "rustVariant": "Variant29",
+          "rustType": "GatewayAzureContentSafetyParameters"
+        },
+        {
+          "sourceIndex": 30,
+          "schema": "s000464",
+          "rustVariant": "Variant30",
+          "rustType": "GatewayAzurePIIParameters"
+        },
+        {
+          "sourceIndex": 31,
+          "schema": "s000476",
+          "rustVariant": "Variant31",
+          "rustType": "GatewayPANWPrismaParameters"
+        },
+        {
+          "sourceIndex": 32,
+          "schema": "s000483",
+          "rustVariant": "Variant32",
+          "rustType": "GatewayBasicParameters"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayCatalogProviderConfiguration",
+      "schema": "s001884",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001778",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayCatalogOpenAIConfiguration"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s001793",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayCatalogAzureOpenAIConfiguration"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s001806",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayCatalogBedrockConfiguration"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s001819",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayCatalogVertexAIConfiguration"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s001828",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayCatalogAzureAIConfiguration"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s001844",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayCatalogWorkersAIConfiguration"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s001847",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayCatalogSageMakerConfiguration"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s001868",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayCatalogHuggingFaceConfiguration"
+        },
+        {
+          "sourceIndex": 9,
+          "schema": "s001872",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayCatalogCortexConfiguration"
+        },
+        {
+          "sourceIndex": 10,
+          "schema": "s001875",
+          "rustVariant": "Variant10",
+          "rustType": "GatewayCatalogCustomHostConfiguration"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayConditionExcludes",
+      "schema": "s001073",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001074",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s001075",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayConditionValue",
+      "schema": "s001068",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001069",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s001070",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayCreateSecretReferenceRequestAuthConfig",
+      "schema": "s001631",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001558",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayRequestAwsAccessKeyAuthConfig"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s001564",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayRequestAwsAssumedRoleAuthConfig"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s001572",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayRequestAwsServiceRoleAuthConfig"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s001577",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayRequestAzureEntraAuthConfig"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s001584",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayRequestAzureManagedAuthConfig"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s001590",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayRequestAzureDefaultAuthConfig"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s001594",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayRequestHashicorpTokenAuthConfig"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s001601",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayRequestHashicorpAppRoleAuthConfig"
+        },
+        {
+          "sourceIndex": 9,
+          "schema": "s001609",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayRequestHashicorpKubernetesAuthConfig"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayDeploymentAuthSettingsInputIsDataserviceHosted",
+      "schema": "s006477",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s006478",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayDeploymentAuthSettingsInputIsDataserviceHostedVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s006479",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayDeploymentAuthSettingsInputIsDataserviceHostedVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayDeploymentAuthSettingsInputIsPlaygroundProxyAllowed",
+      "schema": "s006481",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s006482",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayDeploymentAuthSettingsInputIsPlaygroundProxyAllowedVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s006483",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayDeploymentAuthSettingsInputIsPlaygroundProxyAllowedVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayGenerationsFilterSchemaTraceId",
+      "schema": "s001364",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001365",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s001366",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayGlobalWorkspaceAccessRateLimits",
+      "schema": "s007313",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007314",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayRateLimit>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007315",
+          "rustVariant": "Variant2",
+          "rustType": "TypedMap<JsonValue>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayGlobalWorkspaceAccessUsageLimits",
+      "schema": "s007320",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007321",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayUsageLimit>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007322",
+          "rustVariant": "Variant2",
+          "rustType": "TypedMap<JsonValue>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceAnnotation",
+      "schema": "s004122",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004124",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceFileCitation"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004130",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceUrlCitation"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004138",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceFilePath"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceChatCompletionMessageContentBlock",
+      "schema": "s002599",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002601",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceChatCompletionRequestMessageContentPartText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002606",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceChatCompletionMessageContentPartThinking"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002611",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceChatCompletionMessageContentPartRedactedThinking"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceChatCompletionRequestMessage",
+      "schema": "s002920",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002922",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceChatCompletionRequestSystemMessage"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002929",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceChatCompletionRequestDeveloperMessage"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002936",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceChatCompletionRequestUserMessage"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s002959",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceChatCompletionRequestAssistantMessage"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s002975",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceChatCompletionRequestToolMessage"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s002981",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceChatCompletionRequestFunctionMessage"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceChatCompletionRequestMessageContentPart",
+      "schema": "s002942",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002601",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceChatCompletionRequestMessageContentPartText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002944",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceChatCompletionRequestMessageContentPartImage"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceChatCompletionRequestUserMessageContent",
+      "schema": "s002939",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002940",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002941",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<GatewayInferenceChatCompletionRequestMessageContentPart>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceChatCompletionToolChoiceOption",
+      "schema": "s003126",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003128",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceChatCompletionToolChoiceOptionVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003132",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceChatCompletionNamedToolChoice"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCodeInterpreterToolOutput",
+      "schema": "s004369",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004371",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceCodeInterpreterTextOutput"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004376",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCodeInterpreterFileOutput"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceComparisonFilterValue",
+      "schema": "s003969",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003970",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003971",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceComparisonFilterValueVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003972",
+          "rustVariant": "Variant3",
+          "rustType": "bool"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCompoundFilterFiltersItem",
+      "schema": "s003980",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003958",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceComparisonFilter"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003981",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCompoundFilterFiltersItemVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceComputerAction",
+      "schema": "s004214",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004216",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceClick"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004228",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceDoubleClick"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004234",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceDrag"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s004244",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceKeyPress"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s004250",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceMove"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s004256",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceScreenshot"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s004260",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayInferenceScroll"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s004268",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayInferenceType"
+        },
+        {
+          "sourceIndex": 9,
+          "schema": "s004273",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayInferenceWait"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateChatCompletionRequestFunctionCall",
+      "schema": "s003145",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003146",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceCreateChatCompletionRequestFunctionCallVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003149",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceChatCompletionFunctionCallOption"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateChatCompletionRequestModel",
+      "schema": "s002988",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002989",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002990",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateChatCompletionRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateChatCompletionRequestResponseFormat",
+      "schema": "s003047",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003048",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceResponseFormatText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003052",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceResponseFormatJsonSchema"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003068",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceResponseFormatJsonObject"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateChatCompletionRequestStop",
+      "schema": "s003076",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003077",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003079",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateCompletionRequestModel",
+      "schema": "s003165",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003166",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003167",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateCompletionRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateCompletionRequestPrompt",
+      "schema": "s003172",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003173",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003174",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003176",
+          "rustVariant": "Variant3",
+          "rustType": "Vec<FiniteNumber>"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s003178",
+          "rustVariant": "Variant4",
+          "rustType": "Vec<Vec<FiniteNumber>>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateCompletionRequestStop",
+      "schema": "s003211",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003212",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003214",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreatePromptCompletionResponse",
+      "schema": "s002557",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002559",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceCreateChatCompletionResponse"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002164",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateCompletionResponse"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002645",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceCreatePromptCompletionResponseVariant3"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreatePromptCompletionResponseVariant3Body",
+      "schema": "s002653",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002559",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceCreateChatCompletionResponse"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002164",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateCompletionResponse"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreatePromptCompletionStreamResponse",
+      "schema": "s002654",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002656",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceCreateChatCompletionStreamResponse"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002164",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateCompletionResponse"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreatePromptRenderResponseData",
+      "schema": "s002915",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002916",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceCreateChatCompletionRequest"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003162",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateCompletionRequest"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateTranscriptionResponseVerboseJsonDuration",
+      "schema": "s004805",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004806",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004807",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateTranscriptionResponseVerboseJsonDurationVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceCreateTranslationResponseVerboseJsonDuration",
+      "schema": "s004855",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004856",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004857",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCreateTranslationResponseVerboseJsonDurationVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceEmbeddingEmbedding",
+      "schema": "s003371",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003372",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<FiniteNumber>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003374",
+          "rustVariant": "Variant2",
+          "rustType": "String"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceFileSearchToolFilters",
+      "schema": "s003957",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003958",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceComparisonFilter"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003973",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceCompoundFilter"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceFineTuningJobHyperparametersNEpochs",
+      "schema": "s005046",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005047",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceFineTuningJobHyperparametersNEpochsVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005048",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceFineTuningJobHyperparametersNEpochsVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputAnnotation",
+      "schema": "s003645",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003647",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputFileCitation"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003653",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputUrlCitation"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003661",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputFilePath"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputChatCompletionRequestMessage",
+      "schema": "s002230",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002232",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputChatCompletionRequestSystemMessage"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002239",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputChatCompletionRequestDeveloperMessage"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002246",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputChatCompletionRequestUserMessage"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s002274",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceInputChatCompletionRequestAssistantMessage"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s002301",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceInputChatCompletionRequestToolMessage"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s002307",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceInputChatCompletionRequestFunctionMessage"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputChatCompletionRequestMessageContentPart",
+      "schema": "s002252",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002254",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputChatCompletionRequestMessageContentPartText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002259",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputChatCompletionRequestMessageContentPartImage"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputChatCompletionRequestUserMessageContent",
+      "schema": "s002249",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002250",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002251",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<GatewayInferenceInputChatCompletionRequestMessageContentPart>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputChatCompletionToolChoiceOption",
+      "schema": "s002447",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002449",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputChatCompletionToolChoiceOptionVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002453",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputChatCompletionNamedToolChoice"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputChunkingStrategyRequestParam",
+      "schema": "s005557",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005449",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputAutoChunkingStrategyRequestParam"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005453",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputStaticChunkingStrategyRequestParam"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputComparisonFilterValue",
+      "schema": "s003469",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003470",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003471",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputComparisonFilterValueVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003472",
+          "rustVariant": "Variant3",
+          "rustType": "bool"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCompoundFilterFiltersItem",
+      "schema": "s003480",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003458",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputComparisonFilter"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003481",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCompoundFilterFiltersItemVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputComputerAction",
+      "schema": "s003717",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003719",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputClick"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003731",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputDoubleClick"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003737",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputDrag"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s003747",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceInputKeyPress"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s003753",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceInputMove"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s003759",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceInputScreenshot"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s003763",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayInferenceInputScroll"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s003771",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayInferenceInputType"
+        },
+        {
+          "sourceIndex": 9,
+          "schema": "s003776",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayInferenceInputWait"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputContent",
+      "schema": "s005296",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005298",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005303",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputImage"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s005317",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputFile"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateBatchRequest",
+      "schema": "s005611",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005613",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputOpenAIBatchJob"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005628",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputBedrockBatchJob"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s005649",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputVertexBatchJob"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s005669",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceInputPortkeyBatchJob"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateChatCompletionRequestFunctionCall",
+      "schema": "s003331",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003332",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputCreateChatCompletionRequestFunctionCallVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002470",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputChatCompletionFunctionCallOption"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateChatCompletionRequestModel",
+      "schema": "s003235",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003236",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003237",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateChatCompletionRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateChatCompletionRequestResponseFormat",
+      "schema": "s003295",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002376",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputResponseFormatText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002380",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputResponseFormatJsonSchema"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002396",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputResponseFormatJsonObject"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateChatCompletionRequestStop",
+      "schema": "s003300",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003301",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003303",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateCompletionRequestModel",
+      "schema": "s002091",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002092",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002093",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateCompletionRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateCompletionRequestPrompt",
+      "schema": "s002098",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002099",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002100",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002102",
+          "rustVariant": "Variant3",
+          "rustType": "Vec<FiniteNumber>"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s002104",
+          "rustVariant": "Variant4",
+          "rustType": "Vec<Vec<FiniteNumber>>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateCompletionRequestStop",
+      "schema": "s002138",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002139",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002141",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateEmbeddingRequestInput",
+      "schema": "s003340",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003341",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003342",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003344",
+          "rustVariant": "Variant3",
+          "rustType": "Vec<FiniteNumber>"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s003346",
+          "rustVariant": "Variant4",
+          "rustType": "Vec<Vec<FiniteNumber>>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateEmbeddingRequestModel",
+      "schema": "s003349",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003350",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003351",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateEmbeddingRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateFineTuningJobRequest",
+      "schema": "s004910",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004912",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputOpenAIFinetuneJob"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004941",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputBedrockFinetuneJob"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004976",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputPortkeyFinetuneJob"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateImageEditRequestModel",
+      "schema": "s004601",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004602",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004603",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateImageEditRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateImageRequestModel",
+      "schema": "s004544",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004545",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004546",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateImageRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateImageVariationRequestModel",
+      "schema": "s004627",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004628",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004629",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateImageVariationRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateLogsRequest",
+      "schema": "s005843",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005845",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputCustomLog"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005882",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<GatewayInferenceInputCustomLog>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateModerationRequestInput",
+      "schema": "s005210",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005211",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005212",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateModerationRequestModel",
+      "schema": "s005215",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005216",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005217",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateModerationRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequest",
+      "schema": "s002224",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002226",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002485",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant1FunctionCall",
+      "schema": "s002466",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002467",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant1FunctionCallVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002470",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputChatCompletionFunctionCallOption"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant1Model",
+      "schema": "s002315",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002316",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002317",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant1ModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant1ResponseFormat",
+      "schema": "s002375",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002376",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputResponseFormatText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002380",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputResponseFormatJsonSchema"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002396",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputResponseFormatJsonObject"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant1Stop",
+      "schema": "s002404",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002405",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002407",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant2Model",
+      "schema": "s002488",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002489",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002490",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant2ModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant2Prompt",
+      "schema": "s002496",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002497",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002498",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002500",
+          "rustVariant": "Variant3",
+          "rustType": "Vec<FiniteNumber>"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s002502",
+          "rustVariant": "Variant4",
+          "rustType": "Vec<Vec<FiniteNumber>>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptCompletionRequestVariant2Stop",
+      "schema": "s002536",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002537",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002539",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequest",
+      "schema": "s002726",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002728",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002837",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant1FunctionCall",
+      "schema": "s002829",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002830",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant1FunctionCallVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002470",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputChatCompletionFunctionCallOption"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant1Model",
+      "schema": "s002733",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002734",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002735",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant1ModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant1ResponseFormat",
+      "schema": "s002793",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002376",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputResponseFormatText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002380",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputResponseFormatJsonSchema"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002396",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputResponseFormatJsonObject"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant1Stop",
+      "schema": "s002798",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002799",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002801",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant2Model",
+      "schema": "s002840",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002841",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002842",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant2ModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant2Prompt",
+      "schema": "s002848",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002849",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002850",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002852",
+          "rustVariant": "Variant3",
+          "rustType": "Vec<FiniteNumber>"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s002854",
+          "rustVariant": "Variant4",
+          "rustType": "Vec<Vec<FiniteNumber>>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreatePromptRenderRequestVariant2Stop",
+      "schema": "s002888",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002889",
+          "rustVariant": "Variant1",
+          "rustType": "Nullable<String>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002891",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateResponseInput",
+      "schema": "s003564",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003565",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003566",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<GatewayInferenceInputInputItem>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateResponseToolChoice",
+      "schema": "s003540",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003541",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputToolChoiceOptions"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003546",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputToolChoiceTypes"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003554",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputToolChoiceFunction"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateSpeechRequestModel",
+      "schema": "s004748",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004749",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004750",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateSpeechRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateTranscriptionRequestModel",
+      "schema": "s004776",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004777",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004778",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateTranscriptionRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateTranslationRequestModel",
+      "schema": "s004838",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004839",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004840",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCreateTranslationRequestModelVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputCreateVectorStoreRequestChunkingStrategy",
+      "schema": "s005448",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005449",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputAutoChunkingStrategyRequestParam"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005453",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputStaticChunkingStrategyRequestParam"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputEasyInputMessageContent",
+      "schema": "s003577",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003578",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003579",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputInputMessageContentList"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputFileSearchToolFilters",
+      "schema": "s003457",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003458",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputComparisonFilter"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003473",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputCompoundFilter"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputGetLogQuery",
+      "schema": "s005883",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005885",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputGetLogQueryVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005893",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputGetLogQueryVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputInputContent",
+      "schema": "s003581",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003583",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputInputText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003588",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputInputImage"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003602",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputInputFile"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputInputItem",
+      "schema": "s003567",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003569",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputEasyInputMessage"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003614",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputItem"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003865",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputItemReference"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputItem",
+      "schema": "s003614",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003616",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputInputMessage"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003630",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputOutputMessage"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003676",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputFileSearchToolCall"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s003711",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceInputComputerToolCall"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s003791",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceInputComputerToolCallOutput"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s003813",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceInputWebSearchToolCall"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s003823",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayInferenceInputFunctionToolCall"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s003837",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayInferenceInputFunctionToolCallOutput"
+        },
+        {
+          "sourceIndex": 9,
+          "schema": "s003850",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayInferenceInputReasoningItem"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputOutputContent",
+      "schema": "s003637",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003639",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputOutputText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003667",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputRefusal"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputPortkeyBatchJobProviderOptions",
+      "schema": "s005702",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005703",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputPortkeyBatchJobProviderOptionsVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005711",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputPortkeyBatchJobProviderOptionsVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputRerankDocument",
+      "schema": "s004652",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004654",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004655",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputRerankDocumentVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputTextResponseFormatConfiguration",
+      "schema": "s003431",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002376",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputResponseFormatText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003433",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputTextResponseFormatJsonSchema"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s002396",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputResponseFormatJsonObject"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputTool",
+      "schema": "s003446",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003448",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputFileSearchTool"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003492",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputFunctionTool"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003503",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceInputComputerTool"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s003514",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceInputWebSearchTool"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceInputVectorStoreFileAttributesValueValueLeftAdditionalValue",
+      "schema": "s003705",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003706",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003707",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceInputVectorStoreFileAttributesValueValueLeftAdditionalValueVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003708",
+          "rustVariant": "Variant3",
+          "rustType": "bool"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceItemResource",
+      "schema": "s005278",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005280",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceInputMessageResource"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004107",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceOutputMessage"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004153",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceFileSearchToolCall"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s004208",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceComputerToolCall"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s005328",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceComputerToolCallOutputResource"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s004198",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceWebSearchToolCall"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s005349",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayInferenceFunctionToolCallResource"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s005362",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayInferenceFunctionToolCallOutputResource"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceOutputContent",
+      "schema": "s004114",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004116",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceOutputText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004144",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceRefusal"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceOutputItem",
+      "schema": "s004105",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004107",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceOutputMessage"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004153",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceFileSearchToolCall"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004184",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceFunctionToolCall"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s004198",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceWebSearchToolCall"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s004208",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceComputerToolCall"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s004288",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceReasoningItem"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceResponseStreamEvent",
+      "schema": "s004321",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004323",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceResponseAudioDeltaEvent"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004328",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceResponseAudioDoneEvent"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004332",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceResponseAudioTranscriptDeltaEvent"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s004337",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceResponseAudioTranscriptDoneEvent"
+        },
+        {
+          "sourceIndex": 5,
+          "schema": "s004341",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayInferenceResponseCodeInterpreterCallCodeDeltaEvent"
+        },
+        {
+          "sourceIndex": 6,
+          "schema": "s004347",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayInferenceResponseCodeInterpreterCallCodeDoneEvent"
+        },
+        {
+          "sourceIndex": 7,
+          "schema": "s004353",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayInferenceResponseCodeInterpreterCallCompletedEvent"
+        },
+        {
+          "sourceIndex": 8,
+          "schema": "s004385",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayInferenceResponseCodeInterpreterCallInProgressEvent"
+        },
+        {
+          "sourceIndex": 9,
+          "schema": "s004390",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayInferenceResponseCodeInterpreterCallInterpretingEvent"
+        },
+        {
+          "sourceIndex": 10,
+          "schema": "s004395",
+          "rustVariant": "Variant10",
+          "rustType": "GatewayInferenceResponseCompletedEvent"
+        },
+        {
+          "sourceIndex": 11,
+          "schema": "s004399",
+          "rustVariant": "Variant11",
+          "rustType": "GatewayInferenceResponseContentPartAddedEvent"
+        },
+        {
+          "sourceIndex": 12,
+          "schema": "s004406",
+          "rustVariant": "Variant12",
+          "rustType": "GatewayInferenceResponseContentPartDoneEvent"
+        },
+        {
+          "sourceIndex": 13,
+          "schema": "s004413",
+          "rustVariant": "Variant13",
+          "rustType": "GatewayInferenceResponseCreatedEvent"
+        },
+        {
+          "sourceIndex": 14,
+          "schema": "s004417",
+          "rustVariant": "Variant14",
+          "rustType": "GatewayInferenceResponseErrorEvent"
+        },
+        {
+          "sourceIndex": 15,
+          "schema": "s004426",
+          "rustVariant": "Variant15",
+          "rustType": "GatewayInferenceResponseFileSearchCallCompletedEvent"
+        },
+        {
+          "sourceIndex": 16,
+          "schema": "s004432",
+          "rustVariant": "Variant16",
+          "rustType": "GatewayInferenceResponseFileSearchCallInProgressEvent"
+        },
+        {
+          "sourceIndex": 17,
+          "schema": "s004438",
+          "rustVariant": "Variant17",
+          "rustType": "GatewayInferenceResponseFileSearchCallSearchingEvent"
+        },
+        {
+          "sourceIndex": 18,
+          "schema": "s004444",
+          "rustVariant": "Variant18",
+          "rustType": "GatewayInferenceResponseFunctionCallArgumentsDeltaEvent"
+        },
+        {
+          "sourceIndex": 19,
+          "schema": "s004451",
+          "rustVariant": "Variant19",
+          "rustType": "GatewayInferenceResponseFunctionCallArgumentsDoneEvent"
+        },
+        {
+          "sourceIndex": 20,
+          "schema": "s004458",
+          "rustVariant": "Variant20",
+          "rustType": "GatewayInferenceResponseInProgressEvent"
+        },
+        {
+          "sourceIndex": 21,
+          "schema": "s004462",
+          "rustVariant": "Variant21",
+          "rustType": "GatewayInferenceResponseFailedEvent"
+        },
+        {
+          "sourceIndex": 22,
+          "schema": "s004466",
+          "rustVariant": "Variant22",
+          "rustType": "GatewayInferenceResponseIncompleteEvent"
+        },
+        {
+          "sourceIndex": 23,
+          "schema": "s004470",
+          "rustVariant": "Variant23",
+          "rustType": "GatewayInferenceResponseOutputItemAddedEvent"
+        },
+        {
+          "sourceIndex": 24,
+          "schema": "s004475",
+          "rustVariant": "Variant24",
+          "rustType": "GatewayInferenceResponseOutputItemDoneEvent"
+        },
+        {
+          "sourceIndex": 25,
+          "schema": "s004480",
+          "rustVariant": "Variant25",
+          "rustType": "GatewayInferenceResponseRefusalDeltaEvent"
+        },
+        {
+          "sourceIndex": 26,
+          "schema": "s004488",
+          "rustVariant": "Variant26",
+          "rustType": "GatewayInferenceResponseRefusalDoneEvent"
+        },
+        {
+          "sourceIndex": 27,
+          "schema": "s004496",
+          "rustVariant": "Variant27",
+          "rustType": "GatewayInferenceResponseTextAnnotationDeltaEvent"
+        },
+        {
+          "sourceIndex": 28,
+          "schema": "s004504",
+          "rustVariant": "Variant28",
+          "rustType": "GatewayInferenceResponseTextDeltaEvent"
+        },
+        {
+          "sourceIndex": 29,
+          "schema": "s004512",
+          "rustVariant": "Variant29",
+          "rustType": "GatewayInferenceResponseTextDoneEvent"
+        },
+        {
+          "sourceIndex": 30,
+          "schema": "s004520",
+          "rustVariant": "Variant30",
+          "rustType": "GatewayInferenceResponseWebSearchCallCompletedEvent"
+        },
+        {
+          "sourceIndex": 31,
+          "schema": "s004526",
+          "rustVariant": "Variant31",
+          "rustType": "GatewayInferenceResponseWebSearchCallInProgressEvent"
+        },
+        {
+          "sourceIndex": 32,
+          "schema": "s004532",
+          "rustVariant": "Variant32",
+          "rustType": "GatewayInferenceResponseWebSearchCallSearchingEvent"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceResponseToolChoice",
+      "schema": "s004039",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s004040",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceToolChoiceOptions"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s004045",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceToolChoiceTypes"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004053",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceToolChoiceFunction"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceStaticChunkingStrategyMaxChunkSizeTokens",
+      "schema": "s005539",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005540",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceStaticChunkingStrategyMaxChunkSizeTokensVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005541",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceStaticChunkingStrategyMaxChunkSizeTokensVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceTextResponseFormatConfiguration",
+      "schema": "s003932",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003048",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceResponseFormatText"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003934",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceTextResponseFormatJsonSchema"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s003068",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceResponseFormatJsonObject"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceTool",
+      "schema": "s003946",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s003948",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceFileSearchTool"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s003992",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceFunctionTool"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s004003",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayInferenceComputerTool"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s004014",
+          "rustVariant": "Variant4",
+          "rustType": "GatewayInferenceWebSearchTool"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayInferenceVectorStoreFileObjectChunkingStrategy",
+      "schema": "s005531",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s005532",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayInferenceStaticChunkingStrategyResponseParam"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s005543",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayInferenceOtherChunkingStrategyResponseParam"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayIntegrationConfiguration",
+      "sourceType": "t003867",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "sourceType": "t003868",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayOpenAIConfiguration"
+        },
+        {
+          "sourceIndex": 2,
+          "sourceType": "t003739",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayAzureOpenAIConfiguration"
+        },
+        {
+          "sourceIndex": 3,
+          "sourceType": "t003741",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayBedrockConfiguration"
+        },
+        {
+          "sourceIndex": 4,
+          "sourceType": "t003869",
+          "rustVariant": "Variant4",
+          "rustType": "GatewaySageMakerConfiguration"
+        },
+        {
+          "sourceIndex": 5,
+          "sourceType": "t003870",
+          "rustVariant": "Variant5",
+          "rustType": "GatewayVertexAIConfiguration"
+        },
+        {
+          "sourceIndex": 6,
+          "sourceType": "t003736",
+          "rustVariant": "Variant6",
+          "rustType": "GatewayAzureAIConfiguration"
+        },
+        {
+          "sourceIndex": 7,
+          "sourceType": "t003873",
+          "rustVariant": "Variant7",
+          "rustType": "GatewayWorkersAIConfiguration"
+        },
+        {
+          "sourceIndex": 8,
+          "sourceType": "t003771",
+          "rustVariant": "Variant8",
+          "rustType": "GatewayHuggingFaceConfiguration"
+        },
+        {
+          "sourceIndex": 9,
+          "sourceType": "t003765",
+          "rustVariant": "Variant9",
+          "rustType": "GatewayCortexConfiguration"
+        },
+        {
+          "sourceIndex": 10,
+          "sourceType": "t003766",
+          "rustVariant": "Variant10",
+          "rustType": "GatewayCustomHostConfiguration"
+        },
+        {
+          "sourceIndex": 11,
+          "sourceType": "t000355",
+          "rustVariant": "Variant11",
+          "rustType": "GatewayJsonObject"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayIntegrationConfigurations",
+      "schema": "s007303",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001884",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayCatalogProviderConfiguration"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007304",
+          "rustVariant": "Variant2",
+          "rustType": "String"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayIntegrationModelsResponseModelsItemIsCustom",
+      "schema": "s007374",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007375",
+          "rustVariant": "Variant1",
+          "rustType": "bool"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007376",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayIntegrationModelsResponseModelsItemIsCustomVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s007377",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayIntegrationModelsResponseModelsItemIsCustomVariant3"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayIntegrationModelsResponseModelsItemIsFinetune",
+      "schema": "s007380",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007381",
+          "rustVariant": "Variant1",
+          "rustType": "bool"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007382",
+          "rustVariant": "Variant2",
+          "rustType": "GatewayIntegrationModelsResponseModelsItemIsFinetuneVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s007383",
+          "rustVariant": "Variant3",
+          "rustType": "GatewayIntegrationModelsResponseModelsItemIsFinetuneVariant3"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayIntegrationWorkspaceRateLimits",
+      "schema": "s007403",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007404",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayRateLimit>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007405",
+          "rustVariant": "Variant2",
+          "rustType": "TypedMap<JsonValue>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayIntegrationWorkspaceUsageLimits",
+      "schema": "s007397",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007398",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayUsageLimit>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007399",
+          "rustVariant": "Variant2",
+          "rustType": "TypedMap<JsonValue>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayMcpServerMappingsResponse",
+      "schema": "s002082",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s002083",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayMcpServerMapping>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s002084",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayMcpServerMapping>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayOrganisationInfoBenefitsFeatureFlagsValue",
+      "schema": "s000666",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s000667",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayOrganisationInfoBenefitsFeatureFlagsValueVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s000668",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayProviderDetailResetUsage",
+      "schema": "s007239",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007240",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayProviderDetailResetUsageVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007241",
+          "rustVariant": "Variant2",
+          "rustType": "bool"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayProviderDetailUsageLimits",
+      "schema": "s007226",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s006632",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayUsageLimit"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007227",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<GatewayUsageLimit>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayProviderResetUsage",
+      "schema": "s007194",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007195",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayProviderResetUsageVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007196",
+          "rustVariant": "Variant2",
+          "rustType": "bool"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayProviderUsageLimits",
+      "schema": "s007190",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s006632",
+          "rustVariant": "Variant1",
+          "rustType": "GatewayUsageLimit"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007191",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<GatewayUsageLimit>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayRequestConditionExcludes",
+      "schema": "s001141",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001142",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s001143",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayRequestConditionValue",
+      "schema": "s001136",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s001137",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s001138",
+          "rustVariant": "Variant2",
+          "rustType": "Vec<String>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayWorkspaceDetailRateLimits",
+      "schema": "s007005",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007006",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayRateLimit>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007007",
+          "rustVariant": "Variant2",
+          "rustType": "TypedMap<JsonValue>"
+        }
+      ]
+    },
+    {
+      "rustType": "GatewayWorkspaceDetailUsageLimits",
+      "schema": "s006999",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s007000",
+          "rustVariant": "Variant1",
+          "rustType": "Vec<GatewayUsageLimit>"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s007001",
+          "rustVariant": "Variant2",
+          "rustType": "TypedMap<JsonValue>"
+        }
+      ]
+    },
+    {
+      "rustType": "JobCreateRequestJobMetadata",
+      "schema": "s011003",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s011004",
+          "rustVariant": "Variant1",
+          "rustType": "JobCreateRequestJobMetadataVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s011008",
+          "rustVariant": "Variant2",
+          "rustType": "JobCreateRequestJobMetadataVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s011012",
+          "rustVariant": "Variant3",
+          "rustType": "JobCreateRequestJobMetadataVariant3"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s010989",
+          "rustVariant": "Variant4",
+          "rustType": "ClaraJobMetadata"
+        }
+      ]
+    },
+    {
+      "rustType": "JobResponseJobMetadata",
+      "schema": "s011125",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010852",
+          "rustVariant": "Variant1",
+          "rustType": "StaticJobMetadata"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010895",
+          "rustVariant": "Variant2",
+          "rustType": "DynamicJobMetadata"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s010953",
+          "rustVariant": "Variant3",
+          "rustType": "CustomJobMetadata"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s010989",
+          "rustVariant": "Variant4",
+          "rustType": "ClaraJobMetadata"
+        }
+      ]
+    },
+    {
+      "rustType": "JobResponseReportStats",
+      "schema": "s011163",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s011024",
+          "rustVariant": "Variant1",
+          "rustType": "StaticJobReportStats"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s011035",
+          "rustVariant": "Variant2",
+          "rustType": "DynamicJobReportStats"
+        }
+      ]
+    },
+    {
+      "rustType": "PromptDetailResponseAttackOutputsItem",
+      "schema": "s011836",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s011837",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s011742",
+          "rustVariant": "Variant2",
+          "rustType": "CustomAttackOutput"
+        }
+      ]
+    },
+    {
+      "rustType": "PropertyNameCreateResponse",
+      "schema": "s012692",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s012457",
+          "rustVariant": "Variant1",
+          "rustType": "BaseResponse"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s012687",
+          "rustVariant": "Variant2",
+          "rustType": "PropertyNamesListResponse"
+        }
+      ]
+    },
+    {
+      "rustType": "StreamDetailResponseGoal",
+      "schema": "s010421",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010422",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010423",
+          "rustVariant": "Variant2",
+          "rustType": "StreamDetailResponseGoalVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "StreamingConnectionParamsMultiTurnConfig",
+      "schema": "s010504",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010505",
+          "rustVariant": "Variant1",
+          "rustType": "StreamingConnectionParamsMultiTurnConfigVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010511",
+          "rustVariant": "Variant2",
+          "rustType": "StreamingConnectionParamsMultiTurnConfigVariant2"
+        }
+      ]
+    },
+    {
+      "rustType": "StreamingConnectionParamsTargetConnectionConfig",
+      "schema": "s010462",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010463",
+          "rustVariant": "Variant1",
+          "rustType": "StreamingConnectionParamsTargetConnectionConfigVariant1"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010467",
+          "rustVariant": "Variant2",
+          "rustType": "StreamingConnectionParamsTargetConnectionConfigVariant2"
+        },
+        {
+          "sourceIndex": 3,
+          "schema": "s010481",
+          "rustVariant": "Variant3",
+          "rustType": "StreamingConnectionParamsTargetConnectionConfigVariant3"
+        },
+        {
+          "sourceIndex": 4,
+          "schema": "s010490",
+          "rustVariant": "Variant4",
+          "rustType": "StreamingConnectionParamsTargetConnectionConfigVariant4"
+        }
+      ]
+    },
+    {
+      "rustType": "ValidationErrorLocItem",
+      "schema": "s010611",
+      "branches": [
+        {
+          "sourceIndex": 1,
+          "schema": "s010612",
+          "rustVariant": "Variant1",
+          "rustType": "String"
+        },
+        {
+          "sourceIndex": 2,
+          "schema": "s010613",
+          "rustVariant": "Variant2",
+          "rustType": "ValidationErrorLocItemVariant2"
+        }
+      ]
+    }
+  ]
+}

@@ -22,6 +22,44 @@ MAPPINGS = {
 }
 PHASES = {"scan": 3, "management": 4, "iam": 4, "model-security": 5,
           "red-team": 5, "ai-gateway": 6, "agentguard": 7}
+FRAGMENTS = ROOT / "contracts/native-operation-mappings"
+
+
+def mappings():
+    result = {}
+    for baseline_id, (feature, namespace, methods, source, tests) in MAPPINGS.items():
+        differences = []
+        option_parity = "complete"
+        if "createChatCompletion" in baseline_id or "downloadFile" in baseline_id:
+            option_parity = "partial"
+            differences.append("Representative Phase 3 slice omits GatewayInferenceRequestOptions routing/OpenAI-Beta headers; full option parity is required in owning Phase 6.")
+        if "Scanner.asyncScan" in baseline_id or "Scanner.syncScan" in baseline_id:
+            differences.append("Native raw async and scan_request inputs enforce Content primary-field and byte-limit invariants before authentication; the frozen raw async path applies only its request schema. Typed native callers retain explicit validation failures.")
+        result[baseline_id] = dict(baselineId=baseline_id, feature=feature, namespace=namespace,
+            methods=methods, source=source, tests=[tests], deliberateDifferences=differences,
+            optionParity=option_parity, deliveredInPhase=3, lastContractPhase=3, liveAcceptance="unverified")
+    replaced = set()
+    for fragment in sorted(FRAGMENTS.glob("*.json")):
+        data = json.loads(fragment.read_text())
+        if data.get("schemaVersion") != 1:
+            raise ValueError("Unsupported native operation mapping schema")
+        baseline_commit = json.loads(SOURCE.read_text())["baseline"]["commit"]
+        if data.get("baselineCommit") != baseline_commit:
+            raise ValueError("Native mapping has the wrong baseline")
+        for entry in data["operations"]:
+            row = dict(entry)
+            baseline_id = row["baselineId"]
+            verified_phase = row.get("lastContractPhase", row["deliveredInPhase"])
+            if baseline_id in replaced:
+                raise ValueError("Duplicate native operation mapping")
+            replaced.add(baseline_id)
+            if baseline_id in result:
+                previous = result[baseline_id]
+                row["deliveredInPhase"] = min(previous["deliveredInPhase"], row["deliveredInPhase"])
+                row["tests"] = sorted(set(previous["tests"] + row["tests"]))
+            row["lastContractPhase"] = max(verified_phase, data.get("verifiedInPhase", verified_phase))
+            result[baseline_id] = row
+    return result
 
 
 def sha(path):
@@ -32,32 +70,49 @@ def generate():
     inventory = json.loads(SOURCE.read_text())
     version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
     rows = []
-    bound = {"crates/scm-sdk/src/engine.rs", "crates/scm-sdk/src/streaming.rs", "crates/scm-sdk/src/transport.rs"}
-    unknown = set(MAPPINGS) - {operation["id"] for operation in inventory["operations"]}
+    native = mappings()
+    bound = {"crates/scm-sdk/src/engine.rs", "crates/scm-sdk/src/streaming.rs", "crates/scm-sdk/src/transport.rs", "crates/scm-sdk/src/config.rs", "crates/scm-sdk/src/pagination.rs", "crates/scm-sdk/src/pagination/tests.rs", "crates/scm-sdk/src/multipart.rs"}
+    bound.update(str(path.relative_to(ROOT)) for path in FRAGMENTS.glob("*.json"))
+    unknown = set(native) - {operation["id"] for operation in inventory["operations"]}
     if unknown:
         raise ValueError(f"Native mappings reference absent frozen operations: {sorted(unknown)}")
     for operation in inventory["operations"]:
         row = {"baselineId": operation["id"], "family": operation["family"],
                "owningPhase": PHASES[operation["family"]], "implementation": "pending",
                "contractVerification": "pending", "liveAcceptance": "unverified"}
-        if mapping := MAPPINGS.get(operation["id"]):
-            feature, namespace, methods, source, tests = mapping
+        if mapping := native.get(operation["id"]):
+            required = {"feature", "namespace", "methods", "source", "tests", "deliberateDifferences", "optionParity", "deliveredInPhase"}
+            if not required <= mapping.keys() or mapping["optionParity"] not in ("complete", "partial"):
+                raise ValueError("Incomplete native mapping contract")
+            if mapping["optionParity"] == "partial" and not mapping["deliberateDifferences"]:
+                raise ValueError("Partial native parity requires an explicit difference")
+            feature, namespace = mapping["feature"], mapping["namespace"]
+            methods, source, tests = mapping["methods"], mapping["source"], mapping["tests"]
+            if not methods or not tests:
+                raise ValueError("Native mappings require concrete methods and verification")
             text = (ROOT / source).read_text()
             for method in methods:
                 if not re.search(r"pub\s+(?:async\s+)?fn\s+" + re.escape(method) + r"\s*[(<]", text):
                     raise ValueError(f"Native method absent: {namespace}::{method}")
-            if not (ROOT / tests).is_file():
-                raise ValueError("Native operation verification source is absent")
-            bound.update((source, tests))
-            row.update(owningPhase=3, implementation="implemented", contractVerification="offline_fixture_verified",
-                       rustMethods=[f"{namespace}::{method}" for method in methods],
-                       feature=feature, source=source, tests=[tests], headerContract="airs_api_defaults")
+            for reference in tests:
+                path, _, test = reference.partition("::")
+                if not (ROOT / path).is_file():
+                    raise ValueError("Native operation verification source is absent")
+                if test and not re.search(r"\bfn\s+" + re.escape(test) + r"\s*[(<]", (ROOT / path).read_text()):
+                    raise ValueError("Native operation verification function is absent")
+                bound.add(path)
+            bound.add(source)
+            row.update(implementation="implemented", contractVerification="offline_fixture_verified",
+                       rustMethods=[f"{namespace}::{method}" for method in methods], feature=feature,
+                       source=source, tests=tests, headerContract="airs_api_defaults",
+                       optionParity=mapping["optionParity"], deliberateDifferences=mapping["deliberateDifferences"],
+                       deliveredInPhase=mapping["deliveredInPhase"], lastContractPhase=mapping["lastContractPhase"])
         rows.append(row)
     return {
         "schemaVersion": 1,
         "baselineCommit": inventory["baseline"]["commit"],
         "baselineOperationsSha256": sha(SOURCE), "generatorSha256": sha(pathlib.Path(__file__)),
-        "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping presence is checked here; independent native tests establish wire behavior.",
+        "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
         "requestHeaderContracts": {
             "airs_api_defaults": {
                 "service-name": "api", "user-agent": f"PAN-AIRS/{version}-rust-sdk",
@@ -70,8 +125,10 @@ def generate():
             }
         },
         "sourceBindings": [{"path": name, "sha256": sha(ROOT / name)} for name in sorted(bound)],
-        "summary": {"baselineConcreteMethods": len(rows), "implemented": len(MAPPINGS),
-                    "pending": len(rows) - len(MAPPINGS), "liveVerified": 0},
+        "summary": {"baselineConcreteMethods": len(rows), "implemented": len(native),
+                    "pending": len(rows) - len(native), "liveVerified": 0,
+                    "completeMethodOptionParity": sum(row.get("optionParity") == "complete" for row in rows),
+                    "partialMethodOptionParity": sum(row.get("optionParity") == "partial" for row in rows)},
         "operations": rows,
     }
 
@@ -79,8 +136,16 @@ def generate():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--require-through-phase", type=int, choices=range(3, 9),
+                        help="Fail on missing methods or incomplete method options in completed scope")
     args = parser.parse_args()
     result = generate()
+    if args.require_through_phase:
+        missing = [row["baselineId"] for row in result["operations"]
+                   if row["owningPhase"] <= args.require_through_phase
+                   and (row["implementation"] != "implemented" or row.get("optionParity") != "complete")]
+        if missing:
+            raise ValueError(f"Native owning-phase capability gaps: {missing}")
     content = json.dumps(result, indent=2) + "\n"
     if args.check:
         if not OUTPUT.is_file() or OUTPUT.read_text() != content:

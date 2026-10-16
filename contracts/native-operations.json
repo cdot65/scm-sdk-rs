@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "baselineOperationsSha256": "028acb96f9740018f2fbdf699d7a110688553e667433e63abf7a137ab67d8abf",
-  "generatorSha256": "a026b45617bd1255f2cdeea22e3250c166ed32c225658587fab5d7b7d3fd61f9",
-  "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping presence is checked here; independent native tests establish wire behavior.",
+  "generatorSha256": "ee80e5fdde56b015dc61139e9b10d4441a6a47f6fddc815b8d0eef316890be22",
+  "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
   "requestHeaderContracts": {
     "airs_api_defaults": {
       "service-name": "api",
@@ -18,20 +18,104 @@
   },
   "sourceBindings": [
     {
+      "path": "contracts/native-operation-mappings/dlp.json",
+      "sha256": "93b878b0d668ef9f6f4834e84f789c63677b90f8cc81e562004be0d628787fe4"
+    },
+    {
+      "path": "contracts/native-operation-mappings/iam.json",
+      "sha256": "66f18c9e67abaf109ac8a17b67e840eab9f58eea659ff780c273a53acd3e6723"
+    },
+    {
+      "path": "contracts/native-operation-mappings/management.json",
+      "sha256": "28cef3505e2408f5529dd0ecb51917ea7c84f380bb918f6fcea0fc83aba1cfc2"
+    },
+    {
+      "path": "contracts/native-operation-mappings/oauth-management.json",
+      "sha256": "3eb2e96f94d66e6b7c3921a95fcbd52b46a2cc409932a18437e8825bcdfa7c18"
+    },
+    {
+      "path": "contracts/native-operation-mappings/oauth-provider.json",
+      "sha256": "335391c6caf081cd31fa15bc6c1e684c9427fbd06b95efbe1c45c89807c4e9c8"
+    },
+    {
       "path": "crates/scm-sdk/src/airs/gateway/runtime.rs",
       "sha256": "4af95b3f5708573bd8129d6d3f738eb84b31f0ca75e7a1648fe6c7d209e2de1a"
     },
     {
+      "path": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "sha256": "f96ef1b59e3c9c9327b68efe03721cf046036b8ee94c7614e79bc6a482a30541"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "sha256": "b3dabce8a2e64bb6d9d3c7d066806b5cd1821d41e0cc834dffd779314d2b13b6"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "sha256": "5943cec1f8e359eb0ce68f883b2762d7d136a45b646972c803842c0f7bfc1c55"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/management/inventory.rs",
+      "sha256": "d3f48fd0f3db28a5edd2a620a49d28793df41fec23824f6b1aaf5253c118fff9"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/management/oauth_management.rs",
+      "sha256": "f19d8cea9412341c76a57c019c546ffb2d459b6c50f5e1f5d8665d8ce16241f4"
+    },
+    {
       "path": "crates/scm-sdk/src/airs/management/profiles.rs",
-      "sha256": "e88c5185c89cb7a3f80003174e5c53367074eadcf3c169fdc285c10cc1d95ce6"
+      "sha256": "c3a3b4cf104cdb1265e8785dea9d2a40140c532773495409d7557ae72d682fcd"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/management/topics.rs",
+      "sha256": "57c69fb3c466fb0c50a2c5ac446f72df4a59035ff50ffb5f7ce87a32503186d1"
     },
     {
       "path": "crates/scm-sdk/src/airs/scan/scanner.rs",
       "sha256": "07a56f4279d48f51075c45c7e0161891861a84e8494a079be9190c1c9bb0cdcf"
     },
     {
+      "path": "crates/scm-sdk/src/auth.rs",
+      "sha256": "19a8f3a50b165ef4dc963c192f0b1b92b51ce5680e3bd570162fdda9ac3cb16c"
+    },
+    {
+      "path": "crates/scm-sdk/src/config.rs",
+      "sha256": "34bce968cd2f03574fdcfc3b14b2815172a321e072cda00ecb085518ee8b1157"
+    },
+    {
+      "path": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "sha256": "73bc5dba11f091d383da2e47d8c5accc9436ea525a6b8b6c9462c4936352c6e9"
+    },
+    {
+      "path": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "sha256": "6c6220aba98e768c433eb51cbec84477fe9ce98ab9f22243c5dc383dc1dba514"
+    },
+    {
+      "path": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "sha256": "ba8c9add2221737abd2e611af4d634f11f0eb2820c34360274f260fb183716ee"
+    },
+    {
+      "path": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "sha256": "74794051fbc5565370dd3b59d7b2261080e97980a8db6908dacbcdcad14d9e94"
+    },
+    {
       "path": "crates/scm-sdk/src/engine.rs",
-      "sha256": "a5ead43b7c0c7e9fd2274d51270ab985566a788c84ab88d92b1de9d3605c43b6"
+      "sha256": "57896dd50278202c230265930ced7edfdd05b6359294770a483bb34e32ffc899"
+    },
+    {
+      "path": "crates/scm-sdk/src/multipart.rs",
+      "sha256": "23b940180370f30313c9371749909560933719161c524eabbde6898b3e72c179"
+    },
+    {
+      "path": "crates/scm-sdk/src/pagination.rs",
+      "sha256": "8590f5c1a0232f5fbc79a3c6dbb30937aa2887667b340eb392b51fdcbcfa3b96"
+    },
+    {
+      "path": "crates/scm-sdk/src/pagination/tests.rs",
+      "sha256": "1a2280add25805b0d93f2b42ef304c1fbfb7808f3fa496cbbf946fb63989e7d5"
+    },
+    {
+      "path": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "sha256": "9b6c3a20a9975f836ca9b893c4cec7a66014acfc4af67afe6a68966df2b09de7"
     },
     {
       "path": "crates/scm-sdk/src/streaming.rs",
@@ -40,6 +124,22 @@
     {
       "path": "crates/scm-sdk/src/transport.rs",
       "sha256": "5eb87c8128b700834e77c1548f2a7eed67818327ef1685cc3b73eb173176ac19"
+    },
+    {
+      "path": "crates/scm-sdk/tests/dlp_contracts.rs",
+      "sha256": "9b28e789492689776c67ec62647960982431c0bb0b65f2ae87d3dfd3f0a6f7f6"
+    },
+    {
+      "path": "crates/scm-sdk/tests/iam_contracts.rs",
+      "sha256": "d55aa11d359c6eb47da8f77b0b502a9c30899c9cf4a546e46d303400587c0ca4"
+    },
+    {
+      "path": "crates/scm-sdk/tests/management_contracts.rs",
+      "sha256": "3cc6c0729d6d98084410c0b0822e4abf105579b5284e4307abd054b227b6c57f"
+    },
+    {
+      "path": "crates/scm-sdk/tests/oauth_management_contracts.rs",
+      "sha256": "77522e05057b2065d4aaa9a2ed1aec0b9b3c2c248ef454ea9013a6f83d238988"
     },
     {
       "path": "crates/scm-sdk/tests/representative_clients.rs",
@@ -52,9 +152,11 @@
   ],
   "summary": {
     "baselineConcreteMethods": 448,
-    "implemented": 7,
-    "pending": 441,
-    "liveVerified": 0
+    "implemented": 99,
+    "pending": 349,
+    "liveVerified": 0,
+    "completeMethodOptionParity": 97,
+    "partialMethodOptionParity": 2
   },
   "operations": [
     {
@@ -436,7 +538,7 @@
     {
       "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createChatCompletion",
       "family": "ai-gateway",
-      "owningPhase": 3,
+      "owningPhase": 6,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
@@ -449,7 +551,13 @@
       "tests": [
         "crates/scm-sdk/tests/representative_clients.rs"
       ],
-      "headerContract": "airs_api_defaults"
+      "headerContract": "airs_api_defaults",
+      "optionParity": "partial",
+      "deliberateDifferences": [
+        "Representative Phase 3 slice omits GatewayInferenceRequestOptions routing/OpenAI-Beta headers; full option parity is required in owning Phase 6."
+      ],
+      "deliveredInPhase": 3,
+      "lastContractPhase": 3
     },
     {
       "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createCompletion",
@@ -1166,7 +1274,7 @@
     {
       "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.downloadFile",
       "family": "ai-gateway",
-      "owningPhase": 3,
+      "owningPhase": 6,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
@@ -1178,7 +1286,13 @@
       "tests": [
         "crates/scm-sdk/tests/representative_clients.rs"
       ],
-      "headerContract": "airs_api_defaults"
+      "headerContract": "airs_api_defaults",
+      "optionParity": "partial",
+      "deliberateDifferences": [
+        "Representative Phase 3 slice omits GatewayInferenceRequestOptions routing/OpenAI-Beta headers; full option parity is required in owning Phase 6."
+      ],
+      "deliveredInPhase": 3,
+      "lastContractPhase": 3
     },
     {
       "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getBatchOutput",
@@ -1680,754 +1794,2170 @@
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.bindWorkspace",
       "family": "iam",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "shared::iam::IamScopesClient::bind_workspace"
+      ],
+      "feature": "iam",
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::bind_is_additive_and_idempotent_without_dropping_existing_metadata"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy.",
+        "Validate workspace slug before the initial GET; share one deadline/cancellation token across read and replacement; no inferred mutation replay safety."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.create",
       "family": "iam",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "shared::iam::IamScopesClient::create"
+      ],
+      "feature": "iam",
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::create_defaults_and_update_full_replacement_match_frozen_wire_bodies"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.delete",
       "family": "iam",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "shared::iam::IamScopesClient::delete"
+      ],
+      "feature": "iam",
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::experimental_delete_uses_exact_route_and_preserves_service_rejection"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy.",
+        "Retain experimental live-unverified DELETE status; 404/405 is a service rejection."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.get",
       "family": "iam",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "shared::iam::IamScopesClient::get"
+      ],
+      "feature": "iam",
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::list_and_get_retain_observed_unknown_fields_and_derive_tenant_header"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.list",
       "family": "iam",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "shared::iam::IamScopesClient::list"
+      ],
+      "feature": "iam",
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::list_and_get_retain_observed_unknown_fields_and_derive_tenant_header"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.update",
       "family": "iam",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "shared::iam::IamScopesClient::update"
+      ],
+      "feature": "iam",
+      "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
+      "tests": [
+        "crates/scm-sdk/tests/iam_contracts.rs::create_defaults_and_update_full_replacement_match_frozen_wire_bodies"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/api-keys.ts:ApiKeysClient.create",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.api_keys::create"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/api-keys.ts:ApiKeysClient.delete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.api_keys::delete"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/api-keys.ts:ApiKeysClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.api_keys::list"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/api-keys.ts:ApiKeysClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.api_keys::list_all"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/api-keys.ts:ApiKeysClient.listForToken",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.api_keys::list_for_token"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/api-keys.ts:ApiKeysClient.regenerate",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.api_keys::regenerate"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::api_key_methods_match_literal_routes_bodies_and_optional_empty_inventory"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.delete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.customer_apps::delete"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.get",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.customer_apps::get"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.customer_apps::list"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.customer_apps::list_all"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.listForToken",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.customer_apps::list_for_token"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.update",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.customer_apps::update"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::customer_app_methods_match_distinct_token_and_tenant_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.application",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::application"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.applicationRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::application_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.applicationViolationBreakdown",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::application_violation_breakdown"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.applicationViolationBreakdownRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::application_violation_breakdown_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsOverview",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::applications_overview"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Runtime query checks enforce source-declared windows/time units and positive/nonnegative safe page integers before authentication."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsOverviewRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::applications_overview_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents.",
+        "Runtime query checks enforce source-declared windows/time units and positive/nonnegative safe page integers before authentication."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsViolationsTrend",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::applications_violations_trend"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsViolationsTrendRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::applications_violations_trend_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.appsList",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::apps_list"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.appsListRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::apps_list_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.scanContent",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::scan_content"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.scanContentRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::scan_content_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.session",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::session"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.sessionRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::session_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.sessionTransaction",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::session_transaction"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.sessionTransactionRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::session_transaction_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsChart",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::sessions_chart"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsChartRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::sessions_chart_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsOverview",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::sessions_overview"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsOverviewRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::sessions_overview_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.topApplicationsViolations",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::top_applications_violations"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dashboard.ts:DashboardClient.topApplicationsViolationsRaw",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dashboard::top_applications_violations_raw"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_values"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Option<JsonValue> distinguishes empty body from explicit JSON null; Debug omits response contents."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/deployment-profiles.ts:DeploymentProfilesClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.deployment_profiles::list"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::deployment_legacy_dlp_and_scan_log_methods_match_frozen_dialects"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp-profiles.ts:DlpProfilesClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.dlp_profiles::list"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::deployment_legacy_dlp_and_scan_log_methods_match_frozen_dialects"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.get",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataFilteringProfilesClient::get"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataFilteringProfilesClient::list"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataFilteringProfilesClient::list_all",
+        "dlp::DataFilteringProfilesClient::list_pages",
+        "dlp::DataFilteringProfilesClient::list_items"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.replace",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataFilteringProfilesClient::replace"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.create",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataPatternsClient::create"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.delete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataPatternsClient::delete"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.get",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataPatternsClient::get"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataPatternsClient::list"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataPatternsClient::list_all",
+        "dlp::DataPatternsClient::list_pages",
+        "dlp::DataPatternsClient::list_items"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.patch",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataPatternsClient::patch"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.replace",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataPatternsClient::replace"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.create",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataProfilesClient::create"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.get",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataProfilesClient::get"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataProfilesClient::list"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataProfilesClient::list_all",
+        "dlp::DataProfilesClient::list_pages",
+        "dlp::DataProfilesClient::list_items"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.patch",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataProfilesClient::patch"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.replace",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DataProfilesClient::replace"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.create",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DictionariesClient::create"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.delete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DictionariesClient::delete"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.get",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DictionariesClient::get"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DictionariesClient::list"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DictionariesClient::list_all",
+        "dlp::DictionariesClient::list_pages",
+        "dlp::DictionariesClient::list_items"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_four_list_all_methods_use_spring_defaults_and_explicit_completion",
+        "crates/scm-sdk/tests/dlp_contracts.rs::native_page_and_item_iterators_work_for_all_four_resource_families"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.patch",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DictionariesClient::patch"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.replace",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "dlp::DictionariesClient::replace"
+      ],
+      "feature": "dlp",
+      "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::all_twelve_dlp_mutations_preserve_uncertain_outcomes_without_replay"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.clearToken",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "auth::OAuthProvider::clear"
+      ],
+      "feature": "core",
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Clear also invalidates pending refresh epochs so late responses cannot restore a cleared token."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.getToken",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "auth::OAuthProvider::get_token"
+      ],
+      "feature": "core",
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.getTokenInfo",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "auth::OAuthProvider::token_info"
+      ],
+      "feature": "core",
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpired",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "auth::OAuthProvider::is_token_expired"
+      ],
+      "feature": "core",
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpiringSoon",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "auth::OAuthProvider::is_token_expiring_soon"
+      ],
+      "feature": "core",
+      "source": "crates/scm-sdk/src/auth.rs",
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/oauth-management.ts:OAuthManagementClient.getAccessToken",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::management::OAuthManagementClient::get_access_token"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/oauth_management.rs",
+      "tests": [
+        "crates/scm-sdk/tests/oauth_management_contracts.rs::token_request_preserves_exact_ttl_dialect_body_and_unknown_response_fields"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Invalidate takes &Secret; options and generated response formatting are redacted. FiniteNumber constrains TTL to finite numeric values."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/oauth-management.ts:OAuthManagementClient.invalidateToken",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::management::OAuthManagementClient::invalidate_token"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/oauth_management.rs",
+      "tests": [
+        "crates/scm-sdk/tests/oauth_management_contracts.rs::invalidation_encodes_secret_query_exactly_and_returns_json_string"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Explicit RequestOptions extend the frozen per-client interface; safe read retries are bounded and mutations are never automatically replayed.",
+        "Invalidate takes &Secret; options and generated response formatting are redacted. FiniteNumber constrains TTL to finite numeric values."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.create",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::create"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.delete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::delete"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.forceDelete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::force_delete"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.get",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::get"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.getByName",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::get_by_name"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::list"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
-    },
-    {
-      "baselineId": "src/management/profiles.ts:ProfilesClient.listForToken",
-      "family": "management",
-      "owningPhase": 3,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::management::ProfilesClient::list_for_token"
+        "airs.management.profiles::list_all"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
       "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.listForToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::list_for_token"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers",
         "crates/scm-sdk/tests/representative_clients.rs"
       ],
-      "headerContract": "airs_api_defaults"
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 3,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.update",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.profiles::update"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::profile_methods_match_literal_routes_schemas_defaults_and_helpers"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/scan-logs.ts:ScanLogsClient.query",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.scan_logs::query"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::deployment_legacy_dlp_and_scan_log_methods_match_frozen_dialects"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Typed positive safe integer interval/page parameters; legacy empty body hydration remains compatible and is not zero-activity evidence.",
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.create",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::create"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.delete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::delete"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.forceDelete",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::force_delete"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.forceDeleteWithAudit",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::force_delete_with_audit"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.get",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::get"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.getByName",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::get_by_name"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Incomplete bounded walks fail rather than claim missing or latest; safe errors omit lookup values."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.list",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::list"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "latest_only fails on incomplete walks; first-seen name order and first revision ties are preserved."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.listAll",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::list_all"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion/partial/resume instead of silently truncated Vec; customer applications retain CustomerAppWithKeys fields."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.listForToken",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::list_for_token"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/management/topics.ts:TopicsClient.update",
       "family": "management",
       "owningPhase": 4,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs.management.topics::update"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/topics.rs",
+      "tests": [
+        "crates/scm-sdk/tests/management_contracts.rs::topic_methods_match_literal_routes_and_latest_revision_workflow"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "deliveredInPhase": 4,
+      "lastContractPhase": 4
     },
     {
       "baselineId": "src/model-security/client.ts:ModelSecurityClient.getPyPIAuth",
@@ -3652,7 +5182,13 @@
       "tests": [
         "crates/scm-sdk/tests/scan_contracts.rs"
       ],
-      "headerContract": "airs_api_defaults"
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native raw async and scan_request inputs enforce Content primary-field and byte-limit invariants before authentication; the frozen raw async path applies only its request schema. Typed native callers retain explicit validation failures."
+      ],
+      "deliveredInPhase": 3,
+      "lastContractPhase": 3
     },
     {
       "baselineId": "src/scan/scanner.ts:Scanner.queryByReportIds",
@@ -3669,7 +5205,11 @@
       "tests": [
         "crates/scm-sdk/tests/scan_contracts.rs"
       ],
-      "headerContract": "airs_api_defaults"
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 3,
+      "lastContractPhase": 3
     },
     {
       "baselineId": "src/scan/scanner.ts:Scanner.queryByScanIds",
@@ -3686,7 +5226,11 @@
       "tests": [
         "crates/scm-sdk/tests/scan_contracts.rs"
       ],
-      "headerContract": "airs_api_defaults"
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [],
+      "deliveredInPhase": 3,
+      "lastContractPhase": 3
     },
     {
       "baselineId": "src/scan/scanner.ts:Scanner.syncScan",
@@ -3704,7 +5248,13 @@
       "tests": [
         "crates/scm-sdk/tests/scan_contracts.rs"
       ],
-      "headerContract": "airs_api_defaults"
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native raw async and scan_request inputs enforce Content primary-field and byte-limit invariants before authentication; the frozen raw async path applies only its request schema. Typed native callers retain explicit validation failures."
+      ],
+      "deliveredInPhase": 3,
+      "lastContractPhase": 3
     }
   ]
 }
