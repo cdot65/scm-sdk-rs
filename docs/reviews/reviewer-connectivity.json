@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-16T01:58:45.050590+00:00",
+  "purpose": "Claude Code reviewer connectivity; not Rust SDK live acceptance",
+  "review_available": false,
+  "routes": [
+    {
+      "route": "installed Claude Code subscription",
+      "outcome": "OAuth session expired; refresh failed"
+    },
+    {
+      "route": "configured local Google provider",
+      "outcome": "No application default credentials"
+    },
+    {
+      "route": "configured nonproduction AIRS Gateway",
+      "outcome": "Connection timeout"
+    },
+    {
+      "route": "reachable AIRS Gateway Claude integration",
+      "outcome": "Upstream Google OAuth rejection"
+    },
+    {
+      "route": "native Claude Code with explicitly selected AIRS Google provider credentials",
+      "attempted_credential_sets": 2,
+      "outcome": "Google rejected both with invalid JWT signature"
+    }
+  ],
+  "cleanup": {
+    "temporary_runtime_keys_created": 3,
+    "temporary_runtime_keys_retired": 3,
+    "cleanup_failures": 0,
+    "temporary_google_credentials_retained": 0
+  },
+  "required_action": "Restore Claude Code authentication or provide an explicitly selected working Claude API credential path.",
+  "record_status": "historical; superseded",
+  "superseded_at": "2026-10-16T07:19:34.504031+00:00",
+  "superseded_by": "docs/reviews/phase-01-attempt-02.json"
+}

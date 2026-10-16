@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "active_phase": 2,
+  "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
+  "review_threshold": 9,
+  "phases": [
+    {
+      "id": 1,
+      "name": "Contracts and repository governance",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-01-attempt-02.json"
+      ],
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-01-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-01.json"
+          ],
+          "source_sha256": "41abe56432875fb53724d9047f6ca34211378f2442aeccd420ea2050af4b72a7"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-01-attempt-02.json"
+          ]
+        }
+      },
+      "accepted_source_sha256": "41abe56432875fb53724d9047f6ca34211378f2442aeccd420ea2050af4b72a7",
+      "accepted_score": 9
+    },
+    {
+      "id": 2,
+      "name": "Secure Rust foundation",
+      "status": "in_progress",
+      "reviews": []
+    },
+    {
+      "id": 3,
+      "name": "Typed models and scanning",
+      "status": "pending",
+      "reviews": []
+    },
+    {
+      "id": 4,
+      "name": "Management and shared modules",
+      "status": "pending",
+      "reviews": []
+    },
+    {
+      "id": 5,
+      "name": "Model Security and Red Team",
+      "status": "pending",
+      "reviews": []
+    },
+    {
+      "id": 6,
+      "name": "AI Gateway",
+      "status": "pending",
+      "reviews": []
+    },
+    {
+      "id": 7,
+      "name": "Experimental and export closure",
+      "status": "pending",
+      "reviews": []
+    },
+    {
+      "id": 8,
+      "name": "Qualification and delivery",
+      "status": "pending",
+      "reviews": []
+    }
+  ]
+}

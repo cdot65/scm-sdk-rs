@@ -1,0 +1,2390 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "repository": "https://github.com/cdot65/prisma-airs-sdk",
+    "package": "@cdot65/prisma-airs-sdk",
+    "version": "0.34.0",
+    "commit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+    "license": "typescript",
+    "gitTreeLedger": "contracts/sources/typescript/git-tree.json",
+    "gitTreeLedgerSha256": "cf2564ab157509cb4ddb0689e15f717fcc4e463019dbc2c9975513f29728c13a",
+    "srcFiles": [
+      {
+        "upstreamPath": "src/agentguard/client.ts",
+        "sha256": "29ee02de866e6ae0da91899c334d0bea16c0af9ec00eb66a81f58c517408f87f",
+        "gitBlobSha1": "aad5b8491277f0dae52ada57b36c16e0e2f428a7",
+        "bytes": 5050
+      },
+      {
+        "upstreamPath": "src/ai-gateway/admin-guardrails-client.ts",
+        "sha256": "4ee7f2ff6841d6aa1bfd9674acb90f6b0e5a357027c315633d437d0d3dd0bccf",
+        "gitBlobSha1": "6b11593fc34ceb58faa819484203cdcff9a9661b",
+        "bytes": 6953
+      },
+      {
+        "upstreamPath": "src/ai-gateway/api-keys-client.ts",
+        "sha256": "65be7bc63a4a477a6be350e6e2ae93d7b526fbafe582220b2da96c019cbf4e9b",
+        "gitBlobSha1": "08159c5898cc139363298d45473142e69a8668bd",
+        "bytes": 10645
+      },
+      {
+        "upstreamPath": "src/ai-gateway/audit-logs-client.ts",
+        "sha256": "bcd0d339b0fd22a7967ed79c98ba6aedb306a45d32fc796d0e63e5f13c56b6cc",
+        "gitBlobSha1": "3891fad2687fb869f2dae0942fbca2644b4e4d1e",
+        "bytes": 2522
+      },
+      {
+        "upstreamPath": "src/ai-gateway/client.ts",
+        "sha256": "826e089e4e6a95280b2ce6a36f813699a60f87dc950d7bc8da6833fddc84e17c",
+        "gitBlobSha1": "1e2b8ba805ae883d2ddf564f9ec83331063d2253",
+        "bytes": 10404
+      },
+      {
+        "upstreamPath": "src/ai-gateway/configs-client.ts",
+        "sha256": "0e1e86971a1e9020097ac6cc490125e089a3650b8a673fa65ee48db82b90d319",
+        "gitBlobSha1": "eceffea59753b73c66c953b0b4382a3f62dad254",
+        "bytes": 7557
+      },
+      {
+        "upstreamPath": "src/ai-gateway/deployments-client.ts",
+        "sha256": "5fc01b675ad5f425de9e6fd3a567ee7cf9f1270a5ae0d1e788659b4ddc1f5279",
+        "gitBlobSha1": "84805167ac4a87b935c8caf30fd5bf9195f1a99f",
+        "bytes": 8446
+      },
+      {
+        "upstreamPath": "src/ai-gateway/guardrails-client.ts",
+        "sha256": "1604e4677c1819e42b9b3b077216472cf5b9072912848ab98ca2d30dd733c400",
+        "gitBlobSha1": "ff66efcb5bbf2b4fb5a5dc6da508e0c249325a77",
+        "bytes": 9906
+      },
+      {
+        "upstreamPath": "src/ai-gateway/index.ts",
+        "sha256": "138efdf54bb9fa518f5f8fa815b3d0f1f99c914d43c455efa48f0cee7e2e2e05",
+        "gitBlobSha1": "933bfd5f1381a20348c9dda1f4fb806cd196a69e",
+        "bytes": 3181
+      },
+      {
+        "upstreamPath": "src/ai-gateway/inference-client.ts",
+        "sha256": "efb9dd2688f5a024cc0756c38174ad0556abe07e790d6bc6bcbad2e08869acf1",
+        "gitBlobSha1": "a77fd66df13cd7124ca12524b9f99044526ed2fa",
+        "bytes": 21423
+      },
+      {
+        "upstreamPath": "src/ai-gateway/integrations-client.ts",
+        "sha256": "1ada5cc9ad5c9b00c7c7e6586753f4179c4a12114b39a7dae7e924e3fc7a4dbe",
+        "gitBlobSha1": "38a434d6137d775263011cc0f0b86a0d029f14a6",
+        "bytes": 16820
+      },
+      {
+        "upstreamPath": "src/ai-gateway/log-exports-client.ts",
+        "sha256": "813c9bf8aa35ceeba72bb73d528fb18bdc10026564d5ae7d27a7888e1e53e779",
+        "gitBlobSha1": "06bebf3b112acf0e765090275d6ab31846db8748",
+        "bytes": 5969
+      },
+      {
+        "upstreamPath": "src/ai-gateway/mcp-integrations-client.ts",
+        "sha256": "67858d5b6e8bf876f6725ff8ce95b40470953684837af2eaf12646c9cd4c8826",
+        "gitBlobSha1": "453d4cf1740e7aff721585d69b20d490235c9c93",
+        "bytes": 10469
+      },
+      {
+        "upstreamPath": "src/ai-gateway/mcp-servers-client.ts",
+        "sha256": "a97bfb4e18652e4af8418961cb5f1b1e28103e31638b99008240ffd5318fb1a5",
+        "gitBlobSha1": "1324fc862fbcfa9d9de69227466aae06d04845a3",
+        "bytes": 11793
+      },
+      {
+        "upstreamPath": "src/ai-gateway/model-pricing-client.ts",
+        "sha256": "fa4a4e706cb23100fc66a5c5cfa86f58349bc44bea287d6feb4a33ed48671c57",
+        "gitBlobSha1": "8af879b5b7a04df0ca7d14e86347ad6c36ef1df3",
+        "bytes": 4631
+      },
+      {
+        "upstreamPath": "src/ai-gateway/nested-values.ts",
+        "sha256": "d484e87a2455773a5c2d9c4b32fc3930978a02209b2e2848052e4b1d2978bb7e",
+        "gitBlobSha1": "26fc692229e4f62cf082d9dc330bbbd8441ee5af",
+        "bytes": 7769
+      },
+      {
+        "upstreamPath": "src/ai-gateway/organisations-client.ts",
+        "sha256": "2f27c725045637f497d5bb6996ddd106fc3f2ca16901edc768ebbe77e9d21154",
+        "gitBlobSha1": "64fa6fdf60b25951e2e2a02ad8de388e3a858fb1",
+        "bytes": 5508
+      },
+      {
+        "upstreamPath": "src/ai-gateway/plugins-client.ts",
+        "sha256": "46f713f5bf1018294bbfd6287ce1129c677e1a39bb71f5ee3cd28f6dbe953e04",
+        "gitBlobSha1": "4b05e2eb80c26c684c619ea6d2e6428e5301304b",
+        "bytes": 2862
+      },
+      {
+        "upstreamPath": "src/ai-gateway/providers-client.ts",
+        "sha256": "40dbe9f7c948d573de7f5dff4fc1e0869918c585ff5cbf397a5771e8f0a3c54f",
+        "gitBlobSha1": "d40ee6873faad6c4be0d65a9ad669cab6e40c35e",
+        "bytes": 6851
+      },
+      {
+        "upstreamPath": "src/ai-gateway/rate-limits-client.ts",
+        "sha256": "3c5a3e9b452f7677a173720cf43106ffd28a2c67cca452975c8d0d574645326b",
+        "gitBlobSha1": "68ad5833f3fc128a6f99d1962aac8af64c6b98ed",
+        "bytes": 4718
+      },
+      {
+        "upstreamPath": "src/ai-gateway/runtime-resources-client.ts",
+        "sha256": "69367336719c9d815b4463e63921b4ec389053b54c19083d5307364616493132",
+        "gitBlobSha1": "93439e93f95366f23284a6e2e4f0bca17e900aee",
+        "bytes": 45422
+      },
+      {
+        "upstreamPath": "src/ai-gateway/runtime-wire.ts",
+        "sha256": "2a412555fa6cbaf5feea4219a14af227c879c1fa736aa4f8bec1e7fca2e84707",
+        "gitBlobSha1": "53ad41e79b077cf014c5bc840db43854452fe044",
+        "bytes": 1424
+      },
+      {
+        "upstreamPath": "src/ai-gateway/secret-fields.ts",
+        "sha256": "beec92da430ddf3df341a2994adcf3287e536fa5e9a253ce48c6645998f32a49",
+        "gitBlobSha1": "4271bca159d4577eed8a255ee548e3c6462275bc",
+        "bytes": 6404
+      },
+      {
+        "upstreamPath": "src/ai-gateway/secret-references-client.ts",
+        "sha256": "1dae387c147bdead3dcc0100169fb68d7bce607a8b2712f59b1428ef9ef5b34a",
+        "gitBlobSha1": "7b856310843a153e44b3c2f4a0f3f83f3148671b",
+        "bytes": 4877
+      },
+      {
+        "upstreamPath": "src/ai-gateway/telemetry-client.ts",
+        "sha256": "f36f049d8b483dc66e7541b69fe90312805453ac0aa5cafb439e3c949ad4a128",
+        "gitBlobSha1": "e67566e4d44774cab014d345edb275979c516cff",
+        "bytes": 27037
+      },
+      {
+        "upstreamPath": "src/ai-gateway/types.ts",
+        "sha256": "7717dabd7ac8f7b22cb7852c52ebbead5fbbc707d8cc1926b7813f319cb92afd",
+        "gitBlobSha1": "c7323322681475bcee7d62d122a038e80edfdec8",
+        "bytes": 4177
+      },
+      {
+        "upstreamPath": "src/ai-gateway/usage-limits-client.ts",
+        "sha256": "df7ea2545f43e6da85a2794fe92f658f561e8213a45606e686d8ebacf5ef72e8",
+        "gitBlobSha1": "80fb94698a726546763881c1e21ca58e306b142f",
+        "bytes": 6865
+      },
+      {
+        "upstreamPath": "src/ai-gateway/window.ts",
+        "sha256": "e02e7c07aef6348278047b1019da297dd9a6003849b8bba20bae6fbaaf65803b",
+        "gitBlobSha1": "fa3d8f3aee71b9833a479a3f5e9602d8b55b03c2",
+        "bytes": 3185
+      },
+      {
+        "upstreamPath": "src/ai-gateway/workspaces-client.ts",
+        "sha256": "4ad671efaadc84da56e94c9306a507901bfbc1791737e2b3972db06d674ad669",
+        "gitBlobSha1": "137fcd9b813ff331532a9f74581a4a4b1b2de17a",
+        "bytes": 14855
+      },
+      {
+        "upstreamPath": "src/configuration.ts",
+        "sha256": "bc547677b7f74d5afa76e64f5a48259308e6f359a6fea6ec6fe9e219486b7bcb",
+        "gitBlobSha1": "a4a385364347bfad25a2b658158b3d63a0104a33",
+        "bytes": 4098
+      },
+      {
+        "upstreamPath": "src/constants.ts",
+        "sha256": "2ca2e1b9d1009ba0a86b9095cb6ecb9802294b620911b26935ed854be0b98838",
+        "gitBlobSha1": "95145959feae6dbab538102b97e97e01d87ecf63",
+        "bytes": 14035
+      },
+      {
+        "upstreamPath": "src/errors.ts",
+        "sha256": "ed727c8e351859f6942dad227f43e3c13656bdd9dd31a7216533533da98531ab",
+        "gitBlobSha1": "35f9ababc115dc1fc785b75241fd2621441f0748",
+        "bytes": 2970
+      },
+      {
+        "upstreamPath": "src/http-retry.ts",
+        "sha256": "1292920f4f8e577e87a2b740c5d59c8984140b5871f726ca1157d2701a4dc0b7",
+        "gitBlobSha1": "0fa5b3d4b1f33d2cde653d88ceb1dea7c65a8c17",
+        "bytes": 9926
+      },
+      {
+        "upstreamPath": "src/http/abort.ts",
+        "sha256": "294c80e3d83b386f636e23bec4d34786561a3abcc6963bd613ac5d3770a291cc",
+        "gitBlobSha1": "2803a041305b70b3dc8d098ae73b5d9a3580ce6f",
+        "bytes": 1200
+      },
+      {
+        "upstreamPath": "src/http/auth/api-key.ts",
+        "sha256": "d6d1aa77bec25dcd35d67a88370a4422cc52566c066daa708d930fdec0e9fa63",
+        "gitBlobSha1": "b586e3cfa7d855c1b6d1637b0542d29899104f8a",
+        "bytes": 1595
+      },
+      {
+        "upstreamPath": "src/http/auth/oauth.ts",
+        "sha256": "87d29d7df4fb80b64b72e582b2fc3b7b4568da95204db05d7a4c784b2e80bbbb",
+        "gitBlobSha1": "3d9bf943343fb498a06edf338a11824c340d0735",
+        "bytes": 1120
+      },
+      {
+        "upstreamPath": "src/http/auth/tsg-header.ts",
+        "sha256": "791b8c6db3e96bf6715e70b389a6ffddd3017ca7fa81867d3fc0e6cd1bc02a81",
+        "gitBlobSha1": "6d9795e750663e6397d2604843053fa880f7d667",
+        "bytes": 870
+      },
+      {
+        "upstreamPath": "src/http/debug.ts",
+        "sha256": "33bd40e697a9c68b3a75aa87d29cf739a1ff10319cb0fef5fee7c822773fe4a8",
+        "gitBlobSha1": "d3de3220a0c48d883aeaaf67d18d2bfd4d67ca35",
+        "bytes": 4879
+      },
+      {
+        "upstreamPath": "src/http/event-stream.ts",
+        "sha256": "25adf79991bf36d3a3c70dea143d33b3be385babb4d23e8ceeab69dcaf077476",
+        "gitBlobSha1": "8b0fb9c17d7584995bfe872c7e2b2973803ac8bf",
+        "bytes": 7322
+      },
+      {
+        "upstreamPath": "src/http/problem.ts",
+        "sha256": "0e9ec7e94894779dbcebc1fe99457a99dfcdd6fb87e6ccb4012a778d2d43b7fd",
+        "gitBlobSha1": "bc529b671812ba4572c9b06e7c4e372e9a85bc2b",
+        "bytes": 3618
+      },
+      {
+        "upstreamPath": "src/http/query.ts",
+        "sha256": "642fbce85a8d5d4510e22f16afeae83dce982a672fd907dfd7d704f3d23759ef",
+        "gitBlobSha1": "0dd08f590e82fa1da16c6e297d5b6ae0610281fa",
+        "bytes": 970
+      },
+      {
+        "upstreamPath": "src/http/realtime.ts",
+        "sha256": "f4ba4b6bb15c9ebe4a490e82ba6b8d1ea350e0a77797fd173276985fb7258904",
+        "gitBlobSha1": "3f8b50cacf5b1ee822fcfffdc1f398958fba6f33",
+        "bytes": 14345
+      },
+      {
+        "upstreamPath": "src/http/request.ts",
+        "sha256": "5e7a7755d287f0ac43cf07eac01f93cbb360126b2b87fd5a93ed76977f8aa098",
+        "gitBlobSha1": "f317f0368db8b2268b1e4b201a94f1f16cc368b6",
+        "bytes": 9234
+      },
+      {
+        "upstreamPath": "src/http/types.ts",
+        "sha256": "929d8939870ac8c99dde11623f08aafaf991aff5c63cb7907ec1d2cc94c6918b",
+        "gitBlobSha1": "1ce29e1ac6852ea5f8a46edcc947aa5988bc2953",
+        "bytes": 4173
+      },
+      {
+        "upstreamPath": "src/iam/index.ts",
+        "sha256": "03d1f8e02e92e879c6f744e5e748a0bf43ad2a22f41425fd5ad37f738838a237",
+        "gitBlobSha1": "92ebde161629a326d2a11f114a93639c06e32c4a",
+        "bytes": 206
+      },
+      {
+        "upstreamPath": "src/iam/scope-name.ts",
+        "sha256": "0018c00a78a238feffca73a6dafe7f9ffb95439311842ae8a04dfa1580909ebd",
+        "gitBlobSha1": "32e2b21bfb63562fc43977d2b67f772df74f91a4",
+        "bytes": 1573
+      },
+      {
+        "upstreamPath": "src/iam/scopes-client.ts",
+        "sha256": "32e4eb1b5a7d29963cbb902da4208b02cfdd9e7cc1bcc8cdfe0a0bf0d5a20a50",
+        "gitBlobSha1": "b6516aaa2ab61e5da175f5bffaf671a5021559cd",
+        "bytes": 9951
+      },
+      {
+        "upstreamPath": "src/index.ts",
+        "sha256": "2b06d1c04680b4da0498ea5d1c549ba752cf9dceb0bf0bc2555725024d6407c1",
+        "gitBlobSha1": "f67770bc36953b0854a1961a5b0e2ac4f1f481e0",
+        "bytes": 689
+      },
+      {
+        "upstreamPath": "src/listing.ts",
+        "sha256": "e7ffb7386981df15164ff34185289db84eaf8098841876880a4f0ff7e4f9c856",
+        "gitBlobSha1": "b9104614c100c508b3e9b13e086deb785f1547c0",
+        "bytes": 4905
+      },
+      {
+        "upstreamPath": "src/management/api-keys.ts",
+        "sha256": "62009c97c70e23c6daaf7603b4cbcaf72141e252f20f8087f34e1f03650ff311",
+        "gitBlobSha1": "0a64553419f05ae452e2845d619c65acf68e72d8",
+        "bytes": 6301
+      },
+      {
+        "upstreamPath": "src/management/client.ts",
+        "sha256": "80ceabf9953e3cbb21a63586b7d588363e4578f7639ba47c2f0243967cc6d452",
+        "gitBlobSha1": "769af5a00e301a169d906e558ac471e1e047667f",
+        "bytes": 4643
+      },
+      {
+        "upstreamPath": "src/management/customer-apps.ts",
+        "sha256": "4f8c44f3e3aa00f68cbfe37bf873a07755cce51373b39822e00157c02f82b3f6",
+        "gitBlobSha1": "4971f18e21c53caf7533a33fa33e3361dbec5dd1",
+        "bytes": 6149
+      },
+      {
+        "upstreamPath": "src/management/dashboard.ts",
+        "sha256": "32525554cea786881b3ce82795219fbd94b0a1f0d067655088e8f5109d3d419e",
+        "gitBlobSha1": "b118c5f8536cf281e5f6f7c4716be0f506a026f6",
+        "bytes": 26932
+      },
+      {
+        "upstreamPath": "src/management/deployment-profiles.ts",
+        "sha256": "1f88ad9d3b5d4cb1c08285fa0041a5202385875dac2903115ae372e092ed5f76",
+        "gitBlobSha1": "282b4f4e81a5df35a16d6c951008694ed46b37f7",
+        "bytes": 2028
+      },
+      {
+        "upstreamPath": "src/management/dlp-profiles.ts",
+        "sha256": "50b279aded5d7ae25bddd5c09df8497bf5e36ab36986b11071933a716db0aea7",
+        "gitBlobSha1": "f494ca7e8160f40f0dcc996bef5de05fc470c025",
+        "bytes": 1411
+      },
+      {
+        "upstreamPath": "src/management/dlp/data-filtering-profiles.ts",
+        "sha256": "51c69995de58036d0ce61c3ae0ed104ef89e31bd40f53b8e722c6baeb7563074",
+        "gitBlobSha1": "1fdbd80f8a614a702aa8c99f039b448c3903fe99",
+        "bytes": 5970
+      },
+      {
+        "upstreamPath": "src/management/dlp/data-patterns.ts",
+        "sha256": "3fe357bd5f54d8d4bafcc682eb80237132393f9c9ec3746da1ff3a2ba7186c0a",
+        "gitBlobSha1": "6c29022bab8d1f6f8e8d47bdf016795e34f468bf",
+        "bytes": 8276
+      },
+      {
+        "upstreamPath": "src/management/dlp/data-profiles.ts",
+        "sha256": "3dbe5c7e2a21939bcde9fbfbd2e82c8bea4f38c1987db2ca1eb57e65fbec93b6",
+        "gitBlobSha1": "36dbcd7b2f7556087054db212bb2e87255626c31",
+        "bytes": 8055
+      },
+      {
+        "upstreamPath": "src/management/dlp/dictionaries.ts",
+        "sha256": "020fd8730cccbb9a158bad4f25fba95f87c074fe41c1934bee875b259c7b4a80",
+        "gitBlobSha1": "e34866ae07c28b370718b802e2f47e441d488f01",
+        "bytes": 10626
+      },
+      {
+        "upstreamPath": "src/management/dlp/index.ts",
+        "sha256": "b97d45db00b85efb1cfee8fc42202a63b649e8f73a426edd746653d9773e0eb2",
+        "gitBlobSha1": "7e989f29bd35d8cb2e68ebbc75607808fc4ee4bd",
+        "bytes": 2351
+      },
+      {
+        "upstreamPath": "src/management/index.ts",
+        "sha256": "3baf211ee8f7f7153e1fa28daaffd665ccbec01cb483198a77cf3f8e3891fce4",
+        "gitBlobSha1": "1ecc8ce0791597dc3d8d9ab440d279b965969d27",
+        "bytes": 2310
+      },
+      {
+        "upstreamPath": "src/management/oauth-client.ts",
+        "sha256": "4edd2474eb33633bdc6316d6a4be5c5f197edb355a157d7c4849234989bf0776",
+        "gitBlobSha1": "8a91f5f318e2750498aaab7a20931fbb88fd0275",
+        "bytes": 10286
+      },
+      {
+        "upstreamPath": "src/management/oauth-management.ts",
+        "sha256": "46297c91ed7019478a0c2453f5e3a8c2abfc06bddfde081f3f344e9506f38267",
+        "gitBlobSha1": "4f52bda05ab88377ee430384b22b52ca57a88f8a",
+        "bytes": 3329
+      },
+      {
+        "upstreamPath": "src/management/profiles.ts",
+        "sha256": "ae7797cfc05be1f47cfe776db3037d886e21284c09c78d5b9bfb48dd72295812",
+        "gitBlobSha1": "a82652539553dfcf98c42c07b4758458995694cd",
+        "bytes": 10164
+      },
+      {
+        "upstreamPath": "src/management/scan-logs.ts",
+        "sha256": "00b5f2b08305e3f7e5ea65b5e228e291c443573c0a151369cf347d4655a7519a",
+        "gitBlobSha1": "42a620b66fcc15a6dcc82dc1ac762f361e9a4da1",
+        "bytes": 2947
+      },
+      {
+        "upstreamPath": "src/management/topics.ts",
+        "sha256": "1022852794782c52231afc659377f19aa5e90879a211bcc4fb63398d03e23b94",
+        "gitBlobSha1": "5bab461ec8f49b7c29498415c4286248bf75dee6",
+        "bytes": 10297
+      },
+      {
+        "upstreamPath": "src/model-security/client.ts",
+        "sha256": "18539089f958b9d075a687d64aac118ef621fb43e11e90e575be01a18bd4d1c1",
+        "gitBlobSha1": "115dee75f5ad730d2d17417f7d7bea9eabb68e9d",
+        "bytes": 5137
+      },
+      {
+        "upstreamPath": "src/model-security/custom-rules-client.ts",
+        "sha256": "25ce13ce7066b0887e3d890b941954ee159be63f2662832694595ca1aeb94ca5",
+        "gitBlobSha1": "ec00dc56e12c586e9c76ad669c992aeabaf77cdd",
+        "bytes": 8811
+      },
+      {
+        "upstreamPath": "src/model-security/index.ts",
+        "sha256": "2b169f8d5b350e7d40fe1a338509131a61da85c255b96668643655b58c2e5a0f",
+        "gitBlobSha1": "cd14769f164da9f9b87f1e1c93ff01d1d09a85e9",
+        "bytes": 1481
+      },
+      {
+        "upstreamPath": "src/model-security/models-client.ts",
+        "sha256": "2763b1044280677403a9c710bd19e171853d42f29be2b5ef3155fa1da5942077",
+        "gitBlobSha1": "cebbeeea67ae953bd308ee4cd460f1d5d2d6e9e1",
+        "bytes": 10475
+      },
+      {
+        "upstreamPath": "src/model-security/scans-client.ts",
+        "sha256": "f19b648a9ed7dc121317fd498ba95901266aa75f24f37b44b343ec7e594244e5",
+        "gitBlobSha1": "8dfdf0abc11bbf7113fc59897df8fd0a4d34cab8",
+        "bytes": 18038
+      },
+      {
+        "upstreamPath": "src/model-security/security-groups-client.ts",
+        "sha256": "e157dbce03efee2373cad7c48ebd39c66bc47f76fca33d54d71a6ac60c9fa38e",
+        "gitBlobSha1": "9aa2e4b6feb4a7b9cd3747eaf4d508f9494df638",
+        "bytes": 13596
+      },
+      {
+        "upstreamPath": "src/model-security/security-rules-client.ts",
+        "sha256": "5196f0f5f018c202b734c943f1cd196a9a43f6eb021e84968bd3df797be35cc9",
+        "gitBlobSha1": "c64b5f2cc579956a55c8d5fa2c87e9fc06f99e37",
+        "bytes": 4795
+      },
+      {
+        "upstreamPath": "src/models/agentguard.ts",
+        "sha256": "5dcde14e051b1c2ad8092b75dd8807a48b049288489ea8dfe1142388c6cb9449",
+        "gitBlobSha1": "7f422b8727515b771d92f91dfa70e2afce1711ac",
+        "bytes": 6025
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-admin-guardrails.ts",
+        "sha256": "7bcd85e53e2a794dab779041ad750a3b8800818a5ae0976fdf6da3512fbb47e9",
+        "gitBlobSha1": "eef61e3a8fcac1173975d57b3b78a5ba096154de",
+        "bytes": 3964
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-dashboard.ts",
+        "sha256": "cf63cf5f6fcaa5236bfdedd750caa43e67258896f334b783acc6b47312ef51e8",
+        "gitBlobSha1": "8b3d347b5660234a35ed6a9e50fb73ce8b1ff8fb",
+        "bytes": 4639
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-extensions.ts",
+        "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+        "gitBlobSha1": "5cac6008f6f0c631cbdf9374ab4c176e7da0ba7e",
+        "bytes": 116251
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-inference.ts",
+        "sha256": "354d6e57d2b00faadf56ec8d23299806554a46889a3692b0326cc0c3caa98436",
+        "gitBlobSha1": "b2304776543248b7cf2ea65974b74420a7fed045",
+        "bytes": 295530
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-model-pricing.ts",
+        "sha256": "736e8ceddf06e8c889bee6a52207fbd68a5db3c59ada6152e1eba7b9094d114c",
+        "gitBlobSha1": "75265276a4d62a2380eb430a8e66baab63307b14",
+        "bytes": 3512
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-realtime.ts",
+        "sha256": "9a691cdf387ad2b51aa3a3c6386f0aaf773cacbde37eb1d193aa7ccbfee083e3",
+        "gitBlobSha1": "2c9a4ca9207036035e1ba513a56604d63e4abbe9",
+        "bytes": 1293
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-requests.ts",
+        "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+        "gitBlobSha1": "f8eff8a8e2472d71d8b361b21a05658522e8dd3c",
+        "bytes": 21295
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway-routing.ts",
+        "sha256": "8f4dfe8ff24a38a427f2717415b2e1f89a8896d85bb383fd288b19d7638159c0",
+        "gitBlobSha1": "f143fd924aa8a6d9107b2a310a67fe2b2749b047",
+        "bytes": 13151
+      },
+      {
+        "upstreamPath": "src/models/ai-gateway.ts",
+        "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+        "gitBlobSha1": "b727652745fce038da00846f43b324e9a8cfe833",
+        "bytes": 48941
+      },
+      {
+        "upstreamPath": "src/models/ai-profile.ts",
+        "sha256": "b0742072fe3c982f4ac667e4a7efddb2370831fd318fa53d012acf0e91565f0b",
+        "gitBlobSha1": "622e76ba17463b28de2d5055f86d31d7661a3c50",
+        "bytes": 639
+      },
+      {
+        "upstreamPath": "src/models/async-scan.ts",
+        "sha256": "a48c1edab93525b3abebc017f21bed4e22659ffca09d09a3379b32a7f040d336",
+        "gitBlobSha1": "b8aa1e196eb95a5ed50e0273962fd9a38c41bf4c",
+        "bytes": 797
+      },
+      {
+        "upstreamPath": "src/models/detection-reports.ts",
+        "sha256": "6726b770eebf65a1fdb200c1cd9d734a7168ff2357983342e7007606638ddaf1",
+        "gitBlobSha1": "8b052d3cb392b9b01f339c2e87a142fd91340ffd",
+        "bytes": 5568
+      },
+      {
+        "upstreamPath": "src/models/detection.ts",
+        "sha256": "5941aa26e49c89fd112429de81808731eadf1a557ee043d6c9ffc028c96f7cd4",
+        "gitBlobSha1": "1908ceeb7aca928f77ba62b885ec91f514852d5f",
+        "bytes": 2673
+      },
+      {
+        "upstreamPath": "src/models/dlp-audit.ts",
+        "sha256": "58620ae2e1fbe587ca1371466687de3aab2e948bffcd2fefe800bd4ffc9cccd5",
+        "gitBlobSha1": "bbff61fe95c9821a3ec502a50112c08eadebae6d",
+        "bytes": 718
+      },
+      {
+        "upstreamPath": "src/models/dlp-data-filtering-profile.ts",
+        "sha256": "03569313794e0fc4f88350fd08b9f09969ee500c11fca442d320bae1eba7d22e",
+        "gitBlobSha1": "e7ec7a24783ea70bb2df8f7ce06dbb2e0e962eef",
+        "bytes": 6908
+      },
+      {
+        "upstreamPath": "src/models/dlp-data-pattern.ts",
+        "sha256": "b66d7eb9b2b11406550606fdff38558af93da3972659de455b8d2b7635d157bd",
+        "gitBlobSha1": "a9b62471c8ee401dc4873c51a8b74a32442c8718",
+        "bytes": 6645
+      },
+      {
+        "upstreamPath": "src/models/dlp-data-profile.ts",
+        "sha256": "7f40647bf871f44fe7371a81fcd834460305cd19d8a492397f3c1660656f08f0",
+        "gitBlobSha1": "5f1a1d4fa52aae761aa47672748e1d038df94fd2",
+        "bytes": 9020
+      },
+      {
+        "upstreamPath": "src/models/dlp-dictionary.ts",
+        "sha256": "41bf06db58e5f81f1c498f291e61d32cfd05f921650d9f29b0ae34736fa512f3",
+        "gitBlobSha1": "b973bde7f3e3fc41dcf09a037e4dfcbc4c71905e",
+        "bytes": 5298
+      },
+      {
+        "upstreamPath": "src/models/dlp-json-nullable.ts",
+        "sha256": "7563d06002e180f33c466ee1fd3904d913a6ebe1a92b479aa33c040dbd33d28a",
+        "gitBlobSha1": "e05bdd6db1bd9d91039cfe54975fc67c4bbb36d4",
+        "bytes": 1026
+      },
+      {
+        "upstreamPath": "src/models/dlp-page.ts",
+        "sha256": "a677c11825b2f7f81e0c1df50833f79814efa71e24f6611ffb83e5b9e2ff8a32",
+        "gitBlobSha1": "1fc5c4792c55b58d8653f3cd97924ab4fee1dcfa",
+        "bytes": 2243
+      },
+      {
+        "upstreamPath": "src/models/dlp-report.ts",
+        "sha256": "f88ae75ca1b112b08b163928b477152e090b8533a8f1c4f6e03183ac3d64f652",
+        "gitBlobSha1": "a6af615094b83b72ec131b6aa91088bc84877b96",
+        "bytes": 858
+      },
+      {
+        "upstreamPath": "src/models/enums.ts",
+        "sha256": "485072a42d7a084a58c446b189e6d95d0e920c936eef3e01192787a3b269308c",
+        "gitBlobSha1": "494cead28a0a3f6df6e9e37d80cfada8cdef9d86",
+        "bytes": 1894
+      },
+      {
+        "upstreamPath": "src/models/error-response.ts",
+        "sha256": "49ecb99da64d90c2d1a6dced549eeb8e65bf4e2960e3303ce54239df516f42c5",
+        "gitBlobSha1": "fd9ee47d908f2c94dbf0bc58ad1538f21c7c9b2d",
+        "bytes": 637
+      },
+      {
+        "upstreamPath": "src/models/iam.ts",
+        "sha256": "efa5fa3ebb50a5f1a8486ea135484e0d906995bdbbe59fafc944037e9b841217",
+        "gitBlobSha1": "3e98a0a65361bf6c2dffdbbb8d96742efe76feaf",
+        "bytes": 3151
+      },
+      {
+        "upstreamPath": "src/models/index.ts",
+        "sha256": "49edee31664da83ceac6f9923607f810c0915c1c02c1982dda792356343ec3a4",
+        "gitBlobSha1": "ada1eb4a67f6857787b3a6f6a2c2fb9325395a2f",
+        "bytes": 12533
+      },
+      {
+        "upstreamPath": "src/models/metadata.ts",
+        "sha256": "bc185d86e06dcd6cf303c728fc18a625eac5c2f54f1e83e7f732957919dc8688",
+        "gitBlobSha1": "22426b932b2fe310eabe84cd9b367c345e73d4a2",
+        "bytes": 776
+      },
+      {
+        "upstreamPath": "src/models/mgmt-api-key.ts",
+        "sha256": "ffd863fdca646ac7f8c6454c08a7111557e512b0346830a2a4a5da0648664a55",
+        "gitBlobSha1": "4fe3edf491a9be601978ecbc1070f650e4961989",
+        "bytes": 3141
+      },
+      {
+        "upstreamPath": "src/models/mgmt-custom-topic.ts",
+        "sha256": "405f747ea807f1feb7448d1c837ef5cc31b2a8b23f2c3a3b5feade75707142c8",
+        "gitBlobSha1": "69ee2fd90fef6451c87883715a9b28c86a4dbacb",
+        "bytes": 2975
+      },
+      {
+        "upstreamPath": "src/models/mgmt-customer-app.ts",
+        "sha256": "bac19852ced658ae4f97210017c8ccfcab3ef099dd831956898813828f34c699",
+        "gitBlobSha1": "c1a80e3a4d3a5217294ab27233572dbb030829a4",
+        "bytes": 2649
+      },
+      {
+        "upstreamPath": "src/models/mgmt-dashboard-sessions.ts",
+        "sha256": "d258915c6e30e038375ab13338101cab654e5a54b6b59af43ece2076a8c16009",
+        "gitBlobSha1": "571fca55dcd063caddc7975ada197f652c62e3e2",
+        "bytes": 6503
+      },
+      {
+        "upstreamPath": "src/models/mgmt-dashboard.ts",
+        "sha256": "228cc8abcfd9835d85327805ecf02977bad70391731188b339697f2d9397855e",
+        "gitBlobSha1": "5543a4ca159e6791dcbe1d0b95afe10ac9c52d35",
+        "bytes": 9631
+      },
+      {
+        "upstreamPath": "src/models/mgmt-deployment-profile.ts",
+        "sha256": "f7965597098ea4a098ff6329d68378831a251748b303ca149a6efe21421cbe15",
+        "gitBlobSha1": "4bc746756f25583c40af0daa07f75815d0e74705",
+        "bytes": 840
+      },
+      {
+        "upstreamPath": "src/models/mgmt-dlp-profile.ts",
+        "sha256": "cf1536a7acd69b6becae4b9971b930652fc9c96b8ba51ab8e069ad6342ddfc66",
+        "gitBlobSha1": "2633f6a4947bc050b6950f095ae45ff6eafb465e",
+        "bytes": 976
+      },
+      {
+        "upstreamPath": "src/models/mgmt-oauth.ts",
+        "sha256": "fbfe4eab5853d913fb8a91fd43de02dd6ab14e0713ac80d4557f5fe8d5fbf916",
+        "gitBlobSha1": "fb9df20b6ea41e9bb67d49ff38be9940cc99940b",
+        "bytes": 796
+      },
+      {
+        "upstreamPath": "src/models/mgmt-scan-log.ts",
+        "sha256": "210e4ee781522882834d6eee08901f7388bbe063f5d7ef6c1c438c78d12454bd",
+        "gitBlobSha1": "917c6bc00e3e0d194034c8667ca2e11ca9b0213a",
+        "bytes": 4246
+      },
+      {
+        "upstreamPath": "src/models/mgmt-security-profile.ts",
+        "sha256": "22e67c4e0541532835437f2236256ebdaf3c8df74e0b904372849494efbe671d",
+        "gitBlobSha1": "2293dfb1bacf778500a470052193173a35fe19f6",
+        "bytes": 13926
+      },
+      {
+        "upstreamPath": "src/models/model-security-custom-rules.ts",
+        "sha256": "ba1e62677b029b7a1adea2b14b0d5c786a2b7934b725e54aea9a936b8c22e785",
+        "gitBlobSha1": "710f4b362e36cb217aa49eb18be20f90017717ef",
+        "bytes": 6766
+      },
+      {
+        "upstreamPath": "src/models/model-security-enums.ts",
+        "sha256": "0b35871d0c0dae3934f5b4c9b19c423325c2c43bdc1cfce5e292c1aa2f46ab4d",
+        "gitBlobSha1": "2333ef12aa21f57087e932c3e5b1999e904891fd",
+        "bytes": 7349
+      },
+      {
+        "upstreamPath": "src/models/model-security.ts",
+        "sha256": "45c4db13c21d62084cb5dc2e0ae4b25c911b1927037a1ed67d0bf925c116e8a9",
+        "gitBlobSha1": "aa717304577b269af3f3cf7ec15d2a01ab923c8f",
+        "bytes": 23915
+      },
+      {
+        "upstreamPath": "src/models/oauth-token.ts",
+        "sha256": "5ef70df934830f95ebb1d4e56029703041167180367675009566381b58811354",
+        "gitBlobSha1": "9d925541ddc5716d807871d56a6dcc95bcfdc941",
+        "bytes": 467
+      },
+      {
+        "upstreamPath": "src/models/prompt-detected.ts",
+        "sha256": "2ecd0b34d79be5442a25fced0744fbe5e4e28d9c63d9fd2f7d384811ec05b8c9",
+        "gitBlobSha1": "e9289a0e30b2f7dcbd15a995fc6577b301c672f3",
+        "bytes": 1160
+      },
+      {
+        "upstreamPath": "src/models/red-team-capabilities.ts",
+        "sha256": "369ac5d5b8ffdef2588e7ab8add5c9af91b23f181f1ad08639be6f699b0315ae",
+        "gitBlobSha1": "1fcc8fd2c0e4dddb67490a422ceec5564c2ee8c8",
+        "bytes": 2452
+      },
+      {
+        "upstreamPath": "src/models/red-team-details.ts",
+        "sha256": "965a9968f5a424c75c7bad8351a04be1ebaf1c64c3b1f93eab81bfac322424df",
+        "gitBlobSha1": "6d29b21567dcd20cfd927075eac6ce96b300f8b9",
+        "bytes": 8188
+      },
+      {
+        "upstreamPath": "src/models/red-team-enums.ts",
+        "sha256": "fec52b8139bb70319ce7ec8863498d8c0bad94332b2b9945565c6cb1c1f4c4f4",
+        "gitBlobSha1": "7ab4fba0b03c11ae1cb1c3cccabc5c853a031b80",
+        "bytes": 9700
+      },
+      {
+        "upstreamPath": "src/models/red-team-network-broker.ts",
+        "sha256": "d0a78d2fe0d05ebfbf3e00403865d679ab06790116cad6191b957b8c645ce30b",
+        "gitBlobSha1": "6678fe35647f99e76beca07f4b5011700d524bd3",
+        "bytes": 3760
+      },
+      {
+        "upstreamPath": "src/models/red-team.ts",
+        "sha256": "60602a52cd88bc5c02233c461d6baf620eed8176bb3bde29d77cea41dbc81cc5",
+        "gitBlobSha1": "4244ca0395ba3c3c0450454066dea12a13cb3b08",
+        "bytes": 76888
+      },
+      {
+        "upstreamPath": "src/models/response-detected.ts",
+        "sha256": "e4003c9efcb4c19e7ce3652dbf12baa5cbd32f13931d5dbe256aef1229ee4ab4",
+        "gitBlobSha1": "ede088892bc7dfe1184d2c0aa7e8ca9630580dbb",
+        "bytes": 1181
+      },
+      {
+        "upstreamPath": "src/models/scan-detail.ts",
+        "sha256": "7d8d55604c1a1d67caba2a96063fdc9e5f94bfc7c151d72a46ef11bc931b7a5b",
+        "gitBlobSha1": "6c8ea442fc5bf5fd02f618a8bc06bdcac6e16b75",
+        "bytes": 428
+      },
+      {
+        "upstreamPath": "src/models/scan-id-result.ts",
+        "sha256": "a3888c651e699a01fb5e8c6d02184c31c6f6067bbb685ff4bc730d9720942249",
+        "gitBlobSha1": "ac48e81efcc4dec68402ad6c988df13671261fb9",
+        "bytes": 845
+      },
+      {
+        "upstreamPath": "src/models/scan-request.ts",
+        "sha256": "308003853b1fa15daa063bb46986d5d03940a652c7ca3b3c5275e2a0abfb04fb",
+        "gitBlobSha1": "db5f84a1a0d5b42189a03749926077c8d8a8529f",
+        "bytes": 1312
+      },
+      {
+        "upstreamPath": "src/models/scan-response.ts",
+        "sha256": "d6e49b1157f677e38805df7880972e827e2386cd94b74916828150f7b89c2f7f",
+        "gitBlobSha1": "844ca32437ba7eef1177bba3940b541567773611",
+        "bytes": 5273
+      },
+      {
+        "upstreamPath": "src/models/threat-report.ts",
+        "sha256": "09fae9966103b7cf773bc9cc140553a2752c5c20da4418f537627c07a1a55a94",
+        "gitBlobSha1": "820243545c4e37c5c1cbb1bc8662ff3088623bf7",
+        "bytes": 659
+      },
+      {
+        "upstreamPath": "src/models/tool-event.ts",
+        "sha256": "5c95b0e0df2373b8e70cdc653d2d9aa21c201b479ba34d3ad10d54a3d8c98c30",
+        "gitBlobSha1": "9b3b8848e62ed96411ce0f22ac92bcd2c084ecec",
+        "bytes": 959
+      },
+      {
+        "upstreamPath": "src/models/urlf-report.ts",
+        "sha256": "5f42511df7cd3bfc01beb3ed41f6eba8f41c48118e32969b7bbbc43a265a9557",
+        "gitBlobSha1": "7d0a7ee5d9fae5feac81842c7f949a75074b0ed8",
+        "bytes": 438
+      },
+      {
+        "upstreamPath": "src/oauth-config.ts",
+        "sha256": "40f8952f0f1bbb87da76833353962c96ec76556720c2dd329a2646cfbbbb929c",
+        "gitBlobSha1": "3840b87a9c55cd6f887f3ae6893078344728848d",
+        "bytes": 3838
+      },
+      {
+        "upstreamPath": "src/red-team/adapters-client.ts",
+        "sha256": "a93dfbec2ca3db57100028f41e01970f0c3830f1ee477e049cdbcd3c548e50e6",
+        "gitBlobSha1": "7444c8a3e43c4171d29acbd6e771fce912742430",
+        "bytes": 10055
+      },
+      {
+        "upstreamPath": "src/red-team/client.ts",
+        "sha256": "e353878650661cd45bd8991eb71d174adb030286be88fec87442df856c25b3bc",
+        "gitBlobSha1": "18aa6435c9a6aa981eef95d6955532b233b822f5",
+        "bytes": 18760
+      },
+      {
+        "upstreamPath": "src/red-team/custom-attack-reports-client.ts",
+        "sha256": "45d56f9a11cc0d7dacacaf995357c37ad620f976f5a3098b083cc18e53c40acc",
+        "gitBlobSha1": "6602eef3cc39d99f51813fab85f3467036b1afc7",
+        "bytes": 9704
+      },
+      {
+        "upstreamPath": "src/red-team/custom-attacks-client.ts",
+        "sha256": "0cd11dda7d2bf6d8ea669b4be5855ef41cf6af9b56ba4265cb5341d11d4602d1",
+        "gitBlobSha1": "fa580d6ecf775a6fe18d1c953ee727822ddc373c",
+        "bytes": 24507
+      },
+      {
+        "upstreamPath": "src/red-team/eula-client.ts",
+        "sha256": "ddff2f55c7f45dd1c3fe0f6c696a93603230866249418605a0f34cc4603d0114",
+        "gitBlobSha1": "276ad024560c50f0ebd78ba500ad53685fb54ec3",
+        "bytes": 2973
+      },
+      {
+        "upstreamPath": "src/red-team/index.ts",
+        "sha256": "e1066ae807cf7f820341c56d4a9a4a6d0d8a45947190a946f3a6c55b3fa58ae9",
+        "gitBlobSha1": "4b602feb9af79ffd444fa6a99b69e636b7c06591",
+        "bytes": 1586
+      },
+      {
+        "upstreamPath": "src/red-team/instances-client.ts",
+        "sha256": "a2f2f47a90cf30f73a71f138357cbd821434c08ecb6fc86feea879d38b902bc7",
+        "gitBlobSha1": "88f96cdc5e9f9d8eaacfdedf0eba454fc4df9dcf",
+        "bytes": 8203
+      },
+      {
+        "upstreamPath": "src/red-team/network-broker-client.ts",
+        "sha256": "f7e7579ada8d47ae6e8fee4073637fa7aea283708cb6ea7cd60ad4e86bccbbb8",
+        "gitBlobSha1": "fb8f15e2c9cc88b0b58ea04b0cf0a2269ad0c07d",
+        "bytes": 6348
+      },
+      {
+        "upstreamPath": "src/red-team/reports-client.ts",
+        "sha256": "73553b0f580f603e085fd95aee0e7ccb0e04a6f396038d5240a79409872106f0",
+        "gitBlobSha1": "0d8d452ab650a16a7dcc665964a7c2beb9041b33",
+        "bytes": 16705
+      },
+      {
+        "upstreamPath": "src/red-team/scans-client.ts",
+        "sha256": "07da1af740fcb5c952aa198844159cfad2f172989e25d43111abebc41803db6d",
+        "gitBlobSha1": "df933603eab5662bc4ff372a7ff9b5a4e76dc608",
+        "bytes": 6209
+      },
+      {
+        "upstreamPath": "src/red-team/targets-client.ts",
+        "sha256": "73efe80d654aaeff756df826ee06fbef92fb33ca432e9e59762cf29290491654",
+        "gitBlobSha1": "6878e46d9412041d48f63c1105c94de96533467d",
+        "bytes": 16433
+      },
+      {
+        "upstreamPath": "src/scan/content.ts",
+        "sha256": "bd65f9cf403041a508a52c4b1e26e934203423d5dce53d934d0bc8a07ec0a9e8",
+        "gitBlobSha1": "951b8922364e1d82f9d061e9e324aded688fd104",
+        "bytes": 10166
+      },
+      {
+        "upstreamPath": "src/scan/index.ts",
+        "sha256": "0c91ea8f7df48cd38982e9b9666958f38d9af37391451272bace9dd757785f75",
+        "gitBlobSha1": "e37cf9b67570ab11843fa4d0937544f52b2efec6",
+        "bytes": 145
+      },
+      {
+        "upstreamPath": "src/scan/scanner.ts",
+        "sha256": "93f8b7d6854fbe30fa7bed3c24a1a520128756fceabfa627278397752bc836fb",
+        "gitBlobSha1": "f47490a41b8797a282e365f75dbf098122bee4fb",
+        "bytes": 11275
+      },
+      {
+        "upstreamPath": "src/utils.ts",
+        "sha256": "65d1d6f06e1ca1600e05f320e963b64480350f27b31798c496061d5c09ea57ba",
+        "gitBlobSha1": "a8372ec387ae4bc69acab4798a0e59d60390181e",
+        "bytes": 1258
+      },
+      {
+        "upstreamPath": "src/validators.ts",
+        "sha256": "e38d0017fb60815dd7798cdc3bce5bce53da18822facf3395b014fdabe922cb4",
+        "gitBlobSha1": "554d26a18010cfae8d2deb6d32c56f1a0615b416",
+        "bytes": 3176
+      }
+    ],
+    "srcTreeSha256": "64c7f427b35caef0397acaa8e99aac9833bbb8446ca3824bf5bea6b31d27dedb",
+    "commitObject": {
+      "path": "contracts/sources/typescript/commit.txt",
+      "sha256": "2ce7b5130c7e6dff59bd619fe4772ef39c5570e4346650fb39bab026c09223c9",
+      "bytes": 267,
+      "gitObjectSha1": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c"
+    },
+    "rootTreeSha1": "19e3d5693e8e0e4dc6786e003cc0d8744570928e"
+  },
+  "fixturePolicy": {
+    "requiredTreePrefix": "test/openapi/",
+    "additionalUpstreamPaths": [
+      "test/http/event-stream.spec.ts",
+      "test/http/request-validation.spec.ts",
+      "test/http/request.spec.ts",
+      "test/http/runtime-transport.spec.ts",
+      "test/http/resilience.spec.ts",
+      "test/ai-gateway/inference.spec.ts",
+      "test/ai-gateway/provider-http.spec.ts",
+      "test/ai-gateway/prompt-completions.spec.ts",
+      "test/ai-gateway/realtime.spec.ts",
+      "test/ai-gateway/request-model-wiring.spec.ts",
+      "test/ai-gateway/telemetry-query-contracts.spec.ts",
+      "test/ai-gateway/telemetry-group-filters.spec.ts",
+      "test/ai-gateway/telemetry-filter-schema.spec.ts",
+      "test/ai-gateway/telemetry-validated-copy.spec.ts",
+      "test/ai-gateway/telemetry-validation.spec.ts",
+      "test/management/dlp/dictionaries.spec.ts",
+      "test/red-team/custom-attacks-client.spec.ts",
+      "test/ai-gateway/fixtures/live-responses.json",
+      "test/ai-gateway/fixtures/model-pricing-live.json",
+      "test/ai-gateway/fixtures/observability.json",
+      "test/ai-gateway/fixtures/secret-references.json"
+    ],
+    "credentials": "No tenant registrations or real credentials are bundled. Independent generator specimens use synthetic values. Observed responses retain the upstream explicit sanitization or public no-auth capture provenance; embedded test literals are dummy credentials.",
+    "independence": "OpenAPI JSON fixtures are generated from the pinned specifications independently of SDK validators, with explicit reviewed corrections. TypeScript test references are SDK-authored regression evidence and are not claimed as independent API truth. Observed captures are separately labeled.",
+    "license": "typescript"
+  },
+  "fixtures": [
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/fixtures/live-responses.json",
+      "upstreamPath": "test/ai-gateway/fixtures/live-responses.json",
+      "origin": "typescript",
+      "category": "sanitized-observed-response",
+      "sha256": "2759819acff43e5221523ebc9d77b30e925bd0bbc3afc83aecce2221c49f1ae7",
+      "gitBlobSha1": "ccfdaecbc78eb5d9ea1c317dca53babd78501da4",
+      "bytes": 74006
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/fixtures/model-pricing-live.json",
+      "upstreamPath": "test/ai-gateway/fixtures/model-pricing-live.json",
+      "origin": "typescript",
+      "category": "public-response-capture",
+      "sha256": "8af2645c707286d9d7da42796e064b214f533b8233e7081df3bb40bdf89680fe",
+      "gitBlobSha1": "2b76e77e8a48faeb0bc7c4d99d29b09500f56eb5",
+      "bytes": 20904
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/fixtures/observability.json",
+      "upstreamPath": "test/ai-gateway/fixtures/observability.json",
+      "origin": "typescript",
+      "category": "sanitized-observed-response",
+      "sha256": "c7e8d512c2230a0a5becf55de182258e6ed1b0ba2e50cec46d6686624032bceb",
+      "gitBlobSha1": "69c86521e9277c6ee15197fa4075464d24dc3d52",
+      "bytes": 317
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/fixtures/secret-references.json",
+      "upstreamPath": "test/ai-gateway/fixtures/secret-references.json",
+      "origin": "typescript",
+      "category": "sanitized-observed-response",
+      "sha256": "686c41cfbb5b7d93099561d2f628156379576a44eee8805d50ebf7515c50b421",
+      "gitBlobSha1": "fab3ced591c759629f3666588d119b1992b8aa8c",
+      "bytes": 1194
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/inference.spec.ts",
+      "upstreamPath": "test/ai-gateway/inference.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "79c85e7bfd3385354029a24cb956b436c187f3ba37118d96eedf270cd628695d",
+      "gitBlobSha1": "297d989b78d4e819fb1453fbea50b4fa70e550aa",
+      "bytes": 10419
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/prompt-completions.spec.ts",
+      "upstreamPath": "test/ai-gateway/prompt-completions.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "e70b98f669c7427e680d76e1c5a397085635ea10fc12e549276fe4784716784f",
+      "gitBlobSha1": "bd2f53437bd469fd314f0fd9bbbbc9b11a2d7ffb",
+      "bytes": 11377
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/provider-http.spec.ts",
+      "upstreamPath": "test/ai-gateway/provider-http.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "804dfdde60cbaf3ba865956965567403318cf55dafce5d42a1ceac63a52970c8",
+      "gitBlobSha1": "a69c1b5e78a25b9f62028fee6a2f65618c87a663",
+      "bytes": 10987
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/realtime.spec.ts",
+      "upstreamPath": "test/ai-gateway/realtime.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "1767dcc68f8b41a820ef240786464123b3caedae5a1ac76b83b2a5017df94327",
+      "gitBlobSha1": "ce8c9b60b7415e4c3f201a68ab52de1e31257101",
+      "bytes": 18114
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/request-model-wiring.spec.ts",
+      "upstreamPath": "test/ai-gateway/request-model-wiring.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "d7da2ecb2df0e3c4c0f557208e93c4e89bffa0c97351394b8a98f887136f1521",
+      "gitBlobSha1": "cf80094013a0416668016fc7a258561d4c8719b4",
+      "bytes": 5023
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/telemetry-filter-schema.spec.ts",
+      "upstreamPath": "test/ai-gateway/telemetry-filter-schema.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "e6209891accaf1d61d2991e3edb28dc0d1e6b3dec9a1e00bf6331032328c0722",
+      "gitBlobSha1": "7b7f0f980c991045e6682105982c833feda46bf1",
+      "bytes": 1555
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/telemetry-group-filters.spec.ts",
+      "upstreamPath": "test/ai-gateway/telemetry-group-filters.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "3715d3b76fe761cf303ee2ca74ae9be724b1f86e25e52ca8f23af2d5b1102a38",
+      "gitBlobSha1": "df7eea911b6f7c9ca98a4782ba341757a58d6614",
+      "bytes": 7675
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/telemetry-query-contracts.spec.ts",
+      "upstreamPath": "test/ai-gateway/telemetry-query-contracts.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "ddb7568816fdfa67891dd404127106589d47ec6e7eee334b30e314604eb18a6b",
+      "gitBlobSha1": "b6c2101717544c756deaf4ef9103fd9328d982de",
+      "bytes": 7743
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/telemetry-validated-copy.spec.ts",
+      "upstreamPath": "test/ai-gateway/telemetry-validated-copy.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "04323673360d715a665945b17de2ab9d0cf5e15f5ad24f250ea89dbb2ae0363c",
+      "gitBlobSha1": "08d209dde89c3cb04265661ce6db457198bdcf73",
+      "bytes": 3928
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/ai-gateway/telemetry-validation.spec.ts",
+      "upstreamPath": "test/ai-gateway/telemetry-validation.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "b821ba9485a5a654bb8c26b79a4c05c213c4538431b4197524ae95b4ef9081eb",
+      "gitBlobSha1": "7a07376ba8d470b58ce92b45caabf7ce423c4b32",
+      "bytes": 9938
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/http/event-stream.spec.ts",
+      "upstreamPath": "test/http/event-stream.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "f7c5247ba58006721027d87ac6c9608ca9790c5b0b77cc408781ab3a727023d8",
+      "gitBlobSha1": "cb079df55a1d200d1be49f2328a52a361e72d5fc",
+      "bytes": 8376
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/http/request-validation.spec.ts",
+      "upstreamPath": "test/http/request-validation.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "393da7c5f2fda3e81c13c6991bea31a3a61f068f1cd7789357141fb00dc116d0",
+      "gitBlobSha1": "8cc50b31552fb69a2af08660255288dc15054edc",
+      "bytes": 2172
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/http/request.spec.ts",
+      "upstreamPath": "test/http/request.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "b9c06a949087686f16c33f4ebc66ea71f81569258a32878c41e7b62f88c4b486",
+      "gitBlobSha1": "d60fd1499a926b57053c78fda5bd4cba08de0620",
+      "bytes": 23198
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/http/resilience.spec.ts",
+      "upstreamPath": "test/http/resilience.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "d76d59704eea45947b6cde7510d02d9082844e85b79b29548dd6a2802beec4c5",
+      "gitBlobSha1": "aa5e8e82c41b4b0bb9c224509c40511154f9cb8e",
+      "bytes": 17655
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/http/runtime-transport.spec.ts",
+      "upstreamPath": "test/http/runtime-transport.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "626a983e4dbf7f84130d6405d24849c8552d22462affa3b4641152109821abb1",
+      "gitBlobSha1": "d84c78c93dc67c6eab4756b83ed88bfc9d666927",
+      "bytes": 2747
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/management/dlp/dictionaries.spec.ts",
+      "upstreamPath": "test/management/dlp/dictionaries.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "ef758323db396bffa72d7101102c9deef9e84b9dfa7f589f10298aa113db8886",
+      "gitBlobSha1": "6987d31d5e5abf86f87520c280e9ff24573517f8",
+      "bytes": 8688
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/acceptance.spec.ts",
+      "upstreamPath": "test/openapi/acceptance.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "c105d31c20252c8508f265875e80c9916ced03f9fb7d660f0d171ca0ccad6c84",
+      "gitBlobSha1": "ab6235b91f43405bbc202ad4a5c91196d5f440ee",
+      "bytes": 3267
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/analytics-adapters.json",
+      "upstreamPath": "test/openapi/analytics-adapters.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "5ec0967224d6fd0b4e834c889e0f92919278f4f38db3df06d5bd6e38ec6aca7f",
+      "gitBlobSha1": "7d76c983dd17f2c57e4ef657af6c4f6f2f72c5b4",
+      "bytes": 13072,
+      "specification": {
+        "source": "ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/analytics-adapters.spec.ts",
+      "upstreamPath": "test/openapi/analytics-adapters.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "c3bd6e6d7156ceef3d557832b2dbc7071244bcf9379cf5f91f18a9088bfad479",
+      "gitBlobSha1": "6e1e92c71f6f0b29ad40bd3bcdc99ec67f5d8451",
+      "bytes": 4115
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/analytics-group-adapters.json",
+      "upstreamPath": "test/openapi/analytics-group-adapters.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "392279f453f64ee1107a47dac3daca4c634c9dc5446aa894cb74b552926f545a",
+      "gitBlobSha1": "0c0f9dae427335b427ef1e2a72437c2910a91b85",
+      "bytes": 9928,
+      "specification": {
+        "source": "ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/analytics-group-adapters.spec.ts",
+      "upstreamPath": "test/openapi/analytics-group-adapters.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "265820caf6846cc482f85b2346a9ec04c2e3641fee25c3683ea299d9d16c5238",
+      "gitBlobSha1": "f6307d3da0bce19c6fb7403623bf7decc6d2f370",
+      "bytes": 4402
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/contracts.spec.ts",
+      "upstreamPath": "test/openapi/contracts.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "e07175ad407ee098331b9e06e7a2be1467058541a1d377e50b40236e92ebe1fd",
+      "gitBlobSha1": "75f7a55315c05770a959e9bbf8ec9d54d2b0f742",
+      "bytes": 7681
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway-runtime.json",
+      "upstreamPath": "test/openapi/fixtures/gateway-runtime.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "0e1a9bd20bdd40e34d797d34c34e063412f6077df0ebca1a68dda573ad8bf54b",
+      "gitBlobSha1": "3098edba3e4606788e31fad6866d0e35dcb28bb9",
+      "bytes": 87648,
+      "specification": {
+        "source": "ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+      "upstreamPath": "test/openapi/fixtures/gateway.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+      "gitBlobSha1": "78be871c43a552ef21e56aeca7ab1e1d21704d29",
+      "bytes": 56712,
+      "specification": {
+        "source": "ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/management.json",
+      "upstreamPath": "test/openapi/fixtures/management.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "6074a7cb954e6c18ceafe002c348236c7cd8f2150652cdb06fb5480e3a5ac4d0",
+      "gitBlobSha1": "9e52dbccc7566795a5340944029ff748072bacf2",
+      "bytes": 38383,
+      "specification": {
+        "source": "prisma-airs/management/mgmt-service_latest.yaml",
+        "sha256": "7ee421fd6ba31bd4f1c88d233ea032a52cd29ad59b71f2c3cbea9bc033fc215f"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/model-data.json",
+      "upstreamPath": "test/openapi/fixtures/model-data.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "7f910da944d59a6000932e32964d15cc1536fa64ff3f9e910bb2b74dcc36c6be",
+      "gitBlobSha1": "f219fe00ce7d75e29d12cc2d52ad1c31531b0dc7",
+      "bytes": 29541,
+      "specification": {
+        "source": "prisma-airs-model-security/dataplane/data-plane.yml",
+        "sha256": "1a581d23ceb7456b9a5f978b212235e2149dadf917eae7d31e1463667339d6dc"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/model-management.json",
+      "upstreamPath": "test/openapi/fixtures/model-management.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "28dd62620f1a787374b860b2b81df3889dbe7ea15f985bf8ded979abca3fe961",
+      "gitBlobSha1": "5de6ddf70181a97ae1a4a895fe16ba4307dccbd9",
+      "bytes": 33884,
+      "specification": {
+        "source": "prisma-airs-model-security/management/mgmt-plane.yml",
+        "sha256": "92b010dbe1b2ba96984aaaadfca95e4a2ff68a1fa98209765cfa1b0bcffcc808"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/network-broker.json",
+      "upstreamPath": "test/openapi/fixtures/network-broker.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "de88e5cac41ba2754f91cdb2fdd1e5a1bcb2d0f182def5d1277e72950970b0df",
+      "gitBlobSha1": "65cc9f5315a51cacabbe2b5fdc9dda13c5f67040",
+      "bytes": 5809,
+      "specification": {
+        "source": "prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+        "sha256": "0cf2176db90da796fdd086a5f8bd6b3dcf3dcd9065d42c4230e10603bb1ea4b5"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/redteam-data.json",
+      "upstreamPath": "test/openapi/fixtures/redteam-data.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "dc29f182519384762f4a8e4403f512424cbeb511109d29dfa4daf91ad9042da9",
+      "gitBlobSha1": "fb8a92f4b889b1395177680bf9fc0ed2cff27d3a",
+      "bytes": 65503,
+      "specification": {
+        "source": "prisma-airs-redteam/data-plane/dp-openapi.yaml",
+        "sha256": "667ce2ea6842c5f96de7a41786d055fa6032d64186bdce4d23edfeeabf10d76d"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/redteam-management.json",
+      "upstreamPath": "test/openapi/fixtures/redteam-management.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "5fb99c07cf92db2a4333d0a53c8f3912feb94fc480263164237a16ba740ca2d3",
+      "gitBlobSha1": "1b733e748ea167ff716d8e4ddbda6c5266fdd0f5",
+      "bytes": 70497,
+      "specification": {
+        "source": "prisma-airs-redteam/management/mp-openapi.yaml",
+        "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/scan.json",
+      "upstreamPath": "test/openapi/fixtures/scan.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "705d45d3240dfc35fe30c07f756f98eb11b4fd136fbc9a8fe860956ce6984435",
+      "gitBlobSha1": "2f94ba6b5e4c4405487c6b077b011c0976d5ba7e",
+      "bytes": 20264,
+      "specification": {
+        "source": "prisma-airs/scan/scan-service_latest.yaml",
+        "sha256": "e97a5a75d5a6073c56af022452d65197c2c474597a569f628fe1d7de0f63e7c3"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/gateway-manifest.json",
+      "upstreamPath": "test/openapi/gateway-manifest.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "ff4797a29c87d1d20396885106f42d85fe13e9198e602b3855dc31fee58ee732",
+      "gitBlobSha1": "6b0442cf4c18a6ea3bfbfc35359fb8c8fb62f8d5",
+      "bytes": 109429,
+      "specification": {
+        "source": "ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/gateway-routing.spec.ts",
+      "upstreamPath": "test/openapi/gateway-routing.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "75e0340093aa5343f73971529692f08268f8f961489a5d9c131d6a2878eb38d7",
+      "gitBlobSha1": "0e02de5ed641dab3e8e4516adacd601a33f49b97",
+      "bytes": 8720
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/inventory.spec.ts",
+      "upstreamPath": "test/openapi/inventory.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "04c0357fdec86f7a5cf6fce84de94a70c34959a5280c29ffcda6656deec568f5",
+      "gitBlobSha1": "e279ac13ff55cfb31c3f6a75516aaaf16269a7f1",
+      "bytes": 3997
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/model-pricing.spec.ts",
+      "upstreamPath": "test/openapi/model-pricing.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "aacc4d4d4d392f027f7846125bcadd59ac50b147372517ebcb0073dba504f71c",
+      "gitBlobSha1": "557fc7444e68798190e1084700a8dec720bbcc78",
+      "bytes": 2089
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/provider-multipart.json",
+      "upstreamPath": "test/openapi/provider-multipart.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "c68c4c11f475168168dcdb05810c33cd6a2a3f9ddaa1d4ee91d71502e8e49e25",
+      "gitBlobSha1": "b20e0f074f706f3015dc98519a92b8cf79692a05",
+      "bytes": 10570,
+      "specification": {
+        "source": "ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/provider-multipart.spec.ts",
+      "upstreamPath": "test/openapi/provider-multipart.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "72a2ff8c51d5d98b7192178902f4e9b67da98a72801d98e835d7f363e3abee25",
+      "gitBlobSha1": "e90960d95fdfc866291247b34fea49c7146eb83b",
+      "bytes": 5819
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/realtime.json",
+      "upstreamPath": "test/openapi/realtime.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "8a560077d72581ca78d9900dfbf847ecea30f3127f0d750dd3c390f515120f03",
+      "gitBlobSha1": "fbcaef29c2a348cd26f4ae2d7d48ffcb87fe2fb0",
+      "bytes": 5559,
+      "specification": {
+        "source": "ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/realtime.spec.ts",
+      "upstreamPath": "test/openapi/realtime.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "2e4c1b57c72cdbd447d02f6b2f1a5792302af2dba157a5bfb242fbff3765c972",
+      "gitBlobSha1": "1933ceef0ccd0b2012b2f5ec0c2ce3de6b59de92",
+      "bytes": 6588
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/specimen.spec.ts",
+      "upstreamPath": "test/openapi/specimen.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "3744842098922018e2fd401e49bd054b24830db6116a83fb4d8fc810c2cc2179",
+      "gitBlobSha1": "46e65d7a85b4827672ea9f3a9938242b9b7f0b38",
+      "bytes": 995
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/typed-fields.ts",
+      "upstreamPath": "test/openapi/typed-fields.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "48b644e951ce962ff12a86f8d077a124e8280a840a2cbd2fa733f7c767242110",
+      "gitBlobSha1": "bba46cf66949c52b37e1ab2064f437674c579a05",
+      "bytes": 2503
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation.spec.ts",
+      "upstreamPath": "test/openapi/validation.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "295888aad0bad90f282057e72b39cc93c7ffb8176ab6bd782d699f9fe2c866cb",
+      "gitBlobSha1": "e75b7c3b1c225f9165b060698daad6d1a9541120",
+      "bytes": 4539
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-0.json",
+      "upstreamPath": "test/openapi/validation/gateway-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "1e3dc2783f9c6071dde9ce84473b6ca8558e69176e627cef37240598577aa164",
+      "gitBlobSha1": "40d281a804541f53a7057426596aca8af9c5c6e3",
+      "bytes": 238083,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-1.json",
+      "upstreamPath": "test/openapi/validation/gateway-1.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "1dc31b0dd73efa898bcc7b7f6f8bcc9716077d15c9b541eb68caacc4f2b0be4e",
+      "gitBlobSha1": "4549d43c92108c089b941002f5c53df282a12916",
+      "bytes": 24860,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-2.json",
+      "upstreamPath": "test/openapi/validation/gateway-2.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "27e021a36ed65414a57d3fb1ab75ffaefaf7e0b2e8cc2c985f60d5f97d3d606a",
+      "gitBlobSha1": "6226526197ed4b415995567cfb969463a8f6535b",
+      "bytes": 34958,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-3.json",
+      "upstreamPath": "test/openapi/validation/gateway-3.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "5baf0e76001cb82025c94f6bff4453433b81efa4e801b956025872eb074f854e",
+      "gitBlobSha1": "7d29d3341dc0e9ae54377e683267469a1f3ca83f",
+      "bytes": 28920,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-4.json",
+      "upstreamPath": "test/openapi/validation/gateway-4.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "2f52ee7d21de3ab08994ac3924d752dea4498fc31d94f198da38f8562d9c66e9",
+      "gitBlobSha1": "4a34ff4aa99d260eadd8efe4e0f272cbd2dcf403",
+      "bytes": 218944,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-5.json",
+      "upstreamPath": "test/openapi/validation/gateway-5.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "4dd625a2ca23db003dbf6ae7126207aa47336bb7932a39a6ad33821ce2d17fd8",
+      "gitBlobSha1": "dbb24bd1cd10ec399011f161812b7ab1b0822679",
+      "bytes": 36587,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-6.json",
+      "upstreamPath": "test/openapi/validation/gateway-6.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "f9324f11416227f35829a4b8f368a00dea6658a992893502ca797f1f40d35d9b",
+      "gitBlobSha1": "c0778a3cfd18541725ed9539a140fad221be2e91",
+      "bytes": 53239,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/gateway-7.json",
+      "upstreamPath": "test/openapi/validation/gateway-7.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "62b7e692c32b7f6995038b220444e944bfe539d384440b7eb61b5ef9bc4d400e",
+      "gitBlobSha1": "1c5b558b027f735d92c5fa9aa31535a1e5a97605",
+      "bytes": 126912,
+      "specification": {
+        "source": "/home/cdot/development/others/ai-gateway-openapi/openapi.yaml",
+        "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/management-0.json",
+      "upstreamPath": "test/openapi/validation/management-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "47c5c5f93ec92342877763c8f79fde436e30ad4813999c0bfd104b718e8aef0f",
+      "gitBlobSha1": "2d83635c83d17ebce565e2375e4ceeb76922b1d2",
+      "bytes": 41720,
+      "specification": {
+        "source": "prisma-airs/management/mgmt-service_latest.yaml",
+        "sha256": "7ee421fd6ba31bd4f1c88d233ea032a52cd29ad59b71f2c3cbea9bc033fc215f"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/management-1.json",
+      "upstreamPath": "test/openapi/validation/management-1.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "09f657db1d2670f65f82929509c5d842fbb0482ed4fa5ee68a05d879c49c6900",
+      "gitBlobSha1": "e79584e6af4ee7a25a3391069f8073aa1eb58798",
+      "bytes": 29309,
+      "specification": {
+        "source": "prisma-airs/management/mgmt-service_latest.yaml",
+        "sha256": "7ee421fd6ba31bd4f1c88d233ea032a52cd29ad59b71f2c3cbea9bc033fc215f"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/management-2.json",
+      "upstreamPath": "test/openapi/validation/management-2.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "fe1be17b2c14cd758635eb3cabc095dd669ecad788031981d3cf1c9b5b226639",
+      "gitBlobSha1": "a8e5ee8802eb354fc04c6d30e8bde301da84fd65",
+      "bytes": 6278,
+      "specification": {
+        "source": "prisma-airs/management/mgmt-service_latest.yaml",
+        "sha256": "7ee421fd6ba31bd4f1c88d233ea032a52cd29ad59b71f2c3cbea9bc033fc215f"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/model-data-0.json",
+      "upstreamPath": "test/openapi/validation/model-data-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "ceddabb0e327ebb2b2bcf93516d093f96743bfd4402f80b9dbcfc92f59aa7ce2",
+      "gitBlobSha1": "2dbc228acbfa5240876653ea2c2b30f5933c4c57",
+      "bytes": 58267,
+      "specification": {
+        "source": "prisma-airs-model-security/dataplane/data-plane.yml",
+        "sha256": "1a581d23ceb7456b9a5f978b212235e2149dadf917eae7d31e1463667339d6dc"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/model-data-1.json",
+      "upstreamPath": "test/openapi/validation/model-data-1.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "37db0b4469c034f77507767c31ca02351af638f4f638a6bd6d0164540b3ebd8a",
+      "gitBlobSha1": "bfbdf774f0a35ed7e83b3fd7c4c19ada5388bf34",
+      "bytes": 32825,
+      "specification": {
+        "source": "prisma-airs-model-security/dataplane/data-plane.yml",
+        "sha256": "1a581d23ceb7456b9a5f978b212235e2149dadf917eae7d31e1463667339d6dc"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/model-management-0.json",
+      "upstreamPath": "test/openapi/validation/model-management-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "97ca20fcff56c7ee9aa2471795310bf73077518c063eaf308268d3797cdcb1cd",
+      "gitBlobSha1": "d146121ddfe2bbfaf561624dd013d953590e547c",
+      "bytes": 37045,
+      "specification": {
+        "source": "prisma-airs-model-security/management/mgmt-plane.yml",
+        "sha256": "92b010dbe1b2ba96984aaaadfca95e4a2ff68a1fa98209765cfa1b0bcffcc808"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/model-management-1.json",
+      "upstreamPath": "test/openapi/validation/model-management-1.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "4b7f6cb89de59e603c07bb787a9298546fcf68fe99f283d7c285dd4e52c20c86",
+      "gitBlobSha1": "a9acb03c7642470145d56165dbc2ee5c7aba18f8",
+      "bytes": 40346,
+      "specification": {
+        "source": "prisma-airs-model-security/management/mgmt-plane.yml",
+        "sha256": "92b010dbe1b2ba96984aaaadfca95e4a2ff68a1fa98209765cfa1b0bcffcc808"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/model-management-2.json",
+      "upstreamPath": "test/openapi/validation/model-management-2.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "b708c759e23483ef440b44fc037622f2372f9f71c23223666c5a2c012cf9a221",
+      "gitBlobSha1": "5ae963e5e1d473beaa2e704eecdf1e10a823310f",
+      "bytes": 14775,
+      "specification": {
+        "source": "prisma-airs-model-security/management/mgmt-plane.yml",
+        "sha256": "92b010dbe1b2ba96984aaaadfca95e4a2ff68a1fa98209765cfa1b0bcffcc808"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/network-broker-0.json",
+      "upstreamPath": "test/openapi/validation/network-broker-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "64c7958d8f381df2a3f721110940c77f5427bf7a6f23e7aa884c0e0be03847de",
+      "gitBlobSha1": "d90164ed142078382778bd13adff47bdd04d04bf",
+      "bytes": 6071,
+      "specification": {
+        "source": "prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+        "sha256": "0cf2176db90da796fdd086a5f8bd6b3dcf3dcd9065d42c4230e10603bb1ea4b5"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-data-0.json",
+      "upstreamPath": "test/openapi/validation/redteam-data-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "b2139247ed4336cacdeb294b979b7a24e908a2965133c42e3aac5f52a9bc1d10",
+      "gitBlobSha1": "e620958e613181db2071dfdefee494d48f76a46a",
+      "bytes": 184585,
+      "specification": {
+        "source": "prisma-airs-redteam/data-plane/dp-openapi.yaml",
+        "sha256": "667ce2ea6842c5f96de7a41786d055fa6032d64186bdce4d23edfeeabf10d76d"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-data-1.json",
+      "upstreamPath": "test/openapi/validation/redteam-data-1.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "b9fee236b5fb3f48b4cc96ac621c05f0dd9875f53dc0266b3698c8869205f965",
+      "gitBlobSha1": "7f0f1613d777e24ce465d363cfaa3d76806c0c58",
+      "bytes": 88904,
+      "specification": {
+        "source": "prisma-airs-redteam/data-plane/dp-openapi.yaml",
+        "sha256": "667ce2ea6842c5f96de7a41786d055fa6032d64186bdce4d23edfeeabf10d76d"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-data-2.json",
+      "upstreamPath": "test/openapi/validation/redteam-data-2.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "c9a8c0d5c75f7df11ae1327b77cd98ed8a3c9714fa268b096af765a5dbb8e6e8",
+      "gitBlobSha1": "1cfcd715788ebddbcd311c8df2fb98808b21f222",
+      "bytes": 50499,
+      "specification": {
+        "source": "prisma-airs-redteam/data-plane/dp-openapi.yaml",
+        "sha256": "667ce2ea6842c5f96de7a41786d055fa6032d64186bdce4d23edfeeabf10d76d"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-data-3.json",
+      "upstreamPath": "test/openapi/validation/redteam-data-3.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "c3a38ce1151c07f60d9b31c11be187685b9b728943b6d6b12526ec9a43ec15ad",
+      "gitBlobSha1": "76880ef8d25d1920e26d23c22cc3322c3f9f2181",
+      "bytes": 17391,
+      "specification": {
+        "source": "prisma-airs-redteam/data-plane/dp-openapi.yaml",
+        "sha256": "667ce2ea6842c5f96de7a41786d055fa6032d64186bdce4d23edfeeabf10d76d"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-management-0.json",
+      "upstreamPath": "test/openapi/validation/redteam-management-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "8cdaaa71cb9876d015b663d1e772964d58105db715f85d97647d3935a155bd8c",
+      "gitBlobSha1": "090682e9b21f9319a975d4d35668d8814d1c3957",
+      "bytes": 82988,
+      "specification": {
+        "source": "prisma-airs-redteam/management/mp-openapi.yaml",
+        "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-management-1.json",
+      "upstreamPath": "test/openapi/validation/redteam-management-1.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "963d8cfdd72f604ad8ada16096a44852b3722094660e0c867f1b6e17cfedff3e",
+      "gitBlobSha1": "9180f35efff8865b70e3f6f0a2b944c4db27e8db",
+      "bytes": 257073,
+      "specification": {
+        "source": "prisma-airs-redteam/management/mp-openapi.yaml",
+        "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-management-2.json",
+      "upstreamPath": "test/openapi/validation/redteam-management-2.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "ffa1be26ee3660a4815acc8c40648c5d9cc713cf0404bfe64b0e9955ad2df511",
+      "gitBlobSha1": "eb6b094e93b0ea2c5b97391e56d62a25300e07aa",
+      "bytes": 80549,
+      "specification": {
+        "source": "prisma-airs-redteam/management/mp-openapi.yaml",
+        "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-management-3.json",
+      "upstreamPath": "test/openapi/validation/redteam-management-3.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "18ee25b77aeef051eacc3d21e620cf9007b4187a83f105ecfd2cc935b72219f6",
+      "gitBlobSha1": "34e971e671c161082cfaa4afd862ada168118981",
+      "bytes": 26691,
+      "specification": {
+        "source": "prisma-airs-redteam/management/mp-openapi.yaml",
+        "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-management-4.json",
+      "upstreamPath": "test/openapi/validation/redteam-management-4.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "d6017faf1f05684d3ac5c5900a542edc6f22b03c1049c51a9210c07018540c99",
+      "gitBlobSha1": "bb36e8c18b15c81b82c57300e812a4e711fbcd33",
+      "bytes": 9002,
+      "specification": {
+        "source": "prisma-airs-redteam/management/mp-openapi.yaml",
+        "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/redteam-management-5.json",
+      "upstreamPath": "test/openapi/validation/redteam-management-5.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "90929f2106719fd5ece00c77890b3089cf54e8370532b2c1846f8bd0d0e57db0",
+      "gitBlobSha1": "a0a021672ea15cb43949f448337dcf7532b17704",
+      "bytes": 9525,
+      "specification": {
+        "source": "prisma-airs-redteam/management/mp-openapi.yaml",
+        "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validation/scan-0.json",
+      "upstreamPath": "test/openapi/validation/scan-0.json",
+      "origin": "typescript",
+      "category": "independent-openapi-fixture",
+      "sha256": "3d67c7db0ec6b36f8186ebae3fa70d8a07c2435587abed8a314b06bb9237103a",
+      "gitBlobSha1": "2518907300376ac54509bb420ce03360c78d28f5",
+      "bytes": 70284,
+      "specification": {
+        "source": "prisma-airs/scan/scan-service_latest.yaml",
+        "sha256": "e97a5a75d5a6073c56af022452d65197c2c474597a569f628fe1d7de0f63e7c3"
+      }
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/validators.spec.ts",
+      "upstreamPath": "test/openapi/validators.spec.ts",
+      "origin": "typescript",
+      "category": "fixture-test-reference",
+      "sha256": "e8e5f1fb1c798d4aaccb67285e96866a85a5ce0dc1d2d358966d2b2bf16d6658",
+      "gitBlobSha1": "50fb783ce12aa4fc68a41073f1aa6a636c1b236b",
+      "bytes": 1258
+    },
+    {
+      "path": "contracts/fixtures/typescript/test/red-team/custom-attacks-client.spec.ts",
+      "upstreamPath": "test/red-team/custom-attacks-client.spec.ts",
+      "origin": "typescript",
+      "category": "sdk-authored-regression-reference",
+      "sha256": "c4ca7a049aac5b7a9f15d7d3ee0de58700e9bef931976382d2f4629a22545f13",
+      "gitBlobSha1": "aa17f6ef55627c9ecd0355ad8b0437f55e966310",
+      "bytes": 17556
+    }
+  ],
+  "sources": [
+    {
+      "id": "ai-gateway-openapi/openapi.yaml",
+      "family": "legacy-portkey",
+      "path": "contracts/sources/legacy-portkey/openapi.yaml",
+      "repository": "https://github.com/Portkey-AI/openapi",
+      "commit": "8ab247e2d5bedc9c642f8a012c16ddc3a06fff7a",
+      "upstreamPath": "openapi.yaml",
+      "sourceUrl": "https://github.com/Portkey-AI/openapi/blob/8ab247e2d5bedc9c642f8a012c16ddc3a06fff7a/openapi.yaml",
+      "license": "legacy-portkey-8ab247e2d5be",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "de7a1bd98bdb2edb7428a33054d9f6000b9568d1cd5b603d1a8302c053d094d9",
+      "gitBlobSha1": "f9630d26ca64ac6abd61f37d9ed373967937ca5e",
+      "bytes": 1288926,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "prisma-airs-model-security/dataplane/data-plane.yml",
+      "family": "official-airs",
+      "path": "contracts/sources/pan-dev/openapi-specs/prisma-airs-model-security/dataplane/data-plane.yml",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "8bf86246fa535e3f3904eb400d7fdf0434e8f234",
+      "upstreamPath": "openapi-specs/prisma-airs-model-security/dataplane/data-plane.yml",
+      "sourceUrl": "https://github.com/PaloAltoNetworks/pan.dev/blob/8bf86246fa535e3f3904eb400d7fdf0434e8f234/openapi-specs/prisma-airs-model-security/dataplane/data-plane.yml",
+      "license": "pan-dev-8bf86246fa53",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "1a581d23ceb7456b9a5f978b212235e2149dadf917eae7d31e1463667339d6dc",
+      "gitBlobSha1": "22c3fc568112b3cf4cb6b44510989da2f5cb215f",
+      "bytes": 56210,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "prisma-airs-model-security/management/mgmt-plane.yml",
+      "family": "official-airs",
+      "path": "contracts/sources/pan-dev/openapi-specs/prisma-airs-model-security/management/mgmt-plane.yml",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "8bf86246fa535e3f3904eb400d7fdf0434e8f234",
+      "upstreamPath": "openapi-specs/prisma-airs-model-security/management/mgmt-plane.yml",
+      "sourceUrl": "https://github.com/PaloAltoNetworks/pan.dev/blob/8bf86246fa535e3f3904eb400d7fdf0434e8f234/openapi-specs/prisma-airs-model-security/management/mgmt-plane.yml",
+      "license": "pan-dev-8bf86246fa53",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "92b010dbe1b2ba96984aaaadfca95e4a2ff68a1fa98209765cfa1b0bcffcc808",
+      "gitBlobSha1": "edc9c968a08ae6751ac400b152c6817b9adbff2d",
+      "bytes": 62984,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "prisma-airs-redteam/data-plane/dp-openapi.yaml",
+      "family": "official-airs",
+      "path": "contracts/sources/pan-dev/openapi-specs/prisma-airs-redteam/data-plane/dp-openapi.yaml",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "e2e6e63e6acdd637df8a1c692db15f46cafac3a5",
+      "upstreamPath": "openapi-specs/prisma-airs-redteam/data-plane/dp-openapi.yaml",
+      "sourceUrl": "https://github.com/PaloAltoNetworks/pan.dev/blob/e2e6e63e6acdd637df8a1c692db15f46cafac3a5/openapi-specs/prisma-airs-redteam/data-plane/dp-openapi.yaml",
+      "license": "pan-dev-e2e6e63e6acd",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "667ce2ea6842c5f96de7a41786d055fa6032d64186bdce4d23edfeeabf10d76d",
+      "gitBlobSha1": "20084e0bdab6c839f2b301e04d2881b18ad23f5f",
+      "bytes": 172333,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "prisma-airs-redteam/management/mp-openapi.yaml",
+      "family": "official-airs",
+      "path": "contracts/sources/pan-dev/openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "e2e6e63e6acdd637df8a1c692db15f46cafac3a5",
+      "upstreamPath": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml",
+      "sourceUrl": "https://github.com/PaloAltoNetworks/pan.dev/blob/e2e6e63e6acdd637df8a1c692db15f46cafac3a5/openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml",
+      "license": "pan-dev-e2e6e63e6acd",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "4b92495d9a0c5aef460c22c8d124f1ad2586fe1f17ef07348a551a8a5ae78125",
+      "gitBlobSha1": "4ef3949a1817cc4e131340199eeb1bb0312fdf41",
+      "bytes": 206604,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+      "family": "official-airs",
+      "path": "contracts/sources/pan-dev/openapi-specs/prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "891ec0e6c2200f3609c1c9db500a9694932f0c57",
+      "upstreamPath": "openapi-specs/prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+      "sourceUrl": "https://github.com/PaloAltoNetworks/pan.dev/blob/891ec0e6c2200f3609c1c9db500a9694932f0c57/openapi-specs/prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+      "license": "pan-dev-891ec0e6c220",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "0cf2176db90da796fdd086a5f8bd6b3dcf3dcd9065d42c4230e10603bb1ea4b5",
+      "gitBlobSha1": "a60cb028d706987c43fc4c60fe8b9722da0c4b24",
+      "bytes": 10388,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "prisma-airs/management/mgmt-service_latest.yaml",
+      "family": "official-airs",
+      "path": "contracts/sources/pan-dev/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "2021f974ab64ab76cb02f1736b1c35abc9ba38cb",
+      "upstreamPath": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sourceUrl": "https://github.com/PaloAltoNetworks/pan.dev/blob/2021f974ab64ab76cb02f1736b1c35abc9ba38cb/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "license": "pan-dev-2021f974ab64",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "7ee421fd6ba31bd4f1c88d233ea032a52cd29ad59b71f2c3cbea9bc033fc215f",
+      "gitBlobSha1": "a5aec37c1859c8fa83de7aac4a1fb1ff093a432d",
+      "bytes": 46605,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "prisma-airs/scan/scan-service_latest.yaml",
+      "family": "official-airs",
+      "path": "contracts/sources/pan-dev/openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "2021f974ab64ab76cb02f1736b1c35abc9ba38cb",
+      "upstreamPath": "openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "sourceUrl": "https://github.com/PaloAltoNetworks/pan.dev/blob/2021f974ab64ab76cb02f1736b1c35abc9ba38cb/openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "license": "pan-dev-2021f974ab64",
+      "redistributed": true,
+      "usedForGeneration": true,
+      "sha256": "e97a5a75d5a6073c56af022452d65197c2c474597a569f628fe1d7de0f63e7c3",
+      "gitBlobSha1": "548e84c28815b0d785d7f6cec0e752202651c176",
+      "bytes": 46010,
+      "revisionResolution": "Recovered historical file revision whose bytes exactly match the frozen fixture SHA-256; the original generator checkout commit is not asserted."
+    },
+    {
+      "id": "official-gateway/openapi.yaml",
+      "family": "official-gateway",
+      "repository": "https://github.com/PaloAltoNetworks/openapi",
+      "commit": "2931d49bc38e30793d5923d22125f5f953d141d0",
+      "upstreamPath": "openapi.yaml",
+      "sourceUrl": "https://raw.githubusercontent.com/PaloAltoNetworks/openapi/2931d49bc38e30793d5923d22125f5f953d141d0/openapi.yaml",
+      "redistributed": false,
+      "usedForGeneration": false,
+      "licenseStatus": "unresolved",
+      "licenseEvidence": {
+        "pinnedTreeUrl": "https://api.github.com/repos/PaloAltoNetworks/openapi/git/trees/2931d49bc38e30793d5923d22125f5f953d141d0",
+        "repositoryLicenseEndpoint": "https://api.github.com/repos/PaloAltoNetworks/openapi/license",
+        "finding": "Pinned tree has no LICENSE; repository license endpoint returned HTTP 404; OpenAPI info has no license declaration. No other repository license is inferred."
+      },
+      "sha256": "567f53fd7399c4cf87d4fc5e32a8dd5a25765113f698d82de6e538adf4213978",
+      "gitBlobSha1": "e4866136d7394007a2d4bf88799ac30a7cdc0df4",
+      "bytes": 480046
+    }
+  ],
+  "licenses": [
+    {
+      "id": "typescript",
+      "path": "contracts/licenses/typescript.LICENSE",
+      "repository": "https://github.com/cdot65/prisma-airs-sdk",
+      "commit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+      "upstreamPath": "LICENSE",
+      "spdx": "Apache-2.0",
+      "sha256": "8bbb3b541bc1ab282fdeb89f0578ca1d604ac9046aacc0ef267bd33cb9799f74",
+      "gitBlobSha1": "66a17fa6223c97abc3e0450498907cea7b40c3e3",
+      "bytes": 10935
+    },
+    {
+      "id": "legacy-portkey-8ab247e2d5be",
+      "path": "contracts/licenses/legacy-portkey-8ab247e2d5be.LICENSE",
+      "repository": "https://github.com/Portkey-AI/openapi",
+      "commit": "8ab247e2d5bedc9c642f8a012c16ddc3a06fff7a",
+      "upstreamPath": "LICENSE",
+      "spdx": "MIT",
+      "sha256": "bcba3de214851cce46ed5af42d6698044616eeace887c3231bc7a20474ab639e",
+      "gitBlobSha1": "4f14854c3243516f3de1487a60f14882874d7e3a",
+      "bytes": 1083
+    },
+    {
+      "id": "pan-dev-8bf86246fa53",
+      "path": "contracts/licenses/pan-dev-8bf86246fa53.LICENSE",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "8bf86246fa535e3f3904eb400d7fdf0434e8f234",
+      "upstreamPath": "LICENSE",
+      "spdx": "MIT",
+      "sha256": "283becab2c1c86d362454c471582b3788c9f5bf1cefdddfc275ba660a6257558",
+      "gitBlobSha1": "50b8a655c89c237c94dcb541256e4e51ebca2be5",
+      "bytes": 1075
+    },
+    {
+      "id": "pan-dev-e2e6e63e6acd",
+      "path": "contracts/licenses/pan-dev-e2e6e63e6acd.LICENSE",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "e2e6e63e6acdd637df8a1c692db15f46cafac3a5",
+      "upstreamPath": "LICENSE",
+      "spdx": "MIT",
+      "sha256": "283becab2c1c86d362454c471582b3788c9f5bf1cefdddfc275ba660a6257558",
+      "gitBlobSha1": "50b8a655c89c237c94dcb541256e4e51ebca2be5",
+      "bytes": 1075
+    },
+    {
+      "id": "pan-dev-891ec0e6c220",
+      "path": "contracts/licenses/pan-dev-891ec0e6c220.LICENSE",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "891ec0e6c2200f3609c1c9db500a9694932f0c57",
+      "upstreamPath": "LICENSE",
+      "spdx": "MIT",
+      "sha256": "283becab2c1c86d362454c471582b3788c9f5bf1cefdddfc275ba660a6257558",
+      "gitBlobSha1": "50b8a655c89c237c94dcb541256e4e51ebca2be5",
+      "bytes": 1075
+    },
+    {
+      "id": "pan-dev-2021f974ab64",
+      "path": "contracts/licenses/pan-dev-2021f974ab64.LICENSE",
+      "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+      "commit": "2021f974ab64ab76cb02f1736b1c35abc9ba38cb",
+      "upstreamPath": "LICENSE",
+      "spdx": "MIT",
+      "sha256": "283becab2c1c86d362454c471582b3788c9f5bf1cefdddfc275ba660a6257558",
+      "gitBlobSha1": "50b8a655c89c237c94dcb541256e4e51ebca2be5",
+      "bytes": 1075
+    }
+  ],
+  "references": [
+    {
+      "path": "contracts/sources/typescript/docs-site/docs/developer/gateway-coverage.md",
+      "upstreamPath": "docs-site/docs/developer/gateway-coverage.md",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "9e75c053b944a5b7ccc2f3bc1e753351077d2929e32700b4d64e5e0e78ab4ba3",
+      "gitBlobSha1": "a4560e52e5b55d7515e81def204e0ee5a5c1288f",
+      "bytes": 50138
+    },
+    {
+      "path": "contracts/sources/typescript/docs-site/docs/developer/live-validation-results.md",
+      "upstreamPath": "docs-site/docs/developer/live-validation-results.md",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "af6f88dddf6bd9928f2d2ee1cacabba149161ad4c269069d17db7c73189716b3",
+      "gitBlobSha1": "c2adc088d7d06628a1f8425f1a7234335a3af7cb",
+      "bytes": 39041
+    },
+    {
+      "path": "contracts/sources/typescript/docs-site/docs/developer/official-gateway-alignment.md",
+      "upstreamPath": "docs-site/docs/developer/official-gateway-alignment.md",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "3fe168dc63349a3feae45425a5aefb8b2d7f5a4af4bbeef1995b4147e2c78086",
+      "gitBlobSha1": "b57db77e434c2ceb4fc773383cef2e0a8fcb86c1",
+      "bytes": 6929
+    },
+    {
+      "path": "contracts/sources/typescript/docs-site/docs/developer/openapi-conformance.md",
+      "upstreamPath": "docs-site/docs/developer/openapi-conformance.md",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "201baf8a2aa2f95c06f6dcae06fce2fc5a146bf9a5e50d3cdaa0186a3b5e8397",
+      "gitBlobSha1": "8e833d84c0d1ad8e9113e033175e9eb01a8ffb11",
+      "bytes": 35248
+    },
+    {
+      "path": "contracts/sources/typescript/docs-site/docs/guides/ai-gateway-inference.md",
+      "upstreamPath": "docs-site/docs/guides/ai-gateway-inference.md",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "be57a2b8f8a275f78979365e89a4308368bd63c88014ea6b77d8b6e0d526252b",
+      "gitBlobSha1": "6b1619655e772c3bf841816a7ad6b77285927457",
+      "bytes": 24188
+    },
+    {
+      "path": "contracts/sources/typescript/package.json",
+      "upstreamPath": "package.json",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "2a65a500114291e9b90b555f7ca5477c1f3a7da8e41423ae6c7fe9c847557705",
+      "gitBlobSha1": "931ef058599e8892670329fd862e11b7af2df83f",
+      "bytes": 3372
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/acceptance.ts",
+      "upstreamPath": "scripts/openapi/acceptance.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "4691c78e71c5a496312976af11c54cafbf88374c190ca01a0bdb5b2558a418b6",
+      "gitBlobSha1": "4aa27556a13e3c11cd884f1bb50d2262a4f65477",
+      "bytes": 1438
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/audit.ts",
+      "upstreamPath": "scripts/openapi/audit.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "3dd64177274f83d1b3d30553b977928b5672ee4fbe46a47f60ca549154b27b42",
+      "gitBlobSha1": "b75d9a706e6b27d7a9bdf513399ea241c9baf78f",
+      "bytes": 4284
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/compatibility.ts",
+      "upstreamPath": "scripts/openapi/compatibility.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "2769b853fce0b00b7e66fcaa71d57de5280898a397888a05fcb1cced94d2c82e",
+      "gitBlobSha1": "fa7224e737995d50d9350b32541f9dee924211c5",
+      "bytes": 12556
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/conformance.ts",
+      "upstreamPath": "scripts/openapi/conformance.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "8b05dd6840522788b108fec7fa5771892be6d048846b7608ae336e388f1ad94f",
+      "gitBlobSha1": "f81cb1e198c3449a69bd0806ee820609e61f9743",
+      "bytes": 10336
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/emit-patch.ts",
+      "upstreamPath": "scripts/openapi/emit-patch.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "09b3d4a39f9a8be6144629b24c9e9539742bc26bc388efe39ca0e0f6cd75dd5a",
+      "gitBlobSha1": "2cb6b461b903fce781227c789a4fbe2db5c7e1ad",
+      "bytes": 676
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/fields.ts",
+      "upstreamPath": "scripts/openapi/fields.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "8b7276711e46a457cca87a3077fc6d5813742ee27de6fbd7b74c55408c90c449",
+      "gitBlobSha1": "0aab31a3c25aed259130f5cb93aabf203d9c0d13",
+      "bytes": 8667
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/gateway-inventory.ts",
+      "upstreamPath": "scripts/openapi/gateway-inventory.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "a4aa24a53deb13a09e9c46f5a645ce76fb5ab08d55632f41036ba028d22248a0",
+      "gitBlobSha1": "554f6eb15163b9a8a0e292202882b3bdf4f5dbcb",
+      "bytes": 2056
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/gateway-routing.ts",
+      "upstreamPath": "scripts/openapi/gateway-routing.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "b2e4fc0da6e3380d133314efb4004f93448f1f441277fa6f735d16abea4653ce",
+      "gitBlobSha1": "ed0ca845858e094538dca673ae33d6c780e4f310",
+      "bytes": 7906
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/gateway-status.ts",
+      "upstreamPath": "scripts/openapi/gateway-status.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "7f672a1ada132a88f0530d083c13f50d6d76b6e4854edc128edf18c653e967ba",
+      "gitBlobSha1": "3f1088c5b8f6d62f74b878c961bc025cad33e119",
+      "bytes": 9475
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-analytics-adapter-fixture.ts",
+      "upstreamPath": "scripts/openapi/generate-analytics-adapter-fixture.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "daceba9fb0e5cde5ddb885baf4710076ef35263df3b5de39c1ab8753c5d34e9c",
+      "gitBlobSha1": "e3f9f8eba95ffdc8b4036d3c691e5b78efd4be7b",
+      "bytes": 3007
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-contract-fixtures.ts",
+      "upstreamPath": "scripts/openapi/generate-contract-fixtures.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "3f626ff690e539dba6b641a4f1e3520b2415aee2fdcd5ef694c30aa9c2a1e58b",
+      "gitBlobSha1": "42052fc572da0625164f3d6452b3e6a0d798b4cb",
+      "bytes": 5739
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-gateway-extensions.ts",
+      "upstreamPath": "scripts/openapi/generate-gateway-extensions.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "bc0dc2d969e0f74f449866dc24a56ad646cb57076c9ffdffce1ac51853013211",
+      "gitBlobSha1": "897a2897cadce6fe490dce949c9f6726b659473b",
+      "bytes": 20199
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-inference-models.ts",
+      "upstreamPath": "scripts/openapi/generate-inference-models.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "afa354af3d0d0fcda194f10c57e92372b84b588c02c35ddbbaebf65a1c4705eb",
+      "gitBlobSha1": "5666eae382674cd2644c2d1b34638c1894e5f975",
+      "bytes": 23356
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-ledger.ts",
+      "upstreamPath": "scripts/openapi/generate-ledger.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "2df814a135ef85006bfdee943f73fa798e2658d87a30596bd01ddaa619a30b26",
+      "gitBlobSha1": "2ca01cae2e026ccb384477cc1570710fc132329d",
+      "bytes": 4841
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-live-fixtures.ts",
+      "upstreamPath": "scripts/openapi/generate-live-fixtures.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "0b17efb3ff68da80095669e85a7686e790eaefb06935d8a26a3c475778ae2944",
+      "gitBlobSha1": "11582780b7f559ed1a0ac46f6cd247234eb86694",
+      "bytes": 1202
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-provider-multipart-fixtures.ts",
+      "upstreamPath": "scripts/openapi/generate-provider-multipart-fixtures.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "4494b3c1dfec9d678859de6f8c72084134c009920dbf1a04fcbb0ee9cf15265f",
+      "gitBlobSha1": "56ddcc94b00e8fecfb73cd35268d44bfb0f6cf32",
+      "bytes": 1610
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-realtime-fixture.ts",
+      "upstreamPath": "scripts/openapi/generate-realtime-fixture.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "b67ca40917940fb5a06919539b63da6c4e7641fa161f596f48acdf7a7aa5314b",
+      "gitBlobSha1": "5d5d21994706e94630c374ce5a211e22fe84354a",
+      "bytes": 956
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/generate-validation-fixtures.ts",
+      "upstreamPath": "scripts/openapi/generate-validation-fixtures.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "7e2e3ad392b6f2adeefceafd90e1c6baa63366ee2508618f7a8b7d2599b7f4d8",
+      "gitBlobSha1": "2146f7b02d2d5a7617105bf9652d8b5fc4c3f120",
+      "bytes": 4493
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/inventory.ts",
+      "upstreamPath": "scripts/openapi/inventory.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "1b487beb30fe9a4fee847accf659230d3de455f57cc8692314c92e13e572d037",
+      "gitBlobSha1": "3bb926b771e138205453cae9e012c6fd0264be6f",
+      "bytes": 10714
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/negative-conformance.ts",
+      "upstreamPath": "scripts/openapi/negative-conformance.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "fbeadea03e09d1ec56f76ee30e3bbfc086f6e4422ee6d1ce49b4eced9a65a7c4",
+      "gitBlobSha1": "bf3fbe459189aa01c756b3db165073c65beddbbb",
+      "bytes": 6786
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/prompt-contracts.ts",
+      "upstreamPath": "scripts/openapi/prompt-contracts.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "56634dbd1ad2afb994c3037a7529c22d3324ea34290960585b1362e7d24bb131",
+      "gitBlobSha1": "5d4e72759cf00dcea95a9db20c1903f3445e335b",
+      "bytes": 3788
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/propose-fields.ts",
+      "upstreamPath": "scripts/openapi/propose-fields.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "ca6b084713fff8a90cec20f0823e9c0e8fcea8d06c644002cb91306c45df46cf",
+      "gitBlobSha1": "9896c4cdfa719eb5a05d09cc8f818d6759486f03",
+      "bytes": 4786
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/propose-wiring.ts",
+      "upstreamPath": "scripts/openapi/propose-wiring.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "5efc37740bd2af003e130a63cfcc7075f35585a926839105c14cf4ffe812256a",
+      "gitBlobSha1": "9f428e2527bc52e16e60dd067a38452bed2f5cfa",
+      "bytes": 3094
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/query-conformance.ts",
+      "upstreamPath": "scripts/openapi/query-conformance.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "335cfd586889a1d2d07f485f9d4ed5ff35cf2357a5ddff183b0ccb0fda357af2",
+      "gitBlobSha1": "fb02a39db2aa59935297840ebbcd71850d1901cb",
+      "bytes": 7051
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/query-fixtures.ts",
+      "upstreamPath": "scripts/openapi/query-fixtures.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "2f66d45797f3a875fd25bebd66cdf79b4e3f6b02fe93f48879e0fa1eec89edd9",
+      "gitBlobSha1": "be73dd9cdcea67934697b363dba3415f1d147a1d",
+      "bytes": 2124
+    },
+    {
+      "path": "contracts/sources/typescript/scripts/openapi/validators.ts",
+      "upstreamPath": "scripts/openapi/validators.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "81414cbf29f55ae120d7c01042e95cd947358501169269cf09e741745d249784",
+      "gitBlobSha1": "c7ab8dba005ec0788665874292eb4bc370ced9ec",
+      "bytes": 2679
+    },
+    {
+      "path": "contracts/sources/typescript/src/models/ai-gateway-extensions.ts",
+      "upstreamPath": "src/models/ai-gateway-extensions.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+      "gitBlobSha1": "5cac6008f6f0c631cbdf9374ab4c176e7da0ba7e",
+      "bytes": 116251
+    },
+    {
+      "path": "contracts/sources/typescript/src/models/ai-gateway-inference.ts",
+      "upstreamPath": "src/models/ai-gateway-inference.ts",
+      "origin": "typescript",
+      "license": "typescript",
+      "sha256": "354d6e57d2b00faadf56ec8d23299806554a46889a3692b0326cc0c3caa98436",
+      "gitBlobSha1": "b2304776543248b7cf2ea65974b74420a7fed045",
+      "bytes": 295530
+    }
+  ],
+  "corrections": {
+    "catalog": [
+      {
+        "id": "gateway-pricing-overlapping-calculation-nodes",
+        "plane": "gateway"
+      },
+      {
+        "id": "gateway-prompt-root-hyperparameters",
+        "plane": "gateway"
+      },
+      {
+        "id": "gateway-prompt-native-completion-response",
+        "plane": "gateway"
+      },
+      {
+        "id": "gateway-legacy-stream-null-fields",
+        "plane": "gateway"
+      },
+      {
+        "id": "gateway-audio-overlapping-json-variants",
+        "plane": "gateway"
+      },
+      {
+        "id": "gateway-audio-verbose-duration",
+        "plane": "gateway"
+      },
+      {
+        "id": "gateway-provider-prefixed-response-models",
+        "plane": "gateway"
+      },
+      {
+        "id": "scan-flat-async-batch",
+        "plane": "scan"
+      },
+      {
+        "id": "scan-required-profile-selector",
+        "plane": "scan"
+      },
+      {
+        "id": "scan-nonempty-contents",
+        "plane": "scan"
+      },
+      {
+        "id": "management-topic-items-indentation",
+        "plane": "management"
+      },
+      {
+        "id": "management-server-assigned-revisions",
+        "plane": "management"
+      },
+      {
+        "id": "management-optional-topic-content",
+        "plane": "management"
+      },
+      {
+        "id": "management-optional-dlp-members",
+        "plane": "management"
+      },
+      {
+        "id": "redteam-overlapping-connection-variants",
+        "plane": "redteam-management"
+      },
+      {
+        "id": "redteam-csv-template-content-type",
+        "plane": "redteam-management"
+      }
+    ],
+    "primaryReference": "contracts/sources/typescript/scripts/openapi/compatibility.ts",
+    "additionalReferences": [
+      "contracts/sources/typescript/scripts/openapi/prompt-contracts.ts",
+      "contracts/sources/typescript/scripts/openapi/generate-inference-models.ts",
+      "contracts/sources/typescript/scripts/openapi/generate-gateway-extensions.ts"
+    ],
+    "policy": "Raw upstream bytes are preserved. Apply corrections only through reviewed derivation; generated artifacts are not raw specification coverage. Compatibility descriptions and historical evidence do not establish current live acceptance."
+  },
+  "distributionConstraints": [
+    {
+      "source": "official-gateway/openapi.yaml",
+      "status": "excluded-pending-license",
+      "requirement": "Do not bundle official Gateway YAML or generate distributable artifacts from it until its license is identified. Existing Apache-2.0 TypeScript models and licensed fixture provenance remain the Rust parity baseline."
+    }
+  ],
+  "unresolvedExactSourceHashes": [],
+  "documentation": [
+    {
+      "path": "contracts/sources/PROVENANCE.md",
+      "sha256": "f0e9c1aaa5a239a4a22a4a357fe5e3b9017364f0979a829c14fcfe438684b684",
+      "bytes": 3715
+    }
+  ]
+}
