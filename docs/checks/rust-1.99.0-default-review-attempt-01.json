@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "checkedAt": "2026-10-16T07:58:09.142343+00:00",
+  "rustInputsSha256": "f7bc5034b5f7b3d660c2abe8d8e435fd9233915c1e9952c1793b535b38763ce8",
+  "sourceUnchanged": true,
+  "cargoLockSha256": "bad76b146e3b7b64573f3463a401a42172ffa8e47e4ba9136bc31669c508414f",
+  "toolchain": "1.99.0",
+  "featureSet": "default",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "execution": "native_checks_and_tests",
+  "os": "Linux",
+  "machine": "x86_64",
+  "rustcVersion": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-musl\nrelease: 1.99.0\nLLVM version: 23.1.1\n",
+  "cargoVersion": "cargo 1.99.0 (5f94df478 2026-08-27)\nrelease: 1.99.0\ncommit-hash: 5f94df4789f005f9a352888e8355ffc645b7ed0e\ncommit-date: 2026-08-27\nhost: x86_64-unknown-linux-musl\nlibgit2: 1.9.6 (sys:0.21.0 vendored)\nlibcurl: 8.21.0-DEV (sys:0.4.90+curl-8.21.0 vendored ssl:OpenSSL/3.6.3)\nssl: OpenSSL 3.6.3 9 Jun 2026\nos: Alpine Linux 3.24.1 [64-bit]\n",
+  "packagedNoticesMatch": true,
+  "limitations": [
+    "This report covers the recorded native host and feature set. It makes no claim about other targets or live service acceptance."
+  ],
+  "checks": [
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.075
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "check",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "   Compiling proc-macro2 v1.0.107\n   Compiling unicode-ident v1.0.27\n   Compiling quote v1.0.47\n   Compiling libc v0.2.190\n    Checking stable_deref_trait v1.2.1\n    Checking bytes v1.12.1\n   Compiling shlex v2.0.1\n   Compiling find-msvc-tools v0.1.14\n    Checking pin-project-lite v0.2.17\n   Compiling fs_extra v1.3.0\n   Compiling pkg-config v0.3.34\n    Checking futures-core v0.3.34\n   Compiling dunce v1.0.5\n    Checking once_cell v1.21.4\n    Checking itoa v1.0.18\n    Checking slab v0.4.12\n    Checking zeroize v1.9.1\n    Checking writeable v0.6.4\n   Compiling aws-lc-rs v1.18.2\n    Checking smallvec v1.16.3\n    Checking futures-task v0.3.34\n    Checking litemap v0.8.3\n    Checking utf8_iter v1.0.4\n   Compiling icu_normalizer_data v2.3.0\n   Compiling icu_properties_data v2.3.0\n    Checking subtle v2.6.1\n   Compiling version_check v0.9.5\n    Checking rustls-pki-types v1.15.1\n    Checking cfg-if v1.0.5\n    Checking futures-sink v0.3.34\n   Compiling crc32fast v1.5.2\n    Checking tracing-core v0.1.36\n    Checking adler2 v2.0.1\n    Checking simd-adler32 v0.3.10\n    Checking typenum v1.20.1\n    Checking untrusted v0.9.0\n    Checking percent-encoding v2.3.2\n    Checking equivalent v1.0.3\n   Compiling httparse v1.10.1\n    Checking hashbrown v0.17.1\n    Checking http v1.5.0\n   Compiling rustls v0.23.46\n    Checking atomic-waker v1.1.2\n    Checking try-lock v0.2.5\n    Checking fnv v1.0.7\n    Checking miniz_oxide v0.9.1\n   Compiling generic-array v0.14.7\n    Checking tower-service v0.3.3\n    Checking memchr v2.8.3\n    Checking want v0.3.2\n    Checking futures-channel v0.3.34\n    Checking tracing v0.1.44\n   Compiling serde_core v1.0.229\n    Checking compression-core v0.4.33\n    Checking form_urlencoded v1.2.2\n    Checking sync_wrapper v1.0.2\n    Checking openssl-probe v0.2.1\n    Checking base64 v0.23.1\n    Checking ipnet v2.12.2\n   Compiling zmij v1.0.23\n    Checking tower-layer v0.3.3\n    Checking rustls-native-certs v0.8.5\n   Compiling serde_json v1.0.154\n    Checking flate2 v1.1.10\n    Checking bitflags v2.13.2\n   Compiling serde v1.0.229\n    Checking log v0.4.34\n    Checking indexmap v2.14.2\n    Checking cpufeatures v0.2.17\n    Checking mime v0.3.17\n    Checking httpdate v1.0.3\n    Checking base64 v0.22.1\n    Checking http-body v1.1.0\n    Checking compression-codecs v0.4.45\n    Checking http-body-util v0.1.5\n   Compiling syn v3.0.9\n    Checking mio v1.2.4\n    Checking socket2 v0.6.5\n   Compiling jobserver v0.1.35\n    Checking crypto-common v0.1.7\n    Checking block-buffer v0.10.4\n    Checking digest v0.10.7\n   Compiling cc v1.8.0\n    Checking hmac v0.12.1\n    Checking sha2 v0.10.9\n   Compiling cmake v0.1.58\n   Compiling aws-lc-sys v0.46.0\n   Compiling synstructure v0.14.0\n   Compiling zerovec-derive v0.11.6\n   Compiling displaydoc v0.2.7\n   Compiling tokio-macros v2.7.2\n   Compiling futures-macro v0.3.34\n   Compiling serde_derive v1.0.229\n   Compiling zerofrom-derive v0.1.8\n   Compiling yoke-derive v0.8.4\n    Checking tokio v1.53.3\n    Checking futures-util v0.3.34\n    Checking zerofrom v0.1.8\n    Checking yoke v0.8.3\n    Checking rustls-webpki v0.103.15\n    Checking zerovec v0.11.8\n    Checking zerotrie v0.2.5\n    Checking tinystr v0.8.4\n    Checking potential_utf v0.1.6\n    Checking icu_collections v2.3.0\n    Checking icu_locale_core v2.3.0\n    Checking icu_provider v2.3.1\n    Checking icu_properties v2.3.0\n    Checking icu_normalizer v2.3.0\n    Checking tokio-util v0.7.20\n    Checking tower v0.5.3\n    Checking async-compression v0.4.50\n    Checking idna_adapter v1.2.2\n    Checking h2 v0.4.20\n    Checking idna v1.1.0\n    Checking tokio-rustls v0.26.6\n    Checking rustls-platform-verifier v0.7.1\n    Checking url v2.5.8\n    Checking tower-http v0.6.11\n    Checking hyper v1.12.0\n    Checking hyper-util v0.1.21\n    Checking hyper-rustls v0.27.10\n    Checking reqwest v0.13.5\n    Checking scm-sdk v0.1.0 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.61s\n",
+      "duration_seconds": 14.635
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--target",
+        "x86_64-unknown-linux-musl",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "    Checking scm-sdk v0.1.0 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.90s\n",
+      "duration_seconds": 0.95
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "test",
+        "--workspace",
+        "--locked",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "exit_code": 0,
+      "stdout": "\nrunning 45 tests\ntest auth::tests::immutable_context_rejects_cross_tenant_or_unsafe_scope_configuration ... ok\ntest auth::tests::already_cancelled_waiter_never_starts_token_exchange ... ok\ntest auth::tests::header_injection_and_wrong_auth_domains_are_rejected ... ok\ntest auth::tests::token_destination_policy_runs_before_transport ... ok\ntest auth::tests::refresh_has_its_own_thirty_second_deadline ... ok\ntest engine::tests::already_cancelled_request_never_calls_authentication ... ok\ntest auth::tests::rfc4231_signature_uses_exact_bytes_and_protected_headers ... ok\ntest auth::tests::refresh_is_deduplicated_and_one_cancelled_waiter_preserves_the_other ... ok\ntest auth::tests::explicit_session_cancellation_interrupts_shared_refresh ... ok\ntest auth::tests::one_waiter_deadline_does_not_expire_other_waiters ... ok\ntest auth::tests::last_waiter_drop_releases_http_and_next_call_can_refresh ... ok\ntest auth::tests::token_lifetime_starts_before_exchange_latency ... ok\ntest auth::tests::clear_prevents_pending_old_refresh_from_restoring_cache ... ok\ntest auth::tests::token_exchange_uses_encoded_basic_form_and_no_runtime_credentials ... ok\ntest auth::tests::late_unauthorized_response_cannot_evict_new_generation ... ok\ntest engine::tests::framing_credentials_and_header_injection_are_rejected ... ok\ntest auth::tests::identities_caches_and_formatting_are_isolated ... ok\ntest auth::tests::invalidating_old_cached_token_preserves_new_pending_refresh ... ok\ntest engine::tests::echoed_error_values_never_enter_debug_or_display ... ok\ntest engine::tests::authentication_and_oauth_factory_setters_use_the_last_explicit_choice ... ok\ntest engine::tests::invalid_limits_fail_and_injected_client_constructs_without_runtime ... ok\ntest engine::tests::oauth_factory_honors_issuer_denial_before_token_transport ... ok\ntest engine::tests::oauth_factory_default_policy_admits_distinct_api_and_issuer_origins ... ok\ntest engine::tests::invalid_json_and_request_limits_reject_before_authentication ... ok\ntest engine::tests::oauth_factory_session_cancellation_drops_token_exchange_and_blocks_api ... ok\ntest engine::tests::policy_and_invalid_paths_reject_before_authentication_or_transport ... ok\ntest engine::tests::per_request_cancellation_drops_response_stream_and_releases_permit ... ok\ntest engine::tests::session_cancellation_reaches_clones_and_blocks_future_requests ... ok\ntest engine::tests::retry_after_obeys_retry_delay_and_total_budget ... ok\ntest engine::tests::queue_deadline_and_cancellation_do_not_consume_auth_or_leak_permits ... ok\ntest engine::tests::rfc4231_hmac_signs_the_exact_transmitted_body ... ok\ntest engine::tests::post_send_body_and_decode_failures_report_uncertain_outcomes ... ok\ntest engine::tests::only_explicitly_safe_reads_retry_transport_and_server_failures ... ok\ntest engine::tests::success_and_error_bodies_are_bounded_with_uncertain_local_failures ... ok\ntest engine::tests::transport_policy_and_limit_errors_never_trigger_retries ... ok\ntest engine::tests::retry_cap_and_nonretryable_statuses_are_respected ... ok\ntest auth::tests::malformed_or_unbounded_token_responses_fail_without_values ... ok\ntest engine::tests::oversized_header_collection_is_rejected_before_authentication ... ok\ntest engine::tests::default_adapter::default_adapter_constructs_without_a_tokio_runtime ... ok\ntest engine::tests::default_adapter::cancellation_closes_an_incomplete_default_http_response ... ok\ntest engine::tests::default_adapter::exact_json_hmac_and_bytes_survive_the_default_http_adapter ... ok\ntest engine::tests::oauth_factory_reuses_injected_transport_policy_and_cached_identity ... ok\ntest engine::tests::default_adapter::gzip_limit_applies_to_decompressed_bytes ... ok\ntest engine::tests::default_adapter::redirect_never_transmits_credentials_to_the_location_target ... ok\ntest engine::tests::default_adapter::failed_post_is_not_replayed_by_the_default_http_adapter ... ok\n\ntest result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+      "stderr": "   Compiling stable_deref_trait v1.2.1\n   Compiling pin-project-lite v0.2.17\n   Compiling bytes v1.12.1\n   Compiling futures-core v0.3.34\n   Compiling once_cell v1.21.4\n   Compiling itoa v1.0.18\n   Compiling futures-task v0.3.34\n   Compiling writeable v0.6.4\n   Compiling slab v0.4.12\n   Compiling litemap v0.8.3\n   Compiling smallvec v1.16.3\n   Compiling libc v0.2.190\n   Compiling zeroize v1.9.1\n   Compiling zerofrom v0.1.8\n   Compiling utf8_iter v1.0.4\n   Compiling subtle v2.6.1\n   Compiling aws-lc-sys v0.46.0\n   Compiling futures-sink v0.3.34\n   Compiling cfg-if v1.0.5\n   Compiling yoke v0.8.3\n   Compiling icu_normalizer_data v2.3.0\n   Compiling icu_properties_data v2.3.0\n   Compiling adler2 v2.0.1\n   Compiling untrusted v0.9.0\n   Compiling futures-util v0.3.34\n   Compiling tracing-core v0.1.36\n   Compiling simd-adler32 v0.3.10\n   Compiling rustls-pki-types v1.15.1\n   Compiling equivalent v1.0.3\n   Compiling percent-encoding v2.3.2\n   Compiling hashbrown v0.17.1\n   Compiling typenum v1.20.1\n   Compiling crc32fast v1.5.2\n   Compiling try-lock v0.2.5\n   Compiling atomic-waker v1.1.2\n   Compiling memchr v2.8.3\n   Compiling zerovec v0.11.8\n   Compiling zerotrie v0.2.5\n   Compiling fnv v1.0.7\n   Compiling tower-service v0.3.3\n   Compiling want v0.3.2\n   Compiling miniz_oxide v0.9.1\n   Compiling httparse v1.10.1\n   Compiling futures-channel v0.3.34\n   Compiling compression-core v0.4.33\n   Compiling form_urlencoded v1.2.2\n   Compiling sync_wrapper v1.0.2\n   Compiling http v1.5.0\n   Compiling base64 v0.23.1\n   Compiling ipnet v2.12.2\n   Compiling tower-layer v0.3.3\n   Compiling tracing v0.1.44\n   Compiling openssl-probe v0.2.1\n   Compiling serde_core v1.0.229\n   Compiling bitflags v2.13.2\n   Compiling aws-lc-rs v1.18.2\n   Compiling indexmap v2.14.2\n   Compiling log v0.4.34\n   Compiling rustls-native-certs v0.8.5\n   Compiling tinystr v0.8.4\n   Compiling potential_utf v0.1.6\n   Compiling zmij v1.0.23\n   Compiling cpufeatures v0.2.17\n   Compiling flate2 v1.1.10\n   Compiling mime v0.3.17\n   Compiling base64 v0.22.1\n   Compiling generic-array v0.14.7\n   Compiling httpdate v1.0.3\n   Compiling icu_collections v2.3.0\n   Compiling icu_locale_core v2.3.0\n   Compiling mio v1.2.4\n   Compiling socket2 v0.6.5\n   Compiling compression-codecs v0.4.45\n   Compiling http-body v1.1.0\n   Compiling tokio v1.53.3\n   Compiling block-buffer v0.10.4\n   Compiling crypto-common v0.1.7\n   Compiling http-body-util v0.1.5\n   Compiling digest v0.10.7\n   Compiling hmac v0.12.1\n   Compiling sha2 v0.10.9\n   Compiling icu_provider v2.3.1\n   Compiling rustls-webpki v0.103.15\n   Compiling icu_properties v2.3.0\n   Compiling icu_normalizer v2.3.0\n   Compiling serde v1.0.229\n   Compiling serde_json v1.0.154\n   Compiling rustls v0.23.46\n   Compiling idna_adapter v1.2.2\n   Compiling idna v1.1.0\n   Compiling url v2.5.8\n   Compiling tokio-util v0.7.20\n   Compiling async-compression v0.4.50\n   Compiling tower v0.5.3\n   Compiling h2 v0.4.20\n   Compiling tower-http v0.6.11\n   Compiling tokio-rustls v0.26.6\n   Compiling rustls-platform-verifier v0.7.1\n   Compiling hyper v1.12.0\n   Compiling hyper-util v0.1.21\n   Compiling hyper-rustls v0.27.10\n   Compiling reqwest v0.13.5\n   Compiling scm-sdk v0.1.0 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.79s\n     Running unittests src/lib.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/scm_sdk-22e95e3c2a54ec5b)\n   Doc-tests scm_sdk\n",
+      "duration_seconds": 19.012
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "doc",
+        "--workspace",
+        "--no-deps",
+        "--locked",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "    Checking tokio v1.53.3\n    Checking tokio-util v0.7.20\n    Checking async-compression v0.4.50\n    Checking tower v0.5.3\n    Checking tokio-rustls v0.26.6\n    Checking h2 v0.4.20\n    Checking tower-http v0.6.11\n    Checking hyper v1.12.0\n    Checking hyper-util v0.1.21\n    Checking hyper-rustls v0.27.10\n    Checking reqwest v0.13.5\n Documenting scm-sdk v0.1.0 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.43s\n   Generated /build/rust/target/x86_64-unknown-linux-musl/doc/scm_sdk/index.html\n",
+      "duration_seconds": 7.453
+    }
+  ]
+}

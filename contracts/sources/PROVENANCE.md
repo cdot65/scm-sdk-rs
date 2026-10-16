@@ -8,6 +8,12 @@ allow the verifier to reconstruct the root Git tree and bind bundled baseline
 files to that immutable commit. The manifest records all 145 `src/` files, their
 Git blob identities, byte counts, and SHA-256 hashes.
 
+The manifest also pins every non-source baseline input consumed by the
+extractors: `package.json`, `tsconfig.json`, and `scripts/openapi/inventory.ts`.
+Their identities are checked against the same Git tree; `--baseline` verifies
+their extracted bytes before they can influence compiler options or module
+evaluation. Development dependencies have a separate lockfile under `tools/`.
+
 All files in the baseline's `test/openapi/` tree are preserved. Its JSON fixtures
 are generated from specifications independently of SDK validators, subject to
 the explicitly recorded corrections. This independence does not imply that the
@@ -23,6 +29,12 @@ sanitized or synthetic observed values, while model pricing was captured from a
 public endpoint without credentials. Dummy credential literals in tests do not
 represent usable credentials. Tenant registrations and credential files are not
 included.
+
+Fixture categories are enforced against each baseline path. Every independent
+OpenAPI JSON fixture must carry an exact specification pin; observed captures
+and SDK-authored test references cannot carry that designation or pin. Category
+changes, removed specification pins, and modified extracted inputs are covered
+by the verifier's tampering checks.
 
 ## Exact historical specification recovery
 
@@ -55,6 +67,15 @@ another repository. The legacy Portkey source must never be relabeled as this
 official source. Rust parity can use the existing licensed TypeScript models and
 fixtures; including the official YAML or deriving distributable artifacts from
 it requires an identified license first.
+
+This determination is a point-in-time observation, recorded with public primary
+source URLs, response statuses, response hashes, the complete recursive tree's
+license-path result, and the source-byte identity in
+[`docs/evidence/2026-10-16-official-gateway-license.json`](../../docs/evidence/2026-10-16-official-gateway-license.json).
+The observation was captured on October 16, 2026 using unauthenticated requests.
+Offline gates verify the retained evidence and exclusion policy; they do not
+repeat those requests or refresh the repository's license status. A future
+license grant requires a reviewed update to this distribution decision.
 
 `python3 tools/verify-contracts.py` verifies the bundled corpus offline.
 `--baseline .local/typescript` additionally checks an extracted source tree.

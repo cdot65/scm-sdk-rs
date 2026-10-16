@@ -6,16 +6,37 @@
     "version": "0.34.0",
     "commit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
     "sourceTreeLedgerSha256": "cf2564ab157509cb4ddb0689e15f717fcc4e463019dbc2c9975513f29728c13a",
-    "inventoryToolSha256": "1b487beb30fe9a4fee847accf659230d3de455f57cc8692314c92e13e572d037"
+    "inventoryToolSha256": "1b487beb30fe9a4fee847accf659230d3de455f57cc8692314c92e13e572d037",
+    "extractionInputs": [
+      {
+        "upstreamPath": "package.json",
+        "sha256": "2a65a500114291e9b90b555f7ca5477c1f3a7da8e41423ae6c7fe9c847557705",
+        "gitBlobSha1": "931ef058599e8892670329fd862e11b7af2df83f",
+        "bytes": 3372
+      },
+      {
+        "upstreamPath": "scripts/openapi/inventory.ts",
+        "sha256": "1b487beb30fe9a4fee847accf659230d3de455f57cc8692314c92e13e572d037",
+        "gitBlobSha1": "3bb926b771e138205453cae9e012c6fd0264be6f",
+        "bytes": 10714
+      },
+      {
+        "upstreamPath": "tsconfig.json",
+        "sha256": "3a1561f058c68f96bba3dc810128c469e38aaa5d471be8ea3b9e29061374fbc3",
+        "gitBlobSha1": "cdc1d29870ad8a34d4905983fbf9299621792186",
+        "bytes": 530
+      }
+    ]
   },
   "generator": {
     "path": "tools/extract-operations.mts",
-    "sha256": "50f986ceb3244a1b4978039502117e291ca1388df784a49ae2ec0e83ce69a52a",
+    "sha256": "b7e0ab1ffe10b8f3209bcddc4f85787ba189c00f4fdb95da04ec70e2ade79589",
     "typescriptVersion": "5.9.3",
     "tsxVersion": "4.23.15"
   },
   "extractionPolicy": {
-    "sourceHashVerification": "all frozen src files",
+    "sourceHashVerification": "all frozen src files and ledger-bound compiler/package/auditor inputs",
+    "evaluationIsolation": "process.env cleared and fetch/WebSocket disabled before importing verified upstream tooling",
     "publicClientMethodScope": "Concrete public bodies in client families; inherited runtime methods counted only at declaring class. Constructors, accessors, and public properties retained as class evidence; helper/functions/constants tracked separately by export inventory.",
     "expressionEvaluation": "none",
     "unsupportedExpressions": "explicit blockers, never generic JSON stubs",

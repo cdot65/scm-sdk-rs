@@ -1,0 +1,74 @@
+name: Credential-free SDK checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      native_platforms:
+        description: Run additional native platforms after their runner labels are registered
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the reviewed source
+        uses: https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1, Node 20
+        with:
+          persist-credentials: false
+      - name: Verify the offline source and fixture corpus
+        run: python3 tools/verify-contracts.py --self-test
+      - name: Verify review gate behavior
+        run: python3 -m unittest discover -s tools -p test_review_phase.py -v
+
+  rust:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        toolchain: ['1.88.0', '1.99.0']
+        features: [default, minimal, all]
+    steps:
+      - name: Check out the reviewed source
+        uses: https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1, Node 20
+        with:
+          persist-credentials: false
+      - name: Install the exact Rust toolchain
+        run: rustup toolchain install ${{ matrix.toolchain }} --profile minimal --component rustfmt,clippy --no-self-update
+      - name: Check formatting, build, Clippy, tests, and documentation
+        run: python3 scripts/check-rust.py --toolchain ${{ matrix.toolchain }} --feature-set ${{ matrix.features }}
+
+  additional-native-platforms:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.native_platforms == true }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: linux-arm64
+            target: aarch64-unknown-linux-gnu
+            python: python3
+          - runner: macos-arm64
+            target: aarch64-apple-darwin
+            python: python3
+          - runner: windows-amd64
+            target: x86_64-pc-windows-msvc
+            python: python
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Check out the reviewed source
+        uses: https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1, Node 20
+        with:
+          persist-credentials: false
+      - name: Install the exact Rust toolchain
+        run: rustup toolchain install 1.99.0 --profile minimal --component rustfmt,clippy --no-self-update
+      - name: Verify the registered native runner target
+        run: |
+          ${{ matrix.python }} -c "import subprocess; assert 'host: ${{ matrix.target }}' in subprocess.check_output(['rustc', '+1.99.0', '-vV'], text=True)"
+      - name: Run native checks and tests
+        run: ${{ matrix.python }} scripts/check-rust.py --toolchain 1.99.0 --feature-set all

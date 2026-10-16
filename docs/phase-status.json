@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 2,
+  "active_phase": 3,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -39,14 +39,95 @@
     {
       "id": 2,
       "name": "Secure Rust foundation",
-      "status": "in_progress",
-      "reviews": []
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-02-attempt-02.json"
+      ],
+      "review_attempts": [
+        "docs/reviews/phase-02-attempt-01.json",
+        "docs/reviews/phase-02-attempt-02.json"
+      ],
+      "limitations": [
+        {
+          "id": "automated-dependency-policy",
+          "status": "deferred",
+          "due_phase": 8,
+          "scope": "Fresh advisory scan and complete resolved dependency license/source policy; native dependency selection and notices reviewed in Phase2.",
+          "evidence": [
+            "docs/DEPENDENCIES.md",
+            ".forgejo/workflows/ci.yml"
+          ]
+        },
+        {
+          "id": "remote-ci-execution",
+          "status": "pending",
+          "due_phase": 8,
+          "evidence": [
+            "docs/DEVELOPMENT.md",
+            ".forgejo/workflows/ci.yml"
+          ],
+          "scope": "Workflow configured; no retained remote run yet."
+        },
+        {
+          "id": "native-platform-qualification",
+          "status": "pending",
+          "due_phase": 8,
+          "evidence": [
+            "docs/DEVELOPMENT.md"
+          ],
+          "scope": "Actual foundation execution covers Linux x86_64 musl; declared additional platform jobs require native execution."
+        }
+      ],
+      "open_parity_items": [
+        {
+          "id": "oauth-token-buffer-configuration",
+          "status": "pending",
+          "due_phase": 7,
+          "baseline": "OAuthClientOptions.tokenBufferMs",
+          "current": "Safe fixed min(30s,TTL/5) early refresh buffer",
+          "evidence": [
+            "docs/FOUNDATION.md",
+            "crates/scm-sdk/src/auth.rs"
+          ]
+        }
+      ],
+      "accepted_source_sha256": "33367a378e432e79319c1838d4f8b346212d25659f41ef7937fe4cd2f317ce1d",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-02-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-02.json"
+          ],
+          "source_sha256": "33367a378e432e79319c1838d4f8b346212d25659f41ef7937fe4cd2f317ce1d"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-02-attempt-02.json"
+          ]
+        }
+      }
     },
     {
       "id": 3,
       "name": "Typed models and scanning",
-      "status": "pending",
-      "reviews": []
+      "status": "in_progress",
+      "reviews": [],
+      "review_advisories": [
+        {
+          "source": "docs/reviews/phase-02-attempt-02.json",
+          "status": "pending",
+          "scope": "Combined outgoing header bounds; explicit403 refresh difference; TLS rootstore/verifier dependency review."
+        }
+      ]
     },
     {
       "id": 4,

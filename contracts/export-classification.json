@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
-  "policy": "Every exported capability and public member requires an explicit classification. Tags are evidence, not the source of truth. Edit classifications deliberately; ordinary extraction never invents missing entries.",
+  "policy": "Every exported capability and public member requires an explicit classification. Tags and proposedNamespace are evidence and initial proposals, not the source of truth. Generic errors, reusable metadata, OAuth responses and generic security enums have canonical shared ownership; product-specific enum contracts retain product ownership. Edit classifications deliberately; ordinary extraction never invents missing entries.",
   "entries": {
     "Action": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "ActionType": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "AdapterConfigResponse": {
       "namespace": "airs::red_team",
@@ -648,20 +648,20 @@
       "rationale": "Observed AgentGuard service contracts are experimental as a product family."
     },
     "AgentMeta": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Reusable application and agent metadata can accompany product workflows; preserve one canonical shared shape without a scan compilation dependency."
     },
     "AgentMetaSchema": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Reusable application and agent metadata can accompany product workflows; preserve one canonical shared shape without a scan compilation dependency."
     },
     "AgentProtectionItem": {
       "namespace": "airs::management",
@@ -4900,12 +4900,12 @@
       "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
     },
     "Category": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "CategoryModel": {
       "namespace": "airs::red_team",
@@ -4940,12 +4940,12 @@
       "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
     },
     "CategoryType": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "CgReport": {
       "namespace": "airs::scan",
@@ -5444,7 +5444,7 @@
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "AIRS scan detection-service names and prompt/response error locations belong to the scan contract; sharing generic enum infrastructure does not change this product-specific ownership."
     },
     "ContentErrorTypeType": {
       "namespace": "airs::scan",
@@ -5452,7 +5452,7 @@
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "AIRS scan detection-service names and prompt/response error locations belong to the scan contract; sharing generic enum infrastructure does not change this product-specific ownership."
     },
     "ContentOptions": {
       "namespace": "airs::scan",
@@ -8754,7 +8754,7 @@
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "AIRS scan detection-service names and prompt/response error locations belong to the scan contract; sharing generic enum infrastructure does not change this product-specific ownership."
     },
     "DetectionServiceNameType": {
       "namespace": "airs::scan",
@@ -8762,7 +8762,7 @@
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "AIRS scan detection-service names and prompt/response error locations belong to the scan contract; sharing generic enum infrastructure does not change this product-specific ownership."
     },
     "DetectionServiceResult": {
       "namespace": "airs::scan",
@@ -9701,20 +9701,20 @@
       "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
     },
     "ErrorResponse": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Shared API error envelope and retry guidance are required by transports across product families; availability must not depend on the scan feature."
     },
     "ErrorResponseSchema": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Shared API error envelope and retry guidance are required by transports across product families; availability must not depend on the scan feature."
     },
     "ErrorSource": {
       "namespace": "airs::red_team",
@@ -9725,20 +9725,20 @@
       "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
     },
     "ErrorStatus": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "ErrorStatusType": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "ErrorTrendsResponse": {
       "namespace": "airs::gateway",
@@ -22458,12 +22458,12 @@
       "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
     },
     "Metadata": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Reusable application and agent metadata can accompany product workflows; preserve one canonical shared shape without a scan compilation dependency."
     },
     "MetadataCriterion": {
       "namespace": "dlp",
@@ -22482,12 +22482,12 @@
       "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
     },
     "MetadataSchema": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Reusable application and agent metadata can accompany product workflows; preserve one canonical shared shape without a scan compilation dependency."
     },
     "MGMT_API_KEY_PATH": {
       "namespace": "airs::management",
@@ -30896,20 +30896,20 @@
       "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
     },
     "Verdict": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "VerdictType": {
-      "namespace": "airs::scan",
-      "feature": "scan",
+      "namespace": "shared",
+      "feature": "shared",
       "support": "baseline_supported",
       "rustImplementation": "unimplemented",
       "liveAcceptance": "unverified",
-      "rationale": "Included in the frozen public export contract. Baseline support is not a claim of Rust implementation or live acceptance."
+      "rationale": "Generic security outcome/action/error-status wire vocabulary has a canonical shared declaration; preserve its distinct semantic type across product families."
     },
     "ViolationList": {
       "namespace": "airs::model_security",

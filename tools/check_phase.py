@@ -28,6 +28,22 @@ def commands_for(phase):
              "--types", "node", "--typeRoots", ".local/typescript/node_modules/@types",
              "tools/extract-contracts.mts", "tools/extract-operations.mts"],
         ]
+    if phase == 2:
+        return commands_for(1) + [
+            ["python", "scripts/check-rust.py", "--toolchain", "1.88.0", "--feature-set", "default",
+             "--output", "docs/checks/rust-1.88.0-default.json"],
+            ["python", "scripts/check-rust.py", "--toolchain", "1.88.0", "--feature-set", "minimal",
+             "--output", "docs/checks/rust-1.88.0-minimal.json"],
+            ["python", "scripts/check-rust.py", "--toolchain", "1.88.0", "--feature-set", "all",
+             "--output", "docs/checks/rust-1.88.0-all.json"],
+            ["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", "default",
+             "--output", "docs/checks/rust-1.99.0-default.json"],
+            ["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", "minimal",
+             "--output", "docs/checks/rust-1.99.0-minimal.json"],
+            ["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", "all",
+             "--output", "docs/checks/rust-1.99.0-all.json"],
+            ["python", "scripts/check-package.py"],
+        ]
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 

@@ -8,9 +8,13 @@ Implementation proceeds through the gated [phases](docs/PHASES.md), following th
 records actual progress and Claude Code reviews. Implementation, independent
 contract verification, and live acceptance are measured separately.
 
-Current state: Phase 1 contract tooling is implemented and checked; the required
-Claude review is pending. Native Rust crate implementation
-begins in Phase 2. No SDK release is available yet.
+Current state: Phase 1 passed Claude review at 9/10. Phase 2 implements the native
+Rust foundation and is undergoing its checks and review. Product clients follow
+in the remaining phases. No SDK release is available yet.
+
+The [foundation interface](docs/FOUNDATION.md) describes explicit authentication,
+transport injection, cancellation, resource limits, and safe error handling.
+See [development](docs/DEVELOPMENT.md) for native checks and CI coverage.
 
 ## Development contracts
 

@@ -13,8 +13,6 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const baselineRoot = join(repo, '.local/typescript');
-const require = createRequire(join(baselineRoot, 'package.json'));
-const ts: typeof import('../.local/typescript/node_modules/typescript/lib/typescript.js') = require('typescript');
 type Node = import('../.local/typescript/node_modules/typescript/lib/typescript.js').Node;
 type Expression = import('../.local/typescript/node_modules/typescript/lib/typescript.js').Expression;
 type Method = import('../.local/typescript/node_modules/typescript/lib/typescript.js').MethodDeclaration;
@@ -24,6 +22,24 @@ const digest = (value: string | Buffer) => createHash('sha256').update(value).di
 const compareText = (left: string, right: string) => left < right ? -1 : left > right ? 1 : 0;
 const readJson = (path: string) => JSON.parse(readFileSync(path, 'utf8'));
 const manifest = readJson(join(repo, 'contracts/manifest.json'));
+if (manifest.schemaVersion !== 1 || manifest.baseline.commit !== '4a80dbdb3dc14365e1c25d838ac0bd139485d48c')
+  throw new Error('Frozen provenance schema or baseline commit mismatch.');
+const ledgerBytes = readFileSync(join(repo, manifest.baseline.gitTreeLedger));
+if (digest(ledgerBytes) !== manifest.baseline.gitTreeLedgerSha256) throw new Error('Frozen Git tree ledger hash mismatch.');
+const ledger = JSON.parse(ledgerBytes.toString('utf8'));
+if (ledger.commit !== manifest.baseline.commit) throw new Error('Frozen Git tree ledger commit mismatch.');
+const extractionInputs: { upstreamPath: string; sha256: string; gitBlobSha1: string; bytes: number }[] = manifest.baseline.extractionInputs;
+if (!Array.isArray(extractionInputs) || !['package.json', 'tsconfig.json', 'scripts/openapi/inventory.ts'].every((path) => extractionInputs.some((input) => input.upstreamPath === path)))
+  throw new Error('Frozen compiler/package/auditor inputs are absent from provenance.');
+for (const input of extractionInputs) {
+  const entry = ledger.files.find((file: { path: string }) => file.path === input.upstreamPath);
+  const bytes = readFileSync(join(baselineRoot, input.upstreamPath));
+  const blob = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+  if (!entry || input.gitBlobSha1 !== entry.gitBlobSha1 || input.bytes !== entry.bytes || bytes.length !== entry.bytes ||
+    blob !== entry.gitBlobSha1 || digest(bytes) !== input.sha256) throw new Error(`Frozen extraction input mismatch: ${input.upstreamPath}`);
+}
+const require = createRequire(join(baselineRoot, 'package.json'));
+const ts: typeof import('../.local/typescript/node_modules/typescript/lib/typescript.js') = require('typescript');
 const output = join(repo, 'contracts/operations.json');
 const sourcePaths: string[] = manifest.baseline.srcFiles.map((entry: { upstreamPath: string }) => entry.upstreamPath);
 const bySource = new Map<string, { sha256: string }>(manifest.baseline.srcFiles.map((entry: { upstreamPath: string; sha256: string }) => [entry.upstreamPath, entry]));
@@ -37,6 +53,11 @@ if (!inventoryReference || digest(readFileSync(join(baselineRoot, inventoryRefer
   throw new Error('Frozen inventory tooling hash does not match the provenance manifest.');
 // This existing auditor evaluates only its constants module, not request builders. Its
 // call-site output is secondary evidence: it omits spreads and can flatten workflows.
+for (const name of Object.keys(process.env)) delete process.env[name];
+globalThis.fetch = async () => { throw new Error('Network is forbidden during operation extraction'); };
+if ('WebSocket' in globalThis) Object.defineProperty(globalThis, 'WebSocket', {
+  configurable: true, value: class { constructor() { throw new Error('Network is forbidden during operation extraction'); } },
+});
 const { collectCallSites } = await import(pathToFileURL(join(baselineRoot, 'scripts/openapi/inventory.ts')).href);
 const existingCalls: Record<string, unknown>[] = collectCallSites();
 const configFile = ts.readConfigFile(join(baselineRoot, 'tsconfig.json'), ts.sys.readFile);
@@ -345,9 +366,9 @@ for (const input of ['runArbitraryCode(value)', 'Object.fromEntries(values)', '(
 }
 const payload = {
   schemaVersion: 1, purpose: 'Reviewed declarative operation inputs and explicit native-adapter backlog; this artifact is not implemented SDK functionality.',
-  baseline: { repository: manifest.baseline.repository, version: manifest.baseline.version, commit: manifest.baseline.commit, sourceTreeLedgerSha256: manifest.baseline.gitTreeLedgerSha256, inventoryToolSha256: inventoryReference.sha256 },
+  baseline: { repository: manifest.baseline.repository, version: manifest.baseline.version, commit: manifest.baseline.commit, sourceTreeLedgerSha256: manifest.baseline.gitTreeLedgerSha256, inventoryToolSha256: inventoryReference.sha256, extractionInputs },
   generator: { path: 'tools/extract-operations.mts', sha256: digest(readFileSync(fileURLToPath(import.meta.url))), typescriptVersion: ts.version, tsxVersion: require('tsx/package.json').version },
-  extractionPolicy: { sourceHashVerification: 'all frozen src files', publicClientMethodScope: 'Concrete public bodies in client families; inherited runtime methods counted only at declaring class. Constructors, accessors, and public properties retained as class evidence; helper/functions/constants tracked separately by export inventory.', expressionEvaluation: 'none', unsupportedExpressions: 'explicit blockers, never generic JSON stubs', helperExpansion: 'never flatten workflows; retain exact helper source', nativeDeclarativeMeaning: 'Syntax accepted for future typed native generation; Rust type/validator/executor implementation and review are still required.', securityPolicy: 'Baseline retries, global state, logging, and error behavior are evidence only and require the approved Rust corrections.' },
+  extractionPolicy: { sourceHashVerification: 'all frozen src files and ledger-bound compiler/package/auditor inputs', evaluationIsolation: 'process.env cleared and fetch/WebSocket disabled before importing verified upstream tooling', publicClientMethodScope: 'Concrete public bodies in client families; inherited runtime methods counted only at declaring class. Constructors, accessors, and public properties retained as class evidence; helper/functions/constants tracked separately by export inventory.', expressionEvaluation: 'none', unsupportedExpressions: 'explicit blockers, never generic JSON stubs', helperExpansion: 'never flatten workflows; retain exact helper source', nativeDeclarativeMeaning: 'Syntax accepted for future typed native generation; Rust type/validator/executor implementation and review are still required.', securityPolicy: 'Baseline retries, global state, logging, and error behavior are evidence only and require the approved Rust corrections.' },
   summary: { concretePublicClientMethods: operations.length, overloadDeclarations: operations.reduce((sum, operation) => sum + (operation.overloads as unknown[]).length, 0), methodsByFamily: counts, nativeDeclarative: nativeOperations.length, handwrittenAdapterRequired: operations.length - nativeOperations.length, existingInventoryCallSites: existingCalls.length, committedFixtureCases: Object.values(fixtureCounts).reduce((sum, count) => sum + count, 0), openApiTransportFixtureCases: Object.entries(fixtureCounts).filter(([path]) => path.includes('/openapi/fixtures/')).reduce((sum, [, count]) => sum + count, 0), fixtureCasesByFile: fixtureCounts },
   classes: classRecords, operations,
 };

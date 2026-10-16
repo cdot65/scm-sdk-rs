@@ -18,6 +18,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baseline = path.join(root, '.local/typescript');
 const sourceRoot = path.join(baseline, 'src');
 const contractRoot = path.join(root, 'contracts');
+const classificationPath = path.join(contractRoot, 'export-classification.json');
 const baselineCommit = '4a80dbdb3dc14365e1c25d838ac0bd139485d48c';
 const initialize = process.argv.includes('--initialize-classification');
 const check = process.argv.includes('--check');
@@ -29,6 +30,12 @@ const relative = (input: string) => path.relative(baseline, input).split(path.se
 const sort = <T,>(values: T[], key: (value: T) => string) => values.sort((a, b) => key(a).localeCompare(key(b), 'en'));
 const json = (value: unknown) => `${JSON.stringify(value, null, 2)}\n`;
 const normalize = (text: string) => text.split(baseline).join('<baseline>');
+function validateClassificationHeader(classifications: { schemaVersion?: unknown; baselineCommit?: unknown }) {
+  if (classifications.schemaVersion !== 1 || classifications.baselineCommit !== baselineCommit) {
+    throw new Error('Classification schema or frozen baseline commit mismatch');
+  }
+}
+if (!initialize) validateClassificationHeader(JSON.parse(await readFile(classificationPath, 'utf8')));
 
 async function filesIn(directory: string): Promise<string[]> {
   const files: string[] = [];
@@ -45,6 +52,23 @@ const hashes = await Promise.all(baselineFiles.map(async (file) => ({ file: rela
 const provenance = JSON.parse(await readFile(path.join(contractRoot, 'manifest.json'), 'utf8'));
 if (provenance.baseline.commit !== baselineCommit || json(hashes) !== json(provenance.baseline.srcFiles.map((file: any) => ({ file: file.upstreamPath, sha256: file.sha256 })))) {
   throw new Error('Source tree differs from independently verified frozen provenance; refusing to evaluate baseline code');
+}
+const ledgerBytes = await readFile(path.join(root, provenance.baseline.gitTreeLedger));
+if (hash(ledgerBytes) !== provenance.baseline.gitTreeLedgerSha256) throw new Error('Frozen Git tree ledger hash mismatch');
+const ledger = JSON.parse(ledgerBytes.toString('utf8'));
+if (ledger.commit !== baselineCommit) throw new Error('Frozen Git tree ledger commit mismatch');
+const extractionInputs: { upstreamPath: string; sha256: string; gitBlobSha1: string; bytes: number }[] = provenance.baseline.extractionInputs;
+if (!Array.isArray(extractionInputs) || !['package.json', 'tsconfig.json'].every((file) => extractionInputs.some((input) => input.upstreamPath === file))) {
+  throw new Error('Frozen compiler/package inputs are absent from provenance');
+}
+for (const input of extractionInputs) {
+  const entry = ledger.files.find((file: { path: string }) => file.path === input.upstreamPath);
+  const bytes = await readFile(path.join(baseline, input.upstreamPath));
+  const blob = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+  if (!entry || input.gitBlobSha1 !== entry.gitBlobSha1 || input.bytes !== entry.bytes || bytes.length !== entry.bytes ||
+    blob !== entry.gitBlobSha1 || hash(bytes) !== input.sha256) {
+    throw new Error(`Frozen extraction input mismatch: ${input.upstreamPath}`);
+  }
 }
 const parsed = ts.readConfigFile(path.join(baseline, 'tsconfig.json'), ts.sys.readFile);
 if (parsed.error) throw new Error(ts.flattenDiagnosticMessageText(parsed.error.messageText, '\n'));
@@ -244,6 +268,8 @@ function methodInfo(property: ts.Symbol, owner: string, static_: boolean) {
 }
 
 function namespaceFor(file: string, name: string): string {
+  if (['src/models/error-response.ts', 'src/models/metadata.ts', 'src/models/oauth-token.ts'].includes(file)) return 'shared';
+  if (file === 'src/models/enums.ts' && ['Action', 'ActionType', 'Category', 'CategoryType', 'Verdict', 'VerdictType', 'ErrorStatus', 'ErrorStatusType'].includes(name)) return 'shared';
   if (file === 'src/constants.ts') {
     if (/^(?:DEFAULT_)?AI_GW_|^aiGw/.test(name)) return 'airs::gateway';
     if (/^AGENT_GUARD_/.test(name)) return 'airs::agentguard';
@@ -500,7 +526,7 @@ function presence(schema: Schema, value: 'null' | 'undefined', seen = new Set<Sc
 const schemaRoots = schemaDeclarations.map((entry) => {
   const schema = runtimeModules.get(entry.file)![entry.identifier] as Schema;
   if (!schema?._def) throw new Error(`Instrumented schema unavailable: ${entry.file}:${entry.name}`);
-  return { name: entry.name, source: entry.source, schema: schemaRef(schema) };
+  return { name: entry.name, source: entry.source, proposedNamespace: namespaceFor(entry.source.file, entry.name), schema: schemaRef(schema) };
 });
 
 const exports = publicSymbols.map((exportSymbol) => {
@@ -548,7 +574,6 @@ const exportedClientMethodSourceKeys = [...new Set(exports.filter((entry) => ent
   .flatMap((entry) => entry.sources.map((source: any) => `${source.file}:${source.start}`))
   .filter((key) => sourceBodyKeys.has(key)))].sort();
 if (json(clientMethodSourceKeys) !== json(exportedClientMethodSourceKeys)) throw new Error('AST/checker client method-body disagreement');
-const classificationPath = path.join(contractRoot, 'export-classification.json');
 await mkdir(contractRoot, { recursive: true });
 if (initialize) {
   try {
@@ -588,6 +613,7 @@ if (initialize) {
   await writeFile(classificationPath, json({ schemaVersion: 1, baselineCommit, policy: 'Every exported capability and public member requires an explicit classification. Tags are evidence, not the source of truth. Edit classifications deliberately; ordinary extraction never invents missing entries.', entries }));
 }
 const classifications = JSON.parse(await readFile(classificationPath, 'utf8'));
+validateClassificationHeader(classifications);
 const ids = classifiedEntries.map((entry) => entry.id ?? entry.name).sort();
 const policyIds = Object.keys(classifications.entries).sort();
 if (json(ids) !== json(policyIds)) throw new Error('Classification entries are missing or stale; review every changed export/member explicitly');
@@ -626,7 +652,7 @@ const counts = {
 };
 const inventory = {
   schemaVersion: 1,
-  baseline: { package: '@cdot65/prisma-airs-sdk', version: '0.34.0', commit: baselineCommit, sourceFingerprint, sources: hashes },
+  baseline: { package: '@cdot65/prisma-airs-sdk', version: '0.34.0', commit: baselineCommit, sourceFingerprint, sources: hashes, extractionInputs },
   tools: { typescript: ts.version, zod: JSON.parse(await readFile(path.join(baseline, 'node_modules/zod/package.json'), 'utf8')).version,
     node: process.versions.node, generatorSha256: hash(await readFile(fileURLToPath(import.meta.url))) },
   counts,

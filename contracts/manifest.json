@@ -887,7 +887,27 @@
       "bytes": 267,
       "gitObjectSha1": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c"
     },
-    "rootTreeSha1": "19e3d5693e8e0e4dc6786e003cc0d8744570928e"
+    "rootTreeSha1": "19e3d5693e8e0e4dc6786e003cc0d8744570928e",
+    "extractionInputs": [
+      {
+        "upstreamPath": "package.json",
+        "sha256": "2a65a500114291e9b90b555f7ca5477c1f3a7da8e41423ae6c7fe9c847557705",
+        "gitBlobSha1": "931ef058599e8892670329fd862e11b7af2df83f",
+        "bytes": 3372
+      },
+      {
+        "upstreamPath": "scripts/openapi/inventory.ts",
+        "sha256": "1b487beb30fe9a4fee847accf659230d3de455f57cc8692314c92e13e572d037",
+        "gitBlobSha1": "3bb926b771e138205453cae9e012c6fd0264be6f",
+        "bytes": 10714
+      },
+      {
+        "upstreamPath": "tsconfig.json",
+        "sha256": "3a1561f058c68f96bba3dc810128c469e38aaa5d471be8ea3b9e29061374fbc3",
+        "gitBlobSha1": "cdc1d29870ad8a34d4905983fbf9299621792186",
+        "bytes": 530
+      }
+    ]
   },
   "fixturePolicy": {
     "requiredTreePrefix": "test/openapi/",
@@ -1914,7 +1934,13 @@
       "licenseEvidence": {
         "pinnedTreeUrl": "https://api.github.com/repos/PaloAltoNetworks/openapi/git/trees/2931d49bc38e30793d5923d22125f5f953d141d0",
         "repositoryLicenseEndpoint": "https://api.github.com/repos/PaloAltoNetworks/openapi/license",
-        "finding": "Pinned tree has no LICENSE; repository license endpoint returned HTTP 404; OpenAPI info has no license declaration. No other repository license is inferred."
+        "finding": "Point-in-time observation: pinned recursive tree has no license-like file; repository license endpoint returned HTTP 404; OpenAPI info has no license declaration. No other repository license is inferred. Offline verification does not refresh this observation.",
+        "observation": {
+          "path": "docs/evidence/2026-10-16-official-gateway-license.json",
+          "observedAt": "2026-10-16T07:24:06.595992+00:00",
+          "sha256": "010fdf7ff30195cc36eca3a517221a9ebf92bcbab5491b1aa1565c883d8a2059",
+          "bytes": 3171
+        }
       },
       "sha256": "567f53fd7399c4cf87d4fc5e32a8dd5a25765113f698d82de6e538adf4213978",
       "gitBlobSha1": "e4866136d7394007a2d4bf88799ac30a7cdc0df4",
@@ -2383,8 +2409,8 @@
   "documentation": [
     {
       "path": "contracts/sources/PROVENANCE.md",
-      "sha256": "f0e9c1aaa5a239a4a22a4a357fe5e3b9017364f0979a829c14fcfe438684b684",
-      "bytes": 3715
+      "sha256": "05e620e1317a12389a10715c56e5dd04b4f9f1b6d549ba903efd3a3a66a91ff2",
+      "bytes": 5091
     }
   ]
 }

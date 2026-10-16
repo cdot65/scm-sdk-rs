@@ -18,12 +18,19 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 PIN = "4a80dbdb3dc14365e1c25d838ac0bd139485d48c"
 VERSION = "0.34.0"
+EXTRACTION_INPUTS = {"package.json", "tsconfig.json", "scripts/openapi/inventory.ts"}
+FIXTURE_CATEGORIES = {
+    "independent-openapi-fixture", "fixture-test-reference",
+    "public-response-capture", "sanitized-observed-response",
+    "sdk-authored-regression-reference",
+}
 
 
 def require(condition: bool, message: str) -> None:
@@ -68,6 +75,28 @@ def verify_file(record: dict) -> bytes:
     return data
 
 
+def verify_extracted_inputs(records: list[dict], baseline: Path) -> None:
+    for record in records:
+        relative = Path(record["upstreamPath"])
+        require(not relative.is_absolute() and ".." not in relative.parts,
+                "Invalid extracted input path")
+        path = baseline / relative
+        require(path.is_file(), f"Missing extracted baseline input: {relative}")
+        for parent in (path, *path.parents):
+            if parent == baseline:
+                break
+            require(not parent.is_symlink(), f"Symlink in extracted baseline input: {relative}")
+        verify_bytes(record, path.read_bytes(), relative.as_posix())
+
+
+def fixture_category(upstream_path: str) -> str:
+    if upstream_path.startswith("test/openapi/"):
+        return "independent-openapi-fixture" if upstream_path.endswith(".json") else "fixture-test-reference"
+    if "/fixtures/" in upstream_path:
+        return "public-response-capture" if upstream_path.endswith("model-pricing-live.json") else "sanitized-observed-response"
+    return "sdk-authored-regression-reference"
+
+
 def git_tree_hash(files: list[dict]) -> str:
     """Reconstruct Git's root tree from the full ls-tree ledger."""
     root: dict = {}
@@ -102,10 +131,19 @@ def self_test() -> None:
     """Exercise rejection paths against disposable copies of the corpus."""
     cases = ("fixture-change", "fixture-removal", "unmanifested-source", "license-removal",
              "fixture-inventory-omission", "baseline-source-omission", "tree-ledger-omission",
-             "excluded-source-generation", "export-source-change")
+             "excluded-source-generation", "export-source-change", "fixture-category-relabel",
+             "fixture-category-unknown", "specification-pin-removal", "observed-specification-pin",
+             "extraction-input-omission", "extraction-input-origin-change", "license-evidence-change")
     with tempfile.TemporaryDirectory(prefix="scm-contract-verifier-") as temporary:
         root = Path(temporary)
         shutil.copytree(ROOT / "contracts", root / "contracts")
+        copied_manifest = json.loads((root / "contracts/manifest.json").read_bytes())
+        for source in copied_manifest["sources"]:
+            if not source["redistributed"]:
+                evidence_path = source["licenseEvidence"]["observation"]["path"]
+                target = root / evidence_path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(safe_path(evidence_path), target)
         (root / "tools").mkdir()
         shutil.copy2(Path(__file__), root / "tools/verify-contracts.py")
         command = [sys.executable, "-I", str(root / "tools/verify-contracts.py")]
@@ -151,6 +189,24 @@ def self_test() -> None:
                 inventory = json.loads(original_data)
                 inventory["baseline"]["sources"][0]["sha256"] = "0" * 64
                 changed_path.write_bytes(canonical(inventory))
+            elif case == "fixture-category-relabel":
+                next(entry for entry in manifest["fixtures"] if entry["category"] == "sdk-authored-regression-reference")["category"] = "independent-openapi-fixture"
+            elif case == "fixture-category-unknown":
+                manifest["fixtures"][0]["category"] = "unreviewed"
+            elif case == "specification-pin-removal":
+                next(entry for entry in manifest["fixtures"] if entry["category"] == "independent-openapi-fixture").pop("specification")
+            elif case == "observed-specification-pin":
+                observed = next(entry for entry in manifest["fixtures"] if entry["category"] == "sanitized-observed-response")
+                observed["specification"] = next(entry for entry in manifest["fixtures"] if "specification" in entry)["specification"]
+            elif case == "extraction-input-omission":
+                manifest["baseline"]["extractionInputs"].pop(0)
+            elif case == "extraction-input-origin-change":
+                manifest["baseline"]["extractionInputs"][0]["gitBlobSha1"] = "0" * 40
+            elif case == "license-evidence-change":
+                official = next(entry for entry in manifest["sources"] if not entry["redistributed"])
+                changed_path = root / official["licenseEvidence"]["observation"]["path"]
+                original_data = changed_path.read_bytes()
+                changed_path.write_bytes(original_data + b"\n")
             manifest_path.write_bytes(canonical(manifest))
             result = subprocess.run(command, capture_output=True, text=True)
             require(result.returncode != 0 and "Contract verification failed:" in result.stderr,
@@ -161,7 +217,23 @@ def self_test() -> None:
                     changed_path.write_bytes(original_data)
                 else:
                     changed_path.unlink()
-    print(json.dumps({"status": "verified", "rejectedTamperingCases": list(cases)}, indent=2))
+        # Exercise the actual extracted non-src byte check without requiring a
+        # full external baseline checkout: package.json is already bundled.
+        manifest = json.loads(original_manifest)
+        package = next(entry for entry in manifest["baseline"]["extractionInputs"] if entry["upstreamPath"] == "package.json")
+        extracted = root / "temporary-baseline"
+        extracted.mkdir()
+        package_bytes = (root / "contracts/sources/typescript/package.json").read_bytes()
+        (extracted / "package.json").write_bytes(package_bytes)
+        verify_extracted_inputs([package], extracted)
+        (extracted / "package.json").write_bytes(package_bytes + b"\n")
+        try:
+            verify_extracted_inputs([package], extracted)
+        except ValueError:
+            pass
+        else:
+            raise ValueError("Verifier accepted changed extracted package.json")
+    print(json.dumps({"status": "verified", "rejectedTamperingCases": [*cases, "extracted-non-src-byte-change"]}, indent=2))
 
 
 def main() -> None:
@@ -215,9 +287,16 @@ def main() -> None:
             path = args.baseline / entry["upstreamPath"]
             require(path.is_file() and not path.is_symlink(), f"Missing extracted baseline file: {entry['upstreamPath']}")
             verify_bytes(entry, path.read_bytes(), entry["upstreamPath"])
+    input_paths = [entry["upstreamPath"] for entry in baseline["extractionInputs"]]
+    require(len(input_paths) == len(set(input_paths)) and EXTRACTION_INPUTS <= set(input_paths),
+            "Extracted non-src input inventory is incomplete or duplicated")
+    require(all(not path.startswith("src/") for path in input_paths), "Extraction inputs must identify non-src baseline files")
+    for entry in baseline["extractionInputs"]:
+        verify_origin(entry)
     if args.baseline is not None:
         actual = {path.relative_to(args.baseline).as_posix() for path in (args.baseline / "src").rglob("*") if path.is_file()}
         require(actual == set(source_paths), "Extracted baseline has extra or missing src files")
+        verify_extracted_inputs(baseline["extractionInputs"], args.baseline.resolve())
 
     licenses = {entry["id"]: entry for entry in manifest["licenses"]}
     require(len(licenses) == len(manifest["licenses"]), "Duplicate license IDs")
@@ -243,6 +322,29 @@ def main() -> None:
             excluded.append(entry)
             require("path" not in entry and entry["usedForGeneration"] is False, "Excluded source may not be bundled or used for generation")
             require(entry["licenseStatus"] == "unresolved", "Excluded source license status differs")
+            observation = entry["licenseEvidence"]["observation"]
+            evidence = json.loads(verify_file(observation))
+            observed_at = datetime.fromisoformat(evidence["observedAt"])
+            require(observed_at.utcoffset() == timedelta(0) and observation["observedAt"] == evidence["observedAt"],
+                    "Excluded-source license evidence requires a dated UTC observation")
+            require(evidence["repository"] == entry["repository"] and evidence["commit"] == entry["commit"],
+                    "Excluded-source license evidence has a different source pin")
+            observations = {item["kind"]: item for item in evidence["requests"]}
+            tree = observations["pinned-tree"]
+            primary_base = entry["repository"].replace("https://github.com/", "https://api.github.com/repos/")
+            require(tree["url"] == primary_base + "/git/trees/" + entry["commit"] + "?recursive=1"
+                    and observations["repository-license"]["url"] == primary_base + "/license",
+                    "License evidence must identify the pinned primary source endpoints")
+            require(tree["httpStatus"] == 200 and tree["truncated"] is False and tree["licenseLikePaths"] == [],
+                    "Pinned-tree license observation differs")
+            require(tree["openapiBlobSha1"] == entry["gitBlobSha1"], "License evidence source blob differs")
+            require(observations["repository-license"]["httpStatus"] == 404,
+                    "Repository license observation differs")
+            audit = observations["excluded-source-byte-audit"]
+            require(audit["httpStatus"] == 200 and audit["url"] == entry["sourceUrl"]
+                    and audit["responseSha256"] == entry["sha256"] and audit["gitBlobSha1"] == entry["gitBlobSha1"]
+                    and audit["responseBytes"] == entry["bytes"] and audit["infoLicenseDeclarationPresent"] is False,
+                    "Dated source-byte observation differs from excluded pin")
             if args.fetch_excluded:
                 request = Request(entry["sourceUrl"], headers={"User-Agent": "scm-sdk-contract-audit"})
                 with urlopen(request, timeout=30) as response:
@@ -264,6 +366,11 @@ def main() -> None:
     for entry in manifest["fixtures"]:
         data = tracked(entry)
         verify_origin(entry)
+        require(entry["category"] in FIXTURE_CATEGORIES, f"Unreviewed fixture category: {entry['path']}")
+        require(entry["category"] == fixture_category(entry["upstreamPath"]),
+                f"Fixture category differs from its baseline origin: {entry['path']}")
+        require(("specification" in entry) == (entry["category"] == "independent-openapi-fixture"),
+                f"Only independent OpenAPI fixtures require a specification pin: {entry['path']}")
         if entry["upstreamPath"].endswith(".json"):
             fixture = json.loads(data)
             if "specification" in entry:
@@ -313,6 +420,7 @@ def main() -> None:
                       "fixtures": len(manifest["fixtures"]), "bundledSpecifications": len(sources) - len(excluded),
                       "excludedUnlicensedSpecifications": len(excluded), "licenses": len(licenses),
                       "references": len(manifest["references"]), "baselineSourceFiles": len(source_paths),
+                      "baselineNonSourceInputs": len(input_paths),
                       "extractedBaselineVerified": args.baseline is not None,
                       "excludedRemoteBytesVerified": args.fetch_excluded}, indent=2))
 
