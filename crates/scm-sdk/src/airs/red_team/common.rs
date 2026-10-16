@@ -1,6 +1,5 @@
 use super::models::RedTeamPagination;
 use crate::{Error, ErrorKind, Result, data::Patch, pagination::Page};
-use std::fmt;
 pub(super) const MAX_SAFE_INTEGER: u64 = 9_007_199_254_740_991;
 
 /// Skip/limit/search values are omitted on direct reads unless explicitly supplied.
@@ -11,11 +10,7 @@ pub struct RedTeamListOptions {
     pub limit: Option<u32>,
     pub search: Option<String>,
 }
-impl fmt::Debug for RedTeamListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("RedTeamListOptions([REDACTED])")
-    }
-}
+
 impl RedTeamListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
         listing(self.skip, self.limit, self.search.as_deref())
@@ -104,3 +99,5 @@ pub(super) fn skip_page<T>(
         next: more.then_some(next),
     })
 }
+
+crate::redaction::redacted_debug!(RedTeamListOptions);

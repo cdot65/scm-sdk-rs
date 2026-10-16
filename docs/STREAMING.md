@@ -79,3 +79,20 @@ identifiers are encoded as one path segment; empty identifiers and traversal are
 rejected before dispatch. The shared response byte limit applies across chunks,
 and failure releases the response body and concurrency permit. Independent
 tests preserve the frozen SDK fixture's NUL and non-UTF-8 bytes exactly.
+
+## Runtime replay and response metadata
+
+Gateway runtime calls default to `RuntimeReplay::Never`, including resource GETs.
+`RequestOptions::with_retries` controls safe reads outside that runtime policy;
+it cannot opt a billable call into replay. Applications may explicitly configure
+`RuntimeReplay::bounded(0..=5)` on a cloned runtime handle. This can duplicate
+remote computation or charges after a lost response. Only transport failure or
+HTTP 500/502/503/504 may retry, within the original absolute budget and bounded
+backoff. HTTP 429 and authentication rejection are excluded. Successful response
+headers permanently end retry eligibility, even if decoding, SSE framing or a
+later body read fails. Buffered requests reuse the same immutable request bytes;
+streams never reconnect or replay consumed events.
+
+Body, handshake-error-body, framing and typed-event errors retain the known HTTP
+status and an allowlisted bounded request/correlation ID. Arbitrary response
+headers and payloads remain excluded from ordinary errors and formatting.

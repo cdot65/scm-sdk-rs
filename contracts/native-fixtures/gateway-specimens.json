@@ -1,0 +1,2803 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Actual frozen Zod acceptance and exact normalization of literal Gateway test specimens; no Rust-derived oracle",
+  "license": "Apache-2.0; see NOTICE for frozen TypeScript attribution",
+  "baseline": {
+    "commit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+    "sourceFingerprint": "a972723bb524cf8fce652d50297d94ed7af278b13b9a045b5c6bdc79212eb48f"
+  },
+  "inputs": [
+    {
+      "file": "tools/verify-gateway-specimens.mts",
+      "sha256": "4ef1dc993ad79fe059dfed655e6434ea54611bf22b43c9ee51edaed8916a1137"
+    },
+    {
+      "file": "tools/verify-contracts.py",
+      "sha256": "eeaa6900ca2240394c251627cad2bebdf1e786f5a8966235df37e5cb54dbd30f"
+    },
+    {
+      "file": "tools/package.json",
+      "sha256": "3bce4499dc84d5e270c6ed554d358c0568994779db894983cb2433130bc0445d"
+    },
+    {
+      "file": "tools/package-lock.json",
+      "sha256": "fbd92705468db06957c892543019f4d76b98fd82f788878e7db0a36bbad3e6ff"
+    },
+    {
+      "file": "contracts/manifest.json",
+      "sha256": "69606473681ba0744b6310eef942fb7b04aa072125ddf267f6718b8935e84251"
+    },
+    {
+      "file": "contracts/typescript.json",
+      "sha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0"
+    },
+    {
+      "file": "crates/scm-sdk/tests/gateway_contracts.rs",
+      "sha256": "64efc4294a1fae80eae9a3ff748007683d18584382705af42022e642c30ed02b"
+    },
+    {
+      "file": "crates/scm-sdk/src/fixtures/gateway-contracts.json",
+      "sha256": "0e15d984efacee27e3dd541ff029a1cb6a179a41f2f5639e084f585938e040ad"
+    }
+  ],
+  "sources": [
+    {
+      "file": "src/models/ai-gateway-dashboard.ts",
+      "sha256": "cf63cf5f6fcaa5236bfdedd750caa43e67258896f334b783acc6b47312ef51e8"
+    },
+    {
+      "file": "src/models/ai-gateway-extensions.ts",
+      "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac"
+    },
+    {
+      "file": "src/models/ai-gateway-requests.ts",
+      "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e"
+    },
+    {
+      "file": "src/models/ai-gateway.ts",
+      "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d"
+    }
+  ],
+  "counts": {
+    "operations": 61,
+    "independentCases": 12,
+    "zodParses": 74
+  },
+  "results": [
+    {
+      "operation": "configs.list",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "ListConfigsResponseSchema",
+          "schemaId": "s007067",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8648ec3bf8f4beb4f1df3221a5d8a3c5b1afdcaa33efad469f6a18b07c419bec"
+          },
+          "input": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          },
+          "normalized": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "configs.get",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayConfigDetailSchema",
+          "schemaId": "s007076",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "f2c116e81f51fbc2b15e07c7f1220db1a4dda7e30fad3950f15a4a002894dc49"
+          },
+          "input": {
+            "id": "fixture",
+            "name": "fixture",
+            "slug": "fixture",
+            "organisation_id": "fixture",
+            "is_default": 0,
+            "status": "fixture",
+            "owner_id": "fixture",
+            "updated_by": "fixture",
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "workspace_id": "fixture",
+            "object": "fixture",
+            "config": "fixture",
+            "format": "fixture",
+            "type": "fixture",
+            "version_id": "fixture"
+          },
+          "normalized": {
+            "id": "fixture",
+            "name": "fixture",
+            "slug": "fixture",
+            "organisation_id": "fixture",
+            "is_default": 0,
+            "status": "fixture",
+            "owner_id": "fixture",
+            "updated_by": "fixture",
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "workspace_id": "fixture",
+            "object": "fixture",
+            "config": "fixture",
+            "format": "fixture",
+            "type": "fixture",
+            "version_id": "fixture"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "configs.list_versions",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "ListConfigVersionsResponseSchema",
+          "schemaId": "s007090",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "6d820719ae35db5e9afb2d75c0d3ce648b214bf94e96ff45ddfb657a66e88138"
+          },
+          "input": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          },
+          "normalized": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "configs.create",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayConfigCreateRequestSchema",
+          "schemaId": "s006210",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "dd1e22a396546b9955b7105b14295b128f789460acf36da41f35a94f43275e7a"
+          },
+          "input": {
+            "name": "fixture",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "config": {}
+          },
+          "normalized": {
+            "name": "fixture",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "config": {}
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayConfigCreateResponseSchema",
+          "schemaId": "s007099",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "972d17b51bfc372a12ba0faff2fe9e6aaf7d23e7abae7d909827f51512c4f010"
+          },
+          "input": {
+            "id": "fixture",
+            "version_id": "fixture",
+            "slug": "fixture",
+            "object": "fixture"
+          },
+          "normalized": {
+            "id": "fixture",
+            "version_id": "fixture",
+            "slug": "fixture",
+            "object": "fixture"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "configs.update",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayConfigUpdateRequestSchema",
+          "schemaId": "s006240",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "44395505c9ed4471ca53c57e0750582e6cb31f1289ed2c4f8dd6bd1e48873a5f"
+          },
+          "input": {
+            "name": "fixture",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "config": {
+              "retry": {
+                "attempts": 0,
+                "on_status_codes": [
+                  100
+                ]
+              },
+              "cache": {
+                "mode": "fixture",
+                "max_age": 0
+              },
+              "strategy": {
+                "mode": "fixture"
+              },
+              "targets": [
+                {
+                  "provider": "fixture",
+                  "virtual_key": "fixture"
+                }
+              ],
+              "provider": "fixture",
+              "virtual_key": "fixture"
+            },
+            "status": "fixture"
+          },
+          "normalized": {
+            "name": "fixture",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "config": {
+              "retry": {
+                "attempts": 0,
+                "on_status_codes": [
+                  100
+                ]
+              },
+              "cache": {
+                "mode": "fixture",
+                "max_age": 0
+              },
+              "strategy": {
+                "mode": "fixture"
+              },
+              "targets": [
+                {
+                  "provider": "fixture",
+                  "virtual_key": "fixture"
+                }
+              ],
+              "provider": "fixture",
+              "virtual_key": "fixture"
+            },
+            "status": "fixture"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayWriteResponseSchema",
+          "schemaId": "s006936",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8c819d333d33dd30c11a9585b9bfb77bce9faada0c34ff0673d6f5c5a0224303"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "configs.delete",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "unit-no-response-schema",
+      "channels": []
+    },
+    {
+      "operation": "providers.list",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "ListProvidersResponseSchema",
+          "schemaId": "s007205",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "5cc7d137d5da52dce95c7cd31ecf79b87661aa69dd0c0a9557874cf11f9c17ea"
+          },
+          "input": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          },
+          "normalized": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "providers.get",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayProviderDetailSchema",
+          "schemaId": "s007214",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "0bdc8e674f4ecaac7676152d8d10e66337869ea331cc7dbf32cdca55864abae2"
+          },
+          "input": {
+            "id": "fixture",
+            "ai_provider_name": "fixture",
+            "model_config": {},
+            "key": "fixture",
+            "masked_api_key": "fixture",
+            "slug": "fixture",
+            "name": "fixture",
+            "usage_limits": null,
+            "status": "fixture",
+            "note": null,
+            "created_at": "fixture",
+            "expires_at": null,
+            "last_reset_at": null,
+            "rate_limits": [],
+            "integration_id": "fixture",
+            "tags": null,
+            "object": "fixture"
+          },
+          "normalized": {
+            "id": "fixture",
+            "ai_provider_name": "fixture",
+            "model_config": {},
+            "key": "fixture",
+            "masked_api_key": "fixture",
+            "slug": "fixture",
+            "name": "fixture",
+            "usage_limits": null,
+            "status": "fixture",
+            "note": null,
+            "created_at": "fixture",
+            "expires_at": null,
+            "last_reset_at": null,
+            "rate_limits": [],
+            "integration_id": "fixture",
+            "tags": null,
+            "object": "fixture"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "providers.create",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayProviderCreateRequestSchema",
+          "schemaId": "s006263",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "ea5aab8fae086325c137466044a0b2b83d3d06fe8ae37a2008d478f7f27a68e1"
+          },
+          "input": {
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "fixture",
+            "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+            "slug": "fixture"
+          },
+          "normalized": {
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "fixture",
+            "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+            "slug": "fixture"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayProviderCreateResponseSchema",
+          "schemaId": "s007248",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "0bb2614d1ca3045d8c0c8d1969d4f68abf288c9e23bc094aac06712bf4671338"
+          },
+          "input": {
+            "id": "fixture",
+            "slug": "fixture",
+            "object": "fixture"
+          },
+          "normalized": {
+            "id": "fixture",
+            "slug": "fixture",
+            "object": "fixture"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "providers.update",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayProviderUpdateRequestSchema",
+          "schemaId": "s006274",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "061106fb1cdc185652d79c4129f35ab92047756ef6a047d854adf2e449fb1a17"
+          },
+          "input": {
+            "name": "fixture"
+          },
+          "normalized": {
+            "name": "fixture"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayWriteResponseSchema",
+          "schemaId": "s006936",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8c819d333d33dd30c11a9585b9bfb77bce9faada0c34ff0673d6f5c5a0224303"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "providers.delete",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "unit-no-response-schema",
+      "channels": []
+    },
+    {
+      "operation": "deployments.list",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "ListDeploymentsResponseSchema",
+          "schemaId": "s007668",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "d86c3b98e4756d6a0f4d36ddcc327cbf419ca3486754fcb0bda23661d3183927"
+          },
+          "input": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          },
+          "normalized": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "deployments.get",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayDeploymentDetailSchema",
+          "schemaId": "s007595",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "f444a3667267daa547f1565e4b89f01d2c29e978a3fe7e7b70ad8fa136be566f"
+          },
+          "input": {
+            "id": "fixture",
+            "name": "fixture",
+            "slug": "fixture",
+            "type": "fixture",
+            "status": "fixture",
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "last_synced_at": null,
+            "last_resynced_at": null,
+            "is_default": 0,
+            "created_by": "fixture",
+            "object": "fixture",
+            "deployment_config": null
+          },
+          "normalized": {
+            "id": "fixture",
+            "name": "fixture",
+            "slug": "fixture",
+            "type": "fixture",
+            "status": "fixture",
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "last_synced_at": null,
+            "last_resynced_at": null,
+            "is_default": 0,
+            "created_by": "fixture",
+            "object": "fixture",
+            "deployment_config": null
+          }
+        }
+      ]
+    },
+    {
+      "operation": "deployments.create",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayDeploymentCreateRequestSchema",
+          "schemaId": "s006497",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "7568684a6b892ff25916c0312f9b1c0ab8315237d6fc112a160e2217802161d4"
+          },
+          "input": {
+            "name": "fixture",
+            "type": "non_production",
+            "organisation_id": "1"
+          },
+          "normalized": {
+            "name": "fixture",
+            "type": "non_production",
+            "organisation_id": "1"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayDeploymentCreateResponseSchema",
+          "schemaId": "s007639",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "19878a4a1fd10dd9b4416206d50814f2ca48b214b122dfc9b11affb1cb1e8754"
+          },
+          "input": {
+            "id": "fixture",
+            "client_auth": "fixture",
+            "credentials": {
+              "username": "fixture",
+              "password": "fixture"
+            },
+            "organisation_id": "fixture",
+            "object": "fixture"
+          },
+          "normalized": {
+            "id": "fixture",
+            "client_auth": "fixture",
+            "credentials": {
+              "username": "fixture",
+              "password": "fixture"
+            },
+            "organisation_id": "fixture",
+            "object": "fixture"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "deployments.update",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayDeploymentUpdateRequestSchema",
+          "schemaId": "s006508",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "af88cb9cb9bb50315581cd7b44e5925224e001243fc611155280546f5a089379"
+          },
+          "input": {
+            "name": "fixture",
+            "type": "non_production",
+            "status": "active",
+            "deployment_config": {
+              "fixture_key": "fixture"
+            },
+            "is_default": false,
+            "rotate_auth": false,
+            "override_existing": false,
+            "auth_settings": {
+              "gateway_base_url": "https://example.invalid/resource",
+              "mcp_gateway_base_url": "https://example.invalid/resource",
+              "is_dataservice_hosted": 0,
+              "is_playground_proxy_allowed": 0,
+              "workspaces_allowed": [
+                "fixture"
+              ],
+              "jwt_subs_allowed": [
+                "fixture"
+              ],
+              "jwt_sub_workspace_mapping": {
+                "fixture": "fixture"
+              },
+              "allow_all_workspaces": false,
+              "remove_workspaces_allowed": [
+                "fixture"
+              ],
+              "remove_subs_allowed": [
+                "fixture"
+              ]
+            },
+            "tags": {
+              "fixture_key": "fixture"
+            }
+          },
+          "normalized": {
+            "name": "fixture",
+            "type": "non_production",
+            "status": "active",
+            "deployment_config": {
+              "fixture_key": "fixture"
+            },
+            "is_default": false,
+            "rotate_auth": false,
+            "override_existing": false,
+            "auth_settings": {
+              "gateway_base_url": "https://example.invalid/resource",
+              "mcp_gateway_base_url": "https://example.invalid/resource",
+              "is_dataservice_hosted": 0,
+              "is_playground_proxy_allowed": 0,
+              "workspaces_allowed": [
+                "fixture"
+              ],
+              "jwt_subs_allowed": [
+                "fixture"
+              ],
+              "jwt_sub_workspace_mapping": {
+                "fixture": "fixture"
+              },
+              "allow_all_workspaces": false,
+              "remove_workspaces_allowed": [
+                "fixture"
+              ],
+              "remove_subs_allowed": [
+                "fixture"
+              ]
+            },
+            "tags": {
+              "fixture_key": "fixture"
+            }
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayWriteResponseSchema",
+          "schemaId": "s006936",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8c819d333d33dd30c11a9585b9bfb77bce9faada0c34ff0673d6f5c5a0224303"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "deployments.ping",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayDeploymentPingResponseSchema",
+          "schemaId": "s007649",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "888db0e421e2562e04845998407697f4a9ad3bb65015d511623cb09b84e646eb"
+          },
+          "input": {
+            "status": "fixture",
+            "gateway_base_url": "fixture",
+            "outbound": {
+              "status": "fixture"
+            },
+            "inbound": {
+              "status": "fixture"
+            },
+            "object": "fixture"
+          },
+          "normalized": {
+            "status": "fixture",
+            "gateway_base_url": "fixture",
+            "outbound": {
+              "status": "fixture"
+            },
+            "inbound": {
+              "status": "fixture"
+            },
+            "object": "fixture"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "deployments.delete",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "unit-no-response-schema",
+      "channels": []
+    },
+    {
+      "operation": "organisations.get_info",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayOrganisationInfoSchema",
+          "schemaId": "s000637",
+          "source": {
+            "file": "src/models/ai-gateway-dashboard.ts",
+            "sha256": "cf63cf5f6fcaa5236bfdedd750caa43e67258896f334b783acc6b47312ef51e8",
+            "declarationSha256": "521a6e5bce24cc1bf6c6362f2c96dd469088438c258775e23f672eb1aa428a41"
+          },
+          "input": {
+            "id": "fixture",
+            "name": "fixture",
+            "object": "fixture",
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "is_first_generation_done": 0,
+            "disable_portkey_gateway": 0,
+            "settings": {
+              "dashboard_gateway_url": "fixture",
+              "dashboard_mcp_gateway_url": "fixture",
+              "debug_log": 0,
+              "user_api_key_count": 0,
+              "user_api_key_ttl": 0,
+              "user_api_key_max_ttl": 0,
+              "user_key_metadata": 0,
+              "user_key_metadata_override": 0,
+              "user_api_key_rotation_period": null,
+              "user_api_key_auto_create": false,
+              "default_workspace_user_api_key_auto_create": false
+            },
+            "benefits": {
+              "limits": {},
+              "featureFlags": {}
+            },
+            "subscription": {
+              "type": "fixture",
+              "name": "fixture"
+            }
+          },
+          "normalized": {
+            "id": "fixture",
+            "name": "fixture",
+            "object": "fixture",
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "is_first_generation_done": 0,
+            "disable_portkey_gateway": 0,
+            "settings": {
+              "dashboard_gateway_url": "fixture",
+              "dashboard_mcp_gateway_url": "fixture",
+              "debug_log": 0,
+              "user_api_key_count": 0,
+              "user_api_key_ttl": 0,
+              "user_api_key_max_ttl": 0,
+              "user_key_metadata": 0,
+              "user_key_metadata_override": 0,
+              "user_api_key_rotation_period": null,
+              "user_api_key_auto_create": false,
+              "default_workspace_user_api_key_auto_create": false
+            },
+            "benefits": {
+              "limits": {},
+              "featureFlags": {}
+            },
+            "subscription": {
+              "type": "fixture",
+              "name": "fixture"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "organisations.get_self",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "OrganisationSelfResponseSchema",
+          "schemaId": "s007701",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "f17bcea293cf822059eb72c24a5630d3b95ca0694e579ab9343c00e484d72afd"
+          },
+          "input": {
+            "success": false,
+            "data": {}
+          },
+          "normalized": {
+            "success": false,
+            "data": {}
+          }
+        }
+      ]
+    },
+    {
+      "operation": "organisations.update_self",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayOrganisationUpdateRequestSchema",
+          "schemaId": "s006533",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "25a45370fcc9400ae0a58e7bc633a87d719b07086968859d85d03808382f215c"
+          },
+          "input": {
+            "type": "fixture.event"
+          },
+          "normalized": {
+            "type": "fixture.event"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayWriteResponseSchema",
+          "schemaId": "s006936",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8c819d333d33dd30c11a9585b9bfb77bce9faada0c34ff0673d6f5c5a0224303"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "organisations.get_auth_settings",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "AuthSettingsResponseSchema",
+          "schemaId": "s007707",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "9ec8100ba54c2e7cf2a4601b04d6370a6bb04dbece19bf5f9280b373cb0edbdf"
+          },
+          "input": {
+            "success": false,
+            "data": {}
+          },
+          "normalized": {
+            "success": false,
+            "data": {}
+          }
+        }
+      ]
+    },
+    {
+      "operation": "organisations.update_auth_settings",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayOrganisationAuthSettingsUpdateRequestSchema",
+          "schemaId": "s006536",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "69705767097050dfe6eb3cff4551d78177091373e5ca10f8a15f14c0536ba62b"
+          },
+          "input": {
+            "type": "fixture.event"
+          },
+          "normalized": {
+            "type": "fixture.event"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayWriteResponseSchema",
+          "schemaId": "s006936",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8c819d333d33dd30c11a9585b9bfb77bce9faada0c34ff0673d6f5c5a0224303"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "workspaces.list",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "ListWorkspacesResponseSchema",
+          "schemaId": "s007044",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "e19830de67077be687345777f9bfcd43a5eb5e2043305a352c466c814e342b53"
+          },
+          "input": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          },
+          "normalized": {
+            "object": "fixture",
+            "total": 0,
+            "data": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "workspaces.get",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayWorkspaceDetailSchema",
+          "schemaId": "s006982",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "bf3b7478b35c38893a892a4a4026270098113be42463c4e28741aadda3d5ac41"
+          },
+          "input": {
+            "id": "fixture",
+            "name": "fixture",
+            "description": null,
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "is_default": 0,
+            "slug": "fixture",
+            "icon": null,
+            "defaults": null,
+            "usage_limits": null,
+            "rate_limits": null
+          },
+          "normalized": {
+            "id": "fixture",
+            "name": "fixture",
+            "description": null,
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "is_default": 0,
+            "slug": "fixture",
+            "icon": null,
+            "defaults": null,
+            "usage_limits": null,
+            "rate_limits": null
+          }
+        }
+      ]
+    },
+    {
+      "operation": "workspaces.create",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayWorkspaceCreateRequestSchema",
+          "schemaId": "s006184",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "b277c5095aad4b575abcd63ce42e1e3d30f612aa1de652e013ad4d9e44f5b716"
+          },
+          "input": {
+            "name": "fixture",
+            "scope_name": "fixture"
+          },
+          "normalized": {
+            "name": "fixture",
+            "scope_name": "fixture"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayWorkspaceCreateResponseSchema",
+          "schemaId": "s007025",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "2cd7bf1dbfd2c5182e39cefbb5acd4f7011aece948ad95c2972eeba6df1e7eca"
+          },
+          "input": {
+            "id": "fixture",
+            "name": "fixture",
+            "slug": "fixture",
+            "description": null,
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "scope_name": "fixture",
+            "object": "fixture"
+          },
+          "normalized": {
+            "id": "fixture",
+            "name": "fixture",
+            "slug": "fixture",
+            "description": null,
+            "created_at": "fixture",
+            "last_updated_at": "fixture",
+            "scope_name": "fixture",
+            "object": "fixture"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "workspaces.update",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayWorkspaceUpdateRequestSchema",
+          "schemaId": "s006197",
+          "source": {
+            "file": "src/models/ai-gateway-requests.ts",
+            "sha256": "ae6ce10c73fb9eb8c97143783d384496155f3f40cb9bc55430f7f429e229b06e",
+            "declarationSha256": "c77a3d7849dd971c7cdccc6d63b2ac379447e3919b22ebe40601bbf2bb5bc90f"
+          },
+          "input": {
+            "name": "fixture"
+          },
+          "normalized": {
+            "name": "fixture"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayWriteResponseSchema",
+          "schemaId": "s006936",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8c819d333d33dd30c11a9585b9bfb77bce9faada0c34ff0673d6f5c5a0224303"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "workspaces.delete",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "unit-no-response-schema",
+      "channels": []
+    },
+    {
+      "operation": "log_exports.get",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/17"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayLogExportsClientGetResponseSchema",
+          "schemaId": "s001380",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "7ee4a66f7fba7bf01b80535f42caa10b6cc3ac06790a55ec79a4b7e0991c0b6f"
+          },
+          "input": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+            "filters": {
+              "time_of_generation_min": "2026-09-06T00:00:00Z",
+              "time_of_generation_max": "2026-09-06T00:00:00Z",
+              "total_units_min": 1,
+              "total_units_max": 1,
+              "cost_min": 1,
+              "cost_max": 1,
+              "ai_model": "x",
+              "prompt_token_min": 1,
+              "prompt_token_max": 1,
+              "completion_token_min": 1,
+              "completion_token_max": 1,
+              "status_code": "x",
+              "metadata": {},
+              "ai_org_model": "x",
+              "weighted_feedback_min": 1,
+              "weighted_feedback_max": 1,
+              "virtual_keys": "x",
+              "trace_id": "x",
+              "configs": "x",
+              "workspace_slug": "x",
+              "prompt_slug": "x",
+              "page_size": 1,
+              "current_page": 1
+            },
+            "requested_data": [
+              "id"
+            ],
+            "status": "draft",
+            "description": "x",
+            "created_at": "2026-09-06T00:00:00Z",
+            "last_updated_at": "2026-09-06T00:00:00Z",
+            "created_by": "550e8400-e29b-41d4-a716-446655440000",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "object": "export"
+          },
+          "normalized": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+            "filters": {
+              "time_of_generation_min": "2026-09-06T00:00:00Z",
+              "time_of_generation_max": "2026-09-06T00:00:00Z",
+              "total_units_min": 1,
+              "total_units_max": 1,
+              "cost_min": 1,
+              "cost_max": 1,
+              "ai_model": "x",
+              "prompt_token_min": 1,
+              "prompt_token_max": 1,
+              "completion_token_min": 1,
+              "completion_token_max": 1,
+              "status_code": "x",
+              "metadata": {},
+              "ai_org_model": "x",
+              "weighted_feedback_min": 1,
+              "weighted_feedback_max": 1,
+              "virtual_keys": "x",
+              "trace_id": "x",
+              "configs": "x",
+              "workspace_slug": "x",
+              "prompt_slug": "x",
+              "page_size": 1,
+              "current_page": 1
+            },
+            "requested_data": [
+              "id"
+            ],
+            "status": "draft",
+            "description": "x",
+            "created_at": "2026-09-06T00:00:00Z",
+            "last_updated_at": "2026-09-06T00:00:00Z",
+            "created_by": "550e8400-e29b-41d4-a716-446655440000",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "object": "export"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "log_exports.update",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/18"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayLogExportsClientUpdateRequestSchema",
+          "schemaId": "s001458",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "11ea6b4c66dee966aa59039330c3e7dabcfcbb9d5e9296c16e3bc8a6865e1ad8"
+          },
+          "input": {
+            "workspace_id": "x",
+            "filters": {
+              "time_of_generation_min": "2026-09-06T00:00:00Z",
+              "time_of_generation_max": "2026-09-06T00:00:00Z",
+              "total_units_min": 1,
+              "total_units_max": 1,
+              "cost_min": 1,
+              "cost_max": 1,
+              "ai_model": "x",
+              "prompt_token_min": 1,
+              "prompt_token_max": 1,
+              "completion_token_min": 1,
+              "completion_token_max": 1,
+              "status_code": "x",
+              "metadata": {},
+              "ai_org_model": "x",
+              "weighted_feedback_min": 1,
+              "weighted_feedback_max": 1,
+              "virtual_keys": "x",
+              "trace_id": "x",
+              "configs": "x",
+              "workspace_slug": "x",
+              "prompt_slug": "x",
+              "page_size": 1,
+              "current_page": 1
+            },
+            "requested_data": [
+              "id"
+            ],
+            "description": "Offline contract fixture"
+          },
+          "normalized": {
+            "workspace_id": "x",
+            "filters": {
+              "time_of_generation_min": "2026-09-06T00:00:00Z",
+              "time_of_generation_max": "2026-09-06T00:00:00Z",
+              "total_units_min": 1,
+              "total_units_max": 1,
+              "cost_min": 1,
+              "cost_max": 1,
+              "ai_model": "x",
+              "prompt_token_min": 1,
+              "prompt_token_max": 1,
+              "completion_token_min": 1,
+              "completion_token_max": 1,
+              "status_code": "x",
+              "metadata": {},
+              "ai_org_model": "x",
+              "weighted_feedback_min": 1,
+              "weighted_feedback_max": 1,
+              "virtual_keys": "x",
+              "trace_id": "x",
+              "configs": "x",
+              "workspace_slug": "x",
+              "prompt_slug": "x",
+              "page_size": 1,
+              "current_page": 1
+            },
+            "requested_data": [
+              "id"
+            ],
+            "description": "Offline contract fixture"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayLogExportsClientUpdateResponseSchema",
+          "schemaId": "s001452",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "21db59fa11a2089ba862e2c683006edc74cfc13fdde2f73b193d604e7431e0ae"
+          },
+          "input": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "total": 1,
+            "object": "export"
+          },
+          "normalized": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "total": 1,
+            "object": "export"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "log_exports.list",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/19"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "query",
+          "schema": "GatewayLogExportsClientListOptionsSchema",
+          "schemaId": "s001322",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "bea832d0c2f148270c235eed9f4fd704312f67bf903d8406e31bbe3d32e44ed1"
+          },
+          "input": {
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "normalized": {
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayLogExportsClientListResponseSchema",
+          "schemaId": "s001391",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "36f0c355a8526f775109c95e212f75d5a0664390c9a80dc57c59b3e0f0da7c20"
+          },
+          "input": {
+            "object": "list",
+            "total": 1,
+            "data": [
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+                "filters": {
+                  "time_of_generation_min": "2026-09-06T00:00:00Z",
+                  "time_of_generation_max": "2026-09-06T00:00:00Z",
+                  "total_units_min": 1,
+                  "total_units_max": 1,
+                  "cost_min": 1,
+                  "cost_max": 1,
+                  "ai_model": "x",
+                  "prompt_token_min": 1,
+                  "prompt_token_max": 1,
+                  "completion_token_min": 1,
+                  "completion_token_max": 1,
+                  "status_code": "x",
+                  "metadata": {},
+                  "ai_org_model": "x",
+                  "weighted_feedback_min": 1,
+                  "weighted_feedback_max": 1,
+                  "virtual_keys": "x",
+                  "trace_id": "x",
+                  "configs": "x",
+                  "workspace_slug": "x",
+                  "prompt_slug": "x",
+                  "page_size": 1,
+                  "current_page": 1
+                },
+                "requested_data": [
+                  "id"
+                ],
+                "status": "draft",
+                "description": "x",
+                "created_at": "2026-09-06T00:00:00Z",
+                "last_updated_at": "2026-09-06T00:00:00Z",
+                "created_by": "550e8400-e29b-41d4-a716-446655440000",
+                "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+                "object": "export"
+              }
+            ]
+          },
+          "normalized": {
+            "object": "list",
+            "total": 1,
+            "data": [
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+                "filters": {
+                  "time_of_generation_min": "2026-09-06T00:00:00Z",
+                  "time_of_generation_max": "2026-09-06T00:00:00Z",
+                  "total_units_min": 1,
+                  "total_units_max": 1,
+                  "cost_min": 1,
+                  "cost_max": 1,
+                  "ai_model": "x",
+                  "prompt_token_min": 1,
+                  "prompt_token_max": 1,
+                  "completion_token_min": 1,
+                  "completion_token_max": 1,
+                  "status_code": "x",
+                  "metadata": {},
+                  "ai_org_model": "x",
+                  "weighted_feedback_min": 1,
+                  "weighted_feedback_max": 1,
+                  "virtual_keys": "x",
+                  "trace_id": "x",
+                  "configs": "x",
+                  "workspace_slug": "x",
+                  "prompt_slug": "x",
+                  "page_size": 1,
+                  "current_page": 1
+                },
+                "requested_data": [
+                  "id"
+                ],
+                "status": "draft",
+                "description": "x",
+                "created_at": "2026-09-06T00:00:00Z",
+                "last_updated_at": "2026-09-06T00:00:00Z",
+                "created_by": "550e8400-e29b-41d4-a716-446655440000",
+                "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+                "object": "export"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "operation": "log_exports.create",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/20"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayLogExportsClientCreateRequestSchema",
+          "schemaId": "s001401",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "96dcdc22991e78a03e19afcb6d52f5f43247e8e8dffebaf0d29005179d152933"
+          },
+          "input": {
+            "workspace_id": "x",
+            "filters": {
+              "time_of_generation_min": "2026-09-06T00:00:00Z",
+              "time_of_generation_max": "2026-09-06T00:00:00Z",
+              "total_units_min": 1,
+              "total_units_max": 1,
+              "cost_min": 1,
+              "cost_max": 1,
+              "ai_model": "x",
+              "prompt_token_min": 1,
+              "prompt_token_max": 1,
+              "completion_token_min": 1,
+              "completion_token_max": 1,
+              "status_code": "x",
+              "metadata": {},
+              "ai_org_model": "x",
+              "weighted_feedback_min": 1,
+              "weighted_feedback_max": 1,
+              "virtual_keys": "x",
+              "trace_id": "x",
+              "configs": "x",
+              "workspace_slug": "x",
+              "prompt_slug": "x",
+              "page_size": 1,
+              "current_page": 1
+            },
+            "requested_data": [
+              "id"
+            ],
+            "description": "Offline contract fixture"
+          },
+          "normalized": {
+            "workspace_id": "x",
+            "filters": {
+              "time_of_generation_min": "2026-09-06T00:00:00Z",
+              "time_of_generation_max": "2026-09-06T00:00:00Z",
+              "total_units_min": 1,
+              "total_units_max": 1,
+              "cost_min": 1,
+              "cost_max": 1,
+              "ai_model": "x",
+              "prompt_token_min": 1,
+              "prompt_token_max": 1,
+              "completion_token_min": 1,
+              "completion_token_max": 1,
+              "status_code": "x",
+              "metadata": {},
+              "ai_org_model": "x",
+              "weighted_feedback_min": 1,
+              "weighted_feedback_max": 1,
+              "virtual_keys": "x",
+              "trace_id": "x",
+              "configs": "x",
+              "workspace_slug": "x",
+              "prompt_slug": "x",
+              "page_size": 1,
+              "current_page": 1
+            },
+            "requested_data": [
+              "id"
+            ],
+            "description": "Offline contract fixture"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayLogExportsClientCreateResponseSchema",
+          "schemaId": "s001452",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "e005725672e75b21b110ca56e4543c0532fcb5380ff53ac6a941bc0413aa0393"
+          },
+          "input": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "total": 1,
+            "object": "export"
+          },
+          "normalized": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "total": 1,
+            "object": "export"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "log_exports.start",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/21"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayLogExportsClientStartResponseSchema",
+          "schemaId": "s001510",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "fb395603036dec5756298da9e5e745317024df1cfae6897c2026eb460939ed55"
+          },
+          "input": {
+            "message": "x",
+            "object": "export"
+          },
+          "normalized": {
+            "message": "x",
+            "object": "export"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "log_exports.cancel",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/22"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayLogExportsClientCancelResponseSchema",
+          "schemaId": "s001510",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "1a58eef69987d24c18fe926b1a9cd8d9b142f08f31a7fda0aed54e50452220d5"
+          },
+          "input": {
+            "message": "x",
+            "object": "export"
+          },
+          "normalized": {
+            "message": "x",
+            "object": "export"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "log_exports.download",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/23"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayLogExportsClientDownloadResponseSchema",
+          "schemaId": "s001514",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "40d5baddd365673df3fb03f9bfd0eb7e9bcefc94ec82634b5285f866df179ef3"
+          },
+          "input": {
+            "signed_url": "https://example.test"
+          },
+          "normalized": {
+            "signed_url": "https://example.test"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "rate_limits.create",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/31"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayRateLimitsClientCreateRequestSchema",
+          "schemaId": "s001284",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "5ddc13e3cf6d41bdf3044292abc99b6bf2a999dd60843164bf6a9f6184812f50"
+          },
+          "input": {
+            "name": "x",
+            "conditions": [
+              {
+                "key": "x",
+                "value": "x",
+                "excludes": "x"
+              }
+            ],
+            "group_by": [
+              {
+                "key": "x"
+              }
+            ],
+            "type": "requests",
+            "unit": "rpm",
+            "value": 1,
+            "target": "llm",
+            "workspace_id": "x",
+            "organisation_id": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "normalized": {
+            "name": "x",
+            "conditions": [
+              {
+                "key": "x",
+                "value": "x",
+                "excludes": "x"
+              }
+            ],
+            "group_by": [
+              {
+                "key": "x"
+              }
+            ],
+            "type": "requests",
+            "unit": "rpm",
+            "value": 1,
+            "target": "llm",
+            "workspace_id": "x",
+            "organisation_id": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayRateLimitsClientCreateResponseSchema",
+          "schemaId": "s001166",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "467cf5628800cfda49c0d57d767869d80f776bc979fc5599b62c9ce907fe5fc9"
+          },
+          "input": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "object": "x"
+          },
+          "normalized": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "object": "x"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "rate_limits.list",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/32"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "query",
+          "schema": "GatewayRateLimitsClientListOptionsSchema",
+          "schemaId": "s001240",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "d34ca629d1657a126360e5f4767e657f2b8be504cee68a61469c0b04a094e317"
+          },
+          "input": {
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "status": "active",
+            "type": "requests",
+            "unit": "rpm",
+            "target": "llm",
+            "page_size": 0,
+            "current_page": 0
+          },
+          "normalized": {
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "status": "active",
+            "type": "requests",
+            "unit": "rpm",
+            "target": "llm",
+            "page_size": 0,
+            "current_page": 0
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayRateLimitsClientListResponseSchema",
+          "schemaId": "s001276",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "20d0b02953513edd56f67abc90f705f77670b95226fc644b72089c6b0d0b75da"
+          },
+          "input": {
+            "object": "x",
+            "data": [
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "name": "x",
+                "conditions": [
+                  {
+                    "key": "x",
+                    "value": "x",
+                    "excludes": "x"
+                  }
+                ],
+                "group_by": [
+                  {
+                    "key": "x"
+                  }
+                ],
+                "type": "requests",
+                "unit": "rpm",
+                "value": 1,
+                "status": "active",
+                "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+                "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+                "created_at": "2026-09-06T00:00:00Z",
+                "last_updated_at": "2026-09-06T00:00:00Z",
+                "target": "llm"
+              }
+            ],
+            "total": 1
+          },
+          "normalized": {
+            "object": "x",
+            "data": [
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "name": "x",
+                "conditions": [
+                  {
+                    "key": "x",
+                    "value": "x",
+                    "excludes": "x"
+                  }
+                ],
+                "group_by": [
+                  {
+                    "key": "x"
+                  }
+                ],
+                "type": "requests",
+                "unit": "rpm",
+                "value": 1,
+                "status": "active",
+                "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+                "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+                "created_at": "2026-09-06T00:00:00Z",
+                "last_updated_at": "2026-09-06T00:00:00Z",
+                "target": "llm"
+              }
+            ],
+            "total": 1
+          }
+        }
+      ]
+    },
+    {
+      "operation": "rate_limits.get",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/33"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "query",
+          "schema": "GatewayRateLimitsClientGetOptionsSchema",
+          "schemaId": "s001299",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "ad3a7c49306007a8b4768982e34795fca5da0512a3bf09360e928b678d5dad08"
+          },
+          "input": {
+            "status": "active"
+          },
+          "normalized": {
+            "status": "active"
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayRateLimitsClientGetResponseSchema",
+          "schemaId": "s001303",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "aac9c9fda6da7d2b9cd3bcab0311cba18c24cf6d85a5345e0eafdc7e267bd1bb"
+          },
+          "input": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "x",
+            "conditions": [
+              {
+                "key": "x",
+                "value": "x",
+                "excludes": "x"
+              }
+            ],
+            "group_by": [
+              {
+                "key": "x"
+              }
+            ],
+            "type": "requests",
+            "unit": "rpm",
+            "value": 1,
+            "status": "active",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+            "created_at": "2026-09-06T00:00:00Z",
+            "last_updated_at": "2026-09-06T00:00:00Z",
+            "target": "llm",
+            "object": "x"
+          },
+          "normalized": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "x",
+            "conditions": [
+              {
+                "key": "x",
+                "value": "x",
+                "excludes": "x"
+              }
+            ],
+            "group_by": [
+              {
+                "key": "x"
+              }
+            ],
+            "type": "requests",
+            "unit": "rpm",
+            "value": 1,
+            "status": "active",
+            "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+            "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+            "created_at": "2026-09-06T00:00:00Z",
+            "last_updated_at": "2026-09-06T00:00:00Z",
+            "target": "llm",
+            "object": "x"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "rate_limits.update",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/34"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "request",
+          "schema": "GatewayRateLimitsClientUpdateRequestSchema",
+          "schemaId": "s001308",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "9906829c97c01ec8bd226574184ab22631c4c09f9946535f7ab3cc3424ee144c"
+          },
+          "input": {
+            "name": "x",
+            "unit": "rpm",
+            "value": 1,
+            "conditions": [
+              {
+                "key": "x",
+                "value": "x",
+                "excludes": "x"
+              }
+            ]
+          },
+          "normalized": {
+            "name": "x",
+            "unit": "rpm",
+            "value": 1,
+            "conditions": [
+              {
+                "key": "x",
+                "value": "x",
+                "excludes": "x"
+              }
+            ]
+          }
+        },
+        {
+          "channel": "response",
+          "schema": "GatewayRateLimitsClientUpdateResponseSchema",
+          "schemaId": "s001318",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "399adb9509a96811febe9596f8d37d8e5c6f083a0f5dbc4b5cff0a10ccf9a063"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "rate_limits.delete",
+      "fixtureSource": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/35"
+      },
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayRateLimitsClientDeleteResponseSchema",
+          "schemaId": "s001320",
+          "source": {
+            "file": "src/models/ai-gateway-extensions.ts",
+            "sha256": "9da718c1cf3e2c55754c032fb4c868346beabaf7c47258001eb33d322bcf3cac",
+            "declarationSha256": "4171858dd0ad2b2dddf63b66d3de787b1cbd35de41c7cc0d7f4cfed9cc00aac6"
+          },
+          "input": {},
+          "normalized": {}
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.error_category_trends",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "ErrorCategoryTrendsResponseSchema",
+          "schemaId": "s000581",
+          "source": {
+            "file": "src/models/ai-gateway-dashboard.ts",
+            "sha256": "cf63cf5f6fcaa5236bfdedd750caa43e67258896f334b783acc6b47312ef51e8",
+            "declarationSha256": "4b790ac90d59d7d0c7cfdbac8f56ad1a448034b4e04a6ef4e0400e2afa5bfd38"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "summary": {
+                "totalErrors": 0,
+                "totalUniqueErrorCodes": 0
+              },
+              "trend": [],
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "summary": {
+                "totalErrors": 0,
+                "totalUniqueErrorCodes": 0
+              },
+              "trend": [],
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.grouped_errors",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GroupedErrorsResponseSchema",
+          "schemaId": "s000592",
+          "source": {
+            "file": "src/models/ai-gateway-dashboard.ts",
+            "sha256": "cf63cf5f6fcaa5236bfdedd750caa43e67258896f334b783acc6b47312ef51e8",
+            "declarationSha256": "fc1302b1ae255182096959ef6b21cf434472da2695f9dc95499009dbba4e48d6"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "trend": [],
+              "total": 0,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "trend": [],
+              "total": 0,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.cost",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CostChartResponseSchema",
+          "schemaId": "s006675",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8823919cdd023ebb53ba14dbe92451779568bf1d50013f4bf8220416f7b71f05"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "avg": 0,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "avg": 0,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.requests",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CountChartResponseSchema",
+          "schemaId": "s006684",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "998eca6bb2d6817658d0a5bfabd45a07d7e5d6d44ccb2b6743b7d407e66e5ea6"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.latency",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "LatencyChartResponseSchema",
+          "schemaId": "s006704",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "4c542182e0f60163948a814cfc95630667bf2079932dc926e470e836624f5e84"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "p50": null,
+              "p90": null,
+              "p99": null,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "p50": null,
+              "p90": null,
+              "p99": null,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.tokens",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "TokensChartResponseSchema",
+          "schemaId": "s006725",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "fd192387b92872cf6ba76cb302a2d5a3c3aa9438a8b69ae44e7289d34dff6c4e"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "avg": 0,
+              "total_request_units": 0,
+              "total_response_units": 0,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "avg": 0,
+              "total_request_units": 0,
+              "total_response_units": 0,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.errors",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CountChartResponseSchema",
+          "schemaId": "s006684",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "998eca6bb2d6817658d0a5bfabd45a07d7e5d6d44ccb2b6743b7d407e66e5ea6"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.users",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CountChartResponseSchema",
+          "schemaId": "s006684",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "998eca6bb2d6817658d0a5bfabd45a07d7e5d6d44ccb2b6743b7d407e66e5ea6"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.cache_summary",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CacheSummaryResponseSchema",
+          "schemaId": "s006766",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "e184cf6c98ca86229b0c82b693893cbb4be5955347ec29d34b1b6e018c0a7079"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "summary": {
+                "cacheHits": 0,
+                "avgCacheLatency": null,
+                "totalRequests": 0,
+                "cacheSpeedup": 0
+              },
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "summary": {
+                "cacheHits": 0,
+                "avgCacheLatency": null,
+                "totalRequests": 0,
+                "cacheSpeedup": 0
+              },
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.cache_hit_trend",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CacheHitTrendResponseSchema",
+          "schemaId": "s006778",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "3385f9bd9b7281462932b41b946b3657770326506035829b82fca485d5ce6868"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "trend": [],
+              "total": 0,
+              "summary": {
+                "totalCacheHits": 0,
+                "hitRate": 0
+              },
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "trend": [],
+              "total": 0,
+              "summary": {
+                "totalCacheHits": 0,
+                "hitRate": 0
+              },
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.user_trends",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "UserTrendsResponseSchema",
+          "schemaId": "s006797",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "d804939092825bca6c3a45b0aa86e3f43cf99c0c478de12b6cc7b37625084928"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "summary": {
+                "total": 0,
+                "unique": 0,
+                "avg": 0
+              },
+              "trend": [],
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "summary": {
+                "total": 0,
+                "unique": 0,
+                "avg": 0
+              },
+              "trend": [],
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.error_trends",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "ErrorTrendsResponseSchema",
+          "schemaId": "s006808",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "8e9d847c98dc47bf996ff7c822bdf8359750758d39610c4f103b2c1047373e83"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "summary": {
+                "errorPercent": 0
+              },
+              "trend": [],
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "summary": {
+                "errorPercent": 0
+              },
+              "trend": [],
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.rescued_retries",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "RescuedRetriesResponseSchema",
+          "schemaId": "s006817",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "a7a81a6f6c961c291152d6baad698d9fdae990388534be10d78ab896c010b644"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "trend": [],
+              "total": 0,
+              "trends": [],
+              "retryTotal": 0,
+              "fallbackTotal": 0,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "trend": [],
+              "total": 0,
+              "trends": [],
+              "retryTotal": 0,
+              "fallbackTotal": 0,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.feedback_trend",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CountChartResponseSchema",
+          "schemaId": "s006684",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "998eca6bb2d6817658d0a5bfabd45a07d7e5d6d44ccb2b6743b7d407e66e5ea6"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.feedback_weighted",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "CountChartResponseSchema",
+          "schemaId": "s006684",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "998eca6bb2d6817658d0a5bfabd45a07d7e5d6d44ccb2b6743b7d407e66e5ea6"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.feedback_score_distribution",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "FeedbackScoreDistributionResponseSchema",
+          "schemaId": "s006839",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "6e78e6d5f103857d1801c21aece2e199a2b3cb0f27ac4a01a9040ea53c02b3e9"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": null,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.feedback_models",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "FeedbackModelsResponseSchema",
+          "schemaId": "s006851",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "f8f434e21be18d67fa3602a01f2bca2daec144ee821f1c0a94f5602b9141271d"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.filter_boundaries",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayFilterBoundariesResponseSchema",
+          "schemaId": "s000604",
+          "source": {
+            "file": "src/models/ai-gateway-dashboard.ts",
+            "sha256": "cf63cf5f6fcaa5236bfdedd750caa43e67258896f334b783acc6b47312ef51e8",
+            "declarationSha256": "36801e953aba913b0f8487cfe7ae96325f6f23c94b4d6b557ec2823a4c21a1a2"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "total_units_max": null,
+              "total_units_min": null,
+              "cost_max": null,
+              "cost_min": null,
+              "unique_ai_models": [],
+              "unique_status_codes": [],
+              "unique_environments": [],
+              "unique_prompt_ids": [],
+              "unique_virtual_keys": [],
+              "unique_configs": [],
+              "unique_api_keys": [],
+              "unique_metadata_keys": [],
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "total_units_max": null,
+              "total_units_min": null,
+              "cost_max": null,
+              "cost_min": null,
+              "unique_ai_models": [],
+              "unique_status_codes": [],
+              "unique_environments": [],
+              "unique_prompt_ids": [],
+              "unique_virtual_keys": [],
+              "unique_configs": [],
+              "unique_api_keys": [],
+              "unique_metadata_keys": [],
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.by_user",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "UserGroupResponseSchema",
+          "schemaId": "s006886",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "d86bcccf8aa4af028bec3ceab83bb07d8f6b52a5aa6a81616e230a28ec934e8e"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.group_by",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GroupListResponseSchema",
+          "schemaId": "s006880",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "172afb474724dd686ec1e28fbe5fd16ee938d7ee4d991f4de2bec19e357281ad"
+          },
+          "input": {
+            "object": "fixture",
+            "is_quota_exceeded": false,
+            "total": 0,
+            "data": []
+          },
+          "normalized": {
+            "object": "fixture",
+            "is_quota_exceeded": false,
+            "total": 0,
+            "data": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.by_status_code",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GroupListResponseSchema",
+          "schemaId": "s006880",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "172afb474724dd686ec1e28fbe5fd16ee938d7ee4d991f4de2bec19e357281ad"
+          },
+          "input": {
+            "object": "fixture",
+            "is_quota_exceeded": false,
+            "total": 0,
+            "data": []
+          },
+          "normalized": {
+            "object": "fixture",
+            "is_quota_exceeded": false,
+            "total": 0,
+            "data": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "telemetry.logs",
+      "fixtureSource": "literal-source-derived",
+      "responseContract": "json-schema",
+      "channels": [
+        {
+          "channel": "response",
+          "schema": "GatewayLogsResponseSchema",
+          "schemaId": "s006928",
+          "source": {
+            "file": "src/models/ai-gateway.ts",
+            "sha256": "335212ba4fec9093b1730c28c0d8f3042a67c5681c66ef0659df7d272a3ca64d",
+            "declarationSha256": "2b19dcec2a35e775a63c86cd1bccf2ecfcec0e5d875b721e307fb21cd4e41ae4"
+          },
+          "input": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "capturedTotal": 0,
+              "isQuotaExceeded": false
+            }
+          },
+          "normalized": {
+            "success": false,
+            "data": {
+              "records": [],
+              "total": 0,
+              "capturedTotal": 0,
+              "isQuotaExceeded": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

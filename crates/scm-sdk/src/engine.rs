@@ -42,6 +42,7 @@ pub struct RawRequest {
     headers: HeaderMap,
     body: Option<Bytes>,
     replay_safe: bool,
+    runtime_retries: Option<u32>,
 }
 impl RawRequest {
     /// No replay is assumed for an arbitrary operation, including an arbitrary GET.
@@ -55,6 +56,7 @@ impl RawRequest {
             headers: default_headers(),
             body: None,
             replay_safe: false,
+            runtime_retries: None,
         }
     }
     /// Declare a GET with read semantics, allowing bounded replay-safe retries.
@@ -69,10 +71,10 @@ impl RawRequest {
     }
     /// Append identifier data encoded once as a path segment. Literal slashes and
     /// percent signs are data; recursively encoded traversal is rejected locally.
-    pub fn segment(mut self, value: impl Into<String>) -> Result<Self> {
-        let value = value.into();
-        crate::config::encode_segment(&value)?;
-        self.segments.push(value);
+    pub fn segment(mut self, value: impl AsRef<str>) -> Result<Self> {
+        let value = value.as_ref();
+        crate::config::encode_segment(value)?;
+        self.segments.push(value.to_owned());
         Ok(self)
     }
     /// Authentication, routing authority and framing headers belong to the SDK.
@@ -111,6 +113,22 @@ impl RawRequest {
         self.replay_safe = true;
         self
     }
+    #[cfg(feature = "gateway")]
+    pub(crate) fn runtime_replay(&mut self, retries: Option<usize>) {
+        self.replay_safe = false;
+        self.runtime_retries = retries.map(|value| value as u32);
+    }
+    #[cfg(feature = "gateway")]
+    pub(crate) fn routing_headers(&mut self, headers: &HeaderMap) -> Result<()> {
+        if headers.keys().any(|name| self.headers.contains_key(name)) {
+            return Err(Error::new(ErrorKind::Validation));
+        }
+        self.headers.extend(headers.clone());
+        if headers_exceed(&self.headers) {
+            return Err(Error::new(ErrorKind::Limit));
+        }
+        Ok(())
+    }
     #[cfg(feature = "dlp")]
     pub(crate) fn content_type(mut self, value: &str) -> Result<Self> {
         value
@@ -131,6 +149,9 @@ impl RawRequest {
             .to_owned();
         self.body(serialize_bounded(value, limit)?, &content_type)
     }
+}
+fn runtime_retryable(status: StatusCode) -> bool {
+    matches!(status.as_u16(), 500 | 502 | 503 | 504)
 }
 fn forbidden_header(name: &str) -> bool {
     matches!(
@@ -204,6 +225,7 @@ pub(crate) enum AuthKind {
     Scan,
     #[cfg(any(
         feature = "management",
+        feature = "gateway",
         feature = "dlp",
         feature = "iam",
         feature = "model-security",
@@ -212,6 +234,8 @@ pub(crate) enum AuthKind {
     OAuth,
     #[cfg(feature = "gateway")]
     Runtime,
+    #[cfg(feature = "gateway")]
+    Public,
 }
 struct Inner {
     endpoint: Endpoint,
@@ -454,6 +478,7 @@ impl Client {
             AuthKind::Scan => matches!(&self.inner.auth, Authentication::Scan { .. }),
             #[cfg(any(
                 feature = "management",
+                feature = "gateway",
                 feature = "dlp",
                 feature = "iam",
                 feature = "model-security",
@@ -462,6 +487,8 @@ impl Client {
             AuthKind::OAuth => matches!(&self.inner.auth, Authentication::OAuth { .. }),
             #[cfg(feature = "gateway")]
             AuthKind::Runtime => matches!(&self.inner.auth, Authentication::RuntimeKey { .. }),
+            #[cfg(feature = "gateway")]
+            AuthKind::Public => matches!(&self.inner.auth, Authentication::None),
         };
         if valid {
             Ok(())
@@ -574,6 +601,43 @@ impl Client {
             .await
             .map_err(|e| response.annotate(e).with_operation(name))
     }
+    #[cfg(feature = "gateway")]
+    pub(crate) async fn send_contract_one_of<R: DeserializeOwned>(
+        &self,
+        request: RawRequest,
+        schemas: &[&str],
+        options: Option<&RequestOptions>,
+    ) -> Result<R> {
+        let name = request.name;
+        let options = self.operation_options(options)?;
+        let response = self.send_buffered(request, Some(&options)).await?;
+        options
+            .run(&self.inner.session, async {
+                let body = if response.body.is_empty() {
+                    b"{}".as_slice()
+                } else {
+                    &response.body
+                };
+                let value =
+                    serde_json::from_slice(body).map_err(|_| Error::new(ErrorKind::Decode))?;
+                let value = crate::validation::parse_one_of_with_limits(
+                    schemas,
+                    value,
+                    crate::validation::Mode::Response,
+                    &self.contract_limits(self.inner.limits.max_response_bytes)?,
+                )
+                .map_err(|error| {
+                    Error::new(if error.kind() == ErrorKind::Limit {
+                        ErrorKind::Limit
+                    } else {
+                        ErrorKind::Decode
+                    })
+                })?;
+                serde_json::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
+            })
+            .await
+            .map_err(|error| response.annotate(error).with_operation(name))
+    }
     #[cfg(feature = "red-team")]
     pub(crate) async fn send_model_optional<T: Serialize, R: DeserializeOwned>(
         &self,
@@ -651,45 +715,28 @@ impl Client {
             .await
     }
     #[cfg(feature = "gateway")]
-    pub(crate) async fn send_model_stream<T: Serialize, R: DeserializeOwned>(
+    pub(crate) async fn send_contract_stream<R: DeserializeOwned>(
         &self,
         request: RawRequest,
-        body: &T,
-        request_schema: &str,
-        stream_contract: (&'static str, crate::streaming::TerminalPolicy),
+        schema: &'static str,
+        terminal: crate::streaming::TerminalPolicy,
         options: Option<&RequestOptions>,
     ) -> Result<crate::streaming::ContractStream<R>> {
-        let options = options.cloned().map_or_else(
-            || RequestOptions::with_timeout(self.inner.limits.operation_timeout),
-            Ok,
-        )?;
+        let options = self.operation_options(options)?;
         let name = request.name;
-        let request = options
-            .run(&self.inner.session, async {
-                let bytes = serialize_bounded(body, self.inner.limits.max_request_bytes)?;
-                let value = serde_json::from_slice(&bytes)
-                    .map_err(|_| Error::new(ErrorKind::Validation))?;
-                let value = normalize_contract(
-                    request_schema,
-                    value,
-                    crate::validation::Mode::Request,
-                    &self.contract_limits(self.inner.limits.max_request_bytes)?,
-                )?;
-                request.json(&value, self.inner.limits.max_request_bytes)
-            })
-            .await
-            .map_err(|e| e.with_operation(name))?;
         let response = self.send_stream(request, Some(&options)).await?;
         let status = response.status().as_u16();
+        let request_id = response.request_id().map(str::to_owned);
         let stream = crate::streaming::SseStream::new(
             response,
             self.inner.limits.max_event_bytes,
-            stream_contract.1,
+            terminal,
         )?;
         let contract = crate::streaming::EventContract {
-            schema: stream_contract.0,
+            schema,
             operation: name,
             status,
+            request_id,
             limits: self.contract_limits(self.inner.limits.max_event_bytes)?,
         };
         Ok(crate::streaming::ContractStream::new(
@@ -709,6 +756,11 @@ impl Client {
             .policy
             .check(&url, DestinationPurpose::Api)
             .map_err(|_| Error::new(ErrorKind::Destination))?;
+        if request.runtime_retries.is_some()
+            && !matches!(&self.inner.auth, Authentication::RuntimeKey { .. })
+        {
+            return Err(Error::new(ErrorKind::Configuration));
+        }
         let body = request.body.clone().unwrap_or_default();
         if body.len() > self.inner.limits.max_request_bytes || headers_exceed(&request.headers) {
             return Err(Error::new(ErrorKind::Limit).with_operation(request.name));
@@ -730,7 +782,8 @@ impl Client {
         Ok((url, body))
     }
     /// Start a caller-driven response body. Handshake includes queueing and OAuth;
-    /// idle/session limits apply while reading. Streams never automatically replay.
+    /// idle/session limits apply while reading. Only explicit runtime replay may
+    /// retry a failed handshake; successful headers permanently end retry eligibility.
     pub async fn send_stream(
         &self,
         request: RawRequest,
@@ -744,68 +797,102 @@ impl Client {
         };
         let name = request.name;
         let sent = AtomicBool::new(false);
+        let received = std::sync::Mutex::new(None::<(u16, Option<String>)>);
         options
             .run(&self.inner.session, async {
                 let permit = Arc::clone(&self.inner.permits)
                     .acquire_owned()
                     .await
                     .map_err(|_| Error::new(ErrorKind::Cancelled))?;
-                let mut headers = request.headers;
-                let generation = self
-                    .inner
-                    .auth
-                    .prepare(&mut headers, &body, request.body.is_some(), &options)
-                    .await?;
-                if headers_exceed(&headers) {
-                    return Err(Error::new(ErrorKind::Limit));
-                }
-                options.run(&self.inner.session, async { Ok(()) }).await?;
-                sent.store(true, Ordering::Relaxed);
-                let mut response = self
-                    .inner
-                    .transport
-                    .send(TransportRequest::new(
-                        request.method,
-                        url,
-                        headers,
-                        body,
-                        name,
-                    ))
-                    .await?;
-                let status = response.status;
-                if status.is_redirection() {
-                    return Err(Error::new(ErrorKind::Destination)
-                        .with_status(status.as_u16())
-                        .with_outcome(RemoteOutcome::Rejected));
-                }
-                if !status.is_success() {
-                    let bytes = read_limited(&mut response.body, self.inner.limits.max_error_bytes)
-                        .await
-                        .map_err(|e| e.with_status(status.as_u16()))?;
-                    if auth_rejection(status, &response.headers)
-                        && let Some(generation) = generation
-                    {
-                        self.inner.auth.on_unauthorized(generation);
+                let max_retries = request.runtime_retries.unwrap_or(0);
+                let mut retries = 0;
+                loop {
+                    if let Ok(mut slot) = received.lock() {
+                        *slot = None;
                     }
-                    let (id, code) = error_metadata(&response.headers, Some(&bytes));
-                    return Err(Error::new(ErrorKind::Http)
-                        .with_status(status.as_u16())
-                        .with_metadata(id, code, retry_after(&response.headers))
-                        .with_outcome(if status.is_client_error() {
-                            RemoteOutcome::Rejected
-                        } else {
-                            RemoteOutcome::Unknown
-                        }));
+                    let mut headers = request.headers.clone();
+                    let generation = self
+                        .inner
+                        .auth
+                        .prepare(&mut headers, &body, request.body.is_some(), &options)
+                        .await?;
+                    if headers_exceed(&headers) {
+                        return Err(Error::new(ErrorKind::Limit));
+                    }
+                    options.run(&self.inner.session, async { Ok(()) }).await?;
+                    sent.store(true, Ordering::Relaxed);
+                    let mut response = match self
+                        .inner
+                        .transport
+                        .send(TransportRequest::new(
+                            request.method.clone(),
+                            url.clone(),
+                            headers,
+                            body.clone(),
+                            name,
+                        ))
+                        .await
+                    {
+                        Ok(response) => response,
+                        Err(error) => {
+                            if error.kind() == ErrorKind::Transport && retries < max_retries {
+                                let delay = self.backoff(retries);
+                                retries += 1;
+                                tokio::time::sleep(delay).await;
+                                continue;
+                            }
+                            return Err(error);
+                        }
+                    };
+                    let status = response.status;
+                    let request_id = error_metadata(&response.headers, None).0;
+                    if let Ok(mut slot) = received.lock() {
+                        *slot = Some((status.as_u16(), request_id));
+                    }
+                    if status.is_redirection() {
+                        return Err(Error::new(ErrorKind::Destination)
+                            .with_status(status.as_u16())
+                            .with_outcome(RemoteOutcome::Rejected));
+                    }
+                    if !status.is_success() {
+                        let bytes =
+                            read_limited(&mut response.body, self.inner.limits.max_error_bytes)
+                                .await?;
+                        if auth_rejection(status, &response.headers)
+                            && let Some(generation) = generation
+                        {
+                            self.inner.auth.on_unauthorized(generation);
+                        }
+                        let delay = retry_after(&response.headers);
+                        if runtime_retryable(status) && retries < max_retries {
+                            let wait = delay.unwrap_or_else(|| self.backoff(retries));
+                            if wait <= self.inner.limits.max_retry_delay {
+                                retries += 1;
+                                tokio::time::sleep(wait).await;
+                                continue;
+                            }
+                        }
+                        let (id, code) = error_metadata(&response.headers, Some(&bytes));
+                        return Err(Error::new(ErrorKind::Http)
+                            .with_status(status.as_u16())
+                            .with_metadata(id, code, delay)
+                            .with_outcome(if status.is_client_error() {
+                                RemoteOutcome::Rejected
+                            } else {
+                                RemoteOutcome::Unknown
+                            }));
+                    }
+                    // Returning successful headers ends the retry scope permanently.
+                    return Ok(crate::streaming::ResponseStream::new(
+                        response,
+                        permit,
+                        self.inner.session.clone(),
+                        &options,
+                        explicit_deadline,
+                        &self.inner.limits,
+                        name,
+                    ));
                 }
-                Ok(crate::streaming::ResponseStream::new(
-                    response,
-                    permit,
-                    self.inner.session.clone(),
-                    &options,
-                    explicit_deadline,
-                    &self.inner.limits,
-                    name,
-                ))
             })
             .await
             .map_err(|error| {
@@ -815,6 +902,13 @@ impl Client {
                     RemoteOutcome::Unknown
                 } else {
                     error.remote_outcome()
+                };
+                let error = if let Some((status, request_id)) =
+                    received.lock().ok().and_then(|s| s.clone())
+                {
+                    error.with_response_metadata(status, request_id)
+                } else {
+                    error
                 };
                 error.with_operation(name).with_outcome(outcome)
             })
@@ -846,9 +940,11 @@ impl Client {
         let (url, body) = self.preflight(&request)?;
         let sent = AtomicBool::new(false);
         let received = std::sync::Mutex::new(None::<(u16, Option<String>)>);
-        let max_retries = options
-            .retry_limit()
-            .unwrap_or(self.inner.limits.max_retries);
+        let max_retries = request.runtime_retries.unwrap_or_else(|| {
+            options
+                .retry_limit()
+                .unwrap_or(self.inner.limits.max_retries)
+        });
         let task = async {
             let _permit = self
                 .inner
@@ -884,7 +980,7 @@ impl Client {
                     Ok(value) => value,
                     Err(error) => {
                         if error.kind() == ErrorKind::Transport
-                            && request.replay_safe
+                            && (request.replay_safe || request.runtime_retries.is_some())
                             && retries < max_retries
                         {
                             let delay = self.backoff(retries);
@@ -932,7 +1028,10 @@ impl Client {
                         continue;
                     }
                 }
-                if request.replay_safe && retryable(status) && retries < max_retries {
+                if (request.replay_safe && retryable(status)
+                    || request.runtime_retries.is_some() && runtime_retryable(status))
+                    && retries < max_retries
+                {
                     let wait = delay.unwrap_or_else(|| self.backoff(retries));
                     if wait <= self.inner.limits.max_retry_delay {
                         retries += 1;
@@ -978,7 +1077,7 @@ impl Client {
         let name = request.name;
         let options = self.operation_options(options)?;
         let response = self.send_buffered(request, Some(&options)).await?;
-        let text = options
+        options
             .run(&self.inner.session, async {
                 let body = response
                     .body
@@ -986,10 +1085,6 @@ impl Client {
                     .unwrap_or(&response.body);
                 Ok(String::from_utf8_lossy(body).into_owned())
             })
-            .await
-            .map_err(|e| response.annotate(e).with_operation(name))?;
-        options
-            .run(&self.inner.session, async { Ok(text) })
             .await
             .map_err(|e| response.annotate(e).with_operation(name))
     }
@@ -1087,7 +1182,10 @@ fn retry_after(headers: &HeaderMap) -> Option<Duration> {
         .duration_since(SystemTime::now())
         .ok()
 }
-fn error_metadata(headers: &HeaderMap, body: Option<&[u8]>) -> (Option<String>, Option<String>) {
+pub(crate) fn error_metadata(
+    headers: &HeaderMap,
+    body: Option<&[u8]>,
+) -> (Option<String>, Option<String>) {
     let request_id = ["x-request-id", "x-correlation-id", "request-id"]
         .iter()
         .find_map(|k| {

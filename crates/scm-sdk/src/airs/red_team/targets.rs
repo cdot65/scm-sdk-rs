@@ -6,7 +6,6 @@ use crate::{
     pagination::{CollectOptions, CollectionResult, Items, Pages},
 };
 use http::Method;
-use std::fmt;
 const PATH: &str = "/v1/target";
 // The inline getTargetMetadata z.record(z.unknown()) has this exact frozen shape:
 // TargetCreateRequestSchema.extra_info -> Optional s012085 -> Nullable s012086
@@ -23,22 +22,14 @@ pub struct TargetListOptions {
     pub target_type: Option<String>,
     pub status: Option<String>,
 }
-impl fmt::Debug for TargetListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("TargetListOptions([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(TargetListOptions);
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct TargetOperationOptions {
     /// Omitted by default. Explicit false and true are transmitted.
     pub validate: Option<bool>,
 }
-impl fmt::Debug for TargetOperationOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("TargetOperationOptions([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(TargetOperationOptions);
 #[derive(Clone, Debug)]
 pub struct RedTeamTargetsClient {
     pub(super) client: Client,

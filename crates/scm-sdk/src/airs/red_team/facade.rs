@@ -4,7 +4,6 @@ use crate::{
     engine::AuthKind,
 };
 use http::Method;
-use std::fmt;
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct ScanStatisticsOptions {
@@ -18,16 +17,7 @@ pub struct ScoreTrendOptions {
     pub start_date: Option<String>,
     pub end_date: Option<String>,
 }
-impl fmt::Debug for ScanStatisticsOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("ScanStatisticsOptions([REDACTED])")
-    }
-}
-impl fmt::Debug for ScoreTrendOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("ScoreTrendOptions([REDACTED])")
-    }
-}
+
 /// One immutable OAuth identity across explicitly admitted service endpoints.
 #[derive(Clone, Debug)]
 pub struct RedTeamClient {
@@ -104,8 +94,9 @@ impl RedTeamClient {
     /// management metadata fallback. Both reads use one absolute budget.
     pub async fn get_scan_metadata(&self, options: Option<&RequestOptions>) -> Result<JsonObject> {
         let options = self.data.operation_options(options)?;
-        // This frozen record schema accepts arbitrary JSON object values,
-        // matching the inline metadata object while retaining central bounds.
+        // The frozen inline ZodObject({}).passthrough() accepts arbitrary JSON
+        // objects. Reused s012087 is ZodRecord(string, unknown): its JSON-domain
+        // behavior is equivalent, with the same central resource bounds.
         match self
             .data
             .send_contract(
@@ -308,3 +299,5 @@ impl RedTeamClient {
             .await
     }
 }
+
+crate::redaction::redacted_debug!(ScanStatisticsOptions, ScoreTrendOptions);

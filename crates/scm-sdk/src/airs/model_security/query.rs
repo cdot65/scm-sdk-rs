@@ -75,11 +75,6 @@ pub struct ModelSecurityScanListOptions {
     pub end_time: Option<String>,
     pub labels_query: Option<String>,
 }
-impl std::fmt::Debug for ModelSecurityScanListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityScanListOptions([REDACTED])")
-    }
-}
 impl ModelSecurityScanListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
         let mut query = Query::new();
@@ -111,11 +106,6 @@ pub struct ModelSecurityEvaluationListOptions {
     pub result: Option<String>,
     pub rule_instance_uuid: Option<String>,
 }
-impl std::fmt::Debug for ModelSecurityEvaluationListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityEvaluationListOptions([REDACTED])")
-    }
-}
 impl ModelSecurityEvaluationListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
         let mut query = Query::new();
@@ -142,11 +132,6 @@ pub struct ModelSecurityFileListOptions {
     pub result: Option<String>,
     pub query_path: Option<String>,
 }
-impl std::fmt::Debug for ModelSecurityFileListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityFileListOptions([REDACTED])")
-    }
-}
 impl ModelSecurityFileListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
         let mut query = Query::new();
@@ -168,11 +153,6 @@ pub struct ModelSecurityLabelListOptions {
     pub skip: Option<u64>,
     pub limit: Option<u32>,
     pub search: Option<String>,
-}
-impl std::fmt::Debug for ModelSecurityLabelListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityLabelListOptions([REDACTED])")
-    }
 }
 impl ModelSecurityLabelListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
@@ -199,11 +179,6 @@ pub struct ModelSecurityModelListOptions {
     pub latest_version_scan_time_before: Option<String>,
     pub start_time: Option<String>,
     pub end_time: Option<String>,
-}
-impl std::fmt::Debug for ModelSecurityModelListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityModelListOptions([REDACTED])")
-    }
 }
 impl ModelSecurityModelListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
@@ -244,11 +219,6 @@ pub struct ModelSecurityModelVersionListOptions {
     pub search: Option<String>,
     pub sort_order: Option<String>,
 }
-impl std::fmt::Debug for ModelSecurityModelVersionListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityModelVersionListOptions([REDACTED])")
-    }
-}
 impl ModelSecurityModelVersionListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
         let mut query = Query::new();
@@ -270,11 +240,6 @@ pub struct ModelSecurityGroupListOptions {
     pub source_types: Option<Vec<String>>,
     pub search_query: Option<String>,
     pub enabled_rules: Option<Vec<String>>,
-}
-impl std::fmt::Debug for ModelSecurityGroupListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityGroupListOptions([REDACTED])")
-    }
 }
 impl ModelSecurityGroupListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
@@ -301,11 +266,6 @@ pub struct ModelSecurityRuleInstanceListOptions {
     pub security_rule_uuid: Option<String>,
     pub state: Option<String>,
 }
-impl std::fmt::Debug for ModelSecurityRuleInstanceListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityRuleInstanceListOptions([REDACTED])")
-    }
-}
 impl ModelSecurityRuleInstanceListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
         let mut query = Query::new();
@@ -328,11 +288,6 @@ pub struct ModelSecurityRuleListOptions {
     pub source_type: Option<String>,
     pub search_query: Option<String>,
     pub generation: Option<u64>,
-}
-impl std::fmt::Debug for ModelSecurityRuleListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityRuleListOptions([REDACTED])")
-    }
 }
 impl ModelSecurityRuleListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
@@ -357,11 +312,6 @@ pub struct CustomRuleListOptions {
     pub search_query: Option<String>,
     pub source_types: Option<Vec<String>>,
     pub generation: Option<u64>,
-}
-impl std::fmt::Debug for CustomRuleListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("CustomRuleListOptions([REDACTED])")
-    }
 }
 impl CustomRuleListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
@@ -397,11 +347,6 @@ pub struct SnapshotVersionListOptions {
     pub limit: Option<u32>,
     pub next_token: Option<String>,
 }
-impl std::fmt::Debug for SnapshotVersionListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("SnapshotVersionListOptions([REDACTED])")
-    }
-}
 impl SnapshotVersionListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
         if self.limit.is_some_and(|v| v > 100) {
@@ -418,11 +363,6 @@ impl SnapshotVersionListOptions {
 pub struct CustomRuleSecurityGroupListOptions {
     pub skip: Option<u64>,
     pub limit: Option<u32>,
-}
-impl std::fmt::Debug for CustomRuleSecurityGroupListOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("CustomRuleSecurityGroupListOptions([REDACTED])")
-    }
 }
 impl CustomRuleSecurityGroupListOptions {
     pub(super) fn query(&self) -> Result<Vec<(String, String)>> {
@@ -452,11 +392,6 @@ pub struct ModelSecurityScanListAllOptions {
     pub end_time: Option<String>,
     pub labels_query: Option<String>,
     pub collect: CollectOptions,
-}
-impl std::fmt::Debug for ModelSecurityScanListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityScanListAllOptions([REDACTED])")
-    }
 }
 impl ModelSecurityScanListAllOptions {
     pub(super) fn page(&self, skip: u64, limit: u32) -> ModelSecurityScanListOptions {
@@ -495,11 +430,6 @@ pub struct ModelSecurityModelListAllOptions {
     pub end_time: Option<String>,
     pub collect: CollectOptions,
 }
-impl std::fmt::Debug for ModelSecurityModelListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityModelListAllOptions([REDACTED])")
-    }
-}
 impl ModelSecurityModelListAllOptions {
     pub(super) fn page(&self, skip: u64, limit: u32) -> ModelSecurityModelListOptions {
         ModelSecurityModelListOptions {
@@ -527,11 +457,6 @@ pub struct ModelSecurityModelVersionListAllOptions {
     pub sort_order: Option<String>,
     pub collect: CollectOptions,
 }
-impl std::fmt::Debug for ModelSecurityModelVersionListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityModelVersionListAllOptions([REDACTED])")
-    }
-}
 impl ModelSecurityModelVersionListAllOptions {
     pub(super) fn page(&self, skip: u64, limit: u32) -> ModelSecurityModelVersionListOptions {
         ModelSecurityModelVersionListOptions {
@@ -548,11 +473,6 @@ pub struct ModelSecurityModelVersionFileListAllOptions {
     pub limit: Option<u32>,
     pub search: Option<String>,
     pub collect: CollectOptions,
-}
-impl std::fmt::Debug for ModelSecurityModelVersionFileListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityModelVersionFileListAllOptions([REDACTED])")
-    }
 }
 impl ModelSecurityModelVersionFileListAllOptions {
     pub(super) fn page(&self, skip: u64, limit: u32) -> ModelSecurityLabelListOptions {
@@ -574,11 +494,6 @@ pub struct ModelSecurityGroupListAllOptions {
     pub search_query: Option<String>,
     pub enabled_rules: Option<Vec<String>>,
     pub collect: CollectOptions,
-}
-impl std::fmt::Debug for ModelSecurityGroupListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityGroupListAllOptions([REDACTED])")
-    }
 }
 impl ModelSecurityGroupListAllOptions {
     pub(super) fn page(&self, skip: u64, limit: u32) -> ModelSecurityGroupListOptions {
@@ -604,11 +519,6 @@ pub struct ModelSecurityRuleListAllOptions {
     pub generation: Option<u64>,
     pub collect: CollectOptions,
 }
-impl std::fmt::Debug for ModelSecurityRuleListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("ModelSecurityRuleListAllOptions([REDACTED])")
-    }
-}
 impl ModelSecurityRuleListAllOptions {
     pub(super) fn page(&self, skip: u64, limit: u32) -> ModelSecurityRuleListOptions {
         ModelSecurityRuleListOptions {
@@ -631,11 +541,6 @@ pub struct CustomRuleListAllOptions {
     pub search_query: Option<String>,
     pub source_types: Option<Vec<String>>,
     pub collect: CollectOptions,
-}
-impl std::fmt::Debug for CustomRuleListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("CustomRuleListAllOptions([REDACTED])")
-    }
 }
 impl CustomRuleListAllOptions {
     pub(super) fn page(&self, skip: u64, limit: u32) -> CustomRuleListOptions {
@@ -660,8 +565,26 @@ pub struct SnapshotVersionListAllOptions {
     pub next_token: Option<String>,
     pub collect: CollectOptions,
 }
-impl std::fmt::Debug for SnapshotVersionListAllOptions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("SnapshotVersionListAllOptions([REDACTED])")
-    }
-}
+
+crate::redaction::redacted_debug!(
+    ModelSecurityScanListOptions,
+    ModelSecurityEvaluationListOptions,
+    ModelSecurityFileListOptions,
+    ModelSecurityLabelListOptions,
+    ModelSecurityModelListOptions,
+    ModelSecurityModelVersionListOptions,
+    ModelSecurityGroupListOptions,
+    ModelSecurityRuleInstanceListOptions,
+    ModelSecurityRuleListOptions,
+    CustomRuleListOptions,
+    SnapshotVersionListOptions,
+    CustomRuleSecurityGroupListOptions,
+    ModelSecurityScanListAllOptions,
+    ModelSecurityModelListAllOptions,
+    ModelSecurityModelVersionListAllOptions,
+    ModelSecurityModelVersionFileListAllOptions,
+    ModelSecurityGroupListAllOptions,
+    ModelSecurityRuleListAllOptions,
+    CustomRuleListAllOptions,
+    SnapshotVersionListAllOptions,
+);

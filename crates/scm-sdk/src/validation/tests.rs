@@ -2,6 +2,154 @@ use super::*;
 use serde_json::json;
 use std::time::Duration;
 
+#[test]
+fn ordered_contract_alternatives_share_work_and_preserve_source_order() {
+    let registry = registry().unwrap();
+    let literal = registry
+        .graph
+        .nodes
+        .iter()
+        .find(|(_, node)| node["kind"] == "ZodLiteral")
+        .unwrap();
+    let schema = literal.0.as_str();
+    let value = literal.1["value"].clone();
+    assert_eq!(
+        parse_one_of_with_limits(
+            &[schema],
+            value.clone(),
+            Mode::Response,
+            &ValidationLimits::default()
+        )
+        .unwrap(),
+        value
+    );
+    let limits = ValidationLimits {
+        max_work: 1,
+        ..Default::default()
+    };
+    let mismatched = if value == Value::Null {
+        json!(false)
+    } else {
+        Value::Null
+    };
+    assert_eq!(
+        parse_one_of_with_limits(&[schema, schema], mismatched, Mode::Response, &limits)
+            .unwrap_err()
+            .kind(),
+        ErrorKind::Limit
+    );
+    assert!(
+        parse_one_of_with_limits(&[], json!({}), Mode::Response, &ValidationLimits::default())
+            .is_err()
+    );
+}
+
+#[cfg(feature = "gateway")]
+#[test]
+fn native_multipart_validates_every_required_blob_and_metadata_with_shared_limits() {
+    let file = BinaryPart::new(bytes::Bytes::from_static(b"native-file")).unwrap();
+    for (schema, field, metadata) in [
+        ("s004590", "image", json!({"prompt":"edit"})),
+        ("s004620", "image", json!({})),
+        ("s004771", "file", json!({"model":"whisper-1"})),
+        ("s004833", "file", json!({"model":"whisper-1"})),
+        ("s004894", "file", json!({"purpose":"assistants"})),
+    ] {
+        let parsed = parse_multipart_with_limits(
+            schema,
+            metadata.clone(),
+            &[(field, &file)],
+            &ValidationLimits::default(),
+            4096,
+        )
+        .unwrap();
+        assert_eq!(parsed, metadata);
+        assert!(
+            parse_multipart_with_limits(
+                schema,
+                metadata.clone(),
+                &[],
+                &ValidationLimits::default(),
+                4096
+            )
+            .is_err()
+        );
+        let mut spoof = metadata.clone();
+        spoof[field] = json!({"bytes":[1,2]});
+        assert!(parse(schema, spoof.clone(), Mode::Request).is_err());
+        assert!(
+            parse_multipart_with_limits(
+                schema,
+                spoof,
+                &[(field, &file)],
+                &ValidationLimits::default(),
+                4096
+            )
+            .is_err()
+        );
+        assert!(
+            parse_multipart_with_limits(
+                schema,
+                metadata.clone(),
+                &[(field, &file), (field, &file)],
+                &ValidationLimits::default(),
+                4096
+            )
+            .is_err()
+        );
+        assert_eq!(
+            parse_multipart_with_limits(
+                schema,
+                metadata,
+                &[(field, &file)],
+                &ValidationLimits::default(),
+                1
+            )
+            .unwrap_err()
+            .kind(),
+            ErrorKind::Limit
+        );
+    }
+    let metadata = json!({"prompt":"edit"});
+    assert_eq!(
+        parse_multipart_with_limits(
+            "s004590",
+            metadata.clone(),
+            &[("image", &file), ("mask", &file)],
+            &ValidationLimits::default(),
+            4096
+        )
+        .unwrap(),
+        metadata
+    );
+    assert!(
+        parse_multipart_with_limits(
+            "s004590",
+            json!({"prompt":"edit", "unknown":true}),
+            &[("image", &file)],
+            &ValidationLimits::default(),
+            4096
+        )
+        .is_err()
+    );
+    let limits = ValidationLimits {
+        max_work: 1,
+        ..Default::default()
+    };
+    assert_eq!(
+        parse_multipart_with_limits(
+            "s004590",
+            json!({"prompt":"edit"}),
+            &[("image", &file)],
+            &limits,
+            4096
+        )
+        .unwrap_err()
+        .kind(),
+        ErrorKind::Limit
+    );
+}
+
 fn examples(binding: &str) -> (Value, Value) {
     match binding {
         "nonblank" => (json!("\u{feff}letter\u{00a0}"), json!("\u{feff}\u{00a0}")),

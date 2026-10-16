@@ -12,7 +12,6 @@ use crate::{
     pagination::{CollectOptions, CollectionResult, Items, Pages},
 };
 use http::Method;
-use std::fmt;
 const PATH: &str = "/v1/adapters";
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -29,11 +28,7 @@ impl AdapterStatusFilter {
         }
     }
 }
-impl fmt::Debug for AdapterStatusFilter {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("AdapterStatusFilter([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(AdapterStatusFilter);
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct AdapterListOptions {
@@ -43,22 +38,14 @@ pub struct AdapterListOptions {
     pub status: Option<AdapterStatusFilter>,
     pub include_target_count: Option<bool>,
 }
-impl fmt::Debug for AdapterListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("AdapterListOptions([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(AdapterListOptions);
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct AdapterOperationOptions {
     /// The frozen save contract defaults to true when omitted.
     pub validate: Option<bool>,
 }
-impl fmt::Debug for AdapterOperationOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("AdapterOperationOptions([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(AdapterOperationOptions);
 #[derive(Clone, Debug)]
 pub struct RedTeamAdaptersClient {
     pub(super) client: Client,

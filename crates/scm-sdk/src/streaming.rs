@@ -18,6 +18,7 @@ pub(crate) struct EventContract {
     pub schema: &'static str,
     pub operation: &'static str,
     pub status: u16,
+    pub request_id: Option<String>,
     pub limits: crate::validation::ValidationLimits,
 }
 #[cfg(feature = "gateway")]
@@ -58,7 +59,10 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
                         .await;
                     if let Err(error) = active {
                         let error = error
-                            .with_status(self.contract.status)
+                            .with_response_metadata(
+                                self.contract.status,
+                                self.contract.request_id.clone(),
+                            )
                             .with_operation(self.contract.operation)
                             .with_outcome(RemoteOutcome::Unknown);
                         self.stream.close();
@@ -98,7 +102,7 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
             Ok(value) => Ok(Some(value)),
             Err(error) => {
                 let error = error
-                    .with_status(self.contract.status)
+                    .with_response_metadata(self.contract.status, self.contract.request_id.clone())
                     .with_operation(self.contract.operation)
                     .with_outcome(RemoteOutcome::Unknown);
                 self.stream.close();
@@ -131,6 +135,7 @@ use tokio_util::sync::CancellationToken;
 pub struct ResponseStream {
     status: StatusCode,
     headers: HeaderMap,
+    request_id: Option<String>,
     body: Option<BodyStream>,
     permit: Option<OwnedSemaphorePermit>,
     session: Session,
@@ -161,6 +166,7 @@ impl ResponseStream {
             (Some(a), Some(b)) => Some(a.min(b)),
             (a, b) => a.or(b),
         };
+        let request_id = crate::engine::error_metadata(&response.headers, None).0;
         let mut headers = response.headers;
         for value in headers.values_mut() {
             value.set_sensitive(true);
@@ -168,6 +174,7 @@ impl ResponseStream {
         Self {
             status: response.status,
             headers,
+            request_id,
             body: Some(response.body),
             permit: Some(permit),
             session,
@@ -186,6 +193,10 @@ impl ResponseStream {
     pub fn headers(&self) -> &HeaderMap {
         &self.headers
     }
+    /// Allowlisted correlation metadata retained through all body and parser errors.
+    pub fn request_id(&self) -> Option<&str> {
+        self.request_id.as_deref()
+    }
     pub fn bytes_consumed(&self) -> usize {
         self.consumed
     }
@@ -203,6 +214,7 @@ impl ResponseStream {
         };
         match kind {
             Some(kind) => Err(Error::new(kind)
+                .with_response_metadata(self.status.as_u16(), self.request_id.clone())
                 .with_operation(self.operation)
                 .with_outcome(RemoteOutcome::Unknown)),
             None => Ok(()),
@@ -261,6 +273,7 @@ impl ResponseStream {
             Err(error) => {
                 self.close();
                 Err(error
+                    .with_response_metadata(self.status.as_u16(), self.request_id.clone())
                     .with_operation(self.operation)
                     .with_outcome(RemoteOutcome::Unknown))
             }

@@ -1,0 +1,705 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "license": "Apache-2.0; see package NOTICE for frozen TypeScript attribution",
+  "purpose": "Exact independent SCM extension fixture cases; expected values come from the frozen source, not Rust.",
+  "sources": [
+    {
+      "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+      "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+      "license": "Apache-2.0"
+    }
+  ],
+  "cases": [
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/17"
+      },
+      "case": {
+        "method": "GET",
+        "path": "/logs/exports/{exportId}",
+        "call": {
+          "method": "GET",
+          "path": "/logs/exports/{gatewayPathSegment(exportId)}",
+          "source": "src/ai-gateway/log-exports-client.ts",
+          "member": "get",
+          "plane": "gateway",
+          "responseSchema": "GatewayLogExportsClientGetResponseSchema",
+          "className": "AIGatewayLogExportsClient",
+          "parameters": [
+            {
+              "name": "exportId",
+              "type": "string"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "responseBody": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+          "filters": {
+            "time_of_generation_min": "2026-09-06T00:00:00Z",
+            "time_of_generation_max": "2026-09-06T00:00:00Z",
+            "total_units_min": 1,
+            "total_units_max": 1,
+            "cost_min": 1,
+            "cost_max": 1,
+            "ai_model": "x",
+            "prompt_token_min": 1,
+            "prompt_token_max": 1,
+            "completion_token_min": 1,
+            "completion_token_max": 1,
+            "status_code": "x",
+            "metadata": {},
+            "ai_org_model": "x",
+            "weighted_feedback_min": 1,
+            "weighted_feedback_max": 1,
+            "virtual_keys": "x",
+            "trace_id": "x",
+            "configs": "x",
+            "workspace_slug": "x",
+            "prompt_slug": "x",
+            "page_size": 1,
+            "current_page": 1
+          },
+          "requested_data": [
+            "id"
+          ],
+          "status": "draft",
+          "description": "x",
+          "created_at": "2026-09-06T00:00:00Z",
+          "last_updated_at": "2026-09-06T00:00:00Z",
+          "created_by": "550e8400-e29b-41d4-a716-446655440000",
+          "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+          "object": "export"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/18"
+      },
+      "case": {
+        "method": "PUT",
+        "path": "/logs/exports/{exportId}",
+        "call": {
+          "method": "PUT",
+          "path": "/logs/exports/{gatewayPathSegment(exportId)}",
+          "source": "src/ai-gateway/log-exports-client.ts",
+          "member": "update",
+          "plane": "gateway",
+          "responseSchema": "GatewayLogExportsClientUpdateResponseSchema",
+          "requestSchema": "GatewayLogExportsClientUpdateRequestSchema",
+          "requestType": "GatewayLogExportsClientUpdateRequest",
+          "className": "AIGatewayLogExportsClient",
+          "parameters": [
+            {
+              "name": "exportId",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "type": "GatewayLogExportsClientUpdateRequest"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "body": {
+          "workspace_id": "x",
+          "filters": {
+            "time_of_generation_min": "2026-09-06T00:00:00Z",
+            "time_of_generation_max": "2026-09-06T00:00:00Z",
+            "total_units_min": 1,
+            "total_units_max": 1,
+            "cost_min": 1,
+            "cost_max": 1,
+            "ai_model": "x",
+            "prompt_token_min": 1,
+            "prompt_token_max": 1,
+            "completion_token_min": 1,
+            "completion_token_max": 1,
+            "status_code": "x",
+            "metadata": {},
+            "ai_org_model": "x",
+            "weighted_feedback_min": 1,
+            "weighted_feedback_max": 1,
+            "virtual_keys": "x",
+            "trace_id": "x",
+            "configs": "x",
+            "workspace_slug": "x",
+            "prompt_slug": "x",
+            "page_size": 1,
+            "current_page": 1
+          },
+          "requested_data": [
+            "id"
+          ],
+          "description": "Offline contract fixture"
+        },
+        "responseBody": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "total": 1,
+          "object": "export"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/19"
+      },
+      "case": {
+        "method": "GET",
+        "path": "/logs/exports",
+        "call": {
+          "method": "GET",
+          "path": "/logs/exports",
+          "source": "src/ai-gateway/log-exports-client.ts",
+          "member": "list",
+          "plane": "gateway",
+          "responseSchema": "GatewayLogExportsClientListResponseSchema",
+          "queryType": "GatewayLogExportsClientListOptions",
+          "className": "AIGatewayLogExportsClient",
+          "parameters": [
+            {
+              "name": "opts",
+              "type": "GatewayLogExportsClientListOptions"
+            }
+          ]
+        },
+        "query": {
+          "workspace_id": "550e8400-e29b-41d4-a716-446655440000"
+        },
+        "queryWire": {
+          "workspace_id": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ]
+        },
+        "responseBody": {
+          "object": "list",
+          "total": 1,
+          "data": [
+            {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+              "filters": {
+                "time_of_generation_min": "2026-09-06T00:00:00Z",
+                "time_of_generation_max": "2026-09-06T00:00:00Z",
+                "total_units_min": 1,
+                "total_units_max": 1,
+                "cost_min": 1,
+                "cost_max": 1,
+                "ai_model": "x",
+                "prompt_token_min": 1,
+                "prompt_token_max": 1,
+                "completion_token_min": 1,
+                "completion_token_max": 1,
+                "status_code": "x",
+                "metadata": {},
+                "ai_org_model": "x",
+                "weighted_feedback_min": 1,
+                "weighted_feedback_max": 1,
+                "virtual_keys": "x",
+                "trace_id": "x",
+                "configs": "x",
+                "workspace_slug": "x",
+                "prompt_slug": "x",
+                "page_size": 1,
+                "current_page": 1
+              },
+              "requested_data": [
+                "id"
+              ],
+              "status": "draft",
+              "description": "x",
+              "created_at": "2026-09-06T00:00:00Z",
+              "last_updated_at": "2026-09-06T00:00:00Z",
+              "created_by": "550e8400-e29b-41d4-a716-446655440000",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "object": "export"
+            }
+          ]
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/20"
+      },
+      "case": {
+        "method": "POST",
+        "path": "/logs/exports",
+        "call": {
+          "method": "POST",
+          "path": "/logs/exports",
+          "source": "src/ai-gateway/log-exports-client.ts",
+          "member": "create",
+          "plane": "gateway",
+          "responseSchema": "GatewayLogExportsClientCreateResponseSchema",
+          "requestSchema": "GatewayLogExportsClientCreateRequestSchema",
+          "requestType": "GatewayLogExportsClientCreateRequest",
+          "className": "AIGatewayLogExportsClient",
+          "parameters": [
+            {
+              "name": "body",
+              "type": "GatewayLogExportsClientCreateRequest"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "body": {
+          "workspace_id": "x",
+          "filters": {
+            "time_of_generation_min": "2026-09-06T00:00:00Z",
+            "time_of_generation_max": "2026-09-06T00:00:00Z",
+            "total_units_min": 1,
+            "total_units_max": 1,
+            "cost_min": 1,
+            "cost_max": 1,
+            "ai_model": "x",
+            "prompt_token_min": 1,
+            "prompt_token_max": 1,
+            "completion_token_min": 1,
+            "completion_token_max": 1,
+            "status_code": "x",
+            "metadata": {},
+            "ai_org_model": "x",
+            "weighted_feedback_min": 1,
+            "weighted_feedback_max": 1,
+            "virtual_keys": "x",
+            "trace_id": "x",
+            "configs": "x",
+            "workspace_slug": "x",
+            "prompt_slug": "x",
+            "page_size": 1,
+            "current_page": 1
+          },
+          "requested_data": [
+            "id"
+          ],
+          "description": "Offline contract fixture"
+        },
+        "responseBody": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "total": 1,
+          "object": "export"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/21"
+      },
+      "case": {
+        "method": "POST",
+        "path": "/logs/exports/{exportId}/start",
+        "call": {
+          "method": "POST",
+          "path": "/logs/exports/{gatewayPathSegment(exportId)}/start",
+          "source": "src/ai-gateway/log-exports-client.ts",
+          "member": "start",
+          "plane": "gateway",
+          "responseSchema": "GatewayLogExportsClientStartResponseSchema",
+          "className": "AIGatewayLogExportsClient",
+          "parameters": [
+            {
+              "name": "exportId",
+              "type": "string"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "responseBody": {
+          "message": "x",
+          "object": "export"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/22"
+      },
+      "case": {
+        "method": "POST",
+        "path": "/logs/exports/{exportId}/cancel",
+        "call": {
+          "method": "POST",
+          "path": "/logs/exports/{gatewayPathSegment(exportId)}/cancel",
+          "source": "src/ai-gateway/log-exports-client.ts",
+          "member": "cancel",
+          "plane": "gateway",
+          "responseSchema": "GatewayLogExportsClientCancelResponseSchema",
+          "className": "AIGatewayLogExportsClient",
+          "parameters": [
+            {
+              "name": "exportId",
+              "type": "string"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "responseBody": {
+          "message": "x",
+          "object": "export"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/23"
+      },
+      "case": {
+        "method": "GET",
+        "path": "/logs/exports/{exportId}/download",
+        "call": {
+          "method": "GET",
+          "path": "/logs/exports/{gatewayPathSegment(exportId)}/download",
+          "source": "src/ai-gateway/log-exports-client.ts",
+          "member": "download",
+          "plane": "gateway",
+          "responseSchema": "GatewayLogExportsClientDownloadResponseSchema",
+          "className": "AIGatewayLogExportsClient",
+          "parameters": [
+            {
+              "name": "exportId",
+              "type": "string"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "responseBody": {
+          "signed_url": "https://example.test"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/31"
+      },
+      "case": {
+        "method": "POST",
+        "path": "/policies/rate-limits",
+        "call": {
+          "method": "POST",
+          "path": "/policies/rate-limits",
+          "source": "src/ai-gateway/rate-limits-client.ts",
+          "member": "create",
+          "plane": "gateway",
+          "responseSchema": "GatewayRateLimitsClientCreateResponseSchema",
+          "requestSchema": "GatewayRateLimitsClientCreateRequestSchema",
+          "requestType": "GatewayRateLimitsClientCreateRequest",
+          "className": "AIGatewayRateLimitsClient",
+          "parameters": [
+            {
+              "name": "body",
+              "type": "GatewayRateLimitsClientCreateRequest"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "body": {
+          "name": "x",
+          "conditions": [
+            {
+              "key": "x",
+              "value": "x",
+              "excludes": "x"
+            }
+          ],
+          "group_by": [
+            {
+              "key": "x"
+            }
+          ],
+          "type": "requests",
+          "unit": "rpm",
+          "value": 1,
+          "target": "llm",
+          "workspace_id": "x",
+          "organisation_id": "550e8400-e29b-41d4-a716-446655440000"
+        },
+        "responseBody": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "object": "x"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/32"
+      },
+      "case": {
+        "method": "GET",
+        "path": "/policies/rate-limits",
+        "call": {
+          "method": "GET",
+          "path": "/policies/rate-limits",
+          "source": "src/ai-gateway/rate-limits-client.ts",
+          "member": "list",
+          "plane": "gateway",
+          "responseSchema": "GatewayRateLimitsClientListResponseSchema",
+          "queryType": "GatewayRateLimitsClientListOptions",
+          "className": "AIGatewayRateLimitsClient",
+          "parameters": [
+            {
+              "name": "opts",
+              "type": "GatewayRateLimitsClientListOptions"
+            }
+          ]
+        },
+        "query": {
+          "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+          "status": "active",
+          "type": "requests",
+          "unit": "rpm",
+          "target": "llm",
+          "page_size": 0,
+          "current_page": 0
+        },
+        "queryWire": {
+          "workspace_id": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": [
+            "active"
+          ],
+          "type": [
+            "requests"
+          ],
+          "unit": [
+            "rpm"
+          ],
+          "target": [
+            "llm"
+          ],
+          "page_size": [
+            "0"
+          ],
+          "current_page": [
+            "0"
+          ]
+        },
+        "responseBody": {
+          "object": "x",
+          "data": [
+            {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "x",
+              "conditions": [
+                {
+                  "key": "x",
+                  "value": "x",
+                  "excludes": "x"
+                }
+              ],
+              "group_by": [
+                {
+                  "key": "x"
+                }
+              ],
+              "type": "requests",
+              "unit": "rpm",
+              "value": 1,
+              "status": "active",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+              "created_at": "2026-09-06T00:00:00Z",
+              "last_updated_at": "2026-09-06T00:00:00Z",
+              "target": "llm"
+            }
+          ],
+          "total": 1
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/33"
+      },
+      "case": {
+        "method": "GET",
+        "path": "/policies/rate-limits/{rateLimitsPolicyId}",
+        "call": {
+          "method": "GET",
+          "path": "/policies/rate-limits/{gatewayPathSegment(rateLimitsPolicyId)}",
+          "source": "src/ai-gateway/rate-limits-client.ts",
+          "member": "get",
+          "plane": "gateway",
+          "responseSchema": "GatewayRateLimitsClientGetResponseSchema",
+          "queryType": "GatewayRateLimitsClientGetOptions",
+          "className": "AIGatewayRateLimitsClient",
+          "parameters": [
+            {
+              "name": "rateLimitsPolicyId",
+              "type": "string"
+            },
+            {
+              "name": "opts",
+              "type": "GatewayRateLimitsClientGetOptions"
+            }
+          ]
+        },
+        "query": {
+          "status": "active"
+        },
+        "queryWire": {
+          "status": [
+            "active"
+          ]
+        },
+        "responseBody": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "name": "x",
+          "conditions": [
+            {
+              "key": "x",
+              "value": "x",
+              "excludes": "x"
+            }
+          ],
+          "group_by": [
+            {
+              "key": "x"
+            }
+          ],
+          "type": "requests",
+          "unit": "rpm",
+          "value": 1,
+          "status": "active",
+          "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+          "organisation_id": "550e8400-e29b-41d4-a716-446655440000",
+          "created_at": "2026-09-06T00:00:00Z",
+          "last_updated_at": "2026-09-06T00:00:00Z",
+          "target": "llm",
+          "object": "x"
+        },
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/34"
+      },
+      "case": {
+        "method": "PUT",
+        "path": "/policies/rate-limits/{rateLimitsPolicyId}",
+        "call": {
+          "method": "PUT",
+          "path": "/policies/rate-limits/{gatewayPathSegment(rateLimitsPolicyId)}",
+          "source": "src/ai-gateway/rate-limits-client.ts",
+          "member": "update",
+          "plane": "gateway",
+          "responseSchema": "GatewayRateLimitsClientUpdateResponseSchema",
+          "requestSchema": "GatewayRateLimitsClientUpdateRequestSchema",
+          "requestType": "GatewayRateLimitsClientUpdateRequest",
+          "className": "AIGatewayRateLimitsClient",
+          "parameters": [
+            {
+              "name": "rateLimitsPolicyId",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "type": "GatewayRateLimitsClientUpdateRequest"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "body": {
+          "name": "x",
+          "unit": "rpm",
+          "value": 1,
+          "conditions": [
+            {
+              "key": "x",
+              "value": "x",
+              "excludes": "x"
+            }
+          ]
+        },
+        "responseBody": {},
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    },
+    {
+      "source": {
+        "path": "contracts/fixtures/typescript/test/openapi/fixtures/gateway.json",
+        "sha256": "3b1cd910fa88259340478ce103eb3bb1760d31c92514adbe694edf2b5ffad9d6",
+        "pointer": "/cases/35"
+      },
+      "case": {
+        "method": "DELETE",
+        "path": "/policies/rate-limits/{rateLimitsPolicyId}",
+        "call": {
+          "method": "DELETE",
+          "path": "/policies/rate-limits/{gatewayPathSegment(rateLimitsPolicyId)}",
+          "source": "src/ai-gateway/rate-limits-client.ts",
+          "member": "delete",
+          "plane": "gateway",
+          "responseSchema": "GatewayRateLimitsClientDeleteResponseSchema",
+          "className": "AIGatewayRateLimitsClient",
+          "parameters": [
+            {
+              "name": "rateLimitsPolicyId",
+              "type": "string"
+            }
+          ]
+        },
+        "query": {},
+        "queryWire": {},
+        "responseBody": {},
+        "responseStatus": 200,
+        "responseIsText": false
+      }
+    }
+  ]
+}

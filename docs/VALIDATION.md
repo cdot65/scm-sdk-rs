@@ -56,3 +56,20 @@ An application allowing a large context or response must pass matching validatio
 The bindings cover 40 refinements, 23 missing defaults, and six transforms. The public ledger is `contracts/native-semantics.json`; `validation::tests::all_semantic_bindings_are_exercised` checks each binding's concrete native behavior and exact registry coverage against graph nodes requiring reviewed semantics. Both finite-JSON bindings use only the bounded validator context; a dedicated test admits their complete inner parse, then proves their recursive refinement consumes additional shared work budget in both modes. Dedicated tests cover omission/null/value states, required nullable fields, redaction, UTF-16 lengths, ECMAScript whitespace, calendar and decimal edge cases, response evolution, configured limits, wrapper depth, and safe cleanup of a 10,000-level rejected value.
 
 Independent fixtures in `contracts/native-fixtures/schemas.json` are produced by executing the frozen Zod schemas and a separately defined response-widening policy. The corpus contains 60,271 JSON cases and omitted/default probes, with direct source/runtime bindings for all 69 semantic nodes and typed examples for non-JSON boundaries. The integration suite compares both success/failure and normalized output for both modes. Fixture generation, native tests, review artifacts, and live service acceptance remain separate evidence; these offline checks make no live acceptance claim.
+
+## Native multipart and ordered alternatives
+
+`parse_one_of_with_limits` preserves ordered first-match schema behavior with one
+shared preflight, work counter and copied-byte budget across alternatives.
+
+Gateway multipart uses `parse_multipart_with_limits` for the five frozen image,
+audio and file upload objects. Native `BinaryFile` references travel separately
+from JSON metadata. The validator resolves the pinned lazy object contracts,
+validates each actual file against its known Blob slot, checks required fields,
+normalizes all metadata with the source strict-object policy, rejects duplicate
+or colliding file keys, and bounds file bytes and metadata work. Ordinary JSON
+validation continues to reject fabricated Blob objects. The multipart encoder
+adds part/header/envelope limits before authentication. Binary builders offer
+`build` for required-field presence; their owning operation performs complete
+native validation. A JSON-only `build_validated` is intentionally absent from
+these five builders because native files cannot be serialized as JSON.

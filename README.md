@@ -8,11 +8,10 @@ Implementation proceeds through the gated [phases](docs/PHASES.md), following th
 records actual progress and Claude Code reviews. Implementation, independent
 contract verification, and live acceptance are measured separately.
 
-Current state: Phases 1–4 passed Claude Code review at 9/10 and are pushed.
-Phase 5 implements Model Security and Red Team and is undergoing verification
-and review. Full Gateway,
-experimental capabilities, and qualification follow in order. No SDK release is
-available yet.
+Current state: Phases 1–5 passed Claude Code review at 9/10 and are pushed.
+Phase 6 implements Gateway control, telemetry and runtime APIs and is undergoing
+verification. Experimental capabilities, export closure and qualification follow
+in order. No SDK release is available yet.
 
 The [foundation interface](docs/FOUNDATION.md) describes explicit authentication,
 transport injection, cancellation, resource limits, and safe error handling.
@@ -22,7 +21,9 @@ The [model contracts](docs/MODELS.md), [validator](docs/VALIDATION.md), and
 Product guides cover [management](docs/MANAGEMENT.md), [DLP](docs/DLP.md),
 [IAM](docs/IAM.md), [Model Security](docs/MODEL_SECURITY.md),
 [Red Team](docs/RED_TEAM.md), [Red Team resources](docs/RED_TEAM_RESOURCES.md),
-and [pagination and partial collections](docs/PAGINATION.md).
+[Gateway](docs/GATEWAY.md), [Gateway controls](docs/GATEWAY_CONTROL.md),
+[Gateway runtime](docs/GATEWAY_RUNTIME.md), and
+[pagination and partial collections](docs/PAGINATION.md).
 
 ## Development contracts
 

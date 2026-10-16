@@ -712,10 +712,17 @@ async fn all_twenty_two_dashboard_methods_preserve_queries_headers_and_raw_value
     ];
     let time_query = &[("time_interval", "1"), ("time_unit", "day")];
     let window = &[("time_interval", "30"), ("time_unit", "days")];
-    macro_rules! pair{($path:expr,$query:expr,$reply:expr,$typed:expr,$raw:expr)=>{{
-        let expected=$reply;wire.dashboard($path,$query,Some(expected.clone()));let result=$typed.await.unwrap();assert_eq!(serde_json::to_value(result).unwrap(),expected);
-        let opaque=json!({"unrecognized_response":[null,"sensitive fixture"]});wire.dashboard($path,$query,Some(opaque.clone()));assert_eq!($raw.await.unwrap().unwrap().into_value(),opaque);
-    }};}
+    macro_rules! pair {
+        ($path:expr, $query:expr, $reply:expr, $typed:expr, $raw:expr) => {{
+            let expected = $reply;
+            wire.dashboard($path, $query, Some(expected.clone()));
+            let result = $typed.await.unwrap();
+            assert_eq!(serde_json::to_value(result).unwrap(), expected);
+            let opaque = json!({"unrecognized_response":[null,"sensitive fixture"]});
+            wire.dashboard($path, $query, Some(opaque.clone()));
+            assert_eq!($raw.await.unwrap().unwrap().into_value(), opaque);
+        }};
+    }
     pair!(
         "/v1/mgmt/dashboard/v2/apps/application",
         app_query,

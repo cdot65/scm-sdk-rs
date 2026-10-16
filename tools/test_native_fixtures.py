@@ -5,7 +5,7 @@ import pathlib
 import tempfile
 import unittest
 
-from verify_native_fixtures import DIRECTORY, verify
+from verify_native_fixtures import DIRECTORY, REQUIRED, verify
 
 
 class NativeFixtureTests(unittest.TestCase):
@@ -34,7 +34,8 @@ class NativeFixtureTests(unittest.TestCase):
         path.write_text(json.dumps(value) + "\n")
 
     def save(self):
-        self.write(self.destination, self.bundle)
+        for name in REQUIRED:
+            self.write((DIRECTORY / name).as_posix(), self.bundle)
 
     def rejected(self):
         self.save()
@@ -42,7 +43,7 @@ class NativeFixtureTests(unittest.TestCase):
             verify(self.root)
 
     def test_exact_copy_passes(self):
-        self.assertEqual(verify(self.root), {"bundles": 1, "exact_frozen_cases": 1})
+        self.assertEqual(verify(self.root), {"bundles": len(REQUIRED), "exact_frozen_cases": len(REQUIRED)})
 
     def test_case_edits_and_json_type_substitution_rejected(self):
         for key, value in (("enabled", 1), ("count", 1.0), ("count", 2)):
@@ -103,6 +104,47 @@ class NativeFixtureTests(unittest.TestCase):
     def test_nonfinite_json_rejected(self):
         self.bundle["cases"][0]["case"]["body"]["count"] = float("nan")
         self.rejected()
+
+    def bindings(self, wrapper="{}", raw=False):
+        directory = self.root / "crates/scm-sdk/tests"
+        directory.mkdir(parents=True, exist_ok=True)
+        lines = []
+        for name in sorted(REQUIRED):
+            argument = f'r#"../src/fixtures/{name}"#' if raw else f'"../src/fixtures/{name}"'
+            lines.append(wrapper.format(f'const CASES: &str = include_str!({argument});'))
+        (directory / "fixture_tests.rs").write_text("\n".join(lines))
+
+    def test_literal_test_bindings_pass(self):
+        for raw in (False, True):
+            self.bindings(raw=raw)
+            self.assertEqual(verify(self.root, require_test_bindings=True)["test_bound_bundles"],
+                             len(REQUIRED))
+
+    def test_orphaned_bundle_rejected(self):
+        with self.assertRaisesRegex(ValueError, "no literal Rust test binding"):
+            verify(self.root, require_test_bindings=True)
+
+    def test_commented_or_quoted_bindings_do_not_count(self):
+        for wrapper in ("// {}", "/* outer /* nested */ {} */", 'const TEXT: &str = r###"{}"###;'):
+            self.bindings(wrapper)
+            with self.assertRaisesRegex(ValueError, "no literal Rust test binding"):
+                verify(self.root, require_test_bindings=True)
+
+    def test_unknown_bundle_binding_rejected(self):
+        self.bindings()
+        self.write((DIRECTORY / "unknown-contracts.json").as_posix(), self.bundle)
+        # This new bundle also needs its own literal binding.
+        with self.assertRaisesRegex(ValueError, "no literal Rust test binding"):
+            verify(self.root, require_test_bindings=True)
+
+    def test_symlinked_test_source_rejected(self):
+        self.bindings()
+        path = self.root / "crates/scm-sdk/tests/fixture_tests.rs"
+        replacement = self.root / "fixture-source.rs"
+        path.rename(replacement)
+        path.symlink_to(replacement)
+        with self.assertRaisesRegex(ValueError, "must not follow symlinks"):
+            verify(self.root, require_test_bindings=True)
 
 
 if __name__ == "__main__":

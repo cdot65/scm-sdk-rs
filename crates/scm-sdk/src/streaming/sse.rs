@@ -33,6 +33,7 @@ pub struct SseEvent {
     id: Option<String>,
     retry: Option<Duration>,
     status: u16,
+    request_id: Option<String>,
     operation: &'static str,
 }
 
@@ -65,7 +66,7 @@ impl SseEvent {
 
     fn error(&self, kind: ErrorKind) -> Error {
         Error::new(kind)
-            .with_status(self.status)
+            .with_response_metadata(self.status, self.request_id.clone())
             .with_operation(self.operation)
             .with_outcome(RemoteOutcome::Unknown)
     }
@@ -124,7 +125,10 @@ impl SseStream {
     ) -> Result<Self> {
         let fail = |kind| {
             Error::new(kind)
-                .with_status(response.status().as_u16())
+                .with_response_metadata(
+                    response.status().as_u16(),
+                    response.request_id().map(str::to_owned),
+                )
                 .with_operation(response.operation)
                 .with_outcome(RemoteOutcome::Unknown)
         };
@@ -192,13 +196,19 @@ impl SseStream {
 
     fn error(&self, kind: ErrorKind) -> Error {
         Error::new(kind)
-            .with_status(self.response.status().as_u16())
+            .with_response_metadata(
+                self.response.status().as_u16(),
+                self.response.request_id().map(str::to_owned),
+            )
             .with_operation(self.response.operation)
             .with_outcome(RemoteOutcome::Unknown)
     }
     fn fail(&mut self, error: Error) -> Error {
         let error = error
-            .with_status(self.response.status().as_u16())
+            .with_response_metadata(
+                self.response.status().as_u16(),
+                self.response.request_id().map(str::to_owned),
+            )
             .with_outcome(RemoteOutcome::Unknown);
         self.close();
         self.failure = Some(error.clone());
@@ -356,6 +366,7 @@ impl SseStream {
                 id: self.last_id.clone(),
                 retry: self.retry,
                 status: self.response.status().as_u16(),
+                request_id: self.response.request_id().map(str::to_owned),
                 operation: self.response.operation,
             }));
         }

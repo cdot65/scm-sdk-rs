@@ -1,0 +1,1335 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.create",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayConfigsClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayConfigsClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.get",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayConfigsClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.list",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayConfigsClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.listVersions",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayConfigsClient",
+      "methods": [
+        "list_versions"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.update",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayConfigsClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.create",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayDeploymentsClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayDeploymentsClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.get",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayDeploymentsClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.list",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayDeploymentsClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.ping",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayDeploymentsClient",
+      "methods": [
+        "ping"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.update",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayDeploymentsClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.cancel",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayLogExportsClient",
+      "methods": [
+        "cancel"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.create",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayLogExportsClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.download",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayLogExportsClient",
+      "methods": [
+        "download"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.get",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayLogExportsClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.list",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayLogExportsClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.start",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayLogExportsClient",
+      "methods": [
+        "start"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.update",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayLogExportsClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.getAuthSettings",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayOrganisationsClient",
+      "methods": [
+        "get_auth_settings"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.getInfo",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayOrganisationsClient",
+      "methods": [
+        "get_info"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.getSelf",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayOrganisationsClient",
+      "methods": [
+        "get_self"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.updateAuthSettings",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayOrganisationsClient",
+      "methods": [
+        "update_auth_settings"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.updateSelf",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayOrganisationsClient",
+      "methods": [
+        "update_self"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.create",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayProvidersClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.delete",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayProvidersClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.get",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayProvidersClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.list",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayProvidersClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.update",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayProvidersClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.create",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayRateLimitsClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayRateLimitsClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.get",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayRateLimitsClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.list",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayRateLimitsClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.update",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayRateLimitsClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.byStatusCode",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "by_status_code"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.byUser",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "by_user"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.cacheHitTrend",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "cache_hit_trend"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.cacheSummary",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "cache_summary"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.cost",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "cost"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.errorCategoryTrends",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "error_category_trends"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.errorTrends",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "error_trends"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.errors",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "errors"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackModels",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "feedback_models"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackScoreDistribution",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "feedback_score_distribution"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackTrend",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "feedback_trend"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackWeighted",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "feedback_weighted"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.filterBoundaries",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "filter_boundaries"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.groupBy",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "group_by"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.groupedErrors",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "grouped_errors"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.latency",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "latency"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.logs",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "logs"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.requests",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "requests"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.rescuedRetries",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "rescued_retries"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.tokens",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "tokens"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.userTrends",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "user_trends"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.users",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayTelemetryClient",
+      "methods": [
+        "users"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order",
+        "crates/scm-sdk/tests/gateway_contracts.rs::telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "NativeDate replaces JavaScript Date. Explicit UTC +00:00 is the default, with caller-supplied offset_minutes instead of ambient host timezone. Windows/filters are composed typed values; generated standalone filter schemas retain source validation. Metadata object keys serialize deterministically; cost units and query dialect remain unchanged."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.create",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayWorkspacesClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::explicit_workspace_planes_and_archived_state_never_infer_permission_fallback"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "Reads choose data/admin explicitly; writes remain admin-only. Provisioning/recovery is explicitly scheduled in Phase7 and is not counted as a Phase6 implementation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.delete",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayWorkspacesClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::explicit_workspace_planes_and_archived_state_never_infer_permission_fallback"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "Reads choose data/admin explicitly; writes remain admin-only. Provisioning/recovery is explicitly scheduled in Phase7 and is not counted as a Phase6 implementation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.get",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayWorkspacesClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::explicit_workspace_planes_and_archived_state_never_infer_permission_fallback"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "Reads choose data/admin explicitly; writes remain admin-only. Provisioning/recovery is explicitly scheduled in Phase7 and is not counted as a Phase6 implementation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.list",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayWorkspacesClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::explicit_workspace_planes_and_archived_state_never_infer_permission_fallback"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "Reads choose data/admin explicitly; writes remain admin-only. Provisioning/recovery is explicitly scheduled in Phase7 and is not counted as a Phase6 implementation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.update",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayWorkspacesClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_contracts.rs::all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens",
+        "crates/scm-sdk/tests/gateway_contracts.rs::every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity",
+        "crates/scm-sdk/tests/gateway_contracts.rs::explicit_workspace_planes_and_archived_state_never_infer_permission_fallback"
+      ],
+      "deliberateDifferences": [
+        "Explicit Client/AuthContext/endpoints replace implicit environment/global transports; SCM Gateway requires OAuth plus immutable x-tsg-id and shares admitted destination policy, session and limiter.",
+        "RequestOptions preserves one absolute budget; bounded safe reads alone retry, while every write remains single-dispatch with explicit unknown remote outcomes.",
+        "Native source identifier grammars and URL/query bounds reject invalid or excessive inputs before credentials; response fields and unfamiliar enum vocabulary are preserved.",
+        "Reads choose data/admin explicitly; writes remain admin-only. Provisioning/recovery is explicitly scheduled in Phase7 and is not counted as a Phase6 implementation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

@@ -1,0 +1,1528 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.getMcpServers",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "get_mcp_servers"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.syncMcpServers",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "sync_mcp_servers"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.update",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.upsertMcpServer",
+      "feature": "gateway",
+      "namespace": "airs.gateway.admin_guardrails",
+      "methods": [
+        "upsert_mcp_server"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.createService",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "create_service"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.createUser",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "create_user"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.deleteService",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "delete_service"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.deleteUser",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "delete_user"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.getService",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "get_service"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.getUser",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "get_user"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.listService",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "list_service"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.listUser",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "list_user"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.rotateService",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "rotate_service"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.rotateUser",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "rotate_user"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.updateService",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "update_service"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.updateUser",
+      "feature": "gateway",
+      "namespace": "airs.gateway.api_keys",
+      "methods": [
+        "update_user"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/audit-logs-client.ts:AIGatewayAuditLogsClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.audit_logs",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/audit_logs.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::audit_dates_use_exact_js_utc_milliseconds_and_full_range_without_redacting_data",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.getCatalog",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "get_catalog"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.getMcpServers",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "get_mcp_servers"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.syncMcpServers",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "sync_mcp_servers"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.update",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.upsertMcpServer",
+      "feature": "gateway",
+      "namespace": "airs.gateway.guardrails",
+      "methods": [
+        "upsert_mcp_server"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.catalog",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "catalog"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.deleteModels",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "delete_models"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.getModels",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "get_models"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.getWorkspaces",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "get_workspaces"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.resolveProviderId",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "resolve_provider_id"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::provider_resolution_selects_first_match_and_unknown_errors_omit_input_values",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "Unknown provider errors omit input/provider values; reference processing has an explicit allocation bound."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.setModels",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "set_models"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.setWorkspaces",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "set_workspaces"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.update",
+      "feature": "gateway",
+      "namespace": "airs.gateway.integrations",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.getCapabilities",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "get_capabilities"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.getMetadata",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "get_metadata"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.getWorkspaces",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "get_workspaces"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::empty_optional_successes_required_structures_and_workspace_union_errors_are_distinct",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.setCapabilities",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "set_capabilities"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.setWorkspaces",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "set_workspaces"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.update",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_integrations",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.delete",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.deleteConnections",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "delete_connections"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.getCapabilities",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "get_capabilities"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.getConnections",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "get_connections"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.getUserAccess",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "get_user_access"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.test",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "test"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.update",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.updateCapabilities",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "update_capabilities"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.updateUserAccess",
+      "feature": "gateway",
+      "namespace": "airs.gateway.mcp_servers",
+      "methods": [
+        "update_user_access"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/model-pricing-client.ts:AIGatewayModelPricingClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.model_pricing",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/model_pricing.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_preserves_unevaluated_recursive_prices_and_exact_segments",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_defaults_to_zero_retries_and_explicit_overrides_remain_bounded",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_never_follows_redirects_and_honors_deadline_and_cancellation",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::empty_optional_successes_required_structures_and_workspace_union_errors_are_distinct",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "Explicit credential-free Client owns endpoint/transport/TLS/policy; the default 60s bounds the whole operation instead of resetting per attempt, retries default to zero, and native deadlines cap at 24h instead of the Node timer maximum."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/plugins-client.ts:AIGatewayPluginsClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.plugins",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/plugins.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::both_plugin_methods_preserve_secret_bodies_without_debug_disclosure",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/plugins-client.ts:AIGatewayPluginsClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.plugins",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/plugins.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::both_plugin_methods_preserve_secret_bodies_without_debug_disclosure",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.secret_references",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.delete",
+      "feature": "gateway",
+      "namespace": "airs.gateway.secret_references",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.secret_references",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.secret_references",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.update",
+      "feature": "gateway",
+      "namespace": "airs.gateway.secret_references",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.create",
+      "feature": "gateway",
+      "namespace": "airs.gateway.usage_limits",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.delete",
+      "feature": "gateway",
+      "namespace": "airs.gateway.usage_limits",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.get",
+      "feature": "gateway",
+      "namespace": "airs.gateway.usage_limits",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.list",
+      "feature": "gateway",
+      "namespace": "airs.gateway.usage_limits",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.listEntities",
+      "feature": "gateway",
+      "namespace": "airs.gateway.usage_limits",
+      "methods": [
+        "list_entities"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.resetEntity",
+      "feature": "gateway",
+      "namespace": "airs.gateway.usage_limits",
+      "methods": [
+        "reset_entity"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.update",
+      "feature": "gateway",
+      "namespace": "airs.gateway.usage_limits",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+      ],
+      "deliberateDifferences": [
+        "No mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

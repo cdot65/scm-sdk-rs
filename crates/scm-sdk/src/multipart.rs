@@ -35,14 +35,14 @@ impl Multipart {
             reserved: 30,
         })
     }
-    #[cfg(test)]
-    fn text(&mut self, name: &str, value: &str) -> Result<()> {
+    #[cfg(any(feature = "gateway", test))]
+    pub(crate) fn text(&mut self, name: &str, value: &str) -> Result<()> {
         if value.len() > self.max_bytes {
             return Err(Error::new(ErrorKind::Limit));
         }
         self.part(name, None, None, Bytes::copy_from_slice(value.as_bytes()))
     }
-    #[cfg(any(feature = "dlp", test))]
+    #[cfg(any(feature = "dlp", feature = "gateway", test))]
     pub(crate) fn file(&mut self, name: &str, file: &crate::models::BinaryFile) -> Result<()> {
         file.validate(self.max_bytes)?;
         self.part(
@@ -162,7 +162,15 @@ mod tests {
         let boundary = content_type
             .strip_prefix("multipart/form-data; boundary=")
             .unwrap();
-        let mut expected=format!("--{boundary}\r\nContent-Disposition: form-data; name=\"name\"\r\n\r\nprivate\r\n--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"file.bin\"\r\nContent-Type: application/octet-stream\r\n\r\n").into_bytes();
+        let mut expected = format!(
+            concat!(
+                "--{}\r\nContent-Disposition: form-data; name=\"name\"\r\n\r\nprivate\r\n",
+                "--{}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"file.bin\"\r\n",
+                "Content-Type: application/octet-stream\r\n\r\n",
+            ),
+            boundary, boundary
+        )
+        .into_bytes();
         expected.extend_from_slice(&[0, 255, 10]);
         expected.extend_from_slice(format!("\r\n--{boundary}--\r\n").as_bytes());
         assert_eq!(body.as_ref(), expected);

@@ -264,9 +264,28 @@ fn check_form(
             .windows(boundary.len())
             .any(|bytes| bytes == boundary.as_bytes())
     );
-    let mut expected=format!("--{boundary}\r\nContent-Disposition: form-data; name=\"json\"; filename=\"metadata.json\"\r\nContent-Type: application/json\r\n\r\n").into_bytes();
+    let mut expected = format!(
+        concat!(
+            "--{boundary}\r\n",
+            "Content-Disposition: form-data; name=\"json\"; filename=\"metadata.json\"\r\n",
+            "Content-Type: application/json\r\n\r\n"
+        ),
+        boundary = boundary
+    )
+    .into_bytes();
     expected.extend(serde_json::to_vec(metadata).unwrap());
-    expected.extend(format!("\r\n--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"pii.txt\"\r\nContent-Type: {mime}\r\n\r\n").as_bytes());
+    expected.extend(
+        format!(
+            concat!(
+                "\r\n--{boundary}\r\n",
+                "Content-Disposition: form-data; name=\"file\"; filename=\"pii.txt\"\r\n",
+                "Content-Type: {mime}\r\n\r\n"
+            ),
+            boundary = boundary,
+            mime = mime
+        )
+        .as_bytes(),
+    );
     expected.extend_from_slice(file);
     expected.extend(format!("\r\n--{boundary}--\r\n").as_bytes());
     assert_eq!(request.body().as_ref(), expected);

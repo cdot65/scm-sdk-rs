@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "sourceSha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
-  "generatorSha256": "32e8708e9c2495816fdbf3b322c92ccaf85b891b0c164e77207c71cb78df9021",
+  "generatorSha256": "9cf60d54cbfc15cee554ece76b1e75a83c4ec2464ab999b9a9f4bb04a97c0215",
   "partialFamily": null,
   "structuralChecks": {
     "stringChecks": [
@@ -14654,9 +14654,13 @@
         "$ref": "t000547"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayAuditLogListOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayChartFilters",
@@ -14676,9 +14680,13 @@
         "$ref": "t000564"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayChartOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayClientOptions",
@@ -14687,9 +14695,16 @@
         "$ref": "t002483"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint",
+        "crate::airs::gateway::AIGatewayClient",
+        "crate::airs::gateway::RuntimeClient"
+      ],
+      "reason": "AIGatewayClient::new(Client, admin Endpoint, IAM Endpoint) selects admitted OAuth planes; with_runtime accepts a separately configured runtime-key client without reusing control credentials"
     },
     {
       "export": "AIGatewayGroupOptions",
@@ -14698,9 +14713,13 @@
         "$ref": "t002243"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayGroupOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayInferenceClientOptions",
@@ -14709,9 +14728,17 @@
         "$ref": "t002485"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::RuntimeClient",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint",
+        "crate::Limits",
+        "crate::GatewayRouting",
+        "crate::RuntimeReplay"
+      ],
+      "reason": "RuntimeClient::new requires a separately configured runtime API-key Client; explicit endpoint, bounded response/event limits, immutable routing and explicit billable replay replace ambient environment/default client options"
     },
     {
       "export": "AIGatewayLogsOptions",
@@ -14720,9 +14747,13 @@
         "$ref": "t002368"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayLogsOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayModelPricingClientOptions",
@@ -14731,9 +14762,15 @@
         "$ref": "t002520"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayModelPricingClientOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint",
+        "crate::RequestOptions"
+      ],
+      "reason": "Credential-free public pricing Client plus explicit timeout and safe-read retry configuration; per-call deadline/cancellation/retry selection uses RequestOptions"
     },
     {
       "export": "AIGatewayPlane",
@@ -14742,9 +14779,13 @@
         "$ref": "t002523"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayPlane",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayRequestChartOptions",
@@ -14753,9 +14794,13 @@
         "$ref": "t002378"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayRequestChartOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewaySecretOperation",
@@ -14765,8 +14810,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "AIGatewaySubClientOptions",
@@ -14775,9 +14820,14 @@
         "$ref": "t000470"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint"
+      ],
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallbacks; Gateway leaf constructors retain the shared provider, policy, transport, session, limits and tenant scope"
     },
     {
       "export": "AIGatewayTelemetryClientOptions",
@@ -14786,9 +14836,14 @@
         "$ref": "t002546"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint"
+      ],
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallbacks; Gateway leaf constructors retain the shared provider, policy, transport, session, limits and tenant scope"
     },
     {
       "export": "AIGatewayWindowOptions",
@@ -14797,9 +14852,13 @@
         "$ref": "t002263"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayWindowOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayWorkspaceGetOptions",
@@ -14808,9 +14867,13 @@
         "$ref": "t002457"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayWorkspaceGetOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayWorkspaceListOptions",
@@ -14819,9 +14882,13 @@
         "$ref": "t002468"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayWorkspaceListOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AIGatewayWorkspaceProvisionOptions",
@@ -14841,9 +14908,15 @@
         "$ref": "t002547"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint",
+        "crate::airs::gateway::AIGatewayWorkspacesClient"
+      ],
+      "reason": "AIGatewayWorkspacesClient::new(Client, admin Endpoint) selects explicit admitted data/admin planes; multi-step IAM provisioning remains a separate Phase 7 method obligation"
     },
     {
       "export": "AIGatewayWorkspaceScopedListOptions",
@@ -14852,9 +14925,13 @@
         "$ref": "t000521"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayWorkspaceScopedListOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions"
     },
     {
       "export": "AISecSDKExceptionMetadata",
@@ -14997,8 +15074,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "CustomRuleListOptions",
@@ -15385,9 +15462,14 @@
         "$ref": "t000735"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::GatewayRouting",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions",
+        "crate::RuntimeReplay"
+      ],
+      "reason": "RuntimeClient::with_routing applies validated routing/OpenAI version headers without auth overrides; with_replay requires explicit bounded billable replay acknowledgement; RequestOptions retains total deadline/cancellation, not per-attempt timeouts"
     },
     {
       "export": "GatewayModelPricingRequestOptions",
@@ -15396,9 +15478,10 @@
         "$ref": "t002491"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::RequestOptions",
+      "nativeFeature": "gateway",
+      "reason": "Public pricing get(provider, model, options) uses native per-call total deadline, cancellation and bounded safe-read retry selection"
     },
     {
       "export": "GatewayRealtimeConnection",
@@ -15430,8 +15513,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "GatewaySecretFieldRule",
@@ -15463,8 +15546,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "GatewayStream",
@@ -16448,105 +16531,6 @@
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
-      "export": "AIGatewayAuditLogListOptions",
-      "source": "src/ai-gateway/audit-logs-client.ts",
-      "sourceType": {
-        "$ref": "t000547"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayChartOptions",
-      "source": "src/ai-gateway/telemetry-client.ts",
-      "sourceType": {
-        "$ref": "t000564"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayClientOptions",
-      "source": "src/ai-gateway/client.ts",
-      "sourceType": {
-        "$ref": "t002483"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayGroupOptions",
-      "source": "src/ai-gateway/telemetry-client.ts",
-      "sourceType": {
-        "$ref": "t002243"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayInferenceClientOptions",
-      "source": "src/ai-gateway/inference-client.ts",
-      "sourceType": {
-        "$ref": "t002485"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayLogsOptions",
-      "source": "src/ai-gateway/telemetry-client.ts",
-      "sourceType": {
-        "$ref": "t002368"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayModelPricingClientOptions",
-      "source": "src/ai-gateway/model-pricing-client.ts",
-      "sourceType": {
-        "$ref": "t002520"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayPlane",
-      "source": "src/ai-gateway/types.ts",
-      "sourceType": {
-        "$ref": "t002523"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayRequestChartOptions",
-      "source": "src/ai-gateway/telemetry-client.ts",
-      "sourceType": {
-        "$ref": "t002378"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
       "export": "AIGatewaySecretOperation",
       "source": "src/ai-gateway/secret-fields.ts",
       "sourceType": {
@@ -16554,63 +16538,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewaySubClientOptions",
-      "source": "src/ai-gateway/types.ts",
-      "sourceType": {
-        "$ref": "t000470"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayTelemetryClientOptions",
-      "source": "src/ai-gateway/telemetry-client.ts",
-      "sourceType": {
-        "$ref": "t002546"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayWindowOptions",
-      "source": "src/ai-gateway/window.ts",
-      "sourceType": {
-        "$ref": "t002263"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayWorkspaceGetOptions",
-      "source": "src/ai-gateway/types.ts",
-      "sourceType": {
-        "$ref": "t002457"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayWorkspaceListOptions",
-      "source": "src/ai-gateway/types.ts",
-      "sourceType": {
-        "$ref": "t002468"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "AIGatewayWorkspaceProvisionOptions",
@@ -16621,28 +16550,6 @@
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
       "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayWorkspacesClientOptions",
-      "source": "src/ai-gateway/types.ts",
-      "sourceType": {
-        "$ref": "t002547"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewayWorkspaceScopedListOptions",
-      "source": "src/ai-gateway/types.ts",
-      "sourceType": {
-        "$ref": "t000521"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
@@ -16708,8 +16615,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "DashboardApplicationsOverviewQuery",
@@ -16822,28 +16729,6 @@
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
-      "export": "GatewayInferenceRequestOptions",
-      "source": "src/ai-gateway/inference-client.ts",
-      "sourceType": {
-        "$ref": "t000735"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "GatewayModelPricingRequestOptions",
-      "source": "src/ai-gateway/model-pricing-client.ts",
-      "sourceType": {
-        "$ref": "t002491"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
       "export": "GatewayRealtimeConnection",
       "source": "src/http/realtime.ts",
       "sourceType": {
@@ -16873,8 +16758,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "GatewaySecretPathSegment",
@@ -16884,8 +16769,8 @@
       },
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
-      "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "owningPhase": 7,
+      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
     },
     {
       "export": "GatewayStream",

@@ -7,7 +7,6 @@ use crate::{
     pagination::{CollectOptions, CollectionResult, Items, Pages},
 };
 use http::Method;
-use std::fmt;
 const SET_PATH: &str = "/v1/custom-attack/custom-prompt-set";
 
 #[derive(Clone, Default)]
@@ -21,11 +20,7 @@ pub struct PromptSetListOptions {
     pub active: Option<bool>,
     pub archive: Option<bool>,
 }
-impl fmt::Debug for PromptSetListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("PromptSetListOptions([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(PromptSetListOptions);
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct PromptListOptions {
@@ -35,11 +30,7 @@ pub struct PromptListOptions {
     pub status: Option<String>,
     pub active: Option<bool>,
 }
-impl fmt::Debug for PromptListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("PromptListOptions([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(PromptListOptions);
 #[derive(Clone, Debug)]
 pub struct RedTeamCustomAttacksClient {
     pub(super) client: Client,

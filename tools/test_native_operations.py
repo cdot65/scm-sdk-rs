@@ -9,6 +9,22 @@ import native_operations as ledger
 
 
 class NativeOperationLedgerTests(unittest.TestCase):
+    def test_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven(self):
+        rows = {row["baselineId"]: row for row in ledger.generate()["operations"]}
+        gateway = [row for row in rows.values() if row["family"] == "ai-gateway"]
+        self.assertEqual(len(gateway), 196)
+        self.assertEqual(sum(row["owningPhase"] == 6 for row in gateway), 194)
+        self.assertEqual({row["baselineId"] for row in gateway if row["owningPhase"] == 7},
+                         set(ledger.OWNERSHIP_OVERRIDES))
+        self.assertTrue(all(row["reason"] for row in ledger.OWNERSHIP_OVERRIDES.values()))
+
+    def test_invented_or_unexplained_ownership_overrides_are_rejected(self):
+        for overrides in ({"invented": {"phase": 7, "reason": "x"}},
+                          {next(iter(ledger.OWNERSHIP_OVERRIDES)): {"phase": 7, "reason": ""}}):
+            with mock.patch.object(ledger, "OWNERSHIP_OVERRIDES", overrides):
+                with self.assertRaisesRegex(ValueError, "ownership override"):
+                    ledger.generate()
+
     def test_every_frozen_operation_is_accounted_for_without_baseline_mutation(self):
         before = ledger.SOURCE.read_bytes()
         result = ledger.generate()

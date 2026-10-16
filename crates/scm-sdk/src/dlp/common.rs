@@ -3,7 +3,6 @@ use crate::{
     data::{FiniteNumber, Optional},
     pagination::Page,
 };
-use std::fmt;
 
 const MAX_SAFE_INTEGER: u64 = 9_007_199_254_740_991;
 
@@ -32,11 +31,7 @@ impl SpringListParams {
         self
     }
 }
-impl fmt::Debug for SpringListParams {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("SpringListParams([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(SpringListParams);
 pub type DataPatternListParams = SpringListParams;
 pub type DataProfileListParams = SpringListParams;
 
@@ -48,11 +43,7 @@ pub struct DictionaryListParams {
     pub sort: Vec<String>,
     pub keywords: Option<bool>,
 }
-impl fmt::Debug for DictionaryListParams {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("DictionaryListParams([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(DictionaryListParams);
 
 /// Request-only lifecycle filter. It cannot express an unfamiliar server status.
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -69,11 +60,7 @@ impl FilteringStatus {
         }
     }
 }
-impl fmt::Debug for FilteringStatus {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("FilteringStatus([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(FilteringStatus);
 
 #[derive(Clone, Default)]
 #[non_exhaustive]
@@ -84,11 +71,7 @@ pub struct DataFilteringProfileListParams {
     pub status: Option<FilteringStatus>,
     pub name: Option<String>,
 }
-impl fmt::Debug for DataFilteringProfileListParams {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("DataFilteringProfileListParams([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(DataFilteringProfileListParams);
 
 pub(super) fn query(
     page: Option<u64>,

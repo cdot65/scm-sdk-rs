@@ -7,7 +7,6 @@ use super::{
 };
 use crate::{Client, Error, ErrorKind, RawRequest, RequestOptions, Result};
 use http::Method;
-use std::fmt;
 const PATH: &str = "/v1/channels";
 
 #[derive(Clone, Default)]
@@ -20,11 +19,7 @@ pub struct ChannelListOptions {
     pub status: Vec<String>,
     pub include_all_if_empty: Option<bool>,
 }
-impl fmt::Debug for ChannelListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("ChannelListOptions([REDACTED])")
-    }
-}
+crate::redaction::redacted_debug!(ChannelListOptions);
 #[derive(Clone, Debug)]
 pub struct RedTeamNetworkBrokerClient {
     pub(super) client: Client,

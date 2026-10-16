@@ -219,15 +219,24 @@ Return the requested structured review with score, summary, findings, evidence, 
 """
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.with_suffix(".prompt.md").write_text(prompt)
-    result = subprocess.run(
-        ["claude", "-p", "--restricted", "--permission-mode", "plan", "--tools", "Read,Glob,Grep",
-         "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
-         "--max-budget-usd", "25", "--output-format", "json", "--json-schema", json.dumps(SCHEMA)],
-        cwd=root, input=prompt, text=True, capture_output=True, timeout=900,
-    )
     local = root / ".local/reviews"
     local.mkdir(parents=True, exist_ok=True, mode=0o700)
-    (local / f"phase-{args.phase:02d}-attempt-{args.attempt:02d}.json").write_text(result.stdout)
+    def diagnostics(stdout, stderr):
+        for suffix, output in (("json", stdout), ("stderr.txt", stderr)):
+            path = local / f"phase-{args.phase:02d}-attempt-{args.attempt:02d}.{suffix}"
+            path.write_bytes(output if isinstance(output, bytes) else (output or "").encode())
+            path.chmod(0o600)
+    try:
+        result = subprocess.run(
+            ["claude", "-p", "--restricted", "--permission-mode", "plan", "--tools", "Read,Glob,Grep",
+             "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
+             "--max-budget-usd", "25", "--output-format", "json", "--json-schema", json.dumps(SCHEMA)],
+            cwd=root, input=prompt, text=True, capture_output=True, timeout=1800,
+        )
+    except subprocess.TimeoutExpired as error:
+        diagnostics(error.stdout, error.stderr)
+        raise RuntimeError("Claude Code review timed out; prompt and private diagnostics preserved") from None
+    diagnostics(result.stdout, result.stderr)
     if result.returncode:
         raise RuntimeError(f"Claude Code exited {result.returncode}; see local review output")
     envelope = json.loads(result.stdout)

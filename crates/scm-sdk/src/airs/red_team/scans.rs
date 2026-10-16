@@ -5,7 +5,6 @@ use crate::{
     pagination::{CollectOptions, CollectionResult, Items, Pages},
 };
 use http::Method;
-use std::fmt;
 
 #[derive(Clone, Default)]
 #[non_exhaustive]
@@ -17,11 +16,7 @@ pub struct RedTeamScanListOptions {
     pub job_type: Option<String>,
     pub target_id: Option<String>,
 }
-impl fmt::Debug for RedTeamScanListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("RedTeamScanListOptions([REDACTED])")
-    }
-}
+
 impl From<RedTeamListOptions> for RedTeamScanListOptions {
     fn from(value: RedTeamListOptions) -> Self {
         Self {
@@ -171,3 +166,5 @@ impl RedTeamScansClient {
             .await
     }
 }
+
+crate::redaction::redacted_debug!(RedTeamScanListOptions);

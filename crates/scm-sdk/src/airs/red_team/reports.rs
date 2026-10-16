@@ -1,7 +1,6 @@
 use super::{RedTeamListOptions, common, models::*};
 use crate::{Client, RawRequest, RequestOptions, Result, data::JsonValue, engine::AuthKind};
 use http::Method;
-use std::fmt;
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct AttackListOptions {
@@ -18,11 +17,7 @@ pub struct AttackListOptions {
     pub attack_type: Option<String>,
     pub threat: Option<bool>,
 }
-impl fmt::Debug for AttackListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("AttackListOptions([REDACTED])")
-    }
-}
+
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct GoalListOptions {
@@ -34,11 +29,7 @@ pub struct GoalListOptions {
     pub status: Option<String>,
     pub count: Option<bool>,
 }
-impl fmt::Debug for GoalListOptions {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("GoalListOptions([REDACTED])")
-    }
-}
+
 #[derive(Clone, Debug)]
 pub struct RedTeamReportsClient {
     pub(super) client: Client,
@@ -334,3 +325,5 @@ impl RedTeamReportsClient {
             .await
     }
 }
+
+crate::redaction::redacted_debug!(AttackListOptions, GoalListOptions);

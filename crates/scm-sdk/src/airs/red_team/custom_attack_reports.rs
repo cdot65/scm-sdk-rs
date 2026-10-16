@@ -1,6 +1,5 @@
 use super::{common, models::*};
 use crate::{Client, RawRequest, RequestOptions, Result, engine::AuthKind};
-use std::fmt;
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct PromptsBySetListOptions {
@@ -29,8 +28,7 @@ pub struct CustomAttacksReportListOptions {
     pub prompt_set_id: Option<String>,
     pub property_value: Option<String>,
 }
-macro_rules! redacted_debug {($($ty:ty),+)=>{$(impl fmt::Debug for $ty{fn fmt(&self,f:&mut fmt::Formatter<'_>)->fmt::Result{f.write_str(concat!(stringify!($ty),"([REDACTED])"))}})+};}
-redacted_debug!(
+crate::redaction::redacted_debug!(
     PromptsBySetListOptions,
     PromptSetsReportOptions,
     CustomAttacksReportListOptions

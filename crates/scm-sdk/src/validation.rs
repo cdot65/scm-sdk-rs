@@ -140,6 +140,149 @@ pub fn parse_with_limits(
 ) -> Result<Value> {
     parse_optional_with_limits(schema, Some(input), mode, limits)?.ok_or_else(invalid)
 }
+
+/// Ordered alternatives share one preflight, work counter and allocation budget.
+/// The first matching schema wins, including overlapping optional object shapes.
+pub fn parse_one_of_with_limits(
+    schemas: &[&str],
+    input: Value,
+    mode: Mode,
+    limits: &ValidationLimits,
+) -> Result<Value> {
+    if let Err(error) = limits.validate().and_then(|()| preflight(&input, limits)) {
+        discard(input);
+        return Err(error);
+    }
+    if schemas.is_empty() || schemas.len() > 64 {
+        return Err(invalid());
+    }
+    let registry = registry()?;
+    let mut context = Context {
+        registry,
+        limits,
+        mode,
+        work: 0,
+        copied: 0,
+    };
+    for schema in schemas {
+        let schema = sid(registry, schema)?;
+        match context.walk(schema, Some(&input), 0) {
+            Ok(Some(value)) => return Ok(value),
+            Err(error) if error.kind() == ErrorKind::Limit => return Err(error),
+            _ => {}
+        }
+    }
+    Err(invalid())
+}
+
+/// Validate the five frozen multipart objects with actual native files in a
+/// separate typed channel. JSON cannot manufacture file values. The returned
+/// normalized metadata excludes binary fields; the encoder retains their bytes.
+#[cfg(feature = "gateway")]
+pub fn parse_multipart_with_limits(
+    schema: &str,
+    metadata: Value,
+    binaries: &[(&str, &BinaryPart)],
+    limits: &ValidationLimits,
+    max_file_bytes: usize,
+) -> Result<Value> {
+    if let Err(error) = limits
+        .validate()
+        .and_then(|()| preflight(&metadata, limits))
+    {
+        discard(metadata);
+        return Err(error);
+    }
+    if max_file_bytes == 0 || max_file_bytes > 512 * 1024 * 1024 {
+        return Err(Error::new(ErrorKind::Configuration));
+    }
+    if binaries.len() > 6 {
+        return Err(limit());
+    }
+    let registry = registry()?;
+    let schema = sid(registry, schema)?;
+    if !matches!(
+        schema,
+        "s004590" | "s004620" | "s004771" | "s004833" | "s004894"
+    ) {
+        return Err(invalid());
+    }
+    let mut schema = schema;
+    let mut node = registry.graph.nodes.get(schema).ok_or_else(invalid)?;
+    for _ in 0..MAX_DEPTH {
+        if node["kind"] != "ZodLazy" {
+            break;
+        }
+        schema = child(node, "target")?;
+        node = registry.graph.nodes.get(schema).ok_or_else(invalid)?;
+    }
+    if node["kind"] != "ZodObject" {
+        return Err(invalid());
+    }
+    let properties = node
+        .get("properties")
+        .and_then(Value::as_object)
+        .ok_or_else(invalid)?;
+    let values = metadata.as_object().ok_or_else(invalid)?;
+    let mut total = 0usize;
+    for (index, (name, file)) in binaries.iter().enumerate() {
+        if values.contains_key(*name) || binaries[..index].iter().any(|(old, _)| old == name) {
+            return Err(invalid());
+        }
+        let property = properties.get(*name).ok_or_else(invalid)?;
+        boundary(child(property, "schema")?, "native_binary")?;
+        file.validate(max_file_bytes)?;
+        total = total.checked_add(file.bytes().len()).ok_or_else(limit)?;
+        if total > max_file_bytes {
+            return Err(limit());
+        }
+    }
+    let mut context = Context {
+        registry,
+        limits,
+        mode: Mode::Request,
+        work: 0,
+        copied: 0,
+    };
+    context.tick(0)?;
+    let mut result = Map::new();
+    for (key, property) in properties {
+        let child_schema = child(property, "schema")?;
+        if binaries.iter().any(|(name, _)| *name == key) {
+            context.tick(1)?;
+            continue;
+        }
+        if let Some(value) = context.walk(child_schema, values.get(key), 1)? {
+            result.insert(context.copy_text(key)?, value);
+        }
+    }
+    let catchall = child(node, "catchall")?;
+    let catchall_never = registry
+        .graph
+        .nodes
+        .get(catchall)
+        .is_some_and(|node| node["kind"] == "ZodNever");
+    for (key, value) in values {
+        if properties.contains_key(key) {
+            continue;
+        }
+        let value = if !catchall_never {
+            context
+                .walk(catchall, Some(value), 1)?
+                .ok_or_else(invalid)?
+        } else if node["unknownFields"] == "passthrough" {
+            context.clone_value(value, 1)?
+        } else if node["unknownFields"] == "strict" {
+            return Err(invalid());
+        } else {
+            continue;
+        };
+        if key != "__proto__" {
+            result.insert(context.copy_text(key)?, value);
+        }
+    }
+    Ok(Value::Object(result))
+}
 /// Validate an anonymous array contract with one shared resource budget.
 pub fn parse_array(schema: &str, input: Value, mode: Mode) -> Result<Value> {
     parse_array_with_limits(schema, input, mode, &ValidationLimits::default())
@@ -658,7 +801,11 @@ fn merge(left: Value, right: Value) -> Result<Value> {
 }
 
 fn js_space(value: char) -> bool {
-    matches!(value,'\u{0009}'..='\u{000d}'|'\u{0020}'|'\u{00a0}'|'\u{1680}'|'\u{2000}'..='\u{200a}'|'\u{2028}'|'\u{2029}'|'\u{202f}'|'\u{205f}'|'\u{3000}'|'\u{feff}')
+    matches!(value,
+        '\u{0009}'..='\u{000d}' | '\u{0020}' | '\u{00a0}' | '\u{1680}'
+        | '\u{2000}'..='\u{200a}' | '\u{2028}' | '\u{2029}' | '\u{202f}'
+        | '\u{205f}' | '\u{3000}' | '\u{feff}'
+    )
 }
 fn object(value: &Value) -> Result<&Map<String, Value>> {
     value.as_object().ok_or_else(invalid)
@@ -776,12 +923,27 @@ fn apply(binding: &str, value: Option<Value>) -> Result<Value> {
 
 fn patterns() -> &'static BTreeMap<String, regex::Regex> {
     static PATTERNS: OnceLock<BTreeMap<String, regex::Regex>> = OnceLock::new();
-    PATTERNS.get_or_init(||{
-        let whitespace=r"[\x{0009}-\x{000d}\x{0020}\x{00a0}\x{1680}\x{2000}-\x{200a}\x{2028}\x{2029}\x{202f}\x{205f}\x{3000}\x{feff}]";
-        [r"^[A-Za-z0-9][A-Za-z0-9_-]*$",r"^[^,\s]+__[^,\s]+$",r"^[a-zA-Z0-9_-]+$",r"^\d+$"].into_iter().filter_map(|source|{
-            let native=source.replace(r"\d","[0-9]").replace(r"\s",whitespace);
-            regex::RegexBuilder::new(&native).size_limit(64*1024).build().ok().map(|regex|(source.to_owned(),regex))
-        }).collect()
+    PATTERNS.get_or_init(|| {
+        let whitespace = concat!(
+            r"[\x{0009}-\x{000d}\x{0020}\x{00a0}\x{1680}\x{2000}-\x{200a}",
+            r"\x{2028}\x{2029}\x{202f}\x{205f}\x{3000}\x{feff}]",
+        );
+        [
+            r"^[A-Za-z0-9][A-Za-z0-9_-]*$",
+            r"^[^,\s]+__[^,\s]+$",
+            r"^[a-zA-Z0-9_-]+$",
+            r"^\d+$",
+        ]
+        .into_iter()
+        .filter_map(|source| {
+            let native = source.replace(r"\d", "[0-9]").replace(r"\s", whitespace);
+            regex::RegexBuilder::new(&native)
+                .size_limit(64 * 1024)
+                .build()
+                .ok()
+                .map(|regex| (source.to_owned(), regex))
+        })
+        .collect()
     })
 }
 fn email(value: &str) -> bool {
@@ -815,7 +977,15 @@ fn email(value: &str) -> bool {
 }
 fn datetime_pattern() -> Option<&'static regex::Regex> {
     static REGEX: OnceLock<Option<regex::Regex>> = OnceLock::new();
-    REGEX.get_or_init(||regex::Regex::new(r"^([0-9]{4})-([0-9]{2})-([0-9]{2})T([01][0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9])(?:\.([0-9]+))?)?(Z|[+-][0-9]{2}:?[0-9]{2})$").ok()).as_ref()
+    REGEX
+        .get_or_init(|| {
+            regex::Regex::new(concat!(
+                r"^([0-9]{4})-([0-9]{2})-([0-9]{2})T([01][0-9]|2[0-3]):([0-5][0-9])",
+                r"(?::([0-5][0-9])(?:\.([0-9]+))?)?(Z|[+-][0-9]{2}:?[0-9]{2})$",
+            ))
+            .ok()
+        })
+        .as_ref()
 }
 fn datetime(value: &str) -> bool {
     let Some(captures) = datetime_pattern().and_then(|pattern| pattern.captures(value)) else {

@@ -24,12 +24,25 @@ mod models;
 #[cfg(feature = "models")]
 pub mod shared;
 
-#[cfg(any(feature = "dlp", feature = "red-team"))]
+#[cfg(any(feature = "dlp", feature = "red-team", feature = "gateway"))]
 mod multipart;
+
+#[cfg(any(
+    feature = "dlp",
+    feature = "red-team",
+    feature = "model-security",
+    feature = "gateway"
+))]
+mod redaction;
+
+#[cfg(feature = "gateway")]
+pub mod routing;
 
 mod engine;
 
 pub use config::{Endpoint, Limits, OriginPolicy, RequestOptions, Session};
 pub use engine::{Client, ClientBuilder, RawRequest};
 pub use error::{Error, ErrorKind, RemoteOutcome, Result};
+#[cfg(feature = "gateway")]
+pub use routing::{GatewayRouting, RuntimeReplay};
 pub use secret::Secret;

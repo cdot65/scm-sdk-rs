@@ -97,6 +97,20 @@ def commands_for(phase):
              "--output", f"docs/checks/phase-05-rust-1.99.0-{feature}.json"]
             for feature in ("model-security", "red-team")
         ]
+    if phase == 6:
+        previous = [[value.replace("phase-05-rust-", "phase-06-rust-") for value in command]
+                    for command in commands_for(5)]
+        for command in previous:
+            if command[:3] == ["python", "tools/native_operations.py", "--check"]:
+                command[-1] = "6"
+        return previous + [
+            ["python", "tools/verify_native_fixtures.py", "--require-test-bindings"],
+            ["tools/node_modules/.bin/tsx", "tools/verify-gateway-specimens.mts", "--check"],
+            ["tools/node_modules/.bin/tsc", "--noEmit", "--target", "ES2022", "--module", "NodeNext",
+             "--moduleResolution", "NodeNext", "--strict", "--skipLibCheck", "--esModuleInterop",
+             "--types", "node", "--typeRoots", ".local/typescript/node_modules/@types",
+             "tools/verify-gateway-specimens.mts"],
+        ]
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 

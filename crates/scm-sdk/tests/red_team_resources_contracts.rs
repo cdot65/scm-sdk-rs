@@ -1072,7 +1072,16 @@ async fn csv_upload_preserves_exact_bytes_mime_forced_filename_and_text_download
             .unwrap()
             .strip_prefix("multipart/form-data; boundary=")
             .unwrap();
-        let mut expected=format!("--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"prompts.csv\"\r\nContent-Type: {mime}\r\n\r\n").into_bytes();
+        let mut expected = format!(
+            concat!(
+                "--{boundary}\r\n",
+                "Content-Disposition: form-data; name=\"file\"; filename=\"prompts.csv\"\r\n",
+                "Content-Type: {mime}\r\n\r\n"
+            ),
+            boundary = boundary,
+            mime = mime
+        )
+        .into_bytes();
         expected.extend_from_slice(data);
         expected.extend_from_slice(format!("\r\n--{boundary}--\r\n").as_bytes());
         assert_eq!(request.body().as_ref(), expected);

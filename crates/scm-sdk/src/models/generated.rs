@@ -77475,14 +77475,6 @@ impl GatewayInferenceInputCreateFileRequestBuilder {
             extensions: self.extensions,
         })
     }
-    pub fn build_validated(
-        self,
-        mode: crate::validation::Mode,
-    ) -> crate::Result<GatewayInferenceInputCreateFileRequest> {
-        let model = self.build()?;
-        let value = super::support::wire_value(&model)?;
-        GatewayInferenceInputCreateFileRequest::parse(value, mode)
-    }
 }
 impl fmt::Debug for GatewayInferenceInputCreateFileRequestBuilder {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -77707,14 +77699,6 @@ impl GatewayInferenceInputCreateImageEditRequestBuilder {
             user: self.user,
             extensions: self.extensions,
         })
-    }
-    pub fn build_validated(
-        self,
-        mode: crate::validation::Mode,
-    ) -> crate::Result<GatewayInferenceInputCreateImageEditRequest> {
-        let model = self.build()?;
-        let value = super::support::wire_value(&model)?;
-        GatewayInferenceInputCreateImageEditRequest::parse(value, mode)
     }
 }
 impl fmt::Debug for GatewayInferenceInputCreateImageEditRequestBuilder {
@@ -78372,14 +78356,6 @@ impl GatewayInferenceInputCreateImageVariationRequestBuilder {
             user: self.user,
             extensions: self.extensions,
         })
-    }
-    pub fn build_validated(
-        self,
-        mode: crate::validation::Mode,
-    ) -> crate::Result<GatewayInferenceInputCreateImageVariationRequest> {
-        let model = self.build()?;
-        let value = super::support::wire_value(&model)?;
-        GatewayInferenceInputCreateImageVariationRequest::parse(value, mode)
     }
 }
 impl fmt::Debug for GatewayInferenceInputCreateImageVariationRequestBuilder {
@@ -83487,14 +83463,6 @@ impl GatewayInferenceInputCreateTranscriptionRequestBuilder {
             extensions: self.extensions,
         })
     }
-    pub fn build_validated(
-        self,
-        mode: crate::validation::Mode,
-    ) -> crate::Result<GatewayInferenceInputCreateTranscriptionRequest> {
-        let model = self.build()?;
-        let value = super::support::wire_value(&model)?;
-        GatewayInferenceInputCreateTranscriptionRequest::parse(value, mode)
-    }
 }
 impl fmt::Debug for GatewayInferenceInputCreateTranscriptionRequestBuilder {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -83751,14 +83719,6 @@ impl GatewayInferenceInputCreateTranslationRequestBuilder {
             temperature: self.temperature,
             extensions: self.extensions,
         })
-    }
-    pub fn build_validated(
-        self,
-        mode: crate::validation::Mode,
-    ) -> crate::Result<GatewayInferenceInputCreateTranslationRequest> {
-        let model = self.build()?;
-        let value = super::support::wire_value(&model)?;
-        GatewayInferenceInputCreateTranslationRequest::parse(value, mode)
     }
 }
 impl fmt::Debug for GatewayInferenceInputCreateTranslationRequestBuilder {

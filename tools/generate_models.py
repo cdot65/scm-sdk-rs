@@ -460,7 +460,7 @@ class Generator:
             body += f"pub fn {setter}(mut self,value:{typed})->Self{{self.{field}=" + ("value" if optional else "Some(value)") + ";self}\n"
         body += f"pub fn extension(mut self,key:impl Into<String>,value:{extension_type})->Self{{self.extensions.insert(key.into(),value);self}}\n"
         body += f"pub fn build(self)->crate::Result<{name}>{{Ok({name}{{" + "".join(f"{field}:self.{field}" + ("" if optional else ".ok_or_else(||crate::Error::new(crate::ErrorKind::Validation))?") + "," for _, field, _, optional in fields) + "extensions:self.extensions})}}\n"
-        if sid.startswith("s"):
+        if sid.startswith("s") and not any("BinaryFile" in typed for _,_,typed,_ in fields):
             body = body.removesuffix("}\n") + f"pub fn build_validated(self,mode:crate::validation::Mode)->crate::Result<{name}>{{let model=self.build()?;let value=super::support::wire_value(&model)?;{name}::parse(value,mode)}}}}\n"
         body += self.debug(builder)
         return body
@@ -777,6 +777,31 @@ class Generator:
                     if name=="ModelSecurityClientOptions":
                         row.update(additionalTypes=["crate::ClientBuilder","crate::Endpoint"],reason="ModelSecurityClient::new(Client, data Endpoint, management Endpoint) selects admitted data/management destinations and shares immutable OAuth/transport/session configuration")
                 else:raise ValueError(f"Model Security native behavioral adapter lacks an explicit mapping: {name}")
+            elif family=="gateway" and name in {"AIGatewaySecretOperation","GatewaySecretDirection","GatewaySecretPathSegment","CustomHostConfigurationOptions"}:
+                row.update(status="deferred_client_adapter",owningPhase=7,reason="Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods")
+            elif family=="gateway" and not (name.startswith(("GatewayRealtime","GatewayWebSocket")) or name in {"GatewayStream","AIGatewayWorkspaceProvisionOptions"}):
+                options={
+                    "AIGatewayAuditLogListOptions","AIGatewayChartOptions","AIGatewayGroupOptions",
+                    "AIGatewayLogsOptions","AIGatewayPlane","AIGatewayRequestChartOptions",
+                    "AIGatewayWindowOptions","AIGatewayWorkspaceGetOptions",
+                    "AIGatewayWorkspaceListOptions","AIGatewayWorkspaceScopedListOptions",
+                    "AIGatewayModelPricingClientOptions",
+                }
+                configs={"AIGatewayClientOptions","AIGatewaySubClientOptions","AIGatewayTelemetryClientOptions","AIGatewayWorkspacesClientOptions"}
+                if name in options:
+                    row.update(status="native_client_mapping",rustType="crate::airs::gateway::"+name,nativeFeature="gateway",additionalTypes=["crate::RequestOptions"],reason="Implemented native Gateway plane/query/window options; NativeDate and explicit UTC offset replace ambient JavaScript dates/timezone, with total lifecycle controls in RequestOptions")
+                    if name=="AIGatewayModelPricingClientOptions":row.update(additionalTypes=["crate::ClientBuilder","crate::Endpoint","crate::RequestOptions"],reason="Credential-free public pricing Client plus explicit timeout and safe-read retry configuration; per-call deadline/cancellation/retry selection uses RequestOptions")
+                elif name in configs:
+                    row.update(status="native_client_mapping",rustType="crate::Client",nativeFeature="gateway",additionalTypes=["crate::ClientBuilder","crate::Endpoint"],reason="Explicit OAuth Client configuration replaces internal options/environment fallbacks; Gateway leaf constructors retain the shared provider, policy, transport, session, limits and tenant scope")
+                    if name=="AIGatewayClientOptions":row.update(additionalTypes=["crate::ClientBuilder","crate::Endpoint","crate::airs::gateway::AIGatewayClient","crate::airs::gateway::RuntimeClient"],reason="AIGatewayClient::new(Client, admin Endpoint, IAM Endpoint) selects admitted OAuth planes; with_runtime accepts a separately configured runtime-key client without reusing control credentials")
+                    if name=="AIGatewayWorkspacesClientOptions":row.update(additionalTypes=["crate::ClientBuilder","crate::Endpoint","crate::airs::gateway::AIGatewayWorkspacesClient"],reason="AIGatewayWorkspacesClient::new(Client, admin Endpoint) selects explicit admitted data/admin planes; multi-step IAM provisioning remains a separate Phase 7 method obligation")
+                elif name=="AIGatewayInferenceClientOptions":
+                    row.update(status="native_client_mapping",rustType="crate::airs::gateway::RuntimeClient",nativeFeature="gateway",additionalTypes=["crate::ClientBuilder","crate::Endpoint","crate::Limits","crate::GatewayRouting","crate::RuntimeReplay"],reason="RuntimeClient::new requires a separately configured runtime API-key Client; explicit endpoint, bounded response/event limits, immutable routing and explicit billable replay replace ambient environment/default client options")
+                elif name=="GatewayInferenceRequestOptions":
+                    row.update(status="native_client_mapping",rustType="crate::GatewayRouting",nativeFeature="gateway",additionalTypes=["crate::RequestOptions","crate::RuntimeReplay"],reason="RuntimeClient::with_routing applies validated routing/OpenAI version headers without auth overrides; with_replay requires explicit bounded billable replay acknowledgement; RequestOptions retains total deadline/cancellation, not per-attempt timeouts")
+                elif name=="GatewayModelPricingRequestOptions":
+                    row.update(status="native_client_mapping",rustType="crate::RequestOptions",nativeFeature="gateway",reason="Public pricing get(provider, model, options) uses native per-call total deadline, cancellation and bounded safe-read retry selection")
+                else:raise ValueError(f"Gateway native behavioral adapter lacks an explicit mapping: {name}")
             elif name in {"AISecSDKExceptionMetadata","AISecSDKProblemDetails"}:
                 row.update(status="native_foundation_mapping",rustType="crate::Error",reason="Rust Error exposes bounded sanitized diagnostics; JavaScript exception diagnostic bags are not request data")
             else:

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 6,
+  "active_phase": 7,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -277,7 +277,7 @@
       "implemented_scope": {
         "modelSecurityMethods": 49,
         "redTeamMethods": 102,
-        "status": "implemented_pending_review"
+        "status": "accepted_by_review"
       },
       "deliberate_differences": [
         "Explicit bounded collections preserve partial rows and resume positions instead of returning silently truncated arrays.",
@@ -308,18 +308,87 @@
             "docs/reviews/phase-05-attempt-01.json"
           ]
         }
-      }
+      },
+      "review_advisories": [
+        {
+          "source": "docs/reviews/phase-05-attempt-01.json",
+          "status": "implementation_in_phase_6",
+          "scope": "Record equivalent Red Team metadata contracts accurately; centralize option Debug redaction; expand handwritten code layout with explicit rustfmt width; remove redundant text deadline wrapper."
+        }
+      ]
     },
     {
       "id": 6,
       "name": "AI Gateway",
-      "status": "in_progress",
-      "reviews": []
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-06-attempt-02.json"
+      ],
+      "scope_evidence": [
+        "docs/GATEWAY.md",
+        "docs/GATEWAY_CONTROL.md",
+        "docs/GATEWAY_RUNTIME.md",
+        "docs/STREAMING.md",
+        "docs/VALIDATION.md",
+        "contracts/native-operations.json",
+        "contracts/native-operation-mappings/gateway.json",
+        "contracts/native-operation-mappings/gateway-control.json",
+        "contracts/native-operation-mappings/gateway-runtime.json"
+      ],
+      "live_acceptance": "pending_phase_8",
+      "implemented_scope": {
+        "gatewayMethods": 194,
+        "explicitPhaseSevenWorkflows": 2,
+        "cumulativeMethodTarget": 442,
+        "status": "accepted_by_review"
+      },
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-06-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-06.json"
+          ],
+          "source_sha256": "2b5ea5931c054cccf20f2236e939cc67bcb106ead4cabc17581c18e1b5a4667d"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-06-attempt-02.json"
+          ]
+        }
+      },
+      "review_attempts": [
+        "docs/reviews/phase-06-attempt-01.json",
+        "docs/reviews/phase-06-attempt-02.json"
+      ],
+      "review_fixes": [
+        {
+          "source": "docs/reviews/phase-06-attempt-01.json",
+          "status": "accepted_by_phase_6_review",
+          "scope": "Consume all12 packaged cases in typed-client assertions; reproducibly revalidate source-derived specimens against frozenZod; enforce bundle test bindings; add compiledGateway example; assert native void response and enumerate mapping evidence."
+        }
+      ],
+      "review_advisories": [
+        {
+          "source": "docs/reviews/phase-06-attempt-02.json",
+          "status": "planned_phase_7",
+          "scope": "Strengthen independent Gateway control fixture consumption and source-bound operation identity validation without rewriting frozen contracts."
+        }
+      ],
+      "accepted_source_sha256": "2b5ea5931c054cccf20f2236e939cc67bcb106ead4cabc17581c18e1b5a4667d",
+      "accepted_score": 9
     },
     {
       "id": 7,
       "name": "Experimental and export closure",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": []
     },
     {

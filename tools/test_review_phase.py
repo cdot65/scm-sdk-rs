@@ -232,6 +232,28 @@ class ReviewRecordTests(unittest.TestCase):
         self.assertTrue(self.path.with_suffix(".prompt.md").is_file())
         self.assertEqual(json.loads(self.status_path.read_text()), self.status)
 
+    def test_timeout_preserves_private_partial_diagnostics_without_accepted_review(self):
+        for p in self.path.parent.iterdir():
+            p.unlink()
+        actual_run = subprocess.run
+
+        def mocked_run(command, **kwargs):
+            if command[0] == "claude":
+                raise subprocess.TimeoutExpired(command, 1800, b"partial output", b"private diagnostic")
+            return actual_run(command, **kwargs)
+
+        with patch("review_phase.subprocess.run", side_effect=mocked_run):
+            with self.assertRaisesRegex(RuntimeError, "private diagnostics preserved"):
+                main(["--phase", "1"], self.root)
+        self.assertFalse(self.path.exists())
+        self.assertFalse(self.path.with_suffix(".cli.json").exists())
+        self.assertTrue(self.path.with_suffix(".prompt.md").is_file())
+        for suffix, content in (("json", b"partial output"), ("stderr.txt", b"private diagnostic")):
+            path = self.root / ".local/reviews" / f"phase-01-attempt-01.{suffix}"
+            self.assertEqual(path.read_bytes(), content)
+            self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+        self.assertEqual(json.loads(self.status_path.read_text()), self.status)
+
 
 if __name__ == "__main__":
     unittest.main()

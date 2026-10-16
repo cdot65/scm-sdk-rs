@@ -249,7 +249,17 @@ impl TryFrom<Number> for FiniteNumber {
         }
     }
 }
-macro_rules! integer {($($ty:ty),*)=>{$(impl From<$ty> for FiniteNumber{fn from(value:$ty)->Self{Self(Number::from(value))}})*};}
+macro_rules! integer {
+    ($($ty:ty),*) => {
+        $(
+            impl From<$ty> for FiniteNumber {
+                fn from(value: $ty) -> Self {
+                    Self(Number::from(value))
+                }
+            }
+        )*
+    };
+}
 integer!(i8, i16, i32, i64, u8, u16, u32, u64, isize, usize);
 
 /// Faithful arbitrary JSON whose ordinary formatting excludes its contents.

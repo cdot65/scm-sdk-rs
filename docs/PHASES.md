@@ -31,3 +31,14 @@ Each phase records three milestones: implemented scope, passing independent veri
 6. **Gateway:** data/admin namespace families; telemetry adaptation; runtime resource families; multimodal request/response formats; SSE lifecycle; public pricing and configuration helpers.
 7. **Closure:** AgentGuard; realtime lifecycle; provisioning and binding recovery; standalone helper equivalents; constants/config/errors; exhaustive exported capability reconciliation.
 8. **Delivery:** complete offline gates; controlled live workflows and cleanup; feature/platform/compiler evidence; packaged consumer checks; compatibility/dependency/license/security audit; documentation and reviewed remote push.
+
+## Gateway ownership
+
+Phase 6 owns 194 of the 196 frozen Gateway-family methods. Two exact methods
+remain visible Phase 7 obligations: `AIGatewayInferenceClient.connectRealtime`
+(bounded experimental realtime lifecycle) and `AIGatewayWorkspacesClient.provision`
+(multi-step creation, binding and recovery). These follow the original Phase 7
+milestones. `tools/native_operations.py` records their IDs and reasons explicitly;
+all other Gateway methods remain owned by Phase 6. The cumulative Phase 6 target
+is 442 implemented methods, with six Phase 7 methods pending (the two workflows
+and four AgentGuard methods). Method ownership does not establish live acceptance.

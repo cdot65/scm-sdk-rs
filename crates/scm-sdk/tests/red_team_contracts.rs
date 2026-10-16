@@ -494,17 +494,51 @@ async fn all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bo
 }
 
 fn instance_body() -> InstanceRequest {
-    serde_json::from_value(json!({"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1","future_request":true})).unwrap()
+    serde_json::from_value(json!({
+        "tsg_id": "123456789",
+        "tenant_id": "tenant/a?b",
+        "app_id": "airs-redteam",
+        "region": "us-east-1",
+        "future_request": true
+    }))
+    .unwrap()
 }
 fn device_body() -> DeviceRequest {
-    serde_json::from_value(json!({"instance":{"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1"},"devices":[{"serial_number":"SN-1","device_name":"fixture"}],"future_request":true})).unwrap()
+    serde_json::from_value(json!({
+        "instance": {
+            "tsg_id": "123456789",
+            "tenant_id": "tenant/a?b",
+            "app_id": "airs-redteam",
+            "region": "us-east-1"
+        },
+        "devices": [
+            {
+                "serial_number": "SN-1",
+                "device_name": "fixture"
+            }
+        ],
+        "future_request": true
+    }))
+    .unwrap()
 }
 #[tokio::test]
 async fn all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials() {
     let (client, wire, _) = clients(false);
     let instances = client.instances();
-    let instance = json!({"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","is_success":true,"future_response":true});
-    let get = json!({"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1","future_response":true});
+    let instance = json!({
+        "tsg_id": "123456789",
+        "tenant_id": "tenant/a?b",
+        "app_id": "airs-redteam",
+        "is_success": true,
+        "future_response": true
+    });
+    let get = json!({
+        "tsg_id": "123456789",
+        "tenant_id": "tenant/a?b",
+        "app_id": "airs-redteam",
+        "region": "us-east-1",
+        "future_response": true
+    });
     let devices = json!({"devices":[{"serial_number":"SN-1","status":"FUTURE_ACCEPTED"}],"future_response":true});
     macro_rules! same {
         ($call:expr,$expected:expr) => {
@@ -514,7 +548,19 @@ async fn all_eight_instance_methods_match_source_literals_and_preserve_explicit_
             )
         };
     }
-    wire.simple(Method::POST,MGMT,"/v1/instances",Some(json!({"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1","future_request":true})),instance.clone());
+    wire.simple(
+        Method::POST,
+        MGMT,
+        "/v1/instances",
+        Some(json!({
+            "tsg_id": "123456789",
+            "tenant_id": "tenant/a?b",
+            "app_id": "airs-redteam",
+            "region": "us-east-1",
+            "future_request": true
+        })),
+        instance.clone(),
+    );
     same!(instances.create_instance(&instance_body(), None), instance);
     wire.simple(
         Method::GET,
@@ -524,7 +570,19 @@ async fn all_eight_instance_methods_match_source_literals_and_preserve_explicit_
         get.clone(),
     );
     same!(instances.get_instance("tenant/a?b", None), get);
-    wire.simple(Method::PUT,MGMT,"/v1/instances/tenant%2Fa%3Fb",Some(json!({"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1","future_request":true})),instance.clone());
+    wire.simple(
+        Method::PUT,
+        MGMT,
+        "/v1/instances/tenant%2Fa%3Fb",
+        Some(json!({
+            "tsg_id": "123456789",
+            "tenant_id": "tenant/a?b",
+            "app_id": "airs-redteam",
+            "region": "us-east-1",
+            "future_request": true
+        })),
+        instance.clone(),
+    );
     same!(
         instances.update_instance("tenant/a?b", &instance_body(), None),
         instance
@@ -537,7 +595,21 @@ async fn all_eight_instance_methods_match_source_literals_and_preserve_explicit_
         instance.clone(),
     );
     same!(instances.delete_instance("tenant/a?b", None), instance);
-    let expected_device = json!({"instance":{"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1"},"devices":[{"serial_number":"SN-1","device_name":"fixture"}],"future_request":true});
+    let expected_device = json!({
+        "instance": {
+            "tsg_id": "123456789",
+            "tenant_id": "tenant/a?b",
+            "app_id": "airs-redteam",
+            "region": "us-east-1"
+        },
+        "devices": [
+            {
+                "serial_number": "SN-1",
+                "device_name": "fixture"
+            }
+        ],
+        "future_request": true
+    });
     wire.simple(
         Method::POST,
         MGMT,
@@ -572,7 +644,11 @@ async fn all_eight_instance_methods_match_source_literals_and_preserve_explicit_
         instances.delete_devices("tenant/a?b", "SN-1,SN&2", None),
         devices
     );
-    let credentials = json!({"token":"synthetic-registry-secret","expiry":"2026-10-16T01:00:00Z","future_response":true});
+    let credentials = json!({
+        "token": "synthetic-registry-secret",
+        "expiry": "2026-10-16T01:00:00Z",
+        "future_response": true
+    });
     wire.simple(
         Method::POST,
         MGMT,
@@ -921,8 +997,28 @@ fn mutation_expected(wire: &Wire, name: &str) {
         arm(wire, &case);
         return;
     }
-    let instance = json!({"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1","future_request":true});
-    let device = json!({"instance":{"tsg_id":"123456789","tenant_id":"tenant/a?b","app_id":"airs-redteam","region":"us-east-1"},"devices":[{"serial_number":"SN-1","device_name":"fixture"}],"future_request":true});
+    let instance = json!({
+        "tsg_id": "123456789",
+        "tenant_id": "tenant/a?b",
+        "app_id": "airs-redteam",
+        "region": "us-east-1",
+        "future_request": true
+    });
+    let device = json!({
+        "instance": {
+            "tsg_id": "123456789",
+            "tenant_id": "tenant/a?b",
+            "app_id": "airs-redteam",
+            "region": "us-east-1"
+        },
+        "devices": [
+            {
+                "serial_number": "SN-1",
+                "device_name": "fixture"
+            }
+        ],
+        "future_request": true
+    });
     match name {
         "create_instance" => wire.simple(
             Method::POST,

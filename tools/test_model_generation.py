@@ -91,4 +91,34 @@ class GenerationGuards(unittest.TestCase):
                 for name in [row["rustType"],*row.get("additionalTypes",[])]:
                     self.assertRegex(source,r"pub\s+(?:struct|enum|type)\s+"+re.escape(name.split("::")[-1])+r"\b")
 
+    def test_exactly_five_native_binary_builders_omit_json_only_validation(self):
+        native=generator.Generator(self.inventory);native.generate()
+        expected={"GatewayInferenceInputCreateImageEditRequest","GatewayInferenceInputCreateImageVariationRequest","GatewayInferenceInputCreateTranscriptionRequest","GatewayInferenceInputCreateTranslationRequest","GatewayInferenceInputCreateFileRequest"}
+        actual={name for name,body in native.declarations.items() if "pub fn builder()" in body and "BinaryFile" in body}
+        self.assertEqual(actual,expected)
+        for name,body in native.declarations.items():
+            if "pub fn builder()" not in body or "pub fn parse(" not in body:continue
+            with self.subTest(model=name):
+                self.assertIn("pub fn build(self)",body)
+                if name in expected:self.assertNotIn("pub fn build_validated(",body)
+                else:self.assertIn("pub fn build_validated(",body)
+
+    def test_phase_six_gateway_adapters_resolve_and_standalone_helpers_remain_explicit(self):
+        native=generator.Generator(self.inventory);native.generate()
+        rows=[row for row in native.model_rows if row.get("nativeFeature")=="gateway"]
+        self.assertEqual(len(rows),18)
+        source="\n".join(path.read_text() for path in (ROOT/"crates/scm-sdk/src").rglob("*.rs"))
+        for row in rows:
+            with self.subTest(export=row["export"]):
+                self.assertEqual(row["status"],"native_client_mapping")
+                for name in [row["rustType"],*row.get("additionalTypes",[])]:
+                    self.assertRegex(source,r"pub\s+(?:struct|enum|type)\s+"+re.escape(name.split("::")[-1])+r"\b")
+        expected={"AIGatewaySecretOperation","GatewaySecretDirection","GatewaySecretPathSegment","CustomHostConfigurationOptions"}
+        deferred={row["export"]:row for row in native.model_rows if row["export"] in expected}
+        self.assertEqual(set(deferred),expected)
+        for row in deferred.values():
+            self.assertEqual(row["status"],"deferred_client_adapter")
+            self.assertEqual(row["owningPhase"],7)
+        self.assertFalse(any(row.get("status")=="deferred_client_adapter" and row.get("owningPhase")==6 for row in native.model_rows))
+
 if __name__=="__main__":unittest.main()

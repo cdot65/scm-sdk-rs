@@ -1,0 +1,863 @@
+{
+  "phase": 6,
+  "source_sha256": "2b5ea5931c054cccf20f2236e939cc67bcb106ead4cabc17581c18e1b5a4667d",
+  "source_unchanged": true,
+  "checked_at": "2026-10-16T15:43:00.861317+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.222,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 25 tests in 0.141s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.269,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.251,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": true,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 2.052,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"rejectedTamperingCases\": [\n    \"fixture-change\",\n    \"fixture-removal\",\n    \"unmanifested-source\",\n    \"license-removal\",\n    \"fixture-inventory-omission\",\n    \"baseline-source-omission\",\n    \"tree-ledger-omission\",\n    \"excluded-source-generation\",\n    \"export-source-change\",\n    \"fixture-category-relabel\",\n    \"fixture-category-unknown\",\n    \"specification-pin-removal\",\n    \"observed-specification-pin\",\n    \"extraction-input-omission\",\n    \"extraction-input-origin-change\",\n    \"license-evidence-change\",\n    \"extracted-non-src-byte-change\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-contracts.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-contracts.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 9.597,
+      "stdout": "{\n  \"mode\": \"check\",\n  \"sourceFingerprint\": \"a972723bb524cf8fce652d50297d94ed7af278b13b9a045b5c6bdc79212eb48f\",\n  \"counts\": {\n    \"exports\": 2630,\n    \"runtimeExports\": 1379,\n    \"typeOnlyExports\": 1251,\n    \"kinds\": {\n      \"class\": 58,\n      \"constant\": 163,\n      \"enum\": 1,\n      \"function\": 14,\n      \"interface\": 144,\n      \"schema\": 1086,\n      \"type_alias\": 1164\n    },\n    \"publicMembers\": 1190,\n    \"publicMethods\": 468,\n    \"baselinePublicClassMethodBodies\": 458,\n    \"baselinePublicClassMethodDeclarations\": 478,\n    \"clientMethodBodies\": 448,\n    \"objectLiteralMethodBodies\": 11,\n    \"publicInheritedExternalClassMethods\": 2,\n    \"sourceFiles\": 145,\n    \"moduleLevelSchemas\": 1125,\n    \"publicSchemas\": 1086,\n    \"schemaNodes\": 13018,\n    \"typeNodes\": 5036,\n    \"manualSemanticNodes\": 69,\n    \"unsupportedSchemaKinds\": 0,\n    \"localSchemaDeclarations\": 0\n  },\n  \"independentChecks\": {\n    \"checkerRootExports\": 2630,\n    \"astRootExports\": 2630,\n    \"runtimeValueExports\": 1379,\n    \"rootExportNamesSha256\": \"2d1879a53b4686df7f14cc5b099adcbc2d95d0b7ff336528994a5cf155195850\",\n    \"equalNameSets\": true,\n    \"astClientMethodBodies\": 448,\n    \"checkerClientMethodBodies\": 448,\n    \"clientMethodBodiesSha256\": \"76a9f7f109ff4b576f9a515c7c560322cfdf457b43c59123f820da6918f6d5ea\",\n    \"equalClientMethodBodySets\": true\n  }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-operations.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-operations.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.835,
+      "stdout": "Operation metadata verified: 448 methods, 223 declarative, 225 explicit native adapters.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/extract-contracts.mts",
+        "tools/extract-operations.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/extract-contracts.mts",
+        "tools/extract-operations.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.809,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.201,
+      "stdout": "Native semantic registry: 69 explicit bindings\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.795,
+      "stdout": "{\"checked\": true, \"outputs\": 14, \"graphNodes\": 13018, \"partialFamily\": null}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "6"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "6"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.805,
+      "stdout": "{\"checked\": true, \"baselineConcreteMethods\": 448, \"implemented\": 442, \"pending\": 6, \"liveVerified\": 0, \"completeMethodOptionParity\": 442, \"partialMethodOptionParity\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.722,
+      "stdout": "",
+      "stderr": "test_absent_verification_function_is_rejected (test_native_operations.NativeOperationLedgerTests.test_absent_verification_function_is_rejected) ... ok\ntest_completed_owning_phase_rejects_an_unimplemented_operation (test_native_operations.NativeOperationLedgerTests.test_completed_owning_phase_rejects_an_unimplemented_operation) ... ok\ntest_every_frozen_operation_is_accounted_for_without_baseline_mutation (test_native_operations.NativeOperationLedgerTests.test_every_frozen_operation_is_accounted_for_without_baseline_mutation) ... ok\ntest_fragment_baseline_and_duplicate_mappings_are_rejected (test_native_operations.NativeOperationLedgerTests.test_fragment_baseline_and_duplicate_mappings_are_rejected) ... ok\ntest_invented_frozen_operation_is_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_frozen_operation_is_rejected) ... ok\ntest_invented_or_unexplained_ownership_overrides_are_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_or_unexplained_ownership_overrides_are_rejected) ... ok\ntest_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven (test_native_operations.NativeOperationLedgerTests.test_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven) ... ok\ntest_partial_parity_without_a_declared_reason_is_rejected (test_native_operations.NativeOperationLedgerTests.test_partial_parity_without_a_declared_reason_is_rejected) ... ok\ntest_removed_native_method_is_rejected (test_native_operations.NativeOperationLedgerTests.test_removed_native_method_is_rejected) ... ok\ntest_representative_gateway_scope_retains_its_real_owner_and_partial_options (test_native_operations.NativeOperationLedgerTests.test_representative_gateway_scope_retains_its_real_owner_and_partial_options) ... ok\ntest_stale_ledger_is_rejected_without_rewriting_it (test_native_operations.NativeOperationLedgerTests.test_stale_ledger_is_rejected_without_rewriting_it) ... ok\ntest_stricter_native_content_invariants_are_machine_recorded (test_native_operations.NativeOperationLedgerTests.test_stricter_native_content_invariants_are_machine_recorded) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 6.638s\n\nOK\n"
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/schema-oracle.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/schema-oracle.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.005,
+      "stdout": "{\n  \"publicSchemaExports\": 1086,\n  \"moduleRoots\": 1125,\n  \"uniqueRoots\": 1085,\n  \"oracleEntries\": 1127,\n  \"manualSemanticNodes\": 69,\n  \"nativeBoundaryNodes\": 10,\n  \"jsonCoveredRoots\": 1080,\n  \"requiresNativeInput\": [\n    {\n      \"sid\": \"s004590\",\n      \"names\": [\n        \"GatewayInferenceInputCreateImageEditRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004620\",\n      \"names\": [\n        \"GatewayInferenceInputCreateImageVariationRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004771\",\n      \"names\": [\n        \"GatewayInferenceInputCreateTranscriptionRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004833\",\n      \"names\": [\n        \"GatewayInferenceInputCreateTranslationRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004894\",\n      \"names\": [\n        \"GatewayInferenceInputCreateFileRequestSchema\"\n      ]\n    }\n  ],\n  \"unresolvedValidSpecimens\": [],\n  \"jsonCases\": 60271,\n  \"acceptedJsonCases\": 12956,\n  \"rejectedJsonCases\": 47315,\n  \"rootsWithoutJsonRejection\": []\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/schema-oracle.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/schema-oracle.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.731,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.88.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-06-rust-1.88.0-default.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.88.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-06-rust-1.88.0-default.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 32.17,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"default\", \"evidence\": \"docs/checks/phase-06-rust-1.88.0-default.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.88.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-06-rust-1.88.0-minimal.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.88.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-06-rust-1.88.0-minimal.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.419,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"minimal\", \"evidence\": \"docs/checks/phase-06-rust-1.88.0-minimal.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.88.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-06-rust-1.88.0-all.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.88.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-06-rust-1.88.0-all.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 40.842,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"all\", \"evidence\": \"docs/checks/phase-06-rust-1.88.0-all.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-default.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-default.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 38.522,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"default\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-default.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-minimal.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-minimal.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 13.068,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"minimal\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-minimal.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-all.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-all.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 46.634,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"all\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-all.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "json-unification",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-json-unification.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "json-unification",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-json-unification.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 13.372,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"json-unification\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-json-unification.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "scan",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-scan.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "scan",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-scan.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 36.357,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"scan\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-scan.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "management",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-management.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "management",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-management.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 37.325,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"management\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-management.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-gateway.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-gateway.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 41.939,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"gateway\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-gateway.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "models",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-models.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "models",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-models.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 36.29,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"models\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-models.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--verify-fixtures"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_models.py",
+        "--verify-fixtures"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.804,
+      "stdout": "{\"expiryLiteralIdentityChecks\":6,\"failures\":0,\"nativeOnlySchemas\":5,\"publicSchemas\":1086,\"typedCases\":27216,\"typedSchemas\":1081}\n",
+      "stderr": "   Compiling scm-typed-model-oracle v0.0.0 (/home/cdot/development/cdot65/scm-sdk-rs/.local/typed-model-oracle)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.01s\n     Running `/build/rust/target/debug/scm-typed-model-oracle /home/cdot/development/cdot65/scm-sdk-rs/contracts/native-fixtures/schemas.json`\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-package.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-package.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 14.855,
+      "stdout": "{\"passed\": true, \"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.88.0\", \"package\", \"-p\", \"scm-sdk\", \"--locked\", \"--allow-dirty\"], \"archive_sha256\": \"35126805dff5c3b9ee4ecbbb84e18145fac2df31748c9e12c396de135a151369\", \"archive_bytes\": 754786, \"files\": [\".cargo_vcs_info.json\", \"Cargo.lock\", \"Cargo.toml\", \"Cargo.toml.orig\", \"LICENSE\", \"NOTICE\", \"README.md\", \"examples/foundation.rs\", \"examples/gateway.rs\", \"examples/management.rs\", \"examples/model_and_red_team.rs\", \"examples/pagination.rs\", \"examples/scan.rs\", \"src/airs/gateway/admin_guardrails.rs\", \"src/airs/gateway/api_keys.rs\", \"src/airs/gateway/audit_logs.rs\", \"src/airs/gateway/common.rs\", \"src/airs/gateway/configs.rs\", \"src/airs/gateway/deployments.rs\", \"src/airs/gateway/guardrails.rs\", \"src/airs/gateway/integrations.rs\", \"src/airs/gateway/log_exports.rs\", \"src/airs/gateway/mcp_integrations.rs\", \"src/airs/gateway/mcp_servers.rs\", \"src/airs/gateway/mod.rs\", \"src/airs/gateway/model_pricing.rs\", \"src/airs/gateway/organisations.rs\", \"src/airs/gateway/plugins.rs\", \"src/airs/gateway/providers.rs\", \"src/airs/gateway/rate_limits.rs\", \"src/airs/gateway/runtime.rs\", \"src/airs/gateway/runtime_audio.rs\", \"src/airs/gateway/runtime_resources.rs\", \"src/airs/gateway/secret_references.rs\", \"src/airs/gateway/telemetry.rs\", \"src/airs/gateway/usage_limits.rs\", \"src/airs/gateway/workspaces.rs\", \"src/airs/management/api_keys.rs\", \"src/airs/management/customer_apps.rs\", \"src/airs/management/dashboard.rs\", \"src/airs/management/inventory.rs\", \"src/airs/management/mod.rs\", \"src/airs/management/oauth_management.rs\", \"src/airs/management/profiles.rs\", \"src/airs/management/topics.rs\", \"src/airs/mod.rs\", \"src/airs/model_security/client.rs\", \"src/airs/model_security/custom_rules.rs\", \"src/airs/model_security/groups.rs\", \"src/airs/model_security/inventory.rs\", \"src/airs/model_security/mod.rs\", \"src/airs/model_security/query.rs\", \"src/airs/model_security/scans.rs\", \"src/airs/red_team/adapters.rs\", \"src/airs/red_team/common.rs\", \"src/airs/red_team/custom_attack_reports.rs\", \"src/airs/red_team/custom_attacks.rs\", \"src/airs/red_team/eula.rs\", \"src/airs/red_team/facade.rs\", \"src/airs/red_team/instances.rs\", \"src/airs/red_team/mod.rs\", \"src/airs/red_team/network_broker.rs\", \"src/airs/red_team/reports.rs\", \"src/airs/red_team/scans.rs\", \"src/airs/red_team/targets.rs\", \"src/airs/scan/content.rs\", \"src/airs/scan/mod.rs\", \"src/airs/scan/scanner.rs\", \"src/auth.rs\", \"src/config.rs\", \"src/data.rs\", \"src/dlp/common.rs\", \"src/dlp/data_patterns.rs\", \"src/dlp/data_profiles.rs\", \"src/dlp/dictionaries.rs\", \"src/dlp/filtering_profiles.rs\", \"src/dlp/mod.rs\", \"src/engine.rs\", \"src/engine/tests.rs\", \"src/error.rs\", \"src/fixtures/gateway-contracts.json\", \"src/fixtures/red-team-contracts.json\", \"src/lib.rs\", \"src/models/agentguard.rs\", \"src/models/dlp.rs\", \"src/models/gateway.rs\", \"src/models/generated.rs\", \"src/models/iam.rs\", \"src/models/management.rs\", \"src/models/mod.rs\", \"src/models/model_security.rs\", \"src/models/red_team.rs\", \"src/models/scan.rs\", \"src/models/shared.rs\", \"src/models/support.rs\", \"src/models/tests.rs\", \"src/multipart.rs\", \"src/pagination.rs\", \"src/pagination/tests.rs\", \"src/redaction.rs\", \"src/routing.rs\", \"src/secret.rs\", \"src/shared/iam/mod.rs\", \"src/shared/iam/scopes.rs\", \"src/shared/mod.rs\", \"src/streaming.rs\", \"src/streaming/sse.rs\", \"src/streaming/sse/tests.rs\", \"src/transport.rs\", \"src/validation.rs\", \"src/validation/schema_graph.json\", \"src/validation/semantics.json\", \"src/validation/tests.rs\"], \"verification\": \"cargo package compiled the extracted consumer package with Rust 1.88.0\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_generation.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_generation.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 3.006,
+      "stdout": "",
+      "stderr": "test_committed_union_identity_matches_and_reorder_fails (test_model_generation.GenerationGuards.test_committed_union_identity_matches_and_reorder_fails) ... ok\ntest_current_nested_checks_and_record_keys_match_native_implementation (test_model_generation.GenerationGuards.test_current_nested_checks_and_record_keys_match_native_implementation) ... ok\ntest_effect_default_pipeline_and_coercion_in_record_keys_fail (test_model_generation.GenerationGuards.test_effect_default_pipeline_and_coercion_in_record_keys_fail) ... ok\ntest_exactly_five_native_binary_builders_omit_json_only_validation (test_model_generation.GenerationGuards.test_exactly_five_native_binary_builders_omit_json_only_validation) ... ok\ntest_native_dispatcher_and_pattern_drift_fail (test_model_generation.GenerationGuards.test_native_dispatcher_and_pattern_drift_fail) ... ok\ntest_phase_five_behavioral_adapters_resolve_to_implemented_public_types (test_model_generation.GenerationGuards.test_phase_five_behavioral_adapters_resolve_to_implemented_public_types) ... ok\ntest_phase_six_gateway_adapters_resolve_and_standalone_helpers_remain_explicit (test_model_generation.GenerationGuards.test_phase_six_gateway_adapters_resolve_and_standalone_helpers_remain_explicit) ... ok\ntest_union_pin_removal_and_header_tampering_fail (test_model_generation.GenerationGuards.test_union_pin_removal_and_header_tampering_fail) ... ok\ntest_unknown_nested_regex_or_flags_fail (test_model_generation.GenerationGuards.test_unknown_nested_regex_or_flags_fail) ... ok\ntest_unknown_nested_string_and_number_checks_fail (test_model_generation.GenerationGuards.test_unknown_nested_string_and_number_checks_fail) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 2.870s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "dlp",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-dlp.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "dlp",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-dlp.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 36.631,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"dlp\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-dlp.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "iam",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-iam.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "iam",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-iam.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 36.654,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"iam\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-iam.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_native_fixtures.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify_native_fixtures.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.04,
+      "stdout": "{\"bundles\": 2, \"exact_frozen_cases\": 50}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_fixtures.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_fixtures.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.072,
+      "stdout": "",
+      "stderr": "test_case_edits_and_json_type_substitution_rejected (test_native_fixtures.NativeFixtureTests.test_case_edits_and_json_type_substitution_rejected) ... ok\ntest_commented_or_quoted_bindings_do_not_count (test_native_fixtures.NativeFixtureTests.test_commented_or_quoted_bindings_do_not_count) ... ok\ntest_duplicate_source_and_empty_cases_rejected (test_native_fixtures.NativeFixtureTests.test_duplicate_source_and_empty_cases_rejected) ... ok\ntest_exact_copy_passes (test_native_fixtures.NativeFixtureTests.test_exact_copy_passes) ... ok\ntest_invalid_duplicate_or_missing_coordinates_rejected (test_native_fixtures.NativeFixtureTests.test_invalid_duplicate_or_missing_coordinates_rejected) ... ok\ntest_literal_test_bindings_pass (test_native_fixtures.NativeFixtureTests.test_literal_test_bindings_pass) ... ok\ntest_missing_bundle_and_symlink_rejected (test_native_fixtures.NativeFixtureTests.test_missing_bundle_and_symlink_rejected) ... ok\ntest_nonfinite_json_rejected (test_native_fixtures.NativeFixtureTests.test_nonfinite_json_rejected) ... ok\ntest_orphaned_bundle_rejected (test_native_fixtures.NativeFixtureTests.test_orphaned_bundle_rejected) ... ok\ntest_source_changes_cannot_be_blessed_by_bundle_hash (test_native_fixtures.NativeFixtureTests.test_source_changes_cannot_be_blessed_by_bundle_hash) ... ok\ntest_symlinked_test_source_rejected (test_native_fixtures.NativeFixtureTests.test_symlinked_test_source_rejected) ... ok\ntest_unknown_bundle_binding_rejected (test_native_fixtures.NativeFixtureTests.test_unknown_bundle_binding_rejected) ... ok\ntest_unknown_sources_and_regressions_cannot_claim_independence (test_native_fixtures.NativeFixtureTests.test_unknown_sources_and_regressions_cannot_claim_independence) ... ok\ntest_wrong_baseline_and_missing_attribution_rejected (test_native_fixtures.NativeFixtureTests.test_wrong_baseline_and_missing_attribution_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.025s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "model-security",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-model-security.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "model-security",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-model-security.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 36.922,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"model-security\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-model-security.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-red-team.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-06-rust-1.99.0-red-team.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 37.133,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"red-team\", \"evidence\": \"docs/checks/phase-06-rust-1.99.0-red-team.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_native_fixtures.py",
+        "--require-test-bindings"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify_native_fixtures.py",
+        "--require-test-bindings"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.178,
+      "stdout": "{\"bundles\": 2, \"exact_frozen_cases\": 50, \"test_bound_bundles\": 2}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsx",
+        "tools/verify-gateway-specimens.mts",
+        "--check"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsx",
+        "tools/verify-gateway-specimens.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.546,
+      "stdout": "{\"checked\":true,\"operations\":61,\"independentCases\":12,\"zodParses\":74}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/verify-gateway-specimens.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/verify-gateway-specimens.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.548,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

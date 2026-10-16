@@ -1867,7 +1867,14 @@ mod default_adapter {
     async fn redirect_never_transmits_credentials_to_the_location_target() {
         let target = TcpListener::bind("127.0.0.1:0").await.unwrap();
         let location = format!("http://{}/credential-sink", target.local_addr().unwrap());
-        let response=format!("HTTP/1.1 307 Temporary Redirect\r\nLocation: {location}\r\nContent-Length: 0\r\nConnection: close\r\n\r\n").into_bytes();
+        let response = format!(
+            concat!(
+                "HTTP/1.1 307 Temporary Redirect\r\nLocation: {}\r\n",
+                "Content-Length: 0\r\nConnection: close\r\n\r\n",
+            ),
+            location
+        )
+        .into_bytes();
         let (endpoint, wire, server) = fixture(response).await;
         let client = Client::builder(endpoint)
             .authentication(
@@ -1909,7 +1916,14 @@ mod default_adapter {
         gzip.write_all(&plain).unwrap();
         let compressed = gzip.finish().unwrap();
         assert!(compressed.len() < 128);
-        let mut response=format!("HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",compressed.len()).into_bytes();
+        let mut response = format!(
+            concat!(
+                "HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\n",
+                "Content-Length: {}\r\nConnection: close\r\n\r\n",
+            ),
+            compressed.len()
+        )
+        .into_bytes();
         response.extend_from_slice(&compressed);
         let (endpoint, wire, server) = fixture(response).await;
         let client = Client::builder(endpoint)
@@ -2127,4 +2141,199 @@ async fn text_body_deadlines_keep_metadata_and_cancel_before_dispatch() {
         ErrorKind::Cancelled
     );
     assert_eq!(transport.count(), 1);
+}
+
+#[cfg(feature = "gateway")]
+fn runtime_client(transport: Arc<Scripted>) -> Client {
+    Client::builder(endpoint())
+        .authentication(Authentication::runtime_key(Secret::new("runtime-key").unwrap()).unwrap())
+        .transport(transport)
+        .limits(fast_limits())
+        .build()
+        .unwrap()
+}
+
+#[cfg(feature = "gateway")]
+#[tokio::test(start_paused = true)]
+async fn runtime_replay_requires_explicit_permit_and_uses_exact_status_set() {
+    for streaming in [false, true] {
+        for code in [429, 500, 502, 503, 504] {
+            for explicit in [false, true] {
+                let eligible = explicit && code != 429;
+                let transport = Scripted::new(if eligible {
+                    vec![status(code), ok()]
+                } else {
+                    vec![status(code)]
+                });
+                let client = runtime_client(transport.clone());
+                let mut request = RawRequest::new(Method::POST, "inference")
+                    .body(
+                        Bytes::from_static(b"{\"prompt\":\"private\"}"),
+                        "application/json",
+                    )
+                    .unwrap();
+                let replay = if explicit {
+                    crate::RuntimeReplay::bounded(1).unwrap()
+                } else {
+                    crate::RuntimeReplay::Never
+                };
+                replay.apply(&mut request).unwrap();
+                let options = RequestOptions::with_timeout(Duration::from_secs(2))
+                    .unwrap()
+                    .with_retries(5)
+                    .unwrap();
+                let successful = if streaming {
+                    client.send_stream(request, Some(&options)).await.is_ok()
+                } else {
+                    client.send_bytes(request, Some(&options)).await.is_ok()
+                };
+                assert_eq!(
+                    successful, eligible,
+                    "stream={streaming}, status={code}, explicit={explicit}"
+                );
+                assert_eq!(transport.count(), if eligible { 2 } else { 1 });
+                let requests = transport.requests.lock().unwrap();
+                assert!(requests.iter().all(|r| r.body() == requests[0].body()));
+            }
+        }
+    }
+    let transport = Scripted::new(vec![]);
+    let client = client(transport.clone());
+    let mut request = RawRequest::new(Method::POST, "mutation");
+    crate::RuntimeReplay::bounded(1)
+        .unwrap()
+        .apply(&mut request)
+        .unwrap();
+    assert_eq!(
+        client.send_bytes(request, None).await.unwrap_err().kind(),
+        ErrorKind::Configuration
+    );
+    assert_eq!(transport.count(), 0);
+}
+
+#[cfg(feature = "gateway")]
+#[tokio::test]
+async fn runtime_replay_stops_at_success_headers_and_body_failures_keep_metadata() {
+    for streaming in [false, true] {
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "x-request-id",
+            HeaderValue::from_static("safe-runtime-body"),
+        );
+        let transport = Scripted::new(vec![Reply::Http(
+            StatusCode::OK,
+            headers,
+            Bytes::from_static(b"oversized"),
+        )]);
+        let client = Client::builder(endpoint())
+            .authentication(
+                Authentication::runtime_key(Secret::new("runtime-key").unwrap()).unwrap(),
+            )
+            .transport(transport.clone())
+            .limits(Limits {
+                max_response_bytes: 1,
+                ..fast_limits()
+            })
+            .build()
+            .unwrap();
+        let mut request = RawRequest::new(Method::POST, "inference");
+        crate::RuntimeReplay::bounded(5)
+            .unwrap()
+            .apply(&mut request)
+            .unwrap();
+        let error = if streaming {
+            client
+                .send_stream(request, None)
+                .await
+                .unwrap()
+                .next()
+                .await
+                .unwrap_err()
+        } else {
+            client.send_bytes(request, None).await.unwrap_err()
+        };
+        assert_eq!(error.kind(), ErrorKind::Limit);
+        assert_eq!(error.status(), Some(200));
+        assert_eq!(error.request_id(), Some("safe-runtime-body"));
+        assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+        assert_eq!(transport.count(), 1);
+    }
+}
+
+#[tokio::test(start_paused = true)]
+async fn streaming_error_body_deadlines_retain_known_status_and_correlation() {
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        "x-request-id",
+        HeaderValue::from_static("safe-stream-handshake"),
+    );
+    let transport = Scripted::new(vec![Reply::PendingMetadata(
+        StatusCode::SERVICE_UNAVAILABLE,
+        headers,
+    )]);
+    let client = client(transport.clone());
+    let options = RequestOptions::with_timeout(Duration::from_millis(1)).unwrap();
+    let error = client
+        .send_stream(read(), Some(&options))
+        .await
+        .unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Deadline);
+    assert_eq!(error.status(), Some(503));
+    assert_eq!(error.request_id(), Some("safe-stream-handshake"));
+    assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+    assert_eq!(transport.count(), 1);
+}
+
+#[test]
+fn segment_checks_borrowed_length_before_owning_identifier() {
+    let identifier = "x".repeat(1024 * 1024);
+    assert_eq!(
+        RawRequest::new(Method::GET, "files")
+            .segment(&identifier)
+            .unwrap_err()
+            .kind(),
+        ErrorKind::Validation
+    );
+}
+
+#[cfg(feature = "gateway")]
+#[tokio::test]
+async fn typed_stream_and_sse_parser_errors_keep_allowlisted_correlation_without_payloads() {
+    for payload in [
+        b"data: private-invalid-json\n\n".as_slice(),
+        b"data: {}\n\n".as_slice(),
+    ] {
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            http::header::CONTENT_TYPE,
+            HeaderValue::from_static("text/event-stream"),
+        );
+        headers.insert("x-request-id", HeaderValue::from_static("safe-event-id"));
+        let transport = Scripted::new(vec![Reply::Http(
+            StatusCode::OK,
+            headers,
+            Bytes::copy_from_slice(payload),
+        )]);
+        let client = runtime_client(transport.clone());
+        let mut response = client
+            .send_contract_stream::<serde_json::Value>(
+                RawRequest::new(Method::POST, "inference"),
+                "GatewayInferenceCreateCompletionResponseSchema",
+                crate::streaming::TerminalPolicy::DoneMarker,
+                None,
+            )
+            .await
+            .unwrap();
+        let error = response.next().await.unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Decode);
+        assert_eq!(error.status(), Some(200));
+        assert_eq!(error.request_id(), Some("safe-event-id"));
+        assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+        assert!(!format!("{error:?} {error} {response:?}").contains("private-invalid-json"));
+        assert_eq!(
+            response.next().await.unwrap_err().request_id(),
+            Some("safe-event-id")
+        );
+        assert_eq!(transport.count(), 1);
+    }
 }

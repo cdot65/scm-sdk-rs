@@ -1,0 +1,1180 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createChatCompletion",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_chat_completion",
+        "create_chat_completion_stream"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::streaming_failures_keep_safe_metadata_and_never_replay_after_success_headers",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::explicit_runtime_replay_is_bounded_and_only_network_or_source_five_xx_statuses_qualify"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Separate ordinary and _stream methods replace the dynamic response union; stream:true must match the selected method. Native streams enforce typed events, lifecycle bounds and the frozen terminal policy, preserving safe response metadata on failures."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createCompletion",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_completion",
+        "create_completion_stream"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Separate ordinary and _stream methods replace the dynamic response union; stream:true must match the selected method. Native streams enforce typed events, lifecycle bounds and the frozen terminal policy, preserving safe response metadata on failures."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createEmbedding",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_embedding"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createPromptCompletion",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_prompt_completion",
+        "create_prompt_completion_stream"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Separate ordinary and _stream methods replace the dynamic response union; stream:true must match the selected method. Native streams enforce typed events, lifecycle bounds and the frozen terminal policy, preserving safe response metadata on failures."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createPromptRender",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_prompt_render"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createResponse",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_response",
+        "create_response_stream"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Separate ordinary and _stream methods replace the dynamic response union; stream:true must match the selected method. Native streams enforce typed events, lifecycle bounds and the frozen terminal policy, preserving safe response metadata on failures."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.cancelBatch",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "cancel_batch"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.cancelFineTuningJob",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "cancel_fine_tuning_job"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.cancelVectorStoreFileBatch",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "cancel_vector_store_file_batch"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createBatch",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_batch"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createFeedback",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_feedback"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createFile",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_file"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_five_native_multipart_methods_match_exact_parts_bytes_defaults_and_order",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::every_native_file_shape_rejects_invalid_fields_collisions_and_bounds_before_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Typed native BinaryFile slots replace Blob/FormData; full mixed schema validation, all-known-key extension collision checks, aggregate file bounds and whole-envelope limits run before authentication. Filename/MIME/default/null omission/part order and bytes retain the frozen contract."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createFineTuningJob",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_fine_tuning_job"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createImage",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_image"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createImageEdit",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_image_edit"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_five_native_multipart_methods_match_exact_parts_bytes_defaults_and_order",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::every_native_file_shape_rejects_invalid_fields_collisions_and_bounds_before_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Typed native BinaryFile slots replace Blob/FormData; full mixed schema validation, all-known-key extension collision checks, aggregate file bounds and whole-envelope limits run before authentication. Filename/MIME/default/null omission/part order and bytes retain the frozen contract."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createImageVariation",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_image_variation"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_five_native_multipart_methods_match_exact_parts_bytes_defaults_and_order",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::every_native_file_shape_rejects_invalid_fields_collisions_and_bounds_before_dispatch"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Typed native BinaryFile slots replace Blob/FormData; full mixed schema validation, all-known-key extension collision checks, aggregate file bounds and whole-envelope limits run before authentication. Filename/MIME/default/null omission/part order and bytes retain the frozen contract."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createLogs",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_logs"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createModeration",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_moderation"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createOcr",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_ocr"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createRerank",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_rerank"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createSpeech",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_speech"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createTranscription",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_transcription"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_five_native_multipart_methods_match_exact_parts_bytes_defaults_and_order",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::every_native_file_shape_rejects_invalid_fields_collisions_and_bounds_before_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::audio_response_format_controls_decoding_without_content_type_guessing"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Typed native BinaryFile slots replace Blob/FormData; full mixed schema validation, all-known-key extension collision checks, aggregate file bounds and whole-envelope limits run before authentication. Filename/MIME/default/null omission/part order and bytes retain the frozen contract.",
+        "TranscriptionResult/TranslationResult use distinct Json, VerboseJson and Text variants selected by the requested format, retaining source UTF-8 replacement/BOM semantics and unrestricted translation format strings."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createTranslation",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_translation"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_five_native_multipart_methods_match_exact_parts_bytes_defaults_and_order",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::every_native_file_shape_rejects_invalid_fields_collisions_and_bounds_before_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::audio_response_format_controls_decoding_without_content_type_guessing"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504.",
+        "Typed native BinaryFile slots replace Blob/FormData; full mixed schema validation, all-known-key extension collision checks, aggregate file bounds and whole-envelope limits run before authentication. Filename/MIME/default/null omission/part order and bytes retain the frozen contract.",
+        "TranscriptionResult/TranslationResult use distinct Json, VerboseJson and Text variants selected by the requested format, retaining source UTF-8 replacement/BOM semantics and unrestricted translation format strings."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createVectorStore",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_vector_store"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createVectorStoreFile",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_vector_store_file"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createVectorStoreFileBatch",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "create_vector_store_file_batch"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteFile",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "delete_file"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteModel",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "delete_model"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteResponse",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "delete_response"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteVectorStore",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "delete_vector_store"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteVectorStoreFile",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "delete_vector_store_file"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.downloadFile",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "download_file"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::identifiers_routing_clones_binary_content_and_scalar_query_states_remain_exact"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getBatchOutput",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "get_batch_output"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::identifiers_routing_clones_binary_content_and_scalar_query_states_remain_exact"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getLog",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "get_log"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getResponse",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "get_response"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::identifiers_routing_clones_binary_content_and_scalar_query_states_remain_exact"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getVectorStore",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "get_vector_store"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getVectorStoreFile",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "get_vector_store_file"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getVectorStoreFileBatch",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "get_vector_store_file_batch"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listBatches",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_batches"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFiles",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_files"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFilesInVectorStoreBatch",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_files_in_vector_store_batch"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFineTuningEvents",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_fine_tuning_events"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFineTuningJobCheckpoints",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_fine_tuning_job_checkpoints"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listInputItems",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_input_items"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listModels",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_models"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::identifiers_routing_clones_binary_content_and_scalar_query_states_remain_exact"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listPaginatedFineTuningJobs",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_paginated_fine_tuning_jobs"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listVectorStoreFiles",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_vector_store_files"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listVectorStores",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "list_vector_stores"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.modifyVectorStore",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "modify_vector_store"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveBatch",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "retrieve_batch"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveFile",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "retrieve_file"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveFineTuningJob",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "retrieve_fine_tuning_job"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveModel",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "retrieve_model"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.updateFeedback",
+      "feature": "gateway",
+      "namespace": "airs::gateway::RuntimeClient",
+      "methods": [
+        "update_feedback"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override"
+      ],
+      "deliberateDifferences": [
+        "Explicit RuntimeClient with admitted Endpoint, runtime API-key Client and caller transport replaces environment/global fetch; SCM OAuth, scan credentials and unauthenticated contexts are rejected.",
+        "Immutable with_routing clones apply bounded source-grammar x-portkey/OpenAI-Beta headers without auth overrides; per-call RequestOptions carries one absolute deadline and cancellation across preparation and response consumption.",
+        "RuntimeReplay::Never dispatches once even for GET and ignores safe-read retry overrides; an explicit bounded permit acknowledges possible duplicate billed work and only retries pre-success-header transport failure or HTTP500/502/503/504."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 6,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

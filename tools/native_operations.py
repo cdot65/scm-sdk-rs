@@ -18,10 +18,18 @@ MAPPINGS = {
     "src/scan/scanner.ts:Scanner.queryByReportIds": ("scan", "airs::scan::Scanner", ["query_by_report_ids"], "crates/scm-sdk/src/airs/scan/scanner.rs", "crates/scm-sdk/tests/scan_contracts.rs"),
     "src/management/profiles.ts:ProfilesClient.listForToken": ("management", "airs::management::ProfilesClient", ["list_for_token"], "crates/scm-sdk/src/airs/management/profiles.rs", "crates/scm-sdk/tests/representative_clients.rs"),
     "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createChatCompletion": ("gateway", "airs::gateway::RuntimeClient", ["create_chat_completion", "create_chat_completion_stream"], "crates/scm-sdk/src/airs/gateway/runtime.rs", "crates/scm-sdk/tests/representative_clients.rs"),
-    "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.downloadFile": ("gateway", "airs::gateway::RuntimeClient", ["download_file"], "crates/scm-sdk/src/airs/gateway/runtime.rs", "crates/scm-sdk/tests/representative_clients.rs"),
+    "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.downloadFile": ("gateway", "airs::gateway::RuntimeClient", ["download_file"], "crates/scm-sdk/src/airs/gateway/runtime_resources.rs", "crates/scm-sdk/tests/representative_clients.rs"),
 }
 PHASES = {"scan": 3, "management": 4, "iam": 4, "model-security": 5,
           "red-team": 5, "ai-gateway": 6, "agentguard": 7}
+OWNERSHIP_OVERRIDES = {
+    "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime": {
+        "phase": 7, "reason": "Phase 7 owns bounded realtime lifecycle and experimental export closure, as specified in docs/PHASES.md."
+    },
+    "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.provision": {
+        "phase": 7, "reason": "Phase 7 owns multi-step provisioning, binding recovery and uncertain remote outcomes, as specified in docs/PHASES.md."
+    },
+}
 FRAGMENTS = ROOT / "contracts/native-operation-mappings"
 
 
@@ -76,9 +84,13 @@ def generate():
     unknown = set(native) - {operation["id"] for operation in inventory["operations"]}
     if unknown:
         raise ValueError(f"Native mappings reference absent frozen operations: {sorted(unknown)}")
+    unknown_owners = set(OWNERSHIP_OVERRIDES) - {operation["id"] for operation in inventory["operations"]}
+    if unknown_owners or any(value.get("phase") != 7 or not value.get("reason")
+                             for value in OWNERSHIP_OVERRIDES.values()):
+        raise ValueError("Native ownership override is absent from baseline or lacks its explicit Phase 7 reason")
     for operation in inventory["operations"]:
         row = {"baselineId": operation["id"], "family": operation["family"],
-               "owningPhase": PHASES[operation["family"]], "implementation": "pending",
+               "owningPhase": OWNERSHIP_OVERRIDES.get(operation["id"], {}).get("phase", PHASES[operation["family"]]), "implementation": "pending",
                "contractVerification": "pending", "liveAcceptance": "unverified"}
         if mapping := native.get(operation["id"]):
             required = {"feature", "namespace", "methods", "source", "tests", "deliberateDifferences", "optionParity", "deliveredInPhase"}
@@ -112,6 +124,7 @@ def generate():
         "schemaVersion": 1,
         "baselineCommit": inventory["baseline"]["commit"],
         "baselineOperationsSha256": sha(SOURCE), "generatorSha256": sha(pathlib.Path(__file__)),
+        "ownershipOverrides": OWNERSHIP_OVERRIDES,
         "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
         "requestHeaderContracts": {
             "airs_api_defaults": {

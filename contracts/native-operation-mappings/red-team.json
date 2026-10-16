@@ -161,7 +161,7 @@
         "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
         "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
         "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
-        "Fallback requires actual API Http422, excludes issuer errors, shares one absolute operation budget, and uses the frozen structurally equivalent arbitrary-object record schema s012087 with central validation bounds."
+        "Fallback requires actual API HTTP422, excludes issuer errors and shares one absolute budget. Frozen inline ZodObject({}).passthrough() is implemented using s012087 ZodRecord(string, unknown): both accept arbitrary JSON objects and preserve their values, so behavior is equivalent in the SDK JSON domain; central validation bounds apply."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 5,

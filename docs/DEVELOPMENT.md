@@ -33,10 +33,10 @@ The helper checks formatting without modifying files, builds all targets, runs C
 Product features are `scan`, `management`, `dlp`, `iam`, `model-security`,
 `red-team`, and `gateway`; `models` selects the shared native contracts and
 `reqwest-transport` selects the default HTTP adapter. Defaults enable the adapter
-and scanning. Management includes canonical DLP; IAM is independently selected.
-Phases 3–4 implement scanning, management/DLP/IAM and representative Gateway
-chat/binary operations. Phase 5 implements Model Security and Red Team, pending
-its acceptance gate. Remaining Gateway methods enter Phase 6. Minimal builds
+and scanning. Management includes canonical DLP; Gateway includes canonical IAM
+for its scope accessor. IAM is also independently selectable. Phases 3–5 implement
+scanning, management/DLP/IAM, Model Security and Red Team. Phase 6 implements
+Gateway control, telemetry and HTTP runtime contracts. Minimal builds
 require caller-supplied transport and retain validation/data primitives. Realtime
 and tracing features arrive with their implementations. Keep the default,
 minimal and all-feature matrices as new features enter scope.
