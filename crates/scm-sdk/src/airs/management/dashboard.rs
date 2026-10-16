@@ -141,16 +141,41 @@ pub struct DashboardApplicationsOverviewQuery {
     pub limit: Option<u64>,
     pub offset: Option<u64>,
 }
-macro_rules! redacted_debug{($($ty:ty),+)=>{$(impl fmt::Debug for $ty{fn fmt(&self,f:&mut fmt::Formatter<'_>)->fmt::Result{f.write_str(concat!(stringify!($ty),"([REDACTED])"))}})+};}
-redacted_debug!(
-    DashboardAppQuery,
-    DashboardTimeRangeQuery,
-    DashboardSessionsOverviewQuery,
-    DashboardSessionQuery,
-    DashboardSessionTransactionQuery,
-    DashboardScanContentQuery,
-    DashboardApplicationsOverviewQuery
-);
+impl fmt::Debug for DashboardAppQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("DashboardAppQuery([REDACTED])")
+    }
+}
+impl fmt::Debug for DashboardTimeRangeQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("DashboardTimeRangeQuery([REDACTED])")
+    }
+}
+impl fmt::Debug for DashboardSessionsOverviewQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("DashboardSessionsOverviewQuery([REDACTED])")
+    }
+}
+impl fmt::Debug for DashboardSessionQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("DashboardSessionQuery([REDACTED])")
+    }
+}
+impl fmt::Debug for DashboardSessionTransactionQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("DashboardSessionTransactionQuery([REDACTED])")
+    }
+}
+impl fmt::Debug for DashboardScanContentQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("DashboardScanContentQuery([REDACTED])")
+    }
+}
+impl fmt::Debug for DashboardApplicationsOverviewQuery {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("DashboardApplicationsOverviewQuery([REDACTED])")
+    }
+}
 #[derive(Clone, Debug)]
 pub struct DashboardClient {
     pub(super) client: Client,

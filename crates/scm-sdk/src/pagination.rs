@@ -221,6 +221,9 @@ pub struct Pages<'a, T, C> {
     max_pages: usize,
     pages_read: usize,
     failure: Option<Error>,
+    // A rejected next cursor must not discard the rows from its accepted page.
+    deferred_failure: Option<Error>,
+    rejected_page_items: usize,
     cursor_limits: CursorLimits,
     retained_cursor_bytes: usize,
 }
@@ -230,7 +233,10 @@ impl<T, C> fmt::Debug for Pages<'_, T, C> {
             .field("pages_read", &self.pages_read)
             .field("max_pages", &self.max_pages)
             .field("has_resume", &self.cursor.is_some())
-            .field("failed", &self.failure.is_some())
+            .field(
+                "failed",
+                &(self.failure.is_some() || self.deferred_failure.is_some()),
+            )
             .field("cursor_limits", &self.cursor_limits)
             .field("retained_cursor_bytes", &self.retained_cursor_bytes)
             .finish()
@@ -283,6 +289,8 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Pages<'a, T, C> {
             max_pages,
             pages_read: 0,
             failure: None,
+            deferred_failure: None,
+            rejected_page_items: 0,
             cursor_limits,
             retained_cursor_bytes: 0,
         })
@@ -290,10 +298,23 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Pages<'a, T, C> {
     pub fn pages_read(&self) -> usize {
         self.pages_read
     }
+    /// Override cursor bounds before fetching, including on product page iterators.
+    /// Apply this before `items().resume_from(...)` to admit a larger saved cursor.
+    pub fn with_cursor_limits(mut self, limits: CursorLimits) -> Result<Self> {
+        if self.pages_read != 0 || !self.seen.is_empty() {
+            return Err(Error::new(ErrorKind::Validation));
+        }
+        limits.validate()?;
+        if let Some(cursor) = &self.cursor {
+            crate::engine::serialize_bounded(cursor, limits.max_bytes)?;
+        }
+        self.cursor_limits = limits;
+        Ok(self)
+    }
     pub fn resume(&self) -> Option<Resume<C>> {
         self.cursor.clone().map(|cursor| Resume {
             cursor,
-            item_offset: 0,
+            item_offset: self.rejected_page_items,
         })
     }
     async fn check_active(&mut self) -> Result<()> {
@@ -308,6 +329,10 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Pages<'a, T, C> {
     }
     pub async fn next_page(&mut self) -> Result<Option<Page<T, C>>> {
         if let Some(error) = &self.failure {
+            return Err(error.clone());
+        }
+        if let Some(error) = &self.deferred_failure {
+            self.failure = Some(error.clone());
             return Err(error.clone());
         }
         let Some(_) = &self.cursor else {
@@ -351,14 +376,17 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Pages<'a, T, C> {
                 return Err(error);
             }
         };
+        self.pages_read += 1;
         if let Some(next) = &page.next
             && let Err(error) = crate::engine::serialize_bounded(next, self.cursor_limits.max_bytes)
         {
             let error = error.with_operation("pagination.cursor");
-            self.failure = Some(error.clone());
-            return Err(error);
+            self.deferred_failure = Some(error);
+            self.rejected_page_items = page.items.len();
+            // Retain only the admitted request cursor. The returned page preserves
+            // its actual data; the next advance reports the error instead of EOF.
+            return Ok(Some(page));
         }
-        self.pages_read += 1;
         if page.items.is_empty() && page.next.is_some() {
             let error = Error::new(ErrorKind::Pagination).with_operation("pagination.empty_page");
             self.failure = Some(error.clone());
@@ -412,15 +440,17 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Items<'a, T, C> {
         Ok(self)
     }
     pub fn resume(&self) -> Option<Resume<C>> {
-        if !self.pending.is_empty() {
+        if !self.pending.is_empty()
+            || (self.pages.deferred_failure.is_some() && self.active_cursor.is_some())
+        {
             self.active_cursor.clone().map(|cursor| Resume {
                 cursor,
                 item_offset: self.item_offset,
             })
         } else {
-            self.pages.cursor.clone().map(|cursor| Resume {
-                cursor,
-                item_offset: self.initial_skip,
+            self.pages.resume().map(|mut position| {
+                position.item_offset = position.item_offset.max(self.initial_skip);
+                position
             })
         }
     }
@@ -473,6 +503,11 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Items<'a, T, C> {
         let mut wire_bytes = 2usize;
         let max_pages = options.max_pages.min(self.pages.max_pages);
         loop {
+            if self.pending.is_empty()
+                && let Some(error) = &self.pages.deferred_failure
+            {
+                self.pages.failure = Some(error.clone());
+            }
             if let Some(error) = &self.pages.failure {
                 return Err(CollectionError {
                     error: error.clone(),
@@ -495,6 +530,18 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Items<'a, T, C> {
                 None
             };
             if let Some(completion) = completion {
+                if let Some(error) = &self.pages.deferred_failure {
+                    return Err(CollectionError {
+                        error: error.clone(),
+                        partial: Box::new(Collection {
+                            items,
+                            completion: Completion::Interrupted,
+                            resume: self.resume(),
+                            pages_read: self.pages.pages_read,
+                            wire_bytes,
+                        }),
+                    });
+                }
                 return Ok(Collection {
                     items,
                     completion,
@@ -547,6 +594,18 @@ impl<'a, T: 'a, C: Clone + Eq + Hash + Serialize + Send + 'a> Items<'a, T, C> {
             match encoded {
                 Ok(bytes) => wire_bytes += bytes.len() + comma,
                 Err(error) if error.kind() == ErrorKind::Limit => {
+                    if let Some(error) = &self.pages.deferred_failure {
+                        return Err(CollectionError {
+                            error: error.clone(),
+                            partial: Box::new(Collection {
+                                items,
+                                completion: Completion::Interrupted,
+                                resume: self.resume(),
+                                pages_read: self.pages.pages_read,
+                                wire_bytes,
+                            }),
+                        });
+                    }
                     return Ok(Collection {
                         items,
                         completion: Completion::Truncated(Truncation::Bytes),

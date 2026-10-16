@@ -8,7 +8,7 @@ The facade exposes `profiles`, `topics`, `api_keys`, `customer_apps`, `deploymen
 
 Pass the AIRS management base explicitly, commonly `https://api.apps.paloaltonetworks.com/aisec`. `with_dashboard_endpoint` changes only dashboard reads. It preserves the provider, transport, session, limiter, and destination policy; an unadmitted destination fails locally. Dashboard always sends `x-tsg-id` taken from its OAuth context, including when the original client's optional tenant header was disabled.
 
-Canonical `ManagementClient::dlp(endpoint)` requires the separate DLP endpoint explicitly and the `dlp` feature. It reuses the caller's admitted destination policy and OAuth identity; it never treats the management base as the DLP service. The legacy `dlp_profiles().list` remains `/v1/mgmt/dlpprofiles` on the management endpoint.
+Canonical `ManagementClient::dlp(endpoint)` requires the separate DLP endpoint explicitly. The `management` feature always enables `dlp`; IAM remains independently selected with `iam`. It reuses the caller's admitted destination policy and OAuth identity; it never treats the management base as the DLP service. The legacy `dlp_profiles().list` remains `/v1/mgmt/dlpprofiles` on the management endpoint.
 
 All API requests, including injected transports, carry `service-name: api`, `User-Agent: PAN-AIRS/<crate-version>-rust-sdk`, and OAuth bearer authentication. The Rust User-Agent is a documented language/version difference from the baseline. JSON bodies carry `application/json`. Dashboard adds its tenant header; other management methods retain the caller's OAuth tenant-header setting. Credentials, queries, bodies, cursor values, and response contents are excluded from ordinary formatting.
 

@@ -83,6 +83,20 @@ def commands_for(phase):
                "--output", f"docs/checks/phase-04-rust-1.99.0-{feature}.json"]
               for feature in ("dlp", "iam")],
         ]
+    if phase == 5:
+        previous = [[value.replace("phase-04-rust-", "phase-05-rust-") for value in command]
+                    for command in commands_for(4)]
+        for command in previous:
+            if command[:3] == ["python", "tools/native_operations.py", "--check"]:
+                command[-1] = "5"
+        return previous + [
+            ["python", "tools/verify_native_fixtures.py"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_native_fixtures.py", "-v"],
+        ] + [
+            ["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", feature,
+             "--output", f"docs/checks/phase-05-rust-1.99.0-{feature}.json"]
+            for feature in ("model-security", "red-team")
+        ]
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 

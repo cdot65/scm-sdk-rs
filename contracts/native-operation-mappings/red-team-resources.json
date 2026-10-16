@@ -1,0 +1,1084 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.create",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.delete",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.get",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.getConfig",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "get_config"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.list",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.listAll",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "list_all",
+        "list_pages",
+        "list_items"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Explicit bounded CollectionResult with partial failure/truncation/resume replaces bare array and unlimited max=0; optional starting skip is a native extension.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.update",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.validate",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamAdaptersClient",
+      "methods": [
+        "validate"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.archivePromptSet",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "archive_prompt_set"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPrompt",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "create_prompt"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPromptSet",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "create_prompt_set"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPropertyName",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "create_property_name"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPropertyValue",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "create_property_value"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.deletePrompt",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "delete_prompt"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.downloadTemplate",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "download_template"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_upload_preserves_exact_bytes_mime_forced_filename_and_text_download",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_file_envelope_download_and_response_shape_limits_are_bounded"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Native bounded text decoding uses Fetch-compatible UTF-8 replacement and leading BOM removal on the shared transport."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPrompt",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "get_prompt"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPromptSet",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "get_prompt_set"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPromptSetReference",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "get_prompt_set_reference"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPromptSetVersionInfo",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "get_prompt_set_version_info"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials.",
+        "The inline version options object is expressed as Option<&str>."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPropertyNames",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "get_property_names"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPropertyValues",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "get_property_values"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials.",
+        "A single path segment encodes the property name once and rejects traversal/control values."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPropertyValuesMultiple",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "get_property_values_multiple"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listActivePromptSets",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "list_active_prompt_sets"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listAllPromptSets",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "list_all_prompt_sets",
+        "prompt_set_pages",
+        "prompt_set_items"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Explicit bounded CollectionResult with partial failure/truncation/resume replaces bare array and unlimited max=0; optional starting skip is a native extension.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listAllPrompts",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "list_all_prompts",
+        "prompt_pages",
+        "prompt_items"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Explicit bounded CollectionResult with partial failure/truncation/resume replaces bare array and unlimited max=0; optional starting skip is a native extension.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listPromptSets",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "list_prompt_sets"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listPrompts",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "list_prompts"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.updatePrompt",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "update_prompt"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.updatePromptSet",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "update_prompt_set"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::nullable_request_fields_keep_omission_null_and_value_in_exact_json_bytes"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.uploadPromptsCsv",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttacksClient",
+      "methods": [
+        "upload_prompts_csv"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_upload_preserves_exact_bytes_mime_forced_filename_and_text_download",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_file_envelope_download_and_response_shape_limits_are_bounded",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::expired_csv_budget_precedes_encoding_validation_and_credentials"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown.",
+        "Native BinaryFile and bounded multipart encoding replace Blob/FormData; forced prompts.csv filename and file MIME/bytes are preserved; boundary Content-Type is explicit."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/eula-client.ts:RedTeamEulaClient.accept",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamEulaClient",
+      "methods": [
+        "accept"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/eula.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::eula_methods_read_content_status_and_accept_only_when_called",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/eula-client.ts:RedTeamEulaClient.getContent",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamEulaClient",
+      "methods": [
+        "get_content"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/eula.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::eula_methods_read_content_status_and_accept_only_when_called"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/eula-client.ts:RedTeamEulaClient.getStatus",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamEulaClient",
+      "methods": [
+        "get_status"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/eula.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::eula_methods_read_content_status_and_accept_only_when_called"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.createChannel",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamNetworkBrokerClient",
+      "methods": [
+        "create_channel"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.getChannel",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamNetworkBrokerClient",
+      "methods": [
+        "get_channel"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.getChannelStats",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamNetworkBrokerClient",
+      "methods": [
+        "get_channel_stats"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.listChannels",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamNetworkBrokerClient",
+      "methods": [
+        "list_channels"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.updateChannel",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamNetworkBrokerClient",
+      "methods": [
+        "update_channel"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.create",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.delete",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.deleteCopilotToken",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "delete_copilot_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.exchangeCopilotToken",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "exchange_copilot_token"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.get",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getCopilotAuthUrl",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "get_copilot_auth_url"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getProfile",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "get_profile"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getTargetMetadata",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "get_target_metadata"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_file_envelope_download_and_response_shape_limits_are_bounded"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "JsonObject uses verified structurally equivalent frozen SID s012087 (TargetCreateRequestSchema.extra_info record beneath wrappers) for the inline z.record(z.unknown()) contract."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getTargetTemplates",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "get_target_templates"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.list",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.listAll",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "list_all",
+        "list_pages",
+        "list_items"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Explicit bounded CollectionResult with partial failure/truncation/resume replaces bare array and unlimited max=0; optional starting skip is a native extension.",
+        "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.probe",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "probe"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.startProfiling",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "start_profiling"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.update",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.updateProfile",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "update_profile"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.validateAuth",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamTargetsClient",
+      "methods": [
+        "validate_auth"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
+        "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle.",
+        "Mutations are never automatically replayed; ambiguous dispatched failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

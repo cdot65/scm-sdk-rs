@@ -1,0 +1,954 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/model-security/client.ts:ModelSecurityClient.getPyPIAuth",
+      "feature": "model-security",
+      "namespace": "airs.model_security",
+      "methods": [
+        "get_pypi_auth"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::pypi_credentials_are_returned_faithfully_without_following_or_formatting_the_url",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Data and management endpoints are explicit admitted destinations sharing one OAuth provider; returned PyPI credential URLs are never followed automatically."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.archive",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "archive"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.assignSecurityGroups",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "assign_security_groups"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.create",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.get",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.list",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listAll",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector.",
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listAllVersions",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "list_all_versions"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::opaque_version_cursor_limits_keep_rows_and_resume_without_duplication",
+        "crates/scm-sdk/tests/model_security_contracts.rs::version_walks_share_one_deadline_and_cancellation_including_buffered_rows",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listSecurityGroups",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "list_security_groups"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listVersions",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "list_versions"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.removeAssignment",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "remove_assignment"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.unarchive",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "unarchive"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.update",
+      "feature": "model-security",
+      "namespace": "airs.model_security.custom_rules",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_twelve_custom_rule_methods_preserve_strict_requests_and_207_results",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.getModel",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "get_model"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.getModelVersion",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "get_model_version"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listAllModelVersionFiles",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "list_all_model_version_files"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector.",
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listAllModelVersions",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "list_all_model_versions"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector.",
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listAllModels",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "list_all_models"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector.",
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listModelVersionFiles",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "list_model_version_files"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listModelVersions",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "list_model_versions"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listModels",
+      "feature": "model-security",
+      "namespace": "airs.model_security.models",
+      "methods": [
+        "list_models"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_eight_model_methods_use_distinct_model_and_version_paths",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.addLabels",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "add_labels"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.create",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.deleteLabels",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "delete_labels"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.get",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getEvaluation",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get_evaluation"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getEvaluations",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get_evaluations"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getFiles",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get_files"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getLabelKeys",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get_label_keys"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getLabelValues",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get_label_values"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getViolation",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get_violation"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getViolations",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "get_violations"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.list",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.listAll",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::capped_scan_totals_are_latched_until_short_or_empty_end_pages",
+        "crates/scm-sdk/tests/model_security_contracts.rs::mid_page_capped_resume_survives_serialized_snapshot_and_missing_replayed_flag",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector.",
+        "After any count_capped=true evidence, the walk ignores reported totals until a short or empty page; ScanCursor preserves that evidence across serialized mid-page resumes.",
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.setLabels",
+      "feature": "model-security",
+      "namespace": "airs.model_security.scans",
+      "methods": [
+        "set_labels"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_scan_methods_match_independent_data_plane_contracts",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.create",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.delete",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "delete"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.get",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.getRuleInstance",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "get_rule_instance"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.list",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.listAll",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector.",
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.listRuleInstanceVersions",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "list_rule_instance_versions"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.listRuleInstances",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "list_rule_instances"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.update",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "update"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.updateRuleInstance",
+      "feature": "model-security",
+      "namespace": "airs.model_security.groups",
+      "methods": [
+        "update_rule_instance"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_ten_group_methods_preserve_put_patch_states_and_snapshot_route",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_fourteen_mutations_preserve_unknown_outcomes_and_never_replay",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "No automatic mutation replay; ambiguous post-send failures retain RemoteOutcome::Unknown."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.get",
+      "feature": "model-security",
+      "namespace": "airs.model_security.rules",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_four_template_rule_methods_preserve_global_version_history",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.list",
+      "feature": "model-security",
+      "namespace": "airs.model_security.rules",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_four_template_rule_methods_preserve_global_version_history",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.listAll",
+      "feature": "model-security",
+      "namespace": "airs.model_security.rules",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_four_template_rule_methods_preserve_global_version_history",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Returns bounded CollectionResult with explicit completion, partial items and resume instead of an unbounded vector.",
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.listVersions",
+      "feature": "model-security",
+      "namespace": "airs.model_security.rules",
+      "methods": [
+        "list_versions"
+      ],
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_four_template_rule_methods_preserve_global_version_history",
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false",
+        "crates/scm-sdk/tests/model_security_contracts.rs::invalid_identifiers_queries_strict_bodies_and_oversized_inputs_are_pre_auth"
+      ],
+      "deliberateDifferences": [
+        "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

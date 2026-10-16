@@ -1,0 +1,173 @@
+use super::{RedTeamListOptions, common, models::*};
+use crate::{
+    Client, RawRequest, RequestOptions, Result,
+    engine::AuthKind,
+    pagination::{CollectOptions, CollectionResult, Items, Pages},
+};
+use http::Method;
+use std::fmt;
+
+#[derive(Clone, Default)]
+#[non_exhaustive]
+pub struct RedTeamScanListOptions {
+    pub skip: Option<u64>,
+    pub limit: Option<u32>,
+    pub search: Option<String>,
+    pub status: Option<String>,
+    pub job_type: Option<String>,
+    pub target_id: Option<String>,
+}
+impl fmt::Debug for RedTeamScanListOptions {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("RedTeamScanListOptions([REDACTED])")
+    }
+}
+impl From<RedTeamListOptions> for RedTeamScanListOptions {
+    fn from(value: RedTeamListOptions) -> Self {
+        Self {
+            skip: value.skip,
+            limit: value.limit,
+            search: value.search,
+            ..Self::default()
+        }
+    }
+}
+impl RedTeamScanListOptions {
+    fn query(&self) -> Result<Vec<(String, String)>> {
+        let mut query = common::listing(self.skip, self.limit, self.search.as_deref())?;
+        common::push_filter(&mut query, "status", self.status.as_deref())?;
+        common::push_filter(&mut query, "job_type", self.job_type.as_deref())?;
+        common::push_filter(&mut query, "target_id", self.target_id.as_deref())?;
+        Ok(query)
+    }
+}
+#[derive(Clone, Debug)]
+pub struct RedTeamScansClient {
+    pub(super) client: Client,
+}
+impl RedTeamScansClient {
+    pub fn new(client: Client) -> Result<Self> {
+        client.require_auth(AuthKind::OAuth)?;
+        Ok(Self {
+            client: client.with_tsg_header(false)?,
+        })
+    }
+    pub async fn create(
+        &self,
+        body: &JobCreateRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<JobResponse> {
+        self.client
+            .send_model(
+                RawRequest::new(Method::POST, "/v1/scan").named("airs.red_team.scans.create"),
+                body,
+                "JobCreateRequestSchema",
+                "JobResponseSchema",
+                options,
+            )
+            .await
+    }
+    pub async fn list(
+        &self,
+        params: &RedTeamScanListOptions,
+        options: Option<&RequestOptions>,
+    ) -> Result<JobListResponse> {
+        self.client
+            .send_contract(
+                RawRequest::read("/v1/scan")
+                    .query(params.query()?)
+                    .named("airs.red_team.scans.list"),
+                "JobListResponseSchema",
+                options,
+            )
+            .await
+    }
+    pub async fn get(&self, job_id: &str, options: Option<&RequestOptions>) -> Result<JobResponse> {
+        common::uuid(job_id)?;
+        self.client
+            .send_contract(
+                RawRequest::read("/v1/scan")
+                    .segment(job_id)?
+                    .named("airs.red_team.scans.get"),
+                "JobResponseSchema",
+                options,
+            )
+            .await
+    }
+    pub async fn abort(
+        &self,
+        job_id: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<JobAbortResponse> {
+        common::uuid(job_id)?;
+        self.client
+            .send_contract(
+                RawRequest::new(Method::POST, "/v1/scan")
+                    .segment(job_id)?
+                    .segment("abort")?
+                    .named("airs.red_team.scans.abort"),
+                "JobAbortResponseSchema",
+                options,
+            )
+            .await
+    }
+    pub async fn get_categories(
+        &self,
+        options: Option<&RequestOptions>,
+    ) -> Result<Vec<CategoryModel>> {
+        self.client
+            .send_contract(
+                RawRequest::read("/v1/categories").named("airs.red_team.scans.get_categories"),
+                "CategoryModelSchema[]",
+                options,
+            )
+            .await
+    }
+    pub fn list_pages(
+        &self,
+        params: &RedTeamScanListOptions,
+        max_pages: usize,
+        options: Option<&RequestOptions>,
+    ) -> Result<Pages<'static, JobResponse, u64>> {
+        params.query()?;
+        let client = self.clone();
+        let mut params = params.clone();
+        let initial = params.skip.unwrap_or(0);
+        let limit = params.limit.unwrap_or(50);
+        params.limit = Some(limit);
+        Pages::new(
+            initial,
+            self.client.operation_options(options)?,
+            self.client.session(),
+            max_pages,
+            move |skip, options| {
+                let client = client.clone();
+                let mut params = params.clone();
+                params.skip = Some(skip);
+                async move {
+                    let page = client.list(&params, Some(&options)).await?;
+                    common::skip_page(page.data, page.pagination, skip, limit)
+                }
+            },
+        )
+    }
+    pub fn list_items(
+        &self,
+        params: &RedTeamScanListOptions,
+        max_pages: usize,
+        options: Option<&RequestOptions>,
+    ) -> Result<Items<'static, JobResponse, u64>> {
+        Ok(self.list_pages(params, max_pages, options)?.items())
+    }
+    /// Explicit bounds, truncation, partial failures and resume positions replace silent caps.
+    pub async fn list_all(
+        &self,
+        params: &RedTeamScanListOptions,
+        collect: CollectOptions,
+        options: Option<&RequestOptions>,
+    ) -> CollectionResult<JobResponse, u64> {
+        self.list_pages(params, collect.max_pages, options)?
+            .collect(collect)
+            .await
+    }
+}

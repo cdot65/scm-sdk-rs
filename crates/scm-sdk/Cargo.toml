@@ -17,10 +17,12 @@ default = ["reqwest-transport", "scan"]
 reqwest-transport = ["dep:reqwest"]
 models = []
 scan = ["models"]
-management = ["models", "dlp", "iam"]
+management = ["models", "dlp"]
 dlp = ["models"]
 iam = ["models"]
 gateway = ["models"]
+model-security = ["models"]
+red-team = ["models"]
 
 [dependencies]
 base64 = "0.22.1"

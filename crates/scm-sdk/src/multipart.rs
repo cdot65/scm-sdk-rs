@@ -42,6 +42,7 @@ impl Multipart {
         }
         self.part(name, None, None, Bytes::copy_from_slice(value.as_bytes()))
     }
+    #[cfg(any(feature = "dlp", test))]
     pub(crate) fn file(&mut self, name: &str, file: &crate::models::BinaryFile) -> Result<()> {
         file.validate(self.max_bytes)?;
         self.part(

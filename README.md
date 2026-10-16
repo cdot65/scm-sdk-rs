@@ -8,9 +8,9 @@ Implementation proceeds through the gated [phases](docs/PHASES.md), following th
 records actual progress and Claude Code reviews. Implementation, independent
 contract verification, and live acceptance are measured separately.
 
-Current state: Phases 1–3 passed Claude Code review at 9/10 and are pushed.
-Phase 4 implements management, canonical DLP/IAM, and bounded pagination; it is
-undergoing verification and review. Model Security, Red Team, full Gateway,
+Current state: Phases 1–4 passed Claude Code review at 9/10 and are pushed.
+Phase 5 implements Model Security and Red Team and is undergoing verification
+and review. Full Gateway,
 experimental capabilities, and qualification follow in order. No SDK release is
 available yet.
 
@@ -20,7 +20,9 @@ See [development](docs/DEVELOPMENT.md) for native checks and CI coverage.
 The [model contracts](docs/MODELS.md), [validator](docs/VALIDATION.md), and
 [streaming interface](docs/STREAMING.md) describe the native data boundaries.
 Product guides cover [management](docs/MANAGEMENT.md), [DLP](docs/DLP.md),
-[IAM](docs/IAM.md), and [pagination and partial collections](docs/PAGINATION.md).
+[IAM](docs/IAM.md), [Model Security](docs/MODEL_SECURITY.md),
+[Red Team](docs/RED_TEAM.md), [Red Team resources](docs/RED_TEAM_RESOURCES.md),
+and [pagination and partial collections](docs/PAGINATION.md).
 
 ## Development contracts
 

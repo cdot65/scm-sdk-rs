@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "sourceSha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
-  "generatorSha256": "04af1e2c90a38aa15fbca2a9eafc97a1b242a96d6cd24415c2feb9b930b08d8b",
+  "generatorSha256": "32e8708e9c2495816fdbf3b322c92ccaf85b891b0c164e77207c71cb78df9021",
   "partialFamily": null,
   "structuralChecks": {
     "stringChecks": [
@@ -14597,9 +14597,14 @@
         "$ref": "t000038"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::AdapterListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions",
+        "crate::pagination::CollectOptions"
+      ],
+      "reason": "Implemented native list options plus explicit bounded CollectOptions; collection reports truncation/partial failure/resume, with starting skip as a native extension"
     },
     {
       "export": "AdapterListOptions",
@@ -14608,9 +14613,13 @@
         "$ref": "t000039"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::AdapterListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "AdapterOperationOptions",
@@ -14619,9 +14628,13 @@
         "$ref": "t000040"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::AdapterOperationOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "AgentGuardClientOptions",
@@ -14894,9 +14907,13 @@
         "$ref": "t002710"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::AttackListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "ChannelListOptions",
@@ -14905,9 +14922,13 @@
         "$ref": "t002798"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::ChannelListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented channel filters; status scalar or array maps to a repeated ordered Vec<String>, including duplicates; empty vector emits no status query"
     },
     {
       "export": "CollectAllOptions",
@@ -14938,9 +14959,13 @@
         "$ref": "t002953"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::CustomAttacksReportListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "CustomerAppListAllOptions",
@@ -14982,9 +15007,13 @@
         "$ref": "t003083"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::CustomRuleListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "DashboardApplicationsOverviewQuery",
@@ -15510,9 +15539,13 @@
         "$ref": "t003926"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::GoalListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "IamScopeCreateInput",
@@ -15587,9 +15620,14 @@
         "$ref": "t004362"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "model-security",
+      "reason": "ModelSecurityClient::new(Client, data Endpoint, management Endpoint) selects admitted data/management destinations and shares immutable OAuth/transport/session configuration",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint"
+      ]
     },
     {
       "export": "ModelSecurityCustomRulesClientOptions",
@@ -15598,9 +15636,10 @@
         "$ref": "t004365"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "model-security",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "ModelSecurityEvaluationListOptions",
@@ -15609,9 +15648,13 @@
         "$ref": "t004284"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityEvaluationListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityFileListOptions",
@@ -15620,9 +15663,13 @@
         "$ref": "t004291"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityFileListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityGroupListAllOptions",
@@ -15631,9 +15678,13 @@
         "$ref": "t004337"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityGroupListAllOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native list-all options include bounded pagination::CollectOptions; source filters are retained and collections report truncation/partial failure/resume"
     },
     {
       "export": "ModelSecurityGroupListOptions",
@@ -15642,9 +15693,13 @@
         "$ref": "t004334"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityGroupListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityGroupsClientOptions",
@@ -15653,9 +15708,10 @@
         "$ref": "t004366"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "model-security",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "ModelSecurityLabelListOptions",
@@ -15664,9 +15720,13 @@
         "$ref": "t004050"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityLabelListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityModelListAllOptions",
@@ -15675,9 +15735,13 @@
         "$ref": "t004234"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityModelListAllOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native list-all options include bounded pagination::CollectOptions; source filters are retained and collections report truncation/partial failure/resume"
     },
     {
       "export": "ModelSecurityModelListOptions",
@@ -15686,9 +15750,13 @@
         "$ref": "t004245"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityModelListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityModelsClientOptions",
@@ -15697,9 +15765,10 @@
         "$ref": "t004368"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "model-security",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "ModelSecurityModelVersionFileListAllOptions",
@@ -15708,9 +15777,13 @@
         "$ref": "t004237"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityModelVersionFileListAllOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native list-all options include bounded pagination::CollectOptions; source filters are retained and collections report truncation/partial failure/resume"
     },
     {
       "export": "ModelSecurityModelVersionFileListOptions",
@@ -15719,9 +15792,13 @@
         "$ref": "t004050"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityModelVersionFileListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityModelVersionListAllOptions",
@@ -15730,9 +15807,13 @@
         "$ref": "t004240"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityModelVersionListAllOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native list-all options include bounded pagination::CollectOptions; source filters are retained and collections report truncation/partial failure/resume"
     },
     {
       "export": "ModelSecurityModelVersionListOptions",
@@ -15741,9 +15822,13 @@
         "$ref": "t004252"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityModelVersionListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityRuleInstanceListOptions",
@@ -15752,9 +15837,13 @@
         "$ref": "t004341"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityRuleInstanceListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityRuleListAllOptions",
@@ -15763,9 +15852,13 @@
         "$ref": "t004359"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityRuleListAllOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native list-all options include bounded pagination::CollectOptions; source filters are retained and collections report truncation/partial failure/resume"
     },
     {
       "export": "ModelSecurityRuleListOptions",
@@ -15774,9 +15867,13 @@
         "$ref": "t004356"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityRuleListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityRulesClientOptions",
@@ -15785,9 +15882,10 @@
         "$ref": "t004370"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "model-security",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "ModelSecurityScanListAllOptions",
@@ -15796,9 +15894,13 @@
         "$ref": "t004316"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityScanListAllOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native list-all options include bounded pagination::CollectOptions; source filters are retained and collections report truncation/partial failure/resume"
     },
     {
       "export": "ModelSecurityScanListOptions",
@@ -15807,9 +15909,13 @@
         "$ref": "t004310"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityScanListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "ModelSecurityScansClientOptions",
@@ -15818,9 +15924,10 @@
         "$ref": "t004371"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "model-security",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "ModelSecurityViolationListOptions",
@@ -15829,9 +15936,13 @@
         "$ref": "t004050"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::ModelSecurityViolationListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "OAuthClientOptions",
@@ -15906,9 +16017,14 @@
         "$ref": "t004434"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::PromptListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions",
+        "crate::pagination::CollectOptions"
+      ],
+      "reason": "Implemented native list options plus explicit bounded CollectOptions; collection reports truncation/partial failure/resume, with starting skip as a native extension"
     },
     {
       "export": "PromptListOptions",
@@ -15917,9 +16033,13 @@
         "$ref": "t004435"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::PromptListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "PromptsBySetListOptions",
@@ -15928,9 +16048,13 @@
         "$ref": "t004436"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::PromptsBySetListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "PromptSetListAllOptions",
@@ -15939,9 +16063,14 @@
         "$ref": "t004437"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::PromptSetListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions",
+        "crate::pagination::CollectOptions"
+      ],
+      "reason": "Implemented native list options plus explicit bounded CollectOptions; collection reports truncation/partial failure/resume, with starting skip as a native extension"
     },
     {
       "export": "PromptSetListOptions",
@@ -15950,9 +16079,13 @@
         "$ref": "t004438"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::PromptSetListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "PromptSetsReportOptions",
@@ -15961,9 +16094,13 @@
         "$ref": "t004439"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::PromptSetsReportOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "RedTeamAdaptersClientOptions",
@@ -15972,9 +16109,10 @@
         "$ref": "t004502"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamClientOptions",
@@ -15983,9 +16121,14 @@
         "$ref": "t004883"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "RedTeamClient::new(Client, management Endpoint, broker Endpoint) uses explicit admitted destinations and shared immutable OAuth/transport/session configuration",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint"
+      ]
     },
     {
       "export": "RedTeamCustomAttackReportsClientOptions",
@@ -15994,9 +16137,10 @@
         "$ref": "t004898"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamCustomAttacksClientOptions",
@@ -16005,9 +16149,10 @@
         "$ref": "t004899"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamEulaClientOptions",
@@ -16016,9 +16161,10 @@
         "$ref": "t004907"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamInstancesClientOptions",
@@ -16027,9 +16173,10 @@
         "$ref": "t004908"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamListOptions",
@@ -16038,9 +16185,13 @@
         "$ref": "t004050"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::RedTeamListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "RedTeamNetworkBrokerClientOptions",
@@ -16049,9 +16200,10 @@
         "$ref": "t004909"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamReportsClientOptions",
@@ -16060,9 +16212,10 @@
         "$ref": "t004911"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamScanListAllOptions",
@@ -16071,9 +16224,14 @@
         "$ref": "t004730"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::RedTeamScanListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions",
+        "crate::pagination::CollectOptions"
+      ],
+      "reason": "Implemented native list options plus explicit bounded CollectOptions; collection reports truncation/partial failure/resume, with starting skip as a native extension"
     },
     {
       "export": "RedTeamScanListOptions",
@@ -16082,9 +16240,13 @@
         "$ref": "t004727"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::RedTeamScanListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "RedTeamScansClientOptions",
@@ -16093,9 +16255,10 @@
         "$ref": "t004912"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "RedTeamTargetsClientOptions",
@@ -16104,9 +16267,10 @@
         "$ref": "t004913"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "red-team",
+      "reason": "Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id"
     },
     {
       "export": "ScanCallOptions",
@@ -16148,9 +16312,13 @@
         "$ref": "t004206"
       },
       "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::model_security::SnapshotVersionListOptions",
+      "nativeFeature": "model-security",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions"
     },
     {
       "export": "SyncScanOptions",
@@ -16170,9 +16338,14 @@
         "$ref": "t004861"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::TargetListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions",
+        "crate::pagination::CollectOptions"
+      ],
+      "reason": "Implemented native list options plus explicit bounded CollectOptions; collection reports truncation/partial failure/resume, with starting skip as a native extension"
     },
     {
       "export": "TargetListOptions",
@@ -16181,9 +16354,13 @@
         "$ref": "t004852"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::TargetListOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "TargetOperationOptions",
@@ -16192,9 +16369,13 @@
         "$ref": "t004764"
       },
       "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::red_team::TargetOperationOptions",
+      "nativeFeature": "red-team",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions"
     },
     {
       "export": "TokenInfo",
@@ -16255,39 +16436,6 @@
   "generatedDeclarations": 1958,
   "aliases": 53,
   "deferred": [
-    {
-      "export": "AdapterListAllOptions",
-      "source": "src/red-team/adapters-client.ts",
-      "sourceType": {
-        "$ref": "t000038"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AdapterListOptions",
-      "source": "src/red-team/adapters-client.ts",
-      "sourceType": {
-        "$ref": "t000039"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AdapterOperationOptions",
-      "source": "src/red-team/adapters-client.ts",
-      "sourceType": {
-        "$ref": "t000040"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
     {
       "export": "AgentGuardClientOptions",
       "source": "src/agentguard/client.ts",
@@ -16520,28 +16668,6 @@
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
-      "export": "AttackListOptions",
-      "source": "src/red-team/reports-client.ts",
-      "sourceType": {
-        "$ref": "t002710"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ChannelListOptions",
-      "source": "src/red-team/network-broker-client.ts",
-      "sourceType": {
-        "$ref": "t002798"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
       "export": "CollectAllOptions",
       "source": "src/listing.ts",
       "sourceType": {
@@ -16550,17 +16676,6 @@
       "namespace": "shared",
       "status": "deferred_client_adapter",
       "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "CustomAttacksReportListOptions",
-      "source": "src/red-team/custom-attack-reports-client.ts",
-      "sourceType": {
-        "$ref": "t002953"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
@@ -16594,17 +16709,6 @@
       "namespace": "airs::gateway",
       "status": "deferred_client_adapter",
       "owningPhase": 6,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "CustomRuleListOptions",
-      "source": "src/model-security/custom-rules-client.ts",
-      "sourceType": {
-        "$ref": "t003083"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
@@ -16817,17 +16921,6 @@
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
-      "export": "GoalListOptions",
-      "source": "src/red-team/reports-client.ts",
-      "sourceType": {
-        "$ref": "t003926"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
       "export": "InitOptions",
       "source": "src/configuration.ts",
       "sourceType": {
@@ -16858,259 +16951,6 @@
       "namespace": "airs::management",
       "status": "deferred_client_adapter",
       "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityClientOptions",
-      "source": "src/model-security/client.ts",
-      "sourceType": {
-        "$ref": "t004362"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityCustomRulesClientOptions",
-      "source": "src/model-security/custom-rules-client.ts",
-      "sourceType": {
-        "$ref": "t004365"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityEvaluationListOptions",
-      "source": "src/model-security/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004284"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityFileListOptions",
-      "source": "src/model-security/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004291"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityGroupListAllOptions",
-      "source": "src/model-security/security-groups-client.ts",
-      "sourceType": {
-        "$ref": "t004337"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityGroupListOptions",
-      "source": "src/model-security/security-groups-client.ts",
-      "sourceType": {
-        "$ref": "t004334"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityGroupsClientOptions",
-      "source": "src/model-security/security-groups-client.ts",
-      "sourceType": {
-        "$ref": "t004366"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityLabelListOptions",
-      "source": "src/model-security/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004050"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityModelListAllOptions",
-      "source": "src/model-security/models-client.ts",
-      "sourceType": {
-        "$ref": "t004234"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityModelListOptions",
-      "source": "src/model-security/models-client.ts",
-      "sourceType": {
-        "$ref": "t004245"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityModelsClientOptions",
-      "source": "src/model-security/models-client.ts",
-      "sourceType": {
-        "$ref": "t004368"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityModelVersionFileListAllOptions",
-      "source": "src/model-security/models-client.ts",
-      "sourceType": {
-        "$ref": "t004237"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityModelVersionFileListOptions",
-      "source": "src/model-security/models-client.ts",
-      "sourceType": {
-        "$ref": "t004050"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityModelVersionListAllOptions",
-      "source": "src/model-security/models-client.ts",
-      "sourceType": {
-        "$ref": "t004240"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityModelVersionListOptions",
-      "source": "src/model-security/models-client.ts",
-      "sourceType": {
-        "$ref": "t004252"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityRuleInstanceListOptions",
-      "source": "src/model-security/security-groups-client.ts",
-      "sourceType": {
-        "$ref": "t004341"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityRuleListAllOptions",
-      "source": "src/model-security/security-rules-client.ts",
-      "sourceType": {
-        "$ref": "t004359"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityRuleListOptions",
-      "source": "src/model-security/security-rules-client.ts",
-      "sourceType": {
-        "$ref": "t004356"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityRulesClientOptions",
-      "source": "src/model-security/security-rules-client.ts",
-      "sourceType": {
-        "$ref": "t004370"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityScanListAllOptions",
-      "source": "src/model-security/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004316"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityScanListOptions",
-      "source": "src/model-security/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004310"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityScansClientOptions",
-      "source": "src/model-security/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004371"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ModelSecurityViolationListOptions",
-      "source": "src/model-security/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004050"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
@@ -17169,215 +17009,6 @@
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {
-      "export": "PromptListAllOptions",
-      "source": "src/red-team/custom-attacks-client.ts",
-      "sourceType": {
-        "$ref": "t004434"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "PromptListOptions",
-      "source": "src/red-team/custom-attacks-client.ts",
-      "sourceType": {
-        "$ref": "t004435"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "PromptsBySetListOptions",
-      "source": "src/red-team/custom-attack-reports-client.ts",
-      "sourceType": {
-        "$ref": "t004436"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "PromptSetListAllOptions",
-      "source": "src/red-team/custom-attacks-client.ts",
-      "sourceType": {
-        "$ref": "t004437"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "PromptSetListOptions",
-      "source": "src/red-team/custom-attacks-client.ts",
-      "sourceType": {
-        "$ref": "t004438"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "PromptSetsReportOptions",
-      "source": "src/red-team/custom-attack-reports-client.ts",
-      "sourceType": {
-        "$ref": "t004439"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamAdaptersClientOptions",
-      "source": "src/red-team/adapters-client.ts",
-      "sourceType": {
-        "$ref": "t004502"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamClientOptions",
-      "source": "src/red-team/client.ts",
-      "sourceType": {
-        "$ref": "t004883"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamCustomAttackReportsClientOptions",
-      "source": "src/red-team/custom-attack-reports-client.ts",
-      "sourceType": {
-        "$ref": "t004898"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamCustomAttacksClientOptions",
-      "source": "src/red-team/custom-attacks-client.ts",
-      "sourceType": {
-        "$ref": "t004899"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamEulaClientOptions",
-      "source": "src/red-team/eula-client.ts",
-      "sourceType": {
-        "$ref": "t004907"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamInstancesClientOptions",
-      "source": "src/red-team/instances-client.ts",
-      "sourceType": {
-        "$ref": "t004908"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamListOptions",
-      "source": "src/red-team/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004050"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamNetworkBrokerClientOptions",
-      "source": "src/red-team/network-broker-client.ts",
-      "sourceType": {
-        "$ref": "t004909"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamReportsClientOptions",
-      "source": "src/red-team/reports-client.ts",
-      "sourceType": {
-        "$ref": "t004911"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamScanListAllOptions",
-      "source": "src/red-team/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004730"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamScanListOptions",
-      "source": "src/red-team/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004727"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamScansClientOptions",
-      "source": "src/red-team/scans-client.ts",
-      "sourceType": {
-        "$ref": "t004912"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "RedTeamTargetsClientOptions",
-      "source": "src/red-team/targets-client.ts",
-      "sourceType": {
-        "$ref": "t004913"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
       "export": "ScanLogQueryOptions",
       "source": "src/management/scan-logs.ts",
       "sourceType": {
@@ -17397,50 +17028,6 @@
       "namespace": "airs::management",
       "status": "deferred_client_adapter",
       "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "SnapshotVersionListOptions",
-      "source": "src/model-security/custom-rules-client.ts",
-      "sourceType": {
-        "$ref": "t004206"
-      },
-      "namespace": "airs::model_security",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "TargetListAllOptions",
-      "source": "src/red-team/targets-client.ts",
-      "sourceType": {
-        "$ref": "t004861"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "TargetListOptions",
-      "source": "src/red-team/targets-client.ts",
-      "sourceType": {
-        "$ref": "t004852"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "TargetOperationOptions",
-      "source": "src/red-team/targets-client.ts",
-      "sourceType": {
-        "$ref": "t004764"
-      },
-      "namespace": "airs::red_team",
-      "status": "deferred_client_adapter",
-      "owningPhase": 5,
       "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
     },
     {

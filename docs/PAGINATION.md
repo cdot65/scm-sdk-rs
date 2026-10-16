@@ -43,7 +43,9 @@ own defaults. Native collections always report truncation; the TypeScript
 Generic cursor types implement `Serialize` for resource accounting. Default
 `CursorLimits` allow 4 KiB per serialized cursor and 4 MiB of retained history.
 `Pages::new_with_cursor_limits` accepts explicitly validated alternatives, capped
-at 1 MiB per cursor and 64 MiB total. Initial, resumed, and returned next cursors
+at 1 MiB per cursor and 64 MiB total. Product page iterators also accept
+`.with_cursor_limits(limits)` before the first fetch; apply this before
+`.items().resume_from(position)` when resuming an opaque cursor. Initial, resumed, and returned next cursors
 are checked before cloning them into retained state. These bounds count encoded
 data; caller-defined serializers, hash functions, and fetch callbacks are trusted
 integration code. Ordinary formatting redacts cursor and row data.
@@ -55,3 +57,12 @@ resource limits independently of collection limits.
 
 See the compiled [pagination example](../crates/scm-sdk/examples/pagination.rs)
 and [management example](../crates/scm-sdk/examples/management.rs).
+
+If a received next cursor exceeds its bound, the fetched page's rows remain
+available. A page walk returns the actual page, then fails on its next advance;
+an item walk yields the accepted rows, then fails. Collection errors retain those
+rows within the collection bounds, count the page, and resume at the consumed
+offset of that page. The rejected next cursor is not cloned into iterator state.
+Start a fresh iterator with explicitly larger cursor limits and apply the saved
+resume position to continue. Raising limits after a walk has started is rejected.
+A known cursor failure never becomes successful completion or a silent cap result.

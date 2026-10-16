@@ -24,7 +24,7 @@ mod models;
 #[cfg(feature = "models")]
 pub mod shared;
 
-#[cfg(feature = "dlp")]
+#[cfg(any(feature = "dlp", feature = "red-team"))]
 mod multipart;
 
 mod engine;

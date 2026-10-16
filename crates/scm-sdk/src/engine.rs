@@ -195,12 +195,20 @@ impl BufferedResponse {
     feature = "management",
     feature = "gateway",
     feature = "dlp",
-    feature = "iam"
+    feature = "iam",
+    feature = "model-security",
+    feature = "red-team"
 ))]
 pub(crate) enum AuthKind {
     #[cfg(feature = "scan")]
     Scan,
-    #[cfg(any(feature = "management", feature = "dlp", feature = "iam"))]
+    #[cfg(any(
+        feature = "management",
+        feature = "dlp",
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
+    ))]
     OAuth,
     #[cfg(feature = "gateway")]
     Runtime,
@@ -359,7 +367,9 @@ impl Client {
         feature = "management",
         feature = "gateway",
         feature = "dlp",
-        feature = "iam"
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
     ))]
     pub(crate) fn contract_limits(
         &self,
@@ -434,13 +444,21 @@ impl Client {
         feature = "management",
         feature = "gateway",
         feature = "dlp",
-        feature = "iam"
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
     ))]
     pub(crate) fn require_auth(&self, kind: AuthKind) -> Result<()> {
         let valid = match kind {
             #[cfg(feature = "scan")]
             AuthKind::Scan => matches!(&self.inner.auth, Authentication::Scan { .. }),
-            #[cfg(any(feature = "management", feature = "dlp", feature = "iam"))]
+            #[cfg(any(
+                feature = "management",
+                feature = "dlp",
+                feature = "iam",
+                feature = "model-security",
+                feature = "red-team"
+            ))]
             AuthKind::OAuth => matches!(&self.inner.auth, Authentication::OAuth { .. }),
             #[cfg(feature = "gateway")]
             AuthKind::Runtime => matches!(&self.inner.auth, Authentication::RuntimeKey { .. }),
@@ -456,7 +474,9 @@ impl Client {
         feature = "management",
         feature = "gateway",
         feature = "dlp",
-        feature = "iam"
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
     ))]
     pub(crate) async fn validated_json<T: Serialize>(
         &self,
@@ -484,7 +504,9 @@ impl Client {
         feature = "management",
         feature = "gateway",
         feature = "dlp",
-        feature = "iam"
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
     ))]
     async fn prepare_model<T: Serialize>(
         &self,
@@ -511,7 +533,9 @@ impl Client {
         feature = "management",
         feature = "gateway",
         feature = "dlp",
-        feature = "iam"
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
     ))]
     pub(crate) async fn send_model<T: Serialize, R: DeserializeOwned>(
         &self,
@@ -533,7 +557,9 @@ impl Client {
         feature = "management",
         feature = "gateway",
         feature = "dlp",
-        feature = "iam"
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
     ))]
     pub(crate) async fn send_contract<R: DeserializeOwned>(
         &self,
@@ -548,7 +574,23 @@ impl Client {
             .await
             .map_err(|e| response.annotate(e).with_operation(name))
     }
-    #[cfg(feature = "dlp")]
+    #[cfg(feature = "red-team")]
+    pub(crate) async fn send_model_optional<T: Serialize, R: DeserializeOwned>(
+        &self,
+        request: RawRequest,
+        body: &T,
+        request_schema: &str,
+        response_schema: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<Option<R>> {
+        let options = self.operation_options(options)?;
+        let request = self
+            .prepare_model(request, body, request_schema, &options)
+            .await?;
+        self.send_optional_contract(request, response_schema, Some(&options))
+            .await
+    }
+    #[cfg(any(feature = "dlp", feature = "red-team"))]
     pub(crate) async fn send_optional_contract<R: DeserializeOwned>(
         &self,
         request: RawRequest,
@@ -571,7 +613,9 @@ impl Client {
         feature = "management",
         feature = "gateway",
         feature = "dlp",
-        feature = "iam"
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team"
     ))]
     async fn decode_contract<R: DeserializeOwned>(
         &self,
@@ -924,6 +968,31 @@ impl Client {
             e.with_operation(name).with_outcome(outcome)
         })
     }
+    /// Read a bounded text response using UTF-8 replacement decoding, as Fetch does.
+    /// A leading UTF-8 BOM is omitted; content-type does not select another encoding.
+    pub async fn send_text(
+        &self,
+        request: RawRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<String> {
+        let name = request.name;
+        let options = self.operation_options(options)?;
+        let response = self.send_buffered(request, Some(&options)).await?;
+        let text = options
+            .run(&self.inner.session, async {
+                let body = response
+                    .body
+                    .strip_prefix(&[0xef, 0xbb, 0xbf])
+                    .unwrap_or(&response.body);
+                Ok(String::from_utf8_lossy(body).into_owned())
+            })
+            .await
+            .map_err(|e| response.annotate(e).with_operation(name))?;
+        options
+            .run(&self.inner.session, async { Ok(text) })
+            .await
+            .map_err(|e| response.annotate(e).with_operation(name))
+    }
     pub async fn send_json<R: DeserializeOwned>(
         &self,
         request: RawRequest,
@@ -989,7 +1058,9 @@ fn auth_rejection(status: StatusCode, headers: &HeaderMap) -> bool {
     feature = "management",
     feature = "gateway",
     feature = "dlp",
-    feature = "iam"
+    feature = "iam",
+    feature = "model-security",
+    feature = "red-team"
 ))]
 fn normalize_contract(
     schema: &str,

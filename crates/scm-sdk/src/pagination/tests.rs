@@ -464,8 +464,10 @@ async fn cursor_values_and_retained_history_have_independent_bounds() {
     .unwrap();
     let error = stream.collect(CollectOptions::default()).await.unwrap_err();
     assert_eq!(error.error().kind(), ErrorKind::Limit);
-    assert!(error.partial().items.is_empty());
+    assert_eq!(error.partial().items, vec![1]);
+    assert_eq!(error.partial().pages_read, 1);
     assert_eq!(error.partial().resume.as_ref().unwrap().cursor, "small");
+    assert_eq!(error.partial().resume.as_ref().unwrap().item_offset, 1);
     let limits = CursorLimits {
         max_bytes: 4,
         max_retained_bytes: 4,
@@ -494,4 +496,113 @@ async fn cursor_values_and_retained_history_have_independent_bounds() {
             item_offset: 0
         })
     );
+}
+
+#[tokio::test]
+async fn rejected_next_cursor_retains_rows_and_can_resume_with_larger_bounds() {
+    let long = "opaque".repeat(1024);
+    let make = || {
+        let long = long.clone();
+        Pages::new(
+            "start".to_owned(),
+            options(),
+            Session::new(),
+            10,
+            move |cursor, _| {
+                let long = long.clone();
+                async move {
+                    Ok(if cursor == "start" {
+                        Page {
+                            items: vec![1_u32, 2],
+                            next: Some(long),
+                        }
+                    } else {
+                        Page {
+                            items: vec![3],
+                            next: None,
+                        }
+                    })
+                }
+            },
+        )
+        .unwrap()
+    };
+    let failure = make().collect(CollectOptions::default()).await.unwrap_err();
+    assert_eq!(failure.error().kind(), ErrorKind::Limit);
+    assert_eq!(failure.partial().items, vec![1, 2]);
+    assert_eq!(failure.partial().pages_read, 1);
+    let resume = failure.partial().resume.clone().unwrap();
+    assert_eq!(
+        resume,
+        Resume {
+            cursor: "start".into(),
+            item_offset: 2
+        }
+    );
+    let limits = CursorLimits {
+        max_bytes: 16 * 1024,
+        ..CursorLimits::default()
+    };
+    let result = make()
+        .with_cursor_limits(limits)
+        .unwrap()
+        .items()
+        .resume_from(resume)
+        .unwrap()
+        .collect(CollectOptions::default())
+        .await
+        .unwrap();
+    assert_eq!(result.items, vec![3]);
+    assert!(result.is_complete());
+
+    let mut items = make().items();
+    assert_eq!(items.next().await.unwrap(), Some(1));
+    assert_eq!(items.next().await.unwrap(), Some(2));
+    assert_eq!(items.next().await.unwrap_err().kind(), ErrorKind::Limit);
+    assert_eq!(items.resume().unwrap().item_offset, 2);
+    assert_eq!(items.next().await.unwrap_err().kind(), ErrorKind::Limit);
+
+    let mut pages = make();
+    let page = pages.next_page().await.unwrap().unwrap();
+    assert_eq!(page.items, vec![1, 2]);
+    assert_eq!(page.next, Some(long));
+    assert_eq!(pages.resume().unwrap().item_offset, 2);
+    assert_eq!(
+        pages.next_page().await.unwrap_err().kind(),
+        ErrorKind::Limit
+    );
+    assert_eq!(
+        pages.with_cursor_limits(limits).unwrap_err().kind(),
+        ErrorKind::Validation
+    );
+}
+
+#[tokio::test]
+async fn rejected_cursor_errors_remain_visible_at_collection_limits() {
+    for byte_limit in [false, true] {
+        let stream = Pages::new(
+            "start".to_owned(),
+            options(),
+            Session::new(),
+            10,
+            |_, _| async {
+                Ok(Page {
+                    items: vec![1_u32, 2],
+                    next: Some("x".repeat(4096)),
+                })
+            },
+        )
+        .unwrap();
+        let collect = if byte_limit {
+            CollectOptions::default().with_max_bytes(3).unwrap()
+        } else {
+            CollectOptions::default().with_max_items(1).unwrap()
+        };
+        let failure = stream.collect(collect).await.unwrap_err();
+        assert_eq!(failure.error().kind(), ErrorKind::Limit);
+        assert_eq!(failure.partial().completion, Completion::Interrupted);
+        assert_eq!(failure.partial().items, vec![1]);
+        assert_eq!(failure.partial().resume.as_ref().unwrap().item_offset, 1);
+        assert_eq!(failure.partial().pages_read, 1);
+    }
 }

@@ -717,6 +717,66 @@ class Generator:
             elif name in {"ContentOptions","ScanCallOptions","SyncScanOptions"}:
                 target={"ContentOptions":"crate::airs::scan::ContentBuilder","ScanCallOptions":"crate::RequestOptions","SyncScanOptions":"crate::airs::scan::SyncScanOptions"}[name]
                 row.update(status="native_client_mapping",rustType=target,reason="Implemented native scan builder or per-call deadline/cancellation/retry options")
+            elif family=="red_team":
+                # Public behavioral options are handwritten client APIs, not JSON models.
+                options={
+                    "RedTeamListOptions":"RedTeamListOptions",
+                    "RedTeamScanListOptions":"RedTeamScanListOptions",
+                    "RedTeamScanListAllOptions":"RedTeamScanListOptions",
+                    "AttackListOptions":"AttackListOptions","GoalListOptions":"GoalListOptions",
+                    "PromptsBySetListOptions":"PromptsBySetListOptions",
+                    "PromptSetsReportOptions":"PromptSetsReportOptions",
+                    "CustomAttacksReportListOptions":"CustomAttacksReportListOptions",
+                    "PromptSetListOptions":"PromptSetListOptions","PromptSetListAllOptions":"PromptSetListOptions",
+                    "PromptListOptions":"PromptListOptions","PromptListAllOptions":"PromptListOptions",
+                    "TargetListOptions":"TargetListOptions","TargetListAllOptions":"TargetListOptions",
+                    "TargetOperationOptions":"TargetOperationOptions",
+                    "AdapterListOptions":"AdapterListOptions","AdapterListAllOptions":"AdapterListOptions",
+                    "AdapterOperationOptions":"AdapterOperationOptions","ChannelListOptions":"ChannelListOptions",
+                }
+                configs={
+                    "RedTeamClientOptions","RedTeamScansClientOptions","RedTeamReportsClientOptions",
+                    "RedTeamInstancesClientOptions","RedTeamCustomAttackReportsClientOptions",
+                    "RedTeamCustomAttacksClientOptions","RedTeamTargetsClientOptions",
+                    "RedTeamAdaptersClientOptions","RedTeamNetworkBrokerClientOptions","RedTeamEulaClientOptions",
+                }
+                if name in options:
+                    row.update(status="native_client_mapping",rustType="crate::airs::red_team::"+options[name],nativeFeature="red-team",additionalTypes=["crate::RequestOptions"],reason="Implemented native Red Team query/operation options; explicit total deadline and cancellation are separate RequestOptions")
+                    if "ListAllOptions" in name:
+                        row["additionalTypes"].append("crate::pagination::CollectOptions")
+                        row["reason"]="Implemented native list options plus explicit bounded CollectOptions; collection reports truncation/partial failure/resume, with starting skip as a native extension"
+                    if name=="ChannelListOptions":row["reason"]="Implemented channel filters; status scalar or array maps to a repeated ordered Vec<String>, including duplicates; empty vector emits no status query"
+                elif name in configs:
+                    row.update(status="native_client_mapping",rustType="crate::Client",nativeFeature="red-team",reason="Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id")
+                    if name=="RedTeamClientOptions":
+                        row.update(additionalTypes=["crate::ClientBuilder","crate::Endpoint"],reason="RedTeamClient::new(Client, management Endpoint, broker Endpoint) uses explicit admitted destinations and shared immutable OAuth/transport/session configuration")
+                else:raise ValueError(f"Red Team native behavioral adapter lacks an explicit mapping: {name}")
+            elif family=="model_security":
+                options={
+                    "ModelSecurityScanListOptions","ModelSecurityScanListAllOptions",
+                    "ModelSecurityEvaluationListOptions","ModelSecurityFileListOptions",
+                    "ModelSecurityLabelListOptions","ModelSecurityViolationListOptions",
+                    "ModelSecurityModelListOptions","ModelSecurityModelListAllOptions",
+                    "ModelSecurityModelVersionListOptions","ModelSecurityModelVersionListAllOptions",
+                    "ModelSecurityModelVersionFileListOptions","ModelSecurityModelVersionFileListAllOptions",
+                    "ModelSecurityGroupListOptions","ModelSecurityGroupListAllOptions",
+                    "ModelSecurityRuleInstanceListOptions","ModelSecurityRuleListOptions",
+                    "ModelSecurityRuleListAllOptions","CustomRuleListOptions","SnapshotVersionListOptions",
+                }
+                configs={
+                    "ModelSecurityClientOptions","ModelSecurityScansClientOptions",
+                    "ModelSecurityModelsClientOptions","ModelSecurityRulesClientOptions",
+                    "ModelSecurityGroupsClientOptions","ModelSecurityCustomRulesClientOptions",
+                }
+                if name in options:
+                    row.update(status="native_client_mapping",rustType="crate::airs::model_security::"+name,nativeFeature="model-security",additionalTypes=["crate::RequestOptions"],reason="Implemented typed Model Security query options; per-call total deadline/cancellation/retry controls are separate RequestOptions")
+                    if "ListAllOptions" in name:
+                        row["reason"]="Implemented native list-all options include bounded pagination::CollectOptions; source filters are retained and collections report truncation/partial failure/resume"
+                elif name in configs:
+                    row.update(status="native_client_mapping",rustType="crate::Client",nativeFeature="model-security",reason="Explicit OAuth Client configuration replaces internal options/environment fallback; constructors share provider/policy/session/limits and omit x-tsg-id")
+                    if name=="ModelSecurityClientOptions":
+                        row.update(additionalTypes=["crate::ClientBuilder","crate::Endpoint"],reason="ModelSecurityClient::new(Client, data Endpoint, management Endpoint) selects admitted data/management destinations and shares immutable OAuth/transport/session configuration")
+                else:raise ValueError(f"Model Security native behavioral adapter lacks an explicit mapping: {name}")
             elif name in {"AISecSDKExceptionMetadata","AISecSDKProblemDetails"}:
                 row.update(status="native_foundation_mapping",rustType="crate::Error",reason="Rust Error exposes bounded sanitized diagnostics; JavaScript exception diagnostic bags are not request data")
             else:

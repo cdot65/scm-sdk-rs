@@ -106,7 +106,6 @@ impl ManagementClient {
         OAuthManagementClient::new(self.client.clone())
     }
     /// Canonical DLP requires its own explicitly admitted endpoint.
-    #[cfg(feature = "dlp")]
     pub fn dlp(&self, endpoint: Endpoint) -> Result<crate::dlp::DlpClient> {
         crate::dlp::DlpClient::new(self.client.with_endpoint(endpoint)?)
     }
@@ -136,8 +135,19 @@ fn uuid(value: &str) -> Result<()> {
     }
 }
 #[cfg(feature = "management")]
+const ECMASCRIPT_WHITESPACE: &[char] = &[
+    '\u{0009}', '\u{000a}', '\u{000b}', '\u{000c}', '\u{000d}', '\u{0020}', '\u{00a0}', '\u{1680}',
+    '\u{2000}', '\u{2001}', '\u{2002}', '\u{2003}', '\u{2004}', '\u{2005}', '\u{2006}', '\u{2007}',
+    '\u{2008}', '\u{2009}', '\u{200a}', '\u{2028}', '\u{2029}', '\u{202f}', '\u{205f}', '\u{3000}',
+    '\u{feff}',
+];
+#[cfg(feature = "management")]
 fn nonblank(value: &str) -> Result<()> {
-    if value.trim_matches(|c|matches!(c,'\u{0009}'..='\u{000d}'|'\u{0020}'|'\u{00a0}'|'\u{1680}'|'\u{2000}'..='\u{200a}'|'\u{2028}'|'\u{2029}'|'\u{202f}'|'\u{205f}'|'\u{3000}'|'\u{feff}')).is_empty(){ Err(Error::new(ErrorKind::Validation)) }else{Ok(())}
+    if value.trim_matches(ECMASCRIPT_WHITESPACE).is_empty() {
+        Err(Error::new(ErrorKind::Validation))
+    } else {
+        Ok(())
+    }
 }
 #[cfg(feature = "management")]
 fn next_offset(value: Optional<FiniteNumber>) -> Result<Option<u64>> {

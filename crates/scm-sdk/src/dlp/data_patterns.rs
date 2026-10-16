@@ -112,8 +112,8 @@ impl DataPatternsClient {
     pub fn list_pages(
         &self,
         params: &DataPatternListParams,
-        options: Option<&RequestOptions>,
         max_pages: usize,
+        options: Option<&RequestOptions>,
     ) -> Result<Pages<'static, DataPatternResponse, u64>> {
         common::query(params.page, params.size, &params.sort)?;
         let client = self.clone();
@@ -141,10 +141,10 @@ impl DataPatternsClient {
     pub fn list_items(
         &self,
         params: &DataPatternListParams,
-        options: Option<&RequestOptions>,
         max_pages: usize,
+        options: Option<&RequestOptions>,
     ) -> Result<Items<'static, DataPatternResponse, u64>> {
-        Ok(self.list_pages(params, options, max_pages)?.items())
+        Ok(self.list_pages(params, max_pages, options)?.items())
     }
     /// Collect under explicit item/byte/page caps; incomplete results retain a resume position.
     pub async fn list_all(
@@ -153,7 +153,7 @@ impl DataPatternsClient {
         collect: CollectOptions,
         options: Option<&RequestOptions>,
     ) -> CollectionResult<DataPatternResponse, u64> {
-        match self.list_pages(params, options, collect.max_pages) {
+        match self.list_pages(params, collect.max_pages, options) {
             Ok(pages) => pages.collect(collect).await,
             Err(error) => Err(error.into()),
         }

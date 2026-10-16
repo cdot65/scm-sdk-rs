@@ -1,0 +1,994 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getDashboardOverview",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_dashboard_overview"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getErrorLogs",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_error_logs"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getGoalCategories",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_goal_categories"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getLanguages",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_languages"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getManagementLanguages",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_management_languages"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getQuota",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_quota"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getQuotaSummary",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_quota_summary"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::quota_summary_uses_get_without_changing_the_published_post_contract"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getScanMetadata",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_scan_metadata"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses",
+        "crates/scm-sdk/tests/red_team_contracts.rs::metadata_fallback_requires_api_422_and_does_not_follow_arbitrary_download_urls",
+        "crates/scm-sdk/tests/red_team_contracts.rs::metadata_fallback_shares_one_deadline_and_cancellation_can_prevent_second_dispatch",
+        "crates/scm-sdk/tests/red_team_contracts.rs::issuer_422_never_triggers_metadata_fallback_and_constructor_never_widens_policy"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Fallback requires actual API Http422, excludes issuer errors, shares one absolute operation budget, and uses the frozen structurally equivalent arbitrary-object record schema s012087 with central validation bounds."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getScanStatistics",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_scan_statistics"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getScoreTrend",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_score_trend"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getSentiment",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_sentiment"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getTargetProfileErrorLogs",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "get_target_profile_error_logs"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.updateSentiment",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamClient",
+      "methods": [
+        "update_sentiment"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getAttackOutputs",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttackReportsClient",
+      "methods": [
+        "get_attack_outputs"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPromptDetail",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttackReportsClient",
+      "methods": [
+        "get_prompt_detail"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPromptSets",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttackReportsClient",
+      "methods": [
+        "get_prompt_sets"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPromptsBySet",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttackReportsClient",
+      "methods": [
+        "get_prompts_by_set"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPropertyStats",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttackReportsClient",
+      "methods": [
+        "get_property_stats"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getReport",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttackReportsClient",
+      "methods": [
+        "get_report"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.listCustomAttacks",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamCustomAttackReportsClient",
+      "methods": [
+        "list_custom_attacks"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.createDevices",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "create_devices"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.createInstance",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "create_instance"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.deleteDevices",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "delete_devices"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.deleteInstance",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "delete_instance"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.getInstance",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "get_instance"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.getRegistryCredentials",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "get_registry_credentials"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.updateDevices",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "update_devices"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.updateInstance",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamInstancesClient",
+      "methods": [
+        "update_instance"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_eight_instance_methods_match_source_literals_and_preserve_explicit_credentials",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Tenant IDs are structured segments, rather than unescaped string interpolation; registry credential formatting is redacted."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.downloadReport",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "download_report"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Returns redacted arbitrary JSON; URLs in a response are data and never fetched automatically."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.generatePartialReport",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "generate_partial_report"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getAttackDetail",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_attack_detail"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getDynamicRemediation",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_dynamic_remediation"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getDynamicReport",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_dynamic_report"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getDynamicRuntimePolicy",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_dynamic_runtime_policy"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getMultiTurnAttackDetail",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_multi_turn_attack_detail"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStaticRemediation",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_static_remediation"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStaticReport",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_static_report"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStaticRuntimePolicy",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_static_runtime_policy"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStreamDetail",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "get_stream_detail"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.listAttacks",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "list_attacks"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.listGoalStreams",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "list_goal_streams"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.listGoals",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamReportsClient",
+      "methods": [
+        "list_goals"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.abort",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamScansClient",
+      "methods": [
+        "abort"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.create",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamScansClient",
+      "methods": [
+        "create"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses",
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_twelve_owned_mutations_dispatch_once_and_keep_ambiguous_outcomes_unknown"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.get",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamScansClient",
+      "methods": [
+        "get"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.getCategories",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamScansClient",
+      "methods": [
+        "get_categories"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.list",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamScansClient",
+      "methods": [
+        "list"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bodies_and_responses"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.listAll",
+      "feature": "red-team",
+      "namespace": "airs::red_team::RedTeamScansClient",
+      "methods": [
+        "list_all"
+      ],
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "tests": [
+        "crates/scm-sdk/tests/red_team_contracts.rs::scan_list_all_matches_actual_count_offsets_total_hints_defaults_and_source_empty_terminal",
+        "crates/scm-sdk/tests/red_team_contracts.rs::scan_walk_is_lazy_cancellable_and_retains_truncation_and_failure_resume_positions",
+        "crates/scm-sdk/tests/red_team_contracts.rs::scan_walk_preserves_every_filter_on_successive_pages"
+      ],
+      "deliberateDifferences": [
+        "Explicit OAuth clients and admitted endpoints replace implicit environment construction. One immutable provider, policy, transport, session and limiter are shared across planes; Red Team derives tenant header false.",
+        "All requests accept an absolute RequestOptions budget; safe reads alone permit bounded retries and mutations are never automatically replayed.",
+        "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open.",
+        "Native lazy page/item walks and explicit CollectOptions report truncation, partial failures and resume positions. Unlimited max0 is unavailable; caller starting skip is supported; total metadata used for walking must be nonnegative safe integers."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 5,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

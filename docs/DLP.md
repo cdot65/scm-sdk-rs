@@ -4,6 +4,8 @@ Enable the `dlp` feature for canonical DLP operations. `management` also enables
 
 Construct `DlpClient::new(client)` with an explicit DLP endpoint and SCM OAuth authentication. It rejects scan/runtime credentials. The client retains the caller's transport, destination admission, tenant identity, request bounds and session. Management convenience access uses the same implementation with an explicitly admitted DLP destination.
 
+Tenant routing remains caller-selected: `Authentication::oauth(provider, true)` sends `x-tsg-id` from the immutable provider identity; `false` omits it. `DlpClient` preserves that selection. The frozen TypeScript DLP client sends no tenant header, so select `false` for that exact header contract. Both choices have native wire fixtures.
+
 | Accessor | Operations |
 | --- | --- |
 | `data_patterns()` | `list`, `create`, `get`, `replace`, `patch`, `delete`, `list_all` |
@@ -12,6 +14,8 @@ Construct `DlpClient::new(client)` with an explicit DLP endpoint and SCM OAuth a
 | `data_filtering_profiles()` | `list`, `get`, `replace`, `list_all` |
 
 Every client also exposes `list_pages` and `list_items`. There is no invented create/delete endpoint for filtering profiles or delete endpoint for data profiles. The legacy AIRS `/v1/mgmt/dlpprofiles` resource remains a separate management contract.
+
+Page and item helpers take `(params, max_pages, request_options)`, with request lifecycle options last. Their argument order was standardized during prerelease review to match the other product clients.
 
 ## Requests and patches
 

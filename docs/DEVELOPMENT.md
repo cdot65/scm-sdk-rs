@@ -30,7 +30,16 @@ python3 scripts/check-rust.py --toolchain 1.99.0 --feature-set all
 
 The helper checks formatting without modifying files, builds all targets, runs Clippy with warnings denied, runs tests including any crate doctests, and builds documentation with warnings denied. Cargo uses the committed lockfile. `minimal` means `--no-default-features`; `all` means `--all-features`.
 
-Implemented features are `reqwest-transport`, `models`, `scan`, `management`, and `gateway`. Defaults enable the HTTP adapter and scanning. `models` exposes native contracts for all product families; product features gate client behavior. Phase 3 implements complete scan operations and representative management/read and runtime/chat and binary file operations. Remaining family methods enter their owning phases. Minimal builds require caller-supplied transport and retain validation/data primitives. Realtime and tracing features arrive with their implementations. Keep all three verification configurations as new features enter scope.
+Product features are `scan`, `management`, `dlp`, `iam`, `model-security`,
+`red-team`, and `gateway`; `models` selects the shared native contracts and
+`reqwest-transport` selects the default HTTP adapter. Defaults enable the adapter
+and scanning. Management includes canonical DLP; IAM is independently selected.
+Phases 3–4 implement scanning, management/DLP/IAM and representative Gateway
+chat/binary operations. Phase 5 implements Model Security and Red Team, pending
+its acceptance gate. Remaining Gateway methods enter Phase 6. Minimal builds
+require caller-supplied transport and retain validation/data primitives. Realtime
+and tracing features arrive with their implementations. Keep the default,
+minimal and all-feature matrices as new features enter scope.
 
 Each invocation writes `.local/checks/rust-TOOLCHAIN-FEATURE.json`, with exact commands, outputs, exit codes, durations, compiler/host information, lockfile hash, and a fingerprint of Rust build inputs. Source changes during a run fail the evidence check. The helper targets the compiler's native host explicitly and verifies the packaged license/notice copies. It removes `PANW_`, `AIRS_`, and `SCM_` environment variables from test subprocesses. Tests use synthetic credentials and local fixtures. Live acceptance follows [LIVE-ACCEPTANCE.md](LIVE-ACCEPTANCE.md).
 
@@ -59,6 +68,7 @@ Native generation and independent schema/model checks are explicit:
 python3 tools/generate_validation.py --check
 python3 tools/generate_models.py --check
 python3 tools/native_operations.py --check
+python3 tools/verify_native_fixtures.py
 .local/typescript/node_modules/.bin/tsx tools/schema-oracle.mts --check
 python3 tools/generate_models.py --verify-fixtures
 ```
@@ -70,11 +80,15 @@ specimen; Blob-only roots have typed binary tests. Node is absent from the crate
 `contracts/native-operations.json` records implemented native methods, explicit
 pending methods, header contracts, source bindings, and separate live status.
 Its mapping generator checks declared methods and reproducibility; independent
-integration tests establish the behavior attributed to those mappings.
+integration tests establish the behavior attributed to those mappings. Packaged
+fixture subsets are compared directly with manifest-pinned independent source
+cases and JSON pointers; tamper tests prevent replacement, type substitution,
+unreviewed sources, duplicate coordinates and symlinked inputs.
 Phase 3 also runs the minimal suite with dependency feature unification enabling
 `serde_json/arbitrary_precision`, so finite-number checks remain effective when
 another application dependency selects that feature.
-Isolated `scan`, `management`, `gateway`, and `models` configurations are also
+Isolated `scan`, `management`, `dlp`, `iam`, `model-security`, `red-team`,
+`gateway`, and `models` configurations are also
 checked with default features disabled on Rust 1.99.0, including all targets,
 Clippy, tests, and documentation. This catches product-specific conditional code.
 

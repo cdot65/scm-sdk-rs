@@ -187,8 +187,8 @@ impl DictionariesClient {
     pub fn list_pages(
         &self,
         params: &DictionaryListParams,
-        options: Option<&RequestOptions>,
         max_pages: usize,
+        options: Option<&RequestOptions>,
     ) -> Result<Pages<'static, DictionaryResponse, u64>> {
         common::query(params.page, params.size, &params.sort)?;
         let client = self.clone();
@@ -216,10 +216,10 @@ impl DictionariesClient {
     pub fn list_items(
         &self,
         params: &DictionaryListParams,
-        options: Option<&RequestOptions>,
         max_pages: usize,
+        options: Option<&RequestOptions>,
     ) -> Result<Items<'static, DictionaryResponse, u64>> {
-        Ok(self.list_pages(params, options, max_pages)?.items())
+        Ok(self.list_pages(params, max_pages, options)?.items())
     }
     pub async fn list_all(
         &self,
@@ -227,7 +227,7 @@ impl DictionariesClient {
         collect: CollectOptions,
         options: Option<&RequestOptions>,
     ) -> CollectionResult<DictionaryResponse, u64> {
-        match self.list_pages(params, options, collect.max_pages) {
+        match self.list_pages(params, collect.max_pages, options) {
             Ok(pages) => pages.collect(collect).await,
             Err(error) => Err(error.into()),
         }

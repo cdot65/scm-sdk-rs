@@ -832,7 +832,7 @@ async fn collection_item_byte_and_page_caps_are_explicit_and_resumable() {
     assert!(!format!("{result:?}").contains("row-secret"));
     let remaining = client
         .data_patterns()
-        .list_items(&SpringListParams::default(), None, 10)
+        .list_items(&SpringListParams::default(), 10, None)
         .unwrap()
         .resume_from(resume)
         .unwrap()
@@ -885,7 +885,7 @@ async fn buffered_items_observe_cancellation_without_another_credential_lookup()
     let options = RequestOptions::with_timeout(Duration::from_secs(5)).unwrap();
     let mut items = client
         .data_profiles()
-        .list_items(&SpringListParams::default(), Some(&options), 10)
+        .list_items(&SpringListParams::default(), 10, Some(&options))
         .unwrap();
     assert!(items.next().await.unwrap().is_some());
     options.cancel();
@@ -948,15 +948,15 @@ async fn invalid_queries_bodies_uploads_and_ids_precede_credentials_and_dispatch
             .data_patterns()
             .list_pages(
                 &SpringListParams::new().page(9_007_199_254_740_992),
-                None,
-                10
+                10,
+                None
             )
             .is_err()
     );
     assert!(
         client
             .data_patterns()
-            .list_pages(&SpringListParams::default(), None, 0)
+            .list_pages(&SpringListParams::default(), 0, None)
             .is_err()
     );
     let mut invalid = DictionaryListParams::default();
@@ -1159,49 +1159,49 @@ async fn native_page_and_item_iterators_work_for_all_four_resource_families() {
     let filtering = DataFilteringProfileListParams::default();
     let mut pages = client
         .data_patterns()
-        .list_pages(&params, None, 10)
+        .list_pages(&params, 10, None)
         .unwrap();
     assert_eq!(pages.next_page().await.unwrap().unwrap().items.len(), 1);
     assert!(pages.next_page().await.unwrap().is_none());
     let mut pages = client
         .dictionaries()
-        .list_pages(&dictionary, None, 10)
+        .list_pages(&dictionary, 10, None)
         .unwrap();
     assert_eq!(pages.next_page().await.unwrap().unwrap().items.len(), 1);
     assert!(pages.next_page().await.unwrap().is_none());
     let mut pages = client
         .data_profiles()
-        .list_pages(&params, None, 10)
+        .list_pages(&params, 10, None)
         .unwrap();
     assert_eq!(pages.next_page().await.unwrap().unwrap().items.len(), 1);
     assert!(pages.next_page().await.unwrap().is_none());
     let mut pages = client
         .data_filtering_profiles()
-        .list_pages(&filtering, None, 10)
+        .list_pages(&filtering, 10, None)
         .unwrap();
     assert_eq!(pages.next_page().await.unwrap().unwrap().items.len(), 1);
     assert!(pages.next_page().await.unwrap().is_none());
     let mut items = client
         .data_patterns()
-        .list_items(&params, None, 10)
+        .list_items(&params, 10, None)
         .unwrap();
     assert!(items.next().await.unwrap().is_some());
     assert!(items.next().await.unwrap().is_none());
     let mut items = client
         .dictionaries()
-        .list_items(&dictionary, None, 10)
+        .list_items(&dictionary, 10, None)
         .unwrap();
     assert!(items.next().await.unwrap().is_some());
     assert!(items.next().await.unwrap().is_none());
     let mut items = client
         .data_profiles()
-        .list_items(&params, None, 10)
+        .list_items(&params, 10, None)
         .unwrap();
     assert!(items.next().await.unwrap().is_some());
     assert!(items.next().await.unwrap().is_none());
     let mut items = client
         .data_filtering_profiles()
-        .list_items(&filtering, None, 10)
+        .list_items(&filtering, 10, None)
         .unwrap();
     assert!(items.next().await.unwrap().is_some());
     assert!(items.next().await.unwrap().is_none());
@@ -1230,4 +1230,64 @@ fn dlp_constructor_rejects_scan_runtime_and_missing_authentication() {
         );
     }
     assert!(wire.requests.lock().unwrap().is_empty());
+}
+
+#[tokio::test]
+async fn caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists() {
+    let (enabled, wire, _) = setup(
+        (0..8)
+            .map(|_| Reply::Json(page(vec![], Some(true), None)))
+            .collect(),
+    );
+    let disabled = DlpClient::new(enabled.client().with_tsg_header(false).unwrap()).unwrap();
+    for client in [&enabled, &disabled] {
+        client
+            .data_patterns()
+            .list(&SpringListParams::default(), None)
+            .await
+            .unwrap();
+        client
+            .dictionaries()
+            .list(&DictionaryListParams::default(), None)
+            .await
+            .unwrap();
+        client
+            .data_profiles()
+            .list(&SpringListParams::default(), None)
+            .await
+            .unwrap();
+        client
+            .data_filtering_profiles()
+            .list(&DataFilteringProfileListParams::default(), None)
+            .await
+            .unwrap();
+    }
+    let requests = wire.requests.lock().unwrap();
+    for (index, request) in requests.iter().enumerate() {
+        let mut names: Vec<_> = request.headers().keys().map(|name| name.as_str()).collect();
+        names.sort_unstable();
+        let expected = if index < 4 {
+            vec!["authorization", "service-name", "user-agent", "x-tsg-id"]
+        } else {
+            vec!["authorization", "service-name", "user-agent"]
+        };
+        assert_eq!(names, expected);
+        assert_eq!(
+            request.headers()["authorization"],
+            format!("Bearer {TOKEN}")
+        );
+        assert_eq!(request.headers()["service-name"], "api");
+        assert_eq!(
+            request.headers()["user-agent"],
+            concat!("PAN-AIRS/", env!("CARGO_PKG_VERSION"), "-rust-sdk")
+        );
+        assert_eq!(
+            request
+                .headers()
+                .get("x-tsg-id")
+                .map(|v| v.to_str().unwrap()),
+            (index < 4).then_some("12345")
+        );
+        assert!(request.headers().values().all(|value| value.is_sensitive()));
+    }
 }

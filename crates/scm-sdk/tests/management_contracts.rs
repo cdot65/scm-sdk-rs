@@ -136,8 +136,9 @@ impl Transport for Wire {
             let mut actual_url = request.url().clone();
             actual_url.set_query(None);
             assert_eq!(actual_url.as_str(), expected_url);
-            let actual: BTreeMap<String, String> =
-                request.url().query_pairs().into_owned().collect();
+            let ordered: Vec<(String, String)> = request.url().query_pairs().into_owned().collect();
+            assert_eq!(ordered, expected.query);
+            let actual: BTreeMap<String, String> = ordered.into_iter().collect();
             assert_eq!(actual, expected.query.into_iter().collect());
             assert_eq!(
                 request.url().query_pairs().count(),
@@ -1643,8 +1644,8 @@ async fn dashboard_nondefault_windows_paging_and_zero_subrequest_keep_wire_spell
         &[
             ("time_interval", "24"),
             ("time_unit", "hour"),
-            ("offset", "4"),
             ("limit", "8"),
+            ("offset", "4"),
         ],
         Some(json!({"items":[],"pagination":{}})),
     );
@@ -1662,8 +1663,8 @@ async fn dashboard_nondefault_windows_paging_and_zero_subrequest_keep_wire_spell
         &[
             ("time_interval", "1"),
             ("time_unit", "hour"),
-            ("offset", "5"),
             ("limit", "6"),
+            ("offset", "5"),
         ],
         Some(json!({"items":[]})),
     );

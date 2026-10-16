@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import json
 import pathlib
+import re
 import unittest
 
 ROOT=pathlib.Path(__file__).resolve().parents[1]
@@ -78,5 +79,16 @@ class GenerationGuards(unittest.TestCase):
             else:pins["schemaVersion"]=2
             with self.assertRaisesRegex(ValueError,"union identity"):
                 generator.verify_union_pins(self.pins,pins)
+
+    def test_phase_five_behavioral_adapters_resolve_to_implemented_public_types(self):
+        native=generator.Generator(self.inventory);native.generate()
+        rows=[row for row in native.model_rows if row.get("nativeFeature") in {"red-team","model-security"}]
+        self.assertEqual(len(rows),54)
+        source="\n".join(path.read_text() for path in (ROOT/"crates/scm-sdk/src").rglob("*.rs"))
+        for row in rows:
+            with self.subTest(export=row["export"]):
+                self.assertEqual(row["status"],"native_client_mapping")
+                for name in [row["rustType"],*row.get("additionalTypes",[])]:
+                    self.assertRegex(source,r"pub\s+(?:struct|enum|type)\s+"+re.escape(name.split("::")[-1])+r"\b")
 
 if __name__=="__main__":unittest.main()

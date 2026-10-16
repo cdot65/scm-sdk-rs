@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 5,
+  "active_phase": 6,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -136,7 +136,7 @@
         },
         {
           "source": "docs/reviews/phase-03-attempt-02.json",
-          "status": "implemented_pending_phase_4_review",
+          "status": "accepted_by_phase_4_review",
           "scope": "Machine-recorded deliberate differences and owning phases; generation check/regex/record-key inventory; pinned union identities; BinaryFile bounds documentation; SSE sentinel precedence.",
           "evidence": [
             "tools/native_operations.py",
@@ -209,7 +209,7 @@
       "implemented_scope": {
         "managementMethods": 87,
         "iamMethods": 6,
-        "status": "implemented_pending_review",
+        "status": "accepted_by_review",
         "scope": "All93 owning-family methods; cumulative native ledger99 includes scans4 and two partial representativeGateway operations whose real owner remainsPhase6."
       },
       "deliberate_differences": [
@@ -248,18 +248,72 @@
             "docs/reviews/phase-04-attempt-01.json"
           ]
         }
-      }
+      },
+      "review_advisories": [
+        {
+          "source": "docs/reviews/phase-04-attempt-01.json",
+          "status": "implementation_in_phase_5",
+          "scope": "Remove unnecessary IAM feature dependency; clarify DLP headers; assert dashboard query ordering; expand whitespace/macro formatting; retain rows on rejected opaque next cursors with explicit cursor-limit override."
+        }
+      ]
     },
     {
       "id": 5,
       "name": "Model Security and Red Team",
-      "status": "in_progress",
-      "reviews": []
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-05-attempt-01.json"
+      ],
+      "scope_evidence": [
+        "docs/MODEL_SECURITY.md",
+        "docs/RED_TEAM.md",
+        "docs/RED_TEAM_RESOURCES.md",
+        "contracts/native-operations.json",
+        "contracts/native-operation-mappings/model-security.json",
+        "contracts/native-operation-mappings/red-team.json",
+        "contracts/native-operation-mappings/red-team-resources.json"
+      ],
+      "live_acceptance": "pending_phase_8",
+      "implemented_scope": {
+        "modelSecurityMethods": 49,
+        "redTeamMethods": 102,
+        "status": "implemented_pending_review"
+      },
+      "deliberate_differences": [
+        "Explicit bounded collections preserve partial rows and resume positions instead of returning silently truncated arrays.",
+        "Model Security capped-count evidence remains conservative across mid-page and serialized resumes; capped totals cannot establish completeness.",
+        "Native page/item controls consistently place RequestOptions last.",
+        "Explicit OAuth configuration and admitted endpoints replace implicit environment/global state; product clients omit tenant routing headers as in the frozen baseline."
+      ],
+      "accepted_source_sha256": "ebffaeb5a6d6e38a2b93f317f3989e9424eb4c86025acad9d369884cbd177c3d",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-05-attempt-01.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-05.json"
+          ],
+          "source_sha256": "ebffaeb5a6d6e38a2b93f317f3989e9424eb4c86025acad9d369884cbd177c3d"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-05-attempt-01.json"
+          ]
+        }
+      }
     },
     {
       "id": 6,
       "name": "AI Gateway",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": []
     },
     {

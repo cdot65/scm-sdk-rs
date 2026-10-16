@@ -185,3 +185,23 @@ subscriptions remain Phase 7 capabilities.
 
 See [pagination](PAGINATION.md) for collection bounds and partial errors, and
 [DLP](DLP.md) for bounded native multipart uploads and merge-patch behavior.
+
+## Bounded text responses
+
+`Client::send_text` uses the same response-byte limits, retry safety, request
+budget, cancellation, destination policy, and response metadata as JSON and
+binary reads. It matches the frozen Fetch text decoding: UTF-8 replaces malformed
+sequences and removes a leading UTF-8 BOM, independent of content type. Byte
+limits count received/decompressed bytes; replacement characters can use up to
+three output bytes per malformed input byte. No service credentials are attached
+to URLs embedded in text or JSON responses; following those URLs is a separate,
+explicit operation with its own destination and credential policy.
+
+## Client method conventions
+
+Typed product methods put `Option<&RequestOptions>` last. Native page/item
+helpers take identifiers and filters first, then `max_pages`, then request
+options. List-all helpers take their typed collection controls before request
+options. This keeps cancellation, deadlines and retry selection in a consistent
+position across product namespaces. These controls do not change credential kind
+or destination admission.

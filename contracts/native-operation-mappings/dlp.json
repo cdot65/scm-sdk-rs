@@ -14,7 +14,8 @@
         "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters"
       ],
       "deliberateDifferences": [
-        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -29,11 +30,13 @@
       ],
       "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
       "tests": [
-        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters"
+        "crates/scm-sdk/tests/dlp_contracts.rs::filtering_profiles_match_all_three_frozen_routes_and_filters",
+        "crates/scm-sdk/tests/dlp_contracts.rs::caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists"
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -57,7 +60,9 @@
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
         "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
         "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
-        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -77,7 +82,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -97,7 +103,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -117,7 +124,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -135,7 +143,8 @@
         "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch"
       ],
       "deliberateDifferences": [
-        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -150,11 +159,13 @@
       ],
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
       "tests": [
-        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch"
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_pattern_crud_matches_all_six_frozen_routes_and_merge_patch",
+        "crates/scm-sdk/tests/dlp_contracts.rs::caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists"
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -178,7 +189,9 @@
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
         "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
         "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
-        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -198,7 +211,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -218,7 +232,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -238,7 +253,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -256,7 +272,8 @@
         "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes"
       ],
       "deliberateDifferences": [
-        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -271,11 +288,13 @@
       ],
       "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
       "tests": [
-        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes"
+        "crates/scm-sdk/tests/dlp_contracts.rs::data_profile_crud_matches_all_five_frozen_routes",
+        "crates/scm-sdk/tests/dlp_contracts.rs::caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists"
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -299,7 +318,9 @@
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
         "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
         "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
-        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -319,7 +340,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -339,7 +361,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -360,7 +383,8 @@
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
         "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
-        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary."
+        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -380,7 +404,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -398,7 +423,8 @@
         "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace"
       ],
       "deliberateDifferences": [
-        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries."
+        "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -413,11 +439,13 @@
       ],
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
       "tests": [
-        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace"
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace",
+        "crates/scm-sdk/tests/dlp_contracts.rs::caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists"
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved."
+        "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -441,7 +469,9 @@
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
         "Typed nonnegative pages, positive sizes, bounded/control-free sort/name filters and URL limits reject invalid queries before credentials; repeated sort entries and supplied false booleans are preserved.",
         "CollectionResult reports item/byte/page truncation and retains partial errors/resume positions; bounded defaults replace silent arrays and max=0 unlimited collection.",
-        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk."
+        "Native callers may select a starting page; malformed/fractional/negative totalPages is a pagination error when used. One absolute RequestOptions snapshot covers the entire walk.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission.",
+        "Native page/item helper arguments use parameters, then max_pages, then RequestOptions; identifier arguments precede parameters. Prerelease API review standardized this across product clients."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -461,7 +491,8 @@
       ],
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
-        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown."
+        "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -482,7 +513,8 @@
       "deliberateDifferences": [
         "Canonical DLP namespace and explicit OAuth Client replace internal TypeScript client options; per-call RequestOptions preserves shared deadlines/cancellation and bounded safe-read retries.",
         "Mutations are never automatically replayed; dispatched transport failures retain RemoteOutcome::Unknown.",
-        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary."
+        "Dictionary metadata is validated before encoding (the frozen FormData builder skipped that schema); native binary/header/filename checks and complete multipart envelope bounds run before credentials. Explicit multipart Content-Type carries the selected collision-safe boundary.",
+        "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,

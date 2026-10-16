@@ -2059,3 +2059,72 @@ fn client_validation_limits_are_explicit_and_validated() {
         .unwrap();
     assert_eq!(client.validation_limits().unwrap().max_nodes, 200_000);
 }
+
+#[tokio::test]
+async fn text_responses_match_fetch_decoding_and_preserve_body_bounds() {
+    let transport = Scripted::new(vec![
+        Reply::Http(
+            StatusCode::OK,
+            HeaderMap::new(),
+            Bytes::from_static(b"\xef\xbb\xbfheader\n\xfftail\n"),
+        ),
+        Reply::Http(StatusCode::NO_CONTENT, HeaderMap::new(), Bytes::new()),
+    ]);
+    let client = client(transport);
+    assert_eq!(
+        client.send_text(read(), None).await.unwrap(),
+        "header\n\u{fffd}tail\n"
+    );
+    assert_eq!(client.send_text(read(), None).await.unwrap(), "");
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        "x-request-id",
+        HeaderValue::from_static("safe-text-request"),
+    );
+    let transport = Scripted::new(vec![Reply::Http(
+        StatusCode::OK,
+        headers,
+        Bytes::from_static(b"too-long"),
+    )]);
+    let client = Client::builder(endpoint())
+        .transport(transport)
+        .limits(Limits {
+            max_response_bytes: 4,
+            ..fast_limits()
+        })
+        .build()
+        .unwrap();
+    let error = client.send_text(read(), None).await.unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Limit);
+    assert_eq!(error.status(), Some(200));
+    assert_eq!(error.request_id(), Some("safe-text-request"));
+    assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+}
+
+#[tokio::test(start_paused = true)]
+async fn text_body_deadlines_keep_metadata_and_cancel_before_dispatch() {
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        "x-request-id",
+        HeaderValue::from_static("safe-text-deadline"),
+    );
+    let transport = Scripted::new(vec![Reply::PendingMetadata(StatusCode::OK, headers)]);
+    let client = client(transport.clone());
+    let options = RequestOptions::with_timeout(Duration::from_millis(1)).unwrap();
+    let error = client.send_text(read(), Some(&options)).await.unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Deadline);
+    assert_eq!(error.status(), Some(200));
+    assert_eq!(error.request_id(), Some("safe-text-deadline"));
+    assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+    let options = RequestOptions::with_timeout(Duration::from_secs(1)).unwrap();
+    options.cancel();
+    assert_eq!(
+        client
+            .send_text(read(), Some(&options))
+            .await
+            .unwrap_err()
+            .kind(),
+        ErrorKind::Cancelled
+    );
+    assert_eq!(transport.count(), 1);
+}
