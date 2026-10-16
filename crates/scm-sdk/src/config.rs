@@ -233,8 +233,28 @@ impl OriginPolicy {
     }
 }
 impl DestinationPolicy for OriginPolicy {
-    fn check(&self, url: &Url, _purpose: DestinationPurpose) -> Result<()> {
-        if self.origins.contains(&url.origin().ascii_serialization()) {
+    fn check(&self, url: &Url, purpose: DestinationPurpose) -> Result<()> {
+        let mut admitted = url.clone();
+        // Realtime uses the same explicitly selected authority with its WS scheme.
+        if purpose == DestinationPurpose::Realtime {
+            match url.scheme() {
+                "wss" => {
+                    admitted
+                        .set_scheme("https")
+                        .map_err(|_| Error::new(ErrorKind::Destination))?;
+                }
+                "ws" => {
+                    admitted
+                        .set_scheme("http")
+                        .map_err(|_| Error::new(ErrorKind::Destination))?;
+                }
+                _ => return Err(Error::new(ErrorKind::Destination)),
+            }
+        }
+        if self
+            .origins
+            .contains(&admitted.origin().ascii_serialization())
+        {
             Ok(())
         } else {
             Err(Error::new(ErrorKind::Destination))
@@ -261,7 +281,6 @@ pub struct Limits {
     pub stream_idle_timeout: Duration,
     pub stream_session_timeout: Option<Duration>,
     pub max_event_bytes: usize,
-    pub max_realtime_queue: usize,
 }
 impl Default for Limits {
     fn default() -> Self {
@@ -278,7 +297,6 @@ impl Default for Limits {
             stream_idle_timeout: Duration::from_secs(30),
             stream_session_timeout: None,
             max_event_bytes: 1024 * 1024,
-            max_realtime_queue: 64,
         }
     }
 }
@@ -309,7 +327,6 @@ impl Limits {
             || self.max_error_bytes > 1024 * 1024
             || self.max_event_bytes > 16 * 1024 * 1024
             || !(1..=4096).contains(&self.max_concurrency)
-            || !(1..=4096).contains(&self.max_realtime_queue)
             || self.max_retries > 5
             || self.retry_base_delay > self.max_retry_delay
         {

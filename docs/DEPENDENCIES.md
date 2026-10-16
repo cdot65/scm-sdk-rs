@@ -1,6 +1,6 @@
 # Dependency and source review
 
-This foundation snapshot describes the resolved `Cargo.lock` and `cargo metadata --locked --all-features` on 2026-10-16. The lockfile fixes repository verification inputs; downstream applications resolve their own compatible dependency graph. Review lockfile changes and rerun compiler, feature, advisory, and license checks before release.
+This Phase 7 dependency snapshot describes the resolved `Cargo.lock` and `cargo metadata --locked --all-features` on 2026-10-16. The lockfile fixes repository verification inputs; downstream applications resolve their own compatible dependency graph. Review lockfile changes and rerun compiler, feature, advisory, and license checks before release.
 
 ## Resolved direct dependencies
 
@@ -9,26 +9,35 @@ This foundation snapshot describes the resolved `Cargo.lock` and `cargo metadata
 | `base64` | 0.22.1 | 1.48.0 | MIT OR Apache-2.0 |
 | `bytes` | 1.12.1 | 1.57 | MIT |
 | `futures-util` | 0.3.34 | 1.71 | MIT OR Apache-2.0 |
+| `getrandom` | 0.4.3, optional IAM/native WS | 1.85 | MIT OR Apache-2.0 |
 | `hmac` | 0.12.1 | Unspecified | MIT OR Apache-2.0 |
 | `http` | 1.5.0 | 1.57.0 | MIT OR Apache-2.0 |
+| `httparse` | 1.10.1, optional native WS | Unspecified | MIT OR Apache-2.0 |
 | `httpdate` | 1.0.3 | 1.56 | MIT OR Apache-2.0 |
 | `mime` | 0.3.17 | Unspecified | MIT OR Apache-2.0 |
 | `regex` | 1.13.1 | 1.65 | MIT OR Apache-2.0 |
 | `ryu-js` | 1.0.3 | 1.71 | Apache-2.0 OR BSL-1.0 |
-| `reqwest` | 0.13.5, optional | 1.85.0 | MIT OR Apache-2.0 |
+| `reqwest` | 0.13.5, optional HTTP | 1.85.0 | MIT OR Apache-2.0 |
+| `aws-lc-rs` | 1.18.2, optional direct native WS | 1.71.0 | ISC AND (Apache-2.0 OR ISC) |
+| `rustls` | 0.23.46, optional direct native WS | 1.71 | Apache-2.0 OR ISC OR MIT |
+| `rustls-native-certs` | 0.8.5, optional direct native WS | 1.71 | Apache-2.0 OR ISC OR MIT |
 | `serde` | 1.0.229 | 1.56 | MIT OR Apache-2.0 |
 | `serde_json` | 1.0.154 | 1.71 | MIT OR Apache-2.0 |
 | `sha2` | 0.10.9 | Unspecified | MIT OR Apache-2.0 |
 | `tokio` | 1.53.3 | 1.71 | MIT |
+| `tokio-rustls` | 0.26.6, optional native WS | 1.71 | MIT OR Apache-2.0 |
+| `tokio-websockets` | **=0.13.3**, optional native WS | **1.89** | MIT |
 | `tokio-util` | 0.7.20 | 1.85 | MIT |
 | `time` | 0.3.55 | 1.88 | MIT OR Apache-2.0 |
 | `url` | 2.5.8 | 1.63 | MIT OR Apache-2.0 |
 | `zeroize` | 1.9.1 | 1.85 | Apache-2.0 OR MIT |
 | `flate2`, test dependency | 1.1.10 | 1.67.0 | MIT OR Apache-2.0 |
 
-The metadata also contains transitive `base64` 0.23.1; it does not replace the SDK's direct 0.22.1 dependency. `tracing` remains an HTTP-stack transitive dependency; SDK instrumentation arrives with its implementation. Native `models`, `scan`, `management`, `dlp`, `iam`, and `gateway` features now gate contracts/client behavior; `reqwest-transport` remains the optional network adapter. The validator's regex, exact JavaScript floating-number formatting, and calendar parsing use the added dependencies above.
+The metadata also contains transitive `base64` 0.23.1; it does not replace the SDK's direct 0.22.1 dependency. Direct optional rustls/AWS-LC declarations serve the native WebSocket adapter; these packages also occur transitively through the independently selectable reqwest adapter. IAM uses `getrandom` for native helper generation. The validator uses regex, exact JavaScript number formatting and calendar parsing. Node and the TypeScript toolchain are absent from the crate.
 
-The highest declared Rust minimum in the current resolved graph is 1.88, from ICU 2.3 components used by URL/IDNA. This supports choosing workspace MSRV 1.88; successful checks on Rust 1.88.0 provide the executable proof. Declared minimum versions alone do not prove source compatibility.
+Product/client features are `models`, `scan`, `management`, `dlp`, `iam`, `model-security`, `red-team`, `gateway`, and `agentguard`; `realtime` adds the caller-connector lifecycle and `ws-transport` selects native framing/TCP/TLS. Default features remain reqwest HTTP plus scanning. `tracing` is an HTTP-stack transitive dependency; the SDK has no tracing feature or global subscriber.
+
+The current resolved all-feature graph's highest declared Rust minimum is **1.89**, from pinned `tokio-websockets` 0.13.3. The workspace minimum is now 1.89 for every feature selection, including minimal builds. This replaces the earlier 1.88 choice driven by ICU 2.3 and time 0.3.55. Historical accepted 1.88.0 checks retain their prior source/dependency state. Current Phase 7 executable MSRV/feature qualification remains subject to its gate; metadata alone is not proof. The historical Forgejo 1.88 matrix has a pending Phase 8 update.
 
 ## HTTP, cryptography, compression, and native code
 
@@ -59,6 +68,18 @@ all-platform metadata, and active features are distinct evidence; downstream
 feature unification can select additional providers. Reqwest exposes no SDK
 verification bypass, and added PEM roots retain hostname/certificate verification.
 
+## Optional WebSocket dependency decision
+
+The native adapter pins registry `tokio-websockets =0.13.3`, MIT, declared MSRV 1.89, with checksum `d52efb639344a7c6adb8e62c6f3d2c19c001ff1b79a5041ba1c6ed42e19c6aa5`. The exact lockfile and crate source are the verification inputs. The development audit used `/tmp/scm-ws-013-reference-n917gj4m/tokio-websockets-0.13.3`; this temporary reference is not a packaged input. The [versioned changelog](https://docs.rs/crate/tokio-websockets/0.13.3/source/CHANGELOG.md) and manifest retain the upstream declarations.
+
+The earlier 0.12 candidate was rejected after inspection of the upstream 0.13.1 ARM NEON undefined-behavior fix. That fix addresses use of an inadequately aligned pointer in the old intrinsic path. A lower declared MSRV did not justify retaining that unpatched line. Upstream's Miri claims do not qualify our ARM or other native targets. `tungstenite` 0.30 was also rejected: its raw authenticated request trace was incompatible with the SDK's credential-formatting boundary. The SDK does not suppress application logging globally to compensate for a dependency.
+
+`realtime::NativeWebSocketConnector` owns a manually bounded HTTP/1.1 upgrade. It validates the 101 status, exact canonical accept value, required singleton headers and connection tokens, and rejects redirects, unrequested protocols/extensions and HTTP body framing. Only then does it use the framing crate's `take_over`. Framing/payload bounds, strict UTF-8, masking and control replies remain the explicit native dependency boundary. The adapter avoids the dependency's built-in upgrade parsing and keeps credential-bearing request buffers zeroizing.
+
+Native sockets use direct TCP and an explicitly selected AWS-LC rustls provider with verified certificates and HTTP/1.1 ALPN. The connector does not install a global crypto provider or logging subscriber, and does not inherit reqwest's HTTP proxy, root or TLS settings. `with_additional_certificates` configures explicit PEM roots; `with_tls_config` accepts a trusted caller-owned rustls configuration. Proxies and alternate networking policies require a caller `WebSocketConnector`. A custom connector owns its TLS/proxy policy and must satisfy the sanitized bounded transport contract.
+
+The current native adapter is restricted to 64-bit targets. Other target widths can use the caller-connector `realtime` feature without `ws-transport`. Only retained native execution establishes a target's behavior; additional platforms and live provider readiness remain unqualified. An HTTP upgrade alone is not proof of a working inference session. See [REALTIME.md](REALTIME.md) for lifecycle and [DEVELOPMENT.md](DEVELOPMENT.md) for actual platform evidence.
+
 ## Source and distribution boundaries
 
 Project-owned code is Apache-2.0. The crate carries copies of the repository `LICENSE` and `NOTICE`; `scripts/check-rust.py` verifies they match. Crate packaging must preserve them, and the final delivery phase checks the actual archive and consumer build.
@@ -69,6 +90,6 @@ The official PANW Gateway specification is not bundled or used for generation wh
 
 ## Remaining release checks
 
-The foundation dependency review records actual choices and build requirements. Automated advisory scanning and a machine-enforced resolved license/source policy are explicitly deferred to phase 8; `docs/phase-status.json` records this phase-2 limitation. Compiler, test, and provenance CI results establish their recorded checks while dependency-policy qualification remains pending. Packaged notice verification, target execution, and release artifact validation retain their own qualification evidence.
+This dependency review records actual choices and build requirements while preserving historical foundation evidence. Automated advisory scanning and a machine-enforced resolved license/source policy are explicitly deferred to phase 8; `docs/phase-status.json` records this phase-2 limitation. Local compiler/test/provenance reports establish only their recorded source checks. The historically configured CI matrix still needs its MSRV update and retained remote execution; dependency-policy qualification remains pending. Packaged notice verification, target execution, and release artifact validation retain their own qualification evidence.
 
 Applicable advisories block releases unless `cdot65` approves a scoped, documented, expiring exception. Keep any advisory database revision and tool version with the final report; an old clean scan is not a statement about future dependency safety.

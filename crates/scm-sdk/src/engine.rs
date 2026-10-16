@@ -218,7 +218,8 @@ impl BufferedResponse {
     feature = "dlp",
     feature = "iam",
     feature = "model-security",
-    feature = "red-team"
+    feature = "red-team",
+    feature = "agentguard"
 ))]
 pub(crate) enum AuthKind {
     #[cfg(feature = "scan")]
@@ -229,7 +230,8 @@ pub(crate) enum AuthKind {
         feature = "dlp",
         feature = "iam",
         feature = "model-security",
-        feature = "red-team"
+        feature = "red-team",
+        feature = "agentguard"
     ))]
     OAuth,
     #[cfg(feature = "gateway")]
@@ -255,6 +257,7 @@ pub struct ClientBuilder {
     limits: Limits,
     session: Session,
     oauth: Option<(AuthContext, crate::Secret, bool)>,
+    oauth_options: crate::auth::OAuthProviderOptions,
     validation: Option<crate::validation::ValidationLimits>,
 }
 impl ClientBuilder {
@@ -267,6 +270,7 @@ impl ClientBuilder {
             limits: Limits::default(),
             session: Session::new(),
             oauth: None,
+            oauth_options: crate::auth::OAuthProviderOptions::default(),
             validation: None,
         }
     }
@@ -287,6 +291,11 @@ impl ClientBuilder {
     ) -> Self {
         self.auth = Authentication::None;
         self.oauth = Some((context, secret, tsg_header));
+        self
+    }
+    /// Configure this client's immutable managed OAuth refresh policy and events.
+    pub fn oauth_provider_options(mut self, options: crate::auth::OAuthProviderOptions) -> Self {
+        self.oauth_options = options;
         self
     }
     pub fn transport(mut self, value: Arc<dyn Transport>) -> Self {
@@ -337,12 +346,13 @@ impl ClientBuilder {
         };
         let auth = match self.oauth {
             Some((context, secret, tsg_header)) => {
-                let provider = OAuthProvider::new(
+                let provider = OAuthProvider::new_with_options(
                     context,
                     secret,
                     Arc::clone(&transport),
                     Arc::clone(&policy),
                     self.session.clone(),
+                    self.oauth_options,
                 )?;
                 Authentication::oauth(Arc::new(provider), tsg_header)
             }
@@ -393,7 +403,8 @@ impl Client {
         feature = "dlp",
         feature = "iam",
         feature = "model-security",
-        feature = "red-team"
+        feature = "red-team",
+        feature = "agentguard"
     ))]
     pub(crate) fn contract_limits(
         &self,
@@ -470,7 +481,8 @@ impl Client {
         feature = "dlp",
         feature = "iam",
         feature = "model-security",
-        feature = "red-team"
+        feature = "red-team",
+        feature = "agentguard"
     ))]
     pub(crate) fn require_auth(&self, kind: AuthKind) -> Result<()> {
         let valid = match kind {
@@ -482,7 +494,8 @@ impl Client {
                 feature = "dlp",
                 feature = "iam",
                 feature = "model-security",
-                feature = "red-team"
+                feature = "red-team",
+                feature = "agentguard"
             ))]
             AuthKind::OAuth => matches!(&self.inner.auth, Authentication::OAuth { .. }),
             #[cfg(feature = "gateway")]
@@ -503,7 +516,8 @@ impl Client {
         feature = "dlp",
         feature = "iam",
         feature = "model-security",
-        feature = "red-team"
+        feature = "red-team",
+        feature = "agentguard"
     ))]
     pub(crate) async fn validated_json<T: Serialize>(
         &self,
@@ -586,7 +600,8 @@ impl Client {
         feature = "dlp",
         feature = "iam",
         feature = "model-security",
-        feature = "red-team"
+        feature = "red-team",
+        feature = "agentguard"
     ))]
     pub(crate) async fn send_contract<R: DeserializeOwned>(
         &self,
@@ -679,7 +694,8 @@ impl Client {
         feature = "dlp",
         feature = "iam",
         feature = "model-security",
-        feature = "red-team"
+        feature = "red-team",
+        feature = "agentguard"
     ))]
     async fn decode_contract<R: DeserializeOwned>(
         &self,
@@ -745,6 +761,124 @@ impl Client {
             options,
             self.inner.session.clone(),
         ))
+    }
+    #[cfg(feature = "realtime")]
+    pub(crate) async fn open_realtime(
+        &self,
+        mut request: RawRequest,
+        settings: &crate::realtime::GatewayRealtimeOptions,
+        options: &RequestOptions,
+    ) -> Result<crate::realtime::GatewayRealtimeConnection> {
+        use crate::realtime::{GatewayRealtimeConnection, OPERATION, WebSocketRequest};
+        self.require_auth(AuthKind::Runtime)?;
+        settings.validate()?;
+        let mut settings = settings.clone();
+        settings.max_event_bytes = settings
+            .max_event_bytes
+            .min(self.inner.limits.max_event_bytes)
+            .min(settings.max_buffered_bytes);
+        settings.idle_timeout = settings
+            .idle_timeout
+            .min(self.inner.limits.stream_idle_timeout);
+        let validation = self.contract_limits(settings.max_event_bytes)?;
+        // The frozen WebSocket path bypasses common HTTP API headers.
+        request.headers.remove(http::header::USER_AGENT);
+        request.headers.remove("service-name");
+        let (mut url, body) = self.preflight(&request)?;
+        if request.method != Method::GET || !body.is_empty() {
+            return Err(Error::new(ErrorKind::Validation));
+        }
+        let scheme = match url.scheme() {
+            "https" => "wss",
+            "http" => "ws",
+            _ => return Err(Error::new(ErrorKind::Destination)),
+        };
+        url.set_scheme(scheme)
+            .map_err(|_| Error::new(ErrorKind::Destination))?;
+        self.inner
+            .policy
+            .check(&url, DestinationPurpose::Realtime)
+            .map_err(|_| Error::new(ErrorKind::Destination))?;
+        let sent = AtomicBool::new(false);
+        let deadline = options.deadline().min(
+            tokio::time::Instant::now()
+                .checked_add(settings.handshake_timeout)
+                .ok_or_else(|| Error::new(ErrorKind::Configuration))?,
+        );
+        let result = options
+            .run(&self.inner.session, async {
+                tokio::time::timeout_at(deadline, async {
+                    let permit = Arc::clone(&self.inner.permits)
+                        .acquire_owned()
+                        .await
+                        .map_err(|_| Error::new(ErrorKind::Cancelled))?;
+                    let mut headers = request.headers;
+                    self.inner
+                        .auth
+                        .prepare(&mut headers, &body, false, options)
+                        .await?;
+                    if headers_exceed(&headers) {
+                        return Err(Error::new(ErrorKind::Limit));
+                    }
+                    for value in headers.values_mut() {
+                        value.set_sensitive(true);
+                    }
+                    options.run(&self.inner.session, async { Ok(()) }).await?;
+                    sent.store(true, Ordering::Relaxed);
+                    let upgrade = settings
+                        .connector
+                        .connect(WebSocketRequest {
+                            url,
+                            headers,
+                            handshake_timeout: deadline
+                                .saturating_duration_since(tokio::time::Instant::now()),
+                            max_event_bytes: settings.max_event_bytes,
+                        })
+                        .await?;
+                    if upgrade.status != StatusCode::SWITCHING_PROTOCOLS {
+                        return Err(Error::new(if upgrade.status.is_redirection() {
+                            ErrorKind::Destination
+                        } else {
+                            ErrorKind::Http
+                        })
+                        .with_status(upgrade.status.as_u16())
+                        .with_metadata(
+                            error_metadata(&upgrade.headers, None).0,
+                            None,
+                            retry_after(&upgrade.headers),
+                        )
+                        .with_failure_kind(crate::FailureKind::Http)
+                        .with_outcome(
+                            if upgrade.status.is_client_error() || upgrade.status.is_redirection() {
+                                RemoteOutcome::Rejected
+                            } else {
+                                RemoteOutcome::Unknown
+                            },
+                        ));
+                    }
+                    Ok(GatewayRealtimeConnection::new(
+                        upgrade,
+                        permit,
+                        options.clone(),
+                        self.inner.session.clone(),
+                        settings,
+                        validation,
+                    ))
+                })
+                .await
+                .unwrap_or_else(|_| Err(Error::new(ErrorKind::Deadline)))
+            })
+            .await;
+        result.map_err(|error| {
+            let outcome = if sent.load(Ordering::Relaxed)
+                && error.remote_outcome() == RemoteOutcome::NotSent
+            {
+                RemoteOutcome::Unknown
+            } else {
+                error.remote_outcome()
+            };
+            error.with_operation(OPERATION).with_outcome(outcome)
+        })
     }
     fn preflight(&self, request: &RawRequest) -> Result<(url::Url, Bytes)> {
         let url = self
@@ -841,7 +975,7 @@ impl Client {
                                 tokio::time::sleep(delay).await;
                                 continue;
                             }
-                            return Err(error);
+                            return Err(error.with_failure_kind(crate::FailureKind::Network));
                         }
                     };
                     let status = response.status;
@@ -857,7 +991,8 @@ impl Client {
                     if !status.is_success() {
                         let bytes =
                             read_limited(&mut response.body, self.inner.limits.max_error_bytes)
-                                .await?;
+                                .await
+                                .map_err(body_failure)?;
                         if auth_rejection(status, &response.headers)
                             && let Some(generation) = generation
                         {
@@ -876,6 +1011,7 @@ impl Client {
                         return Err(Error::new(ErrorKind::Http)
                             .with_status(status.as_u16())
                             .with_metadata(id, code, delay)
+                            .with_http_body(&bytes)
                             .with_outcome(if status.is_client_error() {
                                 RemoteOutcome::Rejected
                             } else {
@@ -988,7 +1124,7 @@ impl Client {
                             tokio::time::sleep(delay).await;
                             continue;
                         }
-                        return Err(error);
+                        return Err(error.with_failure_kind(crate::FailureKind::Network));
                     }
                 };
                 let status = response.status;
@@ -1005,7 +1141,8 @@ impl Client {
                 if status.is_success() {
                     let body =
                         read_limited(&mut response.body, self.inner.limits.max_response_bytes)
-                            .await?;
+                            .await
+                            .map_err(body_failure)?;
                     return Ok(BufferedResponse {
                         body,
                         status: status.as_u16(),
@@ -1016,7 +1153,7 @@ impl Client {
                 let error_body =
                     read_limited(&mut response.body, self.inner.limits.max_error_bytes)
                         .await
-                        .map_err(|e| e.with_status(status.as_u16()))?;
+                        .map_err(|e| body_failure(e).with_status(status.as_u16()))?;
                 let (request_id, code) = error_metadata(&response.headers, Some(&error_body));
                 if auth_rejection(status, &response.headers)
                     && let Some(generation) = generation
@@ -1047,6 +1184,7 @@ impl Client {
                 return Err(Error::new(ErrorKind::Http)
                     .with_status(status.as_u16())
                     .with_metadata(request_id, code, delay)
+                    .with_http_body(&error_body)
                     .with_outcome(outcome));
             }
         };
@@ -1155,7 +1293,8 @@ fn auth_rejection(status: StatusCode, headers: &HeaderMap) -> bool {
     feature = "dlp",
     feature = "iam",
     feature = "model-security",
-    feature = "red-team"
+    feature = "red-team",
+    feature = "agentguard"
 ))]
 fn normalize_contract(
     schema: &str,
@@ -1173,14 +1312,31 @@ fn retryable(status: StatusCode) -> bool {
     matches!(status.as_u16(), 429 | 502 | 503 | 504)
 }
 fn retry_after(headers: &HeaderMap) -> Option<Duration> {
-    let value = headers.get(http::header::RETRY_AFTER)?.to_str().ok()?;
-    if let Ok(seconds) = value.parse::<u64>() {
+    let value = headers
+        .get(http::header::RETRY_AFTER)?
+        .to_str()
+        .ok()?
+        .trim();
+    if !value.is_empty()
+        && value.bytes().all(|byte| byte.is_ascii_digit())
+        && let Ok(seconds) = value.parse::<u64>()
+    {
         return Some(Duration::from_secs(seconds));
     }
-    httpdate::parse_http_date(value)
-        .ok()?
-        .duration_since(SystemTime::now())
-        .ok()
+    Some(
+        httpdate::parse_http_date(value)
+            .ok()?
+            .duration_since(SystemTime::now())
+            .unwrap_or(Duration::ZERO),
+    )
+}
+pub(crate) fn body_failure(error: Error) -> Error {
+    let kind = if matches!(error.kind(), ErrorKind::Transport | ErrorKind::Io) {
+        crate::FailureKind::Network
+    } else {
+        crate::FailureKind::Http
+    };
+    error.with_failure_kind(kind)
 }
 pub(crate) fn error_metadata(
     headers: &HeaderMap,
@@ -1200,6 +1356,8 @@ pub(crate) fn error_metadata(
         .and_then(|v| {
             v.get("code")
                 .or_else(|| v.get("error").and_then(|v| v.get("code")))
+                .or_else(|| v.get("data").and_then(|v| v.get("errorCode")))
+                .or_else(|| v.get("errorCode"))
                 .and_then(|v| v.as_str())
                 .filter(|v| valid_metadata(v))
                 .map(str::to_owned)

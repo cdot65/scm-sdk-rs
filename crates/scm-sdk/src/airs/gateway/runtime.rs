@@ -34,6 +34,39 @@ impl RuntimeClient {
     pub fn client(&self) -> &Client {
         &self.client
     }
+    /// Experimental realtime. The caller explicitly selects a connector; HTTP retries never apply.
+    #[cfg(feature = "realtime")]
+    pub async fn connect_realtime(
+        &self,
+        query: &GatewayRealtimeConnectRequest,
+        realtime: &crate::realtime::GatewayRealtimeOptions,
+        options: Option<&RequestOptions>,
+    ) -> Result<crate::realtime::GatewayRealtimeConnection> {
+        realtime.validate()?;
+        let options = self.client.operation_options(options)?;
+        let query = self
+            .client
+            .validated_json(query, "GatewayRealtimeConnectRequestSchema", &options)
+            .await?;
+        let query: serde_json::Value =
+            serde_json::from_slice(&query).map_err(|_| Error::new(ErrorKind::Validation))?;
+        let query = query
+            .as_object()
+            .ok_or_else(|| Error::new(ErrorKind::Validation))?
+            .iter()
+            .map(|(key, value)| {
+                value
+                    .as_str()
+                    .map(|value| (key.clone(), value.to_owned()))
+                    .ok_or_else(|| Error::new(ErrorKind::Validation))
+            })
+            .collect::<Result<Vec<_>>>()?;
+        let mut request = RawRequest::new(Method::GET, "/realtime")
+            .query(query)
+            .named(crate::realtime::OPERATION);
+        self.routing.apply(&mut request)?;
+        self.client.open_realtime(request, realtime, &options).await
+    }
     /// Configure a clone for one call or a sequence; authentication remains unchanged.
     pub fn with_routing(&self, routing: GatewayRouting) -> Result<Self> {
         Ok(Self {

@@ -1,0 +1,470 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "capabilities": [
+    {
+      "baselineId": "ContentOptions",
+      "rustPaths": [
+        "scm_sdk::airs::scan::ContentBuilder"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Explicit bounded native content builder replaces a JavaScript options bag."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::airs::scan::ContentBuilder>; let _ = scm_sdk::airs::scan::Content::builder;"
+    },
+    {
+      "baselineId": "ContentOptions.prompt",
+      "rustPaths": [
+        "scm_sdk::airs::scan::ContentBuilder::prompt"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Source option becomes an explicit typed builder setter; build() enforces content invariants before use."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |builder: scm_sdk::airs::scan::ContentBuilder| { let _ = builder.prompt(String::new()); };"
+    },
+    {
+      "baselineId": "ContentOptions.response",
+      "rustPaths": [
+        "scm_sdk::airs::scan::ContentBuilder::response"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Source option becomes an explicit typed builder setter; build() enforces content invariants before use."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |builder: scm_sdk::airs::scan::ContentBuilder| { let _ = builder.response(String::new()); };"
+    },
+    {
+      "baselineId": "ContentOptions.context",
+      "rustPaths": [
+        "scm_sdk::airs::scan::ContentBuilder::context"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Source option becomes an explicit typed builder setter; build() enforces content invariants before use."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |builder: scm_sdk::airs::scan::ContentBuilder| { let _ = builder.context(String::new()); };"
+    },
+    {
+      "baselineId": "ContentOptions.codePrompt",
+      "rustPaths": [
+        "scm_sdk::airs::scan::ContentBuilder::code_prompt"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Source option becomes an explicit typed builder setter; build() enforces content invariants before use."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |builder: scm_sdk::airs::scan::ContentBuilder| { let _ = builder.code_prompt(String::new()); };"
+    },
+    {
+      "baselineId": "ContentOptions.codeResponse",
+      "rustPaths": [
+        "scm_sdk::airs::scan::ContentBuilder::code_response"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Source option becomes an explicit typed builder setter; build() enforces content invariants before use."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |builder: scm_sdk::airs::scan::ContentBuilder| { let _ = builder.code_response(String::new()); };"
+    },
+    {
+      "baselineId": "ContentOptions.toolEvent",
+      "rustPaths": [
+        "scm_sdk::airs::scan::ContentBuilder::tool_event"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Source option becomes an explicit typed builder setter; build() enforces content invariants before use."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |builder: scm_sdk::airs::scan::ContentBuilder, event: scm_sdk::airs::scan::models::ToolEvent| { let _ = builder.tool_event(event); };"
+    },
+    {
+      "baselineId": "Content.toJSON",
+      "rustPaths": [
+        "scm_sdk::airs::scan::Content::to_json"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Explicit native conversion preserves modeled content and rejects malformed JSON without echoing it."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::airs::scan::Content::to_json;"
+    },
+    {
+      "baselineId": "Content::fromJSON",
+      "rustPaths": [
+        "scm_sdk::airs::scan::Content::from_json"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Explicit native conversion preserves modeled content and rejects malformed JSON without echoing it."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::airs::scan::Content::from_json;"
+    },
+    {
+      "baselineId": "Content::fromJSONFile",
+      "rustPaths": [
+        "scm_sdk::airs::scan::Content::from_json_file"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/scan/content.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/airs/scan/content.rs::byte_limits_and_required_content_are_transactional",
+        "crates/scm-sdk/src/airs/scan/content.rs::explicit_file_reader_is_bounded_and_safe"
+      ],
+      "deliberateDifferences": [
+        "Explicit async file path and byte bound replace synchronous unbounded JavaScript file reads."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = || { let _future = scm_sdk::airs::scan::Content::from_json_file(\"probe.json\", 1024); };"
+    },
+    {
+      "baselineId": "GatewayWorkspaceProvisionRequest",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::GatewayWorkspaceProvisionRequest"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/provision.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::new_scope_workspace_and_additive_binding_match_exact_source_sequence"
+      ],
+      "deliberateDifferences": [
+        "Native workflow types use canonical semantic input/result fields; models-only source-derived wire types remain available separately."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::airs::gateway::GatewayWorkspaceProvisionRequest>;"
+    },
+    {
+      "baselineId": "GatewayWorkspaceProvisionResult",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/provision.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::new_scope_workspace_and_additive_binding_match_exact_source_sequence"
+      ],
+      "deliberateDifferences": [
+        "Native workflow types use canonical semantic input/result fields; models-only source-derived wire types remain available separately."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult>;"
+    },
+    {
+      "baselineId": "GatewayWorkspaceProvisionResult.scope",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult.scope"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/provision.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::new_scope_workspace_and_additive_binding_match_exact_source_sequence"
+      ],
+      "deliberateDifferences": [
+        "Rust field names use snake_case; confirmed receipt and scope-after-bind semantics are preserved."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |value: &scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult| { let _ = &value.scope; };"
+    },
+    {
+      "baselineId": "GatewayWorkspaceProvisionResult.workspace",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult.workspace"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/provision.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::new_scope_workspace_and_additive_binding_match_exact_source_sequence"
+      ],
+      "deliberateDifferences": [
+        "Rust field names use snake_case; confirmed receipt and scope-after-bind semantics are preserved."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |value: &scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult| { let _ = &value.workspace; };"
+    },
+    {
+      "baselineId": "GatewayWorkspaceProvisionResult.scopeCreated",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult.scope_created"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/provision.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::new_scope_workspace_and_additive_binding_match_exact_source_sequence"
+      ],
+      "deliberateDifferences": [
+        "Rust field names use snake_case; confirmed receipt and scope-after-bind semantics are preserved."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |value: &scm_sdk::airs::gateway::GatewayWorkspaceProvisionResult| { let _ = &value.scope_created; };"
+    },
+    {
+      "baselineId": "ScanCallOptions.numRetries",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::with_retries"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs::sync_and_async_ambiguous_failures_remain_unknown_and_are_never_replayed"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions carries one total deadline, cancellation and safe-read retry controls; SyncScanOptions.request composes it with scan payload metadata. Mutations never gain replay permission."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::with_retries;"
+    },
+    {
+      "baselineId": "ScanCallOptions.signal",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs::sync_and_async_ambiguous_failures_remain_unknown_and_are_never_replayed"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions carries one total deadline, cancellation and safe-read retry controls; SyncScanOptions.request composes it with scan payload metadata. Mutations never gain replay permission."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::cancel;"
+    },
+    {
+      "baselineId": "ScanCallOptions.timeoutMs",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::with_timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs::sync_and_async_ambiguous_failures_remain_unknown_and_are_never_replayed"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions carries one total deadline, cancellation and safe-read retry controls; SyncScanOptions.request composes it with scan payload metadata. Mutations never gain replay permission."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::with_timeout;"
+    },
+    {
+      "baselineId": "SyncScanOptions.numRetries",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::with_retries"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs::sync_and_async_ambiguous_failures_remain_unknown_and_are_never_replayed"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions carries one total deadline, cancellation and safe-read retry controls; SyncScanOptions.request composes it with scan payload metadata. Mutations never gain replay permission."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::with_retries;"
+    },
+    {
+      "baselineId": "SyncScanOptions.signal",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs::sync_and_async_ambiguous_failures_remain_unknown_and_are_never_replayed"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions carries one total deadline, cancellation and safe-read retry controls; SyncScanOptions.request composes it with scan payload metadata. Mutations never gain replay permission."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::cancel;"
+    },
+    {
+      "baselineId": "SyncScanOptions.timeoutMs",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::with_timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs::sync_and_async_ambiguous_failures_remain_unknown_and_are_never_replayed"
+      ],
+      "deliberateDifferences": [
+        "Explicit RequestOptions carries one total deadline, cancellation and safe-read retry controls; SyncScanOptions.request composes it with scan payload metadata. Mutations never gain replay permission."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::with_timeout;"
+    },
+    {
+      "baselineId": "ModelSecurityFileListOptions.type",
+      "rustPaths": [
+        "scm_sdk::airs::model_security::ModelSecurityFileListOptions.type_"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/model_security/query.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/model_security_contracts.rs::all_listing_filters_preserve_exact_order_repeated_arrays_and_zero_false"
+      ],
+      "deliberateDifferences": [
+        "The reserved Rust type keyword uses type_ while the wire query key remains type."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |value: &scm_sdk::airs::model_security::ModelSecurityFileListOptions| { let _ = &value.type_; };"
+    },
+    {
+      "baselineId": "DataPatternsClient",
+      "rustPaths": [
+        "scm_sdk::dlp::DataPatternsClient",
+        "scm_sdk::dlp::DlpClient::new",
+        "scm_sdk::dlp::DlpClient::data_patterns"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/dlp/data_patterns.rs",
+        "crates/scm-sdk/src/dlp/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs"
+      ],
+      "deliberateDifferences": [
+        "DLP leaf construction uses authenticated DlpClient::new(Client) plus its typed factory accessor; the returned leaf shares immutable identity, policy, session and transport. This replaces independent JavaScript constructor option bags."
+      ],
+      "verification": "independent_dlp_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::dlp::DataPatternsClient>; let _ = scm_sdk::dlp::DlpClient::new; let _ = scm_sdk::dlp::DlpClient::data_patterns;"
+    },
+    {
+      "baselineId": "DataProfilesClient",
+      "rustPaths": [
+        "scm_sdk::dlp::DataProfilesClient",
+        "scm_sdk::dlp::DlpClient::new",
+        "scm_sdk::dlp::DlpClient::data_profiles"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/dlp/data_profiles.rs",
+        "crates/scm-sdk/src/dlp/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs"
+      ],
+      "deliberateDifferences": [
+        "DLP leaf construction uses authenticated DlpClient::new(Client) plus its typed factory accessor; the returned leaf shares immutable identity, policy, session and transport. This replaces independent JavaScript constructor option bags."
+      ],
+      "verification": "independent_dlp_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::dlp::DataProfilesClient>; let _ = scm_sdk::dlp::DlpClient::new; let _ = scm_sdk::dlp::DlpClient::data_profiles;"
+    },
+    {
+      "baselineId": "DictionariesClient",
+      "rustPaths": [
+        "scm_sdk::dlp::DictionariesClient",
+        "scm_sdk::dlp::DlpClient::new",
+        "scm_sdk::dlp::DlpClient::dictionaries"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/dlp/dictionaries.rs",
+        "crates/scm-sdk/src/dlp/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs"
+      ],
+      "deliberateDifferences": [
+        "DLP leaf construction uses authenticated DlpClient::new(Client) plus its typed factory accessor; the returned leaf shares immutable identity, policy, session and transport. This replaces independent JavaScript constructor option bags."
+      ],
+      "verification": "independent_dlp_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::dlp::DictionariesClient>; let _ = scm_sdk::dlp::DlpClient::new; let _ = scm_sdk::dlp::DlpClient::dictionaries;"
+    },
+    {
+      "baselineId": "DataFilteringProfilesClient",
+      "rustPaths": [
+        "scm_sdk::dlp::DataFilteringProfilesClient",
+        "scm_sdk::dlp::DlpClient::new",
+        "scm_sdk::dlp::DlpClient::data_filtering_profiles"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/dlp/filtering_profiles.rs",
+        "crates/scm-sdk/src/dlp/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs"
+      ],
+      "deliberateDifferences": [
+        "DLP leaf construction uses authenticated DlpClient::new(Client) plus its typed factory accessor; the returned leaf shares immutable identity, policy, session and transport. This replaces independent JavaScript constructor option bags."
+      ],
+      "verification": "independent_dlp_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::dlp::DataFilteringProfilesClient>; let _ = scm_sdk::dlp::DlpClient::new; let _ = scm_sdk::dlp::DlpClient::data_filtering_profiles;"
+    }
+  ]
+}

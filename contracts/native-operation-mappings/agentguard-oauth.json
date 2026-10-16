@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.getScanStats",
+      "feature": "agentguard",
+      "namespace": "scm_sdk::airs::agentguard::AgentGuardClient",
+      "methods": [
+        "get_scan_stats"
+      ],
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 7,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.listRules",
+      "feature": "agentguard",
+      "namespace": "scm_sdk::airs::agentguard::AgentGuardClient",
+      "methods": [
+        "list_rules"
+      ],
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 7,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.listScanVulnerabilities",
+      "feature": "agentguard",
+      "namespace": "scm_sdk::airs::agentguard::AgentGuardClient",
+      "methods": [
+        "list_scan_vulnerabilities"
+      ],
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 7,
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.listScans",
+      "feature": "agentguard",
+      "namespace": "scm_sdk::airs::agentguard::AgentGuardClient",
+      "methods": [
+        "list_scans"
+      ],
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 7,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

@@ -1,13 +1,15 @@
 # Rust foundation
 
-The foundation supplies an async HTTP client for the product clients implemented
-in subsequent phases. Applications own their Tokio runtime and credential
-persistence. Client construction creates no runtime and starts no background task.
+The foundation supplies the async HTTP client shared by the implemented product
+clients. Phase 7 extends configuration, OAuth observation and error interfaces;
+its complete gate remains under verification. Applications own their Tokio
+runtime and credential persistence. Client construction creates no runtime and starts no background task.
 Clones share their connection pool, concurrency limit, and session cancellation.
 
 ## Explicit configuration
 
-See the [compiled foundation example](../crates/scm-sdk/examples/foundation.rs).
+See the [compiled foundation example](../crates/scm-sdk/examples/foundation.rs) and
+[isolated configuration/environment guide](CONFIGURATION.md).
 The crate's rustdoc includes that same source as a checked `no_run` example.
 
 `oauth_credentials` uses the same transport, destination policy, and session for
@@ -31,13 +33,15 @@ Gateway runtime key. Authenticated redirects are rejected. Separate clients bind
 different credential kinds to their configured origins. Signed transfers and
 public pricing require distinct unauthenticated handling in their product clients.
 
-Every API request includes SDK-owned `service-name: api` and
+Every ordinary HTTP API request includes SDK-owned `service-name: api` and
 `User-Agent: PAN-AIRS/<crate-version>-rust-sdk` headers before transport dispatch,
 including caller-supplied adapters. The frozen TypeScript User-Agent uses its
 own package version and `-typescript-sdk` suffix; the native value deliberately
 identifies Rust while retaining the vendor's `PAN-AIRS/` prefix. These defaults
 cannot be overridden through raw per-request headers. They count toward the
 combined header budget. The token issuer exchange has its own OAuth headers.
+Realtime upgrades preserve the source's separate header contract and omit these
+ordinary HTTP defaults.
 
 ### Deliberate TypeScript differences
 
@@ -51,9 +55,12 @@ combined header budget. The token issuer exchange has its own OAuth headers.
   is an SDK bound, not a claimed vendor maximum.
 - Bearer tokens follow [RFC 6750 section 2.1](https://www.rfc-editor.org/rfc/rfc6750#section-2.1)'s `b64token` character set. Arbitrary
   opaque strings outside that grammar are rejected before becoming headers.
-- The early-refresh buffer is currently `min(30 seconds, TTL / 5)`, which keeps
-  short-lived tokens usable. The TypeScript client exposes `tokenBufferMs`;
-  its configurable native equivalent remains a tracked Phase 7 parity item.
+- The default early-refresh buffer is `min(30 seconds, TTL / 5)`, keeping
+  short-lived tokens usable. `OAuthProviderOptions::refresh_buffer` accepts
+  `RefreshBuffer::Fixed(Duration)` for the source's exact fixed-buffer behavior
+  or `Adaptive(Duration)` for a lifetime-aware maximum. The default remains
+  adaptive. `subscribe_refresh` provides a bounded metadata receiver in place
+  of an application callback. See [OAUTH.md](OAUTH.md) for lifecycle and lag semantics.
 - Request deadlines cover the complete operation. Retries require declared read
   semantics, so scan submissions and ambiguous mutations do not inherit the
   TypeScript SDK's permissive retry behavior.
@@ -72,6 +79,15 @@ and before calling this adapter. A custom adapter is trusted code: it must prese
 the exact body, verify TLS, reject redirects, bound headers/chunks, sanitize its
 errors, and release local resources when its future or body is dropped. These
 requirements also apply to any network code inside an external token provider.
+
+Experimental realtime is opt-in through `realtime`, with a separate
+`WebSocketConnector` seam and `DestinationPurpose::Realtime` admission.
+`ws-transport` selects the native direct TCP/TLS connector; it does not inherit
+HTTP reqwest proxy or certificate configuration. Its explicit PEM/TLS methods
+configure trust; proxies and alternate network stacks require a caller connector.
+The native adapter currently supports 64-bit targets and does not change global
+logging or crypto providers. See [REALTIME.md](REALTIME.md) and the
+[dependency review](DEPENDENCIES.md) for the pinned framing boundary.
 
 Endpoints require HTTPS. `Endpoint::loopback` explicitly permits HTTP for literal
 loopback addresses and localhost. Paths retain the configured base path and cannot
@@ -96,12 +112,20 @@ Endpoints and final URLs are bounded at 16 KiB; queries have at most 256 entries
 | Outgoing header count / total bytes | 128 / 16 KiB |
 | Default adapter received headers | HTTP/1: 128 headers; HTTP/2: 16 KiB list |
 | Stream handshake / idle | 30 seconds each |
-| Stream event / future realtime queue | 1 MiB / 64 entries |
+| Stream event bytes | 1 MiB |
+| Realtime handshake / idle / close | 15 seconds / 30 seconds / 500 milliseconds |
+| Realtime option defaults (no SDK event queue) | 1 MiB/event, 256 events, 4 MiB |
 
 `send_bytes` buffers bounded responses. `send_stream` returns a caller-driven
 body owning its concurrency permit; dropping or closing it releases the response.
 The SSE decoder and typed Gateway stream enforce event and terminal contracts.
 See [STREAMING.md](STREAMING.md) for raw and typed stream budget differences.
+Realtime is pull-driven and keeps no SDK event queue. Per-event bytes and idle
+timeout intersect shared client limits. Event-count options are validated; this
+native pull path has no queue on which to accumulate that count. These controls
+do not create a background reader. Graceful cancel has a separate bounded close
+timeout.
+
 Limits are configurable within documented validation bounds in
 `config::Limits::validate`; they are SDK defaults, not vendor service quotas.
 
@@ -143,12 +167,16 @@ failures after sending and successful-response decoding failures report unknown
 remote outcomes. Before dispatch, failures report `NotSent`; definitive HTTP
 client rejections report `Rejected`.
 
+Phase 7 adds `ErrorType`, `FailureKind`, `ErrorMetadata`, and bounded
+`ProblemDetails` equivalents. Explicit `Error::custom` messages and opt-in
+backtraces remain omitted from ordinary formatting; SDK-generated errors do not
+retain arbitrary transport causes or upstream text. Problem descriptions and
+field reasons use reviewed allowlists. See [ERRORS.md](ERRORS.md).
+
 Secret formatting is redacted. `Secret::expose` is an explicit access point.
 Zeroization erases its final owned buffer; it cannot erase copies in a caller,
-HTTP stack, allocator, operating system, or server. No foundation telemetry records
-payload data. Product, realtime, and metadata-only tracing features are introduced
-with their implementations in later milestones; they are not empty feature flags
-in the foundation crate.
+HTTP stack, allocator, operating system, or server. No SDK telemetry records
+payload data. OAuth refresh observation is metadata-only and caller-polled. No tracing feature or logging subscriber is installed.
 
 ## Evidence
 
@@ -158,7 +186,9 @@ stale 401s, exact HMAC bytes, destination rejection, gzip limits, ambiguous writ
 permit/body release, redirects, invalid JSON, deadlines, and redaction. Exact
 executed compiler, feature, command, and outcome evidence lives in
 `docs/checks/phase-02.json` and its linked native reports. Live service acceptance
-is a separate qualification milestone.
+is a separate Phase 8 qualification milestone. Historical reports retain the
+source and compiler state they actually checked; current Phase 7 acceptance is
+recorded separately in [phase status](phase-status.json).
 
 ## Phase 4 shared client additions
 
@@ -180,8 +210,9 @@ provider cancels the call synchronously.
 `is_token_expiring_soon`, and `token_info` provide all five frozen lifecycle
 methods. One monotonic instant determines each metadata snapshot; wall-clock
 expiry is informational. Custom expiring-soon duration comparisons cannot
-overflow timestamps. Provider constructor buffer configuration and metadata
-subscriptions remain Phase 7 capabilities.
+overflow timestamps. Phase 7 implements immutable provider buffer configuration
+and bounded metadata subscriptions; these extend the original Phase 4 lifecycle
+methods without changing their delivery history.
 
 See [pagination](PAGINATION.md) for collection bounds and partial errors, and
 [DLP](DLP.md) for bounded native multipart uploads and merge-patch behavior.

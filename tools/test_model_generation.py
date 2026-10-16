@@ -103,9 +103,9 @@ class GenerationGuards(unittest.TestCase):
                 if name in expected:self.assertNotIn("pub fn build_validated(",body)
                 else:self.assertIn("pub fn build_validated(",body)
 
-    def test_phase_six_gateway_adapters_resolve_and_standalone_helpers_remain_explicit(self):
+    def test_phase_six_gateway_adapters_resolve_and_standalone_helper_closure_is_explicit(self):
         native=generator.Generator(self.inventory);native.generate()
-        rows=[row for row in native.model_rows if row.get("nativeFeature")=="gateway"]
+        rows=[row for row in native.model_rows if row.get("nativeFeature")=="gateway" and row.get("behavioralClosurePhase")!=7 and row.get("operationTypeAdapterPhase")!=7]
         self.assertEqual(len(rows),18)
         source="\n".join(path.read_text() for path in (ROOT/"crates/scm-sdk/src").rglob("*.rs"))
         for row in rows:
@@ -114,11 +114,20 @@ class GenerationGuards(unittest.TestCase):
                 for name in [row["rustType"],*row.get("additionalTypes",[])]:
                     self.assertRegex(source,r"pub\s+(?:struct|enum|type)\s+"+re.escape(name.split("::")[-1])+r"\b")
         expected={"AIGatewaySecretOperation","GatewaySecretDirection","GatewaySecretPathSegment","CustomHostConfigurationOptions"}
-        deferred={row["export"]:row for row in native.model_rows if row["export"] in expected}
-        self.assertEqual(set(deferred),expected)
-        for row in deferred.values():
-            self.assertEqual(row["status"],"deferred_client_adapter")
-            self.assertEqual(row["owningPhase"],7)
+        helpers={row["export"]:row for row in native.model_rows if row["export"] in expected}
+        self.assertEqual(set(helpers),expected)
+        for row in helpers.values():
+            self.assertEqual(row["status"],"native_client_mapping")
+            self.assertEqual(row["behavioralClosurePhase"],7)
         self.assertFalse(any(row.get("status")=="deferred_client_adapter" and row.get("owningPhase")==6 for row in native.model_rows))
+
+    def test_all_forty_behavioral_adapters_close_and_problem_metadata_has_concrete_types(self):
+        native=generator.Generator(self.inventory);native.generate()
+        rows=[row for row in native.model_rows if row.get("behavioralClosurePhase")==7]
+        self.assertEqual({row["export"] for row in rows},set(generator.PHASE7_NATIVE_ADAPTERS))
+        self.assertEqual(len(rows),40)
+        self.assertFalse(any(row["status"].startswith(("pending_","deferred_")) for row in native.model_rows))
+        metadata={row["export"]:row["rustType"] for row in native.model_rows if row["export"] in {"AISecSDKProblemDetails","AISecSDKExceptionMetadata"}}
+        self.assertEqual(metadata,{"AISecSDKProblemDetails":"crate::error::ProblemDetails","AISecSDKExceptionMetadata":"crate::error::ErrorMetadata"})
 
 if __name__=="__main__":unittest.main()

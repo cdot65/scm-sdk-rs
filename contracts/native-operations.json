@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "baselineOperationsSha256": "028acb96f9740018f2fbdf699d7a110688553e667433e63abf7a137ab67d8abf",
-  "generatorSha256": "9cf4a5b0f720dcdb119671da29d08d35e73f9a24df54868b0904a9c170c5fdd6",
+  "generatorSha256": "c158db339f25ed18d46f20b7c65d9d50327c1e7703af809a30b5879a55f10f79",
   "ownershipOverrides": {
     "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime": {
       "phase": 7,
@@ -15,6 +15,25 @@
   },
   "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
   "requestHeaderContracts": {
+    "gateway_realtime": {
+      "purpose": "Explicit runtime-key WebSocket upgrade; bypasses common HTTP API defaults as in frozen openRealtime.",
+      "authentication": "x-portkey-api-key",
+      "routing": "validated non-authentication x-portkey-* and OpenAI-Beta",
+      "nativeUpgrade": [
+        "Host",
+        "Upgrade",
+        "Connection",
+        "Sec-WebSocket-Key",
+        "Sec-WebSocket-Version"
+      ],
+      "neverInherited": [
+        "SCM OAuth",
+        "x-tsg-id",
+        "service-name",
+        "User-Agent",
+        "HTTP proxy/TLS settings"
+      ]
+    },
     "airs_api_defaults": {
       "service-name": "api",
       "user-agent": "PAN-AIRS/0.1.0-rust-sdk",
@@ -28,12 +47,24 @@
   },
   "sourceBindings": [
     {
+      "path": "contracts/native-operation-mappings/agentguard-oauth.json",
+      "sha256": "9cc23596f14fd18cee17d86c5c0d06a2ea661f97b3ea47af4b1817218e5ad27a"
+    },
+    {
       "path": "contracts/native-operation-mappings/dlp.json",
       "sha256": "1eb59ef5bf324426f198b1cb1c5bf5e9b3a4486ca90a48e9c948535a20018d75"
     },
     {
       "path": "contracts/native-operation-mappings/gateway-control.json",
-      "sha256": "8c38a898ada2887d0088a93ea3d2e635b642e5292628391784c3ed253cd9681f"
+      "sha256": "eb80c3af2bb3b6e20c8afc65e3221d4817e21a1aa012de80737e1e2d8c308902"
+    },
+    {
+      "path": "contracts/native-operation-mappings/gateway-provision.json",
+      "sha256": "66f87538d7beb2a778dc4980dbb4e17d7dc3fc7cdaea69ad44c5e6864e177522"
+    },
+    {
+      "path": "contracts/native-operation-mappings/gateway-realtime.json",
+      "sha256": "30eace9b93c0758e0421dbf9b22d77970913f5b29152d326b24e5abc1fb86bbc"
     },
     {
       "path": "contracts/native-operation-mappings/gateway-runtime.json",
@@ -49,11 +80,11 @@
     },
     {
       "path": "contracts/native-operation-mappings/management.json",
-      "sha256": "28cef3505e2408f5529dd0ecb51917ea7c84f380bb918f6fcea0fc83aba1cfc2"
+      "sha256": "56c51e256d92f3061997ab0114c4ee6f833136e30d83090dec172a200abc0273"
     },
     {
       "path": "contracts/native-operation-mappings/model-security.json",
-      "sha256": "ee0f1dfd3cd9c4472c23519c3793a6e6b70268d5e1785d62b8bb28f0dc437822"
+      "sha256": "35178f133d2d265f127059c4f545e95efdef20ffc8bec1f98d5d7524f3d22f73"
     },
     {
       "path": "contracts/native-operation-mappings/oauth-management.json",
@@ -61,7 +92,7 @@
     },
     {
       "path": "contracts/native-operation-mappings/oauth-provider.json",
-      "sha256": "335391c6caf081cd31fa15bc6c1e684c9427fbd06b95efbe1c45c89807c4e9c8"
+      "sha256": "5965edfeb09458f3db66eca468c3082dd062e569ae809dbe8bdf3818b6a2705f"
     },
     {
       "path": "contracts/native-operation-mappings/red-team-resources.json",
@@ -70,6 +101,10 @@
     {
       "path": "contracts/native-operation-mappings/red-team.json",
       "sha256": "2cebad0c30b6637bce3a77a81cfd7f6b7f27e14c8e775dbc2e81fbd39ee31dcb"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "sha256": "23fc18a0adcaef2a12e6a6d3b2f91c302f4fe55281830b9ab2b76c4f0153b5a3"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -128,16 +163,20 @@
       "sha256": "dd0e4ea40301eaf776341794a89b3bc41f5e7b05ca145c3f5a121f6fd6162908"
     },
     {
+      "path": "crates/scm-sdk/src/airs/gateway/provision.rs",
+      "sha256": "b67199ecc30da77a6ca54a68ef7bf1d415994fffb3cb640dbc6da5935024258c"
+    },
+    {
       "path": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
       "sha256": "caaffff65849835dd4c9304ef09c112c77898bb871d430ce968a6c2ab83e5b09"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/runtime.rs",
-      "sha256": "4aa7ed0ea3546797705a835acf9359e65d4980932ed69021c6bc117e22176044"
+      "sha256": "95ecf697f6f79cb2654d7a2d1b2df9daaadb838178b98928c12259b8a4c2fb11"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
-      "sha256": "9c7d7548a25e501d874e0abf6a7a8527c4643ba1aec53fce63553d77c2c918ad"
+      "sha256": "ef6f54e681e7053659d4fab19dd0441c22de29438f0a7f1c4b2575a5fbeb1d03"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -157,7 +196,7 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
-      "sha256": "273bf536c97f5ae2910c8ccceacae0972c6e6430e1bfec751f751079c3c269f7"
+      "sha256": "02f4986d39db6a3c614eea6d1e4d6947d088f1e850c7591f60cf93eeaecc8384"
     },
     {
       "path": "crates/scm-sdk/src/airs/management/api_keys.rs",
@@ -253,11 +292,11 @@
     },
     {
       "path": "crates/scm-sdk/src/auth.rs",
-      "sha256": "19a8f3a50b165ef4dc963c192f0b1b92b51ce5680e3bd570162fdda9ac3cb16c"
+      "sha256": "5a35132b2256687d86678dce3e77920d14448590c8fd94bdc3dfb53b5a315060"
     },
     {
       "path": "crates/scm-sdk/src/config.rs",
-      "sha256": "34bce968cd2f03574fdcfc3b14b2815172a321e072cda00ecb085518ee8b1157"
+      "sha256": "84868f2f0013b545d45fa3e6d51d56df54edd4c186abd60989b471197babeb6d"
     },
     {
       "path": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -277,7 +316,7 @@
     },
     {
       "path": "crates/scm-sdk/src/engine.rs",
-      "sha256": "b00ae540c15eb879416e4a00da0e9dcb0b9556fa808c5eba1c41a51275f0666d"
+      "sha256": "cf2f9ab448be4d3c0fe26a8a953a315344f607baeee1c3f6017291271f31fb4c"
     },
     {
       "path": "crates/scm-sdk/src/multipart.rs",
@@ -297,11 +336,15 @@
     },
     {
       "path": "crates/scm-sdk/src/streaming.rs",
-      "sha256": "ff69524160f03df7ee4c7ccdece7ade22eb46ef215e346980cfc5427e58f7c54"
+      "sha256": "8c983cf7d0976274a6faaca4727cbe191a18426e51d4224384e66e3d07482e91"
     },
     {
       "path": "crates/scm-sdk/src/transport.rs",
       "sha256": "5eb87c8128b700834e77c1548f2a7eed67818327ef1685cc3b73eb173176ac19"
+    },
+    {
+      "path": "crates/scm-sdk/tests/agentguard_contracts.rs",
+      "sha256": "70c5f201218f6c74836d6915b84d86cd45365db0ae8086de57ce6c76f4207911"
     },
     {
       "path": "crates/scm-sdk/tests/dlp_contracts.rs",
@@ -313,11 +356,15 @@
     },
     {
       "path": "crates/scm-sdk/tests/gateway_control_contracts.rs",
-      "sha256": "5f7d316755939d422890166d97f0b1e913138318d4087fb7e0111d5067a36082"
+      "sha256": "1319ec1075cebfe781e41c22f9b0aa5e6cc07f1ccff4c5a7a83622b6aac76271"
+    },
+    {
+      "path": "crates/scm-sdk/tests/gateway_provision_contracts.rs",
+      "sha256": "cbec9ade084e4d1625f4bc82fe4e506ce73dd7f509ea34da83fc84d4c8887b3f"
     },
     {
       "path": "crates/scm-sdk/tests/gateway_runtime_contracts.rs",
-      "sha256": "664f9aedacf7763b5455ff79c8abc844d5fa2052722dbfe4b648dd1fafd4b93e"
+      "sha256": "64fc385c35dbe230f2839a301927994ee259f3c69c79ed62a5165b97f6d242ea"
     },
     {
       "path": "crates/scm-sdk/tests/iam_contracts.rs",
@@ -332,8 +379,16 @@
       "sha256": "cbb059ae368119b6846b1fbbe77b87419e18ab5c27c6d0bf07e2f7769806a811"
     },
     {
+      "path": "crates/scm-sdk/tests/native_realtime.rs",
+      "sha256": "0e50f3d3a6fa870fbf75757f295151c7abcce75d7667b0c9fc57db9f81969492"
+    },
+    {
       "path": "crates/scm-sdk/tests/oauth_management_contracts.rs",
       "sha256": "77522e05057b2065d4aaa9a2ed1aec0b9b3c2c248ef454ea9013a6f83d238988"
+    },
+    {
+      "path": "crates/scm-sdk/tests/realtime_contracts.rs",
+      "sha256": "5dc1b25d9056121b8943e79321637be1a48123f2fcf67170296c1db176e88376"
     },
     {
       "path": "crates/scm-sdk/tests/red_team_contracts.rs",
@@ -354,10 +409,10 @@
   ],
   "summary": {
     "baselineConcreteMethods": 448,
-    "implemented": 442,
-    "pending": 6,
+    "implemented": 448,
+    "pending": 0,
     "liveVerified": 0,
-    "completeMethodOptionParity": 442,
+    "completeMethodOptionParity": 448,
     "partialMethodOptionParity": 0
   },
   "operations": [
@@ -365,33 +420,105 @@
       "baselineId": "src/agentguard/client.ts:AgentGuardClient.getScanStats",
       "family": "agentguard",
       "owningPhase": 7,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "scm_sdk::airs::agentguard::AgentGuardClient::get_scan_stats"
+      ],
+      "feature": "agentguard",
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "deliveredInPhase": 7,
+      "lastContractPhase": 7
     },
     {
       "baselineId": "src/agentguard/client.ts:AgentGuardClient.listRules",
       "family": "agentguard",
       "owningPhase": 7,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "scm_sdk::airs::agentguard::AgentGuardClient::list_rules"
+      ],
+      "feature": "agentguard",
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "deliveredInPhase": 7,
+      "lastContractPhase": 7
     },
     {
       "baselineId": "src/agentguard/client.ts:AgentGuardClient.listScanVulnerabilities",
       "family": "agentguard",
       "owningPhase": 7,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "scm_sdk::airs::agentguard::AgentGuardClient::list_scan_vulnerabilities"
+      ],
+      "feature": "agentguard",
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "deliveredInPhase": 7,
+      "lastContractPhase": 7
     },
     {
       "baselineId": "src/agentguard/client.ts:AgentGuardClient.listScans",
       "family": "agentguard",
       "owningPhase": 7,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "scm_sdk::airs::agentguard::AgentGuardClient::list_scans"
+      ],
+      "feature": "agentguard",
+      "source": "crates/scm-sdk/src/airs/agentguard/client.rs",
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::invalid_queries_uuid_and_bounded_serialization_fail_before_authentication",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::malformed_known_response_fields_missing_nulls_and_negative_counts_are_rejected"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "deliveredInPhase": 7,
+      "lastContractPhase": 7
     },
     {
       "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.create",
@@ -401,7 +528,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::create"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -427,7 +554,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::delete"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -452,7 +579,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::get"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -474,7 +601,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::get_mcp_servers"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::get_mcp_servers"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -496,7 +623,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::list"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -518,7 +645,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::sync_mcp_servers"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::sync_mcp_servers"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -544,7 +671,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::update"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -570,7 +697,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.admin_guardrails::upsert_mcp_server"
+        "scm_sdk::airs::gateway::AIGatewayAdminGuardrailsClient::upsert_mcp_server"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -596,7 +723,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::create_service"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::create_service"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -622,7 +749,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::create_user"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::create_user"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -648,7 +775,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::delete_service"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::delete_service"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -673,7 +800,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::delete_user"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::delete_user"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -698,7 +825,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::get_service"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::get_service"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -720,7 +847,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::get_user"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::get_user"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -742,7 +869,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::list_service"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::list_service"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -764,7 +891,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::list_user"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::list_user"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -786,7 +913,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::rotate_service"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::rotate_service"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -812,7 +939,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::rotate_user"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::rotate_user"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -838,7 +965,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::update_service"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::update_service"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -864,7 +991,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.api_keys::update_user"
+        "scm_sdk::airs::gateway::AIGatewayApiKeysClient::update_user"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/api_keys.rs",
@@ -890,7 +1017,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.audit_logs::list"
+        "scm_sdk::airs::gateway::AIGatewayAuditLogsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/audit_logs.rs",
@@ -1218,7 +1345,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::create"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1244,7 +1371,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::delete"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1269,7 +1396,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::get"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1291,7 +1418,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::get_catalog"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::get_catalog"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1313,13 +1440,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::get_mcp_servers"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::get_mcp_servers"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -1335,7 +1463,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::list"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1357,7 +1485,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::sync_mcp_servers"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::sync_mcp_servers"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1365,7 +1493,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -1383,7 +1512,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::update"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1409,7 +1538,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.guardrails::upsert_mcp_server"
+        "scm_sdk::airs::gateway::AIGatewayGuardrailsClient::upsert_mcp_server"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/guardrails.rs",
@@ -1417,7 +1546,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -1431,9 +1561,44 @@
       "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime",
       "family": "ai-gateway",
       "owningPhase": 7,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "scm_sdk::airs::gateway::RuntimeClient::connect_realtime"
+      ],
+      "feature": "realtime",
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::prepared_upgrade_pins_runtime_key_query_and_routing_without_oauth_or_http_defaults",
+        "crates/scm-sdk/tests/realtime_contracts.rs::unknown_provider_error_events_are_faithful_and_do_not_imply_provider_readiness",
+        "crates/scm-sdk/tests/realtime_contracts.rs::malformed_binary_oversized_and_abnormal_endings_latch_errors_and_drop_transport",
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed",
+        "crates/scm-sdk/tests/realtime_contracts.rs::cancelled_partial_send_releases_socket_and_retains_uncertainty",
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration",
+        "crates/scm-sdk/tests/realtime_contracts.rs::lifecycle_cancellation_idle_and_absolute_deadlines_release_every_resource",
+        "crates/scm-sdk/tests/realtime_contracts.rs::queue_and_handshake_share_original_budget_and_release_permits_without_replay",
+        "crates/scm-sdk/tests/realtime_contracts.rs::destination_invalid_bounds_and_precancellation_fail_before_connector_or_secret_dispatch",
+        "crates/scm-sdk/tests/native_realtime.rs::native_socket_pins_masking_ping_pong_fragmented_unicode_tail_and_clean_close",
+        "crates/scm-sdk/tests/native_realtime.rs::native_upgrade_preserves_already_received_frame_bytes",
+        "crates/scm-sdk/tests/native_realtime.rs::native_upgrade_rejects_redirects_bad_accepts_and_oversized_headers_without_replay",
+        "crates/scm-sdk/tests/native_realtime.rs::native_socket_bounds_assembled_fragments_and_rejects_invalid_utf8_and_binary",
+        "crates/scm-sdk/tests/native_realtime.rs::native_ping_flood_is_flushed_before_more_reads_and_does_not_queue_events",
+        "crates/scm-sdk/tests/native_realtime.rs::native_eof_and_unconfirmed_close_never_become_success"
+      ],
+      "headerContract": "gateway_realtime",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "An explicitly selected trusted WebSocketConnector replaces Node callbacks; Stream/Sink backpressure and pull iteration keep no SDK event queue, within validated per-event and byte bounds.",
+        "Native WebSocket transport is a separate opt-in ws-transport feature with explicit direct socket/TLS configuration. HTTP transport proxy and CA configuration is never inherited; custom connectors preserve caller-owned network integration.",
+        "One absolute default60s operation/session deadline covers validation, queueing, authentication, upgrade and event consumption; handshake is also bounded15s and idle reads/writes30s. Explicit graceful cancellation has its own bounded500ms cleanup budget.",
+        "Dropping either split handle immediately releases the socket and concurrency permit. Partially sent cancellation retains Unknown remote outcome. No automatic replay or OAuth refresh is performed.",
+        "Native option bounds cap events16MiB and buffers64MiB; only peer close1000 is clean, and HTTP101 alone does not imply provider readiness.",
+        "Default native framing is qualified only for64-bit targets, uses patched tokio-websockets0.13.3, and requires Rust1.89; caller connectors remain available without the native adapter."
+      ],
+      "deliveredInPhase": 7,
+      "lastContractPhase": 7
     },
     {
       "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createChatCompletion",
@@ -1619,7 +1784,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::catalog"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::catalog"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1641,7 +1806,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::create"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1667,7 +1832,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::delete"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1692,7 +1857,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::delete_models"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::delete_models"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1700,7 +1865,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -1718,7 +1884,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::get"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1740,7 +1906,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::get_models"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::get_models"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1762,7 +1928,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::get_workspaces"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::get_workspaces"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1784,7 +1950,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::list"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1806,7 +1972,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::resolve_provider_id"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::resolve_provider_id"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1831,7 +1997,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::set_models"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::set_models"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1857,7 +2023,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::set_workspaces"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::set_workspaces"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -1883,7 +2049,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.integrations::update"
+        "scm_sdk::airs::gateway::AIGatewayIntegrationsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/integrations.rs",
@@ -2095,7 +2261,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::create"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2121,7 +2287,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::delete"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2146,7 +2312,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::get"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2168,7 +2334,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::get_capabilities"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::get_capabilities"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2190,7 +2356,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::get_metadata"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::get_metadata"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2212,14 +2378,15 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::get_workspaces"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::get_workspaces"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::empty_optional_successes_required_structures_and_workspace_union_errors_are_distinct",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2235,7 +2402,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::list"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2257,7 +2424,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::set_capabilities"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::set_capabilities"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2283,7 +2450,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::set_workspaces"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::set_workspaces"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2309,7 +2476,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_integrations::update"
+        "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
@@ -2335,7 +2502,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::create"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
@@ -2343,7 +2510,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2361,7 +2529,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::delete"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
@@ -2369,7 +2537,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2387,7 +2556,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::delete_connections"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::delete_connections"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
@@ -2395,7 +2564,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2413,13 +2583,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::get"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2435,13 +2606,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::get_capabilities"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::get_capabilities"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2457,13 +2629,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::get_connections"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::get_connections"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2479,13 +2652,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::get_user_access"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::get_user_access"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2501,13 +2675,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::list"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2523,7 +2698,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::test"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::test"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
@@ -2531,7 +2706,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2549,7 +2725,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::update"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
@@ -2557,7 +2733,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2575,7 +2752,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::update_capabilities"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::update_capabilities"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
@@ -2583,7 +2760,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2601,7 +2779,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.mcp_servers::update_user_access"
+        "scm_sdk::airs::gateway::AIGatewayMcpServersClient::update_user_access"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
@@ -2609,7 +2787,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2627,7 +2806,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.model_pricing::get"
+        "scm_sdk::airs::gateway::AIGatewayModelPricingClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/model_pricing.rs",
@@ -2636,7 +2815,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_defaults_to_zero_retries_and_explicit_overrides_remain_bounded",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_never_follows_redirects_and_honors_deadline_and_cancellation",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::empty_optional_successes_required_structures_and_workspace_union_errors_are_distinct",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -2781,7 +2961,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.plugins::create"
+        "scm_sdk::airs::gateway::AIGatewayPluginsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/plugins.rs",
@@ -2807,7 +2987,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.plugins::list"
+        "scm_sdk::airs::gateway::AIGatewayPluginsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/plugins.rs",
@@ -4360,7 +4540,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.secret_references::create"
+        "scm_sdk::airs::gateway::AIGatewaySecretReferencesClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
@@ -4368,7 +4548,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -4386,7 +4567,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.secret_references::delete"
+        "scm_sdk::airs::gateway::AIGatewaySecretReferencesClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
@@ -4394,7 +4575,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -4412,13 +4594,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.secret_references::get"
+        "scm_sdk::airs::gateway::AIGatewaySecretReferencesClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -4434,13 +4617,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.secret_references::list"
+        "scm_sdk::airs::gateway::AIGatewaySecretReferencesClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -4456,7 +4640,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.secret_references::update"
+        "scm_sdk::airs::gateway::AIGatewaySecretReferencesClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/secret_references.rs",
@@ -4464,7 +4648,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5098,7 +5283,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.usage_limits::create"
+        "scm_sdk::airs::gateway::AIGatewayUsageLimitsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
@@ -5106,7 +5291,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5124,7 +5310,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.usage_limits::delete"
+        "scm_sdk::airs::gateway::AIGatewayUsageLimitsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
@@ -5132,7 +5318,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5150,13 +5337,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.usage_limits::get"
+        "scm_sdk::airs::gateway::AIGatewayUsageLimitsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5172,13 +5360,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.usage_limits::list"
+        "scm_sdk::airs::gateway::AIGatewayUsageLimitsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5194,13 +5383,14 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.usage_limits::list_entities"
+        "scm_sdk::airs::gateway::AIGatewayUsageLimitsClient::list_entities"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
       "tests": [
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5216,7 +5406,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.usage_limits::reset_entity"
+        "scm_sdk::airs::gateway::AIGatewayUsageLimitsClient::reset_entity"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
@@ -5224,7 +5414,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5242,7 +5433,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.gateway.usage_limits::update"
+        "scm_sdk::airs::gateway::AIGatewayUsageLimitsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
@@ -5250,7 +5441,8 @@
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_forty_four_mutations_preserve_unknown_outcomes_without_replay",
         "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay",
-        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth"
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth",
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
@@ -5374,9 +5566,36 @@
       "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.provision",
       "family": "ai-gateway",
       "owningPhase": 7,
-      "implementation": "pending",
-      "contractVerification": "pending",
-      "liveAcceptance": "unverified"
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::gateway::AIGatewayWorkspacesClient::provision"
+      ],
+      "feature": "gateway",
+      "source": "crates/scm-sdk/src/airs/gateway/provision.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::new_scope_workspace_and_additive_binding_match_exact_source_sequence",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::reused_scope_is_never_created_or_deleted_and_existing_binding_is_idempotent",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::ambiguous_creations_never_replay_or_delete_a_potential_dependency",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::definite_workspace_rejection_can_clean_only_owned_scope_and_preserves_cleanup_failure",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::binding_failure_keeps_confirmed_workspace_receipt_for_explicit_recovery",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::preflight_checks_every_input_and_iam_configuration_before_any_authentication",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::cancellation_between_steps_and_total_deadline_do_not_start_new_dispatches",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::generated_scope_name_is_used_consistently_and_mismatched_receipts_stop_recovery"
+      ],
+      "headerContract": "airs_api_defaults",
+      "optionParity": "complete",
+      "deliberateDifferences": [
+        "Every step and safe cleanup share one absolute caller deadline and cancellation token; no mutation is automatically replayed.",
+        "The frozen source attempts IAM rollback after any workspace-create failure. Rust retains the scope after an unknown remote outcome and exposes explicit recovery facts; only a definitely rejected/not-sent create permits cleanup of a newly owned scope.",
+        "Rust verifies returned scope/workspace binding identities before further workflow steps and exposes inconsistent receipts as Protocol/Unknown without deleting dependencies.",
+        "Generated scope suffix uses unbiased cryptographic random selection rather than the frozen modulo-36 reduction.",
+        "ProvisionError exposes structured stage/resource certainty/cleanup/confirmed receipt access while ordinary formatting redacts identifiers and bodies.",
+        "Direct workspace clients must explicitly admit an IAM endpoint; the facade shares its configured IAM client."
+      ],
+      "deliveredInPhase": 7,
+      "lastContractPhase": 7
     },
     {
       "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.update",
@@ -5560,7 +5779,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.api_keys::create"
+        "scm_sdk::airs::management::ApiKeysClient::create"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
@@ -5583,7 +5802,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.api_keys::delete"
+        "scm_sdk::airs::management::ApiKeysClient::delete"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
@@ -5606,7 +5825,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.api_keys::list"
+        "scm_sdk::airs::management::ApiKeysClient::list"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
@@ -5627,7 +5846,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.api_keys::list_all"
+        "scm_sdk::airs::management::ApiKeysClient::list_all"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
@@ -5650,7 +5869,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.api_keys::list_for_token"
+        "scm_sdk::airs::management::ApiKeysClient::list_for_token"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
@@ -5671,7 +5890,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.api_keys::regenerate"
+        "scm_sdk::airs::management::ApiKeysClient::regenerate"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
@@ -5694,7 +5913,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.customer_apps::delete"
+        "scm_sdk::airs::management::CustomerAppsClient::delete"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
@@ -5717,7 +5936,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.customer_apps::get"
+        "scm_sdk::airs::management::CustomerAppsClient::get"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
@@ -5738,7 +5957,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.customer_apps::list"
+        "scm_sdk::airs::management::CustomerAppsClient::list"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
@@ -5759,7 +5978,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.customer_apps::list_all"
+        "scm_sdk::airs::management::CustomerAppsClient::list_all"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
@@ -5782,7 +6001,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.customer_apps::list_for_token"
+        "scm_sdk::airs::management::CustomerAppsClient::list_for_token"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
@@ -5803,7 +6022,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.customer_apps::update"
+        "scm_sdk::airs::management::CustomerAppsClient::update"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
@@ -5826,7 +6045,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::application"
+        "scm_sdk::airs::management::DashboardClient::application"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -5847,7 +6066,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::application_raw"
+        "scm_sdk::airs::management::DashboardClient::application_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -5870,7 +6089,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::application_violation_breakdown"
+        "scm_sdk::airs::management::DashboardClient::application_violation_breakdown"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -5891,7 +6110,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::application_violation_breakdown_raw"
+        "scm_sdk::airs::management::DashboardClient::application_violation_breakdown_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -5914,7 +6133,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::applications_overview"
+        "scm_sdk::airs::management::DashboardClient::applications_overview"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -5937,7 +6156,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::applications_overview_raw"
+        "scm_sdk::airs::management::DashboardClient::applications_overview_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -5961,7 +6180,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::applications_violations_trend"
+        "scm_sdk::airs::management::DashboardClient::applications_violations_trend"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -5982,7 +6201,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::applications_violations_trend_raw"
+        "scm_sdk::airs::management::DashboardClient::applications_violations_trend_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6005,7 +6224,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::apps_list"
+        "scm_sdk::airs::management::DashboardClient::apps_list"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6026,7 +6245,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::apps_list_raw"
+        "scm_sdk::airs::management::DashboardClient::apps_list_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6049,7 +6268,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::scan_content"
+        "scm_sdk::airs::management::DashboardClient::scan_content"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6070,7 +6289,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::scan_content_raw"
+        "scm_sdk::airs::management::DashboardClient::scan_content_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6093,7 +6312,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::session"
+        "scm_sdk::airs::management::DashboardClient::session"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6114,7 +6333,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::session_raw"
+        "scm_sdk::airs::management::DashboardClient::session_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6137,7 +6356,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::session_transaction"
+        "scm_sdk::airs::management::DashboardClient::session_transaction"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6158,7 +6377,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::session_transaction_raw"
+        "scm_sdk::airs::management::DashboardClient::session_transaction_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6181,7 +6400,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::sessions_chart"
+        "scm_sdk::airs::management::DashboardClient::sessions_chart"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6202,7 +6421,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::sessions_chart_raw"
+        "scm_sdk::airs::management::DashboardClient::sessions_chart_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6225,7 +6444,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::sessions_overview"
+        "scm_sdk::airs::management::DashboardClient::sessions_overview"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6246,7 +6465,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::sessions_overview_raw"
+        "scm_sdk::airs::management::DashboardClient::sessions_overview_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6269,7 +6488,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::top_applications_violations"
+        "scm_sdk::airs::management::DashboardClient::top_applications_violations"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6290,7 +6509,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dashboard::top_applications_violations_raw"
+        "scm_sdk::airs::management::DashboardClient::top_applications_violations_raw"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/dashboard.rs",
@@ -6313,7 +6532,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.deployment_profiles::list"
+        "scm_sdk::airs::management::DeploymentProfilesClient::list"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/inventory.rs",
@@ -6334,7 +6553,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.dlp_profiles::list"
+        "scm_sdk::airs::management::DlpProfilesClient::list"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/inventory.rs",
@@ -6993,18 +7212,23 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "auth::OAuthProvider::clear"
+        "scm_sdk::auth::OAuthProvider::clear"
       ],
       "feature": "core",
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
       "deliberateDifferences": [
         "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
-        "Clear also invalidates pending refresh epochs so late responses cannot restore a cleared token."
+        "Clear also invalidates pending refresh epochs so late responses cannot restore a cleared token.",
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "deliveredInPhase": 4,
       "lastContractPhase": 4
@@ -7017,17 +7241,22 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "auth::OAuthProvider::get_token"
+        "scm_sdk::auth::OAuthProvider::get_token"
       ],
       "feature": "core",
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
       "deliberateDifferences": [
-        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "deliveredInPhase": 4,
       "lastContractPhase": 4
@@ -7040,18 +7269,22 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "auth::OAuthProvider::token_info"
+        "scm_sdk::auth::OAuthProvider::token_info"
       ],
       "feature": "core",
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
       "deliberateDifferences": [
         "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
-        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "deliveredInPhase": 4,
       "lastContractPhase": 4
@@ -7064,17 +7297,22 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "auth::OAuthProvider::is_token_expired"
+        "scm_sdk::auth::OAuthProvider::is_token_expired"
       ],
       "feature": "core",
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
       "deliberateDifferences": [
-        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "deliveredInPhase": 4,
       "lastContractPhase": 4
@@ -7087,18 +7325,22 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "auth::OAuthProvider::is_token_expiring_soon"
+        "scm_sdk::auth::OAuthProvider::is_token_expiring_soon"
       ],
       "feature": "core",
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "headerContract": "airs_api_defaults",
       "optionParity": "complete",
       "deliberateDifferences": [
         "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
-        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "deliveredInPhase": 4,
       "lastContractPhase": 4
@@ -7159,7 +7401,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::create"
+        "scm_sdk::airs::management::ProfilesClient::create"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7182,7 +7424,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::delete"
+        "scm_sdk::airs::management::ProfilesClient::delete"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7205,7 +7447,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::force_delete"
+        "scm_sdk::airs::management::ProfilesClient::force_delete"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7228,7 +7470,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::get"
+        "scm_sdk::airs::management::ProfilesClient::get"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7251,7 +7493,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::get_by_name"
+        "scm_sdk::airs::management::ProfilesClient::get_by_name"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7274,7 +7516,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::list"
+        "scm_sdk::airs::management::ProfilesClient::list"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7295,7 +7537,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::list_all"
+        "scm_sdk::airs::management::ProfilesClient::list_all"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7318,7 +7560,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::list_for_token"
+        "scm_sdk::airs::management::ProfilesClient::list_for_token"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7340,7 +7582,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.profiles::update"
+        "scm_sdk::airs::management::ProfilesClient::update"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/profiles.rs",
@@ -7363,7 +7605,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.scan_logs::query"
+        "scm_sdk::airs::management::ScanLogsClient::query"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/inventory.rs",
@@ -7387,7 +7629,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::create"
+        "scm_sdk::airs::management::TopicsClient::create"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7410,7 +7652,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::delete"
+        "scm_sdk::airs::management::TopicsClient::delete"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7433,7 +7675,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::force_delete"
+        "scm_sdk::airs::management::TopicsClient::force_delete"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7456,7 +7698,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::force_delete_with_audit"
+        "scm_sdk::airs::management::TopicsClient::force_delete_with_audit"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7479,7 +7721,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::get"
+        "scm_sdk::airs::management::TopicsClient::get"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7502,7 +7744,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::get_by_name"
+        "scm_sdk::airs::management::TopicsClient::get_by_name"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7525,7 +7767,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::list"
+        "scm_sdk::airs::management::TopicsClient::list"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7548,7 +7790,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::list_all"
+        "scm_sdk::airs::management::TopicsClient::list_all"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7571,7 +7813,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::list_for_token"
+        "scm_sdk::airs::management::TopicsClient::list_for_token"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7592,7 +7834,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.management.topics::update"
+        "scm_sdk::airs::management::TopicsClient::update"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/topics.rs",
@@ -7615,7 +7857,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security::get_pypi_auth"
+        "scm_sdk::airs::model_security::ModelSecurityClient::get_pypi_auth"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/client.rs",
@@ -7639,7 +7881,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::archive"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::archive"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7664,7 +7906,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::assign_security_groups"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::assign_security_groups"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7689,7 +7931,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::create"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::create"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7714,7 +7956,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::get"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::get"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7736,7 +7978,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::list"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::list"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7761,7 +8003,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::list_all"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::list_all"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7787,7 +8029,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::list_all_versions"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::list_all_versions"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7813,7 +8055,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::list_security_groups"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::list_security_groups"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7838,7 +8080,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::list_versions"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::list_versions"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7863,7 +8105,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::remove_assignment"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::remove_assignment"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7888,7 +8130,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::unarchive"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::unarchive"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7913,7 +8155,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.custom_rules::update"
+        "scm_sdk::airs::model_security::ModelSecurityCustomRulesClient::update"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -7938,7 +8180,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::get_model"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::get_model"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -7960,7 +8202,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::get_model_version"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::get_model_version"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -7982,7 +8224,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::list_all_model_version_files"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::list_all_model_version_files"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8008,7 +8250,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::list_all_model_versions"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::list_all_model_versions"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8034,7 +8276,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::list_all_models"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::list_all_models"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8060,7 +8302,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::list_model_version_files"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::list_model_version_files"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8085,7 +8327,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::list_model_versions"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::list_model_versions"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8110,7 +8352,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.models::list_models"
+        "scm_sdk::airs::model_security::ModelSecurityModelsClient::list_models"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8135,7 +8377,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::add_labels"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::add_labels"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8160,7 +8402,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::create"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::create"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8185,7 +8427,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::delete_labels"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::delete_labels"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8210,7 +8452,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8232,7 +8474,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get_evaluation"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get_evaluation"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8254,7 +8496,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get_evaluations"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get_evaluations"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8276,7 +8518,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get_files"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get_files"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8298,7 +8540,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get_label_keys"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get_label_keys"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8320,7 +8562,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get_label_values"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get_label_values"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8342,7 +8584,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get_violation"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get_violation"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8364,7 +8606,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::get_violations"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::get_violations"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8386,7 +8628,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::list"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::list"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8411,7 +8653,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::list_all"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::list_all"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8440,7 +8682,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.scans::set_labels"
+        "scm_sdk::airs::model_security::ModelSecurityScansClient::set_labels"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
@@ -8465,7 +8707,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::create"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::create"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8490,7 +8732,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::delete"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::delete"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8515,7 +8757,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::get"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::get"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8537,7 +8779,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::get_rule_instance"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::get_rule_instance"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8559,7 +8801,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::list"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::list"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8584,7 +8826,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::list_all"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::list_all"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8610,7 +8852,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::list_rule_instance_versions"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::list_rule_instance_versions"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8635,7 +8877,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::list_rule_instances"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::list_rule_instances"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8660,7 +8902,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::update"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::update"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8685,7 +8927,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.groups::update_rule_instance"
+        "scm_sdk::airs::model_security::ModelSecurityGroupsClient::update_rule_instance"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
@@ -8710,7 +8952,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.rules::get"
+        "scm_sdk::airs::model_security::ModelSecurityRulesClient::get"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8732,7 +8974,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.rules::list"
+        "scm_sdk::airs::model_security::ModelSecurityRulesClient::list"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8757,7 +8999,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.rules::list_all"
+        "scm_sdk::airs::model_security::ModelSecurityRulesClient::list_all"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
@@ -8783,7 +9025,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs.model_security.rules::list_versions"
+        "scm_sdk::airs::model_security::ModelSecurityRulesClient::list_versions"
       ],
       "feature": "model-security",
       "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",

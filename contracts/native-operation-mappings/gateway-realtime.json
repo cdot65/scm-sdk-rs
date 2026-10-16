@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime",
+      "feature": "realtime",
+      "namespace": "scm_sdk::airs::gateway::RuntimeClient",
+      "methods": [
+        "connect_realtime"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::prepared_upgrade_pins_runtime_key_query_and_routing_without_oauth_or_http_defaults",
+        "crates/scm-sdk/tests/realtime_contracts.rs::unknown_provider_error_events_are_faithful_and_do_not_imply_provider_readiness",
+        "crates/scm-sdk/tests/realtime_contracts.rs::malformed_binary_oversized_and_abnormal_endings_latch_errors_and_drop_transport",
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed",
+        "crates/scm-sdk/tests/realtime_contracts.rs::cancelled_partial_send_releases_socket_and_retains_uncertainty",
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration",
+        "crates/scm-sdk/tests/realtime_contracts.rs::lifecycle_cancellation_idle_and_absolute_deadlines_release_every_resource",
+        "crates/scm-sdk/tests/realtime_contracts.rs::queue_and_handshake_share_original_budget_and_release_permits_without_replay",
+        "crates/scm-sdk/tests/realtime_contracts.rs::destination_invalid_bounds_and_precancellation_fail_before_connector_or_secret_dispatch",
+        "crates/scm-sdk/tests/native_realtime.rs::native_socket_pins_masking_ping_pong_fragmented_unicode_tail_and_clean_close",
+        "crates/scm-sdk/tests/native_realtime.rs::native_upgrade_preserves_already_received_frame_bytes",
+        "crates/scm-sdk/tests/native_realtime.rs::native_upgrade_rejects_redirects_bad_accepts_and_oversized_headers_without_replay",
+        "crates/scm-sdk/tests/native_realtime.rs::native_socket_bounds_assembled_fragments_and_rejects_invalid_utf8_and_binary",
+        "crates/scm-sdk/tests/native_realtime.rs::native_ping_flood_is_flushed_before_more_reads_and_does_not_queue_events",
+        "crates/scm-sdk/tests/native_realtime.rs::native_eof_and_unconfirmed_close_never_become_success"
+      ],
+      "headerContract": "gateway_realtime",
+      "optionParity": "complete",
+      "deliveredInPhase": 7,
+      "liveAcceptance": "unverified",
+      "deliberateDifferences": [
+        "An explicitly selected trusted WebSocketConnector replaces Node callbacks; Stream/Sink backpressure and pull iteration keep no SDK event queue, within validated per-event and byte bounds.",
+        "Native WebSocket transport is a separate opt-in ws-transport feature with explicit direct socket/TLS configuration. HTTP transport proxy and CA configuration is never inherited; custom connectors preserve caller-owned network integration.",
+        "One absolute default60s operation/session deadline covers validation, queueing, authentication, upgrade and event consumption; handshake is also bounded15s and idle reads/writes30s. Explicit graceful cancellation has its own bounded500ms cleanup budget.",
+        "Dropping either split handle immediately releases the socket and concurrency permit. Partially sent cancellation retains Unknown remote outcome. No automatic replay or OAuth refresh is performed.",
+        "Native option bounds cap events16MiB and buffers64MiB; only peer close1000 is clean, and HTTP101 alone does not imply provider readiness.",
+        "Default native framing is qualified only for64-bit targets, uses patched tokio-websockets0.13.3, and requires Rust1.89; caller connectors remain available without the native adapter."
+      ]
+    }
+  ]
+}

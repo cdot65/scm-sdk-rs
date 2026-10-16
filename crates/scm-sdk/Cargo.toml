@@ -19,15 +19,19 @@ models = []
 scan = ["models"]
 management = ["models", "dlp"]
 dlp = ["models"]
-iam = ["models"]
+iam = ["models", "dep:getrandom"]
 gateway = ["models", "iam"]
+agentguard = ["models"]
+realtime = ["gateway"]
+ws-transport = ["realtime", "dep:tokio-websockets", "dep:rustls", "dep:tokio-rustls", "dep:rustls-native-certs", "dep:httparse", "dep:aws-lc-rs", "tokio/net"]
 model-security = ["models"]
 red-team = ["models"]
 
 [dependencies]
 base64 = "0.22.1"
 bytes = "1.11"
-futures-util = "0.3.34"
+futures-util = { version = "0.3.34", features = ["sink"] }
+getrandom = { version = "0.4.3", optional = true }
 hmac = "0.12.1"
 http = "1.4"
 httpdate = "1.0.3"
@@ -43,6 +47,12 @@ tokio-util = { version = "0.7.20", features = ["rt"] }
 time = { version = "0.3.55", features = ["parsing", "formatting"] }
 url = "2.5.8"
 zeroize = "1.8.2"
+aws-lc-rs = { version = "1.18.2", optional = true, default-features = false, features = ["aws-lc-sys"] }
+httparse = { version = "1.10.1", optional = true }
+rustls = { version = "0.23.46", optional = true, default-features = false, features = ["aws_lc_rs", "std", "tls12"] }
+rustls-native-certs = { version = "0.8.5", optional = true }
+tokio-rustls = { version = "0.26.6", optional = true, default-features = false, features = ["aws_lc_rs", "tls12"] }
+tokio-websockets = { version = "=0.13.3", optional = true, default-features = false, features = ["client", "getrandom", "aws_lc_rs"] }
 
 [dev-dependencies]
 flate2 = "1.1"

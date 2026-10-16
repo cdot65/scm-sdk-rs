@@ -9,6 +9,7 @@ import pathlib
 import subprocess
 import sys
 import tarfile
+import tomllib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
@@ -21,14 +22,16 @@ def main():
     for key in list(env):
         if key.startswith(("PANW_", "AIRS_", "SCM_")):
             env.pop(key)
-    command = [str(cargo), "+1.88.0", "package", "-p", "scm-sdk", "--locked", "--allow-dirty"]
+    minimum = tomllib.loads((ROOT / "Cargo.toml").read_text())["workspace"]["package"]["rust-version"]
+    toolchain = minimum + ".0" if minimum.count(".") == 1 else minimum
+    command = [str(cargo), f"+{toolchain}", "package", "-p", "scm-sdk", "--locked", "--allow-dirty"]
     result = subprocess.run(command, cwd=ROOT, env=env, text=True, capture_output=True, timeout=600)
     if result.returncode:
         print(result.stdout, file=sys.stderr)
         print(result.stderr, file=sys.stderr)
         return result.returncode
     metadata = json.loads(subprocess.check_output(
-        [str(cargo), "+1.88.0", "metadata", "--no-deps", "--format-version", "1"], cwd=ROOT, env=env
+        [str(cargo), f"+{toolchain}", "metadata", "--no-deps", "--format-version", "1"], cwd=ROOT, env=env
     ))
     package = next(value for value in metadata["packages"] if value["name"] == "scm-sdk")
     archive = pathlib.Path(metadata["target_directory"]) / "package" / f"scm-sdk-{package['version']}.crate"
@@ -49,7 +52,8 @@ def main():
                 raise ValueError("Packaged legal notice differs from repository notice")
     print(json.dumps({"passed": True, "command": command, "archive_sha256": hashlib.sha256(content).hexdigest(),
                       "archive_bytes": len(content), "files": sorted(files),
-                      "verification": "cargo package compiled the extracted consumer package with Rust 1.88.0"}))
+                      "toolchain": toolchain,
+                      "verification": f"cargo package compiled the extracted consumer package with Rust {toolchain}"}))
     return 0
 
 

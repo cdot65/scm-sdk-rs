@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "sourceSha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
-  "generatorSha256": "9cf60d54cbfc15cee554ece76b1e75a83c4ec2464ab999b9a9f4bb04a97c0215",
+  "generatorSha256": "2b15cf001deb6a33f41f341a58e22dffa7c1fa9e4a982e106f6095a4035cff5a",
   "partialFamily": null,
   "structuralChecks": {
     "stringChecks": [
@@ -14643,9 +14643,15 @@
         "$ref": "t000171"
       },
       "namespace": "airs::agentguard",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::agentguard::AgentGuardClient",
+      "nativeFeature": "agentguard",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::Endpoint"
+      ],
+      "reason": "Explicit scoped OAuth Client and admitted data/management endpoints replace environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "AIGatewayAuditLogListOptions",
@@ -14809,9 +14815,12 @@
         "$ref": "t002524"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
+      "status": "native_client_mapping",
+      "rustType": "crate::constants::AIGatewaySecretOperation",
+      "nativeFeature": null,
+      "additionalTypes": [],
+      "reason": "Closed operation vocabulary selects all 21 frozen directional secret rule sets; unknown operation names fail",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "AIGatewaySubClientOptions",
@@ -14897,9 +14906,14 @@
         "$ref": "t002479"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::AIGatewayWorkspaceProvisionOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Explicit existing_scope flag and shared deadline/cancellation drive bounded provisioning with structured recovery",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "AIGatewayWorkspacesClientOptions",
@@ -14941,8 +14955,8 @@
       },
       "namespace": "shared",
       "status": "native_foundation_mapping",
-      "rustType": "crate::Error",
-      "reason": "Rust Error exposes bounded sanitized diagnostics; JavaScript exception diagnostic bags are not request data"
+      "rustType": "crate::error::ErrorMetadata",
+      "reason": "Concrete bounded native metadata preserves failure kind/status/retry delay and allowlisted problem details/field errors with safe formatting"
     },
     {
       "export": "AISecSDKProblemDetails",
@@ -14952,8 +14966,8 @@
       },
       "namespace": "shared",
       "status": "native_foundation_mapping",
-      "rustType": "crate::Error",
-      "reason": "Rust Error exposes bounded sanitized diagnostics; JavaScript exception diagnostic bags are not request data"
+      "rustType": "crate::error::ProblemDetails",
+      "reason": "Concrete bounded native metadata preserves failure kind/status/retry delay and allowlisted problem details/field errors with safe formatting"
     },
     {
       "export": "ApiKeyListAllOptions",
@@ -14962,9 +14976,14 @@
         "$ref": "t002647"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::ApiKeyListAllOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ApiKeysClientOptions",
@@ -14973,9 +14992,15 @@
         "$ref": "t002661"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "AttackListOptions",
@@ -15014,9 +15039,12 @@
         "$ref": "t002823"
       },
       "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::pagination::CollectOptions",
+      "nativeFeature": null,
+      "additionalTypes": [],
+      "reason": "Explicit item/byte/page bounds replace max=0 unlimited collection and retain truncation/partial outcomes",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ContentOptions",
@@ -15051,9 +15079,14 @@
         "$ref": "t002960"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::CustomerAppListAllOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "CustomerAppsClientOptions",
@@ -15062,9 +15095,15 @@
         "$ref": "t002974"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "CustomHostConfigurationOptions",
@@ -15073,9 +15112,12 @@
         "$ref": "t002982"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::CustomHostConfigurationOptions",
+      "nativeFeature": "gateway",
+      "additionalTypes": [],
+      "reason": "Typed custom-host input preserves the original http(s) URL and headers with native header/count/byte bounds",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "CustomRuleListOptions",
@@ -15099,9 +15141,14 @@
         "$ref": "t003126"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DashboardApplicationsOverviewQuery",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DashboardAppQuery",
@@ -15110,9 +15157,14 @@
         "$ref": "t003142"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DashboardAppQuery",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DashboardClientOptions",
@@ -15121,9 +15173,15 @@
         "$ref": "t003202"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DashboardScanContentQuery",
@@ -15132,9 +15190,14 @@
         "$ref": "t003155"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DashboardScanContentQuery",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DashboardSessionQuery",
@@ -15143,9 +15206,14 @@
         "$ref": "t003162"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DashboardSessionQuery",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DashboardSessionsOverviewQuery",
@@ -15154,9 +15222,14 @@
         "$ref": "t003179"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DashboardSessionsOverviewQuery",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DashboardSessionTransactionQuery",
@@ -15165,9 +15238,14 @@
         "$ref": "t003186"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DashboardSessionTransactionQuery",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DashboardTimeRangeQuery",
@@ -15176,9 +15254,14 @@
         "$ref": "t003151"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DashboardTimeRangeQuery",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DataFilteringProfileListAllParams",
@@ -15286,9 +15369,14 @@
         "$ref": "t003432"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::DeploymentProfileListOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DeploymentProfilesClientOptions",
@@ -15297,9 +15385,15 @@
         "$ref": "t003442"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "DictionariesClientOptions",
@@ -15490,9 +15584,12 @@
         "$ref": "t000805"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::realtime::GatewayRealtimeConnection",
+      "nativeFeature": "realtime",
+      "additionalTypes": [],
+      "reason": "Caller-driven typed connection with explicit send/receive/cancel and owned socket release; no implicit replay",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "GatewayRealtimeOptions",
@@ -15501,9 +15598,15 @@
         "$ref": "t000790"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::realtime::GatewayRealtimeOptions",
+      "nativeFeature": "realtime",
+      "additionalTypes": [
+        "crate::RequestOptions",
+        "crate::GatewayRouting"
+      ],
+      "reason": "Explicit connector and bounded handshake/event/buffering policy; total cancellation and immutable routing replace inherited JavaScript request options",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "GatewaySecretDirection",
@@ -15512,9 +15615,12 @@
         "$ref": "t003897"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
+      "status": "native_client_mapping",
+      "rustType": "crate::constants::GatewaySecretDirection",
+      "nativeFeature": null,
+      "additionalTypes": [],
+      "reason": "Request/Response selects the frozen redaction direction; Default is Request",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "GatewaySecretFieldRule",
@@ -15545,9 +15651,12 @@
         "$ref": "t000007"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
+      "status": "native_client_mapping",
+      "rustType": "crate::constants::GatewaySecretPathSegment",
+      "nativeFeature": null,
+      "additionalTypes": [],
+      "reason": "String path components preserve the literal or wildcard grammar implemented by the directional redactor",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "GatewayStream",
@@ -15556,9 +15665,12 @@
         "$ref": "t003910"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::streaming::ContractStream<crate::data::JsonValue>",
+      "nativeFeature": "gateway",
+      "additionalTypes": [],
+      "reason": "Generic ContractStream<T> is the native typed caller-driven SSE iterator with synchronous cancellation and drop release; concrete JsonValue is only the compile-witness instantiation",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "GatewayWebSocket",
@@ -15567,9 +15679,12 @@
         "$ref": "t000793"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::realtime::BoxWebSocket",
+      "nativeFeature": "realtime",
+      "additionalTypes": [],
+      "reason": "Owned framed Stream/Sink socket replaces Node listener and callback methods; custom adapters implement GatewayWebSocket and enforce framing policy",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "GatewayWebSocketFactory",
@@ -15578,9 +15693,12 @@
         "$ref": "t000791"
       },
       "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::realtime::GatewayWebSocketFactory",
+      "nativeFeature": "realtime",
+      "additionalTypes": [],
+      "reason": "Arc<dyn WebSocketConnector> performs explicit admitted upgrades without redirects or compression",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "GatewayWorkspaceProvisionRequest",
@@ -15589,9 +15707,13 @@
         "$ref": "t002476"
       },
       "namespace": "airs::gateway",
-      "status": "typed_source_model",
-      "rustType": "GatewayWorkspaceProvisionRequest",
-      "validation": "source-only type; owning client validates its operation contract"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::GatewayWorkspaceProvisionRequest",
+      "validation": "source-only type; owning client validates its operation contract",
+      "wireModelRustType": "GatewayWorkspaceProvisionRequest",
+      "nativeFeature": "gateway",
+      "operationTypeAdapterPhase": 7,
+      "reason": "Provision accepts/returns the canonical handwritten operation type; the models namespace retains a source-only wire-compatible representation for models-only use, without claiming it is accepted by provision"
     },
     {
       "export": "GatewayWorkspaceProvisionResult",
@@ -15600,9 +15722,13 @@
         "$ref": "t002481"
       },
       "namespace": "airs::gateway",
-      "status": "typed_source_model",
-      "rustType": "GatewayWorkspaceProvisionResult",
-      "validation": "source-only type; owning client validates its operation contract"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::gateway::GatewayWorkspaceProvisionResult",
+      "validation": "source-only type; owning client validates its operation contract",
+      "wireModelRustType": "GatewayWorkspaceProvisionResult",
+      "nativeFeature": "gateway",
+      "operationTypeAdapterPhase": 7,
+      "reason": "Provision accepts/returns the canonical handwritten operation type; the models namespace retains a source-only wire-compatible representation for models-only use, without claiming it is accepted by provision"
     },
     {
       "export": "GetTokenOptions",
@@ -15670,9 +15796,16 @@
         "$ref": "t003915"
       },
       "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::configuration::InitOptions",
+      "nativeFeature": null,
+      "additionalTypes": [
+        "crate::configuration::ScanConfiguration",
+        "crate::ClientBuilder",
+        "crate::environment::EnvironmentSnapshot"
+      ],
+      "reason": "Typed scan initialization and isolated configuration preserve source getters/transactional init/reset; explicit environment snapshots replace implicit global process reads and existing clients retain immutable configuration snapshots",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ListingOptions",
@@ -15681,9 +15814,12 @@
         "$ref": "t004050"
       },
       "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::helpers::ListingOptions",
+      "nativeFeature": null,
+      "additionalTypes": [],
+      "reason": "Generic canonical skip/limit/search input preserves omissions and explicit zero/empty values with safe numeric/string bounds",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ManagementClientOptions",
@@ -15692,9 +15828,15 @@
         "$ref": "t004134"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ModelSecurityClientOptions",
@@ -16034,9 +16176,17 @@
         "$ref": "t004384"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::auth::OAuthProviderOptions",
+      "nativeFeature": null,
+      "additionalTypes": [
+        "crate::auth::AuthContext",
+        "crate::auth::OAuthProvider",
+        "crate::auth::RefreshBuffer",
+        "crate::Secret"
+      ],
+      "reason": "Explicit issuer/client/secret/tenant and immutable fixed/adaptive refresh policy; bounded subscribe_refresh TokenInfo events replace inline callbacks without blocking token delivery",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "OAuthManagementClientOptions",
@@ -16056,9 +16206,14 @@
         "$ref": "t002657"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::PaginationOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "PaginationPage",
@@ -16067,9 +16222,12 @@
         "$ref": "t004415"
       },
       "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::pagination::Page<crate::data::JsonValue,u64>",
+      "nativeFeature": null,
+      "additionalTypes": [],
+      "reason": "Generic Page<T,C> retains items and optional cursor; concrete types are compile witnesses, not a restriction on caller types",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ProfileListAllOptions",
@@ -16078,9 +16236,14 @@
         "$ref": "t004099"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::ProfileListAllOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ProfilesClientOptions",
@@ -16089,9 +16252,15 @@
         "$ref": "t004424"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "PromptListAllOptions",
@@ -16373,9 +16542,14 @@
         "$ref": "t004105"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::ScanLogQueryOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "ScanLogsClientOptions",
@@ -16384,9 +16558,15 @@
         "$ref": "t004976"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "SnapshotVersionListOptions",
@@ -16478,9 +16658,14 @@
         "$ref": "t004130"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::TopicListAllOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "TopicListOptions",
@@ -16489,9 +16674,14 @@
         "$ref": "t004127"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::airs::management::TopicListOptions",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::RequestOptions"
+      ],
+      "reason": "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "TopicsClientOptions",
@@ -16500,9 +16690,15 @@
         "$ref": "t005033"
       },
       "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::Client",
+      "nativeFeature": "management",
+      "additionalTypes": [
+        "crate::ClientBuilder",
+        "crate::auth::AuthContext"
+      ],
+      "reason": "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks",
+      "behavioralClosurePhase": 7
     },
     {
       "export": "WalkAllOptions",
@@ -16511,453 +16707,17 @@
         "$ref": "t002831"
       },
       "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
+      "status": "native_client_mapping",
+      "rustType": "crate::helpers::WalkAllOptions",
+      "nativeFeature": null,
+      "additionalTypes": [
+        "crate::pagination::CollectOptions"
+      ],
+      "reason": "Positive typed page limit plus explicit bounded collection options; skip walks use actual counts and optional totals",
+      "behavioralClosurePhase": 7
     }
   ],
   "generatedDeclarations": 1958,
   "aliases": 53,
-  "deferred": [
-    {
-      "export": "AgentGuardClientOptions",
-      "source": "src/agentguard/client.ts",
-      "sourceType": {
-        "$ref": "t000171"
-      },
-      "namespace": "airs::agentguard",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "AIGatewaySecretOperation",
-      "source": "src/ai-gateway/secret-fields.ts",
-      "sourceType": {
-        "$ref": "t002524"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
-    },
-    {
-      "export": "AIGatewayWorkspaceProvisionOptions",
-      "source": "src/ai-gateway/types.ts",
-      "sourceType": {
-        "$ref": "t002479"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ApiKeyListAllOptions",
-      "source": "src/management/api-keys.ts",
-      "sourceType": {
-        "$ref": "t002647"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ApiKeysClientOptions",
-      "source": "src/management/api-keys.ts",
-      "sourceType": {
-        "$ref": "t002661"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "CollectAllOptions",
-      "source": "src/listing.ts",
-      "sourceType": {
-        "$ref": "t002823"
-      },
-      "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "CustomerAppListAllOptions",
-      "source": "src/management/customer-apps.ts",
-      "sourceType": {
-        "$ref": "t002960"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "CustomerAppsClientOptions",
-      "source": "src/management/customer-apps.ts",
-      "sourceType": {
-        "$ref": "t002974"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "CustomHostConfigurationOptions",
-      "source": "src/ai-gateway/integrations-client.ts",
-      "sourceType": {
-        "$ref": "t002982"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
-    },
-    {
-      "export": "DashboardApplicationsOverviewQuery",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003126"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DashboardAppQuery",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003142"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DashboardClientOptions",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003202"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DashboardScanContentQuery",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003155"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DashboardSessionQuery",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003162"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DashboardSessionsOverviewQuery",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003179"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DashboardSessionTransactionQuery",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003186"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DashboardTimeRangeQuery",
-      "source": "src/management/dashboard.ts",
-      "sourceType": {
-        "$ref": "t003151"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DeploymentProfileListOptions",
-      "source": "src/management/deployment-profiles.ts",
-      "sourceType": {
-        "$ref": "t003432"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "DeploymentProfilesClientOptions",
-      "source": "src/management/deployment-profiles.ts",
-      "sourceType": {
-        "$ref": "t003442"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "GatewayRealtimeConnection",
-      "source": "src/http/realtime.ts",
-      "sourceType": {
-        "$ref": "t000805"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "GatewayRealtimeOptions",
-      "source": "src/ai-gateway/inference-client.ts",
-      "sourceType": {
-        "$ref": "t000790"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "GatewaySecretDirection",
-      "source": "src/ai-gateway/secret-fields.ts",
-      "sourceType": {
-        "$ref": "t003897"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
-    },
-    {
-      "export": "GatewaySecretPathSegment",
-      "source": "src/ai-gateway/secret-fields.ts",
-      "sourceType": {
-        "$ref": "t000007"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods"
-    },
-    {
-      "export": "GatewayStream",
-      "source": "src/http/event-stream.ts",
-      "sourceType": {
-        "$ref": "t003910"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "GatewayWebSocket",
-      "source": "src/http/realtime.ts",
-      "sourceType": {
-        "$ref": "t000793"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "GatewayWebSocketFactory",
-      "source": "src/http/realtime.ts",
-      "sourceType": {
-        "$ref": "t000791"
-      },
-      "namespace": "airs::gateway",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "InitOptions",
-      "source": "src/configuration.ts",
-      "sourceType": {
-        "$ref": "t003915"
-      },
-      "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 7,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ListingOptions",
-      "source": "src/listing.ts",
-      "sourceType": {
-        "$ref": "t004050"
-      },
-      "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ManagementClientOptions",
-      "source": "src/management/client.ts",
-      "sourceType": {
-        "$ref": "t004134"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "OAuthClientOptions",
-      "source": "src/management/oauth-client.ts",
-      "sourceType": {
-        "$ref": "t004384"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "PaginationOptions",
-      "source": "src/management/profiles.ts",
-      "sourceType": {
-        "$ref": "t002657"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "PaginationPage",
-      "source": "src/listing.ts",
-      "sourceType": {
-        "$ref": "t004415"
-      },
-      "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ProfileListAllOptions",
-      "source": "src/management/profiles.ts",
-      "sourceType": {
-        "$ref": "t004099"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ProfilesClientOptions",
-      "source": "src/management/profiles.ts",
-      "sourceType": {
-        "$ref": "t004424"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ScanLogQueryOptions",
-      "source": "src/management/scan-logs.ts",
-      "sourceType": {
-        "$ref": "t004105"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "ScanLogsClientOptions",
-      "source": "src/management/scan-logs.ts",
-      "sourceType": {
-        "$ref": "t004976"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "TopicListAllOptions",
-      "source": "src/management/topics.ts",
-      "sourceType": {
-        "$ref": "t004130"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "TopicListOptions",
-      "source": "src/management/topics.ts",
-      "sourceType": {
-        "$ref": "t004127"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "TopicsClientOptions",
-      "source": "src/management/topics.ts",
-      "sourceType": {
-        "$ref": "t005033"
-      },
-      "namespace": "airs::management",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    },
-    {
-      "export": "WalkAllOptions",
-      "source": "src/listing.ts",
-      "sourceType": {
-        "$ref": "t002831"
-      },
-      "namespace": "shared",
-      "status": "deferred_client_adapter",
-      "owningPhase": 4,
-      "reason": "Behavioral/client configuration contract; native adapter belongs to the product client phase"
-    }
-  ]
+  "deferred": []
 }

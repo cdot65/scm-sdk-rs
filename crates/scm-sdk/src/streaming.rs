@@ -41,6 +41,18 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
     pub fn close(&mut self) {
         self.stream.close();
     }
+    /// Consume the caller-owned stream through the standard Rust Stream interface.
+    pub fn into_stream(self) -> impl futures_util::Stream<Item = Result<T>> + Send
+    where
+        T: Send,
+    {
+        futures_util::stream::try_unfold(self, |mut stream| async move {
+            stream
+                .next()
+                .await
+                .map(|value| value.map(|event| (event, stream)))
+        })
+    }
     pub async fn next(&mut self) -> Result<Option<T>> {
         if let Some(error) = &self.failure {
             return Err(error.clone());
@@ -272,7 +284,7 @@ impl ResponseStream {
             Ok(value) => Ok(value),
             Err(error) => {
                 self.close();
-                Err(error
+                Err(crate::engine::body_failure(error)
                     .with_response_metadata(self.status.as_u16(), self.request_id.clone())
                     .with_operation(self.operation)
                     .with_outcome(RemoteOutcome::Unknown))

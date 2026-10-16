@@ -42,6 +42,16 @@ class NativeOperationLedgerTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "absent frozen operations"):
                 ledger.generate()
 
+    def test_realtime_header_contract_is_distinct_and_cannot_be_forged(self):
+        native = ledger.mappings()
+        key = "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime"
+        row = next(row for row in ledger.generate()["operations"] if row["baselineId"] == key)
+        self.assertEqual(row["headerContract"], "gateway_realtime")
+        native[key]["headerContract"] = "airs_api_defaults"
+        with mock.patch.object(ledger, "mappings", return_value=native):
+            with self.assertRaisesRegex(ValueError, "protocol header contract"):
+                ledger.generate()
+
     def test_removed_native_method_is_rejected(self):
         original = pathlib.Path.read_text
         source = ledger.ROOT / "crates/scm-sdk/src/airs/scan/scanner.rs"

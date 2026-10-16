@@ -6,16 +6,21 @@
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.getToken",
       "feature": "core",
-      "namespace": "auth::OAuthProvider",
+      "namespace": "scm_sdk::auth::OAuthProvider",
       "methods": [
         "get_token"
       ],
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "deliberateDifferences": [
-        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -24,17 +29,22 @@
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.clearToken",
       "feature": "core",
-      "namespace": "auth::OAuthProvider",
+      "namespace": "scm_sdk::auth::OAuthProvider",
       "methods": [
         "clear"
       ],
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "deliberateDifferences": [
         "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
-        "Clear also invalidates pending refresh epochs so late responses cannot restore a cleared token."
+        "Clear also invalidates pending refresh epochs so late responses cannot restore a cleared token.",
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -43,16 +53,21 @@
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpired",
       "feature": "core",
-      "namespace": "auth::OAuthProvider",
+      "namespace": "scm_sdk::auth::OAuthProvider",
       "methods": [
         "is_token_expired"
       ],
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "deliberateDifferences": [
-        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence."
+        "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -61,17 +76,21 @@
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpiringSoon",
       "feature": "core",
-      "namespace": "auth::OAuthProvider",
+      "namespace": "scm_sdk::auth::OAuthProvider",
       "methods": [
         "is_token_expiring_soon"
       ],
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "deliberateDifferences": [
         "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
-        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,
@@ -80,17 +99,21 @@
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.getTokenInfo",
       "feature": "core",
-      "namespace": "auth::OAuthProvider",
+      "namespace": "scm_sdk::auth::OAuthProvider",
       "methods": [
         "token_info"
       ],
       "source": "crates/scm-sdk/src/auth.rs",
       "tests": [
-        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets"
+        "crates/scm-sdk/src/auth.rs::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets",
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::clear_prevents_pending_old_refresh_from_restoring_cache"
       ],
       "deliberateDifferences": [
         "Native token leases and metadata use monotonic validity, redacted secrets, and Result for poisoned cache state; no implicit application runtime or credential persistence.",
-        "Default early refresh window is safely capped at min(30s,TTL/5); configurable provider buffer and metadata subscription are tracked Phase7 constructor capabilities."
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "optionParity": "complete",
       "deliveredInPhase": 4,

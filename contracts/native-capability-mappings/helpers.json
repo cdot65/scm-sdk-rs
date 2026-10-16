@@ -1,0 +1,4144 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "capabilities": [
+    {
+      "baselineId": "AGENT_GUARD_DATA_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AGENT_GUARD_DATA_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/aiag/data",
+      "compileProbe": "let _ = scm_sdk::constants::AGENT_GUARD_DATA_ENDPOINT;"
+    },
+    {
+      "baselineId": "AGENT_GUARD_MGMT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AGENT_GUARD_MGMT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/aiag/mgmt",
+      "compileProbe": "let _ = scm_sdk::constants::AGENT_GUARD_MGMT_ENDPOINT;"
+    },
+    {
+      "baselineId": "AGENT_GUARD_RULES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AGENT_GUARD_RULES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/rules",
+      "compileProbe": "let _ = scm_sdk::constants::AGENT_GUARD_RULES_PATH;"
+    },
+    {
+      "baselineId": "AGENT_GUARD_SCANS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AGENT_GUARD_SCANS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/scans",
+      "compileProbe": "let _ = scm_sdk::constants::AGENT_GUARD_SCANS_PATH;"
+    },
+    {
+      "baselineId": "AGENT_GUARD_STATS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AGENT_GUARD_STATS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/stats/scans",
+      "compileProbe": "let _ = scm_sdk::constants::AGENT_GUARD_STATS_PATH;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_DEPLOYMENT_STATUSES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_DEPLOYMENT_STATUSES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "active",
+        "archived"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_DEPLOYMENT_STATUSES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_DEPLOYMENT_TYPES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_DEPLOYMENT_TYPES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "non_production",
+        "production"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_DEPLOYMENT_TYPES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_KNOWN_API_KEY_SCOPES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_KNOWN_API_KEY_SCOPES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "agents.invoke",
+        "completions.write",
+        "logs.write",
+        "mcp.invoke",
+        "prompts.render"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_KNOWN_API_KEY_SCOPES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_KNOWN_CACHE_MODES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_KNOWN_CACHE_MODES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "semantic",
+        "simple"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_KNOWN_CACHE_MODES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_KNOWN_CONFIG_STRATEGIES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_KNOWN_CONFIG_STRATEGIES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "fallback",
+        "loadbalance",
+        "single"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_KNOWN_CONFIG_STRATEGIES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_KNOWN_MCP_AUTH_TYPES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_KNOWN_MCP_AUTH_TYPES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "headers",
+        "none",
+        "oauth_auto",
+        "oauth_client_credentials"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_KNOWN_MCP_AUTH_TYPES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_KNOWN_MCP_TRANSPORTS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_KNOWN_MCP_TRANSPORTS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "http",
+        "interactive",
+        "sse"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_KNOWN_MCP_TRANSPORTS;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_KNOWN_RATE_LIMIT_TYPES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_KNOWN_RATE_LIMIT_TYPES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "requests",
+        "tokens"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_KNOWN_RATE_LIMIT_TYPES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_KNOWN_RATE_LIMIT_UNITS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_KNOWN_RATE_LIMIT_UNITS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "rpd",
+        "rph",
+        "rpm",
+        "rps",
+        "rpw"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_KNOWN_RATE_LIMIT_UNITS;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_MUTABLE_MCP_CAPABILITY_TYPES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_MUTABLE_MCP_CAPABILITY_TYPES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "prompt",
+        "resource",
+        "tool"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_MUTABLE_MCP_CAPABILITY_TYPES;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_REDACTED",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_REDACTED"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "[REDACTED]",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_REDACTED;"
+    },
+    {
+      "baselineId": "AI_GATEWAY_SECRET_FIELDS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GATEWAY_SECRET_FIELDS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": {
+        "telemetry.filterBoundaries": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "data"
+              ],
+              "redact": "subtree"
+            }
+          ]
+        },
+        "organisations.getInfo": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "settings"
+              ],
+              "redact": "subtree"
+            }
+          ]
+        },
+        "secretReferences.list": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "data",
+                "*",
+                "auth_config"
+              ],
+              "redact": "subtree"
+            }
+          ]
+        },
+        "secretReferences.create": {
+          "request": [
+            {
+              "path": [
+                "auth_config"
+              ],
+              "redact": "subtree"
+            }
+          ],
+          "response": [
+            {
+              "path": [
+                "auth_config"
+              ],
+              "redact": "subtree"
+            }
+          ]
+        },
+        "secretReferences.get": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "auth_config"
+              ],
+              "redact": "subtree"
+            }
+          ]
+        },
+        "secretReferences.update": {
+          "request": [
+            {
+              "path": [
+                "auth_config"
+              ],
+              "redact": "subtree"
+            }
+          ],
+          "response": [
+            {
+              "path": [
+                "auth_config"
+              ],
+              "redact": "subtree"
+            }
+          ]
+        },
+        "secretReferences.delete": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "auth_config"
+              ],
+              "redact": "subtree"
+            }
+          ]
+        },
+        "apiKeys.createService": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "key"
+              ],
+              "redact": "value",
+              "oneTime": true
+            }
+          ]
+        },
+        "apiKeys.createUser": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "key"
+              ],
+              "redact": "value",
+              "oneTime": true
+            }
+          ]
+        },
+        "apiKeys.rotateService": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "key"
+              ],
+              "redact": "value",
+              "oneTime": true
+            }
+          ]
+        },
+        "apiKeys.rotateUser": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "key"
+              ],
+              "redact": "value",
+              "oneTime": true
+            }
+          ]
+        },
+        "deployments.create": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "client_auth"
+              ],
+              "redact": "value",
+              "oneTime": true
+            },
+            {
+              "path": [
+                "credentials",
+                "password"
+              ],
+              "redact": "value",
+              "oneTime": true
+            }
+          ]
+        },
+        "deployments.update": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "client_auth"
+              ],
+              "redact": "value",
+              "oneTime": true
+            },
+            {
+              "path": [
+                "credentials",
+                "password"
+              ],
+              "redact": "value",
+              "oneTime": true
+            }
+          ]
+        },
+        "integrations.create": {
+          "request": [
+            {
+              "path": [
+                "key"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "azure_entra_client_secret"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "aws_secret_access_key"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "vertex_service_account_json"
+              ],
+              "redact": "subtree"
+            },
+            {
+              "path": [
+                "configurations",
+                "custom_headers",
+                "*"
+              ],
+              "redact": "value"
+            }
+          ],
+          "response": []
+        },
+        "integrations.update": {
+          "request": [
+            {
+              "path": [
+                "key"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "azure_entra_client_secret"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "aws_secret_access_key"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "vertex_service_account_json"
+              ],
+              "redact": "subtree"
+            },
+            {
+              "path": [
+                "configurations",
+                "custom_headers",
+                "*"
+              ],
+              "redact": "value"
+            }
+          ],
+          "response": []
+        },
+        "mcpIntegrations.create": {
+          "request": [
+            {
+              "path": [
+                "configurations",
+                "custom_headers",
+                "*"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "client_secret"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "oauth_client_secret"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "oauth_metadata"
+              ],
+              "redact": "subtree"
+            }
+          ],
+          "response": []
+        },
+        "mcpIntegrations.update": {
+          "request": [
+            {
+              "path": [
+                "configurations",
+                "custom_headers",
+                "*"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "client_secret"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "oauth_client_secret"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "oauth_metadata"
+              ],
+              "redact": "subtree"
+            }
+          ],
+          "response": []
+        },
+        "organisations.getAuthSettings": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "scim_token"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "data",
+                "scim_token"
+              ],
+              "redact": "value"
+            }
+          ]
+        },
+        "organisations.updateAuthSettings": {
+          "request": [
+            {
+              "path": [
+                "scim_token"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "auth_settings",
+                "client_secret"
+              ],
+              "redact": "value"
+            }
+          ],
+          "response": [
+            {
+              "path": [
+                "scim_token"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "data",
+                "scim_token"
+              ],
+              "redact": "value"
+            }
+          ]
+        },
+        "plugins.create": {
+          "request": [
+            {
+              "path": [
+                "credentials",
+                "*"
+              ],
+              "redact": "value"
+            }
+          ],
+          "response": []
+        },
+        "providers.get": {
+          "request": [],
+          "response": [
+            {
+              "path": [
+                "key"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "model_config"
+              ],
+              "redact": "subtree"
+            },
+            {
+              "path": [
+                "credentials"
+              ],
+              "redact": "subtree"
+            },
+            {
+              "path": [
+                "configurations",
+                "azure_entra_client_secret"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "aws_secret_access_key"
+              ],
+              "redact": "value"
+            },
+            {
+              "path": [
+                "configurations",
+                "vertex_service_account_json"
+              ],
+              "redact": "subtree"
+            },
+            {
+              "path": [
+                "configurations",
+                "custom_headers",
+                "*"
+              ],
+              "redact": "value"
+            }
+          ]
+        }
+      },
+      "compileProbe": "let _ = scm_sdk::constants::AI_GATEWAY_SECRET_FIELDS;"
+    },
+    {
+      "baselineId": "AI_GW_ADMIN_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_ADMIN_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_AI_GW_ADMIN_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_ADMIN_ENDPOINT;"
+    },
+    {
+      "baselineId": "AI_GW_API_KEYS_SERVICE_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_API_KEYS_SERVICE_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/api-keys/service",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_API_KEYS_SERVICE_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_API_KEYS_USER_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_API_KEYS_USER_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/api-keys/user",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_API_KEYS_USER_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_AUDIT_LOGS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_AUDIT_LOGS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/audit-logs",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_AUDIT_LOGS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_CHART_METRICS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_CHART_METRICS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "cost",
+        "requests",
+        "latency",
+        "tokens",
+        "errors",
+        "users",
+        "cache-summary",
+        "cache-hit-trend",
+        "user-trends",
+        "error-trends",
+        "error-category-trends",
+        "grouped-errors",
+        "rescued-retries",
+        "feedback-trend",
+        "feedback-weighted",
+        "feedback-score-distribution",
+        "feedback-models"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_CHART_METRICS;"
+    },
+    {
+      "baselineId": "AI_GW_CHARTS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_CHARTS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/logs/charts",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_CHARTS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_CONFIGS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_CONFIGS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/configs",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_CONFIGS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_DATA_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_DATA_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_AI_GW_DATA_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_DATA_ENDPOINT;"
+    },
+    {
+      "baselineId": "AI_GW_DEPLOYMENTS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_DEPLOYMENTS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/deployments",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_DEPLOYMENTS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_GROUP_COLUMNS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_GROUP_COLUMNS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "cost",
+        "avg_latency",
+        "avg_tokens",
+        "total_tokens",
+        "success_rate",
+        "last_seen"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_GROUP_COLUMNS;"
+    },
+    {
+      "baselineId": "AI_GW_GROUP_DIMENSIONS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_GROUP_DIMENSIONS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        "ai_service",
+        "model",
+        "api_key",
+        "provider"
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_GROUP_DIMENSIONS;"
+    },
+    {
+      "baselineId": "AI_GW_GROUPS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_GROUPS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/logs/groups",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_GROUPS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_GUARDRAILS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_GUARDRAILS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/guardrails",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_GUARDRAILS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_INTEGRATIONS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_INTEGRATIONS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/integrations",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_INTEGRATIONS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_LOGS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_LOGS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/logs",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_LOGS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_MCP_INTEGRATIONS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_MCP_INTEGRATIONS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/mcp-integrations",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_MCP_INTEGRATIONS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_ORGANISATIONS_SELF_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_ORGANISATIONS_SELF_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/organisations/self",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_ORGANISATIONS_SELF_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_PLUGINS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_PLUGINS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/plugins",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_PLUGINS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_PROVIDER_CATALOG_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_PROVIDER_CATALOG_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/utils/static-resources/ai-providers",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_PROVIDER_CATALOG_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_PROVIDERS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_PROVIDERS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/providers",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_PROVIDERS_PATH;"
+    },
+    {
+      "baselineId": "AI_GW_WORKSPACES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_GW_WORKSPACES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/workspaces",
+      "compileProbe": "let _ = scm_sdk::constants::AI_GW_WORKSPACES_PATH;"
+    },
+    {
+      "baselineId": "AI_SEC_API_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_SEC_API_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_AI_SEC_API_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::AI_SEC_API_ENDPOINT;"
+    },
+    {
+      "baselineId": "AI_SEC_API_KEY",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_SEC_API_KEY"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_AI_SEC_API_KEY",
+      "compileProbe": "let _ = scm_sdk::constants::AI_SEC_API_KEY;"
+    },
+    {
+      "baselineId": "AI_SEC_API_TOKEN",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AI_SEC_API_TOKEN"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_AI_SEC_API_TOKEN",
+      "compileProbe": "let _ = scm_sdk::constants::AI_SEC_API_TOKEN;"
+    },
+    {
+      "baselineId": "aiGwOrganisationsAuthSettingsPath",
+      "kind": "function",
+      "feature": "gateway",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::ai_gw_organisations_auth_settings_path"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts"
+      ],
+      "deliberateDifferences": [
+        "Numeric tenant validation rejects unsafe direct helper interpolation."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::ai_gw_organisations_auth_settings_path;"
+    },
+    {
+      "baselineId": "AIRS_ENDPOINTS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::AIRS_ENDPOINTS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": {
+        "US": "https://service.api.aisecurity.paloaltonetworks.com",
+        "EU": "https://service-de.api.aisecurity.paloaltonetworks.com",
+        "INDIA": "https://service-in.api.aisecurity.paloaltonetworks.com",
+        "SINGAPORE": "https://service-sg.api.aisecurity.paloaltonetworks.com"
+      },
+      "compileProbe": "let _ = scm_sdk::constants::AIRS_ENDPOINTS;"
+    },
+    {
+      "baselineId": "ASYNC_SCAN_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::ASYNC_SCAN_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/scan/async/request",
+      "compileProbe": "let _ = scm_sdk::constants::ASYNC_SCAN_PATH;"
+    },
+    {
+      "baselineId": "BEARER",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::BEARER"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "Bearer ",
+      "compileProbe": "let _ = scm_sdk::constants::BEARER;"
+    },
+    {
+      "baselineId": "buildDottedObject",
+      "kind": "function",
+      "feature": "gateway",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::build_dotted_object"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::helper_boundaries_redact_errors_and_preserve_original_inputs"
+      ],
+      "deliberateDifferences": [
+        "Bounded sparse staging permits out-of-order dense final arrays without huge index allocation; known-field collisions, forbidden paths, conflicts and finite JSON are checked."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::build_dotted_object;"
+    },
+    {
+      "baselineId": "collectAll",
+      "kind": "function",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::helpers::collect_all"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::arbitrary_stream_collection_stops_before_polling_after_item_cap_and_resumes_byte_caps"
+      ],
+      "deliberateDifferences": [
+        "Any fallible Rust Stream is accepted through StreamListing; explicit item/byte caps, partial errors and retained pending items replace max=0 unlimited arrays. Arbitrary streams have no page count; page iterators retain their separate page bound."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let options = scm_sdk::RequestOptions::with_timeout(std::time::Duration::from_secs(1)).unwrap(); let mut listing = scm_sdk::helpers::StreamListing::new(futures_util::stream::empty::<scm_sdk::Result<String>>()); let _ = scm_sdk::helpers::collect_all(&mut listing, scm_sdk::pagination::CollectOptions::default(), &scm_sdk::Session::new(), &options);"
+    },
+    {
+      "baselineId": "collectSkipPages",
+      "kind": "function",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::helpers::collect_skip_pages"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::generic_skip_and_spring_walks_preserve_partial_caps_and_fail_before_invalid_fetches"
+      ],
+      "deliberateDifferences": [
+        "Generic typed skip callback receives the shared RequestOptions; actual item counts and optional totals preserve continuation, while explicit bounded collections retain truncation/partial/resume states."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let options = scm_sdk::RequestOptions::with_timeout(std::time::Duration::from_secs(1)).unwrap(); let _ = scm_sdk::helpers::collect_skip_pages(|_,_,_| async { Ok(scm_sdk::helpers::SkipPage::<String> {items:vec![],total:None}) }, scm_sdk::helpers::WalkAllOptions::default(), scm_sdk::Session::new(), options);"
+    },
+    {
+      "baselineId": "collectSpringPages",
+      "kind": "function",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::helpers::collect_spring_pages"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::generic_skip_and_spring_walks_preserve_partial_caps_and_fail_before_invalid_fetches"
+      ],
+      "deliberateDifferences": [
+        "Generic typed Spring callback receives one shared RequestOptions; required last flag and empty-nonfinal rejection retain continuation with explicit bounds and partial results."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let options = scm_sdk::RequestOptions::with_timeout(std::time::Duration::from_secs(1)).unwrap(); let _ = scm_sdk::helpers::collect_spring_pages(|_,_,_| async { Ok(scm_sdk::helpers::SpringPage::<String> {items:vec![],last:true}) }, scm_sdk::helpers::SpringWalkOptions::default(), scm_sdk::Session::new(), options);"
+    },
+    {
+      "baselineId": "customHostConfiguration",
+      "kind": "function",
+      "feature": "gateway",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::custom_host_configuration"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::helper_boundaries_redact_errors_and_preserve_original_inputs"
+      ],
+      "deliberateDifferences": [
+        "Typed exact provider_auth_type/custom_host/custom_headers output retains URL spelling and validates http(s), header grammar, case-insensitive duplicates and operational bounds; no request is dispatched."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::custom_host_configuration;"
+    },
+    {
+      "baselineId": "DEFAULT_AI_GW_ADMIN_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_AI_GW_ADMIN_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/ai_gw/admin/v2",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_AI_GW_ADMIN_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_AI_GW_DATA_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_AI_GW_DATA_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/ai_gw/v2",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_AI_GW_DATA_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_DLP_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_DLP_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.dlp.paloaltonetworks.com",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_DLP_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://service.api.aisecurity.paloaltonetworks.com",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_IAM_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_IAM_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/iam/v1",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_IAM_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_MGMT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_MGMT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/aisec",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_MGMT_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_MODEL_SEC_DATA_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_MODEL_SEC_DATA_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/aims/data",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_MODEL_SEC_DATA_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_MODEL_SEC_MGMT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_MODEL_SEC_MGMT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/aims/mgmt",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_MODEL_SEC_MGMT_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_RED_TEAM_DATA_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_RED_TEAM_DATA_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/ai-red-teaming/data-plane",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_RED_TEAM_DATA_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_RED_TEAM_MGMT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_RED_TEAM_MGMT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_RED_TEAM_MGMT_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_RED_TEAM_NETWORK_BROKER_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_RED_TEAM_NETWORK_BROKER_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://api.apps.paloaltonetworks.com/ai-red-teaming/data-plane/network-broker",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_RED_TEAM_NETWORK_BROKER_ENDPOINT;"
+    },
+    {
+      "baselineId": "DEFAULT_TOKEN_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DEFAULT_TOKEN_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "https://auth.apps.paloaltonetworks.com/oauth2/access_token",
+      "compileProbe": "let _ = scm_sdk::constants::DEFAULT_TOKEN_ENDPOINT;"
+    },
+    {
+      "baselineId": "DLP_DATA_FILTERING_PROFILES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DLP_DATA_FILTERING_PROFILES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v2/api/data-filtering-profiles",
+      "compileProbe": "let _ = scm_sdk::constants::DLP_DATA_FILTERING_PROFILES_PATH;"
+    },
+    {
+      "baselineId": "DLP_DATA_PATTERNS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DLP_DATA_PATTERNS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v2/api/data-patterns",
+      "compileProbe": "let _ = scm_sdk::constants::DLP_DATA_PATTERNS_PATH;"
+    },
+    {
+      "baselineId": "DLP_DATA_PROFILES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DLP_DATA_PROFILES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v2/api/data-profiles",
+      "compileProbe": "let _ = scm_sdk::constants::DLP_DATA_PROFILES_PATH;"
+    },
+    {
+      "baselineId": "DLP_DICTIONARIES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::DLP_DICTIONARIES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v2/api/dictionaries",
+      "compileProbe": "let _ = scm_sdk::constants::DLP_DICTIONARIES_PATH;"
+    },
+    {
+      "baselineId": "generateWorkspaceScopeName",
+      "kind": "function",
+      "feature": "iam",
+      "rustPaths": [
+        "scm_sdk::helpers::generate_workspace_scope_name"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts"
+      ],
+      "deliberateDifferences": [
+        "Canonical shared helper is reexported from IAM/Gateway. Bounded names and fallible OS entropy replace unbounded strings; rejection sampling yields an unbiased six-character suffix."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::helpers::generate_workspace_scope_name;"
+    },
+    {
+      "baselineId": "HEADER_API_KEY",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::HEADER_API_KEY"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "x-pan-token",
+      "compileProbe": "let _ = scm_sdk::constants::HEADER_API_KEY;"
+    },
+    {
+      "baselineId": "HEADER_AUTH_TOKEN",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::HEADER_AUTH_TOKEN"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "Authorization",
+      "compileProbe": "let _ = scm_sdk::constants::HEADER_AUTH_TOKEN;"
+    },
+    {
+      "baselineId": "HTTP_FORCE_RETRY_STATUS_CODES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::HTTP_FORCE_RETRY_STATUS_CODES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": [
+        500,
+        502,
+        503,
+        504
+      ],
+      "compileProbe": "let _ = scm_sdk::constants::HTTP_FORCE_RETRY_STATUS_CODES;"
+    },
+    {
+      "baselineId": "IAM_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::IAM_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_IAM_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::IAM_ENDPOINT;"
+    },
+    {
+      "baselineId": "IAM_SCOPES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::IAM_SCOPES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/scopes",
+      "compileProbe": "let _ = scm_sdk::constants::IAM_SCOPES_PATH;"
+    },
+    {
+      "baselineId": "jsonNullable",
+      "kind": "function",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::helpers::json_nullable"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::listing_and_nullable_composition_preserve_explicit_states_and_use_the_inner_parser"
+      ],
+      "deliberateDifferences": [
+        "Generic callback composition invokes the inner parser only for present nonnull JSON; Patch<T> preserves unset/null/value for arbitrary native T without a Zod runtime."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::helpers::json_nullable::<String>(None, |value| value.as_str().map(str::to_owned).ok_or_else(|| scm_sdk::Error::new(scm_sdk::ErrorKind::Validation)));"
+    },
+    {
+      "baselineId": "MAX_AI_PROFILE_NAME_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_AI_PROFILE_NAME_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 100,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_AI_PROFILE_NAME_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_API_KEY_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_API_KEY_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 2048,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_API_KEY_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_CONNECTION_POOL_SIZE",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_CONNECTION_POOL_SIZE"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 100,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_CONNECTION_POOL_SIZE;"
+    },
+    {
+      "baselineId": "MAX_CONTENT_CONTEXT_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_CONTENT_CONTEXT_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 104857600,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_CONTENT_CONTEXT_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_CONTENT_PROMPT_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_CONTENT_PROMPT_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 2097152,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_CONTENT_PROMPT_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_CONTENT_RESPONSE_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_CONTENT_RESPONSE_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 2097152,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_CONTENT_RESPONSE_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_NUMBER_OF_BATCH_SCAN_OBJECTS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_NUMBER_OF_BATCH_SCAN_OBJECTS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 20,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_NUMBER_OF_BATCH_SCAN_OBJECTS;"
+    },
+    {
+      "baselineId": "MAX_NUMBER_OF_REPORT_IDS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_NUMBER_OF_REPORT_IDS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 5,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_NUMBER_OF_REPORT_IDS;"
+    },
+    {
+      "baselineId": "MAX_NUMBER_OF_RETRIES",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_NUMBER_OF_RETRIES"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 5,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_NUMBER_OF_RETRIES;"
+    },
+    {
+      "baselineId": "MAX_NUMBER_OF_SCAN_IDS",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_NUMBER_OF_SCAN_IDS"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 5,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_NUMBER_OF_SCAN_IDS;"
+    },
+    {
+      "baselineId": "MAX_REPORT_ID_STR_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_REPORT_ID_STR_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 40,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_REPORT_ID_STR_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_SCAN_ID_STR_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_SCAN_ID_STR_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 36,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_SCAN_ID_STR_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_SESSION_ID_STR_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_SESSION_ID_STR_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 100,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_SESSION_ID_STR_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_TOKEN_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_TOKEN_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 2048,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_TOKEN_LENGTH;"
+    },
+    {
+      "baselineId": "MAX_TRANSACTION_ID_STR_LENGTH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MAX_TRANSACTION_ID_STR_LENGTH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": 100,
+      "compileProbe": "let _ = scm_sdk::constants::MAX_TRANSACTION_ID_STR_LENGTH;"
+    },
+    {
+      "baselineId": "MGMT_API_KEY_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_API_KEY_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/apikey",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_API_KEY_PATH;"
+    },
+    {
+      "baselineId": "MGMT_API_KEYS_TSG_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_API_KEYS_TSG_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/apikeys/tsg",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_API_KEYS_TSG_PATH;"
+    },
+    {
+      "baselineId": "MGMT_CLIENT_ID",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_CLIENT_ID"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MGMT_CLIENT_ID",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_CLIENT_ID;"
+    },
+    {
+      "baselineId": "MGMT_CLIENT_SECRET",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_CLIENT_SECRET"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MGMT_CLIENT_SECRET",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_CLIENT_SECRET;"
+    },
+    {
+      "baselineId": "MGMT_CUSTOMER_APP_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_CUSTOMER_APP_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/customerapp",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_CUSTOMER_APP_PATH;"
+    },
+    {
+      "baselineId": "MGMT_CUSTOMER_APPS_TSG_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_CUSTOMER_APPS_TSG_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/customerapp/tsg",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_CUSTOMER_APPS_TSG_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_APPLICATION_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_APPLICATION_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/apps/application",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_APPLICATION_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_APPLICATION_VIOLATION_BREAKDOWN_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_APPLICATION_VIOLATION_BREAKDOWN_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/apps/applicationviolationbreakdown",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_APPLICATION_VIOLATION_BREAKDOWN_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_APPLICATIONS_OVERVIEW_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_APPLICATIONS_OVERVIEW_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/apps/applicationsoverview",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_APPLICATIONS_OVERVIEW_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_APPLICATIONS_VIOLATIONS_TREND_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_APPLICATIONS_VIOLATIONS_TREND_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/apps/applicationsviolationstrend",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_APPLICATIONS_VIOLATIONS_TREND_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_APPS_LIST_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_APPS_LIST_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/apps/appslist",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_APPS_LIST_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_SESSION_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_SESSION_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/sessions/session",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_SESSION_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_SESSION_TRANSACTION_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_SESSION_TRANSACTION_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/sessions/sessiontransaction",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_SESSION_TRANSACTION_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_SESSIONS_CHART_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_SESSIONS_CHART_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/sessions/sessionschart",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_SESSIONS_CHART_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_SESSIONS_OVERVIEW_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_SESSIONS_OVERVIEW_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/sessions/sessionsoverview",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_SESSIONS_OVERVIEW_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DASHBOARD_TOP_APPLICATIONS_VIOLATIONS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DASHBOARD_TOP_APPLICATIONS_VIOLATIONS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dashboard/v2/apps/topapplicationsviolations",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DASHBOARD_TOP_APPLICATIONS_VIOLATIONS_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DEPLOYMENT_PROFILES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DEPLOYMENT_PROFILES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/deploymentprofiles",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DEPLOYMENT_PROFILES_PATH;"
+    },
+    {
+      "baselineId": "MGMT_DLP_PROFILES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_DLP_PROFILES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/dlpprofiles",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_DLP_PROFILES_PATH;"
+    },
+    {
+      "baselineId": "MGMT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MGMT_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_ENDPOINT;"
+    },
+    {
+      "baselineId": "MGMT_OAUTH_INVALIDATE_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_OAUTH_INVALIDATE_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/oauth/invalidateToken",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_OAUTH_INVALIDATE_PATH;"
+    },
+    {
+      "baselineId": "MGMT_OAUTH_TOKEN_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_OAUTH_TOKEN_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/oauth/client_credential/accesstoken",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_OAUTH_TOKEN_PATH;"
+    },
+    {
+      "baselineId": "MGMT_PROFILE_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_PROFILE_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/profile",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_PROFILE_PATH;"
+    },
+    {
+      "baselineId": "MGMT_PROFILES_TSG_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_PROFILES_TSG_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/profiles/tsg",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_PROFILES_TSG_PATH;"
+    },
+    {
+      "baselineId": "MGMT_REPORT_SCAN_CONTENT_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_REPORT_SCAN_CONTENT_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/reports/scancontent",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_REPORT_SCAN_CONTENT_PATH;"
+    },
+    {
+      "baselineId": "MGMT_SCAN_LOGS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_SCAN_LOGS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/scanlogs",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_SCAN_LOGS_PATH;"
+    },
+    {
+      "baselineId": "MGMT_TOKEN_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_TOKEN_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MGMT_TOKEN_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_TOKEN_ENDPOINT;"
+    },
+    {
+      "baselineId": "MGMT_TOPIC_FORCE_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_TOPIC_FORCE_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/topic/force",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_TOPIC_FORCE_PATH;"
+    },
+    {
+      "baselineId": "MGMT_TOPIC_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_TOPIC_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/topic",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_TOPIC_PATH;"
+    },
+    {
+      "baselineId": "MGMT_TOPICS_TSG_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_TOPICS_TSG_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/mgmt/topics/tsg",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_TOPICS_TSG_PATH;"
+    },
+    {
+      "baselineId": "MGMT_TSG_ID",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MGMT_TSG_ID"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MGMT_TSG_ID",
+      "compileProbe": "let _ = scm_sdk::constants::MGMT_TSG_ID;"
+    },
+    {
+      "baselineId": "MODEL_SEC_CLIENT_ID",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_CLIENT_ID"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MODEL_SEC_CLIENT_ID",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_CLIENT_ID;"
+    },
+    {
+      "baselineId": "MODEL_SEC_CLIENT_SECRET",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_CLIENT_SECRET"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MODEL_SEC_CLIENT_SECRET",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_CLIENT_SECRET;"
+    },
+    {
+      "baselineId": "MODEL_SEC_DATA_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_DATA_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MODEL_SEC_DATA_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_DATA_ENDPOINT;"
+    },
+    {
+      "baselineId": "MODEL_SEC_EVALUATIONS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_EVALUATIONS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/evaluations",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_EVALUATIONS_PATH;"
+    },
+    {
+      "baselineId": "MODEL_SEC_MGMT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_MGMT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MODEL_SEC_MGMT_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_MGMT_ENDPOINT;"
+    },
+    {
+      "baselineId": "MODEL_SEC_MODEL_VERSIONS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_MODEL_VERSIONS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/model-versions",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_MODEL_VERSIONS_PATH;"
+    },
+    {
+      "baselineId": "MODEL_SEC_MODELS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_MODELS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/models",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_MODELS_PATH;"
+    },
+    {
+      "baselineId": "MODEL_SEC_PYPI_AUTH_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_PYPI_AUTH_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/pypi/authenticate",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_PYPI_AUTH_PATH;"
+    },
+    {
+      "baselineId": "MODEL_SEC_SCANS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_SCANS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/scans",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_SCANS_PATH;"
+    },
+    {
+      "baselineId": "MODEL_SEC_SECURITY_GROUPS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_SECURITY_GROUPS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/security-groups",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_SECURITY_GROUPS_PATH;"
+    },
+    {
+      "baselineId": "MODEL_SEC_SECURITY_RULES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_SECURITY_RULES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/security-rules",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_SECURITY_RULES_PATH;"
+    },
+    {
+      "baselineId": "MODEL_SEC_TOKEN_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_TOKEN_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MODEL_SEC_TOKEN_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_TOKEN_ENDPOINT;"
+    },
+    {
+      "baselineId": "MODEL_SEC_TSG_ID",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_TSG_ID"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_MODEL_SEC_TSG_ID",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_TSG_ID;"
+    },
+    {
+      "baselineId": "MODEL_SEC_VIOLATIONS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::MODEL_SEC_VIOLATIONS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/violations",
+      "compileProbe": "let _ = scm_sdk::constants::MODEL_SEC_VIOLATIONS_PATH;"
+    },
+    {
+      "baselineId": "pageSchema",
+      "kind": "function",
+      "feature": "models",
+      "rustPaths": [
+        "scm_sdk::helpers::page_schema"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts"
+      ],
+      "deliberateDifferences": [
+        "Generic Page<T> plus caller item parser replaces a runtime schema factory; typed finite metadata, required content, optional nonnull fields and passthrough extras retain the wire envelope."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::helpers::page_schema::<serde_json::Value>(&serde_json::json!({\"content\": []}), |value| Ok(value.clone()));"
+    },
+    {
+      "baselineId": "paginate",
+      "kind": "function",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::helpers::paginate"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::generic_cursor_iterator_rejects_repeated_positions_and_checks_buffered_cancellation"
+      ],
+      "deliberateDifferences": [
+        "Generic caller-driven Items<T,C> uses explicit page/cursor bounds and one shared budget; no repeated cursor or silent truncation."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let options = scm_sdk::RequestOptions::with_timeout(std::time::Duration::from_secs(1)).unwrap(); let _ = scm_sdk::helpers::paginate(0u64, |_, _| async { Ok(scm_sdk::pagination::Page::<String,u64> { items: vec![], next: None }) }, 1, scm_sdk::Session::new(), options);"
+    },
+    {
+      "baselineId": "PAYLOAD_HASH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::PAYLOAD_HASH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "x-payload-hash",
+      "compileProbe": "let _ = scm_sdk::constants::PAYLOAD_HASH;"
+    },
+    {
+      "baselineId": "RED_TEAM_ADAPTER_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_ADAPTER_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/adapters",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_ADAPTER_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_ADAPTER_VALIDATE_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_ADAPTER_VALIDATE_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/adapters/validate",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_ADAPTER_VALIDATE_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_CATEGORIES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_CATEGORIES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/categories",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_CATEGORIES_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_CHANNELS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_CHANNELS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/channels",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_CHANNELS_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_CHANNELS_STATS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_CHANNELS_STATS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/channels/stats",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_CHANNELS_STATS_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_CLIENT_ID",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_CLIENT_ID"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_RED_TEAM_CLIENT_ID",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_CLIENT_ID;"
+    },
+    {
+      "baselineId": "RED_TEAM_CLIENT_SECRET",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_CLIENT_SECRET"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_RED_TEAM_CLIENT_SECRET",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_CLIENT_SECRET;"
+    },
+    {
+      "baselineId": "RED_TEAM_CUSTOM_ATTACK_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_CUSTOM_ATTACK_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/custom-attack",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_CUSTOM_ATTACK_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_CUSTOM_ATTACKS_REPORT_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_CUSTOM_ATTACKS_REPORT_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/custom-attacks",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_CUSTOM_ATTACKS_REPORT_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_DASHBOARD_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_DASHBOARD_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/dashboard",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_DASHBOARD_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_DATA_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_DATA_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_RED_TEAM_DATA_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_DATA_ENDPOINT;"
+    },
+    {
+      "baselineId": "RED_TEAM_ERROR_LOG_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_ERROR_LOG_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/error-log/job",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_ERROR_LOG_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_ERROR_LOG_TARGET_PROFILE_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_ERROR_LOG_TARGET_PROFILE_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/error-log/target-profile",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_ERROR_LOG_TARGET_PROFILE_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_EULA_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_EULA_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/eula",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_EULA_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_INSTANCES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_INSTANCES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/instances",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_INSTANCES_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_LANGUAGES_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_LANGUAGES_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/languages",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_LANGUAGES_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_MGMT_DASHBOARD_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_MGMT_DASHBOARD_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/dashboard/overview",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_MGMT_DASHBOARD_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_MGMT_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_MGMT_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_RED_TEAM_MGMT_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_MGMT_ENDPOINT;"
+    },
+    {
+      "baselineId": "RED_TEAM_NETWORK_BROKER_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_NETWORK_BROKER_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_RED_TEAM_NETWORK_BROKER_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_NETWORK_BROKER_ENDPOINT;"
+    },
+    {
+      "baselineId": "RED_TEAM_QUOTA_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_QUOTA_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/metering/quota",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_QUOTA_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_REGISTRY_CREDENTIALS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_REGISTRY_CREDENTIALS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/registry-credentials",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_REGISTRY_CREDENTIALS_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_REPORT_DYNAMIC_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_REPORT_DYNAMIC_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/report/dynamic",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_REPORT_DYNAMIC_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_REPORT_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_REPORT_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/report",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_REPORT_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_REPORT_STATIC_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_REPORT_STATIC_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/report/static",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_REPORT_STATIC_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_SCAN_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_SCAN_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/scan",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_SCAN_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_SENTIMENT_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_SENTIMENT_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/sentiment",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_SENTIMENT_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_TARGET_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_TARGET_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/target",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_TARGET_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_TARGET_VALIDATE_AUTH_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_TARGET_VALIDATE_AUTH_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/target/validate-auth",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_TARGET_VALIDATE_AUTH_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_TEMPLATE_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_TEMPLATE_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/template",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_TEMPLATE_PATH;"
+    },
+    {
+      "baselineId": "RED_TEAM_TOKEN_ENDPOINT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_TOKEN_ENDPOINT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_RED_TEAM_TOKEN_ENDPOINT",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_TOKEN_ENDPOINT;"
+    },
+    {
+      "baselineId": "RED_TEAM_TSG_ID",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::RED_TEAM_TSG_ID"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PANW_RED_TEAM_TSG_ID",
+      "compileProbe": "let _ = scm_sdk::constants::RED_TEAM_TSG_ID;"
+    },
+    {
+      "baselineId": "redactAIGatewaySecrets",
+      "kind": "function",
+      "feature": "gateway",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::redact_ai_gateway_secrets"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::helper_boundaries_redact_errors_and_preserve_original_inputs"
+      ],
+      "deliberateDifferences": [
+        "Closed operation/direction types and bounded immutable JSON redaction preserve all21 rule sets49 rules, wildcard traversal, untouched branches and one-time annotations. Unknown operation names fail."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::redact_ai_gateway_secrets;"
+    },
+    {
+      "baselineId": "SCAN_REPORTS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::SCAN_REPORTS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/scan/reports",
+      "compileProbe": "let _ = scm_sdk::constants::SCAN_REPORTS_PATH;"
+    },
+    {
+      "baselineId": "SCAN_RESULTS_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::SCAN_RESULTS_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/scan/results",
+      "compileProbe": "let _ = scm_sdk::constants::SCAN_RESULTS_PATH;"
+    },
+    {
+      "baselineId": "SDK_VERSION",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::SDK_VERSION"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [
+        "Native SDK version follows its crate package version."
+      ],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "0.34.0",
+      "compileProbe": "let _ = scm_sdk::constants::SDK_VERSION;",
+      "nativeValueAdaptation": "env!(CARGO_PKG_VERSION); BASELINE_SDK_VERSION retains source0.34.0"
+    },
+    {
+      "baselineId": "serializeListing",
+      "kind": "function",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::helpers::serialize_listing"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::listing_and_nullable_composition_preserve_explicit_states_and_use_the_inner_parser"
+      ],
+      "deliberateDifferences": [
+        "Ordered typed query pairs retain skip/limit/search omissions and explicit zero/empty values; nonnegative safe skip and bounded control-free search replace unchecked JavaScript coercion."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::helpers::serialize_listing;"
+    },
+    {
+      "baselineId": "setDottedValue",
+      "kind": "function",
+      "feature": "gateway",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::set_dotted_value"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_157_independent_typescript_helper_cases_match_native_contracts",
+        "crates/scm-sdk/tests/helpers_contracts.rs::helper_boundaries_redact_errors_and_preserve_original_inputs"
+      ],
+      "deliberateDifferences": [
+        "Immutable bounded JsonObject/JsonValue inputs replace JavaScript objects; replacement preserves the original and rejects sparse or conflicting paths."
+      ],
+      "verification": "independent_typescript_helper_oracle",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::set_dotted_value;"
+    },
+    {
+      "baselineId": "SYNC_SCAN_PATH",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::SYNC_SCAN_PATH"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "/v1/scan/sync/request",
+      "compileProbe": "let _ = scm_sdk::constants::SYNC_SCAN_PATH;"
+    },
+    {
+      "baselineId": "TSG_ID_HEADER",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::TSG_ID_HEADER"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "x-tsg-id",
+      "compileProbe": "let _ = scm_sdk::constants::TSG_ID_HEADER;"
+    },
+    {
+      "baselineId": "USER_AGENT",
+      "kind": "constant",
+      "feature": null,
+      "rustPaths": [
+        "scm_sdk::constants::USER_AGENT"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/constants.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::all_163_frozen_constant_exports_have_values_or_explicit_native_configuration_adaptations"
+      ],
+      "deliberateDifferences": [
+        "Native identity uses the crate version and rust-sdk suffix."
+      ],
+      "verification": "independent_frozen_constant_contract",
+      "expectedValue": "PAN-AIRS/0.34.0-typescript-sdk",
+      "compileProbe": "let _ = scm_sdk::constants::USER_AGENT;",
+      "nativeValueAdaptation": "PAN-AIRS/{CARGO_PKG_VERSION}-rust-sdk"
+    },
+    {
+      "baselineId": "CollectAllOptions.max",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::pagination::CollectOptions.max_items"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/pagination.rs",
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::arbitrary_stream_collection_stops_before_polling_after_item_cap_and_resumes_byte_caps",
+        "crates/scm-sdk/tests/helpers_contracts.rs::generic_skip_and_spring_walks_preserve_partial_caps_and_fail_before_invalid_fetches"
+      ],
+      "deliberateDifferences": [
+        "Explicit positive item/byte/page caps replace the source max=0 unlimited mode; truncation and partial state remain observable."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = |value: &scm_sdk::pagination::CollectOptions| { let _ = value.max_items; };"
+    },
+    {
+      "baselineId": "WalkAllOptions.max",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::helpers::WalkAllOptions.collect.max_items"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/pagination.rs",
+        "crates/scm-sdk/src/helpers.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::arbitrary_stream_collection_stops_before_polling_after_item_cap_and_resumes_byte_caps",
+        "crates/scm-sdk/tests/helpers_contracts.rs::generic_skip_and_spring_walks_preserve_partial_caps_and_fail_before_invalid_fetches"
+      ],
+      "deliberateDifferences": [
+        "Explicit positive item/byte/page caps replace the source max=0 unlimited mode; truncation and partial state remain observable."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = |value: &scm_sdk::helpers::WalkAllOptions| { let _ = value.collect.max_items; };"
+    },
+    {
+      "baselineId": "PaginationPage.items",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::pagination::Page<scm_sdk::data::JsonValue,u64>.items"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/pagination.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::generic_cursor_iterator_rejects_repeated_positions_and_checks_buffered_cancellation"
+      ],
+      "deliberateDifferences": [
+        "Generic Page<T,C> preserves item records and optional next cursor; the concrete probe types are witnesses only."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = |value: &scm_sdk::pagination::Page<scm_sdk::data::JsonValue,u64>| { let _ = &value.items; };"
+    },
+    {
+      "baselineId": "PaginationPage.next",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::pagination::Page<scm_sdk::data::JsonValue,u64>.next"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/pagination.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/helpers_contracts.rs::generic_cursor_iterator_rejects_repeated_positions_and_checks_buffered_cancellation"
+      ],
+      "deliberateDifferences": [
+        "Generic Page<T,C> preserves item records and optional next cursor; the concrete probe types are witnesses only."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = |value: &scm_sdk::pagination::Page<scm_sdk::data::JsonValue,u64>| { let _ = &value.next; };"
+    },
+    {
+      "baselineId": "DictionaryGetParams.includeKeywords",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::dlp::DictionariesClient::get"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/dlp/dictionaries.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dictionary_crud_preserves_multipart_keywords_patch_and_optional_replace"
+      ],
+      "deliberateDifferences": [
+        "Optional keyword selection is a positional Option<bool> argument; omission and explicit false/true retain the frozen wire query."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::dlp::DictionariesClient::get;"
+    },
+    {
+      "baselineId": "DlpNamespace.auth",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::ClientBuilder::authentication"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/engine.rs",
+        "crates/scm-sdk/src/dlp/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dlp_constructor_rejects_scan_runtime_and_missing_authentication",
+        "crates/scm-sdk/tests/dlp_contracts.rs::caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists"
+      ],
+      "deliberateDifferences": [
+        "Canonical DlpClient retains caller-owned immutable Client configuration. Endpoint/limits are explicit getters; the caller supplies/retains Authentication or its token provider instead of extracting a mutable prepared-auth adapter."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::ClientBuilder::authentication;"
+    },
+    {
+      "baselineId": "DlpNamespace.baseUrl",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::Client::endpoint"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/engine.rs",
+        "crates/scm-sdk/src/dlp/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dlp_constructor_rejects_scan_runtime_and_missing_authentication",
+        "crates/scm-sdk/tests/dlp_contracts.rs::caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists"
+      ],
+      "deliberateDifferences": [
+        "Canonical DlpClient retains caller-owned immutable Client configuration. Endpoint/limits are explicit getters; the caller supplies/retains Authentication or its token provider instead of extracting a mutable prepared-auth adapter."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::Client::endpoint;"
+    },
+    {
+      "baselineId": "DlpNamespace.numRetries",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::Client::limits"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/engine.rs",
+        "crates/scm-sdk/src/dlp/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/dlp_contracts.rs::dlp_constructor_rejects_scan_runtime_and_missing_authentication",
+        "crates/scm-sdk/tests/dlp_contracts.rs::caller_selected_tenant_header_is_preserved_for_all_canonical_dlp_lists"
+      ],
+      "deliberateDifferences": [
+        "Canonical DlpClient retains caller-owned immutable Client configuration. Endpoint/limits are explicit getters; the caller supplies/retains Authentication or its token provider instead of extracting a mutable prepared-auth adapter."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::Client::limits;"
+    },
+    {
+      "baselineId": "AIGatewayInferenceClientOptions.maxEventBytes",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::Limits.max_event_bytes"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "ClientBuilder limits configure bounded events and one total operation timeout; RequestOptions can select a shorter shared call budget."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = |value: &scm_sdk::Limits| { let _ = value.max_event_bytes; };"
+    },
+    {
+      "baselineId": "AIGatewayInferenceClientOptions.timeoutMs",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::Limits.operation_timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "ClientBuilder limits configure bounded events and one total operation timeout; RequestOptions can select a shorter shared call budget."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = |value: &scm_sdk::Limits| { let _ = value.operation_timeout; };"
+    },
+    {
+      "baselineId": "GatewayInferenceRequestOptions.headers",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::RuntimeClient::with_routing"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/runtime.rs",
+        "crates/scm-sdk/src/routing.rs",
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::explicit_runtime_replay_is_bounded_and_only_network_or_source_five_xx_statuses_qualify",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "Validated immutable routing and explicit billable replay permits are separate from RequestOptions cancellation/total deadline; authentication cannot be overridden and safe-read retry overrides cannot enable runtime replay."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::RuntimeClient::with_routing;"
+    },
+    {
+      "baselineId": "GatewayInferenceRequestOptions.numRetries",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::RuntimeClient::with_replay"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/runtime.rs",
+        "crates/scm-sdk/src/routing.rs",
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::explicit_runtime_replay_is_bounded_and_only_network_or_source_five_xx_statuses_qualify",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "Validated immutable routing and explicit billable replay permits are separate from RequestOptions cancellation/total deadline; authentication cannot be overridden and safe-read retry overrides cannot enable runtime replay."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::RuntimeClient::with_replay;"
+    },
+    {
+      "baselineId": "GatewayInferenceRequestOptions.signal",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/runtime.rs",
+        "crates/scm-sdk/src/routing.rs",
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::explicit_runtime_replay_is_bounded_and_only_network_or_source_five_xx_statuses_qualify",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "Validated immutable routing and explicit billable replay permits are separate from RequestOptions cancellation/total deadline; authentication cannot be overridden and safe-read retry overrides cannot enable runtime replay."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::cancel;"
+    },
+    {
+      "baselineId": "GatewayInferenceRequestOptions.timeoutMs",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::with_timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/runtime.rs",
+        "crates/scm-sdk/src/routing.rs",
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::explicit_runtime_replay_is_bounded_and_only_network_or_source_five_xx_statuses_qualify",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events"
+      ],
+      "deliberateDifferences": [
+        "Validated immutable routing and explicit billable replay permits are separate from RequestOptions cancellation/total deadline; authentication cannot be overridden and safe-read retry overrides cannot enable runtime replay."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::with_timeout;"
+    },
+    {
+      "baselineId": "GatewayModelPricingRequestOptions.signal",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs",
+        "crates/scm-sdk/src/airs/gateway/model_pricing.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_never_follows_redirects_and_honors_deadline_and_cancellation"
+      ],
+      "deliberateDifferences": [
+        "Public pricing uses the credential-free client lifecycle and a per-call absolute deadline/cancellation handle."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::cancel;"
+    },
+    {
+      "baselineId": "GatewayModelPricingRequestOptions.timeoutMs",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::with_timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/config.rs",
+        "crates/scm-sdk/src/airs/gateway/model_pricing.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_never_follows_redirects_and_honors_deadline_and_cancellation"
+      ],
+      "deliberateDifferences": [
+        "Public pricing uses the credential-free client lifecycle and a per-call absolute deadline/cancellation handle."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::with_timeout;"
+    },
+    {
+      "baselineId": "AIGatewayModelPricingClientOptions.timeoutMs",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::AIGatewayModelPricingClientOptions.timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/gateway/model_pricing.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_control_contracts.rs::public_pricing_never_follows_redirects_and_honors_deadline_and_cancellation"
+      ],
+      "deliberateDifferences": [
+        "Typed Duration configures the same default pricing timeout; per-call RequestOptions can override it with an absolute total budget."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = |value: &scm_sdk::airs::gateway::AIGatewayModelPricingClientOptions| { let _ = value.timeout; };"
+    },
+    {
+      "baselineId": "GatewayStream.__@asyncIterator@1855",
+      "kind": "method",
+      "rustPaths": [
+        "scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::next"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/streaming.rs",
+        "crates/scm-sdk/src/streaming/sse.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::typed_stream_close_before_iteration_or_after_buffering_releases_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Typed next() drives native iteration. close()/Drop release the stream even before iteration; JavaScript return/throw/cancel cleanup becomes explicit close/RAII while caller return values and injected errors remain ordinary application Result flow."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::next;"
+    },
+    {
+      "baselineId": "GatewayStream.next",
+      "kind": "method",
+      "rustPaths": [
+        "scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::next"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/streaming.rs",
+        "crates/scm-sdk/src/streaming/sse.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::typed_stream_close_before_iteration_or_after_buffering_releases_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Typed next() drives native iteration. close()/Drop release the stream even before iteration; JavaScript return/throw/cancel cleanup becomes explicit close/RAII while caller return values and injected errors remain ordinary application Result flow."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::next;"
+    },
+    {
+      "baselineId": "GatewayStream.cancel",
+      "kind": "method",
+      "rustPaths": [
+        "scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::close"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/streaming.rs",
+        "crates/scm-sdk/src/streaming/sse.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::typed_stream_close_before_iteration_or_after_buffering_releases_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Typed next() drives native iteration. close()/Drop release the stream even before iteration; JavaScript return/throw/cancel cleanup becomes explicit close/RAII while caller return values and injected errors remain ordinary application Result flow."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::close;"
+    },
+    {
+      "baselineId": "GatewayStream.return",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::close"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/streaming.rs",
+        "crates/scm-sdk/src/streaming/sse.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::typed_stream_close_before_iteration_or_after_buffering_releases_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Typed next() drives native iteration. close()/Drop release the stream even before iteration; JavaScript return/throw/cancel cleanup becomes explicit close/RAII while caller return values and injected errors remain ordinary application Result flow."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::close;"
+    },
+    {
+      "baselineId": "GatewayStream.throw",
+      "kind": "property",
+      "rustPaths": [
+        "scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::close"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/streaming.rs",
+        "crates/scm-sdk/src/streaming/sse.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::four_inference_streams_preserve_typed_events_terminal_policies_and_metadata",
+        "crates/scm-sdk/tests/gateway_runtime_contracts.rs::typed_stream_close_before_iteration_or_after_buffering_releases_without_replay"
+      ],
+      "deliberateDifferences": [
+        "Typed next() drives native iteration. close()/Drop release the stream even before iteration; JavaScript return/throw/cancel cleanup becomes explicit close/RAII while caller return values and injected errors remain ordinary application Result flow."
+      ],
+      "verification": "explicit_native_member_adapter",
+      "compileProbe": "let _ = scm_sdk::streaming::ContractStream::<scm_sdk::data::JsonValue>::close;"
+    }
+  ]
+}

@@ -130,6 +130,124 @@ fn fast_limits() -> Limits {
 }
 
 #[tokio::test]
+async fn http_problem_fields_and_body_retry_guidance_are_sanitized_metadata_only() {
+    let body = Bytes::from_static(br#"{"title":"Bad Request","detail":"echoed synthetic secret","errors":[{"property":"name","reason":"must not be blank"}],"retry_after":{"interval":2,"unit":"MIN"},"extension":"secret"}"#);
+    let transport = Scripted::new(vec![Reply::Http(
+        StatusCode::BAD_REQUEST,
+        HeaderMap::new(),
+        body,
+    )]);
+    let error = client(transport.clone())
+        .send_bytes(RawRequest::read("/problem"), None)
+        .await
+        .unwrap_err();
+    assert_eq!(transport.count(), 1);
+    assert_eq!(error.failure_kind(), Some(crate::FailureKind::Http));
+    assert_eq!(error.retry_after(), Some(Duration::from_secs(120)));
+    let problem = error.problem().unwrap();
+    assert_eq!(problem.title(), Some("Bad Request"));
+    assert_eq!(problem.detail(), Some("[withheld]"));
+    assert!(problem.redacted());
+    assert_eq!(problem.errors().unwrap()[0].reason(), "must not be blank");
+    assert!(!format!("{error:?} {error}").contains("secret"));
+    let mut headers = HeaderMap::new();
+    headers.insert(http::header::RETRY_AFTER, HeaderValue::from_static(" 2 "));
+    let body = Bytes::from_static(br#"{"retry_after":{"interval":10,"unit":"s"}}"#);
+    let transport = Scripted::new(vec![Reply::Http(StatusCode::BAD_REQUEST, headers, body)]);
+    let error = client(transport)
+        .send_bytes(RawRequest::read("/problem"), None)
+        .await
+        .unwrap_err();
+    assert_eq!(error.retry_after(), Some(Duration::from_secs(2)));
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        http::header::RETRY_AFTER,
+        HeaderValue::from_static("Thu, 01 Jan 1970 00:00:00 GMT"),
+    );
+    assert_eq!(super::retry_after(&headers), Some(Duration::ZERO));
+    headers.insert(http::header::RETRY_AFTER, HeaderValue::from_static("+1"));
+    assert_eq!(super::retry_after(&headers), None);
+    let transport = Scripted::new(vec![Reply::Http(
+        StatusCode::BAD_REQUEST,
+        HeaderMap::new(),
+        Bytes::from_static(
+            br#"{"success":false,"data":{"errorCode":"AB01","message":"synthetic secret"}}"#,
+        ),
+    )]);
+    let error = client(transport)
+        .send_bytes(RawRequest::read("/problem"), None)
+        .await
+        .unwrap_err();
+    assert_eq!(error.service_code(), Some("AB01"));
+    assert!(error.problem().is_none());
+    assert!(!format!("{error:?} {error}").contains("secret"));
+}
+
+#[tokio::test]
+async fn failure_origin_is_preserved_even_after_successful_response_headers() {
+    let error = client(Scripted::new(vec![Reply::BrokenBody]))
+        .send_bytes(RawRequest::read("/body"), None)
+        .await
+        .unwrap_err();
+    assert_eq!(error.status(), Some(200));
+    assert_eq!(error.failure_kind(), Some(crate::FailureKind::Network));
+    let error = client(Scripted::new(vec![Reply::Failure]))
+        .send_bytes(
+            RawRequest::read("/connection"),
+            Some(
+                &RequestOptions::with_timeout(Duration::from_secs(1))
+                    .unwrap()
+                    .with_retries(0)
+                    .unwrap(),
+            ),
+        )
+        .await
+        .unwrap_err();
+    assert_eq!(error.failure_kind(), Some(crate::FailureKind::Network));
+    assert_eq!(error.status(), None);
+}
+
+#[cfg(feature = "gateway")]
+#[tokio::test]
+async fn typed_sse_standard_stream_adapter_releases_its_owned_permit() {
+    use futures_util::StreamExt;
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        http::header::CONTENT_TYPE,
+        HeaderValue::from_static("text/event-stream"),
+    );
+    let transport = Scripted::new(vec![Reply::Http(
+        StatusCode::OK,
+        headers,
+        Bytes::from_static(b"data: {\"type\":\"session.created\"}\n\ndata: [DONE]\n\n"),
+    )]);
+    let client = client(transport);
+    let stream = client
+        .send_contract_stream::<serde_json::Value>(
+            RawRequest::read("/events"),
+            "GatewayRealtimeEventSchema",
+            crate::streaming::TerminalPolicy::DoneMarker,
+            None,
+        )
+        .await
+        .unwrap();
+    assert_eq!(
+        client.inner.permits.available_permits(),
+        client.limits().max_concurrency - 1
+    );
+    let mut stream = stream.into_stream().boxed();
+    assert_eq!(
+        stream.next().await.unwrap().unwrap()["type"],
+        "session.created"
+    );
+    drop(stream);
+    assert_eq!(
+        client.inner.permits.available_permits(),
+        client.limits().max_concurrency
+    );
+}
+
+#[tokio::test]
 async fn successful_decode_failures_preserve_status_and_allowlisted_correlation() {
     let mut headers = HeaderMap::new();
     headers.insert(

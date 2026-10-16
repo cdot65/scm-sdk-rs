@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "operations": [
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.provision",
+      "feature": "gateway",
+      "namespace": "airs::gateway::AIGatewayWorkspacesClient",
+      "methods": [
+        "provision"
+      ],
+      "source": "crates/scm-sdk/src/airs/gateway/provision.rs",
+      "tests": [
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::new_scope_workspace_and_additive_binding_match_exact_source_sequence",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::reused_scope_is_never_created_or_deleted_and_existing_binding_is_idempotent",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::ambiguous_creations_never_replay_or_delete_a_potential_dependency",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::definite_workspace_rejection_can_clean_only_owned_scope_and_preserves_cleanup_failure",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::binding_failure_keeps_confirmed_workspace_receipt_for_explicit_recovery",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::preflight_checks_every_input_and_iam_configuration_before_any_authentication",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::cancellation_between_steps_and_total_deadline_do_not_start_new_dispatches",
+        "crates/scm-sdk/tests/gateway_provision_contracts.rs::generated_scope_name_is_used_consistently_and_mismatched_receipts_stop_recovery"
+      ],
+      "deliberateDifferences": [
+        "Every step and safe cleanup share one absolute caller deadline and cancellation token; no mutation is automatically replayed.",
+        "The frozen source attempts IAM rollback after any workspace-create failure. Rust retains the scope after an unknown remote outcome and exposes explicit recovery facts; only a definitely rejected/not-sent create permits cleanup of a newly owned scope.",
+        "Rust verifies returned scope/workspace binding identities before further workflow steps and exposes inconsistent receipts as Protocol/Unknown without deleting dependencies.",
+        "Generated scope suffix uses unbiased cryptographic random selection rather than the frozen modulo-36 reduction.",
+        "ProvisionError exposes structured stage/resource certainty/cleanup/confirmed receipt access while ordinary formatting redacts identifiers and bodies.",
+        "Direct workspace clients must explicitly admit an IAM endpoint; the facade shares its configured IAM client."
+      ],
+      "optionParity": "complete",
+      "deliveredInPhase": 7,
+      "liveAcceptance": "unverified"
+    }
+  ]
+}

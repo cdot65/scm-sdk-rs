@@ -31,14 +31,7 @@ struct Metadata {
     remaining: usize,
 }
 impl Metadata {
-    fn new(
-        extensions: &Extensions<crate::data::JsonValue>,
-        known: &[&str],
-        limit: usize,
-    ) -> Result<Self> {
-        if extensions.keys().any(|key| known.contains(&key.as_str())) {
-            return Err(Error::new(ErrorKind::Validation));
-        }
+    fn new(extensions: &Extensions<crate::data::JsonValue>, limit: usize) -> Result<Self> {
         // All five multipart schemas are strict, including future extension keys.
         if !extensions.is_empty() {
             return Err(Error::new(ErrorKind::Validation));
@@ -157,11 +150,8 @@ impl RuntimeClient {
                 )?,
                 "GatewayInferenceInputCreateImageEditRequestSchema",
                 || {
-                    let mut metadata = Metadata::new(
-                        &body.extensions,
-                        KEYS,
-                        self.client.limits().max_request_bytes,
-                    )?;
+                    let mut metadata =
+                        Metadata::new(&body.extensions, self.client.limits().max_request_bytes)?;
                     metadata.value("prompt", &body.prompt)?;
                     metadata.patch("model", &body.model)?;
                     metadata.patch("n", &body.n)?;
@@ -199,11 +189,8 @@ impl RuntimeClient {
                 )?,
                 "GatewayInferenceInputCreateImageVariationRequestSchema",
                 || {
-                    let mut metadata = Metadata::new(
-                        &body.extensions,
-                        KEYS,
-                        self.client.limits().max_request_bytes,
-                    )?;
+                    let mut metadata =
+                        Metadata::new(&body.extensions, self.client.limits().max_request_bytes)?;
                     metadata.patch("model", &body.model)?;
                     metadata.patch("n", &body.n)?;
                     metadata.patch("response_format", &body.response_format)?;
@@ -235,11 +222,8 @@ impl RuntimeClient {
                 self.request(Method::POST, "/files", &[], "gateway.create_file")?,
                 "GatewayInferenceInputCreateFileRequestSchema",
                 || {
-                    let mut metadata = Metadata::new(
-                        &body.extensions,
-                        KEYS,
-                        self.client.limits().max_request_bytes,
-                    )?;
+                    let mut metadata =
+                        Metadata::new(&body.extensions, self.client.limits().max_request_bytes)?;
                     metadata.value("purpose", &body.purpose)?;
                     Ok(metadata)
                 },
@@ -276,11 +260,8 @@ impl RuntimeClient {
                 )?,
                 "GatewayInferenceInputCreateTranscriptionRequestSchema",
                 || {
-                    let mut metadata = Metadata::new(
-                        &body.extensions,
-                        KEYS,
-                        self.client.limits().max_request_bytes,
-                    )?;
+                    let mut metadata =
+                        Metadata::new(&body.extensions, self.client.limits().max_request_bytes)?;
                     metadata.value("model", &body.model)?;
                     metadata.optional("language", &body.language)?;
                     metadata.optional("prompt", &body.prompt)?;
@@ -341,11 +322,8 @@ impl RuntimeClient {
                 )?,
                 "GatewayInferenceInputCreateTranslationRequestSchema",
                 || {
-                    let mut metadata = Metadata::new(
-                        &body.extensions,
-                        KEYS,
-                        self.client.limits().max_request_bytes,
-                    )?;
+                    let mut metadata =
+                        Metadata::new(&body.extensions, self.client.limits().max_request_bytes)?;
                     metadata.value("model", &body.model)?;
                     metadata.optional("prompt", &body.prompt)?;
                     metadata.optional("response_format", &body.response_format)?;

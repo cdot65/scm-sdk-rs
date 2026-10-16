@@ -1,0 +1,448 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "capabilities": [
+    {
+      "baselineId": "AISecSDKProblemDetails",
+      "rustPaths": [
+        "scm_sdk::ProblemDetails"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Native diagnostics are constructed through exact allowlisting with at most 20 field errors; unknown text is withheld and extensions discarded, matching the frozen HTTP sanitizer."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::ProblemDetails>;"
+    },
+    {
+      "baselineId": "AISecSDKProblemDetails.title",
+      "rustPaths": [
+        "scm_sdk::ProblemDetails::title"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Native diagnostics are constructed through exact allowlisting with at most 20 field errors; unknown text is withheld and extensions discarded, matching the frozen HTTP sanitizer."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ProblemDetails::title;"
+    },
+    {
+      "baselineId": "AISecSDKProblemDetails.detail",
+      "rustPaths": [
+        "scm_sdk::ProblemDetails::detail"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Native diagnostics are constructed through exact allowlisting with at most 20 field errors; unknown text is withheld and extensions discarded, matching the frozen HTTP sanitizer."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ProblemDetails::detail;"
+    },
+    {
+      "baselineId": "AISecSDKProblemDetails.errors",
+      "rustPaths": [
+        "scm_sdk::ProblemDetails::errors"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Native diagnostics are constructed through exact allowlisting with at most 20 field errors; unknown text is withheld and extensions discarded, matching the frozen HTTP sanitizer."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ProblemDetails::errors;"
+    },
+    {
+      "baselineId": "AISecSDKProblemDetails.redacted",
+      "rustPaths": [
+        "scm_sdk::ProblemDetails::redacted"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Native diagnostics are constructed through exact allowlisting with at most 20 field errors; unknown text is withheld and extensions discarded, matching the frozen HTTP sanitizer."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ProblemDetails::redacted;"
+    },
+    {
+      "baselineId": "AISecSDKExceptionMetadata",
+      "rustPaths": [
+        "scm_sdk::ErrorMetadata"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::ErrorMetadata>;"
+    },
+    {
+      "baselineId": "AISecSDKExceptionMetadata.failureKind",
+      "rustPaths": [
+        "scm_sdk::ErrorMetadata::failure_kind"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ErrorMetadata::failure_kind;"
+    },
+    {
+      "baselineId": "AISecSDKExceptionMetadata.problem",
+      "rustPaths": [
+        "scm_sdk::ErrorMetadata::problem"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ErrorMetadata::problem;"
+    },
+    {
+      "baselineId": "AISecSDKExceptionMetadata.retryAfterMs",
+      "rustPaths": [
+        "scm_sdk::ErrorMetadata::retry_after"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Duration replaces a JavaScript millisecond number; metadata is bounded independently from retry authorization and the caller deadline."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ErrorMetadata::retry_after;"
+    },
+    {
+      "baselineId": "AISecSDKExceptionMetadata.statusCode",
+      "rustPaths": [
+        "scm_sdk::ErrorMetadata::status"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::ErrorMetadata::status;"
+    },
+    {
+      "baselineId": "AISecSDKException",
+      "rustPaths": [
+        "scm_sdk::Error"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Error::custom bounds explicit application messages to 8 KiB and keeps ErrorType separate from message text; arbitrary upstream messages are never retained automatically."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = |message: &str| { let _ = scm_sdk::Error::custom(message, None, scm_sdk::ErrorMetadata::new()); };"
+    },
+    {
+      "baselineId": "AISecSDKException.errorType",
+      "rustPaths": [
+        "scm_sdk::Error::error_type"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::error_type;"
+    },
+    {
+      "baselineId": "AISecSDKException.failureKind",
+      "rustPaths": [
+        "scm_sdk::Error::failure_kind"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::failure_kind;"
+    },
+    {
+      "baselineId": "AISecSDKException.message",
+      "rustPaths": [
+        "scm_sdk::Error::message"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "message() returns the bounded explicit application message without the JavaScript ErrorType colon prefix; error_type() exposes that classification separately."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::message;"
+    },
+    {
+      "baselineId": "AISecSDKException.name",
+      "rustPaths": [
+        "scm_sdk::Error::name"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "The native error name is ScmSdkError; the original exception taxonomy remains available through ErrorType::as_str()."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::name;"
+    },
+    {
+      "baselineId": "AISecSDKException.problem",
+      "rustPaths": [
+        "scm_sdk::Error::problem"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::problem;"
+    },
+    {
+      "baselineId": "AISecSDKException.retryAfterMs",
+      "rustPaths": [
+        "scm_sdk::Error::retry_after"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics.",
+        "Duration replaces a JavaScript millisecond number; metadata is bounded independently from retry authorization and the caller deadline."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::retry_after;"
+    },
+    {
+      "baselineId": "AISecSDKException.statusCode",
+      "rustPaths": [
+        "scm_sdk::Error::status"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Ordinary formatting is redacted; explicit typed access retains bounded diagnostics."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::status;"
+    },
+    {
+      "baselineId": "AISecSDKException.cause",
+      "rustPaths": [
+        "std::error::Error::source"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Rust std::error::Error::source replaces JS Error.cause. Native SDK errors deliberately retain no arbitrary transport source/body; source() is None. Explicit structured metadata carries safe facts."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = |error: &scm_sdk::Error| { let _ = std::error::Error::source(error); };"
+    },
+    {
+      "baselineId": "AISecSDKException.stack",
+      "rustPaths": [
+        "scm_sdk::Error::capture_backtrace"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Node global stack formatting/capture hooks are replaced by explicit per-error capture_backtrace/backtrace and caller-owned formatting; no process-global stack settings or ordinary stack logging."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::capture_backtrace; let _ = scm_sdk::Error::backtrace;"
+    },
+    {
+      "baselineId": "AISecSDKException::captureStackTrace",
+      "rustPaths": [
+        "scm_sdk::Error::capture_backtrace"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Node global stack formatting/capture hooks are replaced by explicit per-error capture_backtrace/backtrace and caller-owned formatting; no process-global stack settings or ordinary stack logging."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::capture_backtrace; let _ = scm_sdk::Error::backtrace;"
+    },
+    {
+      "baselineId": "AISecSDKException::prepareStackTrace",
+      "rustPaths": [
+        "scm_sdk::Error::capture_backtrace"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Node global stack formatting/capture hooks are replaced by explicit per-error capture_backtrace/backtrace and caller-owned formatting; no process-global stack settings or ordinary stack logging."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::capture_backtrace; let _ = scm_sdk::Error::backtrace;"
+    },
+    {
+      "baselineId": "AISecSDKException::stackTraceLimit",
+      "rustPaths": [
+        "scm_sdk::Error::capture_backtrace"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Node global stack formatting/capture hooks are replaced by explicit per-error capture_backtrace/backtrace and caller-owned formatting; no process-global stack settings or ordinary stack logging."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "let _ = scm_sdk::Error::capture_backtrace; let _ = scm_sdk::Error::backtrace;"
+    },
+    {
+      "baselineId": "ErrorType",
+      "rustPaths": [
+        "scm_sdk::ErrorType"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/error/problem.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/error/problem.rs::allowlists_are_exact_and_unknown_text_never_survives",
+        "crates/scm-sdk/src/error.rs::explicit_application_messages_and_backtraces_are_never_formatted"
+      ],
+      "deliberateDifferences": [
+        "Rust enum variant names use Rust conventions; as_str() preserves all seven exact frozen wire classification values."
+      ],
+      "verification": "native_error_contract",
+      "compileProbe": "assert_eq!(scm_sdk::ErrorType::ServerSideError.as_str(), \"AISEC_SERVER_SIDE_ERROR\"); assert_eq!(scm_sdk::ErrorType::ClientSideError.as_str(), \"AISEC_CLIENT_SIDE_ERROR\"); assert_eq!(scm_sdk::ErrorType::UserRequestPayloadError.as_str(), \"AISEC_USER_REQUEST_PAYLOAD_ERROR\"); assert_eq!(scm_sdk::ErrorType::MissingVariable.as_str(), \"AISEC_MISSING_VARIABLE\"); assert_eq!(scm_sdk::ErrorType::SdkError.as_str(), \"AISEC_SDK_ERROR\"); assert_eq!(scm_sdk::ErrorType::OAuthError.as_str(), \"AISEC_OAUTH_ERROR\"); assert_eq!(scm_sdk::ErrorType::ResponseValidation.as_str(), \"AISEC_RESPONSE_VALIDATION\");"
+    }
+  ]
+}

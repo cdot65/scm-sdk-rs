@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "capabilities": [
+    {
+      "baselineId": "GatewayRealtimeConnection.next",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeConnection::next"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Caller-driven native next/send/cancel and consuming into_stream replace JavaScript iterator callbacks. return/throw release via cancel or Drop; application errors remain Rust Result values."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::realtime::GatewayRealtimeConnection::next;"
+    },
+    {
+      "baselineId": "GatewayRealtimeConnection.send",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeConnection::send"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Caller-driven native next/send/cancel and consuming into_stream replace JavaScript iterator callbacks. return/throw release via cancel or Drop; application errors remain Rust Result values."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::realtime::GatewayRealtimeConnection::send;"
+    },
+    {
+      "baselineId": "GatewayRealtimeConnection.cancel",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeConnection::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Caller-driven native next/send/cancel and consuming into_stream replace JavaScript iterator callbacks. return/throw release via cancel or Drop; application errors remain Rust Result values."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::realtime::GatewayRealtimeConnection::cancel;"
+    },
+    {
+      "baselineId": "GatewayRealtimeConnection.return",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeConnection::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Caller-driven native next/send/cancel and consuming into_stream replace JavaScript iterator callbacks. return/throw release via cancel or Drop; application errors remain Rust Result values."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::realtime::GatewayRealtimeConnection::cancel;"
+    },
+    {
+      "baselineId": "GatewayRealtimeConnection.throw",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeConnection::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Caller-driven native next/send/cancel and consuming into_stream replace JavaScript iterator callbacks. return/throw release via cancel or Drop; application errors remain Rust Result values."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::realtime::GatewayRealtimeConnection::cancel;"
+    },
+    {
+      "baselineId": "GatewayRealtimeConnection.__@asyncIterator@1855",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeConnection::into_stream"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::split_allows_simultaneous_read_write_and_either_half_drop_terminates_every_owner",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Caller-driven native next/send/cancel and consuming into_stream replace JavaScript iterator callbacks. return/throw release via cancel or Drop; application errors remain Rust Result values."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::realtime::GatewayRealtimeConnection::into_stream;"
+    },
+    {
+      "baselineId": "GatewayRealtimeOptions.handshakeTimeoutMs",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeOptions.handshake_timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::prepared_upgrade_pins_runtime_key_query_and_routing_without_oauth_or_http_defaults",
+        "crates/scm-sdk/tests/realtime_contracts.rs::lifecycle_cancellation_idle_and_absolute_deadlines_release_every_resource"
+      ],
+      "deliberateDifferences": [
+        "Explicit connector, immutable routing and one caller RequestOptions budget replace JavaScript factories/options; no worker or ambient credentials."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = |value: &scm_sdk::realtime::GatewayRealtimeOptions| { let _ = value.handshake_timeout; };"
+    },
+    {
+      "baselineId": "GatewayRealtimeOptions.headers",
+      "rustPaths": [
+        "scm_sdk::airs::gateway::RuntimeClient::with_routing"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::prepared_upgrade_pins_runtime_key_query_and_routing_without_oauth_or_http_defaults",
+        "crates/scm-sdk/tests/realtime_contracts.rs::lifecycle_cancellation_idle_and_absolute_deadlines_release_every_resource"
+      ],
+      "deliberateDifferences": [
+        "Explicit connector, immutable routing and one caller RequestOptions budget replace JavaScript factories/options; no worker or ambient credentials."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::airs::gateway::RuntimeClient::with_routing;"
+    },
+    {
+      "baselineId": "GatewayRealtimeOptions.signal",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::cancel"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::prepared_upgrade_pins_runtime_key_query_and_routing_without_oauth_or_http_defaults",
+        "crates/scm-sdk/tests/realtime_contracts.rs::lifecycle_cancellation_idle_and_absolute_deadlines_release_every_resource"
+      ],
+      "deliberateDifferences": [
+        "Explicit connector, immutable routing and one caller RequestOptions budget replace JavaScript factories/options; no worker or ambient credentials."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::cancel;"
+    },
+    {
+      "baselineId": "GatewayRealtimeOptions.timeoutMs",
+      "rustPaths": [
+        "scm_sdk::RequestOptions::with_timeout"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::prepared_upgrade_pins_runtime_key_query_and_routing_without_oauth_or_http_defaults",
+        "crates/scm-sdk/tests/realtime_contracts.rs::lifecycle_cancellation_idle_and_absolute_deadlines_release_every_resource"
+      ],
+      "deliberateDifferences": [
+        "Explicit connector, immutable routing and one caller RequestOptions budget replace JavaScript factories/options; no worker or ambient credentials."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::RequestOptions::with_timeout;"
+    },
+    {
+      "baselineId": "GatewayRealtimeOptions.webSocketFactory",
+      "rustPaths": [
+        "scm_sdk::realtime::GatewayRealtimeOptions::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::prepared_upgrade_pins_runtime_key_query_and_routing_without_oauth_or_http_defaults",
+        "crates/scm-sdk/tests/realtime_contracts.rs::lifecycle_cancellation_idle_and_absolute_deadlines_release_every_resource"
+      ],
+      "deliberateDifferences": [
+        "Explicit connector, immutable routing and one caller RequestOptions budget replace JavaScript factories/options; no worker or ambient credentials."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = scm_sdk::realtime::GatewayRealtimeOptions::new;"
+    },
+    {
+      "baselineId": "GatewayWebSocket.on",
+      "rustPaths": [
+        "futures_util::Stream::poll_next"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Rust Stream/Sink readiness, bounded backpressure and caller-owned polling replace Node event listeners/state/buffer counters. Dropping polling futures/owners removes the lifetime; no ambient callback registry or reader task exists."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = |socket: &mut dyn scm_sdk::realtime::GatewayWebSocket, cx: &mut std::task::Context<'_>| { let _ = futures_util::Stream::poll_next(std::pin::Pin::new(socket), cx); };"
+    },
+    {
+      "baselineId": "GatewayWebSocket.off",
+      "rustPaths": [
+        "futures_util::Stream::poll_next"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Rust Stream/Sink readiness, bounded backpressure and caller-owned polling replace Node event listeners/state/buffer counters. Dropping polling futures/owners removes the lifetime; no ambient callback registry or reader task exists."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = |socket: &mut dyn scm_sdk::realtime::GatewayWebSocket, cx: &mut std::task::Context<'_>| { let _ = futures_util::Stream::poll_next(std::pin::Pin::new(socket), cx); };"
+    },
+    {
+      "baselineId": "GatewayWebSocket.readyState",
+      "rustPaths": [
+        "futures_util::Sink::poll_ready"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Rust Stream/Sink readiness, bounded backpressure and caller-owned polling replace Node event listeners/state/buffer counters. Dropping polling futures/owners removes the lifetime; no ambient callback registry or reader task exists."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = |socket: &mut dyn scm_sdk::realtime::GatewayWebSocket, cx: &mut std::task::Context<'_>| { let _ = futures_util::Sink::poll_ready(std::pin::Pin::new(socket), cx); };"
+    },
+    {
+      "baselineId": "GatewayWebSocket.bufferedAmount",
+      "rustPaths": [
+        "futures_util::Sink::poll_flush"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Rust Stream/Sink readiness, bounded backpressure and caller-owned polling replace Node event listeners/state/buffer counters. Dropping polling futures/owners removes the lifetime; no ambient callback registry or reader task exists."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = |socket: &mut dyn scm_sdk::realtime::GatewayWebSocket, cx: &mut std::task::Context<'_>| { let _ = futures_util::Sink::poll_flush(std::pin::Pin::new(socket), cx); };"
+    },
+    {
+      "baselineId": "GatewayWebSocket.close",
+      "rustPaths": [
+        "futures_util::Sink::poll_close"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed",
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Rust Stream/Sink readiness, bounded backpressure and caller-owned polling replace Node event listeners/state/buffer counters. Dropping polling futures/owners removes the lifetime; no ambient callback registry or reader task exists."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = |socket: &mut dyn scm_sdk::realtime::GatewayWebSocket, cx: &mut std::task::Context<'_>| { let _ = futures_util::Sink::poll_close(std::pin::Pin::new(socket), cx); };"
+    },
+    {
+      "baselineId": "GatewayWebSocket.send",
+      "rustPaths": [
+        "futures_util::Sink::start_send"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::sends_are_validated_bounded_and_never_replayed"
+      ],
+      "deliberateDifferences": [
+        "Typed bounded frames and Sink readiness/flush replace callback-based socket.send."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = |socket: &mut dyn scm_sdk::realtime::GatewayWebSocket, frame: scm_sdk::realtime::WebSocketFrame| { let _ = futures_util::Sink::start_send(std::pin::Pin::new(socket), frame); };"
+    },
+    {
+      "baselineId": "GatewayWebSocket.terminate",
+      "rustPaths": [
+        "std::mem::drop::<scm_sdk::realtime::BoxWebSocket>"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/realtime/mod.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/realtime_contracts.rs::explicit_close_is_bounded_and_drop_closes_even_without_iteration"
+      ],
+      "deliberateDifferences": [
+        "Dropping the owned framed socket immediately releases transport; bounded explicit cancel attempts a close handshake."
+      ],
+      "verification": "bounded_realtime_contract",
+      "feature": "realtime",
+      "compileProbe": "let _ = std::mem::drop::<scm_sdk::realtime::BoxWebSocket>;"
+    }
+  ]
+}

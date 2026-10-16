@@ -1287,3 +1287,26 @@ async fn cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_
     );
     assert!(wire.requests.lock().unwrap().is_empty());
 }
+
+#[tokio::test]
+async fn typed_stream_close_before_iteration_or_after_buffering_releases_without_replay() {
+    for consume_first in [false, true] {
+        let (client, wire) = setup(vec![Reply::Sse(format!(
+            "data: {}\n\ndata: {}\n\ndata: [DONE]\n\n",
+            chunk(),
+            chunk()
+        ))]);
+        let mut stream = client
+            .create_chat_completion_stream(&model(streamed("createChatCompletion")), None)
+            .await
+            .unwrap();
+        if consume_first {
+            assert!(stream.next().await.unwrap().is_some());
+        }
+        stream.close();
+        assert!(stream.next().await.unwrap().is_none());
+        stream.close();
+        assert!(stream.next().await.unwrap().is_none());
+        assert_eq!(wire.requests.lock().unwrap().len(), 1);
+    }
+}

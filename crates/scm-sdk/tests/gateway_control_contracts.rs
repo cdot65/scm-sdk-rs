@@ -2573,3 +2573,224 @@ async fn provider_resolution_selects_first_match_and_unknown_errors_omit_input_v
     assert!(!format!("{e:?} {e}").contains("request-secret"));
     w.done();
 }
+async fn invoke_frozen_control(c: &Control, case: &Value) -> Result<Value> {
+    let class = case["call"]["className"].as_str().unwrap();
+    let method = case["call"]["member"].as_str().unwrap();
+    let q = case["query"].clone();
+    let b = case["body"].clone();
+    macro_rules! value {
+        ($request:expr) => {
+            serde_json::to_value($request.await?).map_err(|_| Error::new(ErrorKind::Decode))
+        };
+    }
+    match (class, method) {
+        ("AIGatewayGuardrailsClient", "syncMcpServers") => {
+            value!(c.guardrails.sync_mcp_servers(ID, &body(b), None))
+        }
+        ("AIGatewayGuardrailsClient", "getMcpServers") => {
+            value!(c.guardrails.get_mcp_servers(ID, None))
+        }
+        ("AIGatewayGuardrailsClient", "upsertMcpServer") => {
+            value!(c.guardrails.upsert_mcp_server(ID, ID, &body(b), None))
+        }
+        ("AIGatewayIntegrationsClient", "deleteModels") => {
+            let slugs: Vec<String> = case["queryWire"]["slugs"][0]
+                .as_str()
+                .unwrap()
+                .split(',')
+                .map(str::to_owned)
+                .collect();
+            value!(
+                c.integrations
+                    .delete_models("integration-slug", &slugs, None)
+            )
+        }
+        ("AIGatewayMcpIntegrationsClient", "getWorkspaces") => {
+            let mut query = McpIntegrationWorkspacesOptions::default();
+            query.version = q["version"].as_str().map(str::to_owned);
+            value!(c.mcp_integrations.get_workspaces(ID, &query, None))
+        }
+        ("AIGatewayMcpServersClient", "create") => value!(c.mcp.create(&body(b), None)),
+        ("AIGatewayMcpServersClient", "list") => value!(c.mcp.list(&body(q), None)),
+        ("AIGatewayMcpServersClient", "get") => value!(c.mcp.get(ID, None)),
+        ("AIGatewayMcpServersClient", "update") => value!(c.mcp.update(ID, &body(b), None)),
+        ("AIGatewayMcpServersClient", "delete") => value!(c.mcp.delete(ID, None)),
+        ("AIGatewayMcpServersClient", "test") => value!(c.mcp.test(ID, None)),
+        ("AIGatewayMcpServersClient", "getCapabilities") => {
+            value!(c.mcp.get_capabilities(ID, &body(q), None))
+        }
+        ("AIGatewayMcpServersClient", "updateCapabilities") => {
+            value!(c.mcp.update_capabilities(ID, &body(b), None))
+        }
+        ("AIGatewayMcpServersClient", "getUserAccess") => {
+            value!(c.mcp.get_user_access(ID, &body(q), None))
+        }
+        ("AIGatewayMcpServersClient", "updateUserAccess") => {
+            value!(c.mcp.update_user_access(ID, &body(b), None))
+        }
+        ("AIGatewayMcpServersClient", "getConnections") => {
+            value!(c.mcp.get_connections(ID, &body(q), None))
+        }
+        ("AIGatewayMcpServersClient", "deleteConnections") => {
+            value!(c.mcp.delete_connections(ID, &body(q), None))
+        }
+        ("AIGatewayUsageLimitsClient", "create") => value!(c.usage.create(&body(b), None)),
+        ("AIGatewayUsageLimitsClient", "list") => value!(c.usage.list(&body(q), None)),
+        ("AIGatewayUsageLimitsClient", "get") => value!(c.usage.get(ID, &body(q), None)),
+        ("AIGatewayUsageLimitsClient", "update") => value!(c.usage.update(ID, &body(b), None)),
+        ("AIGatewayUsageLimitsClient", "delete") => value!(c.usage.delete(ID, None)),
+        ("AIGatewayUsageLimitsClient", "listEntities") => {
+            value!(c.usage.list_entities(ID, &body(q), None))
+        }
+        ("AIGatewayUsageLimitsClient", "resetEntity") => value!(c.usage.reset_entity(ID, ID, None)),
+        ("AIGatewaySecretReferencesClient", "list") => value!(c.secrets.list(&body(q), None)),
+        ("AIGatewaySecretReferencesClient", "create") => value!(c.secrets.create(&body(b), None)),
+        ("AIGatewaySecretReferencesClient", "get") => value!(c.secrets.get(ID, None)),
+        ("AIGatewaySecretReferencesClient", "update") => {
+            value!(c.secrets.update(ID, &body(b), None))
+        }
+        ("AIGatewaySecretReferencesClient", "delete") => value!(c.secrets.delete(ID, None)),
+        ("AIGatewayModelPricingClient", "get") => value!(c.pricing.get("provider", "model", None)),
+        _ => panic!("unbound frozen control fixture"),
+    }
+}
+#[tokio::test]
+async fn all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus() {
+    use std::collections::BTreeSet;
+    let corpus: Value = serde_json::from_str(include_str!(
+        "../../../contracts/fixtures/typescript/test/openapi/fixtures/gateway.json"
+    ))
+    .unwrap();
+    let cases = corpus["cases"].as_array().unwrap();
+    assert_eq!(cases.len(), 42);
+    let sibling: Value =
+        serde_json::from_str(include_str!("../src/fixtures/gateway-contracts.json")).unwrap();
+    let siblings = sibling["cases"].as_array().unwrap();
+    assert_eq!(siblings.len(), 12);
+    let mut consumed = BTreeSet::new();
+    let mut operations = BTreeSet::new();
+    // The sibling test all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts
+    // executes these exact packaged cases; compare every field to the common source corpus.
+    for entry in siblings {
+        let index = entry["source"]["pointer"]
+            .as_str()
+            .unwrap()
+            .strip_prefix("/cases/")
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
+        let case = &cases[index];
+        assert_eq!(&entry["case"], case);
+        assert!(matches!(
+            case["call"]["className"].as_str().unwrap(),
+            "AIGatewayLogExportsClient" | "AIGatewayRateLimitsClient"
+        ));
+        assert!(consumed.insert(index));
+    }
+    let (c, w, t) = clients();
+    let mut controls = 0;
+    for (index, case) in cases.iter().enumerate() {
+        let class = case["call"]["className"].as_str().unwrap();
+        let member = case["call"]["member"].as_str().unwrap();
+        assert!(
+            operations.insert((class, member)),
+            "duplicate source operation"
+        );
+        if consumed.contains(&index) {
+            continue;
+        }
+        let plane = match class {
+            "AIGatewayIntegrationsClient"
+            | "AIGatewayMcpIntegrationsClient"
+            | "AIGatewaySecretReferencesClient" => Plane::Admin,
+            "AIGatewayModelPricingClient" => Plane::Public,
+            "AIGatewayMcpServersClient"
+            | "AIGatewayGuardrailsClient"
+            | "AIGatewayUsageLimitsClient" => Plane::Data,
+            _ => panic!("unconsumed source fixture family"),
+        };
+        let path = case["path"]
+            .as_str()
+            .unwrap()
+            .replace("{guardrailId}", ID)
+            .replace("{mcpServerId}", ID)
+            .replace("{mcpIntegrationId}", ID)
+            .replace("{policyUsageLimitsId}", ID)
+            .replace("{entityId}", ID)
+            .replace("{secretReferenceId}", ID)
+            .replace("{slug}", "integration-slug")
+            .replace("{provider}", "provider")
+            .replace("{model}", "model");
+        assert!(!path.contains(['{', '}']), "unbound path");
+        let keys: &[&str] = match (class, member) {
+            ("AIGatewayIntegrationsClient", "deleteModels") => &["slugs"],
+            ("AIGatewayMcpIntegrationsClient", "getWorkspaces") => &["version"],
+            ("AIGatewayMcpServersClient", "list") => {
+                &["workspace_id", "current_page", "page_size", "id", "search"]
+            }
+            ("AIGatewayMcpServersClient", "getCapabilities") => &["page", "page_size", "type"],
+            ("AIGatewayMcpServersClient", "getUserAccess") => &["page", "page_size", "search"],
+            ("AIGatewayMcpServersClient", "getConnections") => {
+                &["user_id", "workspace_id", "current_page", "page_size"]
+            }
+            ("AIGatewayMcpServersClient", "deleteConnections") => &["user_id", "workspace_id"],
+            ("AIGatewayUsageLimitsClient", "list") => &[
+                "workspace_id",
+                "status",
+                "type",
+                "page_size",
+                "current_page",
+            ],
+            ("AIGatewayUsageLimitsClient", "get") => &["status", "include_usage"],
+            ("AIGatewayUsageLimitsClient", "listEntities") => {
+                &["status", "search", "page_size", "current_page"]
+            }
+            ("AIGatewaySecretReferencesClient", "list") => &[
+                "manager_type",
+                "tags",
+                "search",
+                "current_page",
+                "page_size",
+            ],
+            _ => &[],
+        };
+        let mut query = Vec::new();
+        let mut query_keys = BTreeSet::new();
+        for key in keys {
+            if let Some(values) = case["queryWire"].get(*key) {
+                assert!(query_keys.insert(*key));
+                for value in values.as_array().unwrap() {
+                    query.push((*key, value.as_str().unwrap()));
+                }
+            }
+        }
+        assert_eq!(
+            query_keys.len(),
+            case["queryWire"].as_object().unwrap().len()
+        );
+        assert_eq!(case["responseIsText"], false);
+        let status = u16::try_from(case["responseStatus"].as_u64().unwrap()).unwrap();
+        assert_eq!(status, 200, "frozen status changes require review");
+        w.expect(
+            plane,
+            Method::from_bytes(case["method"].as_str().unwrap().as_bytes()).unwrap(),
+            &path,
+            &query,
+            case.get("body").cloned(),
+            Reply::Json(status, case["responseBody"].clone()),
+        );
+        assert_eq!(
+            invoke_frozen_control(&c, case).await.unwrap(),
+            case["responseBody"],
+            "{class}.{member}"
+        );
+        assert!(consumed.insert(index));
+        controls += 1;
+    }
+    assert_eq!(controls, 30);
+    assert_eq!(consumed.len(), 42);
+    assert_eq!(operations.len(), 42);
+    assert_eq!(w.calls.load(Ordering::SeqCst), 30);
+    assert_eq!(t.calls.load(Ordering::SeqCst), 29);
+    w.done();
+}

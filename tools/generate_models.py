@@ -22,6 +22,34 @@ NUMBER_CHECKS = {"int", "finite", "min", "max", "multipleOf"}
 REGEX_SOURCES = {r"^[A-Za-z0-9][A-Za-z0-9_-]*$",r"^[^,\s]+__[^,\s]+$",r"^[a-zA-Z0-9_-]+$",r"^\d+$"}
 TRANSFORM_MESSAGE = {"s008858", "s008913", "s008972", "s009658"}
 
+# These are behavioral interfaces implemented by handwritten native adapters.
+# Concrete paths, feature requirements and explicit source-field decompositions
+# are also compiled by the exhaustive public export probes.
+PHASE7_NATIVE_ADAPTERS = {
+    "AgentGuardClientOptions": ("crate::airs::agentguard::AgentGuardClient", "agentguard", ["crate::ClientBuilder", "crate::Endpoint"], "Explicit scoped OAuth Client and admitted data/management endpoints replace environment fallbacks"),
+    "AIGatewaySecretOperation": ("crate::constants::AIGatewaySecretOperation", None, [], "Closed operation vocabulary selects all 21 frozen directional secret rule sets; unknown operation names fail"),
+    "GatewaySecretDirection": ("crate::constants::GatewaySecretDirection", None, [], "Request/Response selects the frozen redaction direction; Default is Request"),
+    "GatewaySecretPathSegment": ("crate::constants::GatewaySecretPathSegment", None, [], "String path components preserve the literal or wildcard grammar implemented by the directional redactor"),
+    "CustomHostConfigurationOptions": ("crate::airs::gateway::CustomHostConfigurationOptions", "gateway", [], "Typed custom-host input preserves the original http(s) URL and headers with native header/count/byte bounds"),
+    "AIGatewayWorkspaceProvisionOptions": ("crate::airs::gateway::AIGatewayWorkspaceProvisionOptions", "gateway", ["crate::RequestOptions"], "Explicit existing_scope flag and shared deadline/cancellation drive bounded provisioning with structured recovery"),
+    "GatewayRealtimeOptions": ("crate::realtime::GatewayRealtimeOptions", "realtime", ["crate::RequestOptions", "crate::GatewayRouting"], "Explicit connector and bounded handshake/event/buffering policy; total cancellation and immutable routing replace inherited JavaScript request options"),
+    "GatewayRealtimeConnection": ("crate::realtime::GatewayRealtimeConnection", "realtime", [], "Caller-driven typed connection with explicit send/receive/cancel and owned socket release; no implicit replay"),
+    "GatewayWebSocket": ("crate::realtime::BoxWebSocket", "realtime", [], "Owned framed Stream/Sink socket replaces Node listener and callback methods; custom adapters implement GatewayWebSocket and enforce framing policy"),
+    "GatewayWebSocketFactory": ("crate::realtime::GatewayWebSocketFactory", "realtime", [], "Arc<dyn WebSocketConnector> performs explicit admitted upgrades without redirects or compression"),
+    "GatewayStream": ("crate::streaming::ContractStream<crate::data::JsonValue>", "gateway", [], "Generic ContractStream<T> is the native typed caller-driven SSE iterator with synchronous cancellation and drop release; concrete JsonValue is only the compile-witness instantiation"),
+    "InitOptions": ("crate::configuration::InitOptions", None, ["crate::configuration::ScanConfiguration", "crate::ClientBuilder", "crate::environment::EnvironmentSnapshot"], "Typed scan initialization and isolated configuration preserve source getters/transactional init/reset; explicit environment snapshots replace implicit global process reads and existing clients retain immutable configuration snapshots"),
+    "CollectAllOptions": ("crate::pagination::CollectOptions", None, [], "Explicit item/byte/page bounds replace max=0 unlimited collection and retain truncation/partial outcomes"),
+    "ListingOptions": ("crate::helpers::ListingOptions", None, [], "Generic canonical skip/limit/search input preserves omissions and explicit zero/empty values with safe numeric/string bounds"),
+    "PaginationPage": ("crate::pagination::Page<crate::data::JsonValue,u64>", None, [], "Generic Page<T,C> retains items and optional cursor; concrete types are compile witnesses, not a restriction on caller types"),
+    "WalkAllOptions": ("crate::helpers::WalkAllOptions", None, ["crate::pagination::CollectOptions"], "Positive typed page limit plus explicit bounded collection options; skip walks use actual counts and optional totals"),
+    "OAuthClientOptions": ("crate::auth::OAuthProviderOptions", None, ["crate::auth::AuthContext", "crate::auth::OAuthProvider", "crate::auth::RefreshBuffer", "crate::Secret"], "Explicit issuer/client/secret/tenant and immutable fixed/adaptive refresh policy; bounded subscribe_refresh TokenInfo events replace inline callbacks without blocking token delivery"),
+}
+for _name in ["ApiKeyListAllOptions","CustomerAppListAllOptions","DeploymentProfileListOptions","PaginationOptions","ProfileListAllOptions","ScanLogQueryOptions","TopicListAllOptions","TopicListOptions","DashboardApplicationsOverviewQuery","DashboardAppQuery","DashboardScanContentQuery","DashboardSessionQuery","DashboardSessionsOverviewQuery","DashboardSessionTransactionQuery","DashboardTimeRangeQuery"]:
+    PHASE7_NATIVE_ADAPTERS[_name] = ("crate::airs::management::"+_name, "management", ["crate::RequestOptions"], "Implemented typed management query/list options; explicit lifecycle and bounded collection settings replace dynamic configuration bags")
+for _name in ["ApiKeysClientOptions","CustomerAppsClientOptions","DashboardClientOptions","DeploymentProfilesClientOptions","ManagementClientOptions","ProfilesClientOptions","ScanLogsClientOptions","TopicsClientOptions"]:
+    PHASE7_NATIVE_ADAPTERS[_name] = ("crate::Client", "management", ["crate::ClientBuilder", "crate::auth::AuthContext"], "Explicit immutable OAuth Client configuration and admitted endpoints replace per-client option/environment fallbacks")
+assert len(PHASE7_NATIVE_ADAPTERS) == 40
+
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
@@ -702,6 +730,8 @@ class Generator:
                 self.names[sid]=name;self.used.add(name);known[entry["type"]["$ref"]]=sid
                 self.emit(sid,name);self.family_exports[family].add(name)
                 row.update(status="typed_source_model",rustType=name,validation="source-only type; owning client validates its operation contract")
+                if name in {"GatewayWorkspaceProvisionRequest","GatewayWorkspaceProvisionResult"}:
+                    row.update(status="native_client_mapping",rustType="crate::airs::gateway::"+name,wireModelRustType=name,nativeFeature="gateway",operationTypeAdapterPhase=7,reason="Provision accepts/returns the canonical handwritten operation type; the models namespace retains a source-only wire-compatible representation for models-only use, without claiming it is accepted by provision")
             elif family=="dlp":
                 mapping={
                     "DlpNamespaceOptions":"crate::dlp::DlpClient","DlpProfilesClientOptions":"crate::Client",
@@ -717,6 +747,9 @@ class Generator:
             elif name in {"ContentOptions","ScanCallOptions","SyncScanOptions"}:
                 target={"ContentOptions":"crate::airs::scan::ContentBuilder","ScanCallOptions":"crate::RequestOptions","SyncScanOptions":"crate::airs::scan::SyncScanOptions"}[name]
                 row.update(status="native_client_mapping",rustType=target,reason="Implemented native scan builder or per-call deadline/cancellation/retry options")
+            elif name in PHASE7_NATIVE_ADAPTERS:
+                target,feature,additional,reason=PHASE7_NATIVE_ADAPTERS[name]
+                row.update(status="native_client_mapping",rustType=target,nativeFeature=feature,additionalTypes=additional,reason=reason,behavioralClosurePhase=7)
             elif family=="red_team":
                 # Public behavioral options are handwritten client APIs, not JSON models.
                 options={
@@ -777,8 +810,6 @@ class Generator:
                     if name=="ModelSecurityClientOptions":
                         row.update(additionalTypes=["crate::ClientBuilder","crate::Endpoint"],reason="ModelSecurityClient::new(Client, data Endpoint, management Endpoint) selects admitted data/management destinations and shares immutable OAuth/transport/session configuration")
                 else:raise ValueError(f"Model Security native behavioral adapter lacks an explicit mapping: {name}")
-            elif family=="gateway" and name in {"AIGatewaySecretOperation","GatewaySecretDirection","GatewaySecretPathSegment","CustomHostConfigurationOptions"}:
-                row.update(status="deferred_client_adapter",owningPhase=7,reason="Standalone exported helper contract; Phase 7 implements directional operation-specific secret redaction or custom-host configuration, separately from safe Debug and client methods")
             elif family=="gateway" and not (name.startswith(("GatewayRealtime","GatewayWebSocket")) or name in {"GatewayStream","AIGatewayWorkspaceProvisionOptions"}):
                 options={
                     "AIGatewayAuditLogListOptions","AIGatewayChartOptions","AIGatewayGroupOptions",
@@ -803,7 +834,7 @@ class Generator:
                     row.update(status="native_client_mapping",rustType="crate::RequestOptions",nativeFeature="gateway",reason="Public pricing get(provider, model, options) uses native per-call total deadline, cancellation and bounded safe-read retry selection")
                 else:raise ValueError(f"Gateway native behavioral adapter lacks an explicit mapping: {name}")
             elif name in {"AISecSDKExceptionMetadata","AISecSDKProblemDetails"}:
-                row.update(status="native_foundation_mapping",rustType="crate::Error",reason="Rust Error exposes bounded sanitized diagnostics; JavaScript exception diagnostic bags are not request data")
+                row.update(status="native_foundation_mapping",rustType="crate::error::ErrorMetadata" if name=="AISecSDKExceptionMetadata" else "crate::error::ProblemDetails",reason="Concrete bounded native metadata preserves failure kind/status/retry delay and allowlisted problem details/field errors with safe formatting")
             else:
                 phase=7 if name.startswith(("GatewayRealtime","GatewayWebSocket")) or name in {"GatewayStream","AIGatewayWorkspaceProvisionOptions"} else 6 if family=="gateway" else 7 if family=="agentguard" else 5 if family in {"red_team","model_security"} else 4 if family in {"management","dlp","iam"} else 3 if family=="scan" else 4 if entry["source"]["file"]=="src/listing.ts" else 7
                 row.update(status="deferred_client_adapter",owningPhase=phase,reason="Behavioral/client configuration contract; native adapter belongs to the product client phase")
@@ -898,7 +929,7 @@ def verify_fixtures():
     native_exports={row["export"] for row in ledger["schemas"] if has_binary(row["schema"],set())}
     directory=ROOT/".local/typed-model-oracle"
     (directory/"src").mkdir(parents=True,exist_ok=True)
-    manifest='[workspace]\n[package]\nname="scm-typed-model-oracle"\nversion="0.0.0"\nedition="2024"\nrust-version="1.88"\n[dependencies]\nscm-sdk={path="../../crates/scm-sdk",default-features=false,features=["models"]}\nserde="=1.0.229"\nserde_json="=1.0.154"\n'
+    manifest='[workspace]\n[package]\nname="scm-typed-model-oracle"\nversion="0.0.0"\nedition="2024"\nrust-version="1.89"\n[dependencies]\nscm-sdk={path="../../crates/scm-sdk",default-features=false,features=["models"]}\nserde="=1.0.229"\nserde_json="=1.0.154"\n'
     (directory/"Cargo.toml").write_text(manifest)
     program='use serde::{Serialize,de::DeserializeOwned};\nuse serde_json::Value;\nfn typed<T:Serialize+DeserializeOwned>(value:Value)->Result<Value,String>{let decoded:T=serde_json::from_value(value).map_err(|_|"typed decode failed".to_string())?;serde_json::to_value(decoded).map_err(|_|"typed encode failed".to_string())}\nfn roundtrip(schema:&str,value:Value)->Result<Value,String>{match schema{\n'
     for row in ledger["schemas"]:

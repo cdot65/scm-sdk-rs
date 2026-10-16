@@ -7,9 +7,15 @@
 
 pub mod auth;
 pub mod config;
+pub mod configuration;
+pub mod constants;
 pub mod data;
+pub mod environment;
 pub mod error;
+pub mod helpers;
 pub mod pagination;
+#[cfg(feature = "realtime")]
+pub mod realtime;
 pub mod secret;
 pub mod streaming;
 pub mod transport;
@@ -27,12 +33,6 @@ pub mod shared;
 #[cfg(any(feature = "dlp", feature = "red-team", feature = "gateway"))]
 mod multipart;
 
-#[cfg(any(
-    feature = "dlp",
-    feature = "red-team",
-    feature = "model-security",
-    feature = "gateway"
-))]
 mod redaction;
 
 #[cfg(feature = "gateway")]
@@ -42,7 +42,10 @@ mod engine;
 
 pub use config::{Endpoint, Limits, OriginPolicy, RequestOptions, Session};
 pub use engine::{Client, ClientBuilder, RawRequest};
-pub use error::{Error, ErrorKind, RemoteOutcome, Result};
+pub use error::{
+    Error, ErrorKind, ErrorMetadata, ErrorType, FailureKind, ProblemDetails, ProblemFieldError,
+    RemoteOutcome, Result,
+};
 #[cfg(feature = "gateway")]
 pub use routing::{GatewayRouting, RuntimeReplay};
 pub use secret::Secret;

@@ -9,12 +9,24 @@ use http::Method;
 pub struct AIGatewayWorkspacesClient {
     pub(super) client: Client,
     pub(super) admin: Client,
+    pub(super) iam: Option<crate::shared::iam::IamScopesClient>,
 }
 impl AIGatewayWorkspacesClient {
     pub fn new(client: Client, admin_endpoint: Endpoint) -> Result<Self> {
         let client = common::oauth(client)?;
         let admin = client.with_endpoint(admin_endpoint)?;
-        Ok(Self { client, admin })
+        Ok(Self {
+            client,
+            admin,
+            iam: None,
+        })
+    }
+    /// Admit an IAM endpoint while preserving this client's identity and lifecycle.
+    pub fn with_iam_endpoint(mut self, endpoint: Endpoint) -> Result<Self> {
+        self.iam = Some(crate::shared::iam::IamScopesClient::new(
+            self.client.with_endpoint(endpoint)?,
+        )?);
+        Ok(self)
     }
     pub fn client(&self) -> &Client {
         &self.client

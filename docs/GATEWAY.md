@@ -69,8 +69,10 @@ Workspace reads explicitly choose the data or admin plane. Omitting status
 retains the service's active-only behavior; archived rows require the archived
 filter. Workspace writes use the admin plane, and deletion archives the record.
 No authorization error triggers an automatic plane fallback. Direct workspace
-creation requires an existing IAM scope. Provisioning and recovery remain an
-explicit Phase 7 workflow and are excluded from Phase 6 method completion.
+creation requires an existing IAM scope. The Phase 7 `provision` workflow creates
+or reuses that scope, creates the workspace and adds its IAM binding. Structured
+recovery preserves resources after uncertain writes; see [provisioning](PROVISIONING.md).
+This workflow remains excluded from the historical Phase 6 completion denominator.
 
 Config/provider/deployment creation returns its source receipt rather than an
 invented detail record. Config detail retains its JSON-encoded config string.

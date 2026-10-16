@@ -99,6 +99,10 @@ def generate():
             if mapping["optionParity"] == "partial" and not mapping["deliberateDifferences"]:
                 raise ValueError("Partial native parity requires an explicit difference")
             feature, namespace = mapping["feature"], mapping["namespace"]
+            expected_headers = ("gateway_realtime" if operation["id"] ==
+                "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime" else "airs_api_defaults")
+            if mapping.get("headerContract", "airs_api_defaults") != expected_headers:
+                raise ValueError("Native operation has an invalid protocol header contract")
             methods, source, tests = mapping["methods"], mapping["source"], mapping["tests"]
             if not methods or not tests:
                 raise ValueError("Native mappings require concrete methods and verification")
@@ -116,7 +120,7 @@ def generate():
             bound.add(source)
             row.update(implementation="implemented", contractVerification="offline_fixture_verified",
                        rustMethods=[f"{namespace}::{method}" for method in methods], feature=feature,
-                       source=source, tests=tests, headerContract="airs_api_defaults",
+                       source=source, tests=tests, headerContract=mapping.get("headerContract", "airs_api_defaults"),
                        optionParity=mapping["optionParity"], deliberateDifferences=mapping["deliberateDifferences"],
                        deliveredInPhase=mapping["deliveredInPhase"], lastContractPhase=mapping["lastContractPhase"])
         rows.append(row)
@@ -127,6 +131,13 @@ def generate():
         "ownershipOverrides": OWNERSHIP_OVERRIDES,
         "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
         "requestHeaderContracts": {
+            "gateway_realtime": {
+                "purpose": "Explicit runtime-key WebSocket upgrade; bypasses common HTTP API defaults as in frozen openRealtime.",
+                "authentication": "x-portkey-api-key",
+                "routing": "validated non-authentication x-portkey-* and OpenAI-Beta",
+                "nativeUpgrade": ["Host", "Upgrade", "Connection", "Sec-WebSocket-Key", "Sec-WebSocket-Version"],
+                "neverInherited": ["SCM OAuth", "x-tsg-id", "service-name", "User-Agent", "HTTP proxy/TLS settings"],
+            },
             "airs_api_defaults": {
                 "service-name": "api", "user-agent": f"PAN-AIRS/{version}-rust-sdk",
                 "scope": "API requests assembled by Client, including injected transports and streams; OAuth issuer exchange has its own headers.",

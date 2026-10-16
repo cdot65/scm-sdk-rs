@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 7,
+  "active_phase": 8,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -81,12 +81,12 @@
       "open_parity_items": [
         {
           "id": "oauth-token-buffer-configuration",
-          "status": "pending",
+          "status": "implemented_in_phase_7_pending_review",
           "due_phase": 7,
           "baseline": "OAuthClientOptions.tokenBufferMs",
           "current": "Safe fixed min(30s,TTL/5) early refresh buffer",
           "evidence": [
-            "docs/FOUNDATION.md",
+            "docs/OAUTH.md",
             "crates/scm-sdk/src/auth.rs"
           ]
         }
@@ -378,7 +378,7 @@
       "review_advisories": [
         {
           "source": "docs/reviews/phase-06-attempt-02.json",
-          "status": "planned_phase_7",
+          "status": "accepted_in_phase_7",
           "scope": "Strengthen independent Gateway control fixture consumption and source-bound operation identity validation without rewriting frozen contracts."
         }
       ],
@@ -388,14 +388,87 @@
     {
       "id": 7,
       "name": "Experimental and export closure",
-      "status": "in_progress",
-      "reviews": []
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-07-attempt-01.json"
+      ],
+      "scope_evidence": [
+        "docs/AGENTGUARD.md",
+        "docs/CONFIGURATION.md",
+        "docs/OAUTH.md",
+        "docs/HELPERS.md",
+        "docs/REALTIME.md",
+        "docs/ERRORS.md",
+        "docs/PROVISIONING.md",
+        "docs/MODELS.md",
+        "contracts/native-operations.json",
+        "contracts/native-models.json",
+        "contracts/native-exports.json",
+        "contracts/native-gateway-bindings.json",
+        "contracts/native-operation-mappings/agentguard-oauth.json",
+        "contracts/native-operation-mappings/gateway-provision.json",
+        "contracts/native-operation-mappings/gateway-realtime.json"
+      ],
+      "live_acceptance": "pending_phase_8",
+      "implemented_scope": {
+        "baselineMethods": 448,
+        "completeMethodOptions": 448,
+        "pendingMethods": 0,
+        "baselineExportCapabilities": 3820,
+        "status": "verified_pending_claude_review"
+      },
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-07-attempt-01.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-07.json"
+          ],
+          "source_sha256": "921ab15afd82841ec23a8e8780b808898e774eae87e50aa476f9d717a4a96080"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-07-attempt-01.json"
+          ]
+        }
+      },
+      "deliberate_differences": [
+        "Explicit per-instance configuration and environment snapshots replace mutable global state.",
+        "OAuth refresh buffering is configurable; bounded metadata subscriptions replace synchronous callbacks without hidden workers.",
+        "Realtime uses caller-driven Stream/Sink transports with bounded events, explicit network policy, no automatic replay, and deterministic drop ownership.",
+        "Workspace provisioning retains dependencies after ambiguous writes and reports stage/ownership/cleanup recovery facts.",
+        "Sanitized diagnostics retain bounded frozen problem vocabulary and explicit application messages while ordinary formatting remains redacted.",
+        "Unreleased minimum Rust version advances from1.88 to1.89 to use patched native WebSocket framing."
+      ],
+      "review_advisories": [
+        {
+          "source": "docs/reviews/phase-07-attempt-01.json",
+          "status": "due_phase_8",
+          "scope": "Derive export-probe feature gates and exercise exact combinations; bind facade behavioral evidence; update CI MSRV; clarify zero-event-queue option rustdoc; centralize the repeated UUID predicate."
+        }
+      ],
+      "accepted_source_sha256": "921ab15afd82841ec23a8e8780b808898e774eae87e50aa476f9d717a4a96080",
+      "accepted_score": 9
     },
     {
       "id": 8,
       "name": "Qualification and delivery",
-      "status": "pending",
-      "reviews": []
+      "status": "in_progress",
+      "reviews": [],
+      "qualification_candidates": [
+        {
+          "id": "sse-json-number-overflow",
+          "status": "pending_adversarial_regression",
+          "scope": "Investigate and conservatively reject SSE error envelopes whose nonzero number exceeds f64 when serde_json/arbitrary_precision is unified; retain ordinary JSON behavior and safe diagnostics."
+        }
+      ]
     }
   ]
 }

@@ -1,4 +1,9 @@
 //! Distinct SCM OAuth, runtime-key, and public Gateway credential planes.
+#[cfg(feature = "realtime")]
+pub use crate::realtime::{
+    GatewayRealtimeConnection, GatewayRealtimeOptions, GatewayRealtimeReceiver,
+    GatewayRealtimeSender, GatewayWebSocket, GatewayWebSocketFactory, WebSocketConnector,
+};
 pub mod models {
     pub use crate::models::gateway::*;
 }
@@ -17,6 +22,8 @@ mod deployments;
 #[cfg(feature = "gateway")]
 mod guardrails;
 #[cfg(feature = "gateway")]
+mod helpers;
+#[cfg(feature = "gateway")]
 mod integrations;
 #[cfg(feature = "gateway")]
 mod log_exports;
@@ -32,6 +39,8 @@ mod organisations;
 mod plugins;
 #[cfg(feature = "gateway")]
 mod providers;
+#[cfg(feature = "gateway")]
+mod provision;
 #[cfg(feature = "gateway")]
 mod rate_limits;
 #[cfg(feature = "gateway")]
@@ -64,6 +73,8 @@ pub use deployments::*;
 #[cfg(feature = "gateway")]
 pub use guardrails::*;
 #[cfg(feature = "gateway")]
+pub use helpers::*;
+#[cfg(feature = "gateway")]
 pub use integrations::*;
 #[cfg(feature = "gateway")]
 pub use log_exports::*;
@@ -79,6 +90,8 @@ pub use organisations::*;
 pub use plugins::*;
 #[cfg(feature = "gateway")]
 pub use providers::*;
+#[cfg(feature = "gateway")]
+pub use provision::*;
 #[cfg(feature = "gateway")]
 pub use rate_limits::*;
 #[cfg(feature = "gateway")]
@@ -140,6 +153,7 @@ impl AIGatewayClient {
         AIGatewayWorkspacesClient {
             client: self.data.clone(),
             admin: self.admin.clone(),
+            iam: Some(self.iam.clone()),
         }
     }
     pub fn guardrails(&self) -> AIGatewayGuardrailsClient {

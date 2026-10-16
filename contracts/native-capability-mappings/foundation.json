@@ -1,0 +1,844 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "capabilities": [
+    {
+      "baselineId": "InitOptions",
+      "rustPaths": [
+        "scm_sdk::configuration::InitOptions"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::configuration::InitOptions>;"
+    },
+    {
+      "baselineId": "InitOptions.apiKey",
+      "rustPaths": [
+        "scm_sdk::configuration::InitOptions::api_key"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::configuration::InitOptions| { let _ = &x.api_key; };"
+    },
+    {
+      "baselineId": "InitOptions.apiToken",
+      "rustPaths": [
+        "scm_sdk::configuration::InitOptions::api_token"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::configuration::InitOptions| { let _ = &x.api_token; };"
+    },
+    {
+      "baselineId": "InitOptions.apiEndpoint",
+      "rustPaths": [
+        "scm_sdk::configuration::InitOptions::api_endpoint"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::configuration::InitOptions| { let _ = &x.api_endpoint; };"
+    },
+    {
+      "baselineId": "InitOptions.numRetries",
+      "rustPaths": [
+        "scm_sdk::configuration::InitOptions::num_retries"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::configuration::InitOptions| { let _ = &x.num_retries; };"
+    },
+    {
+      "baselineId": "globalConfiguration",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::configuration::ScanConfiguration>;"
+    },
+    {
+      "baselineId": "globalConfiguration.apiKey",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration::api_key"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::ScanConfiguration::api_key;"
+    },
+    {
+      "baselineId": "globalConfiguration.apiToken",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration::api_token"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::ScanConfiguration::api_token;"
+    },
+    {
+      "baselineId": "globalConfiguration.apiEndpoint",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration::api_endpoint"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::ScanConfiguration::api_endpoint;"
+    },
+    {
+      "baselineId": "globalConfiguration.numRetries",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration::num_retries"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::ScanConfiguration::num_retries;"
+    },
+    {
+      "baselineId": "globalConfiguration.initialized",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration::initialized"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::ScanConfiguration::initialized;"
+    },
+    {
+      "baselineId": "globalConfiguration.init",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration::init"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::ScanConfiguration::init;"
+    },
+    {
+      "baselineId": "globalConfiguration.reset",
+      "rustPaths": [
+        "scm_sdk::configuration::ScanConfiguration::reset"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::ScanConfiguration::reset;"
+    },
+    {
+      "baselineId": "init",
+      "rustPaths": [
+        "scm_sdk::configuration::init",
+        "scm_sdk::configuration::init_from_environment"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/configuration.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic",
+        "crates/scm-sdk/tests/configuration_contracts.rs::explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes"
+      ],
+      "deliberateDifferences": [
+        "Per-instance immutable client snapshots replace the mutable process singleton; environment loading is explicit through init_from_environment and EnvironmentSnapshot::capture.",
+        "Credentials use zeroizing redacted Secret, validated endpoints require HTTPS or explicit loopback opt-in, and invalid replacement configuration never partially commits."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::configuration::init; let _ = scm_sdk::configuration::init_from_environment;"
+    },
+    {
+      "baselineId": "OAuthClientOptions",
+      "rustPaths": [
+        "scm_sdk::auth::AuthContext",
+        "scm_sdk::auth::OAuthProviderOptions",
+        "scm_sdk::auth::OAuthProvider::new_with_options"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::auth::OAuthProviderOptions>; let _ = scm_sdk::auth::OAuthProvider::new_with_options; let _ = std::marker::PhantomData::<scm_sdk::auth::AuthContext>;"
+    },
+    {
+      "baselineId": "OAuthClientOptions.clientId",
+      "rustPaths": [
+        "scm_sdk::auth::AuthContext::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |issuer: scm_sdk::Endpoint| { let _ = scm_sdk::auth::AuthContext::new(issuer,\"fixture\",1,\"123\"); };"
+    },
+    {
+      "baselineId": "OAuthClientOptions.tsgId",
+      "rustPaths": [
+        "scm_sdk::auth::AuthContext::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |issuer: scm_sdk::Endpoint| { let _ = scm_sdk::auth::AuthContext::new(issuer,\"fixture\",1,\"123\"); };"
+    },
+    {
+      "baselineId": "OAuthClientOptions.tokenEndpoint",
+      "rustPaths": [
+        "scm_sdk::auth::AuthContext::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |issuer: scm_sdk::Endpoint| { let _ = scm_sdk::auth::AuthContext::new(issuer,\"fixture\",1,\"123\"); };"
+    },
+    {
+      "baselineId": "OAuthClientOptions.clientSecret",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider::new_with_options",
+        "scm_sdk::Secret::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs",
+        "crates/scm-sdk/src/secret.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::auth::OAuthProvider::new_with_options; let _ = scm_sdk::Secret::new(\"fixture\");"
+    },
+    {
+      "baselineId": "OAuthClientOptions.tokenBufferMs",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProviderOptions::refresh_buffer"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::OAuthProviderOptions| { let _ = &x.refresh_buffer; };"
+    },
+    {
+      "baselineId": "OAuthClientOptions.onTokenRefresh",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider::subscribe_refresh"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials",
+        "crates/scm-sdk/src/auth.rs::lagged_dropped_and_absent_subscribers_never_block_token_delivery",
+        "crates/scm-sdk/src/auth.rs::failed_and_cleared_pending_refreshes_publish_no_success_event"
+      ],
+      "deliberateDifferences": [
+        "A bounded broadcast Receiver<TokenInfo> replaces the callback. The application polls it explicitly; dropped/lagged observers cannot block token delivery. Events are safe historical snapshots emitted after publication and outside the cache lock."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::auth::OAuthProvider::subscribe_refresh;"
+    },
+    {
+      "baselineId": "TokenInfo",
+      "rustPaths": [
+        "scm_sdk::auth::TokenInfo"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "hasToken maps to cached; optional Duration/SystemTime replace millisecond/zero sentinels. Validity uses a monotonic clock; ordinary snapshots contain no identity or bearer secret."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::auth::TokenInfo>;"
+    },
+    {
+      "baselineId": "TokenInfo.hasToken",
+      "rustPaths": [
+        "scm_sdk::auth::TokenInfo::cached"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "hasToken maps to cached; optional Duration/SystemTime replace millisecond/zero sentinels. Validity uses a monotonic clock; ordinary snapshots contain no identity or bearer secret."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::TokenInfo| { let _ = &x.cached; };"
+    },
+    {
+      "baselineId": "TokenInfo.isValid",
+      "rustPaths": [
+        "scm_sdk::auth::TokenInfo::is_valid"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "hasToken maps to cached; optional Duration/SystemTime replace millisecond/zero sentinels. Validity uses a monotonic clock; ordinary snapshots contain no identity or bearer secret."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::TokenInfo| { let _ = &x.is_valid; };"
+    },
+    {
+      "baselineId": "TokenInfo.isExpired",
+      "rustPaths": [
+        "scm_sdk::auth::TokenInfo::is_expired"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "hasToken maps to cached; optional Duration/SystemTime replace millisecond/zero sentinels. Validity uses a monotonic clock; ordinary snapshots contain no identity or bearer secret."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::TokenInfo| { let _ = &x.is_expired; };"
+    },
+    {
+      "baselineId": "TokenInfo.isExpiringSoon",
+      "rustPaths": [
+        "scm_sdk::auth::TokenInfo::is_expiring_soon"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "hasToken maps to cached; optional Duration/SystemTime replace millisecond/zero sentinels. Validity uses a monotonic clock; ordinary snapshots contain no identity or bearer secret."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::TokenInfo| { let _ = &x.is_expiring_soon; };"
+    },
+    {
+      "baselineId": "TokenInfo.expiresInMs",
+      "rustPaths": [
+        "scm_sdk::auth::TokenInfo::remaining"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "hasToken maps to cached; optional Duration/SystemTime replace millisecond/zero sentinels. Validity uses a monotonic clock; ordinary snapshots contain no identity or bearer secret."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::TokenInfo| { let _ = &x.remaining; };"
+    },
+    {
+      "baselineId": "TokenInfo.expiresAt",
+      "rustPaths": [
+        "scm_sdk::auth::TokenInfo::expires_at"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "hasToken maps to cached; optional Duration/SystemTime replace millisecond/zero sentinels. Validity uses a monotonic clock; ordinary snapshots contain no identity or bearer secret."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::TokenInfo| { let _ = &x.expires_at; };"
+    },
+    {
+      "baselineId": "OAuthClient",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::auth::OAuthProvider>;"
+    },
+    {
+      "baselineId": "OAuthClient.getToken",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider::get_token"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::auth::OAuthProvider::get_token;"
+    },
+    {
+      "baselineId": "OAuthClient.clearToken",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider::clear"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::auth::OAuthProvider::clear;"
+    },
+    {
+      "baselineId": "OAuthClient.isTokenExpired",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider::is_token_expired"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::auth::OAuthProvider::is_token_expired;"
+    },
+    {
+      "baselineId": "OAuthClient.isTokenExpiringSoon",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider::is_token_expiring_soon"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::auth::OAuthProvider::is_token_expiring_soon;"
+    },
+    {
+      "baselineId": "OAuthClient.getTokenInfo",
+      "rustPaths": [
+        "scm_sdk::auth::OAuthProvider::token_info"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/src/auth.rs::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults",
+        "crates/scm-sdk/src/auth.rs::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials"
+      ],
+      "deliberateDifferences": [
+        "Identity and credential generation are immutable; AuthContext and Secret plus the injected transport/policy/session decompose source constructor credentials.",
+        "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::auth::OAuthProvider::token_info;"
+    },
+    {
+      "baselineId": "OAuthClient.tokenEndpoint",
+      "rustPaths": [
+        "scm_sdk::auth::TokenProvider::context",
+        "scm_sdk::auth::AuthContext::issuer"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "The immutable issuer Endpoint is obtained from the provider AuthContext; no mutable token destination exists."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |x: &scm_sdk::auth::OAuthProvider| { let _ = scm_sdk::auth::TokenProvider::context(x).issuer(); }; let _ = scm_sdk::auth::AuthContext::issuer;"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions",
+      "rustPaths": [
+        "scm_sdk::ClientBuilder",
+        "scm_sdk::airs::agentguard::AgentGuardClient::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/engine.rs",
+        "crates/scm-sdk/src/airs/agentguard/client.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = std::marker::PhantomData::<scm_sdk::ClientBuilder>; let _ = scm_sdk::airs::agentguard::AgentGuardClient::new;"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions.clientId",
+      "rustPaths": [
+        "scm_sdk::auth::AuthContext::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |issuer: scm_sdk::Endpoint| { let _ = scm_sdk::auth::AuthContext::new(issuer,\"fixture\",1,\"123\"); };"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions.tsgId",
+      "rustPaths": [
+        "scm_sdk::auth::AuthContext::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |issuer: scm_sdk::Endpoint| { let _ = scm_sdk::auth::AuthContext::new(issuer,\"fixture\",1,\"123\"); };"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions.tokenEndpoint",
+      "rustPaths": [
+        "scm_sdk::auth::AuthContext::new"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/auth.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = |issuer: scm_sdk::Endpoint| { let _ = scm_sdk::auth::AuthContext::new(issuer,\"fixture\",1,\"123\"); };"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions.clientSecret",
+      "rustPaths": [
+        "scm_sdk::ClientBuilder::oauth_credentials"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/engine.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source",
+        "crates/scm-sdk/tests/configuration_contracts.rs::oauth_resolution_propagates_buffer_events_transport_policy_and_session"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::ClientBuilder::oauth_credentials;"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions.dataEndpoint",
+      "rustPaths": [
+        "scm_sdk::airs::agentguard::AgentGuardClient::new",
+        "scm_sdk::Client::with_endpoint"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/agentguard/client.rs",
+        "crates/scm-sdk/src/engine.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::airs::agentguard::AgentGuardClient::new; let _ = scm_sdk::Client::with_endpoint;"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions.mgmtEndpoint",
+      "rustPaths": [
+        "scm_sdk::airs::agentguard::AgentGuardClient::new",
+        "scm_sdk::Client::with_endpoint"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/airs/agentguard/client.rs",
+        "crates/scm-sdk/src/engine.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::airs::agentguard::AgentGuardClient::new; let _ = scm_sdk::Client::with_endpoint;"
+    },
+    {
+      "baselineId": "AgentGuardClientOptions.numRetries",
+      "rustPaths": [
+        "scm_sdk::ClientBuilder::limits",
+        "scm_sdk::RequestOptions::with_retries"
+      ],
+      "sources": [
+        "crates/scm-sdk/src/engine.rs",
+        "crates/scm-sdk/src/config.rs"
+      ],
+      "tests": [
+        "crates/scm-sdk/tests/agentguard_contracts.rs::all_four_read_operations_preserve_exact_planes_headers_order_defaults_and_sensitive_models",
+        "crates/scm-sdk/tests/agentguard_contracts.rs::constructors_require_oauth_and_explicit_admission_for_both_planes"
+      ],
+      "deliberateDifferences": [
+        "Native constructors take explicit OAuth Client and admitted data/management Endpoints; no environment or tenant-file reads occur. Optional source environment resolution is provided separately by EnvironmentSnapshot and resolve_oauth_config.",
+        "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
+      ],
+      "verification": "independent_native_contract",
+      "compileProbe": "let _ = scm_sdk::ClientBuilder::limits; let _ = scm_sdk::RequestOptions::with_retries;"
+    }
+  ]
+}

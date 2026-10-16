@@ -1164,23 +1164,30 @@ dependencies = [
 name = "scm-sdk"
 version = "0.1.0"
 dependencies = [
+ "aws-lc-rs",
  "base64 0.22.1",
  "bytes",
  "flate2",
  "futures-util",
+ "getrandom 0.4.3",
  "hmac",
  "http",
+ "httparse",
  "httpdate",
  "mime",
  "regex",
  "reqwest",
+ "rustls",
+ "rustls-native-certs",
  "ryu-js",
  "serde",
  "serde_json",
  "sha2",
  "time",
  "tokio",
+ "tokio-rustls",
  "tokio-util",
+ "tokio-websockets",
  "url",
  "zeroize",
 ]
@@ -1508,6 +1515,25 @@ dependencies = [
  "libc",
  "pin-project-lite",
  "tokio",
+]
+
+[[package]]
+name = "tokio-websockets"
+version = "0.13.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d52efb639344a7c6adb8e62c6f3d2c19c001ff1b79a5041ba1c6ed42e19c6aa5"
+dependencies = [
+ "aws-lc-rs",
+ "base64 0.22.1",
+ "bytes",
+ "futures-core",
+ "futures-sink",
+ "getrandom 0.4.3",
+ "http",
+ "httparse",
+ "simdutf8",
+ "tokio",
+ "tokio-util",
 ]
 
 [[package]]

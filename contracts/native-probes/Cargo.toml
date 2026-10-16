@@ -1,0 +1,13 @@
+[package]
+name = "scm-sdk-export-probes"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.89"
+publish = false
+
+[workspace]
+
+[dependencies]
+scm-sdk = { path = "../../crates/scm-sdk", default-features = false, features = ["agentguard", "dlp", "gateway", "iam", "management", "model-security", "models", "realtime", "red-team", "reqwest-transport", "scan", "ws-transport"] }
+futures-util = "=0.3.34"
+serde_json = "=1.0.154"

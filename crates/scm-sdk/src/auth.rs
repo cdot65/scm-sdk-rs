@@ -37,6 +37,54 @@ const MAX_TOKEN_RESPONSE: usize = 64 * 1024;
 const MAX_REFRESH_TIME: Duration = Duration::from_secs(30);
 const MAX_TOKEN_LIFETIME: Duration = Duration::from_secs(31 * 24 * 60 * 60);
 
+/// Immutable early-refresh policy. Fixed buffers preserve the source's absolute window.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum RefreshBuffer {
+    /// Cap the chosen maximum at 20% of the issued TTL so short leases remain usable.
+    Adaptive(Duration),
+    /// An absolute window; zero disables early refresh and a window >= TTL refreshes each call.
+    Fixed(Duration),
+}
+impl Default for RefreshBuffer {
+    fn default() -> Self {
+        Self::Adaptive(Duration::from_secs(30))
+    }
+}
+impl RefreshBuffer {
+    fn window(self, ttl: Duration) -> Duration {
+        match self {
+            Self::Adaptive(maximum) => maximum.min(ttl / 5),
+            Self::Fixed(buffer) => buffer,
+        }
+    }
+}
+
+/// Provider policy is fixed before the cache or its subscribers are created.
+#[derive(Clone, Debug)]
+#[non_exhaustive]
+pub struct OAuthProviderOptions {
+    pub refresh_buffer: RefreshBuffer,
+    /// Bounded metadata history. Slow receivers explicitly observe lag instead of blocking refresh.
+    pub event_capacity: usize,
+}
+impl Default for OAuthProviderOptions {
+    fn default() -> Self {
+        Self {
+            refresh_buffer: RefreshBuffer::default(),
+            event_capacity: 16,
+        }
+    }
+}
+impl OAuthProviderOptions {
+    pub fn validate(&self) -> Result<()> {
+        if !(1..=1024).contains(&self.event_capacity) {
+            return Err(Error::new(ErrorKind::Configuration));
+        }
+        Ok(())
+    }
+}
+
 /// Immutable identity used to obtain a service token. Formatting is redacted.
 #[derive(Clone)]
 pub struct AuthContext {
@@ -168,6 +216,22 @@ impl TokenLease {
         issued_at: Instant,
         valid_for: Duration,
     ) -> Result<Self> {
+        Self::issued_with_buffer(
+            token,
+            generation,
+            issued_at,
+            valid_for,
+            RefreshBuffer::default(),
+        )
+    }
+
+    fn issued_with_buffer(
+        token: Secret,
+        generation: u64,
+        issued_at: Instant,
+        valid_for: Duration,
+        refresh_buffer: RefreshBuffer,
+    ) -> Result<Self> {
         validate_bearer(token.expose())?;
         if valid_for.is_zero() || valid_for > MAX_TOKEN_LIFETIME {
             return Err(Error::new(ErrorKind::Authentication));
@@ -178,8 +242,7 @@ impl TokenLease {
         if expires_at <= Instant::now() {
             return Err(Error::new(ErrorKind::Authentication));
         }
-        // Short-lived tokens remain usable: refresh buffer is at most 20% of TTL.
-        let buffer = std::cmp::min(Duration::from_secs(30), valid_for / 5);
+        let buffer = refresh_buffer.window(valid_for);
         let expires_at_wall = std::time::SystemTime::now()
             .checked_add(expires_at.saturating_duration_since(Instant::now()))
             .ok_or_else(|| Error::new(ErrorKind::Authentication))?;
@@ -187,7 +250,7 @@ impl TokenLease {
             token,
             generation,
             expires_at,
-            refresh_at: expires_at - buffer,
+            refresh_at: issued_at + valid_for.saturating_sub(buffer),
             expires_at_wall,
         })
     }
@@ -257,6 +320,36 @@ struct Cache {
     clear_epoch: u64,
     next_generation: u64,
 }
+
+fn cache_info(cache: &Cache) -> TokenInfo {
+    let now = Instant::now();
+    let is_expired = cache
+        .token
+        .as_ref()
+        .is_none_or(|token| token.expires_at <= now);
+    let is_expiring_soon = cache
+        .token
+        .as_ref()
+        .is_none_or(|token| token.refresh_at <= now);
+    TokenInfo {
+        cached: cache.token.is_some(),
+        generation: cache.token.as_ref().map(TokenLease::generation),
+        remaining: cache
+            .token
+            .as_ref()
+            .map(|token| token.expires_at.saturating_duration_since(now)),
+        refresh_in_progress: cache
+            .pending
+            .as_ref()
+            .and_then(|pending| pending.future.upgrade())
+            .is_some(),
+        is_valid: cache.token.is_some() && !is_expiring_soon,
+        is_expired,
+        is_expiring_soon,
+        expires_at: cache.token.as_ref().map(|token| token.expires_at_wall),
+    }
+}
+
 struct OAuthInner {
     context: AuthContext,
     client_secret: Secret,
@@ -264,6 +357,8 @@ struct OAuthInner {
     policy: Arc<dyn DestinationPolicy>,
     session: Session,
     cache: Mutex<Cache>,
+    options: OAuthProviderOptions,
+    refresh_events: tokio::sync::broadcast::Sender<TokenInfo>,
 }
 
 /// OAuth2 client-credentials provider with an isolated cache and bounded refresh.
@@ -280,9 +375,29 @@ impl OAuthProvider {
         policy: Arc<dyn DestinationPolicy>,
         session: Session,
     ) -> Result<Self> {
+        Self::new_with_options(
+            context,
+            client_secret,
+            transport,
+            policy,
+            session,
+            OAuthProviderOptions::default(),
+        )
+    }
+
+    pub fn new_with_options(
+        context: AuthContext,
+        client_secret: Secret,
+        transport: Arc<dyn Transport>,
+        policy: Arc<dyn DestinationPolicy>,
+        session: Session,
+        options: OAuthProviderOptions,
+    ) -> Result<Self> {
         if client_secret.expose().chars().any(char::is_control) {
             return Err(Error::new(ErrorKind::Configuration));
         }
+        options.validate()?;
+        let (refresh_events, _) = tokio::sync::broadcast::channel(options.event_capacity);
         Ok(Self {
             inner: Arc::new(OAuthInner {
                 context,
@@ -291,8 +406,16 @@ impl OAuthProvider {
                 policy,
                 session,
                 cache: Mutex::new(Cache::default()),
+                options,
+                refresh_events,
             }),
         })
+    }
+
+    /// Subscribe to successful cache-publication snapshots; no credentials or callbacks cross this seam.
+    /// Events are historical metadata, emitted once per generation without workers or backpressure.
+    pub fn subscribe_refresh(&self) -> tokio::sync::broadcast::Receiver<TokenInfo> {
+        self.inner.refresh_events.subscribe()
     }
 
     /// Clear the cached token and prevent an older pending refresh from restoring it.
@@ -343,32 +466,7 @@ impl OAuthProvider {
             .cache
             .lock()
             .map_err(|_| Error::new(ErrorKind::Authentication))?;
-        let now = Instant::now();
-        let is_expired = cache
-            .token
-            .as_ref()
-            .is_none_or(|token| token.expires_at <= now);
-        let is_expiring_soon = cache
-            .token
-            .as_ref()
-            .is_none_or(|token| token.refresh_at <= now);
-        Ok(TokenInfo {
-            cached: cache.token.is_some(),
-            generation: cache.token.as_ref().map(TokenLease::generation),
-            remaining: cache
-                .token
-                .as_ref()
-                .map(|token| token.expires_at.saturating_duration_since(now)),
-            refresh_in_progress: cache
-                .pending
-                .as_ref()
-                .and_then(|pending| pending.future.upgrade())
-                .is_some(),
-            is_valid: cache.token.is_some() && !is_expiring_soon,
-            is_expired,
-            is_expiring_soon,
-            expires_at: cache.token.as_ref().map(|token| token.expires_at_wall),
-        })
+        Ok(cache_info(&cache))
     }
 
     fn shared_refresh(&self) -> Result<Shared<Refresh>> {
@@ -415,8 +513,17 @@ impl OAuthProvider {
             {
                 cache.pending = None;
             }
-            if let Ok(token) = &result {
+            let event = if let Ok(token) = &result {
                 cache.token = Some(token.clone());
+                Some(cache_info(&cache))
+            } else {
+                None
+            };
+            drop(cache);
+            if let Some(event) = event {
+                // Publishing metadata is synchronous and bounded, with no callbacks
+                // or workers. Slow/absent receivers never hold up token delivery.
+                let _ = inner.refresh_events.send(event);
             }
             result
         }
@@ -535,12 +642,13 @@ impl OAuthInner {
                 if !wire.token_type.eq_ignore_ascii_case("bearer") {
                     return Err(Error::new(ErrorKind::Authentication));
                 }
-                TokenLease::issued(
+                TokenLease::issued_with_buffer(
                     Secret::new(access_token.as_str())
                         .map_err(|_| Error::new(ErrorKind::Authentication))?,
                     generation,
                     issued_at,
                     Duration::from_secs(wire.expires_in),
+                    self.options.refresh_buffer,
                 )
             })
             .await
@@ -1306,11 +1414,26 @@ mod tests {
     #[tokio::test]
     async fn malformed_or_unbounded_token_responses_fail_without_values() {
         let cases = [
-            (Bytes::from_static(br#"{"access_token":"secret\r\nvalue","token_type":"Bearer","expires_in":3600}"#), ErrorKind::Authentication),
-            (Bytes::from_static(br#"{"access_token":"secret","token_type":"MAC","expires_in":3600}"#), ErrorKind::Authentication),
-            (Bytes::from_static(br#"{"access_token":"secret","token_type":"Bearer","expires_in":0}"#), ErrorKind::Authentication),
-            (Bytes::from_static(br#"{"access_token":"secret","token_type":"Bearer","expires_in":999999999999}"#), ErrorKind::Authentication),
-            (Bytes::from_static(br#"{"access_token":"secret","token_type":"Bearer","expires_in":"3600"}"#), ErrorKind::Decode),
+            (
+                Bytes::from_static(br#"{"access_token":"secret\r\nvalue","token_type":"Bearer","expires_in":3600}"#),
+                ErrorKind::Authentication,
+            ),
+            (
+                Bytes::from_static(br#"{"access_token":"secret","token_type":"MAC","expires_in":3600}"#),
+                ErrorKind::Authentication,
+            ),
+            (
+                Bytes::from_static(br#"{"access_token":"secret","token_type":"Bearer","expires_in":0}"#),
+                ErrorKind::Authentication,
+            ),
+            (
+                Bytes::from_static(br#"{"access_token":"secret","token_type":"Bearer","expires_in":999999999999}"#),
+                ErrorKind::Authentication,
+            ),
+            (
+                Bytes::from_static(br#"{"access_token":"secret","token_type":"Bearer","expires_in":"3600"}"#),
+                ErrorKind::Decode,
+            ),
             (Bytes::from_static(b"secret malformed upstream response"), ErrorKind::Decode),
             (Bytes::from(vec![b'x'; MAX_TOKEN_RESPONSE + 1]), ErrorKind::Limit),
         ];
@@ -1355,5 +1478,186 @@ mod tests {
             )
             .is_err()
         );
+    }
+    fn configured_provider(
+        transport: Arc<FakeTransport>,
+        buffer: RefreshBuffer,
+        capacity: usize,
+    ) -> OAuthProvider {
+        let context = context("123");
+        let policy = Arc::new(OriginPolicy::new([context.issuer.clone()]));
+        OAuthProvider::new_with_options(
+            context,
+            Secret::new("secret-sensitive").unwrap(),
+            transport,
+            policy,
+            Session::new(),
+            OAuthProviderOptions {
+                refresh_buffer: buffer,
+                event_capacity: capacity,
+            },
+        )
+        .unwrap()
+    }
+    #[tokio::test(start_paused = true)]
+    async fn configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults() {
+        let fixed_transport =
+            FakeTransport::new(false, vec![token("fixed", 100), token("fixed2", 100)]);
+        let adaptive_transport = FakeTransport::new(false, vec![token("adaptive", 100)]);
+        let fixed = configured_provider(
+            fixed_transport.clone(),
+            RefreshBuffer::Fixed(Duration::from_secs(30)),
+            16,
+        );
+        let adaptive = configured_provider(
+            adaptive_transport.clone(),
+            RefreshBuffer::Adaptive(Duration::from_secs(30)),
+            16,
+        );
+        fixed.get_token(None).await.unwrap();
+        adaptive.get_token(None).await.unwrap();
+        tokio::time::advance(Duration::from_secs(71)).await;
+        assert!(fixed.token_info().unwrap().is_expiring_soon);
+        assert!(!adaptive.token_info().unwrap().is_expiring_soon);
+        assert_eq!(
+            fixed.get_token(None).await.unwrap().secret().expose(),
+            "fixed2"
+        );
+        tokio::time::advance(Duration::from_secs(10)).await;
+        assert!(adaptive.token_info().unwrap().is_expiring_soon);
+        let transport = FakeTransport::new(false, vec![token("zero", 10)]);
+        let zero = configured_provider(transport.clone(), RefreshBuffer::Fixed(Duration::ZERO), 16);
+        zero.get_token(None).await.unwrap();
+        tokio::time::advance(Duration::from_secs(9)).await;
+        assert!(zero.token_info().unwrap().is_valid);
+        zero.get_token(None).await.unwrap();
+        assert_eq!(transport.count(), 1);
+        tokio::time::advance(Duration::from_secs(1)).await;
+        assert!(zero.is_token_expired().unwrap());
+        let transport = FakeTransport::new(false, vec![token("first", 10), token("second", 10)]);
+        let eager = configured_provider(transport.clone(), RefreshBuffer::Fixed(Duration::MAX), 16);
+        assert_eq!(
+            eager.get_token(None).await.unwrap().secret().expose(),
+            "first"
+        );
+        assert!(eager.token_info().unwrap().is_expiring_soon);
+        assert_eq!(
+            eager.get_token(None).await.unwrap().secret().expose(),
+            "second"
+        );
+        assert_eq!(transport.count(), 2);
+    }
+    #[tokio::test]
+    async fn refresh_metadata_is_once_per_published_generation_and_never_contains_credentials() {
+        let transport = FakeTransport::new(true, vec![token("event-secret", 3600)]);
+        let provider = configured_provider(transport.clone(), RefreshBuffer::default(), 16);
+        let mut events = provider.subscribe_refresh();
+        let one = tokio::spawn({
+            let provider = provider.clone();
+            async move { provider.get_token(None).await }
+        });
+        transport.started.notified().await;
+        let two = tokio::spawn({
+            let provider = provider.clone();
+            async move { provider.get_token(None).await }
+        });
+        tokio::task::yield_now().await;
+        transport.release.add_permits(1);
+        let first = one.await.unwrap().unwrap();
+        let second = two.await.unwrap().unwrap();
+        assert_eq!(first.generation(), second.generation());
+        assert_eq!(transport.count(), 1);
+        let event = events.recv().await.unwrap();
+        assert_eq!(event.generation, Some(first.generation()));
+        assert!(event.cached && event.is_valid && !event.refresh_in_progress);
+        assert!(!format!("{event:?}").contains("event-secret"));
+        assert!(matches!(
+            events.try_recv(),
+            Err(tokio::sync::broadcast::error::TryRecvError::Empty)
+        ));
+        provider.get_token(None).await.unwrap();
+        assert!(matches!(
+            events.try_recv(),
+            Err(tokio::sync::broadcast::error::TryRecvError::Empty)
+        ));
+        // Observers own their work and may inspect/clear without lock reentrancy.
+        assert!(provider.token_info().unwrap().cached);
+        provider.clear().unwrap();
+        assert!(!provider.token_info().unwrap().cached);
+    }
+    #[tokio::test]
+    async fn failed_and_cleared_pending_refreshes_publish_no_success_event() {
+        let transport = FakeTransport::new(false, vec![Bytes::from_static(b"invalid-secret-json")]);
+        let provider = configured_provider(transport, RefreshBuffer::default(), 16);
+        let mut events = provider.subscribe_refresh();
+        assert!(provider.get_token(None).await.is_err());
+        assert!(matches!(
+            events.try_recv(),
+            Err(tokio::sync::broadcast::error::TryRecvError::Empty)
+        ));
+        let transport = FakeTransport::new(true, vec![token("stale-secret", 3600)]);
+        let provider = configured_provider(transport.clone(), RefreshBuffer::default(), 16);
+        let mut events = provider.subscribe_refresh();
+        let pending = tokio::spawn({
+            let provider = provider.clone();
+            async move { provider.get_token(None).await }
+        });
+        transport.started.notified().await;
+        provider.clear().unwrap();
+        transport.release.add_permits(1);
+        assert_eq!(
+            pending.await.unwrap().unwrap_err().kind(),
+            ErrorKind::Authentication
+        );
+        assert!(matches!(
+            events.try_recv(),
+            Err(tokio::sync::broadcast::error::TryRecvError::Empty)
+        ));
+        assert!(!provider.token_info().unwrap().cached);
+    }
+    #[tokio::test]
+    async fn lagged_dropped_and_absent_subscribers_never_block_token_delivery() {
+        let transport = FakeTransport::new(false, vec![]);
+        let provider =
+            configured_provider(transport.clone(), RefreshBuffer::Fixed(Duration::MAX), 1);
+        let mut slow = provider.subscribe_refresh();
+        for _ in 0..5 {
+            provider.get_token(None).await.unwrap();
+        }
+        assert!(matches!(
+            slow.try_recv(),
+            Err(tokio::sync::broadcast::error::TryRecvError::Lagged(4))
+        ));
+        assert_eq!(slow.try_recv().unwrap().generation, Some(5));
+        drop(slow);
+        provider.get_token(None).await.unwrap();
+        assert_eq!(transport.count(), 6);
+        let mut last = provider.subscribe_refresh();
+        drop(provider);
+        assert!(matches!(
+            last.recv().await,
+            Err(tokio::sync::broadcast::error::RecvError::Closed)
+        ));
+    }
+    #[test]
+    fn refresh_event_capacity_is_validated_before_provider_creation() {
+        for capacity in [0, 1025, usize::MAX] {
+            let context = context("123");
+            let policy = Arc::new(OriginPolicy::new([context.issuer.clone()]));
+            let transport = FakeTransport::new(false, vec![]);
+            let result = OAuthProvider::new_with_options(
+                context,
+                Secret::new("secret").unwrap(),
+                transport.clone(),
+                policy,
+                Session::new(),
+                OAuthProviderOptions {
+                    event_capacity: capacity,
+                    ..OAuthProviderOptions::default()
+                },
+            );
+            assert_eq!(result.unwrap_err().kind(), ErrorKind::Configuration);
+            assert_eq!(transport.count(), 0);
+        }
     }
 }

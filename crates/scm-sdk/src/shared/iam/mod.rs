@@ -5,4 +5,6 @@ pub mod models {
 #[cfg(feature = "iam")]
 mod scopes;
 #[cfg(feature = "iam")]
+pub use crate::helpers::generate_workspace_scope_name;
+#[cfg(feature = "iam")]
 pub use scopes::{IamScopesClient, validate_scope_name};

@@ -111,6 +111,30 @@ def commands_for(phase):
              "--types", "node", "--typeRoots", ".local/typescript/node_modules/@types",
              "tools/verify-gateway-specimens.mts"],
         ]
+    if phase == 7:
+        previous = [[value.replace("phase-06-rust-", "phase-07-rust-").replace("1.88.0", "1.89.0")
+                     for value in command] for command in commands_for(6)]
+        for command in previous:
+            if command[:3] == ["python", "tools/native_operations.py", "--check"]:
+                command[-1] = "7"
+        return previous + [
+            ["python", "tools/generate_constants.py", "--check"],
+            ["tools/node_modules/.bin/tsx", "tools/helper-oracle.mts", "--check"],
+            ["tools/node_modules/.bin/tsc", "--noEmit", "--target", "ES2022", "--module", "NodeNext",
+             "--moduleResolution", "NodeNext", "--strict", "--skipLibCheck", "--esModuleInterop",
+             "--types", "node", "--typeRoots", ".local/typescript/node_modules/@types",
+             "tools/helper-oracle.mts"],
+            ["python", "tools/verify_gateway_bindings.py", "--check"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_verify_gateway_bindings.py", "-v"],
+            ["python", "tools/native_exports.py", "--check"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_native_exports.py", "-v"],
+            *[["python", "scripts/check-native-exports.py", "--toolchain", toolchain,
+               "--output", f"docs/checks/phase-07-native-exports-{toolchain}.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            *[["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", feature,
+               "--output", f"docs/checks/phase-07-rust-1.99.0-{feature}.json"]
+              for feature in ("agentguard", "realtime", "ws-transport")],
+        ]
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 
