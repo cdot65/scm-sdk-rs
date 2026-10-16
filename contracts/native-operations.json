@@ -1,0 +1,3710 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "baselineOperationsSha256": "028acb96f9740018f2fbdf699d7a110688553e667433e63abf7a137ab67d8abf",
+  "generatorSha256": "a026b45617bd1255f2cdeea22e3250c166ed32c225658587fab5d7b7d3fd61f9",
+  "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping presence is checked here; independent native tests establish wire behavior.",
+  "requestHeaderContracts": {
+    "airs_api_defaults": {
+      "service-name": "api",
+      "user-agent": "PAN-AIRS/0.1.0-rust-sdk",
+      "scope": "API requests assembled by Client, including injected transports and streams; OAuth issuer exchange has its own headers.",
+      "frozenUserAgent": "PAN-AIRS/0.34.0-typescript-sdk",
+      "deliberateDifference": "Native crate version and rust-sdk suffix retain the PAN-AIRS vendor prefix.",
+      "regressionSource": "contracts/fixtures/typescript/test/http/request.spec.ts",
+      "regressionSourceSha256": "b9c06a949087686f16c33f4ebc66ea71f81569258a32878c41e7b62f88c4b486",
+      "overridePolicy": "SDK-owned defaults cannot be overridden by raw per-request headers."
+    }
+  },
+  "sourceBindings": [
+    {
+      "path": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "sha256": "4af95b3f5708573bd8129d6d3f738eb84b31f0ca75e7a1648fe6c7d209e2de1a"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "sha256": "e88c5185c89cb7a3f80003174e5c53367074eadcf3c169fdc285c10cc1d95ce6"
+    },
+    {
+      "path": "crates/scm-sdk/src/airs/scan/scanner.rs",
+      "sha256": "07a56f4279d48f51075c45c7e0161891861a84e8494a079be9190c1c9bb0cdcf"
+    },
+    {
+      "path": "crates/scm-sdk/src/engine.rs",
+      "sha256": "a5ead43b7c0c7e9fd2274d51270ab985566a788c84ab88d92b1de9d3605c43b6"
+    },
+    {
+      "path": "crates/scm-sdk/src/streaming.rs",
+      "sha256": "bcc4a293660b3d2571e77172574bd0a177d05a306618f98c5c67af326234dae1"
+    },
+    {
+      "path": "crates/scm-sdk/src/transport.rs",
+      "sha256": "5eb87c8128b700834e77c1548f2a7eed67818327ef1685cc3b73eb173176ac19"
+    },
+    {
+      "path": "crates/scm-sdk/tests/representative_clients.rs",
+      "sha256": "e2c829c094e7cd149cf5c2f307054bde1eb0dbfc58e081c99855fdea7ac62d17"
+    },
+    {
+      "path": "crates/scm-sdk/tests/scan_contracts.rs",
+      "sha256": "1d462efbebc32fe7c26b6a5df0192ec46faaeba20e31adf261414b10b9343991"
+    }
+  ],
+  "summary": {
+    "baselineConcreteMethods": 448,
+    "implemented": 7,
+    "pending": 441,
+    "liveVerified": 0
+  },
+  "operations": [
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.getScanStats",
+      "family": "agentguard",
+      "owningPhase": 7,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.listRules",
+      "family": "agentguard",
+      "owningPhase": 7,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.listScanVulnerabilities",
+      "family": "agentguard",
+      "owningPhase": 7,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/agentguard/client.ts:AgentGuardClient.listScans",
+      "family": "agentguard",
+      "owningPhase": 7,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.getMcpServers",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.syncMcpServers",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.upsertMcpServer",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.createService",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.createUser",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.deleteService",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.deleteUser",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.getService",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.getUser",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.listService",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.listUser",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.rotateService",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.rotateUser",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.updateService",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/api-keys-client.ts:AIGatewayApiKeysClient.updateUser",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/audit-logs-client.ts:AIGatewayAuditLogsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.listVersions",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/configs-client.ts:AIGatewayConfigsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.ping",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/deployments-client.ts:AIGatewayDeploymentsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.getCatalog",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.getMcpServers",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.syncMcpServers",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/guardrails-client.ts:AIGatewayGuardrailsClient.upsertMcpServer",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createChatCompletion",
+      "family": "ai-gateway",
+      "owningPhase": 3,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::gateway::RuntimeClient::create_chat_completion",
+        "airs::gateway::RuntimeClient::create_chat_completion_stream"
+      ],
+      "feature": "gateway",
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/representative_clients.rs"
+      ],
+      "headerContract": "airs_api_defaults"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createCompletion",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createEmbedding",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createPromptCompletion",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createPromptRender",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.createResponse",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.catalog",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.deleteModels",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.getModels",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.getWorkspaces",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.resolveProviderId",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.setModels",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.setWorkspaces",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/integrations-client.ts:AIGatewayIntegrationsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.cancel",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.download",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.start",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/log-exports-client.ts:AIGatewayLogExportsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.getCapabilities",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.getMetadata",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.getWorkspaces",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.setCapabilities",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.setWorkspaces",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-integrations-client.ts:AIGatewayMcpIntegrationsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.deleteConnections",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.getCapabilities",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.getConnections",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.getUserAccess",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.test",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.updateCapabilities",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/mcp-servers-client.ts:AIGatewayMcpServersClient.updateUserAccess",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/model-pricing-client.ts:AIGatewayModelPricingClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.getAuthSettings",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.getInfo",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.getSelf",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.updateAuthSettings",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/organisations-client.ts:AIGatewayOrganisationsClient.updateSelf",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/plugins-client.ts:AIGatewayPluginsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/plugins-client.ts:AIGatewayPluginsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/providers-client.ts:AIGatewayProvidersClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/rate-limits-client.ts:AIGatewayRateLimitsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.cancelBatch",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.cancelFineTuningJob",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.cancelVectorStoreFileBatch",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createBatch",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createFeedback",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createFile",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createFineTuningJob",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createImage",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createImageEdit",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createImageVariation",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createLogs",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createModeration",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createOcr",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createRerank",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createSpeech",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createTranscription",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createTranslation",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createVectorStore",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createVectorStoreFile",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.createVectorStoreFileBatch",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteFile",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteModel",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteResponse",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteVectorStore",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.deleteVectorStoreFile",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.downloadFile",
+      "family": "ai-gateway",
+      "owningPhase": 3,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::gateway::RuntimeClient::download_file"
+      ],
+      "feature": "gateway",
+      "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
+      "tests": [
+        "crates/scm-sdk/tests/representative_clients.rs"
+      ],
+      "headerContract": "airs_api_defaults"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getBatchOutput",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getLog",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getResponse",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getVectorStore",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getVectorStoreFile",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.getVectorStoreFileBatch",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listBatches",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFiles",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFilesInVectorStoreBatch",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFineTuningEvents",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listFineTuningJobCheckpoints",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listInputItems",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listModels",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listPaginatedFineTuningJobs",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listVectorStoreFiles",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.listVectorStores",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.modifyVectorStore",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveBatch",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveFile",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveFineTuningJob",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.retrieveModel",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/runtime-resources-client.ts:AIGatewayRuntimeResourcesClient.updateFeedback",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/secret-references-client.ts:AIGatewaySecretReferencesClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.byStatusCode",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.byUser",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.cacheHitTrend",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.cacheSummary",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.cost",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.errorCategoryTrends",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.errorTrends",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.errors",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackModels",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackScoreDistribution",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackTrend",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.feedbackWeighted",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.filterBoundaries",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.groupBy",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.groupedErrors",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.latency",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.logs",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.requests",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.rescuedRetries",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.tokens",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.userTrends",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/telemetry-client.ts:AIGatewayTelemetryClient.users",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.listEntities",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.resetEntity",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/usage-limits-client.ts:AIGatewayUsageLimitsClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.create",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.delete",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.get",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.list",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.provision",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.update",
+      "family": "ai-gateway",
+      "owningPhase": 6,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.bindWorkspace",
+      "family": "iam",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.create",
+      "family": "iam",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.delete",
+      "family": "iam",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.get",
+      "family": "iam",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.list",
+      "family": "iam",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/iam/scopes-client.ts:IamScopesClient.update",
+      "family": "iam",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.create",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.delete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.listForToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/api-keys.ts:ApiKeysClient.regenerate",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.delete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.get",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.listForToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/customer-apps.ts:CustomerAppsClient.update",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.application",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationViolationBreakdown",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationViolationBreakdownRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsOverview",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsOverviewRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsViolationsTrend",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.applicationsViolationsTrendRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.appsList",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.appsListRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.scanContent",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.scanContentRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.session",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionTransaction",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionTransactionRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsChart",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsChartRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsOverview",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.sessionsOverviewRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.topApplicationsViolations",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dashboard.ts:DashboardClient.topApplicationsViolationsRaw",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/deployment-profiles.ts:DeploymentProfilesClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp-profiles.ts:DlpProfilesClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.get",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-filtering-profiles.ts:DataFilteringProfilesClient.replace",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.create",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.delete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.get",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.patch",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-patterns.ts:DataPatternsClient.replace",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.create",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.get",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.patch",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.replace",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.create",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.delete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.get",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.patch",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/dlp/dictionaries.ts:DictionariesClient.replace",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.clearToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.getToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.getTokenInfo",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpired",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-client.ts:OAuthClient.isTokenExpiringSoon",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-management.ts:OAuthManagementClient.getAccessToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/oauth-management.ts:OAuthManagementClient.invalidateToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.create",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.delete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.forceDelete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.get",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.getByName",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.listForToken",
+      "family": "management",
+      "owningPhase": 3,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::management::ProfilesClient::list_for_token"
+      ],
+      "feature": "management",
+      "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+      "tests": [
+        "crates/scm-sdk/tests/representative_clients.rs"
+      ],
+      "headerContract": "airs_api_defaults"
+    },
+    {
+      "baselineId": "src/management/profiles.ts:ProfilesClient.update",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/scan-logs.ts:ScanLogsClient.query",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.create",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.delete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.forceDelete",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.forceDeleteWithAudit",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.get",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.getByName",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.list",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.listAll",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.listForToken",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/management/topics.ts:TopicsClient.update",
+      "family": "management",
+      "owningPhase": 4,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/client.ts:ModelSecurityClient.getPyPIAuth",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.archive",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.assignSecurityGroups",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.create",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.get",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.list",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listAll",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listAllVersions",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listSecurityGroups",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.listVersions",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.removeAssignment",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.unarchive",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/custom-rules-client.ts:ModelSecurityCustomRulesClient.update",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.getModel",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.getModelVersion",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listAllModelVersionFiles",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listAllModelVersions",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listAllModels",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listModelVersionFiles",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listModelVersions",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/models-client.ts:ModelSecurityModelsClient.listModels",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.addLabels",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.create",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.deleteLabels",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.get",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getEvaluation",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getEvaluations",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getFiles",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getLabelKeys",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getLabelValues",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getViolation",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.getViolations",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.list",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.listAll",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.setLabels",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.create",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.delete",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.get",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.getRuleInstance",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.list",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.listAll",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.listRuleInstanceVersions",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.listRuleInstances",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.update",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-groups-client.ts:ModelSecurityGroupsClient.updateRuleInstance",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.get",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.list",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.listAll",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.listVersions",
+      "family": "model-security",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.create",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.delete",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.get",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.getConfig",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.list",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.listAll",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.update",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/adapters-client.ts:RedTeamAdaptersClient.validate",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getDashboardOverview",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getErrorLogs",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getGoalCategories",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getLanguages",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getManagementLanguages",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getQuota",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getQuotaSummary",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getScanMetadata",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getScanStatistics",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getScoreTrend",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getSentiment",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.getTargetProfileErrorLogs",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/client.ts:RedTeamClient.updateSentiment",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getAttackOutputs",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPromptDetail",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPromptSets",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPromptsBySet",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getPropertyStats",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.getReport",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attack-reports-client.ts:RedTeamCustomAttackReportsClient.listCustomAttacks",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.archivePromptSet",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPrompt",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPromptSet",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPropertyName",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.createPropertyValue",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.deletePrompt",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.downloadTemplate",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPrompt",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPromptSet",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPromptSetReference",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPromptSetVersionInfo",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPropertyNames",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPropertyValues",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.getPropertyValuesMultiple",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listActivePromptSets",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listAllPromptSets",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listAllPrompts",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listPromptSets",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.listPrompts",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.updatePrompt",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.updatePromptSet",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/custom-attacks-client.ts:RedTeamCustomAttacksClient.uploadPromptsCsv",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/eula-client.ts:RedTeamEulaClient.accept",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/eula-client.ts:RedTeamEulaClient.getContent",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/eula-client.ts:RedTeamEulaClient.getStatus",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.createDevices",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.createInstance",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.deleteDevices",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.deleteInstance",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.getInstance",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.getRegistryCredentials",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.updateDevices",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.updateInstance",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.createChannel",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.getChannel",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.getChannelStats",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.listChannels",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/network-broker-client.ts:RedTeamNetworkBrokerClient.updateChannel",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.downloadReport",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.generatePartialReport",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getAttackDetail",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getDynamicRemediation",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getDynamicReport",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getDynamicRuntimePolicy",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getMultiTurnAttackDetail",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStaticRemediation",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStaticReport",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStaticRuntimePolicy",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.getStreamDetail",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.listAttacks",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.listGoalStreams",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/reports-client.ts:RedTeamReportsClient.listGoals",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.abort",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.create",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.get",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.getCategories",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.list",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/scans-client.ts:RedTeamScansClient.listAll",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.create",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.delete",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.deleteCopilotToken",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.exchangeCopilotToken",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.get",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getCopilotAuthUrl",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getProfile",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getTargetMetadata",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.getTargetTemplates",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.list",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.listAll",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.probe",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.startProfiling",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.update",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.updateProfile",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.validateAuth",
+      "family": "red-team",
+      "owningPhase": 5,
+      "implementation": "pending",
+      "contractVerification": "pending",
+      "liveAcceptance": "unverified"
+    },
+    {
+      "baselineId": "src/scan/scanner.ts:Scanner.asyncScan",
+      "family": "scan",
+      "owningPhase": 3,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::scan::Scanner::async_scan"
+      ],
+      "feature": "scan",
+      "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs"
+      ],
+      "headerContract": "airs_api_defaults"
+    },
+    {
+      "baselineId": "src/scan/scanner.ts:Scanner.queryByReportIds",
+      "family": "scan",
+      "owningPhase": 3,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::scan::Scanner::query_by_report_ids"
+      ],
+      "feature": "scan",
+      "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs"
+      ],
+      "headerContract": "airs_api_defaults"
+    },
+    {
+      "baselineId": "src/scan/scanner.ts:Scanner.queryByScanIds",
+      "family": "scan",
+      "owningPhase": 3,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::scan::Scanner::query_by_scan_ids"
+      ],
+      "feature": "scan",
+      "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs"
+      ],
+      "headerContract": "airs_api_defaults"
+    },
+    {
+      "baselineId": "src/scan/scanner.ts:Scanner.syncScan",
+      "family": "scan",
+      "owningPhase": 3,
+      "implementation": "implemented",
+      "contractVerification": "offline_fixture_verified",
+      "liveAcceptance": "unverified",
+      "rustMethods": [
+        "airs::scan::Scanner::sync_scan",
+        "airs::scan::Scanner::scan_request"
+      ],
+      "feature": "scan",
+      "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+      "tests": [
+        "crates/scm-sdk/tests/scan_contracts.rs"
+      ],
+      "headerContract": "airs_api_defaults"
+    }
+  ]
+}

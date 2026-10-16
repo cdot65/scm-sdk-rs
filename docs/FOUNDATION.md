@@ -20,7 +20,7 @@ Credentials and tenant registrations are never loaded implicitly. `AuthContext`
 fixes the issuer, client, credential generation, tenant, scopes, and audience.
 Each provider owns an isolated in-memory cache. Concurrent waiters share a refresh;
 one cancelled waiter leaves other waiters running. When the last waiter drops,
-the refresh future drops. A late 401 invalidates only its token generation.
+the refresh future drops. A late authentication rejection invalidates only its token generation.
 `OAuthProvider::clear` prevents an older pending exchange from repopulating a
 cleared cache. Rotate credentials by constructing a new context/provider/client;
 cancel the old session when its in-flight work must end.
@@ -30,6 +30,14 @@ exact immutable JSON bytes sent. `Authentication::runtime_key` supplies the
 Gateway runtime key. Authenticated redirects are rejected. Separate clients bind
 different credential kinds to their configured origins. Signed transfers and
 public pricing require distinct unauthenticated handling in their product clients.
+
+Every API request includes SDK-owned `service-name: api` and
+`User-Agent: PAN-AIRS/<crate-version>-rust-sdk` headers before transport dispatch,
+including caller-supplied adapters. The frozen TypeScript User-Agent uses its
+own package version and `-typescript-sdk` suffix; the native value deliberately
+identifies Rust while retaining the vendor's `PAN-AIRS/` prefix. These defaults
+cannot be overridden through raw per-request headers. They count toward the
+combined header budget. The token issuer exchange has its own OAuth headers.
 
 ### Deliberate TypeScript differences
 
@@ -67,9 +75,11 @@ requirements also apply to any network code inside an external token provider.
 
 Endpoints require HTTPS. `Endpoint::loopback` explicitly permits HTTP for literal
 loopback addresses and localhost. Paths retain the configured base path and cannot
-change the origin or traverse parent segments. Encoded path separators and encoded
-percent signs are rejected to prevent server decoding from changing route segments;
-encoded periods are included in dot-segment checks. Query values are encoded once.
+change the origin or traverse parent segments. Raw path strings reject encoded
+separators/percent signs; `RawRequest::segment` accepts a structured identifier and
+encodes it once, including literal slash/percent values. Recursive escape and dot
+segments are rejected before authentication. Query values are encoded once.
+Endpoints and final URLs are bounded at 16 KiB; queries have at most 256 entries.
 
 ## Budgets and cancellation
 
@@ -85,12 +95,14 @@ encoded periods are included in dot-segment checks. Query values are encoded onc
 | Retry delay | 250 ms exponential, capped at 5 seconds |
 | Outgoing header count / total bytes | 128 / 16 KiB |
 | Default adapter received headers | HTTP/1: 128 headers; HTTP/2: 16 KiB list |
-| Future stream handshake / idle | 30 seconds each |
-| Future stream event / realtime queue | 1 MiB / 64 entries |
+| Stream handshake / idle | 30 seconds each |
+| Stream event / future realtime queue | 1 MiB / 64 entries |
 
-Stream-specific fields reserve consistent resource configuration for the streaming
-milestones. Phase 2's `send_bytes` buffers bounded responses; it is not a streaming
-interface. Limits are configurable within documented validation bounds in
+`send_bytes` buffers bounded responses. `send_stream` returns a caller-driven
+body owning its concurrency permit; dropping or closing it releases the response.
+The SSE decoder and typed Gateway stream enforce event and terminal contracts.
+See [STREAMING.md](STREAMING.md) for raw and typed stream budget differences.
+Limits are configurable within documented validation bounds in
 `config::Limits::validate`; they are SDK defaults, not vendor service quotas.
 
 `RequestOptions::with_timeout` establishes one absolute deadline. `cancel` cancels
@@ -104,16 +116,24 @@ Only operations with declared read semantics retry transport failures and HTTP
 `RawRequest::new`, including an arbitrary GET, has no automatic replay. Mutations
 and inference do not silently retry, including after a 401. `Retry-After` is honored
 only within the retry and total budgets; longer delays are returned to the caller.
-One safe-read OAuth 401 refresh replay is allowed within the same retry count.
+One safe-read OAuth 401/403 refresh replay is allowed within the same retry count;
+a 403 with `x-opa-decision: false` is a policy denial and does not refresh.
 Setting `max_retries` to zero disables that replay too; the rejected token generation
 is still invalidated for later independent operations.
+`RequestOptions::with_retries` overrides the per-call safe-read replay budget
+within 0–5; it never makes a mutation or inference replayable.
 
 ## Data and error handling
 
 `RawRequest` is an advanced escape hatch. Product clients add typed validation.
 Raw callers own service-specific input contracts. JSON syntax, MIME types, request
 size, header protection, and destination checks still run before authentication.
+The combined outgoing headers are checked again after authentication adds its headers.
 `json_value` uses a bounded serializer; it never signs one body and sends another.
+Serialization bounds nesting at 128 before recursion reaches the native validator.
+`ClientBuilder::validation_limits` supplies explicit JSON node, depth, work, and
+copy limits. Defaults scale with byte configuration within fixed safety ceilings;
+the request/response byte limits continue to apply. These are SDK resource limits.
 
 Errors expose a category, status, static operation name, retry delay, remote-outcome
 classification, and explicit getters for allowlisted correlation IDs and codes.

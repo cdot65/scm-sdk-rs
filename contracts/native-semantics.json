@@ -1,0 +1,929 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "sourceFingerprint": "a972723bb524cf8fce652d50297d94ed7af278b13b9a045b5c6bdc79212eb48f",
+  "generatorSha256": "e37e529738dac4ab9e57cdf61417873d1c9f9ad6cf36e48f15d73b843f604d40",
+  "policy": "Every binding has concrete native behavior; registry generation alone is not test evidence. JSON fakes for typed runtime inputs are rejected.",
+  "bindings": [
+    {
+      "schema": "s000009",
+      "sourceKind": "effect:refinement",
+      "binding": "native_transport",
+      "source": {
+        "file": "src/ai-gateway/model-pricing-client.ts",
+        "line": 35,
+        "sha256": "b074ab1a52d08114aebcf0820d978c188bd8eb61bb1669d0f53667ab45575635"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s000014",
+      "sourceKind": "effect:refinement",
+      "binding": "native_cancellation",
+      "source": {
+        "file": "src/ai-gateway/model-pricing-client.ts",
+        "line": 40,
+        "sha256": "d58d066466c3d2a30c708e3f6c6619cd6a98aad27887dce979dd1b0e92a59a3e"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s000017",
+      "sourceKind": "effect:refinement",
+      "binding": "nonblank",
+      "source": {
+        "file": "src/ai-gateway/telemetry-client.ts",
+        "line": 59,
+        "sha256": "d31dbe1d44f0103c65716dfd3033914a81f4a067ec83d5d5e012332c419b0438"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000035",
+      "sourceKind": "effect:refinement",
+      "binding": "chart_bounds",
+      "source": {
+        "file": "src/ai-gateway/telemetry-client.ts",
+        "line": 110,
+        "sha256": "6c5b9621d54e8372998bd0006c87360ca73242969ae266376e203c0711b8fd1b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000041",
+      "sourceKind": "effect:refinement",
+      "binding": "finite_json_object",
+      "source": {
+        "file": "src/models/ai-gateway-routing.ts",
+        "line": 132,
+        "sha256": "4c523f70ebff9fb35129394909d0342c234a91a49bc40a35ea2415224fd551d7"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000063",
+      "sourceKind": "effect:refinement",
+      "binding": "chart_bounds",
+      "source": {
+        "file": "src/ai-gateway/telemetry-client.ts",
+        "line": 118,
+        "sha256": "ea6196e75bc93e9e2d6cac4a3f10062b3a39b4f3a14b6d8a751010bb98649402"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000065",
+      "sourceKind": "effect:refinement",
+      "binding": "chart_bounds",
+      "source": {
+        "file": "src/ai-gateway/telemetry-client.ts",
+        "line": 123,
+        "sha256": "ae5c228bf99b344a0d397fa9f9d2adc340b51d15b2862ae301fd57c120b1dcda"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000071",
+      "sourceKind": "effect:refinement",
+      "binding": "nonblank",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 155,
+        "sha256": "d93f8fc05df022189185bc726f4c172427f9001f5b1e334d32093d8a29a9460f"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000075",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 160,
+        "sha256": "16c58604cf23781d3e0bffe63b5b3aa6ecff96cf7c62799e3c405ad47a6cbc6b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 30
+    },
+    {
+      "schema": "s000080",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 161,
+        "sha256": "ecc10e35c1d19907684082abe44b43d2aab80375271b957fb6ee3a5bac9617b5"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": "days"
+    },
+    {
+      "schema": "s000084",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 166,
+        "sha256": "6daf297b540fe1dfe372da3140e45fafacbb015f50463e1b6d0990947c2bc62c"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 1
+    },
+    {
+      "schema": "s000086",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 167,
+        "sha256": "411fba098a35ec9962fa86f44af10088c18452b1dcef3d9ae4143b3aad9808ff"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": "day"
+    },
+    {
+      "schema": "s000088",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 171,
+        "sha256": "1f32e32196703abce461fbd4522af0b93f3a50ba02eac0496583d8e98f110a8a"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 25
+    },
+    {
+      "schema": "s000090",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 172,
+        "sha256": "88852f15a4b9c0206e63bd10e55d1d8a63f7d89b421d9e5f2918c0c6cdee6849"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 0
+    },
+    {
+      "schema": "s000093",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 177,
+        "sha256": "a7bdcafefa9340ff237fc0e6cbebc0ae8a6112a21e149bd8dadf20f093c557b3"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 30
+    },
+    {
+      "schema": "s000095",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/management/dashboard.ts",
+        "line": 178,
+        "sha256": "9c658715f97b8d2684f4d673b8f2d7e2a9a2bb0005974c490ec469641dc3e9b0"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": "days"
+    },
+    {
+      "schema": "s000196",
+      "sourceKind": "effect:refinement",
+      "binding": "time_order",
+      "source": {
+        "file": "src/models/agentguard.ts",
+        "line": 142,
+        "sha256": "a390dda76eff6cf2cf0d53bc113df2acf80291de6208832b3cdd11de1de8dcbb"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000489",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s000491",
+      "sourceKind": "effect:refinement",
+      "binding": "finite_json",
+      "source": {
+        "file": "src/models/ai-gateway-routing.ts",
+        "line": 127,
+        "sha256": "575abb7afa5716527ef20a3bf4e639f44c3085118eaa9e24e8def5891fb02355"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s001616",
+      "sourceKind": "effect:refinement",
+      "binding": "secret_create",
+      "source": {
+        "file": "src/models/ai-gateway-extensions.ts",
+        "line": 1692,
+        "sha256": "1f806be8eaa1cede2eeb4705bb16903c12958d671c0a3dfb4d02099f99527f71"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s001692",
+      "sourceKind": "effect:refinement",
+      "binding": "secret_update",
+      "source": {
+        "file": "src/models/ai-gateway-extensions.ts",
+        "line": 1826,
+        "sha256": "bcc715a9ec7c471c9ba9712312e83a2ff16f4d237d8bea320a6509a9b1bcc1c3"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s002084",
+      "sourceKind": "effect:transform",
+      "binding": "unwrap_data",
+      "source": {
+        "file": "src/models/ai-gateway-extensions.ts",
+        "line": 2977,
+        "sha256": "29fac2e4f1c20e97720d9e73a560c388a54cd60114e7a941bb462d857cfb1bb8"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s004593",
+      "sourceKind": "effect:refinement",
+      "binding": "native_binary",
+      "source": {
+        "file": "src/models/ai-gateway-inference.ts",
+        "line": 5259,
+        "sha256": "fd957658a213458b8d96441c576824b8fc3dbb260ff306e9e9a8e646ef050ad7"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s004597",
+      "sourceKind": "effect:refinement",
+      "binding": "native_binary",
+      "source": {
+        "file": "src/models/ai-gateway-inference.ts",
+        "line": 5261,
+        "sha256": "fd957658a213458b8d96441c576824b8fc3dbb260ff306e9e9a8e646ef050ad7"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s004623",
+      "sourceKind": "effect:refinement",
+      "binding": "native_binary",
+      "source": {
+        "file": "src/models/ai-gateway-inference.ts",
+        "line": 5295,
+        "sha256": "fd957658a213458b8d96441c576824b8fc3dbb260ff306e9e9a8e646ef050ad7"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s004774",
+      "sourceKind": "effect:refinement",
+      "binding": "native_binary",
+      "source": {
+        "file": "src/models/ai-gateway-inference.ts",
+        "line": 5553,
+        "sha256": "fd957658a213458b8d96441c576824b8fc3dbb260ff306e9e9a8e646ef050ad7"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s004836",
+      "sourceKind": "effect:refinement",
+      "binding": "native_binary",
+      "source": {
+        "file": "src/models/ai-gateway-inference.ts",
+        "line": 5672,
+        "sha256": "fd957658a213458b8d96441c576824b8fc3dbb260ff306e9e9a8e646ef050ad7"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s004897",
+      "sourceKind": "effect:refinement",
+      "binding": "native_binary",
+      "source": {
+        "file": "src/models/ai-gateway-inference.ts",
+        "line": 5790,
+        "sha256": "fd957658a213458b8d96441c576824b8fc3dbb260ff306e9e9a8e646ef050ad7"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "typed_native_boundary"
+    },
+    {
+      "schema": "s006118",
+      "sourceKind": "effect:transform",
+      "binding": "identity",
+      "source": {
+        "file": "src/models/ai-gateway-realtime.ts",
+        "line": 22,
+        "sha256": "a9a0b5c81f2638ff287f4e9855c0f62a3261416d4ee73d4183f7061127dc35f9"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006119",
+      "sourceKind": "effect:refinement",
+      "binding": "realtime_type",
+      "source": {
+        "file": "src/models/ai-gateway-realtime.ts",
+        "line": 22,
+        "sha256": "ab0ab4c3204685512fb17e85464b4bf0ab3948a08d47239004a45d18bd39ef44"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006129",
+      "sourceKind": "effect:refinement",
+      "binding": "usage_reset_exclusive",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 44,
+        "sha256": "a9c22a24306caa0484bd7cac1ace892fe8f3b5b908e0a5b594c8424fcf636e03"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006130",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006197",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006240",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006247",
+      "sourceKind": "effect:refinement",
+      "binding": "guardrail_checks",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 186,
+        "sha256": "d3e95169795d572d25bd38df605c1d2dcf1c2886c7c8ca2e2c9bcc5f811f27d8"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006256",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006274",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006289",
+      "sourceKind": "effect:refinement",
+      "binding": "rotation_exclusive",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 255,
+        "sha256": "fb1d36bca870f0e9e9c4df5a41e67e745300e382b2afdbf29826a99d617d6bc2"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006290",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006323",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006366",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006409",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006433",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006455",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006508",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006529",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 532,
+        "sha256": "6df085089f53f173d22203270e3d86f98422f60517751d5569b3b89974c08e62"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006533",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s006536",
+      "sourceKind": "effect:refinement",
+      "binding": "nonempty_object",
+      "source": {
+        "file": "src/models/ai-gateway-requests.ts",
+        "line": 33,
+        "sha256": "1a7737f0ab5a3cec7be06176d268008b2190c98fe962f473370a95adee3d5f8b"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s007738",
+      "sourceKind": "effect:refinement",
+      "binding": "profile_selector",
+      "source": {
+        "file": "src/models/ai-profile.ts",
+        "line": 5,
+        "sha256": "42b823159659204ffafe32889e12f790817be93c302827b69ccbc5e9317ae51c"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s007788",
+      "sourceKind": "effect:refinement",
+      "binding": "tool_event",
+      "source": {
+        "file": "src/models/tool-event.ts",
+        "line": 17,
+        "sha256": "3c580721dabb039e0662d3eec2ad67282bdff619cd7be9a1c6c6a58866b3c1e0"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s008858",
+      "sourceKind": "effect:transform",
+      "binding": "message_object",
+      "source": {
+        "file": "src/models/mgmt-api-key.ts",
+        "line": 86,
+        "sha256": "dbada94df53efb39cb0bf5a02b7a711e4231a9525e6cb76a0c5db566fb651970"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s008873",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/mgmt-custom-topic.ts",
+        "line": 12,
+        "sha256": "380268ce40f7475ed4aa9fdeaebb55d7cf7ff7158f68bb0443c408055283c801"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": []
+    },
+    {
+      "schema": "s008908",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/mgmt-custom-topic.ts",
+        "line": 45,
+        "sha256": "886d91c8309857f87c1919d379df798290afe23551494ad20d4e030a39df6473"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": []
+    },
+    {
+      "schema": "s008913",
+      "sourceKind": "effect:transform",
+      "binding": "message_object",
+      "source": {
+        "file": "src/models/mgmt-custom-topic.ts",
+        "line": 59,
+        "sha256": "dbada94df53efb39cb0bf5a02b7a711e4231a9525e6cb76a0c5db566fb651970"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s008972",
+      "sourceKind": "effect:transform",
+      "binding": "message_object",
+      "source": {
+        "file": "src/models/mgmt-customer-app.ts",
+        "line": 69,
+        "sha256": "dbada94df53efb39cb0bf5a02b7a711e4231a9525e6cb76a0c5db566fb651970"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s009653",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/mgmt-security-profile.ts",
+        "line": 355,
+        "sha256": "288da2b16b68d7a1aa7932acbad42d721fac22a917993ea86d911e6ca7a6f6c8"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": []
+    },
+    {
+      "schema": "s009658",
+      "sourceKind": "effect:transform",
+      "binding": "message_object",
+      "source": {
+        "file": "src/models/mgmt-security-profile.ts",
+        "line": 366,
+        "sha256": "dbada94df53efb39cb0bf5a02b7a711e4231a9525e6cb76a0c5db566fb651970"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json"
+    },
+    {
+      "schema": "s009825",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/model-security.ts",
+        "line": 87,
+        "sha256": "d3f52f62bc83ee7c76be099d60c8a3e0f1b4b60db34eb367cfc07c0cb812f3bb"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 0
+    },
+    {
+      "schema": "s009828",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/model-security.ts",
+        "line": 88,
+        "sha256": "d3f52f62bc83ee7c76be099d60c8a3e0f1b4b60db34eb367cfc07c0cb812f3bb"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 0
+    },
+    {
+      "schema": "s009831",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/model-security.ts",
+        "line": 89,
+        "sha256": "d3f52f62bc83ee7c76be099d60c8a3e0f1b4b60db34eb367cfc07c0cb812f3bb"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 0
+    },
+    {
+      "schema": "s010265",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/model-security.ts",
+        "line": 588,
+        "sha256": "70635f9259b19b46e2bd8f8663271d6b0fcdf07bed71e7a6e610a8e97f3e8cd4"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": ""
+    },
+    {
+      "schema": "s010574",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team-network-broker.ts",
+        "line": 71,
+        "sha256": "8fa9a1240b81f931ce85cfc2d55bdeb84ff64d07508e959f0efec80fc6ef0bdd"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": []
+    },
+    {
+      "schema": "s010705",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team.ts",
+        "line": 101,
+        "sha256": "bc2595ae1eaf3ca9f70d3db1796e6b4e35e77d931004046562e9ab03e01f31bf"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": "stateful"
+    },
+    {
+      "schema": "s010711",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team.ts",
+        "line": 110,
+        "sha256": "9068f5a0a243aef0444e00af430bb40c4889eb68feb25d67c25b92bf3e7c568d"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": "stateless"
+    },
+    {
+      "schema": "s010723",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team.ts",
+        "line": 127,
+        "sha256": "bd4391a4a8a30ecabdab128f4a8458edd0af2e62f240be27383ced4a3cac55c5"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": "HEADER"
+    },
+    {
+      "schema": "s010733",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team.ts",
+        "line": 136,
+        "sha256": "d5340861291ceeb37e6b337426844cc88c4129dc0cd98d0d891bcd2207257729"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 60
+    },
+    {
+      "schema": "s010743",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team.ts",
+        "line": 139,
+        "sha256": "c9d22d7ca74fd6b3eb38ac7bbdaefe4948faeeb7d537ac9591434b4fa837f301"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": "access_token"
+    },
+    {
+      "schema": "s010825",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team.ts",
+        "line": 231,
+        "sha256": "0be51b5c215b85284b485f7d83dfb82b6008eca65b7fbf25b7f1d5e5174da5d2"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 110
+    },
+    {
+      "schema": "s012814",
+      "sourceKind": "ZodDefault",
+      "binding": "default",
+      "source": {
+        "file": "src/models/red-team.ts",
+        "line": 2033,
+        "sha256": "2ecda2ae376e1d12d5f8dad73a0e3b86bffade3134952bc5e0c49f70567d1742"
+      },
+      "implementation": "crates/scm-sdk/src/validation.rs",
+      "test": "validation::tests::all_semantic_bindings_are_exercised",
+      "domain": "json",
+      "default": 0
+    }
+  ]
+}

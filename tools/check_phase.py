@@ -44,6 +44,31 @@ def commands_for(phase):
              "--output", "docs/checks/rust-1.99.0-all.json"],
             ["python", "scripts/check-package.py"],
         ]
+    if phase == 3:
+        native = [
+            ["python", "scripts/check-rust.py", "--toolchain", toolchain, "--feature-set", features,
+             "--output", f"docs/checks/phase-03-rust-{toolchain}-{features}.json"]
+            for toolchain in ("1.88.0", "1.99.0") for features in ("default", "minimal", "all")
+        ]
+        return commands_for(1) + [
+            ["python", "tools/generate_validation.py", "--check"],
+            ["python", "tools/generate_models.py", "--check"],
+            ["python", "tools/native_operations.py", "--check"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_native_operations.py", "-v"],
+            [".local/typescript/node_modules/.bin/tsx", "tools/schema-oracle.mts", "--check"],
+            ["tools/node_modules/.bin/tsc", "--noEmit", "--target", "ES2022", "--module", "NodeNext",
+             "--moduleResolution", "NodeNext", "--strict", "--skipLibCheck", "--esModuleInterop",
+             "--types", "node", "--typeRoots", ".local/typescript/node_modules/@types",
+             "tools/schema-oracle.mts"],
+            *native,
+            ["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", "json-unification",
+             "--output", "docs/checks/phase-03-rust-1.99.0-json-unification.json"],
+            *[["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", feature,
+               "--output", f"docs/checks/phase-03-rust-1.99.0-{feature}.json"]
+              for feature in ("scan", "management", "gateway", "models")],
+            ["python", "tools/generate_models.py", "--verify-fixtures"],
+            ["python", "scripts/check-package.py"],
+        ]
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 

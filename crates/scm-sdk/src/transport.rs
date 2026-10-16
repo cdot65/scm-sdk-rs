@@ -151,7 +151,7 @@ impl ReqwestTransport {
             .no_zstd()
             .gzip(true)
             .referer(false)
-            .user_agent(concat!("scm-sdk/", env!("CARGO_PKG_VERSION")));
+            .user_agent(crate::engine::SDK_USER_AGENT);
         if let Some(proxy) = proxy {
             builder = builder.proxy(
                 reqwest::Proxy::all(proxy).map_err(|_| Error::new(ErrorKind::Configuration))?,

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 3,
+  "active_phase": 4,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -119,20 +119,64 @@
     {
       "id": 3,
       "name": "Typed models and scanning",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-03-attempt-02.json"
+      ],
       "review_advisories": [
         {
           "source": "docs/reviews/phase-02-attempt-02.json",
-          "status": "pending",
-          "scope": "Combined outgoing header bounds; explicit403 refresh difference; TLS rootstore/verifier dependency review."
+          "status": "implemented_pending_phase_review",
+          "scope": "Combined outgoing header bounds; explicit403 refresh difference; TLS rootstore/verifier dependency review.",
+          "evidence": [
+            "crates/scm-sdk/src/config.rs",
+            "crates/scm-sdk/src/engine.rs",
+            "docs/DEPENDENCIES.md"
+          ]
         }
-      ]
+      ],
+      "scope_evidence": [
+        "docs/MODELS.md",
+        "docs/VALIDATION.md",
+        "docs/SCANNING.md",
+        "docs/STREAMING.md",
+        "contracts/native-models.json",
+        "contracts/native-semantics.json",
+        "contracts/native-fixtures/schemas.json"
+      ],
+      "live_acceptance": "pending_phase_8",
+      "review_attempts": [
+        "docs/reviews/phase-03-attempt-01.json"
+      ],
+      "accepted_source_sha256": "18bcfea7ac50002482005b7cd811c0fa25111ea38c129d058b05a63efcf5176d",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-03-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-03.json"
+          ],
+          "source_sha256": "18bcfea7ac50002482005b7cd811c0fa25111ea38c129d058b05a63efcf5176d"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-03-attempt-02.json"
+          ]
+        }
+      }
     },
     {
       "id": 4,
       "name": "Management and shared modules",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": []
     },
     {

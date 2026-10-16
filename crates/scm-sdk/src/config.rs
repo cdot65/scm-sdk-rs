@@ -6,6 +6,9 @@ use tokio::time::Instant;
 use tokio_util::sync::CancellationToken;
 use url::Url;
 
+pub(crate) const MAX_URL_BYTES: usize = 16 * 1024;
+const MAX_PATH_SEGMENT_BYTES: usize = 4096;
+
 /// An immutable HTTPS endpoint. Local HTTP requires the explicit loopback constructor.
 #[derive(Clone)]
 pub struct Endpoint {
@@ -23,6 +26,9 @@ impl Endpoint {
         Self::parse_inner(value, true)
     }
     fn parse_inner(value: &str, local: bool) -> Result<Self> {
+        if value.len() > MAX_URL_BYTES {
+            return Err(Error::new(ErrorKind::Configuration));
+        }
         let url = Url::parse(value).map_err(|_| Error::new(ErrorKind::Configuration))?;
         if !valid_url(&url, local) || url.query().is_some() {
             return Err(Error::new(ErrorKind::Configuration));
@@ -49,7 +55,23 @@ impl Endpoint {
         }
         Ok(())
     }
-    pub(crate) fn resolve(&self, path: &str, query: &[(String, String)]) -> Result<Url> {
+    pub(crate) fn resolve(
+        &self,
+        path: &str,
+        segments: &[String],
+        query: &[(String, String)],
+    ) -> Result<Url> {
+        if path.len() > MAX_URL_BYTES
+            || query.len() > 256
+            || query
+                .iter()
+                .try_fold(0usize, |n, (k, v)| {
+                    n.checked_add(k.len())?.checked_add(v.len())
+                })
+                .is_none_or(|n| n > MAX_URL_BYTES)
+        {
+            return Err(Error::new(ErrorKind::Limit));
+        }
         if path.starts_with("//") || path.contains(['?', '#', '\\']) || path.contains("://") {
             return Err(Error::new(ErrorKind::Validation));
         }
@@ -69,18 +91,87 @@ impl Endpoint {
             }
         }
         let mut url = self.url.clone();
-        let full = format!(
+        let mut full = format!(
             "{}/{}",
             url.path().trim_end_matches('/'),
             path.trim_start_matches('/')
         );
+        for segment in segments {
+            full.push('/');
+            full.push_str(&encode_segment(segment)?);
+            if full.len() > MAX_URL_BYTES {
+                return Err(Error::new(ErrorKind::Limit));
+            }
+        }
         url.set_path(&full);
         if !query.is_empty() {
             url.query_pairs_mut()
                 .extend_pairs(query.iter().map(|(k, v)| (k, v)));
         }
         self.admit(&url)?;
+        if url.as_str().len() > MAX_URL_BYTES {
+            return Err(Error::new(ErrorKind::Limit));
+        }
         Ok(url)
+    }
+}
+
+/// Encode identifier data exactly once, while rejecting traversal at every
+/// supported decoding depth. Slashes in identifiers remain encoded on the wire.
+pub(crate) fn encode_segment(value: &str) -> Result<String> {
+    if value.is_empty() || value.len() > MAX_PATH_SEGMENT_BYTES {
+        return Err(Error::new(ErrorKind::Validation));
+    }
+    let mut decoded = value.as_bytes().to_vec();
+    for depth in 0..=8 {
+        if decoded.iter().any(|b| b.is_ascii_control() || *b == b'\\')
+            || decoded
+                .split(|b| *b == b'/')
+                .any(|p| p == b"." || p == b"..")
+        {
+            return Err(Error::new(ErrorKind::Validation));
+        }
+        let mut next = Vec::with_capacity(decoded.len());
+        let mut i = 0;
+        while i < decoded.len() {
+            if decoded[i] == b'%'
+                && i + 2 < decoded.len()
+                && let (Some(a), Some(b)) = (hex(decoded[i + 1]), hex(decoded[i + 2]))
+            {
+                next.push(a * 16 + b);
+                i += 3;
+            } else {
+                next.push(decoded[i]);
+                i += 1;
+            }
+        }
+        if next == decoded {
+            break;
+        }
+        if depth == 8 {
+            return Err(Error::new(ErrorKind::Validation));
+        }
+        decoded = next;
+    }
+    const HEX: &[u8; 16] = b"0123456789ABCDEF";
+    let mut encoded = String::with_capacity(value.len());
+    for byte in value.bytes() {
+        if byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_' | b'.' | b'~') {
+            encoded.push(byte as char);
+        } else {
+            encoded.push('%');
+            encoded.push(HEX[(byte >> 4) as usize] as char);
+            encoded.push(HEX[(byte & 15) as usize] as char);
+        }
+    }
+    Ok(encoded)
+}
+fn hex(value: u8) -> Option<u8> {
+    match value {
+        b'0'..=b'9' => Some(value - b'0'),
+        b'a'..=b'f' => Some(value - b'a' + 10),
+        b'A'..=b'F' => Some(value - b'A' + 10),
+        _ => None,
     }
 }
 fn valid_url(url: &Url, local: bool) -> bool {
@@ -253,6 +344,7 @@ impl Session {
 pub struct RequestOptions {
     deadline: Instant,
     cancellation: CancellationToken,
+    retry_limit: Option<u32>,
 }
 impl RequestOptions {
     pub fn with_timeout(timeout: Duration) -> Result<Self> {
@@ -265,10 +357,23 @@ impl RequestOptions {
         Ok(Self {
             deadline,
             cancellation: CancellationToken::new(),
+            retry_limit: None,
         })
     }
     pub fn deadline(&self) -> Instant {
         self.deadline
+    }
+    /// Override safe-read retries for this operation. This never enables mutation
+    /// or inference replay. Zero guarantees a single API attempt.
+    pub fn with_retries(mut self, value: u32) -> Result<Self> {
+        if value > 5 {
+            return Err(Error::new(ErrorKind::Configuration));
+        }
+        self.retry_limit = Some(value);
+        Ok(self)
+    }
+    pub fn retry_limit(&self) -> Option<u32> {
+        self.retry_limit
     }
     pub fn cancel(&self) {
         self.cancellation.cancel();

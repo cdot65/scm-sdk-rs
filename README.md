@@ -8,13 +8,16 @@ Implementation proceeds through the gated [phases](docs/PHASES.md), following th
 records actual progress and Claude Code reviews. Implementation, independent
 contract verification, and live acceptance are measured separately.
 
-Current state: Phase 1 passed Claude review at 9/10. Phase 2 implements the native
-Rust foundation and is undergoing its checks and review. Product clients follow
-in the remaining phases. No SDK release is available yet.
+Current state: Phases 1 and 2 passed Claude Code review at 9/10. Phase 3 adds native
+typed models, validation, scanning, and representative OAuth and streaming clients;
+it is undergoing verification and review. The remaining product clients follow
+in their owning phases. No SDK release is available yet.
 
 The [foundation interface](docs/FOUNDATION.md) describes explicit authentication,
 transport injection, cancellation, resource limits, and safe error handling.
 See [development](docs/DEVELOPMENT.md) for native checks and CI coverage.
+The [model contracts](docs/MODELS.md), [validator](docs/VALIDATION.md), and
+[streaming interface](docs/STREAMING.md) describe the native data boundaries.
 
 ## Development contracts
 

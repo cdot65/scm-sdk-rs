@@ -1,0 +1,30 @@
+//! Native model contracts and their reachable dependencies; client availability is recorded separately.
+pub use super::generated::{
+    AgentEntry, AgentEntryBuilder, AgentMeta, AgentMetaBuilder, AgentReport, AgentReportBuilder,
+    AiProfile, AiProfileBuilder, AsyncScanObject, AsyncScanObjectBuilder, AsyncScanResponse,
+    AsyncScanResponseBuilder, CgReport, CgReportBuilder, CmdEntry, CmdEntryBuilder,
+    CmdInjectReport, ContentError, ContentErrorBuilder, ContentErrorType, ContentErrorTypeType,
+    DSDetailResult, DSDetailResultBuilder, DSDetailResultDlpSnippets,
+    DSDetailResultDlpSnippetsBuilder, DSDetailResultDlpSnippetsMeta,
+    DSDetailResultDlpSnippetsMetaBuilder, DSDetailResultPiReport, DSDetailResultPiReportBuilder,
+    DSResultMetadata, DSResultMetadataBuilder, DbsEntry, DbsEntryBuilder, DbsReport,
+    DetectionServiceName, DetectionServiceNameType, DetectionServiceResult,
+    DetectionServiceResultBuilder, DlpPatternDetection, DlpPatternDetectionBuilder, DlpReport,
+    DlpReportBuilder, IODetected, IODetectedBuilder, MalwareReport, MalwareReportBuilder,
+    MaskedData, MaskedDataBuilder, McEntry, McEntryBuilder, McReport, McReportBuilder, Metadata,
+    MetadataBuilder, Offset, PatternDetection, PatternDetectionBuilder, PromptDetected,
+    PromptDetectedBuilder, PromptDetectionDetails, PromptDetectionDetailsBuilder,
+    PromptDetectionDetailsToxicContentDetails, PromptDetectionDetailsToxicContentDetailsBuilder,
+    ResponseDetected, ResponseDetectedBuilder, ResponseDetectionDetails,
+    ResponseDetectionDetailsBuilder, ResponseDetectionDetailsToxicContentDetails,
+    ResponseDetectionDetailsToxicContentDetailsBuilder, ScanIdResult, ScanIdResultBuilder,
+    ScanRequest, ScanRequestBuilder, ScanRequestContentsInner, ScanRequestContentsInnerBuilder,
+    ScanResponse, ScanResponseBuilder, ScanSummary, ScanSummaryBuilder, TcReport, TcReportBuilder,
+    TgReport, TgReportBuilder, ThreatScanReport, ThreatScanReportBuilder, ToolDetected,
+    ToolDetectedBuilder, ToolDetectionDetails, ToolDetectionDetailsBuilder, ToolDetectionEntry,
+    ToolDetectionEntryBuilder, ToolDetectionFlags, ToolDetectionFlagsBuilder, ToolEvent,
+    ToolEventBuilder, ToolEventMetadata, ToolEventMetadataBuilder, TopicGuardrailDetails,
+    TopicGuardrailDetailsBuilder, UrlfEntry, UrlfEntryBuilder,
+};
+pub use super::support::*;
+pub use crate::data::{FiniteNumber, JsonObject, JsonValue, Nullable, Optional, Patch};

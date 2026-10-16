@@ -16,7 +16,9 @@ import time
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-FEATURES = {"default": [], "minimal": ["--no-default-features"], "all": ["--all-features"]}
+FEATURES = {"default": [], "minimal": ["--no-default-features"], "all": ["--all-features"],
+            "json-unification": ["--no-default-features", "--features", "serde_json/arbitrary_precision"],
+            **{name: ["--no-default-features", "--features", name] for name in ("scan", "management", "gateway", "models")}}
 
 
 def rust_fingerprint():

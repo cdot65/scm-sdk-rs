@@ -13,6 +13,7 @@ pub enum ErrorKind {
     Validation,
     Destination,
     Authentication,
+    Io,
     Transport,
     Http,
     Decode,

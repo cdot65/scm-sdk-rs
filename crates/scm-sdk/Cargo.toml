@@ -13,8 +13,12 @@ keywords = ["prisma-airs", "strata", "palo-alto", "security", "sdk"]
 categories = ["api-bindings", "asynchronous"]
 
 [features]
-default = ["reqwest-transport"]
+default = ["reqwest-transport", "scan"]
 reqwest-transport = ["dep:reqwest"]
+models = []
+scan = ["models"]
+management = ["models"]
+gateway = ["models"]
 
 [dependencies]
 base64 = "0.22.1"
@@ -24,12 +28,15 @@ hmac = "0.12.1"
 http = "1.4"
 httpdate = "1.0.3"
 mime = "0.3.17"
+regex = "1.13.1"
+ryu-js = "1.0.3"
 reqwest = { version = "0.13.5", optional = true, default-features = false, features = ["rustls", "http2", "stream", "gzip", "system-proxy"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 sha2 = "0.10.9"
-tokio = { version = "1.50", features = ["sync", "time", "macros", "rt"] }
+tokio = { version = "1.50", features = ["sync", "time", "macros", "rt", "fs", "io-util"] }
 tokio-util = { version = "0.7.20", features = ["rt"] }
+time = { version = "0.3.55", features = ["parsing", "formatting"] }
 url = "2.5.8"
 zeroize = "1.8.2"
 

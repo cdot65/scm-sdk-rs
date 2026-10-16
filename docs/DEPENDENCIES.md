@@ -13,17 +13,20 @@ This foundation snapshot describes the resolved `Cargo.lock` and `cargo metadata
 | `http` | 1.5.0 | 1.57.0 | MIT OR Apache-2.0 |
 | `httpdate` | 1.0.3 | 1.56 | MIT OR Apache-2.0 |
 | `mime` | 0.3.17 | Unspecified | MIT OR Apache-2.0 |
+| `regex` | 1.13.1 | 1.65 | MIT OR Apache-2.0 |
+| `ryu-js` | 1.0.3 | 1.71 | Apache-2.0 OR BSL-1.0 |
 | `reqwest` | 0.13.5, optional | 1.85.0 | MIT OR Apache-2.0 |
 | `serde` | 1.0.229 | 1.56 | MIT OR Apache-2.0 |
 | `serde_json` | 1.0.154 | 1.71 | MIT OR Apache-2.0 |
 | `sha2` | 0.10.9 | Unspecified | MIT OR Apache-2.0 |
 | `tokio` | 1.53.3 | 1.71 | MIT |
 | `tokio-util` | 0.7.20 | 1.85 | MIT |
+| `time` | 0.3.55 | 1.88 | MIT OR Apache-2.0 |
 | `url` | 2.5.8 | 1.63 | MIT OR Apache-2.0 |
 | `zeroize` | 1.9.1 | 1.85 | Apache-2.0 OR MIT |
 | `flate2`, test dependency | 1.1.10 | 1.67.0 | MIT OR Apache-2.0 |
 
-The metadata also contains transitive `base64` 0.23.1; it does not replace the SDK's direct 0.22.1 dependency. `tracing` remains an HTTP-stack transitive dependency; SDK instrumentation and a direct tracing feature will arrive with their implementation. The foundation's only implemented optional feature is `reqwest-transport`. Product and realtime feature declarations are added in their owning phases.
+The metadata also contains transitive `base64` 0.23.1; it does not replace the SDK's direct 0.22.1 dependency. `tracing` remains an HTTP-stack transitive dependency; SDK instrumentation arrives with its implementation. Native `models`, `scan`, `management`, and `gateway` features now gate contracts/client behavior; `reqwest-transport` remains the optional network adapter. The validator's regex, exact JavaScript floating-number formatting, and calendar parsing use the added dependencies above.
 
 The highest declared Rust minimum in the current resolved graph is 1.88, from ICU 2.3 components used by URL/IDNA. This supports choosing workspace MSRV 1.88; successful checks on Rust 1.88.0 provide the executable proof. Declared minimum versions alone do not prove source compatibility.
 
@@ -36,6 +39,25 @@ AWS-LC contains native C/assembly and FFI. The pinned non-FIPS version builds wi
 Project-owned Rust forbids unsafe code. That guarantee does not extend to third-party dependencies or AWS-LC's FFI. A native Rust crate removes the Node runtime requirement while retaining the chosen native cryptography dependency. The current configuration does not claim FIPS validation. AWS-LC licensing is recorded as `ISC AND (Apache-2.0 OR ISC)` for `aws-lc-rs`, with additional Apache-2.0, MIT, BSD-3-Clause, ISC, and MIT-0 expressions in `aws-lc-sys`'s bundled sources.
 
 The HTTP stack also resolves `hyper` 1.12.0 and `hyper-util` 0.1.21. Gzip uses the Rust compression backend in `flate2` 1.1.10 (`miniz_oxide`, `rust_backend`, runtime detection); the presence of other optional compression packages in metadata does not mean every backend is selected. macOS system proxy support resolves `system-configuration` 0.7.0 and its `system-configuration-sys` 0.6.0 FFI to platform frameworks. Certificate roots and proxy behavior require native platform qualification as well as local fixture tests.
+
+### Root stores and certificate verification
+
+The active musl-host graph selects `rustls-platform-verifier` 0.7.1 and
+`rustls-native-certs` 0.8.5 through reqwest. Linux loads system roots and verifies
+with webpki; Windows uses its certificate API, and Apple platforms use Security.framework.
+Those platform paths include native interfaces outside project-owned safe Rust.
+Linux containers therefore need a usable CA bundle; platform trust changes and
+custom-root behavior require target execution. This follows the
+[verifier's platform table](https://github.com/rustls/rustls-platform-verifier#readme),
+checked against the pinned crate source on 2026-10-16. Linux root loading does not
+provide the OS revocation behavior available on Windows and Apple platforms.
+
+`ring` appears in the lockfile as an alternative cryptographic dependency, but
+`cargo +1.99.0 tree -p scm-sdk -i ring --target x86_64-unknown-linux-musl -e normal,build`
+selects no active package. AWS-LC is the selected host provider. Lockfile presence,
+all-platform metadata, and active features are distinct evidence; downstream
+feature unification can select additional providers. Reqwest exposes no SDK
+verification bypass, and added PEM roots retain hostname/certificate verification.
 
 ## Source and distribution boundaries
 

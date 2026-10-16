@@ -122,6 +122,347 @@ fn fast_limits() -> Limits {
         ..Limits::default()
     }
 }
+
+#[tokio::test]
+async fn structured_identifiers_encode_once_and_reject_recursive_traversal() {
+    let transport = Scripted::new(vec![ok()]);
+    client(transport.clone())
+        .send_bytes(
+            RawRequest::read("models")
+                .segment("provider/model 1%")
+                .unwrap(),
+            None,
+        )
+        .await
+        .unwrap();
+    assert_eq!(
+        transport.requests.lock().unwrap()[0].url().path(),
+        "/private-base/models/provider%2Fmodel%201%25"
+    );
+    for value in [
+        ".",
+        "..",
+        "../secret",
+        "a/../b",
+        "..%2fsecret",
+        "%252e%252e%252fsecret",
+        "%00",
+        "a\\b",
+    ] {
+        assert_eq!(
+            RawRequest::read("models")
+                .segment(value)
+                .unwrap_err()
+                .kind(),
+            ErrorKind::Validation
+        );
+    }
+}
+
+#[tokio::test]
+async fn assembled_query_and_authenticated_headers_obey_total_bounds() {
+    for query in [
+        vec![("x".into(), "é".repeat(4000))],
+        vec![("x".into(), "v".into()); 257],
+    ] {
+        let transport = Scripted::new(vec![]);
+        let provider = CountingToken::new();
+        let c = Client::builder(endpoint())
+            .transport(transport.clone())
+            .authentication(Authentication::oauth(provider.clone(), true))
+            .build()
+            .unwrap();
+        assert_eq!(
+            c.send_bytes(read().query(query), None)
+                .await
+                .unwrap_err()
+                .kind(),
+            ErrorKind::Limit
+        );
+        assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+        assert_eq!(transport.count(), 0);
+    }
+    for large_value in [false, true] {
+        let transport = Scripted::new(vec![]);
+        let key = if large_value {
+            "k".repeat(16 * 1024)
+        } else {
+            "key".to_owned()
+        };
+        let c = Client::builder(endpoint())
+            .transport(transport.clone())
+            .authentication(Authentication::runtime_key(Secret::new(key).unwrap()).unwrap())
+            .build()
+            .unwrap();
+        let mut request = read();
+        if !large_value {
+            for i in 0..128 {
+                request = request.header(&format!("x-{i}"), "v").unwrap();
+            }
+        }
+        let error = c.send_bytes(request, None).await.unwrap_err();
+        assert_eq!(
+            (error.kind(), error.remote_outcome()),
+            (ErrorKind::Limit, RemoteOutcome::NotSent)
+        );
+        assert_eq!(transport.count(), 0);
+    }
+}
+
+#[tokio::test]
+async fn forbidden_token_refresh_respects_opa_denial_and_replay_safety() {
+    for (code, opa, replay) in [
+        (403, None, true),
+        (403, Some("true"), true),
+        (403, Some("false"), false),
+        (401, Some("false"), true),
+    ] {
+        let mut headers = HeaderMap::new();
+        if let Some(value) = opa {
+            headers.insert("x-opa-decision", HeaderValue::from_static(value));
+        }
+        let mut replies = vec![Reply::Http(
+            StatusCode::from_u16(code).unwrap(),
+            headers,
+            Bytes::new(),
+        )];
+        if replay {
+            replies.push(ok());
+        }
+        let transport = Scripted::new(replies);
+        let provider = RotatingToken::new();
+        let c = Client::builder(endpoint())
+            .transport(transport.clone())
+            .authentication(Authentication::oauth(provider.clone(), true))
+            .build()
+            .unwrap();
+        assert_eq!(c.send_bytes(read(), None).await.is_ok(), replay);
+        assert_eq!(transport.count(), if replay { 2 } else { 1 });
+        assert_eq!(
+            provider.invalidations.lock().unwrap().len(),
+            usize::from(replay)
+        );
+    }
+    let transport = Scripted::new(vec![status(403)]);
+    let provider = RotatingToken::new();
+    let c = Client::builder(endpoint())
+        .transport(transport.clone())
+        .authentication(Authentication::oauth(provider.clone(), true))
+        .build()
+        .unwrap();
+    assert!(
+        c.send_bytes(RawRequest::new(Method::POST, "write"), None)
+            .await
+            .is_err()
+    );
+    assert_eq!(transport.count(), 1);
+    assert_eq!(*provider.invalidations.lock().unwrap(), vec![1]);
+}
+
+#[tokio::test(start_paused = true)]
+async fn per_call_retry_override_keeps_mutations_single_attempt() {
+    let transport = Scripted::new(vec![status(503)]);
+    let options = RequestOptions::with_timeout(Duration::from_secs(5))
+        .unwrap()
+        .with_retries(0)
+        .unwrap();
+    assert!(
+        client(transport.clone())
+            .send_bytes(read(), Some(&options))
+            .await
+            .is_err()
+    );
+    assert_eq!(transport.count(), 1);
+    let transport = Scripted::new(vec![status(503), ok()]);
+    let c = Client::builder(endpoint())
+        .transport(transport.clone())
+        .limits(Limits {
+            max_retries: 0,
+            ..fast_limits()
+        })
+        .build()
+        .unwrap();
+    let options = RequestOptions::with_timeout(Duration::from_secs(5))
+        .unwrap()
+        .with_retries(1)
+        .unwrap();
+    assert!(c.send_bytes(read(), Some(&options)).await.is_ok());
+    assert_eq!(transport.count(), 2);
+    let transport = Scripted::new(vec![status(503)]);
+    let options = RequestOptions::with_timeout(Duration::from_secs(5))
+        .unwrap()
+        .with_retries(5)
+        .unwrap();
+    assert!(
+        client(transport.clone())
+            .send_bytes(RawRequest::new(Method::POST, "write"), Some(&options))
+            .await
+            .is_err()
+    );
+    assert_eq!(transport.count(), 1);
+    assert!(
+        RequestOptions::with_timeout(Duration::from_secs(5))
+            .unwrap()
+            .with_retries(6)
+            .is_err()
+    );
+}
+
+#[tokio::test(start_paused = true)]
+async fn streaming_permit_is_owned_until_close_or_drop() {
+    let transport = Scripted::new(vec![ok(), ok()]);
+    let provider = CountingToken::new();
+    let c = Client::builder(endpoint())
+        .transport(transport.clone())
+        .authentication(Authentication::oauth(provider.clone(), true))
+        .limits(Limits {
+            max_concurrency: 1,
+            ..fast_limits()
+        })
+        .build()
+        .unwrap();
+    let mut stream = c.send_stream(read(), None).await.unwrap();
+    let options = RequestOptions::with_timeout(Duration::from_millis(10)).unwrap();
+    let error = c.send_bytes(read(), Some(&options)).await.unwrap_err();
+    assert_eq!(
+        (error.kind(), error.remote_outcome()),
+        (ErrorKind::Deadline, RemoteOutcome::NotSent)
+    );
+    assert_eq!(provider.calls.load(Ordering::SeqCst), 1);
+    assert_eq!(transport.count(), 1);
+    stream.close();
+    assert!(stream.next().await.unwrap().is_none());
+    assert!(c.send_bytes(read(), None).await.is_ok());
+}
+
+#[tokio::test(start_paused = true)]
+async fn streaming_idle_deadline_drops_body_and_releases_capacity() {
+    let started = Arc::new(Notify::new());
+    let dropped = Arc::new(AtomicUsize::new(0));
+    let transport = Scripted::new(vec![
+        Reply::PendingBody {
+            started,
+            dropped: dropped.clone(),
+        },
+        ok(),
+    ]);
+    let c = Client::builder(endpoint())
+        .transport(transport)
+        .limits(Limits {
+            max_concurrency: 1,
+            stream_idle_timeout: Duration::from_secs(2),
+            ..fast_limits()
+        })
+        .build()
+        .unwrap();
+    let mut stream = c.send_stream(read(), None).await.unwrap();
+    let start = tokio::time::Instant::now();
+    let error = stream.next().await.unwrap_err();
+    assert_eq!(
+        (error.kind(), error.remote_outcome()),
+        (ErrorKind::Deadline, RemoteOutcome::Unknown)
+    );
+    assert_eq!(tokio::time::Instant::now() - start, Duration::from_secs(2));
+    assert_eq!(dropped.load(Ordering::SeqCst), 1);
+    assert!(stream.next().await.unwrap().is_none());
+    assert!(c.send_bytes(read(), None).await.is_ok());
+}
+
+#[tokio::test(start_paused = true)]
+async fn stream_caller_and_session_deadlines_include_inter_read_time() {
+    for explicit in [false, true] {
+        let transport = Scripted::new(vec![ok()]);
+        let c = Client::builder(endpoint())
+            .transport(transport)
+            .limits(Limits {
+                stream_session_timeout: (!explicit).then_some(Duration::from_secs(1)),
+                ..fast_limits()
+            })
+            .build()
+            .unwrap();
+        let options = RequestOptions::with_timeout(Duration::from_secs(1)).unwrap();
+        let mut stream = c
+            .send_stream(read(), explicit.then_some(&options))
+            .await
+            .unwrap();
+        tokio::time::advance(Duration::from_secs(2)).await;
+        assert_eq!(stream.next().await.unwrap_err().kind(), ErrorKind::Deadline);
+    }
+}
+
+#[tokio::test]
+async fn stream_cancellation_and_drop_release_body_and_permit() {
+    for which in [0, 1, 2] {
+        let dropped = Arc::new(AtomicUsize::new(0));
+        let transport = Scripted::new(vec![Reply::PendingBody {
+            started: Arc::new(Notify::new()),
+            dropped: dropped.clone(),
+        }]);
+        let c = client(transport);
+        let options = RequestOptions::with_timeout(Duration::from_secs(5)).unwrap();
+        let mut stream = c.send_stream(read(), Some(&options)).await.unwrap();
+        if which == 0 {
+            options.cancel();
+        } else if which == 1 {
+            c.session().cancel();
+        }
+        if which < 2 {
+            assert_eq!(
+                stream.next().await.unwrap_err().kind(),
+                ErrorKind::Cancelled
+            );
+        }
+        drop(stream);
+        assert_eq!(dropped.load(Ordering::SeqCst), 1);
+    }
+}
+
+#[tokio::test]
+async fn stream_total_bytes_and_formatting_are_bounded() {
+    let transport = Scripted::new(vec![Reply::Http(
+        StatusCode::OK,
+        HeaderMap::new(),
+        Bytes::from_static(b"secret-response-payload"),
+    )]);
+    let c = Client::builder(endpoint())
+        .transport(transport)
+        .limits(Limits {
+            max_response_bytes: 4,
+            ..fast_limits()
+        })
+        .build()
+        .unwrap();
+    let mut stream = c.send_stream(read(), None).await.unwrap();
+    assert!(!format!("{stream:?}").contains("secret-response"));
+    assert_eq!(stream.next().await.unwrap_err().kind(), ErrorKind::Limit);
+    assert!(stream.next().await.unwrap().is_none());
+}
+
+#[tokio::test]
+async fn stream_handshake_never_replays_including_authentication_refresh() {
+    for code in [401, 403, 503] {
+        let transport = Scripted::new(vec![status(code)]);
+        let provider = RotatingToken::new();
+        let c = Client::builder(endpoint())
+            .transport(transport.clone())
+            .authentication(Authentication::oauth(provider.clone(), true))
+            .limits(Limits {
+                max_retries: 5,
+                ..fast_limits()
+            })
+            .build()
+            .unwrap();
+        assert_eq!(
+            c.send_stream(read(), None).await.unwrap_err().status(),
+            Some(code)
+        );
+        assert_eq!(transport.count(), 1);
+        assert_eq!(
+            provider.invalidations.lock().unwrap().len(),
+            usize::from(code != 503)
+        );
+    }
+}
 fn read() -> RawRequest {
     RawRequest::new(Method::GET, "resource").safe_read()
 }
@@ -641,6 +982,8 @@ fn framing_credentials_and_header_injection_are_rejected() {
         "x-portkey-api-key",
         "x-tsg-id",
         "content-type",
+        "service-name",
+        "User-Agent",
     ] {
         let error = RawRequest::new(Method::GET, "resource")
             .header(header, "synthetic-secret")
@@ -1497,4 +1840,46 @@ mod default_adapter {
     fn default_adapter_constructs_without_a_tokio_runtime() {
         assert!(Client::builder(endpoint()).build().is_ok());
     }
+}
+
+#[test]
+fn json_serialization_bounds_depth_before_validation() {
+    let mut value = serde_json::json!({"secret":"fixture-secret"});
+    for _ in 0..140 {
+        value = serde_json::Value::Array(vec![value]);
+    }
+    let error = serialize_bounded(&value, 1024 * 1024).unwrap_err();
+    assert_eq!(error.kind(), ErrorKind::Limit);
+    assert!(!format!("{error:?}").contains("fixture-secret"));
+    let bytes =
+        serialize_bounded(&serde_json::json!({"a":[1,"snowman ☃"],"b":true}), 1024).unwrap();
+    assert_eq!(
+        serde_json::from_slice::<serde_json::Value>(&bytes).unwrap(),
+        serde_json::json!({"a":[1,"snowman ☃"],"b":true})
+    );
+}
+
+#[test]
+fn client_validation_limits_are_explicit_and_validated() {
+    let transport = Scripted::new(vec![]);
+    let invalid = crate::validation::ValidationLimits {
+        max_nodes: 0,
+        ..Default::default()
+    };
+    let result = Client::builder(Endpoint::parse("https://example.invalid").unwrap())
+        .transport(transport.clone())
+        .validation_limits(invalid)
+        .build();
+    assert_eq!(result.unwrap_err().kind(), ErrorKind::Configuration);
+    assert_eq!(transport.count(), 0);
+    let custom = crate::validation::ValidationLimits {
+        max_nodes: 200_000,
+        ..Default::default()
+    };
+    let client = Client::builder(Endpoint::parse("https://example.invalid").unwrap())
+        .transport(transport)
+        .validation_limits(custom)
+        .build()
+        .unwrap();
+    assert_eq!(client.validation_limits().unwrap().max_nodes, 200_000);
 }
