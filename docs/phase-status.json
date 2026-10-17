@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 8,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -472,9 +472,10 @@
     {
       "id": 8,
       "name": "Qualification and delivery",
-      "status": "in_progress",
+      "status": "complete",
       "reviews": [
-        "docs/reviews/phase-08-attempt-02.json"
+        "docs/reviews/phase-08-attempt-02.json",
+        "docs/reviews/phase-08-attempt-04.json"
       ],
       "qualification_candidates": [
         {
@@ -543,17 +544,39 @@
       ],
       "live_acceptance": "recorded_per_method_with_explicit_service_prerequisites",
       "delivery": {
-        "status": "reviewed_current_source_clean_commit_proof_and_push_pending",
+        "status": "reviewed_source_pushed_and_clean_artifacts_verified",
         "registry_publication": "not_requested_not_performed",
         "remote_ci": "configured_unexecuted",
         "remote_ci_detail": "Original run reported missing-rustup setup failure. Corrected workflow has no retained result; API reads return 403 and its web page requires sign-in.",
-        "source_commit": null,
-        "source_pushed": false,
+        "source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
+        "source_pushed": true,
         "source_sha256": "3d2c6cafb703d596f75942d66ea4ee1e35e8b2e75ca3b32734300c82661df1c4",
         "remote": "ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git",
         "clean_release_archive": {
-          "status": "pending_for_corrected_reviewed_source",
-          "proofs": []
+          "status": "passed_for_current_reviewed_source",
+          "release_source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
+          "proofs": [
+            {
+              "toolchain": "1.89.0",
+              "hostTarget": "x86_64-unknown-linux-musl",
+              "report": "docs/checks/release-package-1.89.0.json",
+              "archiveSha256": "0559a8fe526627a71dfe5fbdb04a13818c4571f7a445a718607bd0f327ea2d14",
+              "archiveBytes": 825335,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-0559a8fe526627a7.crate",
+              "releaseCommit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
+              "effectiveDirty": false
+            },
+            {
+              "toolchain": "1.99.0",
+              "hostTarget": "x86_64-unknown-linux-musl",
+              "report": "docs/checks/release-package-1.99.0.json",
+              "archiveSha256": "b0af844a6336f638f8d41654910a5ba4e6482f036a45b8dbb435949f5096e453",
+              "archiveBytes": 825339,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-b0af844a6336f638.crate",
+              "releaseCommit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
+              "effectiveDirty": false
+            }
+          ]
         },
         "historical_delivery": "historical_deliveries[0]",
         "completion_steps": [
@@ -561,19 +584,27 @@
           "Commit accepted source and evidence without changing its source fingerprint.",
           "Run --require-clean archives on 1.89.0 and 1.99.0 with distinct ignored outputs; retain both only after both pass.",
           "Push ordinary reviewed source and evidence commits; retain exact source commit and archive digests."
+        ],
+        "verified_at": "2026-10-17T04:27:34.763543+00:00",
+        "evidence_records": [
+          "docs/checks/release-package-1.89.0.json",
+          "docs/checks/release-package-1.99.0.json",
+          "docs/reviews/phase-08-attempt-04.json",
+          "docs/checks/phase-08-private-material.json"
         ]
       },
       "milestones": {
         "implemented_scope": {
-          "status": "accepted_by_current_review_delivery_pending",
+          "status": "accepted_by_review",
           "evidence": [
+            "docs/reviews/phase-08-attempt-04.json",
             ".forgejo/workflows/ci.yml",
             ".python-version",
-            "docs/CI.md",
-            "docs/DEVELOPMENT.md",
-            "tools/test_ci.py",
+            ".gitattributes",
             "scripts/bootstrap-python.sh",
-            ".gitattributes"
+            "tools/test_ci.py",
+            "docs/CI.md",
+            "docs/DEVELOPMENT.md"
           ]
         },
         "independent_verification": {
@@ -584,7 +615,7 @@
           "source_sha256": "3d2c6cafb703d596f75942d66ea4ee1e35e8b2e75ca3b32734300c82661df1c4"
         },
         "claude_review": {
-          "status": "accepted_current_source_delivery_pending",
+          "status": "accepted",
           "score": 9,
           "evidence": [
             "docs/reviews/phase-08-attempt-04.json"
@@ -644,7 +675,7 @@
             {
               "id": "final-bookkeeping-credential-scan",
               "severity": "low",
-              "status": "historical_scan_complete_current_delivery_scan_pending",
+              "status": "completed_after_current_review_release_proofs_and_phase_records",
               "scope": "Original final scan remains historical. Refresh the selected-value scan after the current accepted review and both new clean-archive proof records before final delivery.",
               "evidence": [
                 "docs/checks/phase-08-private-material.json"
@@ -665,13 +696,13 @@
             {
               "id": "clean-commit-proof-and-push",
               "severity": "low",
-              "status": "historical_completion_superseded_current_source_obligation_reopened",
-              "scope": "Historical original source proof remains valid only for f4178928; current CI correction requires its own accepted commit, both clean archive checks and ordinary push before final completion.",
+              "status": "completed_for_reviewed_ci_correction",
+              "scope": "Accepted CI correction committed and pushed; both clean native archives passed for the exact new source commit. Original f4178928 proofs remain historical.",
               "evidence": [
-                "docs/checks/release-source-f4178928/release-package-1.89.0.json",
-                "docs/checks/release-source-f4178928/release-package-1.99.0.json"
+                "docs/checks/release-package-1.89.0.json",
+                "docs/checks/release-package-1.99.0.json"
               ],
-              "source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7"
+              "source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8"
             },
             {
               "id": "dependency-runner-layout",
@@ -745,16 +776,21 @@
             {
               "id": "current-delivery-proof-and-remote-ci",
               "severity": "low",
-              "status": "clean_proof_and_push_in_progress_remote_ci_unverified",
+              "status": "source_delivery_and_clean_proofs_complete_remote_ci_unverified",
               "path": "docs/checks/phase-08-ci-bootstrap.json",
               "scope": "The corrected workflow still has no execution receipt. The local exercises install rustup directly and run the pinned uv action and bootstrap script outside any runner, and PATH-file application is simulated (docs/checks/phase-08-ci-python-bootstrap.json:80-84, docs/checks/phase-08-ci-uv-action.json:17-20), so the fix's effectiveness on a real runner \u2014 the action's $GITHUB_PATH export, `--offline` cargo cache coverage for the separate contracts/native-probes lockfile, and the 180-minute cold-cache budget for the 77-command gate \u2014 remains unverified. Likewise the reviewed source is uncommitted, origin/main is still 4f65dc48, and the only --require-clean archive proofs bind releaseCommit f4178928. All of this is labeled honestly (docs/phase-status.json:546-564, docs/CI.md:101-119, docs/RELEASE.md:74-75) and the push/proof step must by construction follow this review, so it is an outstanding delivery obligation rather than a misstatement.",
-              "required_followup": "Keep remote_ci at \"configured_unexecuted\" until a Forgejo run log for the corrected workflow (at minimum contracts-and-package and one rust matrix job) is retained. Before marking phase 8 complete, commit the reviewed source, run both --require-clean archive checks on 1.89.0 and 1.99.0 with distinct ignored outputs, push the ordinary commits, and record the exact commit plus both archive digests and a refreshed private-material scan."
+              "required_followup": "Keep remote_ci at \"configured_unexecuted\" until a Forgejo run log for the corrected workflow (at minimum contracts-and-package and one rust matrix job) is retained. Before marking phase 8 complete, commit the reviewed source, run both --require-clean archive checks on 1.89.0 and 1.99.0 with distinct ignored outputs, push the ordinary commits, and record the exact commit plus both archive digests and a refreshed private-material scan.",
+              "current_source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
+              "current_proof_evidence": [
+                "docs/checks/release-package-1.89.0.json",
+                "docs/checks/release-package-1.99.0.json"
+              ]
             }
           ]
         }
       ],
-      "accepted_source_sha256": null,
-      "accepted_score": null,
+      "accepted_source_sha256": "3d2c6cafb703d596f75942d66ea4ee1e35e8b2e75ca3b32734300c82661df1c4",
+      "accepted_score": 9,
       "post_delivery_corrections": [
         {
           "reported_at": "2026-10-17T01:43:08.808283+00:00",
@@ -763,7 +799,7 @@
           "previous_source_commit": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
           "previous_review": "docs/reviews/phase-08-attempt-02.json",
           "preserved_checks": "docs/checks/phase-08-accepted-attempt-02/manifest.json",
-          "status": "review_accepted_clean_commit_archive_proofs_and_push_pending",
+          "status": "complete_reviewed_source_pushed_clean_archives_and_final_scan_verified",
           "checks": [
             "tools/test_ci.py: 9 passing guards including action/documentation consistency and portable bootstrap bounds",
             "original missing-rustup command reproduced exit 127; isolated Rust bootstrap installed both compiler pins",
@@ -841,7 +877,13 @@
           "gatePython": "Actually bootstrapped portable CPython 3.14.7 (Linux x86_64 musl).",
           "review": "docs/reviews/phase-08-attempt-04.json",
           "review_score": 9,
-          "uv_integrity_scope": "Local official uv 0.13.1 archive and installed binary were hash-verified. The configured v6.6.0 setup action has no known checksum for this uv version and CI does not pass its checksum input; CI acquisition still trusts the upstream release. This actual review medium finding is a recorded nonblocking hardening followup, not a claim of CI digest enforcement."
+          "uv_integrity_scope": "Local official uv 0.13.1 archive and installed binary were hash-verified. The configured v6.6.0 setup action has no known checksum for this uv version and CI does not pass its checksum input; CI acquisition still trusts the upstream release. This actual review medium finding is a recorded nonblocking hardening followup, not a claim of CI digest enforcement.",
+          "source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
+          "source_pushed": true,
+          "clean_archive_proofs": [
+            "docs/checks/release-package-1.89.0.json",
+            "docs/checks/release-package-1.99.0.json"
+          ]
         }
       ],
       "historical_deliveries": [
