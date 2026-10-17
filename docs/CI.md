@@ -108,10 +108,25 @@ provenance, audits the complete Cargo lock with warnings denied, and checks
 all-feature license/source/ban policy. Public registry, source, npm, and advisory
 downloads are allowed; these checks need no service credentials.
 
-The qualification job installs standard libraries and fetches locked inputs for
-Linux GNU x86_64/ARM64, Apple Silicon, and Windows MSVC x86_64. The cross checks
+The qualification job installs standard libraries for Linux GNU x86_64/ARM64,
+Apple Silicon, and Windows MSVC x86_64. It fetches the complete locked dependency
+graph without a target filter, then resolves all-feature metadata offline before
+starting the full phase gate. The security audit inventories dependencies across
+all targets, including packages that supported native builds do not use. The cross checks
 compile the transport-independent feature set. They do not link or execute target
 binaries or qualify native HTTP/TLS/WebSocket dependencies.
+
+[Run 11](https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/11) passed the repaired
+private receipt check and retained an unchanged source fingerprint, then failed
+the dependency check's offline metadata resolution. Its wrapper discarded the
+detailed Cargo error. An actual fresh-cache reproduction showed that all four
+target-specific fetches succeed while unfiltered offline metadata fails on an
+uncached package; an unfiltered locked fetch repairs that same cache and metadata
+then resolves all 206 packages. This establishes the input-preparation defect;
+the original CI error's exact missing package remains unobserved. The
+[cold-cache receipt](checks/phase-08-cold-cargo-inputs.json) retains the causal
+before/after execution. CI now checks readiness before the long phase gate;
+the audit retains its complete graph, locked inputs and offline resolution.
 
 ## Evidence status
 

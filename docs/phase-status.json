@@ -60,15 +60,17 @@
         },
         {
           "id": "remote-ci-execution",
-          "status": "run10_actual_failure_retained_corrected_source_pending",
+          "status": "run11_source_unchanged_private_fix_confirmed_dependency_preparation_fix_new_run_pending",
           "due_phase": 8,
           "evidence": [
-            "docs/checks/phase-08-ci-run-10/run-status.json",
-            "docs/checks/phase-08-ci-run-10/qualification-capture-receipt.json",
-            "docs/checks/phase-08-ci-run-10/matrix-capture-receipt.json",
+            "docs/checks/phase-08-ci-run-11/qualification-capture-receipt.json",
+            "docs/checks/phase-08-ci-run-11/matrix-capture-receipt.json",
+            "docs/checks/phase-08-cold-cargo-inputs.json",
+            "docs/checks/phase-08-exact-ci-preparation.json",
+            "docs/checks/phase-08-cold-prepared-audit.json",
             "docs/CI.md"
           ],
-          "scope": "Forgejo run10 at6fe1fac reports46successful Rust jobs and one qualification failure. Its exact original parent report is captured with byte hash verification: repository_byte_limit, source drift,57checks. A directly captured1.99default Rust report records6passing commands on x86_64-unknown-linux-gnu. The corrected source still requires a complete new remote run; optional native-host jobs remain unexecuted."
+          "scope": "Run11 at72765d5 passed46Rust jobs and59qualification commands, including the original private receipt check, then failed offline dependency metadata. Its parent and end-source inventory both bind exactly835b739b and the same Cargo lock as the actual cold-cache reproduction. Current68cd8aa9 fixes complete-graph input preparation; full local77 and fresh-cache full dependency audit pass, while actual review08 and another source-bound remote run remain pending."
         },
         {
           "id": "native-platform-qualification",
@@ -481,7 +483,8 @@
         "docs/reviews/phase-08-attempt-04.json",
         "docs/reviews/phase-08-attempt-05.json",
         "docs/reviews/phase-08-attempt-06.json",
-        "docs/reviews/phase-08-attempt-07.json"
+        "docs/reviews/phase-08-attempt-07.json",
+        "docs/reviews/phase-08-attempt-08.json"
       ],
       "qualification_candidates": [
         {
@@ -565,10 +568,10 @@
       ],
       "live_acceptance": "recorded_per_method_with_explicit_service_prerequisites",
       "delivery": {
-        "status": "review07_accepted_current_source_delivery_pending",
+        "status": "run11_build_output_fix_confirmed_offline_dependency_metadata_correction_required",
         "registry_publication": "verified_existing_publication",
         "registry_publication_evidence": "docs/checks/release-registry-0.1.0.json",
-        "remote_ci": "failure_ci_build_output_boundary_diagnosed_new_source_gate_running",
+        "remote_ci": "run11_failure_at_dependency_metadata_after59_successes",
         "previous_remote_ci": {
           "status": "failure",
           "source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
@@ -576,33 +579,35 @@
           "failed_command": "scripts/check-private-material.py --check",
           "cause": "Exact captured exception unavailable; a separately reproduced validator defect is fixed."
         },
-        "source_commit": "6fe1facbc77b5cd1ee24f44c2c8d9b094c9efe6d",
+        "source_commit": "72765d5346afe985d80b87daa1891ea8e6e99302",
         "source_pushed": true,
-        "source_sha256": "3e77197835e1f9b6f56e05b775b8e8403f7449c8fe1cbf31fbe725ff8391543c",
+        "source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
         "remote": "ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git",
         "clean_release_archive": {
           "status": "passed_for_reviewed_development_snapshot_not_registry_republication",
-          "release_source_commit": "6fe1facbc77b5cd1ee24f44c2c8d9b094c9efe6d",
+          "release_source_commit": "72765d5346afe985d80b87daa1891ea8e6e99302",
           "proofs": [
             {
               "toolchain": "1.89.0",
               "hostTarget": "x86_64-unknown-linux-musl",
-              "report": "docs/checks/release-package-1.89.0.json",
-              "archiveSha256": "80c938c9d2eae15372fda457452a3369491aaed0b07ab62c2aae60aa7398a838",
+              "report": "docs/checks/release-source-72765d5/release-package-1.89.0.json",
+              "archiveSha256": "4eead4cc7d1cb79910908ac4826996ec5d7b0bb7843ff9c2c8c43d9e58603bd7",
               "archiveBytes": 825415,
-              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-80c938c9d2eae153.crate",
-              "releaseCommit": "6fe1facbc77b5cd1ee24f44c2c8d9b094c9efe6d",
-              "effectiveDirty": false
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-4eead4cc7d1cb799.crate",
+              "releaseCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+              "effectiveDirty": false,
+              "requireClean": true
             },
             {
               "toolchain": "1.99.0",
               "hostTarget": "x86_64-unknown-linux-musl",
-              "report": "docs/checks/release-package-1.99.0.json",
-              "archiveSha256": "47fd439c735316e897650a171dcd087c802d8f033f37ee3a1d12fc443e3b224d",
-              "archiveBytes": 825420,
-              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-47fd439c735316e8.crate",
-              "releaseCommit": "6fe1facbc77b5cd1ee24f44c2c8d9b094c9efe6d",
-              "effectiveDirty": false
+              "report": "docs/checks/release-source-72765d5/release-package-1.99.0.json",
+              "archiveSha256": "d1649cca6310267a66379a6aabfd33b9bbfcef4e76139503a159426c36e1f805",
+              "archiveBytes": 825421,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-d1649cca6310267a.crate",
+              "releaseCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+              "effectiveDirty": false,
+              "requireClean": true
             }
           ]
         },
@@ -614,17 +619,17 @@
           "local_target_verified": "4f65dc48686a3b701ed0585812fcca46859f7e5a"
         },
         "completion_steps": [
-          "Pass all77 unchanged-source checks and actual Claude review of at least9/10.",
-          "Commit and push reviewed source; qualify both clean compiler archives.",
-          "Retain successful source-bound remote run and per-job statuses.",
-          "Push annotated release tag at exact published source and verify remote peel.",
-          "Refresh private scan and final delivery records; push evidence-only completion."
+          "Pass all 77 checks on unchanged source and obtain an actual Claude review of at least 9/10.",
+          "Commit and push the reviewed source; qualify both clean compiler archives.",
+          "Retain a successful source-bound remote run and all required job statuses.",
+          "Push the annotated release tag at the exact published source and verify its remote peeled commit.",
+          "Refresh private matching and final delivery records; push the evidence-only completion commit."
         ],
-        "remote_ci_evidence": "docs/checks/phase-08-ci-run-10/qualification-capture-receipt.json",
-        "verified_at": "2026-10-17T11:41:06.245009+00:00",
+        "remote_ci_evidence": "docs/checks/phase-08-ci-run-11/qualification-capture-receipt.json",
+        "verified_at": "2026-10-17T12:43:54.094683+00:00",
         "current_source_candidate": {
-          "source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
-          "status": "full77_and_actual_review07_score9_passed",
+          "source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
+          "status": "complete77_and_review08_score9_passed",
           "sdk_runtime_unchanged": true
         }
       },
@@ -643,18 +648,18 @@
           ]
         },
         "independent_verification": {
-          "status": "passed_current_source_review_and_delivery_pending",
+          "status": "passed_current_source_review08_and_delivery_pending",
           "evidence": [
             "docs/checks/phase-08.json"
           ],
-          "source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a"
+          "source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96"
         },
         "claude_review": {
           "status": "accepted_current_source_delivery_pending",
           "score": 9,
-          "source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+          "source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
           "evidence": [
-            "docs/reviews/phase-08-attempt-07.json"
+            "docs/reviews/phase-08-attempt-08.json"
           ]
         }
       },
@@ -665,7 +670,8 @@
         "docs/reviews/phase-08-attempt-04.json",
         "docs/reviews/phase-08-attempt-05.json",
         "docs/reviews/phase-08-attempt-06.json",
-        "docs/reviews/phase-08-attempt-07.json"
+        "docs/reviews/phase-08-attempt-07.json",
+        "docs/reviews/phase-08-attempt-08.json"
       ],
       "review_fixes": [
         {
@@ -1035,8 +1041,12 @@
             {
               "id": "actual-default-cargo-directory",
               "severity": "low",
-              "status": "required_next_remote_execution_receipt",
-              "scope": "Retain actual native-export report selecting the repository target and passing credential-free private receipt in the same CI workspace."
+              "status": "resolved_actual_local_default_and_same_workspace_receipt_passed",
+              "scope": "Actual1.99native Cargo execution with CARGO_TARGET_DIR absent selected the owned root target, then the credential-free private receipt passed in the same workspace with source unchanged. No caller global setting changed.",
+              "evidence": [
+                "docs/checks/phase-08-default-cargo-proof.json",
+                "docs/checks/phase-08-default-cargo-1.99.0.json"
+              ]
             },
             {
               "id": "accepted-review-pointer",
@@ -1048,12 +1058,58 @@
               "id": "bounded-source-inventory-headroom",
               "severity": "low",
               "status": "nonblocking_future_maintenance_current_headroom_recorded",
-              "scope": "Consumed source and full-tree bytes are recorded in source-excluded delivery evidence. Adding consumed-byte fields to the private scan emitter and a reviewed headroom-threshold regression remains future maintenance; no source-level guard is claimed implemented."
+              "scope": "Consumed source and full-tree bytes are recorded in source-excluded delivery evidence. Adding consumed-byte fields to the private scan emitter and a reviewed headroom-threshold regression remains future maintenance; no source-level guard is claimed implemented.",
+              "evidence": [
+                "docs/checks/phase-08-source-inventory-headroom.json"
+              ]
+            }
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-08-attempt-08.json",
+          "score": 9,
+          "status": "accepted_without_blocking_or_high_findings",
+          "items": [
+            {
+              "id": "live-mutation-cause",
+              "severity": "medium",
+              "status": "experimental_unqualified_before_stable_promotion",
+              "scope": "Keep both rejected workflows and every dependent mutation/cleanup path live-unqualified until successful service evidence establishes them."
+            },
+            {
+              "id": "review08-source-delivery",
+              "severity": "medium",
+              "status": "required_delivery_pending",
+              "scope": "Push the reviewed source, qualify both clean compiler archives, retain complete successful remote qualification, and verify the exact published-source tag."
+            },
+            {
+              "id": "dependency-checker-partial-failure-report",
+              "severity": "medium",
+              "status": "nonblocking_future_tooling_maintenance",
+              "scope": "The new early metadata readiness check exposes Cargo stderr before the long gate. The dependency checker itself still needs bounded failed-child diagnostics and partial reports on every early exception; no such implementation is claimed."
+            },
+            {
+              "id": "changelog-platform-precision",
+              "severity": "low",
+              "status": "nonblocking_documentation_followup",
+              "scope": "The platform document and retained reports establish scoped GNU native execution. The older CHANGELOG sentence conservatively groups all other targets as compile-only and needs a future wording correction."
+            },
+            {
+              "id": "no-run-documentation-example-precision",
+              "severity": "low",
+              "status": "scope_recorded_documentation_followup",
+              "scope": "Documentation examples compile as no-run doctests. Actual unit, parser, loopback, and public-consumer execution is separate; executed doctest assertions are not claimed."
+            },
+            {
+              "id": "delivery-ledger-narrative-readability",
+              "severity": "low",
+              "status": "active_record_normalized_history_preserved",
+              "scope": "Current delivery steps and summary use normal numeral spacing; the complete prior ledger is preserved in the review-time snapshot. Historical narratives retain their original wording."
             }
           ]
         }
       ],
-      "accepted_source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+      "accepted_source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
       "accepted_score": 9,
       "post_delivery_corrections": [
         {
@@ -1253,7 +1309,7 @@
           ],
           "diagnosis": "docs/checks/phase-08-ci-run-10/build-output-diagnosis.json",
           "runtimeSourceSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
-          "scope_status": "full77_and_review07_accepted_delivery_pending",
+          "scope_status": "source_fix_confirmed_in_remote_private_check_dependency_delivery_failure_separate",
           "review_context": "Run10 directly reproduces public receipt failure repository_byte_limit. Source inventory contains4GB under contracts/native-probes/target because .gitignore anchors /target/ at repository root, while check-native-exports invokes an independent workspace without selecting an owned build output directory. Local CARGO_TARGET_DIR points outside the repository and masked this. Read-only virtual exclusion of3325 build files restores exactly source3e771978 with108781268source bytes. No CI worktree change, receipt rewrite or cleanup was used to make the old run pass. The next source must pass regressions, the complete77command gate, actual Claude Code review>=9, ordinary source push, both new clean proofs and new remote execution. SDK runtime remains unchanged; live limits remain. Both new regressions failed on preceding source and now all21CI tooling tests pass. Native export/qualification metadata regenerated for the owned checker hash. Run10 finished with46Rust successes and one qualification failure; its original parent report was captured read-only with byte-exact SHA verification, retaining the actual repository_byte_limit error and source drift. No optional native platform job executed.",
           "source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
           "focused_verification": "docs/checks/phase-08-build-output-fix.json",
@@ -1266,7 +1322,60 @@
           "review": "docs/reviews/phase-08-attempt-07.json",
           "review_score": 9,
           "review_gate_passed": true,
-          "review_source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a"
+          "review_source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+          "source_commit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+          "source_pushed": true,
+          "clean_archive_proofs": [
+            "docs/checks/release-source-72765d5/release-package-1.89.0.json",
+            "docs/checks/release-source-72765d5/release-package-1.99.0.json"
+          ],
+          "currentRemoteCi": {
+            "runId": 4844,
+            "runNumber": 11,
+            "status": "failure",
+            "sourceCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+            "rustJobsSuccessful": 46,
+            "originalPrivateReceiptCheckPassed": true,
+            "sourceUnchanged": true,
+            "parentReceipt": "docs/checks/phase-08-ci-run-11/qualification-capture-receipt.json"
+          },
+          "actual_default_cargo_proof": "docs/checks/phase-08-default-cargo-proof.json",
+          "source_inventory_headroom": "docs/checks/phase-08-source-inventory-headroom.json"
+        },
+        {
+          "id": "ci-offline-dependency-inputs-2026-10-17",
+          "status": "in_progress",
+          "scope_status": "complete77_and_review08_accepted_delivery_pending",
+          "precedingSourceCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+          "precedingSourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+          "precedingReview": "docs/reviews/phase-08-attempt-07.json",
+          "precedingReviewScore": 9,
+          "precedingFullGate": "docs/checks/phase-08-accepted-attempt-07/phase-08.json",
+          "failureReceipt": "docs/checks/phase-08-ci-run-11/qualification-capture-receipt.json",
+          "hypotheses": [
+            "Four target-specific fetches leave packages for other targets absent although the all-feature security graph has no target filter.",
+            "Cargo/rustup selection or CARGO_HOME differs between preparation and the metadata invocation.",
+            "Locked source inputs changed or the registry cache is unavailable."
+          ],
+          "review_context": "Run11 at72765d5 records46successful Rust jobs and59successful gate commands, including the original private receipt check. Source remains exactly835b739b, and actual native consumers select the owned root target. The new failure is the60th command: unable to resolve locked all-feature dependency metadata. Its wrapper discarded raw Cargo metadata stderr, so the exact missing CI package or Cargo message is not observed. A fresh Cargo cache reproducer is running before deciding a source correction. SDK runtime remains unchanged; source fix requires fresh complete77checks and actual Claude review>=9 before another ordinary source push and remote run. A fresh empty Cargo cache reproduces all four targeted fetches succeeding then offline all-feature metadata failing on uncached bumpalo3.20.3. The same cache passes metadata with206packages after an unfiltered locked fetch. Source and lock remain unchanged during that reproduction. CI now uses unfiltered fetch and a locked offline all-feature metadata readiness command before its long phase gate. One new workflow regression failed before the fix; all22CI tests pass after. The security audit remains offline and covers the complete graph with unchanged strict source/license/advisory policy. Platform docs now distinguish the actual retained GNU MSRV all-feature execution from other compile-only targets. The exact new workflow preparation run block was extracted and executed from a second empty Cargo cache. It passed, including offline all-feature metadata readiness. The complete actual dependency checker then passed against THAT fresh prepared cache:206resolved packages, unchanged lock, fresh RustSec and enforced license/source/ban policy. This avoids relying only on the developer warm cache.",
+          "source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
+          "runtime_source_sha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+          "independent_evidence": [
+            "docs/checks/phase-08-cold-cargo-inputs.json",
+            "docs/checks/phase-08-dependency-input-fix.json",
+            "docs/checks/phase-08-exact-ci-preparation.json",
+            "docs/checks/phase-08-cold-prepared-audit.json"
+          ],
+          "full_gate_report": "docs/checks/phase-08.json",
+          "full_gate_commands": 77,
+          "full_gate_passed": true,
+          "source_unchanged": true,
+          "gate_duration_seconds": 2531.7,
+          "review": "docs/reviews/phase-08-attempt-08.json",
+          "review_score": 9,
+          "review_gate_passed": true,
+          "review_source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
+          "summary": "Prepare the complete locked dependency graph before offline audits, with an early readiness check. The cold-cache reproduction, exact CI preparation block, full cold-cache dependency audit, 22 CI tests, and all 77 phase checks pass. The SDK runtime and lockfile are unchanged."
         }
       ],
       "historical_deliveries": [
@@ -1429,11 +1538,11 @@
         }
       },
       "current_source_review": {
-        "review": "docs/reviews/phase-08-attempt-07.json",
-        "source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+        "review": "docs/reviews/phase-08-attempt-08.json",
+        "source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
         "score": 9,
         "phase_advanced": false,
-        "acceptance_scope": "Current source review accepted; source delivery, clean proofs, successful fresh remote run, exact published-source tag and final scan remain required."
+        "acceptance_scope": "Current source review accepted. Reviewed source delivery, both clean archive proofs, complete successful remote qualification, the exact published-source tag, and a final private scan remain required."
       }
     }
   ]

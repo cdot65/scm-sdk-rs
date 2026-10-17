@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T11:39:42.126439+00:00",
+  "sourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+  "runtimeSourceSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+  "sourceUnchanged": true,
+  "passed": true,
+  "scope": "Cargo build output boundary and standalone native consumer default placement.",
+  "diagnosedRemoteSourceCommit": "6fe1facbc77b5cd1ee24f44c2c8d9b094c9efe6d",
+  "remoteDiagnosis": "docs/checks/phase-08-ci-run-10/build-output-diagnosis.json",
+  "capturedRemoteFailure": "docs/checks/phase-08-ci-run-10/qualification-capture-receipt.json",
+  "before": {
+    "tests": 2,
+    "exitCode": 1,
+    "failures": 2,
+    "stdoutAndStderr": "test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget (test_ci.CiContractTests.test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget) ... FAIL\ntest_export_checker_owns_default_build_directory_and_preserves_caller_choice (test_ci.CiContractTests.test_export_checker_owns_default_build_directory_and_preserves_caller_choice) ... FAIL\n\n======================================================================\nFAIL: test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget (test_ci.CiContractTests.test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 63, in test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget\n    self.assertEqual(fingerprint(repository), expected)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'dc826fc5ce303b7c25d830750f80aa15937225a01b2db0e4dc3effd4b6b005d7' != '16649537bdcdbfd5741da5547c9cc8e0121b7cd14fc1ef5dbe2edd295738fc8e'\n- dc826fc5ce303b7c25d830750f80aa15937225a01b2db0e4dc3effd4b6b005d7\n+ 16649537bdcdbfd5741da5547c9cc8e0121b7cd14fc1ef5dbe2edd295738fc8e\n\n\n======================================================================\nFAIL: test_export_checker_owns_default_build_directory_and_preserves_caller_choice (test_ci.CiContractTests.test_export_checker_owns_default_build_directory_and_preserves_caller_choice)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 99, in test_export_checker_owns_default_build_directory_and_preserves_caller_choice\n    self.assertEqual(invocation.kwargs[\"env\"].get(\"CARGO_TARGET_DIR\"), expected)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None != '/tmp/tmpczsctss5/repository/target'\n\n----------------------------------------------------------------------\nRan 2 tests in 0.038s\n\nFAILED (failures=2)\n"
+  },
+  "after": {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_ci.py",
+      "-v"
+    ],
+    "tests": 21,
+    "exitCode": 0,
+    "stdoutAndStderr": "test_actions_and_credentials_are_bounded (test_ci.CiContractTests.test_actions_and_credentials_are_bounded) ... ok\ntest_additional_targets_are_manual_and_assert_actual_host (test_ci.CiContractTests.test_additional_targets_are_manual_and_assert_actual_host) ... ok\ntest_ci_documentation_matches_action_pins_and_setup_effects (test_ci.CiContractTests.test_ci_documentation_matches_action_pins_and_setup_effects) ... ok\ntest_compilers_match_supported_msrv_and_current_pin (test_ci.CiContractTests.test_compilers_match_supported_msrv_and_current_pin) ... ok\ntest_every_job_bootstraps_rust_before_running_commands (test_ci.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... ok\ntest_every_job_installs_pinned_node_before_selecting_uv (test_ci.CiContractTests.test_every_job_installs_pinned_node_before_selecting_uv) ... ok\ntest_every_native_feature_has_an_isolated_job (test_ci.CiContractTests.test_every_native_feature_has_an_isolated_job) ... ok\ntest_export_checker_owns_default_build_directory_and_preserves_caller_choice (test_ci.CiContractTests.test_export_checker_owns_default_build_directory_and_preserves_caller_choice) ... ok\ntest_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report (test_ci.CiContractTests.test_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report) ... ok\ntest_live_policy_has_one_unambiguous_filename_and_current_inbound_link (test_ci.CiContractTests.test_live_policy_has_one_unambiguous_filename_and_current_inbound_link) ... ok\ntest_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget (test_ci.CiContractTests.test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget) ... ok\ntest_node_matches_owned_pin_and_phase_gate_verifies_only (test_ci.CiContractTests.test_node_matches_owned_pin_and_phase_gate_verifies_only) ... ok\ntest_phase_timeout_preserves_partial_output_and_a_failing_report (test_ci.CiContractTests.test_phase_timeout_preserves_partial_output_and_a_failing_report) ... ok\ntest_phase_timeout_stops_a_child_in_the_checker_process_group (test_ci.CiContractTests.test_phase_timeout_stops_a_child_in_the_checker_process_group) ... ok\ntest_portable_python_bootstrap_uses_pinned_job_local_tools (test_ci.CiContractTests.test_portable_python_bootstrap_uses_pinned_job_local_tools) ... ok\ntest_python_bootstrap_rejects_unverified_uv_before_executing_it (test_ci.CiContractTests.test_python_bootstrap_rejects_unverified_uv_before_executing_it) ... ok\ntest_python_pin_supports_tomllib_and_filtered_tar_extraction (test_ci.CiContractTests.test_python_pin_supports_tomllib_and_filtered_tar_extraction) ... ok\ntest_uv_checksums_cover_every_configured_host_and_libc (test_ci.CiContractTests.test_uv_checksums_cover_every_configured_host_and_libc) ... ok\ntest_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes (test_ci.CiContractTests.test_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes) ... ok\ntest_uv_selection_creates_distinct_empty_tool_caches (test_ci.CiContractTests.test_uv_selection_creates_distinct_empty_tool_caches) ... ok\ntest_verified_publication_is_consistent_in_current_release_documents (test_ci.CiContractTests.test_verified_publication_is_consistent_in_current_release_documents) ... ok\n\n----------------------------------------------------------------------\nRan 21 tests in 3.880s\n\nOK\n"
+  },
+  "ownedInputSha256": {
+    ".gitignore": "9186349c8b4c18a164202e868afd2476cc4f1a3ef05cc6c0734e44288d3e232a",
+    "scripts/check-native-exports.py": "048ce50b10148822e0c0f98e5af08414a200e530fd468f68a35d18d5f5e06c42",
+    "tools/test_ci.py": "53019f386608022b4afc1a8cb3084afcf0c60f0273318e3bf2d3ea520a5c8448",
+    "docs/CI.md": "4cca81b761288b9cb977c43e8e32276c93e788ee06c281c46b89544a7c42cc64",
+    "docs/DEVELOPMENT.md": "a00e0572dba1f4db277c1d0e6d09f6b5d4b85b199c2f210628431ec342d6a224",
+    "contracts/native-exports.json": "bb8b8ce6fa2976f3895f4770cc311202391a878da79f3ccab784a54624fa166f",
+    "contracts/qualification.json": "f664dee608a5030ccd9ab6edc7615aedfac3a824616b38f82735015ff26b679c"
+  },
+  "limits": [
+    "Focused regressions are not the complete77command phase gate.",
+    "The live CI diagnostic and captured original parent prove run10 failed on repository_byte_limit; run9 original exception remains unobserved.",
+    "Synthetic output regressions prove source/budget exclusion; actual default Cargo execution must additionally pass in new remote CI.",
+    "No SDK runtime code, byte limit, live acceptance or credential scope changed."
+  ]
+}

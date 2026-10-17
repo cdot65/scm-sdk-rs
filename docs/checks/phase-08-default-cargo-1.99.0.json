@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T13:38:12.209872+00:00",
+  "passed": true,
+  "sourceUnchanged": true,
+  "nativeExportsSha256": "bb8b8ce6fa2976f3895f4770cc311202391a878da79f3ccab784a54624fa166f",
+  "frozenCapabilities": 3820,
+  "toolchain": "1.99.0",
+  "rustcVersion": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-musl\nrelease: 1.99.0\nLLVM version: 23.1.1\n",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "execution": "separate_public_consumer_compile_and_execution",
+  "cargoTargetDir": "/home/cdot/development/cdot65/scm-sdk-rs/target",
+  "command": [
+    "/home/cdot/.cargo/bin/cargo",
+    "+1.99.0",
+    "run",
+    "--manifest-path",
+    "contracts/native-probes/Cargo.toml",
+    "--locked",
+    "--offline",
+    "--target",
+    "x86_64-unknown-linux-musl"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s\n     Running `target/x86_64-unknown-linux-musl/debug/scm-sdk-export-probes`\n",
+  "durationSeconds": 3.313,
+  "limitations": [
+    "This proves the recorded native host/compiler public API probes and literal assertions, not successful live service workflows."
+  ]
+}

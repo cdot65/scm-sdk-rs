@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-17T12:34:47.513Z",
+  "sourceCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+  "reviewedSourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+  "runId": 4844,
+  "runNumber": 11,
+  "job": "rust(all,1.89.0)",
+  "method": "Read-only watcher in the explicitly selected Forgejo Rust matrix container.",
+  "report": "docs/checks/phase-08-ci-run-11/rust-1.89.0-all.json",
+  "originalReportSha256": "4574b790c89d84cb4ddbce26859400e1c59646b478a152d578dc35e3251e7f49",
+  "originalBytesRetained": true,
+  "capture": {
+    "path": "docs/checks/phase-08-ci-run-11/matrix-all-1.89.0-capture.jsonl",
+    "sha256": "6d22edb4cdcb5ec3c1be6ec4401d535448c8c5bd26a5e437dfb4edf41273982e"
+  },
+  "readerSha256": "7d574352085de6d0dea32b607c6141e34b265664bb27a118ad5b2f9baaed1236",
+  "readerSource": "\"use strict\";\nconst fs = require(\"node:fs\");\nconst path = require(\"node:path\");\nconst crypto = require(\"node:crypto\");\nconst cp = require(\"node:child_process\");\nconst [root, expected, relative] = process.argv.slice(2);\nif (!path.isAbsolute(root) || !/^[a-f0-9]{40}$/.test(expected) ||\n    !/^\\.local\\/checks\\/rust-[0-9.]+-[a-z-]+\\.json$/.test(relative)) process.exit(2);\nconst commit = () => cp.execFileSync(\"git\", [\"-c\", `safe.directory=${root}`, \"-C\", root,\n    \"rev-parse\", \"HEAD\"], {encoding: \"utf8\", timeout: 5000}).trim();\nif (commit() !== expected) process.exit(3);\nconst started = Date.now();\nconst filename = path.join(root, relative);\nconst timer = setInterval(() => {\n  if (Date.now() - started > 60 * 60 * 1000) process.exit(4);\n  try {\n    const info = fs.lstatSync(filename);\n    if (!info.isFile() || info.size > 16 * 1024 * 1024) process.exit(5);\n    const data = fs.readFileSync(filename);\n    const report = JSON.parse(data);\n    if (typeof report.passed !== \"boolean\" || !Array.isArray(report.checks)) return;\n    const result = {schemaVersion: 1, capturedAt: new Date().toISOString(),\n      method: \"Read-only watcher in the explicitly selected Forgejo Rust matrix container.\",\n      sourceCommit: commit(), expectedSourceCommit: expected,\n      path: relative, sha256: crypto.createHash(\"sha256\").update(data).digest(\"hex\"), report};\n    clearInterval(timer);\n    process.stdout.write(JSON.stringify(result) + \"\\n\");\n  } catch (_) {\n    // Wait for the final report to exist and its ordinary write to finish.\n  }\n}, 50);\n",
+  "toolchain": "1.89.0",
+  "featureSet": "all",
+  "hostTarget": "x86_64-unknown-linux-gnu",
+  "passed": true,
+  "commands": 6,
+  "limits": [
+    "Direct execution evidence for the exact named matrix job and source commit.",
+    "Full workflow and qualification parent outcome are retained separately when complete.",
+    "No other operating-system or live-provider execution is inferred."
+  ]
+}

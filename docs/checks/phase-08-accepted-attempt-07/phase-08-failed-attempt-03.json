@@ -1,0 +1,1537 @@
+{
+  "phase": 8,
+  "source_sha256": "3dc48e52507439ebdbc02199fdb51e6a4f9ad3125476c1598547d59b860ca5c3",
+  "source_unchanged": true,
+  "checked_at": "2026-10-16T19:59:10.430931+00:00",
+  "passed": false,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.25,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 25 tests in 0.170s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.268,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.246,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": true,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 2.095,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"rejectedTamperingCases\": [\n    \"fixture-change\",\n    \"fixture-removal\",\n    \"unmanifested-source\",\n    \"license-removal\",\n    \"fixture-inventory-omission\",\n    \"baseline-source-omission\",\n    \"tree-ledger-omission\",\n    \"excluded-source-generation\",\n    \"export-source-change\",\n    \"fixture-category-relabel\",\n    \"fixture-category-unknown\",\n    \"specification-pin-removal\",\n    \"observed-specification-pin\",\n    \"extraction-input-omission\",\n    \"extraction-input-origin-change\",\n    \"license-evidence-change\",\n    \"extracted-non-src-byte-change\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-contracts.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-contracts.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 9.807,
+      "stdout": "{\n  \"mode\": \"check\",\n  \"sourceFingerprint\": \"a972723bb524cf8fce652d50297d94ed7af278b13b9a045b5c6bdc79212eb48f\",\n  \"counts\": {\n    \"exports\": 2630,\n    \"runtimeExports\": 1379,\n    \"typeOnlyExports\": 1251,\n    \"kinds\": {\n      \"class\": 58,\n      \"constant\": 163,\n      \"enum\": 1,\n      \"function\": 14,\n      \"interface\": 144,\n      \"schema\": 1086,\n      \"type_alias\": 1164\n    },\n    \"publicMembers\": 1190,\n    \"publicMethods\": 468,\n    \"baselinePublicClassMethodBodies\": 458,\n    \"baselinePublicClassMethodDeclarations\": 478,\n    \"clientMethodBodies\": 448,\n    \"objectLiteralMethodBodies\": 11,\n    \"publicInheritedExternalClassMethods\": 2,\n    \"sourceFiles\": 145,\n    \"moduleLevelSchemas\": 1125,\n    \"publicSchemas\": 1086,\n    \"schemaNodes\": 13018,\n    \"typeNodes\": 5036,\n    \"manualSemanticNodes\": 69,\n    \"unsupportedSchemaKinds\": 0,\n    \"localSchemaDeclarations\": 0\n  },\n  \"independentChecks\": {\n    \"checkerRootExports\": 2630,\n    \"astRootExports\": 2630,\n    \"runtimeValueExports\": 1379,\n    \"rootExportNamesSha256\": \"2d1879a53b4686df7f14cc5b099adcbc2d95d0b7ff336528994a5cf155195850\",\n    \"equalNameSets\": true,\n    \"astClientMethodBodies\": 448,\n    \"checkerClientMethodBodies\": 448,\n    \"clientMethodBodiesSha256\": \"76a9f7f109ff4b576f9a515c7c560322cfdf457b43c59123f820da6918f6d5ea\",\n    \"equalClientMethodBodySets\": true\n  }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-operations.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-operations.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.706,
+      "stdout": "Operation metadata verified: 448 methods, 223 declarative, 225 explicit native adapters.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/extract-contracts.mts",
+        "tools/extract-operations.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/extract-contracts.mts",
+        "tools/extract-operations.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.801,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.198,
+      "stdout": "Native semantic registry: 69 explicit bindings\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.786,
+      "stdout": "{\"checked\": true, \"outputs\": 14, \"graphNodes\": 13018, \"partialFamily\": null}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "8"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "8"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.958,
+      "stdout": "{\"checked\": true, \"baselineConcreteMethods\": 448, \"implemented\": 448, \"pending\": 0, \"liveVerified\": 17, \"liveRecorded\": 22, \"completeMethodOptionParity\": 448, \"partialMethodOptionParity\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 13.153,
+      "stdout": "",
+      "stderr": "test_absent_verification_function_is_rejected (test_native_operations.NativeOperationLedgerTests.test_absent_verification_function_is_rejected) ... ok\ntest_completed_owning_phase_rejects_an_unimplemented_operation (test_native_operations.NativeOperationLedgerTests.test_completed_owning_phase_rejects_an_unimplemented_operation) ... ok\ntest_every_frozen_operation_is_accounted_for_without_baseline_mutation (test_native_operations.NativeOperationLedgerTests.test_every_frozen_operation_is_accounted_for_without_baseline_mutation) ... ok\ntest_fragment_baseline_and_duplicate_mappings_are_rejected (test_native_operations.NativeOperationLedgerTests.test_fragment_baseline_and_duplicate_mappings_are_rejected) ... ok\ntest_invalid_or_stale_live_receipt_stops_generation (test_native_operations.NativeOperationLedgerTests.test_invalid_or_stale_live_receipt_stops_generation) ... ok\ntest_invented_frozen_operation_is_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_frozen_operation_is_rejected) ... ok\ntest_invented_or_unexplained_ownership_overrides_are_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_or_unexplained_ownership_overrides_are_rejected) ... ok\ntest_live_annotation_cannot_certify_an_unimplemented_or_unknown_operation (test_native_operations.NativeOperationLedgerTests.test_live_annotation_cannot_certify_an_unimplemented_or_unknown_operation) ... ok\ntest_missing_receipt_cannot_be_promoted_by_a_mapping_declaration (test_native_operations.NativeOperationLedgerTests.test_missing_receipt_cannot_be_promoted_by_a_mapping_declaration) ... ok\ntest_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven (test_native_operations.NativeOperationLedgerTests.test_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven) ... ok\ntest_only_the_exact_receipted_method_is_live_verified (test_native_operations.NativeOperationLedgerTests.test_only_the_exact_receipted_method_is_live_verified) ... ok\ntest_partial_parity_without_a_declared_reason_is_rejected (test_native_operations.NativeOperationLedgerTests.test_partial_parity_without_a_declared_reason_is_rejected) ... ok\ntest_realtime_header_contract_is_distinct_and_cannot_be_forged (test_native_operations.NativeOperationLedgerTests.test_realtime_header_contract_is_distinct_and_cannot_be_forged) ... ok\ntest_removed_native_method_is_rejected (test_native_operations.NativeOperationLedgerTests.test_removed_native_method_is_rejected) ... ok\ntest_representative_gateway_scope_retains_its_real_owner_and_partial_options (test_native_operations.NativeOperationLedgerTests.test_representative_gateway_scope_retains_its_real_owner_and_partial_options) ... ok\ntest_stale_ledger_is_rejected_without_rewriting_it (test_native_operations.NativeOperationLedgerTests.test_stale_ledger_is_rejected_without_rewriting_it) ... ok\ntest_stricter_native_content_invariants_are_machine_recorded (test_native_operations.NativeOperationLedgerTests.test_stricter_native_content_invariants_are_machine_recorded) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 13.079s\n\nOK\n"
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/schema-oracle.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/schema-oracle.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 5.852,
+      "stdout": "{\n  \"publicSchemaExports\": 1086,\n  \"moduleRoots\": 1125,\n  \"uniqueRoots\": 1085,\n  \"oracleEntries\": 1127,\n  \"manualSemanticNodes\": 69,\n  \"nativeBoundaryNodes\": 10,\n  \"jsonCoveredRoots\": 1080,\n  \"requiresNativeInput\": [\n    {\n      \"sid\": \"s004590\",\n      \"names\": [\n        \"GatewayInferenceInputCreateImageEditRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004620\",\n      \"names\": [\n        \"GatewayInferenceInputCreateImageVariationRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004771\",\n      \"names\": [\n        \"GatewayInferenceInputCreateTranscriptionRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004833\",\n      \"names\": [\n        \"GatewayInferenceInputCreateTranslationRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004894\",\n      \"names\": [\n        \"GatewayInferenceInputCreateFileRequestSchema\"\n      ]\n    }\n  ],\n  \"unresolvedValidSpecimens\": [],\n  \"jsonCases\": 60271,\n  \"acceptedJsonCases\": 12956,\n  \"rejectedJsonCases\": 47315,\n  \"rootsWithoutJsonRejection\": []\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/schema-oracle.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/schema-oracle.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.725,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-default.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-default.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 31.188,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"default\", \"evidence\": \"docs/checks/phase-08-rust-1.89.0-default.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-minimal.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-minimal.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.603,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"minimal\", \"evidence\": \"docs/checks/phase-08-rust-1.89.0-minimal.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-all.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-all.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 34.739,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"all\", \"evidence\": \"docs/checks/phase-08-rust-1.89.0-all.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-default.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-default.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 32.147,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"default\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-default.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-minimal.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "minimal",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-minimal.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 8.614,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"minimal\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-minimal.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-all.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "all",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-all.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 35.999,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--all-features\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"all\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-all.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "json-unification",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-json-unification.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "json-unification",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-json-unification.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 8.861,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"json-unification\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-json-unification.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "scan",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-scan.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "scan",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-scan.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 30.84,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"scan\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"scan\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-scan.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "management",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-management.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "management",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-management.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 32.155,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"management\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"management\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-management.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-gateway.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-gateway.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 32.893,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"gateway\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-gateway.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "models",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-models.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "models",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-models.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 31.253,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"models\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"models\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-models.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--verify-fixtures"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_models.py",
+        "--verify-fixtures"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.292,
+      "stdout": "{\"expiryLiteralIdentityChecks\":6,\"failures\":0,\"nativeOnlySchemas\":5,\"publicSchemas\":1086,\"typedCases\":27216,\"typedSchemas\":1081}\n",
+      "stderr": "   Compiling scm-typed-model-oracle v0.0.0 (/home/cdot/development/cdot65/scm-sdk-rs/.local/typed-model-oracle)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.43s\n     Running `/build/rust/target/debug/scm-typed-model-oracle /home/cdot/development/cdot65/scm-sdk-rs/contracts/native-fixtures/schemas.json`\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-package.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-package.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 241.999,
+      "stdout": "{\"passed\": true, \"toolchain\": \"1.99.0\", \"archive_sha256\": \"acd365e7a15dbf44d3ac1b9168dc8c3d0fb04f02e753e3ecbe6d4dc2debf89dd\", \"evidence\": \"/home/cdot/development/cdot65/scm-sdk-rs/.local/checks/package-1.99.0.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_generation.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_generation.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 3.205,
+      "stdout": "",
+      "stderr": "test_all_forty_behavioral_adapters_close_and_problem_metadata_has_concrete_types (test_model_generation.GenerationGuards.test_all_forty_behavioral_adapters_close_and_problem_metadata_has_concrete_types) ... ok\ntest_committed_union_identity_matches_and_reorder_fails (test_model_generation.GenerationGuards.test_committed_union_identity_matches_and_reorder_fails) ... ok\ntest_current_nested_checks_and_record_keys_match_native_implementation (test_model_generation.GenerationGuards.test_current_nested_checks_and_record_keys_match_native_implementation) ... ok\ntest_effect_default_pipeline_and_coercion_in_record_keys_fail (test_model_generation.GenerationGuards.test_effect_default_pipeline_and_coercion_in_record_keys_fail) ... ok\ntest_exactly_five_native_binary_builders_omit_json_only_validation (test_model_generation.GenerationGuards.test_exactly_five_native_binary_builders_omit_json_only_validation) ... ok\ntest_native_dispatcher_and_pattern_drift_fail (test_model_generation.GenerationGuards.test_native_dispatcher_and_pattern_drift_fail) ... ok\ntest_phase_five_behavioral_adapters_resolve_to_implemented_public_types (test_model_generation.GenerationGuards.test_phase_five_behavioral_adapters_resolve_to_implemented_public_types) ... ok\ntest_phase_six_gateway_adapters_resolve_and_standalone_helper_closure_is_explicit (test_model_generation.GenerationGuards.test_phase_six_gateway_adapters_resolve_and_standalone_helper_closure_is_explicit) ... ok\ntest_union_pin_removal_and_header_tampering_fail (test_model_generation.GenerationGuards.test_union_pin_removal_and_header_tampering_fail) ... ok\ntest_unknown_nested_regex_or_flags_fail (test_model_generation.GenerationGuards.test_unknown_nested_regex_or_flags_fail) ... ok\ntest_unknown_nested_string_and_number_checks_fail (test_model_generation.GenerationGuards.test_unknown_nested_string_and_number_checks_fail) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 3.086s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "dlp",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-dlp.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "dlp",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-dlp.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 112.274,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"dlp\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"dlp\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-dlp.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "iam",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-iam.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "iam",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-iam.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 111.239,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"iam\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"iam\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-iam.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_native_fixtures.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify_native_fixtures.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.046,
+      "stdout": "{\"bundles\": 2, \"exact_frozen_cases\": 50}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_fixtures.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_fixtures.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.087,
+      "stdout": "",
+      "stderr": "test_case_edits_and_json_type_substitution_rejected (test_native_fixtures.NativeFixtureTests.test_case_edits_and_json_type_substitution_rejected) ... ok\ntest_commented_or_quoted_bindings_do_not_count (test_native_fixtures.NativeFixtureTests.test_commented_or_quoted_bindings_do_not_count) ... ok\ntest_duplicate_source_and_empty_cases_rejected (test_native_fixtures.NativeFixtureTests.test_duplicate_source_and_empty_cases_rejected) ... ok\ntest_exact_copy_passes (test_native_fixtures.NativeFixtureTests.test_exact_copy_passes) ... ok\ntest_invalid_duplicate_or_missing_coordinates_rejected (test_native_fixtures.NativeFixtureTests.test_invalid_duplicate_or_missing_coordinates_rejected) ... ok\ntest_literal_test_bindings_pass (test_native_fixtures.NativeFixtureTests.test_literal_test_bindings_pass) ... ok\ntest_missing_bundle_and_symlink_rejected (test_native_fixtures.NativeFixtureTests.test_missing_bundle_and_symlink_rejected) ... ok\ntest_nonfinite_json_rejected (test_native_fixtures.NativeFixtureTests.test_nonfinite_json_rejected) ... ok\ntest_orphaned_bundle_rejected (test_native_fixtures.NativeFixtureTests.test_orphaned_bundle_rejected) ... ok\ntest_source_changes_cannot_be_blessed_by_bundle_hash (test_native_fixtures.NativeFixtureTests.test_source_changes_cannot_be_blessed_by_bundle_hash) ... ok\ntest_symlinked_test_source_rejected (test_native_fixtures.NativeFixtureTests.test_symlinked_test_source_rejected) ... ok\ntest_unknown_bundle_binding_rejected (test_native_fixtures.NativeFixtureTests.test_unknown_bundle_binding_rejected) ... ok\ntest_unknown_sources_and_regressions_cannot_claim_independence (test_native_fixtures.NativeFixtureTests.test_unknown_sources_and_regressions_cannot_claim_independence) ... ok\ntest_wrong_baseline_and_missing_attribution_rejected (test_native_fixtures.NativeFixtureTests.test_wrong_baseline_and_missing_attribution_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.031s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "model-security",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-model-security.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "model-security",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-model-security.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 113.415,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"model-security\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"model-security\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-model-security.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-red-team.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-red-team.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 114.915,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"red-team\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-red-team.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_native_fixtures.py",
+        "--require-test-bindings"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify_native_fixtures.py",
+        "--require-test-bindings"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.309,
+      "stdout": "{\"bundles\": 2, \"exact_frozen_cases\": 50, \"test_bound_bundles\": 2}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsx",
+        "tools/verify-gateway-specimens.mts",
+        "--check"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsx",
+        "tools/verify-gateway-specimens.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.547,
+      "stdout": "{\"checked\":true,\"operations\":61,\"independentCases\":12,\"zodParses\":74}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/verify-gateway-specimens.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/verify-gateway-specimens.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.528,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_constants.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_constants.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.23,
+      "stdout": "{\"checked\": true, \"staticConstants\": 162, \"globalConfiguration\": \"isolated ScanConfiguration adaptation\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsx",
+        "tools/helper-oracle.mts",
+        "--check"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsx",
+        "tools/helper-oracle.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.589,
+      "stdout": "{\"checked\":true,\"cases\":157,\"constants\":163}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/helper-oracle.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/helper-oracle.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.656,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.352,
+      "stdout": "{\"checked\": true, \"gatewayPhaseSixMethods\": 194}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_verify_gateway_bindings.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_verify_gateway_bindings.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.93,
+      "stdout": "",
+      "stderr": "test_all_194_frozen_methods_have_explicit_source_proofs (test_verify_gateway_bindings.GatewayBindingTests.test_all_194_frozen_methods_have_explicit_source_proofs) ... ok\ntest_chart_metric_cannot_silently_use_another_response (test_verify_gateway_bindings.GatewayBindingTests.test_chart_metric_cannot_silently_use_another_response) ... ok\ntest_comment_cannot_supply_a_missing_schema (test_verify_gateway_bindings.GatewayBindingTests.test_comment_cannot_supply_a_missing_schema) ... ok\ntest_composed_filter_field_identity_is_checked (test_verify_gateway_bindings.GatewayBindingTests.test_composed_filter_field_identity_is_checked) ... ok\ntest_extra_segment_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_extra_segment_is_rejected) ... ok\ntest_literal_in_unrelated_method_cannot_supply_route_evidence (test_verify_gateway_bindings.GatewayBindingTests.test_literal_in_unrelated_method_cannot_supply_route_evidence) ... ok\ntest_parameter_replaced_by_a_literal_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_parameter_replaced_by_a_literal_is_rejected) ... ok\ntest_runtime_literal_suffix_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_runtime_literal_suffix_is_rejected) ... ok\ntest_unreviewed_filter_refinement_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_unreviewed_filter_refinement_is_rejected) ... ok\ntest_wrong_http_method_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_http_method_is_rejected) ... ok\ntest_wrong_literal_route_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_literal_route_is_rejected) ... ok\ntest_wrong_request_schema_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_request_schema_is_rejected) ... ok\ntest_wrong_response_schema_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_response_schema_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 0.779s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/native_exports.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/native_exports.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 4.178,
+      "stdout": "{\"checked\": true, \"frozenRoots\": 2630, \"frozenCapabilities\": 3820, \"implemented\": 3820, \"unresolved\": 0, \"liveVerified\": 17, \"liveVerifiedOperations\": 17, \"liveRecordedCapabilities\": 22}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_exports.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_exports.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 35.418,
+      "stdout": "",
+      "stderr": "test_deferred_model_is_never_hidden_by_a_generic_type_fallback (test_native_exports.NativeExportTests.test_deferred_model_is_never_hidden_by_a_generic_type_fallback) ... ok\ntest_duplicate_manual_capability_is_rejected (test_native_exports.NativeExportTests.test_duplicate_manual_capability_is_rejected) ... ok\ntest_duplicate_public_member_is_rejected (test_native_exports.NativeExportTests.test_duplicate_public_member_is_rejected) ... ok\ntest_every_frozen_root_and_member_has_an_external_public_probe (test_native_exports.NativeExportTests.test_every_frozen_root_and_member_has_an_external_public_probe) ... ok\ntest_evidence_paths_reject_absolute_paths_traversal_and_symlinks (test_native_exports.NativeExportTests.test_evidence_paths_reject_absolute_paths_traversal_and_symlinks) ... ok\ntest_facades_and_content_bind_real_behavior_instead_of_only_compile_probes (test_native_exports.NativeExportTests.test_facades_and_content_bind_real_behavior_instead_of_only_compile_probes) ... ok\ntest_missing_test_function_is_rejected (test_native_exports.NativeExportTests.test_missing_test_function_is_rejected) ... ok\ntest_operation_live_evidence_never_promotes_its_constructor_or_sibling (test_native_exports.NativeExportTests.test_operation_live_evidence_never_promotes_its_constructor_or_sibling) ... ok\ntest_pending_operation_is_reported_as_a_gap (test_native_exports.NativeExportTests.test_pending_operation_is_reported_as_a_gap) ... ok\ntest_persisted_live_claim_without_a_receipt_is_rejected (test_native_exports.NativeExportTests.test_persisted_live_claim_without_a_receipt_is_rejected) ... ok\ntest_probe_cfg_is_the_exact_required_feature_union_including_agentguard (test_native_exports.NativeExportTests.test_probe_cfg_is_the_exact_required_feature_union_including_agentguard) ... ok\ntest_removed_concrete_method_is_rejected_before_rust_compilation (test_native_exports.NativeExportTests.test_removed_concrete_method_is_rejected_before_rust_compilation) ... ok\ntest_root_omission_cannot_shrink_the_frozen_denominator (test_native_exports.NativeExportTests.test_root_omission_cannot_shrink_the_frozen_denominator) ... ok\ntest_stale_model_inventory_input_hash_is_rejected (test_native_exports.NativeExportTests.test_stale_model_inventory_input_hash_is_rejected) ... ok\ntest_stale_receipt_aborts_export_generation (test_native_exports.NativeExportTests.test_stale_receipt_aborts_export_generation) ... ok\ntest_unknown_manual_capability_is_rejected (test_native_exports.NativeExportTests.test_unknown_manual_capability_is_rejected) ... ok\ntest_unrelated_probe_cannot_claim_an_api (test_native_exports.NativeExportTests.test_unrelated_probe_cannot_claim_an_api) ... ok\ntest_wrong_baseline_is_rejected (test_native_exports.NativeExportTests.test_wrong_baseline_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 18 tests in 35.339s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-native-exports.py",
+        "--toolchain",
+        "1.89.0",
+        "--output",
+        "docs/checks/phase-08-native-exports-1.89.0.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-native-exports.py",
+        "--toolchain",
+        "1.89.0",
+        "--output",
+        "docs/checks/phase-08-native-exports-1.89.0.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 82.845,
+      "stdout": "{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"frozenCapabilities\": 3820, \"evidence\": \"docs/checks/phase-08-native-exports-1.89.0.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-native-exports.py",
+        "--toolchain",
+        "1.99.0",
+        "--output",
+        "docs/checks/phase-08-native-exports-1.99.0.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-native-exports.py",
+        "--toolchain",
+        "1.99.0",
+        "--output",
+        "docs/checks/phase-08-native-exports-1.99.0.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 77.737,
+      "stdout": "{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"frozenCapabilities\": 3820, \"evidence\": \"docs/checks/phase-08-native-exports-1.99.0.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "agentguard",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-agentguard.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "agentguard",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-agentguard.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 112.043,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"agentguard\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"agentguard\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"agentguard\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"agentguard\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"agentguard\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"agentguard\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-agentguard.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "realtime",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-realtime.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "realtime",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-realtime.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 122.16,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"realtime\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-realtime.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "ws-transport",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-ws-transport.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "ws-transport",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-ws-transport.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 123.651,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"ws-transport\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-ws-transport.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/model_fixtures.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/model_fixtures.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.628,
+      "stdout": "{\"checked\": true, \"specimens\": 18, \"bytes\": 6877}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_fixtures.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_fixtures.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.965,
+      "stdout": "",
+      "stderr": "test_all_eighteen_exact_zod_outputs_are_present (test_model_fixtures.ModelFixturesTests.test_all_eighteen_exact_zod_outputs_are_present) ... ok\ntest_missing_or_duplicate_root_rejected (test_model_fixtures.ModelFixturesTests.test_missing_or_duplicate_root_rejected) ... ok\ntest_modified_packaged_output_is_rejected (test_model_fixtures.ModelFixturesTests.test_modified_packaged_output_is_rejected) ... ok\ntest_stale_oracle_hash_rejected (test_model_fixtures.ModelFixturesTests.test_stale_oracle_hash_rejected) ... ok\ntest_unaccepted_specimen_rejected (test_model_fixtures.ModelFixturesTests.test_unaccepted_specimen_rejected) ... ok\ntest_wrong_baseline_rejected (test_model_fixtures.ModelFixturesTests.test_wrong_baseline_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 6.883s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_package_policy.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_package_policy.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.071,
+      "stdout": "",
+      "stderr": "test_cargo_omitted_false_dirty_flag_is_valid_clean_metadata (test_package_policy.PackagePolicyTests.test_cargo_omitted_false_dirty_flag_is_valid_clean_metadata) ... ok\ntest_duplicate_members_rejected (test_package_policy.PackagePolicyTests.test_duplicate_members_rejected) ... ok\ntest_unsafe_members_are_rejected_before_extraction (test_package_policy.PackagePolicyTests.test_unsafe_members_are_rejected_before_extraction) ... ok\ntest_wrong_or_dirty_release_vcs_rejected (test_package_policy.PackagePolicyTests.test_wrong_or_dirty_release_vcs_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.006s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_dependency_policy.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_dependency_policy.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.067,
+      "stdout": "",
+      "stderr": "test_any_advisory_or_license_exception_is_rejected (test_dependency_policy.DependencyPolicyTests.test_any_advisory_or_license_exception_is_rejected) ... ok\ntest_graph_omissions_and_relaxed_sources_are_rejected (test_dependency_policy.DependencyPolicyTests.test_graph_omissions_and_relaxed_sources_are_rejected) ... ok\ntest_missing_checksum_and_git_or_path_sources_are_rejected (test_dependency_policy.DependencyPolicyTests.test_missing_checksum_and_git_or_path_sources_are_rejected) ... ok\ntest_real_lock_and_policy_are_accepted (test_dependency_policy.DependencyPolicyTests.test_real_lock_and_policy_are_accepted) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.006s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.057,
+      "stdout": "",
+      "stderr": "test_actions_and_credentials_are_bounded (test_ci.CiContractTests.test_actions_and_credentials_are_bounded) ... ok\ntest_additional_targets_are_manual_and_assert_actual_host (test_ci.CiContractTests.test_additional_targets_are_manual_and_assert_actual_host) ... ok\ntest_compilers_match_supported_msrv_and_current_pin (test_ci.CiContractTests.test_compilers_match_supported_msrv_and_current_pin) ... ok\ntest_every_native_feature_has_an_isolated_job (test_ci.CiContractTests.test_every_native_feature_has_an_isolated_job) ... ok\ntest_node_matches_owned_pin_and_phase_gate_verifies_only (test_ci.CiContractTests.test_node_matches_owned_pin_and_phase_gate_verifies_only) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.007s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_live_evidence.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_live_evidence.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.086,
+      "stdout": "",
+      "stderr": "test_absence_proofs_only_certify_owned_cleanup_checks (test_live_evidence.LiveEvidenceTests.test_absence_proofs_only_certify_owned_cleanup_checks) ... ok\ntest_accepted_and_failed_classifications_are_consistent (test_live_evidence.LiveEvidenceTests.test_accepted_and_failed_classifications_are_consistent) ... ok\ntest_failed_workflows_cannot_be_promoted_by_a_flag (test_live_evidence.LiveEvidenceTests.test_failed_workflows_cannot_be_promoted_by_a_flag) ... ok\ntest_only_allowlisted_metadata_is_exported (test_live_evidence.LiveEvidenceTests.test_only_allowlisted_metadata_is_exported) ... ok\ntest_request_and_cleanup_consistency_cannot_be_forged (test_live_evidence.LiveEvidenceTests.test_request_and_cleanup_consistency_cannot_be_forged) ... ok\ntest_stale_source_digest_and_path_tampering_are_rejected (test_live_evidence.LiveEvidenceTests.test_stale_source_digest_and_path_tampering_are_rejected) ... ok\ntest_unrecognized_upstream_words_and_probe_names_are_rejected (test_live_evidence.LiveEvidenceTests.test_unrecognized_upstream_words_and_probe_names_are_rejected) ... ok\ntest_zero_requests_limits_scope_and_numeric_types_are_enforced (test_live_evidence.LiveEvidenceTests.test_zero_requests_limits_scope_and_numeric_types_are_enforced) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.010s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_qualification.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_qualification.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.023,
+      "stdout": "",
+      "stderr": "test_constructor_and_non_server_export_cannot_claim_operation_receipt (test_qualification.QualificationTests.test_constructor_and_non_server_export_cannot_claim_operation_receipt) ... ok\ntest_every_controlled_failure_class_has_an_explicit_explanation (test_qualification.QualificationTests.test_every_controlled_failure_class_has_an_explicit_explanation) ... ok\ntest_exhaustive_denominator_and_unexecuted_methods_stay_unqualified (test_qualification.QualificationTests.test_exhaustive_denominator_and_unexecuted_methods_stay_unqualified) ... ok\ntest_exports_must_bind_every_operation_and_match_its_live_result (test_qualification.QualificationTests.test_exports_must_bind_every_operation_and_match_its_live_result) ... ok\ntest_failed_receipted_probe_is_observed_but_never_verified (test_qualification.QualificationTests.test_failed_receipted_probe_is_observed_but_never_verified) ... ok\ntest_method_omission_duplicate_and_option_gap_are_rejected (test_qualification.QualificationTests.test_method_omission_duplicate_and_option_gap_are_rejected) ... ok\ntest_one_verified_operation_never_promotes_its_sibling_or_family (test_qualification.QualificationTests.test_one_verified_operation_never_promotes_its_sibling_or_family) ... ok\ntest_real_receipt_loader_binds_projection_and_rejects_stale_or_failed_execution (test_qualification.QualificationTests.test_real_receipt_loader_binds_projection_and_rejects_stale_or_failed_execution) ... ok\ntest_stale_or_failed_receipt_stops_projection_before_generation (test_qualification.QualificationTests.test_stale_or_failed_receipt_stops_projection_before_generation) ... ok\ntest_stale_projection_check_does_not_rewrite_the_artifact (test_qualification.QualificationTests.test_stale_projection_check_does_not_rewrite_the_artifact) ... ok\ntest_unknown_live_classification_never_becomes_an_unexplained_gap (test_qualification.QualificationTests.test_unknown_live_classification_never_becomes_an_unexplained_gap) ... ok\ntest_unsupported_live_claim_and_missing_receipt_are_rejected (test_qualification.QualificationTests.test_unsupported_live_claim_and_missing_receipt_are_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.917s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/live_evidence.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/live_evidence.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.076,
+      "stdout": "{\"checked\": true, \"nativeMethodsVerified\": 17, \"observedMethods\": 22, \"cleanupState\": \"not_needed\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/qualification.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/qualification.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.086,
+      "stdout": "{\"checked\": true, \"operations\": 448, \"implemented\": 448, \"contractVerified\": 448, \"completeMethodOptionParity\": 448, \"liveVerified\": 17, \"liveRecorded\": 22, \"liveNotVerified\": 431, \"liveByStatus\": {\"permission_prerequisite\": 3, \"service_contract_rejection\": 2, \"unverified\": 426, \"verified\": 17}, \"unexplainedGaps\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-dependencies.py",
+        "--output",
+        "docs/checks/phase-08-dependencies.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-dependencies.py",
+        "--output",
+        "docs/checks/phase-08-dependencies.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.382,
+      "stdout": "{\"passed\": true, \"packages\": 206, \"advisoryRevision\": \"f28da8c5d386e507fac79153655184056a20c054\", \"freshHead\": true, \"evidence\": \"docs/checks/phase-08-dependencies.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "reqwest-transport",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-reqwest-transport.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "reqwest-transport",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-reqwest-transport.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 24.034,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"reqwest-transport\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"reqwest-transport\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"reqwest-transport\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"reqwest-transport\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"reqwest-transport\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"reqwest-transport\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-reqwest-transport.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-tracing.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-tracing.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 19.681,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"tracing\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"tracing\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-tracing.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "default-tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-default-tracing.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "default-tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-default-tracing.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 181.875,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--features\", \"tracing\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--features\", \"tracing\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"default-tracing\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-default-tracing.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "realtime-tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-realtime-tracing.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "realtime-tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-realtime-tracing.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 188.908,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime,tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime,tracing\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime,tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime,tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"realtime,tracing\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"realtime-tracing\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-realtime-tracing.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "ws-tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-ws-tracing.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "ws-tracing",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-ws-tracing.json"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 148.076,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport,tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport,tracing\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport,tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport,tracing\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"ws-transport,tracing\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"ws-tracing\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-ws-tracing.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway-json-unification",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-gateway-json-unification.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway-json-unification",
+        "--output",
+        "docs/checks/phase-08-rust-1.99.0-gateway-json-unification.json"
+      ],
+      "exit_code": 1,
+      "duration_seconds": 158.735,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway,serde_json/arbitrary_precision\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway,serde_json/arbitrary_precision\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway,serde_json/arbitrary_precision\"], \"exit_code\": 101}\n{\"passed\": false, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"gateway-json-unification\", \"evidence\": \"docs/checks/phase-08-rust-1.99.0-gateway-json-unification.json\"}\n",
+      "stderr": "\nrunning 158 tests\ntest airs::gateway::common::tests::native_dates_match_literal_javascript_iso_vectors_over_the_entire_range ... ok\ntest airs::gateway::common::tests::offset_iso_and_js_number_and_whitespace_rules_are_literal ... ok\ntest auth::tests::immutable_context_rejects_cross_tenant_or_unsafe_scope_configuration ... ok\ntest auth::tests::already_cancelled_waiter_never_starts_token_exchange ... ok\ntest auth::tests::header_injection_and_wrong_auth_domains_are_rejected ... ok\ntest data::tests::numbers_never_turn_nonfinite_into_null ... ok\ntest auth::tests::refresh_event_capacity_is_validated_before_provider_creation ... ok\ntest data::tests::shared_uuid_preserves_frozen_case_nil_and_position_grammar ... ok\ntest auth::tests::token_destination_policy_runs_before_transport ... ok\ntest data::tests::ordinary_formatting_excludes_values ... ok\ntest data::tests::omission_null_and_value_are_distinct ... ok\ntest auth::tests::explicit_session_cancellation_interrupts_shared_refresh ... ok\ntest auth::tests::one_waiter_deadline_does_not_expire_other_waiters ... ok\ntest auth::tests::refresh_has_its_own_thirty_second_deadline ... ok\ntest auth::tests::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets ... ok\ntest auth::tests::clear_prevents_pending_old_refresh_from_restoring_cache ... ok\ntest engine::tests::client_validation_limits_are_explicit_and_validated ... ok\ntest engine::tests::already_cancelled_request_never_calls_authentication ... ok\ntest auth::tests::refresh_is_deduplicated_and_one_cancelled_waiter_preserves_the_other ... ok\ntest auth::tests::invalidating_old_cached_token_preserves_new_pending_refresh ... ok\ntest auth::tests::rfc4231_signature_uses_exact_bytes_and_protected_headers ... ok\ntest auth::tests::token_lifetime_starts_before_exchange_latency ... ok\ntest auth::tests::late_unauthorized_response_cannot_evict_new_generation ... ok\ntest auth::tests::identities_caches_and_formatting_are_isolated ... ok\ntest auth::tests::token_exchange_uses_encoded_basic_form_and_no_runtime_credentials ... ok\ntest auth::tests::last_waiter_drop_releases_http_and_next_call_can_refresh ... ok\ntest auth::tests::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials ... ok\ntest auth::tests::failed_and_cleared_pending_refreshes_publish_no_success_event ... ok\ntest engine::tests::deadline_after_response_headers_retains_status_and_correlation ... ok\ntest engine::tests::empty_json_success_hydrates_an_object_and_optional_json_preserves_absence ... ok\ntest engine::tests::echoed_error_values_never_enter_debug_or_display ... ok\ntest engine::tests::authentication_and_oauth_factory_setters_use_the_last_explicit_choice ... ok\ntest engine::tests::encoded_separators_and_double_encoded_traversal_reject_before_authentication ... ok\ntest engine::tests::failure_origin_is_preserved_even_after_successful_response_headers ... ok\ntest auth::tests::lagged_dropped_and_absent_subscribers_never_block_token_delivery ... ok\ntest engine::tests::invalid_limits_fail_and_injected_client_constructs_without_runtime ... ok\ntest engine::tests::framing_credentials_and_header_injection_are_rejected ... ok\ntest auth::tests::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults ... ok\ntest engine::tests::invalid_json_and_request_limits_reject_before_authentication ... ok\ntest engine::tests::oauth_factory_honors_issuer_denial_before_token_transport ... ok\ntest engine::tests::json_serialization_bounds_depth_before_validation ... ok\ntest engine::tests::oauth_factory_default_policy_admits_distinct_api_and_issuer_origins ... ok\ntest engine::tests::one_retry_budget_permits_exactly_one_fresh_token_replay ... ok\ntest engine::tests::oauth_factory_session_cancellation_drops_token_exchange_and_blocks_api ... ok\ntest engine::tests::oauth_factory_reuses_injected_transport_policy_and_cached_identity ... ok\ntest engine::tests::per_request_cancellation_drops_response_stream_and_releases_permit ... ok\ntest engine::tests::policy_and_invalid_paths_reject_before_authentication_or_transport ... ok\ntest engine::tests::http_problem_fields_and_body_retry_guidance_are_sanitized_metadata_only ... ok\ntest engine::tests::forbidden_token_refresh_respects_opa_denial_and_replay_safety ... ok\ntest engine::tests::post_send_body_and_decode_failures_report_uncertain_outcomes ... ok\ntest engine::tests::rebinding_endpoints_preserves_policy_provider_cancellation_and_shared_capacity ... ok\ntest auth::tests::malformed_or_unbounded_token_responses_fail_without_values ... ok\ntest engine::tests::per_call_retry_override_keeps_mutations_single_attempt ... ok\ntest engine::tests::rfc4231_hmac_signs_the_exact_transmitted_body ... ok\ntest engine::tests::retry_after_obeys_retry_delay_and_total_budget ... ok\ntest engine::tests::queue_deadline_and_cancellation_do_not_consume_auth_or_leak_permits ... ok\ntest engine::tests::segment_checks_borrowed_length_before_owning_identifier ... ok\ntest engine::tests::session_cancellation_reaches_clones_and_blocks_future_requests ... ok\ntest engine::tests::runtime_replay_stops_at_success_headers_and_body_failures_keep_metadata ... ok\ntest engine::tests::only_explicitly_safe_reads_retry_transport_and_server_failures ... ok\ntest engine::tests::stream_caller_and_session_deadlines_include_inter_read_time ... ok\ntest engine::tests::stream_total_bytes_and_formatting_are_bounded ... ok\ntest engine::tests::streaming_error_body_deadlines_retain_known_status_and_correlation ... ok\ntest engine::tests::retry_cap_and_nonretryable_statuses_are_respected ... ok\ntest engine::tests::stream_cancellation_and_drop_release_body_and_permit ... ok\ntest engine::tests::streaming_idle_deadline_drops_body_and_releases_capacity ... ok\ntest engine::tests::oversized_header_collection_is_rejected_before_authentication ... ok\ntest engine::tests::successful_body_limits_keep_status_and_correlation ... ok\ntest engine::tests::structured_identifiers_encode_once_and_reject_recursive_traversal ... ok\ntest engine::tests::streaming_permit_is_owned_until_close_or_drop ... ok\ntest engine::tests::successful_decode_failures_preserve_status_and_allowlisted_correlation ... ok\ntest engine::tests::success_and_error_bodies_are_bounded_with_uncertain_local_failures ... ok\ntest engine::tests::stream_handshake_never_replays_including_authentication_refresh ... ok\ntest engine::tests::text_body_deadlines_keep_metadata_and_cancel_before_dispatch ... ok\ntest engine::tests::text_responses_match_fetch_decoding_and_preserve_body_bounds ... ok\ntest engine::tests::unauthorized_mutation_invalidates_token_without_replaying ... ok\ntest engine::tests::transport_policy_and_limit_errors_never_trigger_retries ... ok\ntest engine::tests::zero_retry_budget_invalidates_unauthorized_token_without_replay ... ok\ntest models::tests::binary_file_is_bounded_header_safe_and_not_json ... ok\ntest models::tests::enum_unknown_values_roundtrip_and_never_format_payloads ... ok\ntest error::problem::tests::body_retry_metadata_is_bounded_and_does_not_authorize_replay ... ok\ntest error::tests::explicit_application_messages_and_backtraces_are_never_formatted ... ok\ntest models::tests::extensions_cannot_duplicate_or_override_known_fields ... ok\ntest models::tests::optional_nonnull_fields_reject_null_and_preserve_omission ... ok\ntest models::tests::known_fields_and_unknown_extensions_roundtrip_with_redacted_debug ... ok\ntest models::tests::intersections_merge_independently_stripped_object_fields ... ok\ntest models::tests::patch_fields_preserve_omission_clear_and_replacement ... ok\ntest error::problem::tests::unrelated_errors_null_and_malformed_entries_match_source ... ok\ntest error::problem::tests::allowlists_are_exact_and_unknown_text_never_survives ... ok\ntest models::tests::required_nullable_fields_accept_null_and_reject_missing ... ok\ntest multipart::tests::bytes_headers_and_terminator_are_exact ... ok\ntest observability::disabled_tests::disabled_observability_has_no_runtime_state ... ok\ntest engine::tests::unauthorized_refresh_and_server_retries_share_one_total_budget ... ok\ntest models::tests::dlp_explicit_discriminator_selects_the_matching_rule ... ok\ntest pagination::tests::all_pages_share_one_absolute_deadline ... ok\ntest pagination::tests::buffered_items_honor_per_call_and_session_cancellation ... ok\ntest pagination::tests::byte_cap_counts_serialized_array_framing_and_retains_unconsumed_item ... ok\ntest pagination::tests::empty_final_pages_succeed_and_empty_nonfinal_pages_fail ... ok\ntest pagination::tests::failed_iterators_cannot_later_claim_a_complete_collection ... ok\ntest pagination::tests::exact_final_item_cap_reports_complete_without_more_network_work ... ok\ntest pagination::tests::inactive_walks_never_invoke_the_fetch_callback ... ok\ntest models::tests::intersections_merge_nested_objects_and_arrays_and_reject_conflicts ... ok\ntest pagination::tests::invalid_resume_and_invalid_collection_limits_are_rejected ... ok\ntest pagination::tests::cursor_values_and_retained_history_have_independent_bounds ... ok\ntest pagination::tests::local_cancellation_is_latched_even_after_consuming_the_last_buffered_item ... ok\ntest multipart::tests::injection_count_and_envelope_limits_are_local ... ok\ntest pagination::tests::mid_walk_remote_failure_retains_accepted_data_and_source_error ... ok\ntest pagination::tests::item_cap_preserves_mid_page_resume_without_an_extra_fetch ... ok\ntest pagination::tests::page_and_item_iteration_preserve_order_and_duplicate_rows ... ok\ntest pagination::tests::page_cap_has_explicit_truncation_and_next_page_resume ... ok\ntest models::tests::literal_decoders_reject_mismatches_and_whole_unions_retain_unknown_values ... ok\ntest routing::tests::routing_is_case_insensitive_bounded_and_redacted ... ok\ntest pagination::tests::resuming_after_the_last_item_in_a_page_obeys_the_collection_page_cap ... ok\ntest pagination::tests::repeated_cursors_never_trigger_a_duplicate_request_and_keep_partial_rows ... ok\ntest models::tests::chat_message_roles_preserve_native_variant_identity ... ok\ntest pagination::tests::rejected_cursor_errors_remain_visible_at_collection_limits ... ok\ntest streaming::sse::tests::absolute_deadline_applies_to_buffered_events ... ok\ntest streaming::sse::tests::cancellation_checks_buffered_events_and_releases_resources ... ok\ntest streaming::sse::tests::done_marker_takes_precedence_over_error_event_name_as_in_frozen_parser ... ok\ntest pagination::tests::rejected_next_cursor_retains_rows_and_can_resume_with_larger_bounds ... ok\ntest streaming::sse::tests::idle_body_and_transport_failures_are_bounded_and_sanitized ... ok\ntest streaming::sse::tests::fields_multiline_comments_ids_retry_empty_data_and_eof ... ok\ntest streaming::sse::tests::event_byte_limit_counts_utf8_comments_and_unknown_fields ... ok\ntest streaming::sse::tests::empty_chunk_flood_is_rejected_and_explicit_close_is_idempotent ... ok\ntest engine::tests::runtime_replay_requires_explicit_permit_and_uses_exact_status_set ... ok\ntest streaming::sse::tests::overflow_response_error_fails_closed_and_releases_resources ... ok\ntest streaming::sse::tests::malformed_utf8_and_error_events_fail_without_sensitive_values ... ok\ntest streaming::sse::tests::invalid_media_type_or_limit_releases_body_before_reading ... ok\ntest streaming::sse::tests::slow_consumer_has_no_prefetch_or_hidden_reader ... ok\ntest streaming::sse::tests::retry_advice_ignores_invalid_numbers_and_preserves_valid_zero ... ok\ntest streaming::sse::tests::required_terminal_cannot_be_spoofed_by_name_or_done_marker ... ok\ntest streaming::sse::tests::eof_policy_requires_complete_data_frames_and_required_policies_require_terminal ... ok\ntest streaming::sse::tests::typed_decode_failure_and_duplicate_media_headers_are_sanitized ... ok\ntest streaming::sse::tests::typed_json_errors_and_formatting_never_echo_data_ids_or_event_names ... ok\ntest validation::tests::configured_byte_budgets_scale_node_and_work_limits_monotonically ... ok\ntest streaming::sse::tests::responses_deliver_each_terminal_lifecycle_then_release_immediately ... ok\ntest streaming::sse::tests::numeric_error_envelopes_follow_javascript_truthiness_including_overflow ... ok\ntest models::tests::stream_event_literal_discriminators_preserve_native_variant_identity ... ok\ntest streaming::sse::tests::independently_chunked_frames_preserve_event_sequence ... ok\ntest streaming::sse::tests::bom_crlf_and_utf8_survive_every_two_chunk_split ... ok\ntest engine::tests::assembled_query_and_authenticated_headers_obey_total_bounds ... ok\ntest validation::tests::anonymous_array_contracts_share_whole_operation_limits ... ok\ntest validation::tests::schema_wrappers_do_not_consume_json_depth ... ok\ntest validation::tests::ordered_contract_alternatives_share_work_and_preserve_source_order ... ok\ntest models::tests::numeric_literal_unions_choose_the_matching_literal ... ok\ntest validation::tests::typed_dates_cancellation_and_public_errors_are_safe ... ok\ntest validation::tests::required_nullable_does_not_mean_missing_and_patch_defaults_are_exact ... ok\ntest models::tests::validated_build_checks_semantics_after_presence ... ok\ntest engine::tests::typed_stream_and_sse_parser_errors_keep_allowlisted_correlation_without_payloads ... ok\ntest engine::tests::typed_sse_standard_stream_adapter_releases_its_owned_permit ... ok\ntest validation::tests::response_evolution_preserves_unknown_values_but_not_invalid_known_structure ... ok\ntest validation::tests::both_finite_json_bindings_charge_recursive_work ... ok\ntest validation::tests::native_multipart_validates_every_required_blob_and_metadata_with_shared_limits ... ok\ntest validation::tests::utf16_lengths_trim_date_regex_and_decimal_steps_match_frozen_semantics ... ok\ntest airs::gateway::common::tests::ordered_query_adapter_keeps_repeated_values_zero_and_empty_with_finite_bounds ... ok\ntest validation::tests::all_semantic_bindings_are_exercised ... ok\ntest validation::tests::resource_limits_are_explicit_and_deep_values_drop_without_recursion ... ok\ntest models::tests::intersection_merge_enforces_depth_node_and_combined_wire_bounds ... ok\n\ntest result: ok. 158 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 8 tests\ntest scan_init_reset_and_failed_reinitialization_are_isolated_and_atomic ... ok\ntest explicit_scan_environment_priority_blank_suppression_and_js_trim_match_source ... ok\ntest built_scan_clients_keep_credentials_after_reset_and_both_headers_sign_exact_bytes ... ok\ntest oauth_environment_precedence_empty_suppression_no_trim_and_retry_clamping_match_source ... ok\ntest oauth_resolution_propagates_buffer_events_transport_policy_and_session ... ok\ntest explicit_process_capture_is_whitelisted_in_a_child_without_global_mutation ... ok\ntest non_utf8_environment_values_fail_safely_in_a_child ... ok\ntest invalid_credentials_limits_endpoints_and_environment_values_are_safe_errors ... ok\n\ntest result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 11 tests\ntest attached_runtime_clients_keep_their_independent_key_and_destination ... ok\ntest scm_constructors_reject_foreign_credentials_and_policy_is_never_broadened ... ok\ntest caller_cancellation_deadlines_decode_metadata_and_facade_credential_planes_are_explicit ... ok\ntest invalid_ids_models_filters_ranges_and_url_budgets_fail_before_authentication ... ok\ntest explicit_workspace_planes_and_archived_state_never_infer_permission_fallback ... ok\ntest telemetry_windows_offsets_defaults_and_zero_based_logs_have_exact_source_names ... ok\ntest nullable_receipts_and_unknown_telemetry_values_preserve_the_wire_without_guessing ... ok\ntest every_owned_mutation_is_single_dispatch_for_transport_and_server_ambiguity ... ok\ntest filtered_telemetry_preserves_csv_lists_cents_zero_metadata_and_column_order ... ok\ntest all_twelve_packaged_independent_cases_drive_resource_wire_and_response_contracts ... ok\ntest all_sixty_one_methods_match_frozen_wire_contracts_and_zod_response_specimens ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s\n\n\nrunning 22 tests\ntest constructor_authentication_destination_scoping_and_option_formatting_are_safe ... ok\ntest oversized_queries_and_provider_model_names_are_rejected_without_auth_or_transport ... ok\ntest public_pricing_never_follows_redirects_and_honors_deadline_and_cancellation ... ok\ntest provider_resolution_selects_first_match_and_unknown_errors_omit_input_values ... ok\ntest public_pricing_preserves_unevaluated_recursive_prices_and_exact_segments ... ok\ntest typed_patch_rotation_and_extension_collision_states_remain_explicit ... ok\ntest audit_dates_use_exact_js_utc_milliseconds_and_full_range_without_redacting_data ... ok\ntest empty_optional_successes_required_structures_and_workspace_union_errors_are_distinct ... ok\ntest both_plugin_methods_preserve_secret_bodies_without_debug_disclosure ... ok\ntest all_eight_admin_guardrail_methods_preserve_admin_identity_and_paging_keys ... ok\ntest all_twelve_integration_methods_preserve_catalog_resolution_and_model_workspace_contracts ... ok\ntest all_nine_data_guardrail_methods_keep_admin_catalog_and_distinct_mapping_schema ... ok\ntest all_twelve_api_key_methods_preserve_separate_routes_and_rotation_defaults ... ok\ntest all_ten_mcp_integration_methods_preserve_admin_shapes_and_ordered_workspace_union ... ok\ntest invalid_ids_query_dialects_strict_bodies_and_cross_field_inputs_fail_before_auth ... ok\ntest all_five_secret_reference_methods_keep_credentials_local_and_nullable_updates ... ok\ntest all_forty_four_mutations_preserve_unknown_outcomes_without_replay ... ok\ntest all_thirty_eight_typed_mutations_retain_unknown_decode_failures_without_replay ... ok\ntest all_seven_usage_policy_methods_preserve_zero_page_size_and_no_body_reset ... ok\ntest all_thirty_frozen_control_cases_and_twelve_sibling_cases_exhaust_the_available_corpus ... ok\ntest all_twelve_mcp_server_methods_preserve_opaque_paths_queries_and_partial_updates ... ok\ntest public_pricing_defaults_to_zero_retries_and_explicit_overrides_remain_bounded ... ok\n\ntest result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.51s\n\n\nrunning 8 tests\ntest preflight_checks_every_input_and_iam_configuration_before_any_authentication ... ok\ntest new_scope_workspace_and_additive_binding_match_exact_source_sequence ... ok\ntest reused_scope_is_never_created_or_deleted_and_existing_binding_is_idempotent ... ok\ntest generated_scope_name_is_used_consistently_and_mismatched_receipts_stop_recovery ... ok\ntest definite_workspace_rejection_can_clean_only_owned_scope_and_preserves_cleanup_failure ... ok\ntest ambiguous_creations_never_replay_or_delete_a_potential_dependency ... ok\ntest binding_failure_keeps_confirmed_workspace_receipt_for_explicit_recovery ... ok\ntest cancellation_between_steps_and_total_deadline_do_not_start_new_dispatches ... ok\n\ntest result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s\n\n\nrunning 12 tests\ntest every_native_file_shape_rejects_invalid_fields_collisions_and_bounds_before_dispatch ... ok\ntest all_five_native_multipart_methods_match_exact_parts_bytes_defaults_and_order ... ok\ntest identifiers_routing_clones_binary_content_and_scalar_query_states_remain_exact ... ok\ntest audio_response_format_controls_decoding_without_content_type_guessing ... ok\ntest runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override ... FAILED\ntest all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts ... FAILED\ntest cancellation_deadlines_and_request_limits_apply_before_dispatch_and_to_buffered_events ... ok\ntest typed_stream_close_before_iteration_or_after_buffering_releases_without_replay ... ok\ntest four_inference_streams_preserve_typed_events_terminal_policies_and_metadata ... FAILED\ntest invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch ... FAILED\ntest streaming_failures_keep_safe_metadata_and_never_replay_after_success_headers ... ok\ntest explicit_runtime_replay_is_bounded_and_only_network_or_source_five_xx_statuses_qualify ... ok\n\nfailures:\n\n---- runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override stdout ----\n\nthread 'runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override' (1535928) panicked at crates/scm-sdk/tests/gateway_runtime_contracts.rs:115:35:\ncalled `Result::unwrap()` on an `Err` value: Error(\"invalid type: integer `-9223372036854776000` as i128, expected any value\", line: 0, column: 0)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n---- all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts stdout ----\n\nthread 'all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts' (1535920) panicked at crates/scm-sdk/tests/gateway_runtime_contracts.rs:115:35:\ncalled `Result::unwrap()` on an `Err` value: Error(\"invalid type: integer `-9223372036854776000` as i128, expected any value\", line: 0, column: 0)\n\n---- four_inference_streams_preserve_typed_events_terminal_policies_and_metadata stdout ----\n\nthread 'four_inference_streams_preserve_typed_events_terminal_policies_and_metadata' (1535925) panicked at crates/scm-sdk/tests/gateway_runtime_contracts.rs:115:35:\ncalled `Result::unwrap()` on an `Err` value: Error(\"invalid type: integer `-9223372036854776000` as i128, expected any value\", line: 0, column: 0)\n\n---- invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch stdout ----\n\nthread 'invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch' (1535927) panicked at crates/scm-sdk/tests/gateway_runtime_contracts.rs:115:35:\ncalled `Result::unwrap()` on an `Err` value: Error(\"invalid type: integer `-9223372036854776000` as i128, expected any value\", line: 0, column: 0)\n\n\nfailures:\n    all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts\n    four_inference_streams_preserve_typed_events_terminal_policies_and_metadata\n    invalid_stream_modes_queries_routing_and_identifiers_fail_without_dispatch\n    runtime_default_never_replays_any_frozen_method_even_with_safe_read_retry_override\n\ntest result: FAILED. 8 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s\n\n\n   Compiling scm-sdk v0.1.0 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 14s\n     Running unittests src/lib.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/scm_sdk-f0d743a33d84ed56)\n     Running tests/agentguard_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/agentguard_contracts-a92775b1281bf5e4)\n     Running tests/configuration_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/configuration_contracts-54eaa23be18ab7be)\n     Running tests/dlp_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/dlp_contracts-d324e6da17f96121)\n     Running tests/facade_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/facade_contracts-3709c5587a3b638b)\n     Running tests/gateway_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/gateway_contracts-981b789f20909430)\n     Running tests/gateway_control_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/gateway_control_contracts-01a5a51a75809846)\n     Running tests/gateway_provision_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/gateway_provision_contracts-8aaf1331ebe10b16)\n     Running tests/gateway_runtime_contracts.rs (/build/rust/target/x86_64-unknown-linux-musl/debug/deps/gateway_runtime_contracts-f764e23421adb68e)\nerror: test failed, to rerun pass `--test gateway_runtime_contracts`\n\n"
+    }
+  ]
+}

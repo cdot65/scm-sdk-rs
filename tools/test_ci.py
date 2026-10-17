@@ -30,6 +30,17 @@ def flow_list(name):
 
 
 class CiContractTests(unittest.TestCase):
+    def test_qualification_prepares_complete_locked_graph_before_offline_checks(self):
+        qualification = WORKFLOW.split("  contracts-and-package:", 1)[1].split("\n  rust:", 1)[0]
+        lines = [line.strip() for line in qualification.splitlines()]
+        fetch = "cargo +1.99.0 fetch --locked"
+        ready = "cargo +1.99.0 metadata --all-features --locked --offline --format-version 1 > /dev/null"
+        phase = "run: python3 tools/check_phase.py --phase 8 --verification-only"
+        self.assertIn(fetch, lines)
+        self.assertIn(ready, lines)
+        self.assertLess(lines.index(fetch), lines.index(ready))
+        self.assertLess(lines.index(ready), lines.index(phase))
+
     def test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget(self):
         from review_phase import fingerprint
         spec = importlib.util.spec_from_file_location("ci_build_evidence", ROOT / "scripts/evidence_common.py")

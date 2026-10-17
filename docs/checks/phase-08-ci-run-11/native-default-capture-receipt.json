@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+  "sha256": "2fd7b3a0afd20734a2a0d10e017aa3a1a23cbf3e2e283aefc39244f421ebd2f6",
+  "reader": "read-only exact native export report",
+  "readerSource": "\nconst fs=require(\"node:fs\"),cp=require(\"node:child_process\"),crypto=require(\"node:crypto\");\nconst root=\"/workspace/cdot/scm-sdk-rs\",expected=\"72765d5346afe985d80b87daa1891ea8e6e99302\";\nconst source=cp.execFileSync(\"git\",[\"-c\",`safe.directory=${root}`,\"-C\",root,\"rev-parse\",\"HEAD\"],{encoding:\"utf8\"}).trim();\nif(source!==expected)process.exit(3);\nconst file=root+\"/docs/checks/phase-08-native-exports-1.89.0.json\",info=fs.lstatSync(file);\nif(!info.isFile()||info.size>1024*1024)process.exit(4);\nconst data=fs.readFileSync(file),r=JSON.parse(data);\nif(!r.passed||r.cargoTargetDir!==root+\"/target\")process.exit(5);\nprocess.stdout.write(data);\nprocess.stderr.write(JSON.stringify({sourceCommit:source,sha256:crypto.createHash(\"sha256\").update(data).digest(\"hex\"),reader:\"read-only exact native export report\"})+\"\\n\");\n",
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-17T13:05:55.445618+00:00",
+  "runId": 4844,
+  "runNumber": 11,
+  "sourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+  "report": "docs/checks/phase-08-ci-run-11/native-exports-1.89.0-default-checkpoint.json",
+  "originalBytesVerified": true,
+  "actualCargoTargetDir": "/workspace/cdot/scm-sdk-rs/target",
+  "limits": [
+    "The native export checker passed at this checkpoint; full qualification and its same-workspace private receipt outcome are confirmed separately by the final parent report.",
+    "This reader changed no CI files or environment."
+  ]
+}

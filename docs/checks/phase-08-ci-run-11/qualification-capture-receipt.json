@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-17T13:10:44.226Z",
+  "sourceCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+  "sourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+  "runId": 4844,
+  "runNumber": 11,
+  "passed": false,
+  "sourceUnchanged": true,
+  "parentCommands": 60,
+  "successfulCommands": 59,
+  "originalParentSha256": "fc753f57c2e0209e18a21a0a7d666b05c1fa01198ceb449008177071fac1b902",
+  "originalParentBytesVerified": true,
+  "captureSha256": "6593a82edc8e353a5b73fc476c43f93a3b937d0799c88237fa77e8bf6597f8ca",
+  "failure": {
+    "command": [
+      "python",
+      "scripts/check-dependencies.py",
+      "--output",
+      "docs/checks/phase-08-dependencies.json"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Dependency qualification failed: Unable to resolve locked all-feature dependency metadata\n"
+  },
+  "originalPrivateReceiptCheckPassed": true,
+  "rustMatrixJobsSuccessful": 46,
+  "limitations": [
+    "The exact Cargo metadata stderr was discarded by the dependency checker; its bounded outer error is retained.",
+    "The additional original-byte observer was truncated at job cleanup; the complete primary parent and bundle were captured and its parent bytes verified."
+  ],
+  "sourceInventoryFingerprintVerified": true,
+  "sourceInventoryBytes": 108788298,
+  "sourceInventoryFiles": 412,
+  "cargoLockMatchesColdReproduction": true,
+  "cargoLockSha256": "fba4bdef0c3860a9d3034a036c02c2364adc63fb32c004922041ec3574a26e79",
+  "readerSha256": "fdd95bfd29917eae093529bb7d3f443d65d9560c1a85d6da489d5084eaf7b1ba",
+  "readerSource": "\"use strict\";\n// Read-only watcher, sent on stdin into the existing CI job container.\nconst fs = require(\"node:fs\");\nconst path = require(\"node:path\");\nconst crypto = require(\"node:crypto\");\nconst cp = require(\"node:child_process\");\nconst [root, expectedCommit] = process.argv.slice(2);\nif (!path.isAbsolute(root) || !/^[a-f0-9]{40}$/.test(expectedCommit)) process.exit(2);\nconst started = Date.now();\nconst filename = path.join(root, \"docs/checks/phase-08.json\");\nconst digest = data => crypto.createHash(\"sha256\").update(data).digest(\"hex\");\nconst git = arguments_ => cp.execFileSync(\"git\", [\"-c\", `safe.directory=${root}`, \"-C\", root, ...arguments_],\n                                   { encoding: \"utf8\", timeout: 5000 }).trim();\nconst commit = () => git([\"rev-parse\", \"HEAD\"]);\nif (commit() !== expectedCommit) process.exit(3);\nconst initial = fs.existsSync(filename) ? digest(fs.readFileSync(filename)) : null;\nlet emittedParent = null;\nconst initialChildren = new Map();\nfor (const name of fs.readdirSync(path.join(root, \"docs/checks\"))) {\n  if (/^phase-08[^/]*\\.json$/.test(name)) {\n    const full = path.join(root, \"docs/checks\", name);\n    const info = fs.lstatSync(full);\n    if (info.isFile() && info.size <= 64 * 1024 * 1024)\n      initialChildren.set(`docs/checks/${name}`, digest(fs.readFileSync(full)));\n  }\n}\nfunction boundedRead(relative) {\n  if (!/^docs\\/checks\\/phase-08[^/]*\\.json$/.test(relative)) throw new Error(\"Unexpected report path\");\n  const full = path.join(root, relative);\n  const info = fs.lstatSync(full);\n  if (!info.isFile() || info.size > 64 * 1024 * 1024) throw new Error(\"Report not bounded\");\n  const content = fs.readFileSync(full);\n  return { path: relative, sha256: digest(content), report: JSON.parse(content) };\n}\nconst timer = setInterval(() => {\n  if (Date.now() - started > 3 * 60 * 60 * 1000) process.exit(4);\n  try {\n    const parent = boundedRead(\"docs/checks/phase-08.json\");\n    if (parent.sha256 === initial || parent.report.phase !== 8 ||\n        !Array.isArray(parent.report.checks) ||\n        !(Date.parse(parent.report.checked_at) >= started)) return;\n    // Preserve the parent immediately; job cleanup may remove the container\n    // before the optional child-report and source-inventory bundle finishes.\n    if (emittedParent !== parent.sha256) {\n      process.stdout.write(JSON.stringify({\n        kind: \"phase_report\", schemaVersion: 1,\n        capturedAt: new Date().toISOString(), sourceCommit: commit(),\n        watcherStartedAt: new Date(started).toISOString(), parent,\n      }) + \"\\n\");\n      emittedParent = parent.sha256;\n    }\n    const reports = [];\n    for (const check of parent.report.checks) {\n      const index = check.command.indexOf(\"--output\");\n      if (index === -1) continue;\n      const relative = check.command[index + 1];\n      if (/^docs\\/checks\\/phase-08[^/]*\\.json$/.test(relative)) {\n        const item = boundedRead(relative);\n        item.changedSinceWatcherStarted = initialChildren.get(relative) !== item.sha256;\n        reports.push(item);\n      }\n    }\n    const after = commit();\n    const sourceFiles = [];\n    const names = [...new Set(git([\"ls-files\", \"--cached\", \"--others\", \"--exclude-standard\", \"-z\"])\n      .split(\"\\0\").filter(Boolean))].sort();\n    let sourceBytes = 0;\n    for (const name of names) {\n      if (name === \"docs/phase-status.json\" || name.startsWith(\"docs/checks/\") ||\n          name.startsWith(\"docs/reviews/\")) continue;\n      const full = path.resolve(root, name);\n      if (!full.startsWith(root + path.sep)) throw new Error(\"Invalid source path\");\n      const info = fs.lstatSync(full);\n      sourceBytes += info.size;\n      if (sourceFiles.length >= 32768 || info.size > 64 * 1024 * 1024 ||\n          sourceBytes > 256 * 1024 * 1024) throw new Error(\"Source bound exceeded\");\n      sourceFiles.push(info.isFile() ? {path: name, sha256: digest(fs.readFileSync(full)), bytes: info.size}\n                                   : {path: name, regularFile: false});\n    }\n    const result = {\n      kind: \"phase_bundle\",\n      schemaVersion: 1,\n      capturedAt: new Date().toISOString(),\n      watcherStartedAt: new Date(started).toISOString(),\n      method: \"Read-only watcher in the existing Forgejo job container through configured kubectl and Docker access.\",\n      sourceCommit: expectedCommit, commitUnchanged: after === expectedCommit,\n      parent, reports, sourceFiles,\n      limits: [\"Reads generated credential-free reports without changing the job filesystem or environment.\",\n               \"The phase report and job completion are independently confirmed against Forgejo run metadata.\"]\n    };\n    clearInterval(timer);\n    process.stdout.write(JSON.stringify(result) + \"\\n\");\n  } catch (_) {\n    // A report can be observed during its ordinary write; wait for valid JSON.\n  }\n}, 250);\n",
+  "limitsOfChildReports": "The failed dependency checker did not overwrite its initial dependency report; the raw bundle records changedSinceWatcherStarted=false for it. That child is historical, while the final parent fails its command."
+}

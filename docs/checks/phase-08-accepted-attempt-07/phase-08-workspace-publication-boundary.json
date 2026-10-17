@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T12:28:03.845060+00:00",
+  "reviewedSourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+  "workspaceVersion": "0.1.0",
+  "workspaceStatus": "unreleased_development_snapshot_not_a_registry_release",
+  "published": {
+    "version": "0.1.0",
+    "sourceCommit": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+    "archiveSha256": "6d555d955c3734dd5ee78f7173569bdecd4426095b2ffedc4b77d8f0f2c2e8d9",
+    "receipt": "docs/checks/release-registry-0.1.0.json"
+  },
+  "comparison": {
+    "currentTrialReport": "docs/checks/phase-08-package-1.99.0.json",
+    "currentTrialReportSha256": "baf3baf9471ee2e8b300addc1183dcb4b084adea640602d3466995e7194dd66a",
+    "sameArchiveInventory": true,
+    "changedPackagedInputs": [
+      "README.md"
+    ],
+    "changedGeneratedMetadata": [
+      ".cargo_vcs_info.json"
+    ],
+    "runtimeSourceAndExamplePayloadBytesIdentical": true,
+    "currentTrialArchiveSha256": "47fd439c735316e897650a171dcd087c802d8f033f37ee3a1d12fc443e3b224d",
+    "comparedArchiveFiles": 131,
+    "precedingReceipt": "docs/checks/phase-08-accepted-attempt-06/phase-08-workspace-publication-boundary.json"
+  },
+  "releaseRules": {
+    "publishedVersionImmutable": true,
+    "v0.1.0TagRequiredTarget": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+    "publishCurrentWorkspaceAsExistingVersionPermitted": false,
+    "packagedInputChangeRequiresVersionBumpAndChangelogBeforeRepublication": true,
+    "nextPatchVersion": "0.1.1",
+    "newVersionBumpPerformed": false,
+    "newRegistryPublicationPerformed": false
+  },
+  "limitations": [
+    "This records an explicit development-versus-published-artifact boundary; it is not a new release or a publication guard implementation.",
+    "Current clean archive proofs qualify the reviewed development snapshot; the published 0.1.0 checksum and tag remain bound to source4f65dc48.",
+    "A source-level guard and corresponding release documentation update remain a nonblocking future-publication advisory; no republication is attempted by this task."
+  ]
+}

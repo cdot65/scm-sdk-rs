@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T12:45:14.996314+00:00",
+  "sourceCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
+  "sourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
+  "sourceUnchanged": true,
+  "passed": true,
+  "cargoTargetDirPresentInInvokedEnvironment": false,
+  "actualTargetDir": "/home/cdot/development/cdot65/scm-sdk-rs/target",
+  "nativeConsumerReport": "docs/checks/phase-08-default-cargo-1.99.0.json",
+  "nativeConsumerPassed": true,
+  "toolchain": "1.99.0",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "frozenCapabilities": 3820,
+  "privateReceiptCheck": {
+    "command": [
+      "python",
+      "scripts/check-private-material.py",
+      "--check",
+      "docs/checks/phase-08-private-material.json"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"receiptFresh\": true, \"privateScanReexecuted\": false, \"gitVisibleFilesChecked\": 1052}\n",
+    "stderr": ""
+  },
+  "limitations": [
+    "Actual local native consumer execution with the inherited target setting removed only for this process; no global caller configuration changed.",
+    "The credential-free receipt check proves source freshness after the build, not private matching of later bookkeeping.",
+    "No service request, live acceptance expansion or other operating-system execution is implied."
+  ]
+}
