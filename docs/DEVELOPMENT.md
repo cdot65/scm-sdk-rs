@@ -48,6 +48,12 @@ outcomes; source changes during a run invalidate its evidence. Synthetic tests
 have `PANW_`, `AIRS_` and `SCM_` environment values removed. Live execution is a
 separately selected workflow.
 
+Cargo build output is ignored at every workspace depth. The standalone export
+consumer uses the root `target` directory when `CARGO_TARGET_DIR` is absent or
+empty, and preserves a nonempty caller choice. Keep generated build output in
+ignored directories so it cannot change source fingerprints or consume the
+bounded private-material inventory. See the retained diagnosis in [CI.md](CI.md).
+
 Defaults are `scan` and `reqwest-transport`. Named product features are
 `management`, `dlp`, `iam`, `model-security`, `red-team`, `gateway` and `agentguard`;
 `models` selects shared contracts. Management includes canonical DLP and Gateway

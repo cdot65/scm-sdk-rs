@@ -1,0 +1,104 @@
+{
+  "checkedAt": "2026-10-17T09:49:40.079596+00:00",
+  "passed": true,
+  "action": "https://github.com/astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b",
+  "actionEntrySha256": "a771fe48447c94a58a69cf65f9f596c5301edcb41bf5ee7fad23e5be99d45a7a",
+  "nodeVersion": "v22.23.2",
+  "officialDownloads": {
+    "checkedAt": "2026-10-17T07:55:05.418101+00:00",
+    "releaseApi": "https://api.github.com/repos/astral-sh/uv/releases/tags/0.13.1",
+    "assets": {
+      "x86_64-unknown-linux-gnu": {
+        "archive": "uv-x86_64-unknown-linux-gnu.tar.gz",
+        "archiveSha256": "eadd9d27c134ab5ac1ffd4473b97a741407f3ea238288f03121fc4deddf90220",
+        "binarySha256": "db919fb9428cc8ad04377ba3c898e0ec5fbee83700da5b982b1c9539f1e1b34f",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-gnu.tar.gz",
+        "assetId": 639313223,
+        "archiveBytes": 16738706,
+        "binaryBytes": 37853280
+      },
+      "x86_64-unknown-linux-musl": {
+        "archive": "uv-x86_64-unknown-linux-musl.tar.gz",
+        "archiveSha256": "6c86040a8f045ab9adc9e3ec4cdafa03fd00e9a988ed2bf28971c7fc2d0debd0",
+        "binarySha256": "752a98d0e2aa983cc2f82d1ca53a1f3374b81d523fb743c06c10286fdf29f014",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz",
+        "assetId": 639313248,
+        "archiveBytes": 18745521,
+        "binaryBytes": 44479912
+      },
+      "aarch64-unknown-linux-gnu": {
+        "archive": "uv-aarch64-unknown-linux-gnu.tar.gz",
+        "archiveSha256": "9041c73c99fdc5892cf128140beb354eca9231d502068cc36e6cb53a8e59ad14",
+        "binarySha256": "43c648f0632c625bf5c70ae844cdd69a44c2d4461ef2d4acf08e0720ccdfdf22",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.1/uv-aarch64-unknown-linux-gnu.tar.gz",
+        "assetId": 639312990,
+        "archiveBytes": 15838367,
+        "binaryBytes": 31946704
+      },
+      "aarch64-unknown-linux-musl": {
+        "archive": "uv-aarch64-unknown-linux-musl.tar.gz",
+        "archiveSha256": "345a8308e4d1835cdfaadf692836fd3137a6d45864773f05ad7bf59442b1ba16",
+        "binarySha256": "03e3c10769f16dbb053eee243271f0cb4d74b3b07f60e335e4fd0a53e3de5872",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.1/uv-aarch64-unknown-linux-musl.tar.gz",
+        "assetId": 639313013,
+        "archiveBytes": 17262001,
+        "binaryBytes": 35910080
+      },
+      "aarch64-apple-darwin": {
+        "archive": "uv-aarch64-apple-darwin.tar.gz",
+        "archiveSha256": "cfe454573412ff7380d15fc7dae5997ab53ffce72fce0a78e91ddbc84001acd2",
+        "binarySha256": "c7634fea71703a48913e793c65997d63351f492ee0c38f6c20f0878fb2795d18",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.1/uv-aarch64-apple-darwin.tar.gz",
+        "assetId": 639312976,
+        "archiveBytes": 14280170,
+        "binaryBytes": 27849760
+      },
+      "x86_64-pc-windows-msvc": {
+        "archive": "uv-x86_64-pc-windows-msvc.zip",
+        "archiveSha256": "3b2661a463a5baea7f5076ea2b25ab71d77f36a6c0d809e5350651792f80a672",
+        "binarySha256": "4075a09490327d2bedfacc807fa48252fb93647c5bd7ef28f00e579160ea3fb5",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-pc-windows-msvc.zip",
+        "assetId": 639313211,
+        "archiveBytes": 15308685,
+        "binaryBytes": 32095024
+      }
+    },
+    "platformExecution": "Only Linux x86_64 musl has executed locally; other artifacts were inspected and hashed."
+  },
+  "ownedInputs": {
+    "scripts/uv-integrity.cjs": "12815be3fbf17dc92d49c7af9cd9916f6b30d983cbd651dfb0f8dc2c36fb5964",
+    "scripts/uv-checksums.json": "473d7e90838b63c467cf3d0998c9643320d3a31b43614678e6fb9157aea1c04b",
+    "scripts/bootstrap-python.sh": "6d939e328349fa3acc8ce3a3d464c9a0bfebdc047b49b0297db01d7f4ef0c2e4",
+    ".forgejo/workflows/ci.yml": "5591cf5cbd68444a08262540abbf4219b2615895140d216b3bcc345ee9cdda3e"
+  },
+  "checks": [
+    {
+      "case": "wrong-archive-checksum",
+      "exitCode": 1,
+      "archiveChecksum": "0000000000000000000000000000000000000000000000000000000000000000",
+      "stdout": "::debug::Resolving relative path **/uv.lock to /home/cdot/development/cdot65/scm-sdk-rs/**/uv.lock\n::debug::Resolving version: 0.13.1\n::debug::isExplicit: 0.13.1\n::debug::explicit? true\n::debug::Version 0.13.1 is an explicit version.\n::debug::Trying to get uv from tool cache for 0.13.1...\n::debug::Cached versions: \n::debug::evaluating 0 versions\n::debug::match not found\n::debug::isExplicit: 0.13.1\n::debug::explicit? true\n::debug::checking cache: /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/wrong-archive-checksum/scm-sdk-uv-KiJKOo/uv/0.13.1/x86_64\n::debug::not found\nmanifest-file not provided, reading from local file.\nmanifest-file does not contain version 0.13.1, arch x86_64, platform unknown-linux-musl. Falling back to GitHub releases.\nDownloading uv from \"https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz\" ...\n::debug::Downloading https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz\n::debug::Destination /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/wrong-archive-checksum/ae96c9ef-53fd-4afd-8683-984882c33766\n::debug::download complete\n::error::Checksum for /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/wrong-archive-checksum/ae96c9ef-53fd-4afd-8683-984882c33766 did not match 0000000000000000000000000000000000000000000000000000000000000000.\n",
+      "stderr": "(node:2319735) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n(Use `node --trace-deprecation ...` to show where the warning was created)\n"
+    },
+    {
+      "case": "correct-archive-checksum",
+      "exitCode": 0,
+      "archiveChecksum": "6c86040a8f045ab9adc9e3ec4cdafa03fd00e9a988ed2bf28971c7fc2d0debd0",
+      "stdout": "::debug::Resolving relative path **/uv.lock to /home/cdot/development/cdot65/scm-sdk-rs/**/uv.lock\n::debug::Resolving version: 0.13.1\n::debug::isExplicit: 0.13.1\n::debug::explicit? true\n::debug::Version 0.13.1 is an explicit version.\n::debug::Trying to get uv from tool cache for 0.13.1...\n::debug::Cached versions: \n::debug::evaluating 0 versions\n::debug::match not found\n::debug::isExplicit: 0.13.1\n::debug::explicit? true\n::debug::checking cache: /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/scm-sdk-uv-ehkFBG/uv/0.13.1/x86_64\n::debug::not found\nmanifest-file not provided, reading from local file.\nmanifest-file does not contain version 0.13.1, arch x86_64, platform unknown-linux-musl. Falling back to GitHub releases.\nDownloading uv from \"https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz\" ...\n::debug::Downloading https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz\n::debug::Destination /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/bba7ecaa-a501-44ce-9d31-f10fc323341e\n::debug::download complete\n::debug::Checksum for /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/bba7ecaa-a501-44ce-9d31-f10fc323341e is valid.\n::debug::Checking tar --version\n::debug::tar (busybox) 1.37.0\n[command]/bin/tar xz -C /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/4913f38b-c1c8-4600-97d3-9d1d50e57b7f -f /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/bba7ecaa-a501-44ce-9d31-f10fc323341e\n::debug::Caching tool uv 0.13.1 x86_64\n::debug::source dir: /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/4913f38b-c1c8-4600-97d3-9d1d50e57b7f/uv-x86_64-unknown-linux-musl\n::debug::destination /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/scm-sdk-uv-ehkFBG/uv/0.13.1/x86_64\n::debug::finished caching tool\nSet UV_TOOL_BIN_DIR to /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/bin\nAdded /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/bin to the path\nAdded /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/scm-sdk-uv-ehkFBG/uv/0.13.1/x86_64 to the path\nSet UV_TOOL_DIR to /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/tools\nSet UV_CACHE_DIR to /home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/correct-archive-checksum/cache\nSuccessfully installed uv version 0.13.1\n",
+      "stderr": "(node:2319763) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n(Use `node --trace-deprecation ...` to show where the warning was created)\n"
+    }
+  ],
+  "bootstrap": {
+    "exitCode": 0,
+    "pythonInitiallyAbsent": true,
+    "installedPython": "Python 3.14.7",
+    "stdout": "Verified uv 0.13.1 executable for x86_64-unknown-linux-musl.\n",
+    "stderr": "warning: The `--default` option is experimental and may change without warning. Pass `--preview-features python-install-default` to disable this warning\nDownloading cpython-3.14.7-linux-x86_64-musl (download) (27.6MiB)\n Downloaded cpython-3.14.7-linux-x86_64-musl (download)\nInstalled Python 3.14.7 in 955ms\n + cpython-3.14.7-linux-x86_64-musl (python, python3, python3.14)\nwarning: `/home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/python-bin` is not on your PATH. To use installed Python executables, run `export PATH=\"/home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/python-bin:$PATH\"` or `uv python update-shell`.\n",
+    "uvExecutableSha256": "752a98d0e2aa983cc2f82d1ca53a1f3374b81d523fb743c06c10286fdf29f014",
+    "pythonExecutable": "/home/cdot/development/cdot65/scm-sdk-rs/.local/uv-integrity-4ygi30f6/python-bin/python3"
+  },
+  "limitations": [
+    "Actual local execution is Linux x86_64 musl using Node 22.23.2; the pinned action declares Node 20.",
+    "Other host archive/executable digests were verified without executing those binaries.",
+    "Forgejo step orchestration and runner PATH-file application require a successful remote run."
+  ]
+}

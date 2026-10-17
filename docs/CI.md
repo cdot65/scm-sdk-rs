@@ -143,6 +143,27 @@ runner. Public receipt failures emit closed diagnostic categories without
 reflecting paths, values or arbitrary exception text. This fixes the reproduced
 defect; the exact cause of run 9 needs source-bound remote execution evidence.
 The latest retained outcome is recorded in [phase status](phase-status.json).
+The subsequent [run 10](https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/10) at
+source `6fe1fac` exposed a distinct, concrete build-output problem. A read-only
+check in its live qualification workspace reproduced `repository_byte_limit`.
+The independent Cargo consumer had generated about 4 GB under
+`contracts/native-probes/target/`; the previous `/target/` ignore covered only
+the root workspace. Local checks inherited an external `CARGO_TARGET_DIR` and
+therefore did not reproduce that output placement. Virtual exclusion of those
+3,325 generated files, without changing the job or its receipt, restored the
+exact reviewed source fingerprint. The
+[diagnostic receipt](checks/phase-08-ci-run-10/build-output-diagnosis.json)
+retains that observation and its limits.
+
+Cargo target directories are now ignored at every workspace depth. The standalone
+export checker explicitly selects the root `target` directory when
+`CARGO_TARGET_DIR` is absent or empty, and preserves a nonempty caller choice.
+Its report records the selected directory. Temporary Git-repository regressions
+prove that generated root and nested build outputs leave the source fingerprint
+and bounded private-evidence inventory unchanged; subprocess regressions cover
+the actual checker's default and caller-selected environment. These changes keep
+the source byte limit unchanged. Current source-bound remote outcomes remain in
+[phase status](phase-status.json).
 Local phase reports identify the executed compiler, native musl host, feature set,
 source fingerprint, commands, and outcomes. The portable Python bootstrap has
 separate local execution evidence with job-local paths and exact version checks;

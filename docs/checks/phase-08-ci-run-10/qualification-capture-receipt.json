@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-17T11:30:00.917Z",
+  "sourceCommit": "6fe1facbc77b5cd1ee24f44c2c8d9b094c9efe6d",
+  "runNumber": 10,
+  "parentReport": "docs/checks/phase-08-ci-run-10/phase-08.json",
+  "parentReportSha256": "8d3dfab1c31e6b4ffed540136e04e7763830215b3ead1e669ef49a74978d0f9a",
+  "reconstructedOriginalBytesVerified": true,
+  "captureSha256": "3a23471db3001a75daf3b2a603e6a265c6afe6ca23ef3e6865ed4b690a17b948",
+  "captureFile": "docs/checks/phase-08-ci-run-10/qualification-capture.jsonl",
+  "parentChecks": 57,
+  "passed": false,
+  "sourceUnchanged": false,
+  "failure": {
+    "command": [
+      "python",
+      "scripts/check-private-material.py",
+      "--check",
+      "docs/checks/phase-08-private-material.json"
+    ],
+    "exit_code": 1,
+    "stderr": "Public receipt verification failed: repository_byte_limit\n"
+  },
+  "watcherExit": 137,
+  "limits": [
+    "The complete parent report was captured before job teardown; the optional child-report/source-hash bundle was not captured.",
+    "The reader only observed the CI workspace. It did not alter build files, environment, receipts or job result.",
+    "46 Rust jobs succeeded; three optional native jobs were not executed."
+  ]
+}

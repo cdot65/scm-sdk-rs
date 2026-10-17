@@ -1,0 +1,92 @@
+{
+  "checkedAt": "2026-10-17T03:02:44.087059+00:00",
+  "passed": true,
+  "bootstrapScriptSha256": "ff70f80eb5825d9f405fc68da17c74191a5c6935fb2eb173ca3e559325e24891",
+  "pythonPinSha256": "922fe0c3de073b01988e23348ea184456161678c5e329e6f34be89be24383f93",
+  "uvVersion": "0.13.1",
+  "uvBinarySha256": "752a98d0e2aa983cc2f82d1ca53a1f3374b81d523fb743c06c10286fdf29f014",
+  "uvDownload": {
+    "url": "https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz",
+    "version": "0.13.1",
+    "archiveSha256": "6c86040a8f045ab9adc9e3ec4cdafa03fd00e9a988ed2bf28971c7fc2d0debd0",
+    "verifiedAgainst": "GitHub release asset digest from the authoritative astral-sh/uv release API",
+    "binarySha256": "752a98d0e2aa983cc2f82d1ca53a1f3374b81d523fb743c06c10286fdf29f014"
+  },
+  "pythonVersion": "3.14.7",
+  "initialPythonUnavailable": true,
+  "jobLocalDirectories": true,
+  "checks": [
+    {
+      "command": [
+        "/bin/bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "command -v python; command -v python3"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "uv",
+        "python",
+        "dir",
+        "--bin"
+      ],
+      "exit_code": 0,
+      "stdout": "/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-python-bootstrap-2026-10-17-attempt-02/python-bin\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/bin/bash",
+        "scripts/bootstrap-python.sh"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "warning: The `--default` option is experimental and may change without warning. Pass `--preview-features python-install-default` to disable this warning\nDownloading cpython-3.14.7-linux-x86_64-musl (download) (27.6MiB)\n Downloaded cpython-3.14.7-linux-x86_64-musl (download)\nInstalled Python 3.14.7 in 954ms\n + cpython-3.14.7-linux-x86_64-musl (python, python3, python3.14)\nwarning: `/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-python-bootstrap-2026-10-17-attempt-02/python-bin` is not on your PATH. To use installed Python executables, run `export PATH=\"/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-python-bootstrap-2026-10-17-attempt-02/python-bin:$PATH\"` or `uv python update-shell`.\n"
+    },
+    {
+      "command": [
+        "python",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "Python 3.14.7\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "Python 3.14.7\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-c",
+        "import tarfile,tomllib; assert callable(tarfile.data_filter); assert tomllib.loads(\"value = 1\")[\"value\"] == 1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "limitations": [
+    "Local Linux x86_64 musl execution; not a Forgejo/act run.",
+    "Uses a hash-verified official uv release binary; the setup-uv JavaScript action is not executed locally.",
+    "Runner PATH-file application is simulated; Windows/macOS/ARM execution remains unverified."
+  ],
+  "configuredHostDownloadAvailability": {
+    "linux-x86_64-gnu": true,
+    "linux-aarch64-gnu": true,
+    "macos-aarch64-none": true,
+    "windows-x86_64-none": true,
+    "linux-x86_64-musl": true
+  }
+}

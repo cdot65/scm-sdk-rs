@@ -38,6 +38,11 @@ def main():
         if key.startswith(("PANW_", "AIRS_", "SCM_")):
             env.pop(key)
     env["CARGO_TERM_COLOR"] = "never"
+    # The independent consumer otherwise creates contracts/native-probes/target.
+    # Keep default output in the repository's ignored build directory while
+    # respecting a nonempty caller-selected cache location.
+    if not env.get("CARGO_TARGET_DIR"):
+        env["CARGO_TARGET_DIR"] = str(ROOT / "target")
     cargo = cargo_path(args.cargo)
     rustc = cargo.with_name("rustc.exe" if os.name == "nt" else "rustc")
     version = subprocess.check_output([str(rustc), "+" + args.toolchain, "-vV"], cwd=ROOT, env=env, text=True)
@@ -61,6 +66,7 @@ def main():
         "passed": result.returncode == 0 and unchanged, "sourceUnchanged": unchanged,
         "nativeExportsSha256": before, "frozenCapabilities": 3820, "toolchain": args.toolchain,
         "rustcVersion": version, "hostTarget": host, "execution": "separate_public_consumer_compile_and_execution",
+        "cargoTargetDir": env["CARGO_TARGET_DIR"],
         "command": command, "exit_code": result.returncode, "stdout": result.stdout, "stderr": result.stderr,
         "durationSeconds": round(time.monotonic() - started, 3),
         "limitations": ["This proves the recorded native host/compiler public API probes and literal assertions, not successful live service workflows."]}

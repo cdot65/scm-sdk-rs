@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-10-17T03:14:36.319771+00:00",
+  "passed": true,
+  "originalCommit": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+  "cases": [
+    {
+      "case": "reported_workflow",
+      "inputSha256": "31c98322fc92b468d92dcc7611426db15f0be2a7eb418c23670d7450a524ac50",
+      "succeeded": false,
+      "expectedSucceeded": false,
+      "output": "test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... \n  test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='contracts-and-package') ... FAIL\n  test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='rust') ... FAIL\n  test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='additional-native-platforms') ... FAIL\n\n======================================================================\nFAIL: test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='contracts-and-package')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 78, in test_every_job_bootstraps_rust_before_running_commands\n    self.assertEqual(installations, toolchains)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['\"1.89.0\"', '\"1.99.0\"']\n\nSecond list contains 2 additional elements.\nFirst extra element 0:\n'\"1.89.0\"'\n\n- []\n+ ['\"1.89.0\"', '\"1.99.0\"']\n\n======================================================================\nFAIL: test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='rust')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 78, in test_every_job_bootstraps_rust_before_running_commands\n    self.assertEqual(installations, toolchains)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['${{ matrix.toolchain }}']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'${{ matrix.toolchain }}'\n\n- []\n+ ['${{ matrix.toolchain }}']\n\n======================================================================\nFAIL: test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='additional-native-platforms')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 78, in test_every_job_bootstraps_rust_before_running_commands\n    self.assertEqual(installations, toolchains)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['\"1.99.0\"']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'\"1.99.0\"'\n\n- []\n+ ['\"1.99.0\"']\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=3)\n"
+    },
+    {
+      "case": "corrected_workflow",
+      "inputSha256": "6a77cc7601c0628c6ed11dc26a100f8ae9fc0764852fccf8e0b9b7d1e8c7c226",
+      "succeeded": true,
+      "expectedSucceeded": true,
+      "output": "test_every_job_bootstraps_rust_before_running_commands (ci_current_guard.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+    },
+    {
+      "case": "stale_ci_document",
+      "inputSha256": "e80699f1696ea50719c4a8e9cf33f759dca44731eb487c60956017c9ae90260d",
+      "succeeded": false,
+      "expectedSucceeded": false,
+      "output": "test_ci_documentation_matches_action_pins_and_setup_effects (ci_final_doc_guard.CiContractTests.test_ci_documentation_matches_action_pins_and_setup_effects) ... FAIL\n\n======================================================================\nFAIL: test_ci_documentation_matches_action_pins_and_setup_effects (ci_final_doc_guard.CiContractTests.test_ci_documentation_matches_action_pins_and_setup_effects)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-final-doc-guard-k98vwm4e/tools/test_ci.py\", line 101, in test_ci_documentation_matches_action_pins_and_setup_effects\n    self.assertEqual(documented, actions)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the second set but not the first:\n'dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8'\n'astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b'\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "case": "corrected_ci_document",
+      "inputSha256": "fb6654bdf227b8428a2a3005f0224e54bebaefa1ae752fc705ae1360fba51cdb",
+      "succeeded": true,
+      "expectedSucceeded": true,
+      "output": "test_ci_documentation_matches_action_pins_and_setup_effects (ci_final_doc_guard.CiContractTests.test_ci_documentation_matches_action_pins_and_setup_effects) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+    }
+  ],
+  "limitations": [
+    "Offline guards validate setup ordering and CI documentation; remote execution remains separate."
+  ]
+}

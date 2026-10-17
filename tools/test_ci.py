@@ -30,6 +30,76 @@ def flow_list(name):
 
 
 class CiContractTests(unittest.TestCase):
+    def test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget(self):
+        from review_phase import fingerprint
+        spec = importlib.util.spec_from_file_location("ci_build_evidence", ROOT / "scripts/evidence_common.py")
+        common = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(common)
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = pathlib.Path(temporary)
+            repository = directory / "repository"
+            repository.mkdir()
+            subprocess.run(["git", "init", "-q", str(repository)], check=True)
+            empty_ignore = directory / "empty-global-ignore"
+            empty_ignore.touch()
+            subprocess.run(["git", "-C", str(repository), "config", "core.excludesFile",
+                            str(empty_ignore)], check=True)
+            (repository / ".gitignore").write_text((ROOT / ".gitignore").read_text())
+            (repository / "Cargo.toml").write_text("[workspace]\n")
+            source = repository / "contracts/native-probes/src/main.rs"
+            source.parent.mkdir(parents=True)
+            source.write_text("fn main() {}\n")
+            subprocess.run(["git", "-C", str(repository), "add", "--", ".gitignore",
+                            "Cargo.toml", "contracts/native-probes/src/main.rs"], check=True)
+            expected = fingerprint(repository)
+            baseline = common.git_files(repository, source_only=True)
+            budget = sum(map(len, baseline.values())) + 128
+            artifacts = [repository / "target/debug/root.rmeta",
+                         repository / "contracts/native-probes/target/debug/deps/consumer.rlib",
+                         repository / "crates/future-client/target/debug/future-client"]
+            for artifact in artifacts:
+                artifact.parent.mkdir(parents=True, exist_ok=True)
+                artifact.write_bytes(b"synthetic compiled output\n" * 512)
+            self.assertEqual(fingerprint(repository), expected)
+            with mock.patch.object(common, "MAX_TREE_BYTES", budget):
+                self.assertEqual(common.git_files(repository, source_only=True), baseline)
+                self.assertEqual(common.git_files(repository), baseline)
+            self.assertTrue(all(path.is_file() for path in artifacts))
+
+    def test_export_checker_owns_default_build_directory_and_preserves_caller_choice(self):
+        spec = importlib.util.spec_from_file_location("ci_export_build_directory",
+                                                      ROOT / "scripts/check-native-exports.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = pathlib.Path(temporary)
+            repository = directory / "repository"
+            (repository / "contracts").mkdir(parents=True)
+            (repository / "contracts/native-exports.json").write_text("{}\n")
+            cargo = directory / "tools/cargo"
+            supplied = str(directory / "caller-selected-target")
+            for index, configured in enumerate((None, "", supplied)):
+                environment = {"PATH": os.defpath, "PANW_TEST_SECRET": "synthetic-not-forwarded"}
+                if configured is not None:
+                    environment["CARGO_TARGET_DIR"] = configured
+                report = directory / f"report-{index}.json"
+                completed = subprocess.CompletedProcess([], 0, stdout="synthetic check", stderr="")
+                with self.subTest(configured=configured), \
+                     mock.patch.object(module, "ROOT", repository), \
+                     mock.patch.object(module, "cargo_path", return_value=cargo), \
+                     mock.patch.object(module.subprocess, "check_output",
+                                       return_value="rustc 1.99.0\nhost: x86_64-unknown-linux-gnu\n"), \
+                     mock.patch.object(module.subprocess, "run", return_value=completed) as run, \
+                     mock.patch.dict(os.environ, environment, clear=True), \
+                     mock.patch.object(sys, "argv", ["check-native-exports.py", "--output", str(report)]), \
+                     contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(module.main(), 0)
+                invocation = next(call for call in run.call_args_list if call.args[0][0] == str(cargo))
+                expected = configured or str(repository / "target")
+                self.assertEqual(invocation.kwargs["env"].get("CARGO_TARGET_DIR"), expected)
+                self.assertNotIn("PANW_TEST_SECRET", invocation.kwargs["env"])
+                self.assertEqual(json.loads(report.read_text())["cargoTargetDir"], expected)
+
     def test_phase_timeout_preserves_partial_output_and_a_failing_report(self):
         spec = importlib.util.spec_from_file_location("phase_ci_timeout", ROOT / "tools/check_phase.py")
         module = importlib.util.module_from_spec(spec)

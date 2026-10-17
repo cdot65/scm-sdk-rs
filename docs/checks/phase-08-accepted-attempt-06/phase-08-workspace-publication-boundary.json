@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T10:49:11.428878+00:00",
+  "reviewedSourceSha256": "3e77197835e1f9b6f56e05b775b8e8403f7449c8fe1cbf31fbe725ff8391543c",
+  "workspaceVersion": "0.1.0",
+  "workspaceStatus": "unreleased_development_snapshot_not_a_registry_release",
+  "published": {
+    "version": "0.1.0",
+    "sourceCommit": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+    "archiveSha256": "6d555d955c3734dd5ee78f7173569bdecd4426095b2ffedc4b77d8f0f2c2e8d9",
+    "receipt": "docs/checks/release-registry-0.1.0.json"
+  },
+  "comparison": {
+    "currentTrialReport": "docs/checks/phase-08-package-1.99.0.json",
+    "currentTrialReportSha256": "cc5b3cfe3ff6196dc6e475e28e73afb69f4392588159c88c10591b62a2988772",
+    "sameArchiveInventory": true,
+    "changedPackagedInputs": [
+      "README.md"
+    ],
+    "changedGeneratedMetadata": [
+      ".cargo_vcs_info.json"
+    ],
+    "runtimeSourceAndExamplePayloadBytesIdentical": true
+  },
+  "releaseRules": {
+    "publishedVersionImmutable": true,
+    "v0.1.0TagRequiredTarget": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+    "publishCurrentWorkspaceAsExistingVersionPermitted": false,
+    "packagedInputChangeRequiresVersionBumpAndChangelogBeforeRepublication": true,
+    "nextPatchVersion": "0.1.1",
+    "newVersionBumpPerformed": false,
+    "newRegistryPublicationPerformed": false
+  },
+  "limitations": [
+    "This records an explicit development-versus-published-artifact boundary; it is not a new release or a publication guard implementation.",
+    "Current clean archive proofs qualify the reviewed development snapshot; the published 0.1.0 checksum and tag remain bound to source4f65dc48.",
+    "A source-level guard and corresponding release documentation update remain a nonblocking future-publication advisory; no republication is attempted by this task."
+  ]
+}

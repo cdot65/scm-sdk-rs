@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T11:32:45.219281+00:00",
+  "sourceCommit": "6fe1facbc77b5cd1ee24f44c2c8d9b094c9efe6d",
+  "reviewedSourceSha256": "3e77197835e1f9b6f56e05b775b8e8403f7449c8fe1cbf31fbe725ff8391543c",
+  "runNumber": 10,
+  "runId": 4837,
+  "directReceiptCheck": "docs/checks/phase-08-ci-run-10/ci-run10-direct-private-receipt.json",
+  "inventory": "docs/checks/phase-08-ci-run-10/ci-run10-source-inventory-diagnostic.json",
+  "virtualExclusion": "docs/checks/phase-08-ci-run-10/ci-run10-virtual-target-exclusion.json",
+  "cause": "The standalone consumer has its own Cargo workspace. With CARGO_TARGET_DIR unset in CI, Cargo writes contracts/native-probes/target; the root-anchored /target/ ignore does not exclude it. Generated artifacts enter Git-visible source inventory and exhaust its byte budget.",
+  "observedSourceBytes": 4023429395,
+  "sourceByteLimit": 268435456,
+  "excludedBuildFiles": 3325,
+  "sourceBytesWithoutBuildArtifacts": 108781268,
+  "virtualExclusionRestoresExactReviewedFingerprint": true,
+  "localEnvironment": {
+    "cargoTargetDirConfigured": true,
+    "configuredTargetOutsideRepository": true
+  },
+  "methods": [
+    "Credential-free private receipt check executed read-only in the running CI workspace.",
+    "File names/sizes acquired using the same cleaned Git environment and source exclusion rules.",
+    "Virtual filtering and source hashing changed no CI worktree file, environment or receipt."
+  ],
+  "limits": [
+    "The run10 job is not repaired or made passing by operator cleanup. A reviewed source correction and a new full CI run are required.",
+    "Run9 used the same anchored ignore and consumer build path; its original captured exception remains unavailable. The concrete cause is directly demonstrated in run10."
+  ]
+}

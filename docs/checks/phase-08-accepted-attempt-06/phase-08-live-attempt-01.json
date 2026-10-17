@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "executedAt": "2026-10-16T18:35:42.825019+00:00",
+  "runtimeInputsSha256": "f2d5574e0b144555096129940895c9025ae79c21a4d52b24cbf89d50307b4fe9",
+  "binarySha256": "7bc1f2004a9c99493431af2baa09bd02f383239462f8b9b8570e12f7614dd5ba",
+  "toolchain": "1.99.0",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "commandTemplate": [
+    "live_qualification",
+    "--config",
+    "[external-registration]",
+    "--expect-tsg",
+    "[verified-external-scope]",
+    "--output",
+    "[private-report]",
+    "--recovery-output",
+    "[private-recovery]",
+    "--mutations"
+  ],
+  "report": {
+    "schemaVersion": 1,
+    "tenantScopeMatched": true,
+    "client": "native_scm_sdk",
+    "crateVersion": "0.1.0",
+    "automaticRetries": 0,
+    "maximumTransportAttempts": 80,
+    "perOperationTimeoutSeconds": 15,
+    "scanAuthentication": "api_key_hmac",
+    "mutationsEnabled": true,
+    "cleanupState": "not_needed",
+    "probes": [
+      {
+        "operation": "oauth.get_token",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "management.profiles.list_for_token",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "management.api_keys.list_for_token",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "management.profiles.list",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "dlp.data_profiles.list",
+        "classification": "not_found_or_unavailable",
+        "status": 404,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "model_security.models.list_models",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "model_security.scans.list",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "model_security.rules.list",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "red_team.eula.get_status",
+        "classification": "permission_prerequisite",
+        "status": 403,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "red_team.get_scan_metadata",
+        "classification": "permission_prerequisite",
+        "status": 403,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "red_team.get_management_languages",
+        "classification": "permission_prerequisite",
+        "status": 403,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "agentguard.list_scans",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "agentguard.get_scan_stats",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "agentguard.list_rules",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "gateway.workspaces.list",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "iam.scopes.list",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "scan.sync_scan",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "scan.query_scan_results",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "scan.query_report",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "scan.async_scan",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "scan.query_async_results",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "iam.scopes.owned_fixture_preflight",
+        "classification": "service_contract_rejection",
+        "status": 400,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "iam.scopes.create",
+        "classification": "not_attempted_missing_prerequisite",
+        "status": null,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": false
+      },
+      {
+        "operation": "gateway.provision.owned_fixture_preflight",
+        "classification": "service_contract_rejection",
+        "status": 400,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "gateway.workspaces.provision",
+        "classification": "not_attempted_missing_prerequisite",
+        "status": null,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": false
+      }
+    ],
+    "cleanup": [],
+    "serviceRequests": 22,
+    "tokenExchanges": 1,
+    "limitations": [
+      "Only the explicitly recorded workflows were attempted; remaining methods are live-unqualified.",
+      "Synthetic scans retain server audit records; the frozen scan API has no deletion method.",
+      "Workspace deletion is archival; permanent deletion is unavailable in the frozen API."
+    ]
+  }
+}
