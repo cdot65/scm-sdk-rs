@@ -50,41 +50,40 @@
       "limitations": [
         {
           "id": "automated-dependency-policy",
-          "status": "deferred",
+          "status": "resolved_in_phase_8",
           "due_phase": 8,
           "scope": "Fresh advisory scan and complete resolved dependency license/source policy; native dependency selection and notices reviewed in Phase2.",
           "evidence": [
             "docs/DEPENDENCIES.md",
-            ".forgejo/workflows/ci.yml"
+            "docs/checks/phase-08-dependencies.json"
           ]
         },
         {
           "id": "remote-ci-execution",
-          "status": "pending",
+          "status": "configured_unexecuted",
           "due_phase": 8,
           "evidence": [
-            "docs/DEVELOPMENT.md",
-            ".forgejo/workflows/ci.yml"
+            "docs/CI.md"
           ],
-          "scope": "Workflow configured; no retained remote run yet."
+          "scope": "Workflow configured; local gates executed. Forgejo run metadata is inaccessible with available read credentials; no remote execution claim."
         },
         {
           "id": "native-platform-qualification",
-          "status": "pending",
+          "status": "qualified_with_explicit_limits",
           "due_phase": 8,
           "evidence": [
-            "docs/DEVELOPMENT.md"
+            "docs/PLATFORMS.md"
           ],
-          "scope": "Actual foundation execution covers Linux x86_64 musl; declared additional platform jobs require native execution."
+          "scope": "Native execution on Linux x86_64 musl; four additional target triples compile portable core/product features only. Native optional transports and other-OS runtime jobs remain unexecuted."
         }
       ],
       "open_parity_items": [
         {
           "id": "oauth-token-buffer-configuration",
-          "status": "implemented_in_phase_7_pending_review",
+          "status": "accepted_in_phase_7",
           "due_phase": 7,
           "baseline": "OAuthClientOptions.tokenBufferMs",
-          "current": "Safe fixed min(30s,TTL/5) early refresh buffer",
+          "current": "Configurable bounded early-refresh buffering with native metadata subscription and lifecycle tests.",
           "evidence": [
             "docs/OAUTH.md",
             "crates/scm-sdk/src/auth.rs"
@@ -157,7 +156,7 @@
         "contracts/native-semantics.json",
         "contracts/native-fixtures/schemas.json"
       ],
-      "live_acceptance": "pending_phase_8",
+      "live_acceptance": "recorded_per_method_in_contracts_qualification_json",
       "review_attempts": [
         "docs/reviews/phase-03-attempt-01.json"
       ],
@@ -205,7 +204,7 @@
         "contracts/native-operation-mappings/oauth-management.json",
         "contracts/native-operation-mappings/oauth-provider.json"
       ],
-      "live_acceptance": "pending_phase_8",
+      "live_acceptance": "recorded_per_method_in_contracts_qualification_json",
       "implemented_scope": {
         "managementMethods": 87,
         "iamMethods": 6,
@@ -221,8 +220,13 @@
         {
           "id": "packaged-unit-tests",
           "due_phase": 8,
-          "status": "pending",
-          "scope": "Consumer archive currently builds independently. A repository-only models unit test includes the full external oracle corpus; qualify and make archive unit testing independent without bundling the47MiB development corpus."
+          "status": "resolved_in_phase_8",
+          "scope": "Consumer archive currently builds independently. A repository-only models unit test includes the full external oracle corpus; qualify and make archive unit testing independent without bundling the47MiB development corpus.",
+          "evidence": [
+            "docs/PACKAGING.md",
+            "docs/checks/phase-08-package-1.89.0.json",
+            "docs/checks/phase-08-package-1.99.0.json"
+          ]
         }
       ],
       "accepted_source_sha256": "50fd6e8a79bbcb21749754d400aeb2e49f35e9a5c1077215e79db6ede8146ce1",
@@ -252,8 +256,9 @@
       "review_advisories": [
         {
           "source": "docs/reviews/phase-04-attempt-01.json",
-          "status": "implementation_in_phase_5",
-          "scope": "Remove unnecessary IAM feature dependency; clarify DLP headers; assert dashboard query ordering; expand whitespace/macro formatting; retain rows on rejected opaque next cursors with explicit cursor-limit override."
+          "status": "accepted_by_phase_5_review",
+          "scope": "Remove unnecessary IAM feature dependency; clarify DLP headers; assert dashboard query ordering; expand whitespace/macro formatting; retain rows on rejected opaque next cursors with explicit cursor-limit override.",
+          "acceptance_evidence": "docs/reviews/phase-05-attempt-01.json"
         }
       ]
     },
@@ -273,7 +278,7 @@
         "contracts/native-operation-mappings/red-team.json",
         "contracts/native-operation-mappings/red-team-resources.json"
       ],
-      "live_acceptance": "pending_phase_8",
+      "live_acceptance": "recorded_per_method_in_contracts_qualification_json",
       "implemented_scope": {
         "modelSecurityMethods": 49,
         "redTeamMethods": 102,
@@ -312,8 +317,9 @@
       "review_advisories": [
         {
           "source": "docs/reviews/phase-05-attempt-01.json",
-          "status": "implementation_in_phase_6",
-          "scope": "Record equivalent Red Team metadata contracts accurately; centralize option Debug redaction; expand handwritten code layout with explicit rustfmt width; remove redundant text deadline wrapper."
+          "status": "accepted_by_phase_6_review",
+          "scope": "Record equivalent Red Team metadata contracts accurately; centralize option Debug redaction; expand handwritten code layout with explicit rustfmt width; remove redundant text deadline wrapper.",
+          "acceptance_evidence": "docs/reviews/phase-06-attempt-02.json"
         }
       ]
     },
@@ -335,7 +341,7 @@
         "contracts/native-operation-mappings/gateway-control.json",
         "contracts/native-operation-mappings/gateway-runtime.json"
       ],
-      "live_acceptance": "pending_phase_8",
+      "live_acceptance": "recorded_per_method_in_contracts_qualification_json",
       "implemented_scope": {
         "gatewayMethods": 194,
         "explicitPhaseSevenWorkflows": 2,
@@ -409,13 +415,13 @@
         "contracts/native-operation-mappings/gateway-provision.json",
         "contracts/native-operation-mappings/gateway-realtime.json"
       ],
-      "live_acceptance": "pending_phase_8",
+      "live_acceptance": "recorded_per_method_in_contracts_qualification_json",
       "implemented_scope": {
         "baselineMethods": 448,
         "completeMethodOptions": 448,
         "pendingMethods": 0,
         "baselineExportCapabilities": 3820,
-        "status": "verified_pending_claude_review"
+        "status": "accepted_by_review"
       },
       "milestones": {
         "implemented_scope": {
@@ -450,8 +456,14 @@
       "review_advisories": [
         {
           "source": "docs/reviews/phase-07-attempt-01.json",
-          "status": "due_phase_8",
-          "scope": "Derive export-probe feature gates and exercise exact combinations; bind facade behavioral evidence; update CI MSRV; clarify zero-event-queue option rustdoc; centralize the repeated UUID predicate."
+          "status": "accepted_by_phase_8_review",
+          "scope": "Derive export-probe feature gates and exercise exact combinations; bind facade behavioral evidence; update CI MSRV; clarify zero-event-queue option rustdoc; centralize the repeated UUID predicate.",
+          "evidence": [
+            "docs/ADVERSARIAL.md",
+            "docs/CI.md",
+            "crates/scm-sdk/tests/facade_contracts.rs"
+          ],
+          "acceptance_evidence": "docs/reviews/phase-08-attempt-02.json"
         }
       ],
       "accepted_source_sha256": "921ab15afd82841ec23a8e8780b808898e774eae87e50aa476f9d717a4a96080",
@@ -465,8 +477,185 @@
       "qualification_candidates": [
         {
           "id": "sse-json-number-overflow",
-          "status": "pending_adversarial_regression",
-          "scope": "Investigate and conservatively reject SSE error envelopes whose nonzero number exceeds f64 when serde_json/arbitrary_precision is unified; retain ordinary JSON behavior and safe diagnostics."
+          "status": "accepted_by_phase_8_review",
+          "scope": "SSE truthiness preserves nonzero overflow numbers and underflow-to-zero behavior under serde_json arbitrary_precision; independent Node oracle plus deterministic parser adversarial cases.",
+          "evidence": [
+            "docs/ADVERSARIAL.md",
+            "crates/scm-sdk/src/streaming/sse/tests.rs",
+            "crates/scm-sdk/tests/parser_qualification.rs"
+          ],
+          "acceptance_evidence": "docs/reviews/phase-08-attempt-02.json"
+        },
+        {
+          "id": "serde-wide-numeric-decoding",
+          "status": "accepted_by_phase_8_review",
+          "scope": "Private public-Serde adapter retains exact wide numbers across typed model/HTTP/SSE/realtime paths under arbitrary-precision dependency feature unification.",
+          "evidence": [
+            "crates/scm-sdk/src/json_decode.rs",
+            "crates/scm-sdk/src/json_decode/tests.rs",
+            "crates/scm-sdk/tests/gateway_runtime_contracts.rs",
+            "docs/ADVERSARIAL.md"
+          ],
+          "acceptance_evidence": "docs/reviews/phase-08-attempt-02.json"
+        },
+        {
+          "id": "serde-reserved-protocol-objects",
+          "status": "accepted_by_phase_8_review",
+          "scope": "Feature-stable fail-closed rejection of reserved Serde literal-object keys before raw parsing and owned-value decoding; documented precise Rust security restriction.",
+          "evidence": [
+            "crates/scm-sdk/src/json_decode.rs",
+            "crates/scm-sdk/src/json_decode/tests.rs",
+            "crates/scm-sdk/tests/gateway_runtime_contracts.rs",
+            "crates/scm-sdk/src/streaming/sse/tests.rs",
+            "docs/MODELS.md"
+          ],
+          "acceptance_evidence": "docs/reviews/phase-08-attempt-02.json"
+        },
+        {
+          "id": "tracing-capture-registration-isolation",
+          "status": "accepted_by_phase_8_review",
+          "scope": "Deterministic first-registration regression and retained inert test dispatcher prevent scoped-subscriber callsite-cache races; production tracing/global defaults unchanged.",
+          "evidence": [
+            "crates/scm-sdk/src/observability/tests.rs",
+            "docs/checks/phase-08-tracing-stress-1.99.0.json",
+            "docs/OBSERVABILITY.md"
+          ],
+          "acceptance_evidence": "docs/reviews/phase-08-attempt-02.json"
+        }
+      ],
+      "scope_evidence": [
+        "contracts/qualification.json",
+        "contracts/live-evidence.json",
+        "docs/LIVE_ACCEPTANCE.md",
+        "docs/OBSERVABILITY.md",
+        "docs/PLATFORMS.md",
+        "docs/PACKAGING.md",
+        "docs/DEPENDENCIES.md",
+        "docs/CI.md",
+        "docs/RELEASE.md",
+        "docs/DEVELOPMENT.md",
+        "docs/ADVERSARIAL.md",
+        "scripts/check-tracing-stress.py",
+        "scripts/check-private-material.py",
+        "docs/checks/phase-08-private-material.json"
+      ],
+      "live_acceptance": "recorded_per_method_with_explicit_service_prerequisites",
+      "delivery": {
+        "registry_publication": "not_requested_not_performed",
+        "remote_ci": "configured_unexecuted",
+        "clean_release_archive": "scheduled_after_accepted_source_commit",
+        "status": "accepted_source_pending_delivery"
+      },
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review_pending_delivery",
+          "evidence": [
+            "docs/reviews/phase-08-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
+          "commands_passed": 77,
+          "evidence": [
+            "docs/checks/phase-08.json"
+          ]
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-08-attempt-02.json"
+          ]
+        }
+      },
+      "review_attempts": [
+        "docs/reviews/phase-08-attempt-01.json"
+      ],
+      "review_fixes": [
+        {
+          "source": "docs/reviews/phase-08-attempt-01.json",
+          "status": "accepted_by_phase_8_review_attempt_2",
+          "prior_score": 9,
+          "scope": "Reproducible tracing/private-material evidence; precise rejected-request diagnostics; conservative repeated-observation aggregation; documented public rustdoc coverage and product entry-point examples.",
+          "preserved_checks": "docs/checks/phase-08-attempt-05/phase-08.json",
+          "evidence": [
+            "scripts/check-tracing-stress.py",
+            "scripts/check-private-material.py",
+            "tools/test_auxiliary_evidence.py",
+            "tools/test_live_evidence.py",
+            "tools/test_qualification.py",
+            "crates/scm-sdk/examples/live_qualification.rs",
+            "docs/DEVELOPMENT.md",
+            "docs/OBSERVABILITY.md",
+            "docs/SECURITY.md",
+            "docs/LIVE_ACCEPTANCE.md"
+          ],
+          "acceptance_evidence": "docs/reviews/phase-08-attempt-02.json"
+        }
+      ],
+      "accepted_review_pending_delivery": {
+        "path": "docs/reviews/phase-08-attempt-02.json",
+        "score": 9,
+        "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
+        "status": "verified_pending_clean_archive_and_push"
+      },
+      "review_advisories": [
+        {
+          "source": "docs/reviews/phase-08-attempt-02.json",
+          "status": "recorded_with_explicit_live_and_qualification_limits",
+          "items": [
+            {
+              "id": "live-mutation-cause",
+              "severity": "medium",
+              "status": "experimental_unqualified_followup",
+              "scope": "IAM scope creation and Gateway provisioning return400; the cause remains unestablished, no SDK defect is excluded, and downstream mutation/cleanup paths lack successful live evidence. Private diagnostics and vendor/tenant contract reconciliation are required before stable promotion.",
+              "evidence": [
+                "docs/LIVE_ACCEPTANCE.md",
+                "contracts/qualification.json",
+                "docs/checks/phase-08-live-attempt-06.json"
+              ]
+            },
+            {
+              "id": "derived-probe-feature-drift-guard",
+              "severity": "low",
+              "status": "future_maintenance_guard",
+              "scope": "Current exact ten-feature union is verified; add a checker equality assertion when evolving the generated export feature union."
+            },
+            {
+              "id": "final-bookkeeping-credential-scan",
+              "severity": "low",
+              "status": "passed_before_source_commit_pending_release_proof_refresh",
+              "scope": "Refresh the actual selected-value scan after new review and release-proof files are written.",
+              "evidence": [
+                "docs/checks/phase-08-private-material.json"
+              ]
+            },
+            {
+              "id": "isolated-msrv-matrix",
+              "severity": "low",
+              "status": "configured_unexecuted_with_limits",
+              "scope": "Executed MSRV evidence covers default/minimal/all/tracing/native-probes and full public consumers/packages. The additional per-isolated-feature MSRV jobs are configured without retained remote execution."
+            },
+            {
+              "id": "consumer-unsafe-lint",
+              "severity": "low",
+              "status": "future_policy_enforcement_guard",
+              "scope": "The generated standalone consumer contains no unsafe code; make its independent workspace inherit an explicit forbid lint in future maintenance."
+            },
+            {
+              "id": "clean-commit-proof-and-push",
+              "severity": "low",
+              "status": "in_progress_required_before_phase_completion",
+              "scope": "Commit/push accepted source, run both --require-clean archive proofs, and retain delivery metadata before completing Phase8."
+            },
+            {
+              "id": "dependency-runner-layout",
+              "severity": "low",
+              "status": "future_readability_cleanup",
+              "scope": "Reformat the enforced dependency-policy runner without altering its strict policy."
+            }
+          ]
         }
       ]
     }

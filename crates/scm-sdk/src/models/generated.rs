@@ -94,8 +94,7 @@ impl AIGatewayChartFilters {
     }
     pub const SCHEMA: &'static str = "s000035";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -267,8 +266,7 @@ impl AdapterConfigResponse {
     }
     pub const SCHEMA: &'static str = "s010351";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -390,8 +388,7 @@ impl AdapterCreateRequest {
     }
     pub const SCHEMA: &'static str = "s011956";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -513,8 +510,7 @@ impl AdapterList {
     }
     pub const SCHEMA: &'static str = "s012024";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -630,8 +626,7 @@ impl AdapterListItem {
     }
     pub const SCHEMA: &'static str = "s012011";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -824,8 +819,7 @@ impl AdapterResponse {
     }
     pub const SCHEMA: &'static str = "s011982";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1016,8 +1010,7 @@ impl AdapterUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s011969";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1159,8 +1152,7 @@ impl AdapterValidateRequest {
     }
     pub const SCHEMA: &'static str = "s012028";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1286,8 +1278,7 @@ impl AdapterValidateResponse {
     }
     pub const SCHEMA: &'static str = "s012038";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1396,8 +1387,7 @@ impl AdapterVar {
     }
     pub const SCHEMA: &'static str = "s011947";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1504,8 +1494,7 @@ impl AdapterVarResponse {
     }
     pub const SCHEMA: &'static str = "s011953";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1664,8 +1653,7 @@ impl AdvancedDataProfileRequest {
     }
     pub const SCHEMA: &'static str = "s008540";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1775,8 +1763,7 @@ impl AgentEntry {
     }
     pub const SCHEMA: &'static str = "s007857";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1867,8 +1854,7 @@ impl AgentGuardPageOptions {
     }
     pub const SCHEMA: &'static str = "s000191";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -1977,8 +1963,7 @@ impl AgentGuardRule {
     }
     pub const SCHEMA: &'static str = "s000179";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -2101,8 +2086,7 @@ impl AgentGuardRuleList {
     }
     pub const SCHEMA: &'static str = "s000188";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -2193,8 +2177,7 @@ impl AgentGuardRuleListPagination {
     }
     pub const SCHEMA: &'static str = "s000102";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -2361,8 +2344,7 @@ impl AgentGuardScan {
     }
     pub const SCHEMA: &'static str = "s000106";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -2610,8 +2592,7 @@ impl AgentGuardScanEvalDetails {
     }
     pub const SCHEMA: &'static str = "s000122";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -2740,8 +2721,7 @@ impl AgentGuardScanEvalDetailsRuleOutcomesItem {
     }
     pub const SCHEMA: &'static str = "s000125";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -2886,8 +2866,7 @@ impl AgentGuardScanEvalSummary {
     }
     pub const SCHEMA: &'static str = "s000119";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -2989,8 +2968,7 @@ impl AgentGuardScanList {
     }
     pub const SCHEMA: &'static str = "s000149";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -3109,8 +3087,7 @@ impl AgentGuardScanListOptions {
     }
     pub const SCHEMA: &'static str = "s000196";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -3228,8 +3205,7 @@ impl AgentGuardScanStats {
     }
     pub const SCHEMA: &'static str = "s000156";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -3337,8 +3313,7 @@ impl AgentGuardScanStatsTopVulnerability {
     }
     pub const SCHEMA: &'static str = "s000159";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -3432,8 +3407,7 @@ impl AgentGuardScanStatsUniqueSkillsScanned {
     }
     pub const SCHEMA: &'static str = "s000152";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -3527,8 +3501,7 @@ impl AgentGuardScanSummary {
     }
     pub const SCHEMA: &'static str = "s000116";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -3621,8 +3594,7 @@ impl AgentGuardStatsOptions {
     }
     pub const SCHEMA: &'static str = "s000204";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -3806,8 +3778,7 @@ impl AgentGuardVulnerability {
     }
     pub const SCHEMA: &'static str = "s000162";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -4029,8 +4000,7 @@ impl AgentGuardVulnerabilityList {
     }
     pub const SCHEMA: &'static str = "s000176";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -4133,8 +4103,7 @@ impl AgentMeta {
     }
     pub const SCHEMA: &'static str = "s007766";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -4232,8 +4201,7 @@ impl AgentProtectionItem {
     }
     pub const SCHEMA: &'static str = "s009560";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -4342,8 +4310,7 @@ impl AgentReport {
     }
     pub const SCHEMA: &'static str = "s007863";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -4440,8 +4407,7 @@ impl AiProfile {
     }
     pub const SCHEMA: &'static str = "s007738";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -4537,8 +4503,7 @@ impl AiSecurityProfile {
     }
     pub const SCHEMA: &'static str = "s009599";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -4809,8 +4774,7 @@ impl ApiKey {
     }
     pub const SCHEMA: &'static str = "s008781";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5092,8 +5056,7 @@ impl ApiKeyCreateRequest {
     }
     pub const SCHEMA: &'static str = "s008828";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5254,8 +5217,7 @@ impl ApiKeyDPInfo {
     }
     pub const SCHEMA: &'static str = "s008928";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5366,8 +5328,7 @@ impl ApiKeyDeleteResponseVariant1 {
     }
     pub const SCHEMA: &'static str = "s008858";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5452,8 +5413,7 @@ impl ApiKeyDeleteResponseVariant2 {
     }
     pub const SCHEMA: &'static str = "s008860";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5541,8 +5501,7 @@ impl ApiKeyListResponse {
     }
     pub const SCHEMA: &'static str = "s008851";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5637,8 +5596,7 @@ impl ApiKeyRegenerateRequest {
     }
     pub const SCHEMA: &'static str = "s008845";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5747,8 +5705,7 @@ impl AppExclusion {
     }
     pub const SCHEMA: &'static str = "s008040";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5841,8 +5798,7 @@ impl AsyncScanObject {
     }
     pub const SCHEMA: &'static str = "s007745";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -5943,8 +5899,7 @@ impl AsyncScanResponse {
     }
     pub const SCHEMA: &'static str = "s007803";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -6175,8 +6130,7 @@ impl AttackDetailResponse {
     }
     pub const SCHEMA: &'static str = "s011302";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -6441,8 +6395,7 @@ impl AttackDetailResponseFile {
     }
     pub const SCHEMA: &'static str = "s011312";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -6647,8 +6600,7 @@ impl AttackListItem {
     }
     pub const SCHEMA: &'static str = "s011256";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -6877,8 +6829,7 @@ impl AttackListResponse {
     }
     pub const SCHEMA: &'static str = "s011299";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -7097,8 +7048,7 @@ impl AttackMultiTurnDetailResponse {
     }
     pub const SCHEMA: &'static str = "s011361";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -7363,8 +7313,7 @@ impl AttackMultiTurnDetailResponseFile {
     }
     pub const SCHEMA: &'static str = "s011371";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -7542,8 +7491,7 @@ impl AttackMultiTurnOutput {
     }
     pub const SCHEMA: &'static str = "s011228";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -7764,8 +7712,7 @@ impl AttackOutput {
     }
     pub const SCHEMA: &'static str = "s011206";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8012,8 +7959,7 @@ impl AuditResponse {
     }
     pub const SCHEMA: &'static str = "s008022";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8267,8 +8213,7 @@ impl AuthConfigRequestVariant2 {
     }
     pub const SCHEMA: &'static str = "s010750";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8390,8 +8335,7 @@ impl AuthConfigRequestVariant3 {
     }
     pub const SCHEMA: &'static str = "s010755";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8481,8 +8425,7 @@ impl AuthSettingsResponse {
     }
     pub const SCHEMA: &'static str = "s007707";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8613,8 +8556,7 @@ impl BaseResponse {
     }
     pub const SCHEMA: &'static str = "s012457";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8709,8 +8651,7 @@ impl BasicAuthAuthConfig {
     }
     pub const SCHEMA: &'static str = "s010721";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8834,8 +8775,7 @@ impl BatchAssignCustomRuleRequest {
     }
     pub const SCHEMA: &'static str = "s009778";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -8918,8 +8858,7 @@ impl BatchAssignCustomRuleResponse {
     }
     pub const SCHEMA: &'static str = "s009791";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9022,8 +8961,7 @@ impl BedrockAccessConnectionParams {
     }
     pub const SCHEMA: &'static str = "s010780";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9182,8 +9120,7 @@ impl CacheHitTrendResponse {
     }
     pub const SCHEMA: &'static str = "s006778";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9283,8 +9220,7 @@ impl CacheHitTrendResponseData {
     }
     pub const SCHEMA: &'static str = "s006781";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9394,8 +9330,7 @@ impl CacheHitTrendResponseDataSummary {
     }
     pub const SCHEMA: &'static str = "s006793";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9514,8 +9449,7 @@ impl CacheHitTrendResponseDataTrendItem {
     }
     pub const SCHEMA: &'static str = "s006784";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9641,8 +9575,7 @@ impl CacheSummaryResponse {
     }
     pub const SCHEMA: &'static str = "s006766";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9736,8 +9669,7 @@ impl CacheSummaryResponseData {
     }
     pub const SCHEMA: &'static str = "s006769";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -9842,8 +9774,7 @@ impl CacheSummaryResponseDataSummary {
     }
     pub const SCHEMA: &'static str = "s006771";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -10010,8 +9941,7 @@ impl CategoryModel {
     }
     pub const SCHEMA: &'static str = "s011198";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -10161,8 +10091,7 @@ impl CategoryReport {
     }
     pub const SCHEMA: &'static str = "s011441";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -10324,8 +10253,7 @@ impl CgReport {
     }
     pub const SCHEMA: &'static str = "s007883";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -10479,8 +10407,7 @@ impl Channel {
     }
     pub const SCHEMA: &'static str = "s010530";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -10620,8 +10547,7 @@ impl ChannelListPagination {
     }
     pub const SCHEMA: &'static str = "s010566";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -10709,8 +10635,7 @@ impl ChannelListResponse {
     }
     pub const SCHEMA: &'static str = "s010571";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -10840,8 +10765,7 @@ impl ChannelStats {
     }
     pub const SCHEMA: &'static str = "s010576";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -11006,8 +10930,7 @@ impl ClaraJobMetadata {
     }
     pub const SCHEMA: &'static str = "s010989";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -11102,8 +11025,7 @@ impl ClientIdAndCustomerApp {
     }
     pub const SCHEMA: &'static str = "s009284";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -11201,8 +11123,7 @@ impl CmdEntry {
     }
     pub const SCHEMA: &'static str = "s007839";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -11380,8 +11301,7 @@ impl ComplianceFramework {
     }
     pub const SCHEMA: &'static str = "s010389";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -11538,8 +11458,7 @@ impl ComplianceFrameworkTechniquesItem {
     }
     pub const SCHEMA: &'static str = "s010398";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -11702,8 +11621,7 @@ impl ComplianceReport {
     }
     pub const SCHEMA: &'static str = "s011485";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -11924,8 +11842,7 @@ impl ComplianceTechnique {
     }
     pub const SCHEMA: &'static str = "s011470";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -12077,8 +11994,7 @@ impl ConditionGroup {
     }
     pub const SCHEMA: &'static str = "s009687";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -12294,8 +12210,7 @@ impl ConnectionParamsRequestVariant2 {
     }
     pub const SCHEMA: &'static str = "s010829";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -12448,8 +12363,7 @@ impl ContentError {
     }
     pub const SCHEMA: &'static str = "s007910";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -12579,8 +12493,7 @@ impl CostChartResponse {
     }
     pub const SCHEMA: &'static str = "s006675";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -12680,8 +12593,7 @@ impl CostChartResponseData {
     }
     pub const SCHEMA: &'static str = "s006678";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -12791,8 +12703,7 @@ impl CountByName {
     }
     pub const SCHEMA: &'static str = "s010604";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -12883,8 +12794,7 @@ impl CountChartResponse {
     }
     pub const SCHEMA: &'static str = "s006684";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -13021,8 +12931,7 @@ impl CountChartResponseData {
     }
     pub const SCHEMA: &'static str = "s006687";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -13202,8 +13111,7 @@ impl CreateChannelRequest {
     }
     pub const SCHEMA: &'static str = "s010519";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -13348,8 +13256,7 @@ impl CreateCustomTopicRequest {
     }
     pub const SCHEMA: &'static str = "s008884";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -13540,8 +13447,7 @@ impl CreateSecurityProfileRequest {
     }
     pub const SCHEMA: &'static str = "s009632";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -13682,8 +13588,7 @@ impl CursorPagination {
     }
     pub const SCHEMA: &'static str = "s009794";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -13807,8 +13712,7 @@ impl CustomAttackOutput {
     }
     pub const SCHEMA: &'static str = "s011742";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -13989,8 +13893,7 @@ impl CustomAttackReportResponse {
     }
     pub const SCHEMA: &'static str = "s011793";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -14134,8 +14037,7 @@ impl CustomAttacksListResponse {
     }
     pub const SCHEMA: &'static str = "s011847";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -14307,8 +14209,7 @@ impl CustomJobMetadata {
     }
     pub const SCHEMA: &'static str = "s010953";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -14464,8 +14365,7 @@ impl CustomPromptCreateRequest {
     }
     pub const SCHEMA: &'static str = "s012602";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -14573,8 +14473,7 @@ impl CustomPromptList {
     }
     pub const SCHEMA: &'static str = "s012676";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -14698,8 +14597,7 @@ impl CustomPromptListItem {
     }
     pub const SCHEMA: &'static str = "s012660";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -14908,8 +14806,7 @@ impl CustomPromptResponse {
     }
     pub const SCHEMA: &'static str = "s012626";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -15090,8 +14987,7 @@ impl CustomPromptResponsePropertyAssignmentsItem {
     }
     pub const SCHEMA: &'static str = "s012645";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -15182,8 +15078,7 @@ impl CustomPromptSetArchiveRequest {
     }
     pub const SCHEMA: &'static str = "s012496";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -15281,8 +15176,7 @@ impl CustomPromptSetCreateRequest {
     }
     pub const SCHEMA: &'static str = "s012470";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -15483,8 +15377,7 @@ impl CustomPromptSetList {
     }
     pub const SCHEMA: &'static str = "s012567";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -15575,8 +15468,7 @@ impl CustomPromptSetListActive {
     }
     pub const SCHEMA: &'static str = "s012585";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -15713,8 +15605,7 @@ impl CustomPromptSetListItem {
     }
     pub const SCHEMA: &'static str = "s012542";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -15878,8 +15769,7 @@ impl CustomPromptSetListItemLanguage {
     }
     pub const SCHEMA: &'static str = "s012545";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16008,8 +15898,7 @@ impl CustomPromptSetReference {
     }
     pub const SCHEMA: &'static str = "s012571";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16232,8 +16121,7 @@ impl CustomPromptSetResponse {
     }
     pub const SCHEMA: &'static str = "s012499";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16421,8 +16309,7 @@ impl CustomPromptSetResponseLanguage {
     }
     pub const SCHEMA: &'static str = "s012502";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16530,8 +16417,7 @@ impl CustomPromptSetUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s012481";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16658,8 +16544,7 @@ impl CustomPromptSetVersionInfo {
     }
     pub const SCHEMA: &'static str = "s012589";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16788,8 +16673,7 @@ impl CustomPromptUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s012613";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16885,8 +16769,7 @@ impl CustomRuleAssignment {
     }
     pub const SCHEMA: &'static str = "s009775";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -16995,8 +16878,7 @@ impl CustomRuleAssignmentResult {
     }
     pub const SCHEMA: &'static str = "s009781";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -17147,8 +17029,7 @@ impl CustomRuleCreateRequest {
     }
     pub const SCHEMA: &'static str = "s009696";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -17382,8 +17263,7 @@ impl CustomRuleListItem {
     }
     pub const SCHEMA: &'static str = "s009754";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -17630,8 +17510,7 @@ impl CustomRuleResponse {
     }
     pub const SCHEMA: &'static str = "s009727";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -17819,8 +17698,7 @@ impl CustomRuleSecurityGroup {
     }
     pub const SCHEMA: &'static str = "s009766";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -18058,8 +17936,7 @@ impl CustomRuleUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s009708";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -18260,8 +18137,7 @@ impl CustomTopic {
     }
     pub const SCHEMA: &'static str = "s008864";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -18406,8 +18282,7 @@ impl CustomTopicListResponse {
     }
     pub const SCHEMA: &'static str = "s008906";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -18546,8 +18421,7 @@ impl CustomerApp {
     }
     pub const SCHEMA: &'static str = "s008933";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -18701,8 +18575,7 @@ impl CustomerAppDeleteResponseVariant1 {
     }
     pub const SCHEMA: &'static str = "s008972";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -18785,8 +18658,7 @@ impl CustomerAppDeleteResponseVariant2 {
     }
     pub const SCHEMA: &'static str = "s008974";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -18876,8 +18748,7 @@ impl CustomerAppListResponse {
     }
     pub const SCHEMA: &'static str = "s008965";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19000,8 +18871,7 @@ impl CustomerAppWithKeys {
     }
     pub const SCHEMA: &'static str = "s008952";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19210,8 +19080,7 @@ impl DSDetailResult {
     }
     pub const SCHEMA: &'static str = "s007918";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19368,8 +19237,7 @@ impl DSDetailResultDlpSnippets {
     }
     pub const SCHEMA: &'static str = "s007921";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19478,8 +19346,7 @@ impl DSDetailResultDlpSnippetsMeta {
     }
     pub const SCHEMA: &'static str = "s007924";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19580,8 +19447,7 @@ impl DSDetailResultPiReport {
     }
     pub const SCHEMA: &'static str = "s007944";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19702,8 +19568,7 @@ impl DSResultMetadata {
     }
     pub const SCHEMA: &'static str = "s007994";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19820,8 +19685,7 @@ impl DashboardAppListItem {
     }
     pub const SCHEMA: &'static str = "s008978";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -19966,8 +19830,7 @@ impl DashboardApplication {
     }
     pub const SCHEMA: &'static str = "s009146";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20123,8 +19986,7 @@ impl DashboardApplicationSessionsBucket {
     }
     pub const SCHEMA: &'static str = "s009179";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20231,8 +20093,7 @@ impl DashboardApplicationViolationBreakdown {
     }
     pub const SCHEMA: &'static str = "s009174";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20329,8 +20190,7 @@ impl DashboardApplicationsOverview {
     }
     pub const SCHEMA: &'static str = "s009216";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20465,8 +20325,7 @@ impl DashboardApplicationsOverviewItem {
     }
     pub const SCHEMA: &'static str = "s009190";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20589,8 +20448,7 @@ impl DashboardApplicationsViolationsTrend {
     }
     pub const SCHEMA: &'static str = "s009237";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20673,8 +20531,7 @@ impl DashboardAppsList {
     }
     pub const SCHEMA: &'static str = "s008982";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20762,8 +20619,7 @@ impl DashboardOverviewResponse {
     }
     pub const SCHEMA: &'static str = "s012706";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20864,8 +20720,7 @@ impl DashboardPagination {
     }
     pub const SCHEMA: &'static str = "s009020";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -20961,8 +20816,7 @@ impl DashboardPolicyViolation {
     }
     pub const SCHEMA: &'static str = "s009220";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -21071,8 +20925,7 @@ impl DashboardScanContent {
     }
     pub const SCHEMA: &'static str = "s009113";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -21194,8 +21047,7 @@ impl DashboardScanContents {
     }
     pub const SCHEMA: &'static str = "s009105";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -21332,8 +21184,7 @@ impl DashboardSession {
     }
     pub const SCHEMA: &'static str = "s009052";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -21547,8 +21398,7 @@ impl DashboardSessionAction {
     }
     pub const SCHEMA: &'static str = "s009028";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -21727,8 +21577,7 @@ impl DashboardSessionApplication {
     }
     pub const SCHEMA: &'static str = "s009054";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -21850,8 +21699,7 @@ impl DashboardSessionOverviewItem {
     }
     pub const SCHEMA: &'static str = "s009010";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -22011,8 +21859,7 @@ impl DashboardSessionStats {
     }
     pub const SCHEMA: &'static str = "s009133";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -22221,8 +22068,7 @@ impl DashboardSessionTransaction {
     }
     pub const SCHEMA: &'static str = "s009095";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -22431,8 +22277,7 @@ impl DashboardSessionsChart {
     }
     pub const SCHEMA: &'static str = "s009006";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -22548,8 +22393,7 @@ impl DashboardSessionsChartBucket {
     }
     pub const SCHEMA: &'static str = "s008985";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -22678,8 +22522,7 @@ impl DashboardSessionsOverview {
     }
     pub const SCHEMA: &'static str = "s009017";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -22779,8 +22622,7 @@ impl DashboardTopApplicationViolations {
     }
     pub const SCHEMA: &'static str = "s009224";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -22887,8 +22729,7 @@ impl DashboardTopApplicationsViolations {
     }
     pub const SCHEMA: &'static str = "s009230";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -23005,8 +22846,7 @@ impl DashboardTransactionAttributes {
     }
     pub const SCHEMA: &'static str = "s009077";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -23123,8 +22963,7 @@ impl DashboardViolationsTrendBucket {
     }
     pub const SCHEMA: &'static str = "s009233";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -23284,8 +23123,7 @@ impl DataFilteringDetails {
     }
     pub const SCHEMA: &'static str = "s008132";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -23513,8 +23351,7 @@ impl DataFilteringProfileRequest {
     }
     pub const SCHEMA: &'static str = "s008165";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -23954,8 +23791,7 @@ impl DataFilteringProfileResponse {
     }
     pub const SCHEMA: &'static str = "s008195";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -24218,8 +24054,7 @@ impl DataFilteringRuleDTO {
     }
     pub const SCHEMA: &'static str = "s008121";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -24322,8 +24157,7 @@ impl DataLeakDetectionMember {
     }
     pub const SCHEMA: &'static str = "s009464";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -24467,8 +24301,7 @@ impl DataPatternDetectionConfig {
     }
     pub const SCHEMA: &'static str = "s008328";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -24629,8 +24462,7 @@ impl DataPatternMatchingRules {
     }
     pub const SCHEMA: &'static str = "s008333";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -24763,8 +24595,7 @@ impl DataPatternPatchRequest {
     }
     pub const SCHEMA: &'static str = "s008372";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -24909,8 +24740,7 @@ impl DataPatternRequest {
     }
     pub const SCHEMA: &'static str = "s008365";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -25103,8 +24933,7 @@ impl DataPatternResponse {
     }
     pub const SCHEMA: &'static str = "s008382";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -25316,8 +25145,7 @@ impl DataPatternTags {
     }
     pub const SCHEMA: &'static str = "s008351";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -25532,8 +25360,7 @@ impl DataProfilePatchRequest {
     }
     pub const SCHEMA: &'static str = "s008548";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -25715,8 +25542,7 @@ impl DataProfileResponse {
     }
     pub const SCHEMA: &'static str = "s008557";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26002,8 +25828,7 @@ impl DataProtection {
     }
     pub const SCHEMA: &'static str = "s009489";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26103,8 +25928,7 @@ impl DataProtectionDataLeakDetection {
     }
     pub const SCHEMA: &'static str = "s009492";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26207,8 +26031,7 @@ impl DatabaseSecurityItem {
     }
     pub const SCHEMA: &'static str = "s009471";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26333,8 +26156,7 @@ impl DatabricksConnectionParams {
     }
     pub const SCHEMA: &'static str = "s010766";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26506,8 +26328,7 @@ impl DbsEntry {
     }
     pub const SCHEMA: &'static str = "s007820";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26623,8 +26444,7 @@ impl DefaultTreeDetectionRule {
     }
     pub const SCHEMA: &'static str = "s008529";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26749,8 +26569,7 @@ impl DeleteProfileConflict {
     }
     pub const SCHEMA: &'static str = "s009664";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26847,8 +26666,7 @@ impl DeleteProfileConflictPayloadItem {
     }
     pub const SCHEMA: &'static str = "s009668";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -26962,8 +26780,7 @@ impl DeleteProfileResponseVariant1 {
     }
     pub const SCHEMA: &'static str = "s009658";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27048,8 +26865,7 @@ impl DeleteProfileResponseVariant2 {
     }
     pub const SCHEMA: &'static str = "s009660";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27133,8 +26949,7 @@ impl DeleteTopicConflict {
     }
     pub const SCHEMA: &'static str = "s008919";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27231,8 +27046,7 @@ impl DeleteTopicConflictPayloadItem {
     }
     pub const SCHEMA: &'static str = "s008923";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27346,8 +27160,7 @@ impl DeleteTopicResponseVariant1 {
     }
     pub const SCHEMA: &'static str = "s008913";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27432,8 +27245,7 @@ impl DeleteTopicResponseVariant2 {
     }
     pub const SCHEMA: &'static str = "s008915";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27521,8 +27333,7 @@ impl DeploymentProfileAttribute {
     }
     pub const SCHEMA: &'static str = "s012792";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27639,8 +27450,7 @@ impl DeploymentProfileEntry {
     }
     pub const SCHEMA: &'static str = "s009240";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27807,8 +27617,7 @@ impl DeploymentProfileRequest {
     }
     pub const SCHEMA: &'static str = "s012798";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -27940,8 +27749,7 @@ impl DeploymentProfilesResponse {
     }
     pub const SCHEMA: &'static str = "s009252";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -28044,8 +27852,7 @@ impl DestinationAttributes {
     }
     pub const SCHEMA: &'static str = "s008089";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -28290,8 +28097,7 @@ impl DetectionRuleItem {
     }
     pub const SCHEMA: &'static str = "s008446";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -28604,8 +28410,7 @@ impl DetectionServiceResult {
     }
     pub const SCHEMA: &'static str = "s008010";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -28723,8 +28528,7 @@ impl DetectorViolationBreakdownEntry {
     }
     pub const SCHEMA: &'static str = "s008989";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -28861,8 +28665,7 @@ impl Device {
     }
     pub const SCHEMA: &'static str = "s012754";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -28999,8 +28802,7 @@ impl DeviceInstance {
     }
     pub const SCHEMA: &'static str = "s012732";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -29147,8 +28949,7 @@ impl DeviceLicense {
     }
     pub const SCHEMA: &'static str = "s012738";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -29272,8 +29073,7 @@ impl DeviceRequest {
     }
     pub const SCHEMA: &'static str = "s012780";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -29372,8 +29172,7 @@ impl DeviceResponse {
     }
     pub const SCHEMA: &'static str = "s012786";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -29467,8 +29266,7 @@ impl DeviceStatus {
     }
     pub const SCHEMA: &'static str = "s012773";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -29803,8 +29601,7 @@ impl DictionaryMetaDataDTO {
     }
     pub const SCHEMA: &'static str = "s008621";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -29925,8 +29722,7 @@ impl DictionaryPatchRequest {
     }
     pub const SCHEMA: &'static str = "s008655";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -30075,8 +29871,7 @@ impl DictionaryRequest {
     }
     pub const SCHEMA: &'static str = "s008645";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -30289,8 +30084,7 @@ impl DictionaryResponse {
     }
     pub const SCHEMA: &'static str = "s008668";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -30460,8 +30254,7 @@ impl DictionaryTags {
     }
     pub const SCHEMA: &'static str = "s008632";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -30625,8 +30418,7 @@ impl DlpDataProfile {
     }
     pub const SCHEMA: &'static str = "s009256";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -30810,8 +30602,7 @@ impl DlpDataProfilePolicy {
     }
     pub const SCHEMA: &'static str = "s009570";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -30952,8 +30743,7 @@ impl DlpDataProfileRule1 {
     }
     pub const SCHEMA: &'static str = "s009265";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -31036,8 +30826,7 @@ impl DlpDataProfileRule2 {
     }
     pub const SCHEMA: &'static str = "s009270";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -31158,8 +30947,7 @@ impl DlpPatternDetection {
     }
     pub const SCHEMA: &'static str = "s007894";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -31272,8 +31060,7 @@ impl DlpProfileListResponse {
     }
     pub const SCHEMA: &'static str = "s009280";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -31403,8 +31190,7 @@ impl DlpReport {
     }
     pub const SCHEMA: &'static str = "s007965";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -31523,8 +31309,7 @@ impl DlpRule {
     }
     pub const SCHEMA: &'static str = "s009566";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -31717,8 +31502,7 @@ impl DynamicJobMetadata {
     }
     pub const SCHEMA: &'static str = "s010895";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -31947,8 +31731,7 @@ impl DynamicJobReport {
     }
     pub const SCHEMA: &'static str = "s011553";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32090,8 +31873,7 @@ impl DynamicJobReportStats {
     }
     pub const SCHEMA: &'static str = "s011035";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32199,8 +31981,7 @@ impl ErrorCategoryTrendsResponse {
     }
     pub const SCHEMA: &'static str = "s000581";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32297,8 +32078,7 @@ impl ErrorCategoryTrendsResponseData {
     }
     pub const SCHEMA: &'static str = "s000584";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32400,8 +32180,7 @@ impl ErrorCategoryTrendsResponseDataSummary {
     }
     pub const SCHEMA: &'static str = "s000586";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32495,8 +32274,7 @@ impl ErrorCategoryTrendsResponseDataTrendItem {
     }
     pub const SCHEMA: &'static str = "s000577";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32738,8 +32516,7 @@ impl ErrorLog {
     }
     pub const SCHEMA: &'static str = "s011900";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32890,8 +32667,7 @@ impl ErrorLogListResponse {
     }
     pub const SCHEMA: &'static str = "s011937";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -32999,8 +32775,7 @@ impl ErrorResponse {
     }
     pub const SCHEMA: &'static str = "s008731";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33098,8 +32873,7 @@ impl ErrorResponseError {
     }
     pub const SCHEMA: &'static str = "s008738";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33187,8 +32961,7 @@ impl ErrorResponseRetryAfter {
     }
     pub const SCHEMA: &'static str = "s008743";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33361,8 +33134,7 @@ impl ErrorTrendsResponse {
     }
     pub const SCHEMA: &'static str = "s006808";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33459,8 +33231,7 @@ impl ErrorTrendsResponseData {
     }
     pub const SCHEMA: &'static str = "s006811";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33559,8 +33330,7 @@ impl ErrorTrendsResponseDataSummary {
     }
     pub const SCHEMA: &'static str = "s006813";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33648,8 +33418,7 @@ impl EulaAcceptRequest {
     }
     pub const SCHEMA: &'static str = "s012711";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33738,8 +33507,7 @@ impl EulaContentResponse {
     }
     pub const SCHEMA: &'static str = "s012717";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33837,8 +33605,7 @@ impl EulaResponse {
     }
     pub const SCHEMA: &'static str = "s012720";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -33991,8 +33758,7 @@ impl EvalSummary {
     }
     pub const SCHEMA: &'static str = "s009823";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34116,8 +33882,7 @@ impl ExceptionRuleDTO {
     }
     pub const SCHEMA: &'static str = "s008102";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34325,8 +34090,7 @@ impl Exclusions {
     }
     pub const SCHEMA: &'static str = "s008062";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34475,8 +34239,7 @@ impl ExpressionTreeNode {
     }
     pub const SCHEMA: &'static str = "s008511";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34572,8 +34335,7 @@ impl FeedbackModelsResponse {
     }
     pub const SCHEMA: &'static str = "s006851";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34667,8 +34429,7 @@ impl FeedbackModelsResponseData {
     }
     pub const SCHEMA: &'static str = "s006854";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34762,8 +34523,7 @@ impl FeedbackModelsResponseDataRecordsItem {
     }
     pub const SCHEMA: &'static str = "s006857";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34857,8 +34617,7 @@ impl FeedbackModelsResponseDataRecordsItemY {
     }
     pub const SCHEMA: &'static str = "s006860";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -34952,8 +34711,7 @@ impl FeedbackScoreDistributionResponse {
     }
     pub const SCHEMA: &'static str = "s006839";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -35050,8 +34808,7 @@ impl FeedbackScoreDistributionResponseData {
     }
     pub const SCHEMA: &'static str = "s006842";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -35153,8 +34910,7 @@ impl FeedbackScoreDistributionResponseDataRecordsItem {
     }
     pub const SCHEMA: &'static str = "s006845";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -35288,8 +35044,7 @@ impl FileList {
     }
     pub const SCHEMA: &'static str = "s009992";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -35429,8 +35184,7 @@ impl FileResponse {
     }
     pub const SCHEMA: &'static str = "s009971";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -35632,8 +35386,7 @@ impl FileScanData {
     }
     pub const SCHEMA: &'static str = "s009847";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -36007,8 +35760,7 @@ impl GatewayAcuvityScanParameters {
     }
     pub const SCHEMA: &'static str = "s000404";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -36261,8 +36013,7 @@ impl GatewayAdminGuardrail {
     }
     pub const SCHEMA: &'static str = "s000513";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -36447,8 +36198,7 @@ impl GatewayAdminGuardrailCreateRequest {
     }
     pub const SCHEMA: &'static str = "s000208";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -36605,8 +36355,7 @@ impl GatewayAdminGuardrailCreateResponse {
     }
     pub const SCHEMA: &'static str = "s000554";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -36775,8 +36524,7 @@ impl GatewayAdminGuardrailDetail {
     }
     pub const SCHEMA: &'static str = "s000537";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -36964,8 +36712,7 @@ impl GatewayAdminGuardrailDetailActions {
     }
     pub const SCHEMA: &'static str = "s000490";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37079,8 +36826,7 @@ impl GatewayAdminGuardrailDetailChecksItem {
     }
     pub const SCHEMA: &'static str = "s000540";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37269,8 +37015,7 @@ impl GatewayAdminGuardrailListOptions {
     }
     pub const SCHEMA: &'static str = "s000505";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37366,8 +37111,7 @@ impl GatewayAdminGuardrailListResponse {
     }
     pub const SCHEMA: &'static str = "s000533";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37468,8 +37212,7 @@ impl GatewayAdminGuardrailMcpMappingRequest {
     }
     pub const SCHEMA: &'static str = "s000565";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37597,8 +37340,7 @@ impl GatewayAdminGuardrailMcpSyncRequest {
     }
     pub const SCHEMA: &'static str = "s000573";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37689,8 +37431,7 @@ impl GatewayAdminGuardrailUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s000559";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37794,8 +37535,7 @@ impl GatewayAllowedRequestTypesParameters {
     }
     pub const SCHEMA: &'static str = "s000322";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -37892,8 +37632,7 @@ impl GatewayApiKey {
     }
     pub const SCHEMA: &'static str = "s007253";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -38040,8 +37779,7 @@ impl GatewayApiKeyCreateResponse {
     }
     pub const SCHEMA: &'static str = "s006962";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -38189,8 +37927,7 @@ impl GatewayApiKeyCreateResponseDataVariant1 {
     }
     pub const SCHEMA: &'static str = "s006948";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -38318,8 +38055,7 @@ impl GatewayApiKeyRotateRequest {
     }
     pub const SCHEMA: &'static str = "s006347";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -38406,8 +38142,7 @@ impl GatewayApiKeyRotateResponse {
     }
     pub const SCHEMA: &'static str = "s007269";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -38522,8 +38257,7 @@ impl GatewayApiKeyRotationPolicy {
     }
     pub const SCHEMA: &'static str = "s006289";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -38736,8 +38470,7 @@ impl GatewayApiKeyUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006323";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -38877,8 +38610,7 @@ impl GatewayAporiaParameters {
     }
     pub const SCHEMA: &'static str = "s000340";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -39029,8 +38761,7 @@ impl GatewayAuditLogRecord {
     }
     pub const SCHEMA: &'static str = "s007713";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -39243,8 +38974,7 @@ impl GatewayAuditLogsResponse {
     }
     pub const SCHEMA: &'static str = "s007731";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -39381,8 +39111,7 @@ impl GatewayAzureAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s006604";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -39578,8 +39307,7 @@ impl GatewayAzureContentSafetyParameters {
     }
     pub const SCHEMA: &'static str = "s000450";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -39706,8 +39434,7 @@ impl GatewayAzureDeploymentConfig {
     }
     pub const SCHEMA: &'static str = "s001784";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -39840,8 +39567,7 @@ impl GatewayAzureDeploymentConfiguration {
     }
     pub const SCHEMA: &'static str = "s006547";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -39986,8 +39712,7 @@ impl GatewayAzureOpenAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s006556";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40135,8 +39860,7 @@ impl GatewayAzurePIIParameters {
     }
     pub const SCHEMA: &'static str = "s000464";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40238,8 +39962,7 @@ impl GatewayBasicParameters {
     }
     pub const SCHEMA: &'static str = "s000483";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40344,8 +40067,7 @@ impl GatewayBedrockConfiguration {
     }
     pub const SCHEMA: &'static str = "s006567";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40511,8 +40233,7 @@ impl GatewayBedrockGuardParameters {
     }
     pub const SCHEMA: &'static str = "s000390";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40615,8 +40336,7 @@ impl GatewayBulkSyncMcpServerMappingsRequest {
     }
     pub const SCHEMA: &'static str = "s001720";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40697,8 +40417,7 @@ impl GatewayBulkSyncMcpServerMappingsRequestMcpServers {
     }
     pub const SCHEMA: &'static str = "s001722";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40788,8 +40507,7 @@ impl GatewayBulkSyncMcpServerMappingsRequestMcpServersAdditionalValue {
     }
     pub const SCHEMA: &'static str = "s001723";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -40891,8 +40609,7 @@ impl GatewayBulkSyncMcpServerMappingsResponse {
     }
     pub const SCHEMA: &'static str = "s001731";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41041,8 +40758,7 @@ impl GatewayCatalogAzureAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s001828";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41203,8 +40919,7 @@ impl GatewayCatalogAzureOpenAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s001793";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41357,8 +41072,7 @@ impl GatewayCatalogBedrockConfiguration {
     }
     pub const SCHEMA: &'static str = "s001806";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41473,8 +41187,7 @@ impl GatewayCatalogCortexConfiguration {
     }
     pub const SCHEMA: &'static str = "s001872";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41569,8 +41282,7 @@ impl GatewayCatalogCustomHostConfiguration {
     }
     pub const SCHEMA: &'static str = "s001875";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41663,8 +41375,7 @@ impl GatewayCatalogCustomHostConfigurationCustomHeaders {
     }
     pub const SCHEMA: &'static str = "s001882";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41786,8 +41497,7 @@ impl GatewayCatalogHuggingFaceConfiguration {
     }
     pub const SCHEMA: &'static str = "s001868";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41875,8 +41585,7 @@ impl GatewayCatalogMcpConfiguration {
     }
     pub const SCHEMA: &'static str = "s001885";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -41966,8 +41675,7 @@ impl GatewayCatalogMcpConfigurationCustomHeaders {
     }
     pub const SCHEMA: &'static str = "s001888";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42039,8 +41747,7 @@ impl GatewayCatalogMcpConfigurationPassthroughHeader {
     }
     pub const SCHEMA: &'static str = "s001891";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42122,8 +41829,7 @@ impl GatewayCatalogOpenAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s001778";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42242,8 +41948,7 @@ impl GatewayCatalogProvider {
     }
     pub const SCHEMA: &'static str = "s007343";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42496,8 +42201,7 @@ impl GatewayCatalogSageMakerConfiguration {
     }
     pub const SCHEMA: &'static str = "s001847";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42684,8 +42388,7 @@ impl GatewayCatalogSecretMapping {
     }
     pub const SCHEMA: &'static str = "s001981";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42810,8 +42513,7 @@ impl GatewayCatalogVertexAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s001819";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42915,8 +42617,7 @@ impl GatewayCatalogVertexAIConfigurationVertexServiceAccountJson {
     }
     pub const SCHEMA: &'static str = "s001826";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -42997,8 +42698,7 @@ impl GatewayCatalogWorkersAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s001844";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -43093,8 +42793,7 @@ impl GatewayCharacterCountParameters {
     }
     pub const SCHEMA: &'static str = "s000263";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -43235,8 +42934,7 @@ impl GatewayChartRecord {
     }
     pub const SCHEMA: &'static str = "s006657";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -43377,8 +43075,7 @@ impl GatewayCondition {
     }
     pub const SCHEMA: &'static str = "s001065";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -43548,8 +43245,7 @@ impl GatewayConfig {
     }
     pub const SCHEMA: &'static str = "s007053";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -43744,8 +43440,7 @@ impl GatewayConfigCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006210";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -43863,8 +43558,7 @@ impl GatewayConfigCreateResponse {
     }
     pub const SCHEMA: &'static str = "s007099";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -43990,8 +43684,7 @@ impl GatewayConfigCreateResponseData {
     }
     pub const SCHEMA: &'static str = "s007108";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -44152,8 +43845,7 @@ impl GatewayConfigDetail {
     }
     pub const SCHEMA: &'static str = "s007076";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -44370,8 +44062,7 @@ impl GatewayConfigDetailData {
     }
     pub const SCHEMA: &'static str = "s007084";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -44490,8 +44181,7 @@ impl GatewayConfigUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006240";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -44672,8 +44362,7 @@ impl GatewayConfigVersion {
     }
     pub const SCHEMA: &'static str = "s007087";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -44909,8 +44598,7 @@ impl GatewayContainsCodeParameters {
     }
     pub const SCHEMA: &'static str = "s000293";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45002,8 +44690,7 @@ impl GatewayContainsParameters {
     }
     pub const SCHEMA: &'static str = "s000282";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45094,8 +44781,7 @@ impl GatewayCortexConfiguration {
     }
     pub const SCHEMA: &'static str = "s006623";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45185,8 +44871,7 @@ impl GatewayCreatePolicyResponse {
     }
     pub const SCHEMA: &'static str = "s001166";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45315,8 +45000,7 @@ impl GatewayCreateRateLimitsPolicyRequest {
     }
     pub const SCHEMA: &'static str = "s001284";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45511,8 +45195,7 @@ impl GatewayCreateSecretReferenceRequest {
     }
     pub const SCHEMA: &'static str = "s001616";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45721,8 +45404,7 @@ impl GatewayCreateSecretReferenceRequestTags {
     }
     pub const SCHEMA: &'static str = "s001643";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45841,8 +45523,7 @@ impl GatewayCreateUsageLimitsPolicyRequest {
     }
     pub const SCHEMA: &'static str = "s001148";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -45986,8 +45667,7 @@ impl GatewayCustomHostConfiguration {
     }
     pub const SCHEMA: &'static str = "s006625";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -46086,8 +45766,7 @@ impl GatewayDefaultsInput {
     }
     pub const SCHEMA: &'static str = "s006147";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -46238,8 +45917,7 @@ impl GatewayDeployment {
     }
     pub const SCHEMA: &'static str = "s007575";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -46484,8 +46162,7 @@ impl GatewayDeploymentAuthSettingsInput {
     }
     pub const SCHEMA: &'static str = "s006470";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -46825,8 +46502,7 @@ impl GatewayDeploymentCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006497";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -46996,8 +46672,7 @@ impl GatewayDeploymentCreateResponse {
     }
     pub const SCHEMA: &'static str = "s007639";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -47115,8 +46790,7 @@ impl GatewayDeploymentCreateResponseCredentials {
     }
     pub const SCHEMA: &'static str = "s007643";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -47293,8 +46967,7 @@ impl GatewayDeploymentDetail {
     }
     pub const SCHEMA: &'static str = "s007595";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -47573,8 +47246,7 @@ impl GatewayDeploymentDetailAuthSettings {
     }
     pub const SCHEMA: &'static str = "s007606";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -47724,8 +47396,7 @@ impl GatewayDeploymentDetailCredentials {
     }
     pub const SCHEMA: &'static str = "s007597";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -47819,8 +47490,7 @@ impl GatewayDeploymentDetailWorkspacesItem {
     }
     pub const SCHEMA: &'static str = "s007635";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -47929,8 +47599,7 @@ impl GatewayDeploymentPingResponse {
     }
     pub const SCHEMA: &'static str = "s007649";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -48050,8 +47719,7 @@ impl GatewayDeploymentPingResponseInbound {
     }
     pub const SCHEMA: &'static str = "s007662";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -48155,8 +47823,7 @@ impl GatewayDeploymentPingResponseOutbound {
     }
     pub const SCHEMA: &'static str = "s007653";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -48313,8 +47980,7 @@ impl GatewayDeploymentTagsValueValue {
     }
     pub const SCHEMA: &'static str = "s001992";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -48479,8 +48145,7 @@ impl GatewayDeploymentUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006508";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -48714,8 +48379,7 @@ impl GatewayDownloadLogsResponse {
     }
     pub const SCHEMA: &'static str = "s001514";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -48803,8 +48467,7 @@ impl GatewayEndsWithParameters {
     }
     pub const SCHEMA: &'static str = "s000308";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -48935,8 +48598,7 @@ impl GatewayExportItem {
     }
     pub const SCHEMA: &'static str = "s001380";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -49111,8 +48773,7 @@ impl GatewayExportListResponse {
     }
     pub const SCHEMA: &'static str = "s001391";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -49208,8 +48869,7 @@ impl GatewayExportTaskResponse {
     }
     pub const SCHEMA: &'static str = "s001510";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -49303,8 +48963,7 @@ impl GatewayFilterBoundariesResponse {
     }
     pub const SCHEMA: &'static str = "s000604";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -49445,8 +49104,7 @@ impl GatewayFilterBoundariesResponseData {
     }
     pub const SCHEMA: &'static str = "s000607";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -49631,8 +49289,7 @@ impl GatewayFilterBoundariesResponseDataUniqueAiModelsItem {
     }
     pub const SCHEMA: &'static str = "s000618";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -49859,8 +49516,7 @@ impl GatewayGenerationsFilterSchema {
     }
     pub const SCHEMA: &'static str = "s001326";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50070,8 +49726,7 @@ impl GatewayGenerationsFilterSchemaMetadata {
     }
     pub const SCHEMA: &'static str = "s001353";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50171,8 +49826,7 @@ impl GatewayGlobalWorkspaceAccess {
     }
     pub const SCHEMA: &'static str = "s007308";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50277,8 +49931,7 @@ impl GatewayGlobalWorkspaceAccessInput {
     }
     pub const SCHEMA: &'static str = "s006161";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50403,8 +50056,7 @@ impl GatewayGroupBy {
     }
     pub const SCHEMA: &'static str = "s001077";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50526,8 +50178,7 @@ impl GatewayGroupRow {
     }
     pub const SCHEMA: &'static str = "s006864";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50699,8 +50350,7 @@ impl GatewayGuardrail {
     }
     pub const SCHEMA: &'static str = "s007114";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50883,8 +50533,7 @@ impl GatewayGuardrailActions {
     }
     pub const SCHEMA: &'static str = "s000489";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -50985,8 +50634,7 @@ impl GatewayGuardrailActionsOnSuccess {
     }
     pub const SCHEMA: &'static str = "s000498";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -51073,8 +50721,7 @@ impl GatewayGuardrailActionsOnSuccessFeedback {
     }
     pub const SCHEMA: &'static str = "s000500";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -51176,8 +50823,7 @@ impl GatewayGuardrailCatalogResponse {
     }
     pub const SCHEMA: &'static str = "s000674";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -51314,8 +50960,7 @@ impl GatewayGuardrailCatalogResponseEvalsItem {
     }
     pub const SCHEMA: &'static str = "s000678";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -51473,8 +51118,7 @@ impl GatewayGuardrailCatalogResponseEvalsItemParameters {
     }
     pub const SCHEMA: &'static str = "s000694";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -51577,8 +51221,7 @@ impl GatewayGuardrailCatalogResponseEvalsItemSource {
     }
     pub const SCHEMA: &'static str = "s000704";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -51692,8 +51335,7 @@ impl GatewayGuardrailCheck {
     }
     pub const SCHEMA: &'static str = "s000219";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -51850,8 +51492,7 @@ impl GatewayGuardrailCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006247";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52013,8 +51654,7 @@ impl GatewayGuardrailCreateResponse {
     }
     pub const SCHEMA: &'static str = "s007166";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52187,8 +51827,7 @@ impl GatewayGuardrailDetail {
     }
     pub const SCHEMA: &'static str = "s007146";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52403,8 +52042,7 @@ impl GatewayGuardrailDetailActions {
     }
     pub const SCHEMA: &'static str = "s007156";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52515,8 +52153,7 @@ impl GatewayGuardrailDetailActionsOnSuccess {
     }
     pub const SCHEMA: &'static str = "s007139";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52605,8 +52242,7 @@ impl GatewayGuardrailDetailActionsOnSuccessFeedback {
     }
     pub const SCHEMA: &'static str = "s007141";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52716,8 +52352,7 @@ impl GatewayGuardrailDetailChecksItem {
     }
     pub const SCHEMA: &'static str = "s007150";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52872,8 +52507,7 @@ impl GatewayGuardrailUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006256";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -52968,8 +52602,7 @@ impl GatewayHuggingFaceConfiguration {
     }
     pub const SCHEMA: &'static str = "s006620";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -53351,8 +52984,7 @@ impl GatewayInferenceAnalyticsMetrics {
     }
     pub const SCHEMA: &'static str = "s005941";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -53847,8 +53479,7 @@ impl GatewayInferenceBatch {
     }
     pub const SCHEMA: &'static str = "s005718";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54064,8 +53695,7 @@ impl GatewayInferenceBatchErrors {
     }
     pub const SCHEMA: &'static str = "s005726";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54169,8 +53799,7 @@ impl GatewayInferenceBatchErrorsDataItem {
     }
     pub const SCHEMA: &'static str = "s005732";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54266,8 +53895,7 @@ impl GatewayInferenceBatchMetadata {
     }
     pub const SCHEMA: &'static str = "s005793";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54381,8 +54009,7 @@ impl GatewayInferenceBatchRequestCounts {
     }
     pub const SCHEMA: &'static str = "s005786";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54537,8 +54164,7 @@ impl GatewayInferenceChatCompletionFunctionCallOption {
     }
     pub const SCHEMA: &'static str = "s003149";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54631,8 +54257,7 @@ impl GatewayInferenceChatCompletionFunctions {
     }
     pub const SCHEMA: &'static str = "s003155";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54746,8 +54371,7 @@ impl GatewayInferenceChatCompletionMessageContentPartRedactedThinking {
     }
     pub const SCHEMA: &'static str = "s002611";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -54887,8 +54511,7 @@ impl GatewayInferenceChatCompletionMessageContentPartThinking {
     }
     pub const SCHEMA: &'static str = "s002606";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55021,8 +54644,7 @@ impl GatewayInferenceChatCompletionMessageToolCall {
     }
     pub const SCHEMA: &'static str = "s002581";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55139,8 +54761,7 @@ impl GatewayInferenceChatCompletionMessageToolCallChunk {
     }
     pub const SCHEMA: &'static str = "s002678";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55254,8 +54875,7 @@ impl GatewayInferenceChatCompletionMessageToolCallChunkFunction {
     }
     pub const SCHEMA: &'static str = "s002687";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55380,8 +55000,7 @@ impl GatewayInferenceChatCompletionMessageToolCallFunction {
     }
     pub const SCHEMA: &'static str = "s002586";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55531,8 +55150,7 @@ impl GatewayInferenceChatCompletionNamedToolChoice {
     }
     pub const SCHEMA: &'static str = "s003132";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55626,8 +55244,7 @@ impl GatewayInferenceChatCompletionNamedToolChoiceFunction {
     }
     pub const SCHEMA: &'static str = "s003136";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55763,8 +55380,7 @@ impl GatewayInferenceChatCompletionRequestAssistantMessage {
     }
     pub const SCHEMA: &'static str = "s002959";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -55883,8 +55499,7 @@ impl GatewayInferenceChatCompletionRequestAssistantMessageFunctionCall {
     }
     pub const SCHEMA: &'static str = "s002971";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -56022,8 +55637,7 @@ impl GatewayInferenceChatCompletionRequestDeveloperMessage {
     }
     pub const SCHEMA: &'static str = "s002929";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -56162,8 +55776,7 @@ impl GatewayInferenceChatCompletionRequestFunctionMessage {
     }
     pub const SCHEMA: &'static str = "s002981";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -56332,8 +55945,7 @@ impl GatewayInferenceChatCompletionRequestMessageContentPartImage {
     }
     pub const SCHEMA: &'static str = "s002944";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -56443,8 +56055,7 @@ impl GatewayInferenceChatCompletionRequestMessageContentPartImageImageUrl {
     }
     pub const SCHEMA: &'static str = "s002948";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -56621,8 +56232,7 @@ impl GatewayInferenceChatCompletionRequestMessageContentPartText {
     }
     pub const SCHEMA: &'static str = "s002601";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -56763,8 +56373,7 @@ impl GatewayInferenceChatCompletionRequestSystemMessage {
     }
     pub const SCHEMA: &'static str = "s002922";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -56900,8 +56509,7 @@ impl GatewayInferenceChatCompletionRequestToolMessage {
     }
     pub const SCHEMA: &'static str = "s002975";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57041,8 +56649,7 @@ impl GatewayInferenceChatCompletionRequestUserMessage {
     }
     pub const SCHEMA: &'static str = "s002936";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57214,8 +56821,7 @@ impl GatewayInferenceChatCompletionResponseMessage {
     }
     pub const SCHEMA: &'static str = "s002573";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57336,8 +56942,7 @@ impl GatewayInferenceChatCompletionResponseMessageFunctionCall {
     }
     pub const SCHEMA: &'static str = "s002592";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57486,8 +57091,7 @@ impl GatewayInferenceChatCompletionStreamOptionsValueValue {
     }
     pub const SCHEMA: &'static str = "s003087";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57585,8 +57189,7 @@ impl GatewayInferenceChatCompletionStreamResponseDelta {
     }
     pub const SCHEMA: &'static str = "s002663";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57701,8 +57304,7 @@ impl GatewayInferenceChatCompletionStreamResponseDeltaFunctionCall {
     }
     pub const SCHEMA: &'static str = "s002670";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57848,8 +57450,7 @@ impl GatewayInferenceChatCompletionTokenLogprob {
     }
     pub const SCHEMA: &'static str = "s002622";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -57965,8 +57566,7 @@ impl GatewayInferenceChatCompletionTokenLogprobTopLogprobsItem {
     }
     pub const SCHEMA: &'static str = "s002631";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -58068,8 +57668,7 @@ impl GatewayInferenceChatCompletionTool {
     }
     pub const SCHEMA: &'static str = "s003108";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -58258,8 +57857,7 @@ impl GatewayInferenceClick {
     }
     pub const SCHEMA: &'static str = "s004216";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -58449,8 +58047,7 @@ impl GatewayInferenceCodeInterpreterFileOutput {
     }
     pub const SCHEMA: &'static str = "s004376";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -58544,8 +58141,7 @@ impl GatewayInferenceCodeInterpreterFileOutputFilesItem {
     }
     pub const SCHEMA: &'static str = "s004381";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -58672,8 +58268,7 @@ impl GatewayInferenceCodeInterpreterTextOutput {
     }
     pub const SCHEMA: &'static str = "s004371";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -58809,8 +58404,7 @@ impl GatewayInferenceCodeInterpreterToolCall {
     }
     pub const SCHEMA: &'static str = "s004358";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59020,8 +58614,7 @@ impl GatewayInferenceComparisonFilter {
     }
     pub const SCHEMA: &'static str = "s003958";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59241,8 +58834,7 @@ impl GatewayInferenceCompletionUsage {
     }
     pub const SCHEMA: &'static str = "s002202";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59381,8 +58973,7 @@ impl GatewayInferenceCompletionUsageCompletionTokensDetails {
     }
     pub const SCHEMA: &'static str = "s002210";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59477,8 +59068,7 @@ impl GatewayInferenceCompletionUsagePromptTokensDetails {
     }
     pub const SCHEMA: &'static str = "s002220";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59562,8 +59152,7 @@ impl GatewayInferenceCompoundFilter {
     }
     pub const SCHEMA: &'static str = "s003973";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59666,8 +59255,7 @@ impl GatewayInferenceCompoundFilterFiltersItemVariant2 {
     }
     pub const SCHEMA: &'static str = "s003981";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59812,8 +59400,7 @@ impl GatewayInferenceComputerScreenshotImage {
     }
     pub const SCHEMA: &'static str = "s005336";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -59950,8 +59537,7 @@ impl GatewayInferenceComputerTool {
     }
     pub const SCHEMA: &'static str = "s004003";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -60080,8 +59666,7 @@ impl GatewayInferenceComputerToolCall {
     }
     pub const SCHEMA: &'static str = "s004208";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -60236,8 +59821,7 @@ impl GatewayInferenceComputerToolCallOutputResource {
     }
     pub const SCHEMA: &'static str = "s005328";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -60442,8 +60026,7 @@ impl GatewayInferenceComputerToolCallSafetyCheck {
     }
     pub const SCHEMA: &'static str = "s004278";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -60696,8 +60279,7 @@ impl GatewayInferenceCoordinate {
     }
     pub const SCHEMA: &'static str = "s004239";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -60926,8 +60508,7 @@ impl GatewayInferenceCreateChatCompletionRequest {
     }
     pub const SCHEMA: &'static str = "s002916";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -61224,8 +60805,7 @@ impl GatewayInferenceCreateChatCompletionRequestLogitBias {
     }
     pub const SCHEMA: &'static str = "s003026";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -61473,8 +61053,7 @@ impl GatewayInferenceCreateChatCompletionRequestThinking {
     }
     pub const SCHEMA: &'static str = "s003093";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -61634,8 +61213,7 @@ impl GatewayInferenceCreateChatCompletionResponse {
     }
     pub const SCHEMA: &'static str = "s002559";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -61776,8 +61354,7 @@ impl GatewayInferenceCreateChatCompletionResponseChoicesItem {
     }
     pub const SCHEMA: &'static str = "s002564";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -61937,8 +61514,7 @@ impl GatewayInferenceCreateChatCompletionResponseChoicesItemLogprobs {
     }
     pub const SCHEMA: &'static str = "s002618";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -62093,8 +61669,7 @@ impl GatewayInferenceCreateChatCompletionStreamResponse {
     }
     pub const SCHEMA: &'static str = "s002656";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -62242,8 +61817,7 @@ impl GatewayInferenceCreateChatCompletionStreamResponseChoicesItem {
     }
     pub const SCHEMA: &'static str = "s002661";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -62413,8 +61987,7 @@ impl GatewayInferenceCreateChatCompletionStreamResponseChoicesItemLogprobs {
     }
     pub const SCHEMA: &'static str = "s002701";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -62545,8 +62118,7 @@ impl GatewayInferenceCreateChatCompletionStreamResponseUsage {
     }
     pub const SCHEMA: &'static str = "s002721";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -62747,8 +62319,7 @@ impl GatewayInferenceCreateCompletionRequest {
     }
     pub const SCHEMA: &'static str = "s003162";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -62941,8 +62512,7 @@ impl GatewayInferenceCreateCompletionRequestLogitBias {
     }
     pub const SCHEMA: &'static str = "s003192";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -63135,8 +62705,7 @@ impl GatewayInferenceCreateCompletionResponse {
     }
     pub const SCHEMA: &'static str = "s002164";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -63275,8 +62844,7 @@ impl GatewayInferenceCreateCompletionResponseChoicesItem {
     }
     pub const SCHEMA: &'static str = "s002169";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -63449,8 +63017,7 @@ impl GatewayInferenceCreateCompletionResponseChoicesItemLogprobs {
     }
     pub const SCHEMA: &'static str = "s002178";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -63559,8 +63126,7 @@ impl GatewayInferenceCreateCompletionResponseChoicesItemLogprobsTopLogprobsItem 
     }
     pub const SCHEMA: &'static str = "s002191";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -63687,8 +63253,7 @@ impl GatewayInferenceCreateEmbeddingResponse {
     }
     pub const SCHEMA: &'static str = "s003363";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -63831,8 +63396,7 @@ impl GatewayInferenceCreateEmbeddingResponseUsage {
     }
     pub const SCHEMA: &'static str = "s003378";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -63929,8 +63493,7 @@ impl GatewayInferenceCreateModerationResponse {
     }
     pub const SCHEMA: &'static str = "s005220";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -64038,8 +63601,7 @@ impl GatewayInferenceCreateModerationResponseResultsItem {
     }
     pub const SCHEMA: &'static str = "s005226";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -64186,8 +63748,7 @@ impl GatewayInferenceCreateModerationResponseResultsItemCategories {
     }
     pub const SCHEMA: &'static str = "s005229";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -64398,8 +63959,7 @@ impl GatewayInferenceCreateModerationResponseResultsItemCategoryScores {
     }
     pub const SCHEMA: &'static str = "s005242";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -64576,8 +64136,7 @@ impl GatewayInferenceCreateOcrResponse {
     }
     pub const SCHEMA: &'static str = "s004722";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -64679,8 +64238,7 @@ impl GatewayInferenceCreateOcrResponseUsageInfo {
     }
     pub const SCHEMA: &'static str = "s004741";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -64789,8 +64347,7 @@ impl GatewayInferenceCreatePromptCompletionResponseVariant3 {
     }
     pub const SCHEMA: &'static str = "s002645";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -64901,8 +64458,7 @@ impl GatewayInferenceCreatePromptCompletionResponseVariant3Headers {
     }
     pub const SCHEMA: &'static str = "s002650";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65001,8 +64557,7 @@ impl GatewayInferenceCreatePromptRenderResponse {
     }
     pub const SCHEMA: &'static str = "s002910";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65129,8 +64684,7 @@ impl GatewayInferenceCreateRerankResponse {
     }
     pub const SCHEMA: &'static str = "s004674";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65280,8 +64834,7 @@ impl GatewayInferenceCreateTranscriptionResponseJson {
     }
     pub const SCHEMA: &'static str = "s004797";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65380,8 +64933,7 @@ impl GatewayInferenceCreateTranscriptionResponseVerboseJson {
     }
     pub const SCHEMA: &'static str = "s004801";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65547,8 +65099,7 @@ impl GatewayInferenceCreateTranslationResponseJson {
     }
     pub const SCHEMA: &'static str = "s004847";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65642,8 +65193,7 @@ impl GatewayInferenceCreateTranslationResponseVerboseJson {
     }
     pub const SCHEMA: &'static str = "s004851";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65809,8 +65359,7 @@ impl GatewayInferenceDeleteFileResponse {
     }
     pub const SCHEMA: &'static str = "s004904";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -65948,8 +65497,7 @@ impl GatewayInferenceDeleteModelResponse {
     }
     pub const SCHEMA: &'static str = "s005201";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66054,8 +65602,7 @@ impl GatewayInferenceDeleteVectorStoreFileResponse {
     }
     pub const SCHEMA: &'static str = "s005559";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66193,8 +65740,7 @@ impl GatewayInferenceDeleteVectorStoreResponse {
     }
     pub const SCHEMA: &'static str = "s005478";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66332,8 +65878,7 @@ impl GatewayInferenceDoubleClick {
     }
     pub const SCHEMA: &'static str = "s004228";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66468,8 +66013,7 @@ impl GatewayInferenceDrag {
     }
     pub const SCHEMA: &'static str = "s004234";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66599,8 +66143,7 @@ impl GatewayInferenceEmbedding {
     }
     pub const SCHEMA: &'static str = "s003367";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66759,8 +66302,7 @@ impl GatewayInferenceFeedbackResponse {
     }
     pub const SCHEMA: &'static str = "s005824";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66859,8 +66401,7 @@ impl GatewayInferenceFileCitation {
     }
     pub const SCHEMA: &'static str = "s004124";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -66998,8 +66539,7 @@ impl GatewayInferenceFilePath {
     }
     pub const SCHEMA: &'static str = "s004138";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -67155,8 +66695,7 @@ impl GatewayInferenceFileSearchTool {
     }
     pub const SCHEMA: &'static str = "s003948";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -67282,8 +66821,7 @@ impl GatewayInferenceFileSearchToolCall {
     }
     pub const SCHEMA: &'static str = "s004153";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -67421,8 +66959,7 @@ impl GatewayInferenceFileSearchToolCallResultsItem {
     }
     pub const SCHEMA: &'static str = "s004169";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -67629,8 +67166,7 @@ impl GatewayInferenceFileSearchToolRankingOptions {
     }
     pub const SCHEMA: &'static str = "s003984";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -67794,8 +67330,7 @@ impl GatewayInferenceFineTuningIntegration {
     }
     pub const SCHEMA: &'static str = "s005069";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -67934,8 +67469,7 @@ impl GatewayInferenceFineTuningIntegrationWandb {
     }
     pub const SCHEMA: &'static str = "s005073";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -68106,8 +67640,7 @@ impl GatewayInferenceFineTuningJob {
     }
     pub const SCHEMA: &'static str = "s005028";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -68346,8 +67879,7 @@ impl GatewayInferenceFineTuningJobCheckpoint {
     }
     pub const SCHEMA: &'static str = "s005136";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -68521,8 +68053,7 @@ impl GatewayInferenceFineTuningJobCheckpointMetrics {
     }
     pub const SCHEMA: &'static str = "s005143";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -68678,8 +68209,7 @@ impl GatewayInferenceFineTuningJobError {
     }
     pub const SCHEMA: &'static str = "s005034";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -68790,8 +68320,7 @@ impl GatewayInferenceFineTuningJobEvent {
     }
     pub const SCHEMA: &'static str = "s005113";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -68980,8 +68509,7 @@ impl GatewayInferenceFineTuningJobHyperparameters {
     }
     pub const SCHEMA: &'static str = "s005044";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -69243,8 +68771,7 @@ impl GatewayInferenceFunctionObject {
     }
     pub const SCHEMA: &'static str = "s003112";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -69342,8 +68869,7 @@ impl GatewayInferenceFunctionParameters {
     }
     pub const SCHEMA: &'static str = "s003119";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -69432,8 +68958,7 @@ impl GatewayInferenceFunctionTool {
     }
     pub const SCHEMA: &'static str = "s003992";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -69565,8 +69090,7 @@ impl GatewayInferenceFunctionToolCall {
     }
     pub const SCHEMA: &'static str = "s004184";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -69699,8 +69223,7 @@ impl GatewayInferenceFunctionToolCallOutputResource {
     }
     pub const SCHEMA: &'static str = "s005362";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -69907,8 +69430,7 @@ impl GatewayInferenceFunctionToolCallResource {
     }
     pub const SCHEMA: &'static str = "s005349";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -70177,8 +69699,7 @@ impl GatewayInferenceFunctionToolParameters {
     }
     pub const SCHEMA: &'static str = "s004000";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -70298,8 +69819,7 @@ impl GatewayInferenceImage {
     }
     pub const SCHEMA: &'static str = "s004581";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -70395,8 +69915,7 @@ impl GatewayInferenceImagesResponse {
     }
     pub const SCHEMA: &'static str = "s004576";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -70503,8 +70022,7 @@ impl GatewayInferenceInputAutoChunkingStrategyRequestParam {
     }
     pub const SCHEMA: &'static str = "s005449";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -70659,8 +70177,7 @@ impl GatewayInferenceInputBedrockBatchJob {
     }
     pub const SCHEMA: &'static str = "s005628";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -70898,8 +70415,7 @@ impl GatewayInferenceInputBedrockBatchJobMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005642";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71012,8 +70528,7 @@ impl GatewayInferenceInputBedrockFinetuneJob {
     }
     pub const SCHEMA: &'static str = "s004941";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71154,8 +70669,7 @@ impl GatewayInferenceInputBedrockFinetuneJobMethod {
     }
     pub const SCHEMA: &'static str = "s004949";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71256,8 +70770,7 @@ impl GatewayInferenceInputBedrockFinetuneJobMethodDpo {
     }
     pub const SCHEMA: &'static str = "s004963";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71349,8 +70862,7 @@ impl GatewayInferenceInputBedrockFinetuneJobMethodDpoHyperparameters {
     }
     pub const SCHEMA: &'static str = "s004965";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71455,8 +70967,7 @@ impl GatewayInferenceInputBedrockFinetuneJobMethodSupervised {
     }
     pub const SCHEMA: &'static str = "s004955";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71549,8 +71060,7 @@ impl GatewayInferenceInputBedrockFinetuneJobMethodSupervisedHyperparameters {
     }
     pub const SCHEMA: &'static str = "s004957";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71693,8 +71203,7 @@ impl GatewayInferenceInputChatCompletionFunctionCallOption {
     }
     pub const SCHEMA: &'static str = "s002470";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71787,8 +71296,7 @@ impl GatewayInferenceInputChatCompletionFunctions {
     }
     pub const SCHEMA: &'static str = "s002476";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71889,8 +71397,7 @@ impl GatewayInferenceInputChatCompletionMessageToolCall {
     }
     pub const SCHEMA: &'static str = "s002286";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -71995,8 +71502,7 @@ impl GatewayInferenceInputChatCompletionMessageToolCallFunction {
     }
     pub const SCHEMA: &'static str = "s002291";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -72148,8 +71654,7 @@ impl GatewayInferenceInputChatCompletionNamedToolChoice {
     }
     pub const SCHEMA: &'static str = "s002453";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -72243,8 +71748,7 @@ impl GatewayInferenceInputChatCompletionNamedToolChoiceFunction {
     }
     pub const SCHEMA: &'static str = "s002457";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -72383,8 +71887,7 @@ impl GatewayInferenceInputChatCompletionRequestAssistantMessage {
     }
     pub const SCHEMA: &'static str = "s002274";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -72506,8 +72009,7 @@ impl GatewayInferenceInputChatCompletionRequestAssistantMessageFunctionCall {
     }
     pub const SCHEMA: &'static str = "s002297";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -72645,8 +72147,7 @@ impl GatewayInferenceInputChatCompletionRequestDeveloperMessage {
     }
     pub const SCHEMA: &'static str = "s002239";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -72787,8 +72288,7 @@ impl GatewayInferenceInputChatCompletionRequestFunctionMessage {
     }
     pub const SCHEMA: &'static str = "s002307";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -72960,8 +72460,7 @@ impl GatewayInferenceInputChatCompletionRequestMessageContentPartImage {
     }
     pub const SCHEMA: &'static str = "s002259";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -73071,8 +72570,7 @@ impl GatewayInferenceInputChatCompletionRequestMessageContentPartImageImageUrl {
     }
     pub const SCHEMA: &'static str = "s002263";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -73264,8 +72762,7 @@ impl GatewayInferenceInputChatCompletionRequestMessageContentPartText {
     }
     pub const SCHEMA: &'static str = "s002254";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -73410,8 +72907,7 @@ impl GatewayInferenceInputChatCompletionRequestSystemMessage {
     }
     pub const SCHEMA: &'static str = "s002232";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -73550,8 +73046,7 @@ impl GatewayInferenceInputChatCompletionRequestToolMessage {
     }
     pub const SCHEMA: &'static str = "s002301";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -73694,8 +73189,7 @@ impl GatewayInferenceInputChatCompletionRequestUserMessage {
     }
     pub const SCHEMA: &'static str = "s002246";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -73877,8 +73371,7 @@ impl GatewayInferenceInputChatCompletionStreamOptionsValueValue {
     }
     pub const SCHEMA: &'static str = "s002149";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -73964,8 +73457,7 @@ impl GatewayInferenceInputChatCompletionTool {
     }
     pub const SCHEMA: &'static str = "s002429";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -74169,8 +73661,7 @@ impl GatewayInferenceInputClick {
     }
     pub const SCHEMA: &'static str = "s003719";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -74363,8 +73854,7 @@ impl GatewayInferenceInputComparisonFilter {
     }
     pub const SCHEMA: &'static str = "s003458";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -74565,8 +74055,7 @@ impl GatewayInferenceInputCompoundFilter {
     }
     pub const SCHEMA: &'static str = "s003473";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -74695,8 +74184,7 @@ impl GatewayInferenceInputCompoundFilterFiltersItemVariant2Left {
     }
     pub const SCHEMA: &'static str = "s003482";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -74843,8 +74331,7 @@ impl GatewayInferenceInputComputerScreenshotImage {
     }
     pub const SCHEMA: &'static str = "s003800";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -74981,8 +74468,7 @@ impl GatewayInferenceInputComputerTool {
     }
     pub const SCHEMA: &'static str = "s003503";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -75111,8 +74597,7 @@ impl GatewayInferenceInputComputerToolCall {
     }
     pub const SCHEMA: &'static str = "s003711";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -75269,8 +74754,7 @@ impl GatewayInferenceInputComputerToolCallOutput {
     }
     pub const SCHEMA: &'static str = "s003791";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -75473,8 +74957,7 @@ impl GatewayInferenceInputComputerToolCallSafetyCheck {
     }
     pub const SCHEMA: &'static str = "s003781";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -75743,8 +75226,7 @@ impl GatewayInferenceInputCoordinate {
     }
     pub const SCHEMA: &'static str = "s003742";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -75990,8 +75472,7 @@ impl GatewayInferenceInputCreateChatCompletionRequest {
     }
     pub const SCHEMA: &'static str = "s003231";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -76324,8 +75805,7 @@ impl GatewayInferenceInputCreateChatCompletionRequestLogitBiasLeft {
     }
     pub const SCHEMA: &'static str = "s003274";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -76579,8 +76059,7 @@ impl GatewayInferenceInputCreateChatCompletionRequestThinking {
     }
     pub const SCHEMA: &'static str = "s003311";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -76812,8 +76291,7 @@ impl GatewayInferenceInputCreateCompletionRequest {
     }
     pub const SCHEMA: &'static str = "s002088";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -77032,8 +76510,7 @@ impl GatewayInferenceInputCreateCompletionRequestLogitBiasLeft {
     }
     pub const SCHEMA: &'static str = "s002119";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -77214,8 +76691,7 @@ impl GatewayInferenceInputCreateEmbeddingRequest {
     }
     pub const SCHEMA: &'static str = "s003337";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -77441,8 +76917,7 @@ impl GatewayInferenceInputCreateFileRequest {
     }
     pub const SCHEMA: &'static str = "s004894";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -77627,8 +77102,7 @@ impl GatewayInferenceInputCreateImageEditRequest {
     }
     pub const SCHEMA: &'static str = "s004590";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -77921,8 +77395,7 @@ impl GatewayInferenceInputCreateImageRequest {
     }
     pub const SCHEMA: &'static str = "s004538";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -78292,8 +77765,7 @@ impl GatewayInferenceInputCreateImageVariationRequest {
     }
     pub const SCHEMA: &'static str = "s004620";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -78554,8 +78026,7 @@ impl GatewayInferenceInputCreateModerationRequest {
     }
     pub const SCHEMA: &'static str = "s005207";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -78745,8 +78216,7 @@ impl GatewayInferenceInputCreateOcrRequest {
     }
     pub const SCHEMA: &'static str = "s004700";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -78871,8 +78341,7 @@ impl GatewayInferenceInputCreateOcrRequestDocument {
     }
     pub const SCHEMA: &'static str = "s004704";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -79168,8 +78637,7 @@ impl GatewayInferenceInputCreatePromptCompletionRequestVariant1 {
     }
     pub const SCHEMA: &'static str = "s002226";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -79521,8 +78989,7 @@ impl GatewayInferenceInputCreatePromptCompletionRequestVariant1LogitBiasLeft {
     }
     pub const SCHEMA: &'static str = "s002354";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -79784,8 +79251,7 @@ impl GatewayInferenceInputCreatePromptCompletionRequestVariant1Thinking {
     }
     pub const SCHEMA: &'static str = "s002414";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -79956,8 +79422,7 @@ impl GatewayInferenceInputCreatePromptCompletionRequestVariant1VariablesLeft {
     }
     pub const SCHEMA: &'static str = "s002484";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -80150,8 +79615,7 @@ impl GatewayInferenceInputCreatePromptCompletionRequestVariant2 {
     }
     pub const SCHEMA: &'static str = "s002485";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -80391,8 +79855,7 @@ impl GatewayInferenceInputCreatePromptCompletionRequestVariant2LogitBiasLeft {
     }
     pub const SCHEMA: &'static str = "s002517";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -80596,8 +80059,7 @@ impl GatewayInferenceInputCreatePromptCompletionRequestVariant2VariablesLeft {
     }
     pub const SCHEMA: &'static str = "s002556";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -80842,8 +80304,7 @@ impl GatewayInferenceInputCreatePromptRenderRequestVariant1 {
     }
     pub const SCHEMA: &'static str = "s002728";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -81189,8 +80650,7 @@ impl GatewayInferenceInputCreatePromptRenderRequestVariant1LogitBiasLeft {
     }
     pub const SCHEMA: &'static str = "s002772";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -81448,8 +80908,7 @@ impl GatewayInferenceInputCreatePromptRenderRequestVariant1Thinking {
     }
     pub const SCHEMA: &'static str = "s002809";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -81613,8 +81072,7 @@ impl GatewayInferenceInputCreatePromptRenderRequestVariant1VariablesLeft {
     }
     pub const SCHEMA: &'static str = "s002836";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -81805,8 +81263,7 @@ impl GatewayInferenceInputCreatePromptRenderRequestVariant2 {
     }
     pub const SCHEMA: &'static str = "s002837";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -82041,8 +81498,7 @@ impl GatewayInferenceInputCreatePromptRenderRequestVariant2LogitBiasLeft {
     }
     pub const SCHEMA: &'static str = "s002869";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -82239,8 +81695,7 @@ impl GatewayInferenceInputCreatePromptRenderRequestVariant2VariablesLeft {
     }
     pub const SCHEMA: &'static str = "s002909";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -82373,8 +81828,7 @@ impl GatewayInferenceInputCreateRerankRequest {
     }
     pub const SCHEMA: &'static str = "s004646";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -82541,8 +81995,7 @@ impl GatewayInferenceInputCreateRerankRequestParametersLeft {
     }
     pub const SCHEMA: &'static str = "s004673";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -82719,8 +82172,7 @@ impl GatewayInferenceInputCreateResponse {
     }
     pub const SCHEMA: &'static str = "s003382";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -82930,8 +82382,7 @@ impl GatewayInferenceInputCreateResponseText {
     }
     pub const SCHEMA: &'static str = "s003428";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -83085,8 +82536,7 @@ impl GatewayInferenceInputCreateSpeechRequest {
     }
     pub const SCHEMA: &'static str = "s004745";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -83390,8 +82840,7 @@ impl GatewayInferenceInputCreateTranscriptionRequest {
     }
     pub const SCHEMA: &'static str = "s004771";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -83668,8 +83117,7 @@ impl GatewayInferenceInputCreateTranslationRequest {
     }
     pub const SCHEMA: &'static str = "s004833";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -83823,8 +83271,7 @@ impl GatewayInferenceInputCreateVectorStoreFileBatchRequest {
     }
     pub const SCHEMA: &'static str = "s005565";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -83921,8 +83368,7 @@ impl GatewayInferenceInputCreateVectorStoreFileRequest {
     }
     pub const SCHEMA: &'static str = "s005552";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84042,8 +83488,7 @@ impl GatewayInferenceInputCreateVectorStoreRequest {
     }
     pub const SCHEMA: &'static str = "s005433";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84195,8 +83640,7 @@ impl GatewayInferenceInputCreateVectorStoreRequestMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005465";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84279,8 +83723,7 @@ impl GatewayInferenceInputCustomLog {
     }
     pub const SCHEMA: &'static str = "s005845";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84420,8 +83863,7 @@ impl GatewayInferenceInputCustomLogMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005873";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84533,8 +83975,7 @@ impl GatewayInferenceInputCustomLogRequest {
     }
     pub const SCHEMA: &'static str = "s005848";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84663,8 +84104,7 @@ impl GatewayInferenceInputCustomLogRequestBodyLeft {
     }
     pub const SCHEMA: &'static str = "s005858";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84762,8 +84202,7 @@ impl GatewayInferenceInputCustomLogRequestHeadersLeft {
     }
     pub const SCHEMA: &'static str = "s005855";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84853,8 +84292,7 @@ impl GatewayInferenceInputCustomLogResponse {
     }
     pub const SCHEMA: &'static str = "s005859";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -84981,8 +84419,7 @@ impl GatewayInferenceInputCustomLogResponseBodyLeft {
     }
     pub const SCHEMA: &'static str = "s005868";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85080,8 +84517,7 @@ impl GatewayInferenceInputCustomLogResponseHeadersLeft {
     }
     pub const SCHEMA: &'static str = "s005865";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85162,8 +84598,7 @@ impl GatewayInferenceInputDoubleClick {
     }
     pub const SCHEMA: &'static str = "s003731";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85298,8 +84733,7 @@ impl GatewayInferenceInputDrag {
     }
     pub const SCHEMA: &'static str = "s003737";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85431,8 +84865,7 @@ impl GatewayInferenceInputEasyInputMessage {
     }
     pub const SCHEMA: &'static str = "s003569";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85634,8 +85067,7 @@ impl GatewayInferenceInputFeedbackRequest {
     }
     pub const SCHEMA: &'static str = "s005814";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85764,8 +85196,7 @@ impl GatewayInferenceInputFeedbackRequestMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005823";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85850,8 +85281,7 @@ impl GatewayInferenceInputFeedbackUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s005834";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -85972,8 +85402,7 @@ impl GatewayInferenceInputFeedbackUpdateRequestMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005842";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -86063,8 +85492,7 @@ impl GatewayInferenceInputFile {
     }
     pub const SCHEMA: &'static str = "s005317";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -86171,8 +85599,7 @@ impl GatewayInferenceInputFileCitation {
     }
     pub const SCHEMA: &'static str = "s003647";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -86310,8 +85737,7 @@ impl GatewayInferenceInputFilePath {
     }
     pub const SCHEMA: &'static str = "s003661";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -86467,8 +85893,7 @@ impl GatewayInferenceInputFileSearchTool {
     }
     pub const SCHEMA: &'static str = "s003448";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -86594,8 +86019,7 @@ impl GatewayInferenceInputFileSearchToolCall {
     }
     pub const SCHEMA: &'static str = "s003676";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -86733,8 +86157,7 @@ impl GatewayInferenceInputFileSearchToolCallResultsItem {
     }
     pub const SCHEMA: &'static str = "s003692";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -86944,8 +86367,7 @@ impl GatewayInferenceInputFileSearchToolRankingOptions {
     }
     pub const SCHEMA: &'static str = "s003484";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -87154,8 +86576,7 @@ impl GatewayInferenceInputFunctionObject {
     }
     pub const SCHEMA: &'static str = "s002433";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -87279,8 +86700,7 @@ impl GatewayInferenceInputFunctionParametersLeft {
     }
     pub const SCHEMA: &'static str = "s002442";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -87369,8 +86789,7 @@ impl GatewayInferenceInputFunctionTool {
     }
     pub const SCHEMA: &'static str = "s003492";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -87502,8 +86921,7 @@ impl GatewayInferenceInputFunctionToolCall {
     }
     pub const SCHEMA: &'static str = "s003823";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -87638,8 +87056,7 @@ impl GatewayInferenceInputFunctionToolCallOutput {
     }
     pub const SCHEMA: &'static str = "s003837";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -87924,8 +87341,7 @@ impl GatewayInferenceInputFunctionToolParametersLeft {
     }
     pub const SCHEMA: &'static str = "s003501";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -88060,8 +87476,7 @@ impl GatewayInferenceInputGetLogQueryVariant1 {
     }
     pub const SCHEMA: &'static str = "s005885";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -88231,8 +87646,7 @@ impl GatewayInferenceInputGetLogQueryVariant2 {
     }
     pub const SCHEMA: &'static str = "s005893";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -88400,8 +87814,7 @@ impl GatewayInferenceInputGetResponseQuery {
     }
     pub const SCHEMA: &'static str = "s005255";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -88495,8 +87908,7 @@ impl GatewayInferenceInputImage {
     }
     pub const SCHEMA: &'static str = "s005303";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -88745,8 +88157,7 @@ impl GatewayInferenceInputInputFile {
     }
     pub const SCHEMA: &'static str = "s003602";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -88893,8 +88304,7 @@ impl GatewayInferenceInputInputImage {
     }
     pub const SCHEMA: &'static str = "s003588";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -89100,8 +88510,7 @@ impl GatewayInferenceInputInputMessage {
     }
     pub const SCHEMA: &'static str = "s003616";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -89345,8 +88754,7 @@ impl GatewayInferenceInputInputText {
     }
     pub const SCHEMA: &'static str = "s003583";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -89495,8 +88903,7 @@ impl GatewayInferenceInputItemReference {
     }
     pub const SCHEMA: &'static str = "s003865";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -89623,8 +89030,7 @@ impl GatewayInferenceInputKeyPress {
     }
     pub const SCHEMA: &'static str = "s003747";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -89755,8 +89161,7 @@ impl GatewayInferenceInputListBatchesQuery {
     }
     pub const SCHEMA: &'static str = "s005795";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -89865,8 +89270,7 @@ impl GatewayInferenceInputListFilesInVectorStoreBatchQuery {
     }
     pub const SCHEMA: &'static str = "s005592";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -90061,8 +89465,7 @@ impl GatewayInferenceInputListFilesQuery {
     }
     pub const SCHEMA: &'static str = "s004861";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -90150,8 +89553,7 @@ impl GatewayInferenceInputListFineTuningEventsQuery {
     }
     pub const SCHEMA: &'static str = "s005102";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -90245,8 +89647,7 @@ impl GatewayInferenceInputListFineTuningJobCheckpointsQuery {
     }
     pub const SCHEMA: &'static str = "s005125";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -90350,8 +89751,7 @@ impl GatewayInferenceInputListInputItemsQuery {
     }
     pub const SCHEMA: &'static str = "s005260";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -90515,8 +89915,7 @@ impl GatewayInferenceInputListModelsQuery {
     }
     pub const SCHEMA: &'static str = "s005169";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -90713,8 +90112,7 @@ impl GatewayInferenceInputListPaginatedFineTuningJobsQuery {
     }
     pub const SCHEMA: &'static str = "s005089";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -90823,8 +90221,7 @@ impl GatewayInferenceInputListVectorStoreFilesQuery {
     }
     pub const SCHEMA: &'static str = "s005484";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -91034,8 +90431,7 @@ impl GatewayInferenceInputListVectorStoresQuery {
     }
     pub const SCHEMA: &'static str = "s005377";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -91212,8 +90608,7 @@ impl GatewayInferenceInputMessageResource {
     }
     pub const SCHEMA: &'static str = "s005280";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -91483,8 +90878,7 @@ impl GatewayInferenceInputMetadataValueValueLeft {
     }
     pub const SCHEMA: &'static str = "s003389";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -91586,8 +90980,7 @@ impl GatewayInferenceInputMove {
     }
     pub const SCHEMA: &'static str = "s003753";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -91730,8 +91123,7 @@ impl GatewayInferenceInputOpenAIBatchJob {
     }
     pub const SCHEMA: &'static str = "s005613";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -91941,8 +91333,7 @@ impl GatewayInferenceInputOpenAIBatchJobMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005627";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92037,8 +91428,7 @@ impl GatewayInferenceInputOpenAIFinetuneJob {
     }
     pub const SCHEMA: &'static str = "s004912";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92161,8 +91551,7 @@ impl GatewayInferenceInputOpenAIFinetuneJobMethod {
     }
     pub const SCHEMA: &'static str = "s004920";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92260,8 +91649,7 @@ impl GatewayInferenceInputOpenAIFinetuneJobMethodDpo {
     }
     pub const SCHEMA: &'static str = "s004934";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92353,8 +91741,7 @@ impl GatewayInferenceInputOpenAIFinetuneJobMethodDpoHyperparameters {
     }
     pub const SCHEMA: &'static str = "s004936";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92459,8 +91846,7 @@ impl GatewayInferenceInputOpenAIFinetuneJobMethodSupervised {
     }
     pub const SCHEMA: &'static str = "s004926";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92553,8 +91939,7 @@ impl GatewayInferenceInputOpenAIFinetuneJobMethodSupervisedHyperparameters {
     }
     pub const SCHEMA: &'static str = "s004928";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92724,8 +92109,7 @@ impl GatewayInferenceInputOutputMessage {
     }
     pub const SCHEMA: &'static str = "s003630";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -92953,8 +92337,7 @@ impl GatewayInferenceInputOutputText {
     }
     pub const SCHEMA: &'static str = "s003639";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -93157,8 +92540,7 @@ impl GatewayInferenceInputPortkeyBatchJob {
     }
     pub const SCHEMA: &'static str = "s005669";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -93412,8 +92794,7 @@ impl GatewayInferenceInputPortkeyBatchJobMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005683";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -93511,8 +92892,7 @@ impl GatewayInferenceInputPortkeyBatchJobPortkeyOptions {
     }
     pub const SCHEMA: &'static str = "s005692";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -93641,8 +93021,7 @@ impl GatewayInferenceInputPortkeyBatchJobProviderOptionsVariant1 {
     }
     pub const SCHEMA: &'static str = "s005703";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -93761,8 +93140,7 @@ impl GatewayInferenceInputPortkeyBatchJobProviderOptionsVariant2 {
     }
     pub const SCHEMA: &'static str = "s005711";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -93913,8 +93291,7 @@ impl GatewayInferenceInputPortkeyFinetuneJob {
     }
     pub const SCHEMA: &'static str = "s004976";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94073,8 +93450,7 @@ impl GatewayInferenceInputPortkeyFinetuneJobMethod {
     }
     pub const SCHEMA: &'static str = "s004984";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94175,8 +93551,7 @@ impl GatewayInferenceInputPortkeyFinetuneJobMethodDpo {
     }
     pub const SCHEMA: &'static str = "s004998";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94268,8 +93643,7 @@ impl GatewayInferenceInputPortkeyFinetuneJobMethodDpoHyperparameters {
     }
     pub const SCHEMA: &'static str = "s005000";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94374,8 +93748,7 @@ impl GatewayInferenceInputPortkeyFinetuneJobMethodSupervised {
     }
     pub const SCHEMA: &'static str = "s004990";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94468,8 +93841,7 @@ impl GatewayInferenceInputPortkeyFinetuneJobMethodSupervisedHyperparameters {
     }
     pub const SCHEMA: &'static str = "s004992";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94629,8 +94001,7 @@ impl GatewayInferenceInputPortkeyFinetuneJobPortkeyOptions {
     }
     pub const SCHEMA: &'static str = "s005012";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94737,8 +94108,7 @@ impl GatewayInferenceInputPortkeyFinetuneJobProviderOptions {
     }
     pub const SCHEMA: &'static str = "s005020";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -94838,8 +94208,7 @@ impl GatewayInferenceInputReasoning {
     }
     pub const SCHEMA: &'static str = "s003406";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95042,8 +94411,7 @@ impl GatewayInferenceInputReasoningItem {
     }
     pub const SCHEMA: &'static str = "s003850";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95192,8 +94560,7 @@ impl GatewayInferenceInputReasoningItemSummaryItem {
     }
     pub const SCHEMA: &'static str = "s003856";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95353,8 +94720,7 @@ impl GatewayInferenceInputRefusal {
     }
     pub const SCHEMA: &'static str = "s003667";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95519,8 +94885,7 @@ impl GatewayInferenceInputRerankDocumentVariant2Left {
     }
     pub const SCHEMA: &'static str = "s004656";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95603,8 +94968,7 @@ impl GatewayInferenceInputResponseFormatJsonObject {
     }
     pub const SCHEMA: &'static str = "s002396";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95723,8 +95087,7 @@ impl GatewayInferenceInputResponseFormatJsonSchema {
     }
     pub const SCHEMA: &'static str = "s002380";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95833,8 +95196,7 @@ impl GatewayInferenceInputResponseFormatJsonSchemaJsonSchema {
     }
     pub const SCHEMA: &'static str = "s002384";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -95961,8 +95323,7 @@ impl GatewayInferenceInputResponseFormatJsonSchemaSchemaLeft {
     }
     pub const SCHEMA: &'static str = "s002392";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -96070,8 +95431,7 @@ impl GatewayInferenceInputResponseFormatText {
     }
     pub const SCHEMA: &'static str = "s002376";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -96187,8 +95547,7 @@ impl GatewayInferenceInputScreenshot {
     }
     pub const SCHEMA: &'static str = "s003759";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -96316,8 +95675,7 @@ impl GatewayInferenceInputScroll {
     }
     pub const SCHEMA: &'static str = "s003763";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -96468,8 +95826,7 @@ impl GatewayInferenceInputStaticChunkingStrategy {
     }
     pub const SCHEMA: &'static str = "s005457";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -96563,8 +95920,7 @@ impl GatewayInferenceInputStaticChunkingStrategyRequestParam {
     }
     pub const SCHEMA: &'static str = "s005453";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -96694,8 +96050,7 @@ impl GatewayInferenceInputText {
     }
     pub const SCHEMA: &'static str = "s005298";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -96820,8 +96175,7 @@ impl GatewayInferenceInputTextResponseFormatJsonSchema {
     }
     pub const SCHEMA: &'static str = "s003433";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97016,8 +96370,7 @@ impl GatewayInferenceInputToolChoiceFunction {
     }
     pub const SCHEMA: &'static str = "s003554";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97182,8 +96535,7 @@ impl GatewayInferenceInputToolChoiceTypes {
     }
     pub const SCHEMA: &'static str = "s003546";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97313,8 +96665,7 @@ impl GatewayInferenceInputType {
     }
     pub const SCHEMA: &'static str = "s003771";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97450,8 +96801,7 @@ impl GatewayInferenceInputUpdateVectorStoreRequest {
     }
     pub const SCHEMA: &'static str = "s005466";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97573,8 +96923,7 @@ impl GatewayInferenceInputUpdateVectorStoreRequestMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005477";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97661,8 +97010,7 @@ impl GatewayInferenceInputUrlCitation {
     }
     pub const SCHEMA: &'static str = "s003653";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97813,8 +97161,7 @@ impl GatewayInferenceInputVectorStoreExpirationAfter {
     }
     pub const SCHEMA: &'static str = "s005442";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -97986,8 +97333,7 @@ impl GatewayInferenceInputVectorStoreFileAttributesValueValueLeft {
     }
     pub const SCHEMA: &'static str = "s003704";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -98163,8 +97509,7 @@ impl GatewayInferenceInputVertexBatchJob {
     }
     pub const SCHEMA: &'static str = "s005649";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -98394,8 +97739,7 @@ impl GatewayInferenceInputVertexBatchJobMetadataLeft {
     }
     pub const SCHEMA: &'static str = "s005663";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -98470,8 +97814,7 @@ impl GatewayInferenceInputWait {
     }
     pub const SCHEMA: &'static str = "s003776";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -98638,8 +97981,7 @@ impl GatewayInferenceInputWebSearchTool {
     }
     pub const SCHEMA: &'static str = "s003514";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -98746,8 +98088,7 @@ impl GatewayInferenceInputWebSearchToolCall {
     }
     pub const SCHEMA: &'static str = "s003813";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -98981,8 +98322,7 @@ impl GatewayInferenceInputWebSearchToolUserLocation {
     }
     pub const SCHEMA: &'static str = "s003522";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -99146,8 +98486,7 @@ impl GatewayInferenceKeyPress {
     }
     pub const SCHEMA: &'static str = "s004244";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -99287,8 +98626,7 @@ impl GatewayInferenceListBatchesResponse {
     }
     pub const SCHEMA: &'static str = "s005802";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -99435,8 +98773,7 @@ impl GatewayInferenceListFilesResponse {
     }
     pub const SCHEMA: &'static str = "s004866";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -99576,8 +98913,7 @@ impl GatewayInferenceListFineTuningJobCheckpointsResponse {
     }
     pub const SCHEMA: &'static str = "s005132";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -99727,8 +99063,7 @@ impl GatewayInferenceListFineTuningJobEventsResponse {
     }
     pub const SCHEMA: &'static str = "s005109";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -99855,8 +99190,7 @@ impl GatewayInferenceListModelsResponse {
     }
     pub const SCHEMA: &'static str = "s005189";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -99986,8 +99320,7 @@ impl GatewayInferenceListPaginatedFineTuningJobsResponse {
     }
     pub const SCHEMA: &'static str = "s005096";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100134,8 +99467,7 @@ impl GatewayInferenceListVectorStoreFilesResponse {
     }
     pub const SCHEMA: &'static str = "s005503";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100262,8 +99594,7 @@ impl GatewayInferenceListVectorStoresResponse {
     }
     pub const SCHEMA: &'static str = "s005390";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100423,8 +99754,7 @@ impl GatewayInferenceLogObject {
     }
     pub const SCHEMA: &'static str = "s005899";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100588,8 +99918,7 @@ impl GatewayInferenceLogRequest {
     }
     pub const SCHEMA: &'static str = "s005904";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100697,8 +100026,7 @@ impl GatewayInferenceLogRequestBody {
     }
     pub const SCHEMA: &'static str = "s005920";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100770,8 +100098,7 @@ impl GatewayInferenceLogRequestHeaders {
     }
     pub const SCHEMA: &'static str = "s005917";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100896,8 +100223,7 @@ impl GatewayInferenceLogRequestPortkeyHeaders {
     }
     pub const SCHEMA: &'static str = "s005922";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -100994,8 +100320,7 @@ impl GatewayInferenceLogResponse {
     }
     pub const SCHEMA: &'static str = "s005924";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101103,8 +100428,7 @@ impl GatewayInferenceLogResponseBody {
     }
     pub const SCHEMA: &'static str = "s005932";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101176,8 +100500,7 @@ impl GatewayInferenceLogResponseHeaders {
     }
     pub const SCHEMA: &'static str = "s005929";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101270,8 +100593,7 @@ impl GatewayInferenceMetadataValueValue {
     }
     pub const SCHEMA: &'static str = "s003892";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101355,8 +100677,7 @@ impl GatewayInferenceModel {
     }
     pub const SCHEMA: &'static str = "s005194";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101523,8 +100844,7 @@ impl GatewayInferenceMove {
     }
     pub const SCHEMA: &'static str = "s004250";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101664,8 +100984,7 @@ impl GatewayInferenceOcrPage {
     }
     pub const SCHEMA: &'static str = "s004726";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101769,8 +101088,7 @@ impl GatewayInferenceOcrPageImagesItem {
     }
     pub const SCHEMA: &'static str = "s004733";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -101889,8 +101207,7 @@ impl GatewayInferenceOpenAIFile {
     }
     pub const SCHEMA: &'static str = "s004870";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -102154,8 +101471,7 @@ impl GatewayInferenceOtherChunkingStrategyResponseParam {
     }
     pub const SCHEMA: &'static str = "s005543";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -102317,8 +101633,7 @@ impl GatewayInferenceOutputMessage {
     }
     pub const SCHEMA: &'static str = "s004107";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -102546,8 +101861,7 @@ impl GatewayInferenceOutputText {
     }
     pub const SCHEMA: &'static str = "s004116";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -102703,8 +102017,7 @@ impl GatewayInferencePromptRenderResponse {
     }
     pub const SCHEMA: &'static str = "s002911";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -102802,8 +102115,7 @@ impl GatewayInferenceReasoning {
     }
     pub const SCHEMA: &'static str = "s003908";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103004,8 +102316,7 @@ impl GatewayInferenceReasoningItem {
     }
     pub const SCHEMA: &'static str = "s004288";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103154,8 +102465,7 @@ impl GatewayInferenceReasoningItemSummaryItem {
     }
     pub const SCHEMA: &'static str = "s004294";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103315,8 +102625,7 @@ impl GatewayInferenceRefusal {
     }
     pub const SCHEMA: &'static str = "s004144";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103457,8 +102766,7 @@ impl GatewayInferenceRequestResponseObject {
     }
     pub const SCHEMA: &'static str = "s006053";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103557,8 +102865,7 @@ impl GatewayInferenceRequestResponseObjectBody {
     }
     pub const SCHEMA: &'static str = "s006057";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103630,8 +102937,7 @@ impl GatewayInferenceRequestResponseObjectHeaders {
     }
     pub const SCHEMA: &'static str = "s006060";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103714,8 +103020,7 @@ impl GatewayInferenceRerankResult {
     }
     pub const SCHEMA: &'static str = "s004681";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103814,8 +103119,7 @@ impl GatewayInferenceRerankResultDocument {
     }
     pub const SCHEMA: &'static str = "s004687";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -103898,8 +103202,7 @@ impl GatewayInferenceRerankUsage {
     }
     pub const SCHEMA: &'static str = "s004693";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -104088,8 +103391,7 @@ impl GatewayInferenceResponse {
     }
     pub const SCHEMA: &'static str = "s003887";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -104336,8 +103638,7 @@ impl GatewayInferenceResponseAudioDeltaEvent {
     }
     pub const SCHEMA: &'static str = "s004323";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -104461,8 +103762,7 @@ impl GatewayInferenceResponseAudioDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004328";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -104581,8 +103881,7 @@ impl GatewayInferenceResponseAudioTranscriptDeltaEvent {
     }
     pub const SCHEMA: &'static str = "s004332";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -104706,8 +104005,7 @@ impl GatewayInferenceResponseAudioTranscriptDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004337";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -104829,8 +104127,7 @@ impl GatewayInferenceResponseCodeInterpreterCallCodeDeltaEvent {
     }
     pub const SCHEMA: &'static str = "s004341";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -104975,8 +104272,7 @@ impl GatewayInferenceResponseCodeInterpreterCallCodeDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004347";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -105119,8 +104415,7 @@ impl GatewayInferenceResponseCodeInterpreterCallCompletedEvent {
     }
     pub const SCHEMA: &'static str = "s004353";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -105265,8 +104560,7 @@ impl GatewayInferenceResponseCodeInterpreterCallInProgressEvent {
     }
     pub const SCHEMA: &'static str = "s004385";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -105413,8 +104707,7 @@ impl GatewayInferenceResponseCodeInterpreterCallInterpretingEvent {
     }
     pub const SCHEMA: &'static str = "s004390";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -105562,8 +104855,7 @@ impl GatewayInferenceResponseCompletedEvent {
     }
     pub const SCHEMA: &'static str = "s004395";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -105699,8 +104991,7 @@ impl GatewayInferenceResponseContentPartAddedEvent {
     }
     pub const SCHEMA: &'static str = "s004399";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -105860,8 +105151,7 @@ impl GatewayInferenceResponseContentPartDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004406";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -106012,8 +105302,7 @@ impl GatewayInferenceResponseCreatedEvent {
     }
     pub const SCHEMA: &'static str = "s004413";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -106253,8 +105542,7 @@ impl GatewayInferenceResponseErrorEvent {
     }
     pub const SCHEMA: &'static str = "s004417";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -106397,8 +105685,7 @@ impl GatewayInferenceResponseErrorValueValue {
     }
     pub const SCHEMA: &'static str = "s004074";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -106492,8 +105779,7 @@ impl GatewayInferenceResponseFailedEvent {
     }
     pub const SCHEMA: &'static str = "s004462";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -106623,8 +105909,7 @@ impl GatewayInferenceResponseFileSearchCallCompletedEvent {
     }
     pub const SCHEMA: &'static str = "s004426";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -106765,8 +106050,7 @@ impl GatewayInferenceResponseFileSearchCallInProgressEvent {
     }
     pub const SCHEMA: &'static str = "s004432";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -106907,8 +106191,7 @@ impl GatewayInferenceResponseFileSearchCallSearchingEvent {
     }
     pub const SCHEMA: &'static str = "s004438";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107043,8 +106326,7 @@ impl GatewayInferenceResponseFormatJsonObject {
     }
     pub const SCHEMA: &'static str = "s003068";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107163,8 +106445,7 @@ impl GatewayInferenceResponseFormatJsonSchema {
     }
     pub const SCHEMA: &'static str = "s003052";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107273,8 +106554,7 @@ impl GatewayInferenceResponseFormatJsonSchemaJsonSchema {
     }
     pub const SCHEMA: &'static str = "s003056";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107375,8 +106655,7 @@ impl GatewayInferenceResponseFormatJsonSchemaSchema {
     }
     pub const SCHEMA: &'static str = "s003062";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107484,8 +106763,7 @@ impl GatewayInferenceResponseFormatText {
     }
     pub const SCHEMA: &'static str = "s003048";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107610,8 +106888,7 @@ impl GatewayInferenceResponseFunctionCallArgumentsDeltaEvent {
     }
     pub const SCHEMA: &'static str = "s004444";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107765,8 +107042,7 @@ impl GatewayInferenceResponseFunctionCallArgumentsDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004451";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -107912,8 +107188,7 @@ impl GatewayInferenceResponseInProgressEvent {
     }
     pub const SCHEMA: &'static str = "s004458";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -108039,8 +107314,7 @@ impl GatewayInferenceResponseIncompleteDetails {
     }
     pub const SCHEMA: &'static str = "s004098";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -108165,8 +107439,7 @@ impl GatewayInferenceResponseIncompleteEvent {
     }
     pub const SCHEMA: &'static str = "s004466";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -108302,8 +107575,7 @@ impl GatewayInferenceResponseItemList {
     }
     pub const SCHEMA: &'static str = "s005273";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -108490,8 +107762,7 @@ impl GatewayInferenceResponseOutputItemAddedEvent {
     }
     pub const SCHEMA: &'static str = "s004470";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -108629,8 +107900,7 @@ impl GatewayInferenceResponseOutputItemDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004475";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -108774,8 +108044,7 @@ impl GatewayInferenceResponseRefusalDeltaEvent {
     }
     pub const SCHEMA: &'static str = "s004480";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -108941,8 +108210,7 @@ impl GatewayInferenceResponseRefusalDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004488";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -109181,8 +108449,7 @@ impl GatewayInferenceResponseText {
     }
     pub const SCHEMA: &'static str = "s003929";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -109288,8 +108555,7 @@ impl GatewayInferenceResponseTextAnnotationDeltaEvent {
     }
     pub const SCHEMA: &'static str = "s004496";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -109457,8 +108723,7 @@ impl GatewayInferenceResponseTextDeltaEvent {
     }
     pub const SCHEMA: &'static str = "s004504";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -109618,8 +108883,7 @@ impl GatewayInferenceResponseTextDoneEvent {
     }
     pub const SCHEMA: &'static str = "s004512";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -109860,8 +109124,7 @@ impl GatewayInferenceResponseUsageValueValue {
     }
     pub const SCHEMA: &'static str = "s004309";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -109982,8 +109245,7 @@ impl GatewayInferenceResponseUsageValueValueInputTokensDetails {
     }
     pub const SCHEMA: &'static str = "s004312";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -110066,8 +109328,7 @@ impl GatewayInferenceResponseUsageValueValueOutputTokensDetails {
     }
     pub const SCHEMA: &'static str = "s004316";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -110158,8 +109419,7 @@ impl GatewayInferenceResponseWebSearchCallCompletedEvent {
     }
     pub const SCHEMA: &'static str = "s004520";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -110300,8 +109560,7 @@ impl GatewayInferenceResponseWebSearchCallInProgressEvent {
     }
     pub const SCHEMA: &'static str = "s004526";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -110442,8 +109701,7 @@ impl GatewayInferenceResponseWebSearchCallSearchingEvent {
     }
     pub const SCHEMA: &'static str = "s004532";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -110578,8 +109836,7 @@ impl GatewayInferenceScreenshot {
     }
     pub const SCHEMA: &'static str = "s004256";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -110707,8 +109964,7 @@ impl GatewayInferenceScroll {
     }
     pub const SCHEMA: &'static str = "s004260";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -110859,8 +110115,7 @@ impl GatewayInferenceStaticChunkingStrategy {
     }
     pub const SCHEMA: &'static str = "s005536";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -111036,8 +110291,7 @@ impl GatewayInferenceStaticChunkingStrategyResponseParam {
     }
     pub const SCHEMA: &'static str = "s005532";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -111198,8 +110452,7 @@ impl GatewayInferenceTextResponseFormatJsonSchema {
     }
     pub const SCHEMA: &'static str = "s003934";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -111361,8 +110614,7 @@ impl GatewayInferenceToolChoiceFunction {
     }
     pub const SCHEMA: &'static str = "s004053";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -111527,8 +110779,7 @@ impl GatewayInferenceToolChoiceTypes {
     }
     pub const SCHEMA: &'static str = "s004045";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -111693,8 +110944,7 @@ impl GatewayInferenceTranscriptionSegment {
     }
     pub const SCHEMA: &'static str = "s004819";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -111855,8 +111105,7 @@ impl GatewayInferenceTranscriptionWord {
     }
     pub const SCHEMA: &'static str = "s004811";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -111958,8 +111207,7 @@ impl GatewayInferenceType {
     }
     pub const SCHEMA: &'static str = "s004268";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -112095,8 +111343,7 @@ impl GatewayInferenceUrlCitation {
     }
     pub const SCHEMA: &'static str = "s004130";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -112247,8 +111494,7 @@ impl GatewayInferenceVectorStoreExpirationAfter {
     }
     pub const SCHEMA: &'static str = "s005415";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -112392,8 +111638,7 @@ impl GatewayInferenceVectorStoreFileAttributesValueValue {
     }
     pub const SCHEMA: &'static str = "s004180";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -112490,8 +111735,7 @@ impl GatewayInferenceVectorStoreFileBatchObject {
     }
     pub const SCHEMA: &'static str = "s005571";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -112629,8 +111873,7 @@ impl GatewayInferenceVectorStoreFileBatchObjectFileCounts {
     }
     pub const SCHEMA: &'static str = "s005585";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -112859,8 +112102,7 @@ impl GatewayInferenceVectorStoreFileObject {
     }
     pub const SCHEMA: &'static str = "s005508";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -113021,8 +112263,7 @@ impl GatewayInferenceVectorStoreFileObjectLastError {
     }
     pub const SCHEMA: &'static str = "s005522";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -113280,8 +112521,7 @@ impl GatewayInferenceVectorStoreObject {
     }
     pub const SCHEMA: &'static str = "s005395";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -113455,8 +112695,7 @@ impl GatewayInferenceVectorStoreObjectFileCounts {
     }
     pub const SCHEMA: &'static str = "s005403";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -113568,8 +112807,7 @@ impl GatewayInferenceVectorStoreObjectMetadata {
     }
     pub const SCHEMA: &'static str = "s005426";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -113718,8 +112956,7 @@ impl GatewayInferenceWait {
     }
     pub const SCHEMA: &'static str = "s004273";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -113886,8 +113123,7 @@ impl GatewayInferenceWebSearchTool {
     }
     pub const SCHEMA: &'static str = "s004014";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -113994,8 +113230,7 @@ impl GatewayInferenceWebSearchToolCall {
     }
     pub const SCHEMA: &'static str = "s004198";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -114229,8 +113464,7 @@ impl GatewayInferenceWebSearchToolUserLocation {
     }
     pub const SCHEMA: &'static str = "s004022";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -114481,8 +113715,7 @@ impl GatewayIntegration {
     }
     pub const SCHEMA: &'static str = "s007274";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -114817,8 +114050,7 @@ impl GatewayIntegrationCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006351";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -115007,8 +114239,7 @@ impl GatewayIntegrationCreateRequestPricingAdjustments {
     }
     pub const SCHEMA: &'static str = "s002066";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -115125,8 +114356,7 @@ impl GatewayIntegrationModelUpdate {
     }
     pub const SCHEMA: &'static str = "s006379";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -115286,8 +114516,7 @@ impl GatewayIntegrationModelUpdateConfigurationsLeft {
     }
     pub const SCHEMA: &'static str = "s006392";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -115384,8 +114613,7 @@ impl GatewayIntegrationModelUpdateConfigurationsLeftCustomHeaders {
     }
     pub const SCHEMA: &'static str = "s006396";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -115506,8 +114734,7 @@ impl GatewayIntegrationModelsBulkUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006404";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -115607,8 +114834,7 @@ impl GatewayIntegrationModelsResponse {
     }
     pub const SCHEMA: &'static str = "s007363";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -115749,8 +114975,7 @@ impl GatewayIntegrationModelsResponseModelsItem {
     }
     pub const SCHEMA: &'static str = "s007366";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116035,8 +115260,7 @@ impl GatewayIntegrationPricingAdjustments {
     }
     pub const SCHEMA: &'static str = "s001965";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116151,8 +115375,7 @@ impl GatewayIntegrationUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006366";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116325,8 +115548,7 @@ impl GatewayIntegrationWorkspace {
     }
     pub const SCHEMA: &'static str = "s007393";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116526,8 +115748,7 @@ impl GatewayIntegrationWorkspacesBulkUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006409";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116646,8 +115867,7 @@ impl GatewayIntegrationWorkspacesResponse {
     }
     pub const SCHEMA: &'static str = "s007415";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116755,8 +115975,7 @@ impl GatewayJSONKeysParameters {
     }
     pub const SCHEMA: &'static str = "s000277";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116852,8 +116071,7 @@ impl GatewayJSONSchemaParameters {
     }
     pub const SCHEMA: &'static str = "s000271";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -116939,8 +116157,7 @@ impl GatewayJSONSchemaParametersSchema {
     }
     pub const SCHEMA: &'static str = "s000273";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -117045,8 +116262,7 @@ impl GatewayJWTParameters {
     }
     pub const SCHEMA: &'static str = "s000225";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -117503,8 +116719,7 @@ impl GatewayLogExportsClientCreateRequest {
     }
     pub const SCHEMA: &'static str = "s001401";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -117741,8 +116956,7 @@ impl GatewayLogExportsClientCreateRequestFilters {
     }
     pub const SCHEMA: &'static str = "s001405";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -117959,8 +117173,7 @@ impl GatewayLogExportsClientCreateRequestFiltersMetadata {
     }
     pub const SCHEMA: &'static str = "s001430";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -118043,8 +117256,7 @@ impl GatewayLogExportsClientCreateResponse {
     }
     pub const SCHEMA: &'static str = "s001452";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -118143,8 +117355,7 @@ impl GatewayLogExportsClientListOptions {
     }
     pub const SCHEMA: &'static str = "s001322";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -118238,8 +117449,7 @@ impl GatewayLogExportsClientUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s001458";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -118477,8 +117687,7 @@ impl GatewayLogExportsClientUpdateRequestFilters {
     }
     pub const SCHEMA: &'static str = "s001462";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -118695,8 +117904,7 @@ impl GatewayLogExportsClientUpdateRequestFiltersMetadata {
     }
     pub const SCHEMA: &'static str = "s001487";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -118893,8 +118101,7 @@ impl GatewayLogRecord {
     }
     pub const SCHEMA: &'static str = "s006898";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119169,8 +118376,7 @@ impl GatewayLogsResponse {
     }
     pub const SCHEMA: &'static str = "s006928";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119270,8 +118476,7 @@ impl GatewayLogsResponseData {
     }
     pub const SCHEMA: &'static str = "s006931";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119421,8 +118626,7 @@ impl GatewayMcpIntegrationWorkspaceItem {
     }
     pub const SCHEMA: &'static str = "s001748";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119535,8 +118739,7 @@ impl GatewayMcpIntegrationWorkspacesLegacyResponse {
     }
     pub const SCHEMA: &'static str = "s001770";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119624,8 +118827,7 @@ impl GatewayMcpIntegrationWorkspacesLegacyResponseGlobalWorkspaceAccess {
     }
     pub const SCHEMA: &'static str = "s001776";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119721,8 +118923,7 @@ impl GatewayMcpIntegrationWorkspacesListResponse {
     }
     pub const SCHEMA: &'static str = "s001760";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119816,8 +119017,7 @@ impl GatewayMcpIntegrationWorkspacesListResponseGlobalWorkspaceAccess {
     }
     pub const SCHEMA: &'static str = "s001766";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -119950,8 +119150,7 @@ impl GatewayMcpServer {
     }
     pub const SCHEMA: &'static str = "s000786";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120082,8 +119281,7 @@ impl GatewayMcpServerCapabilitiesBulkUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s000963";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120181,8 +119379,7 @@ impl GatewayMcpServerCapabilitiesCounts {
     }
     pub const SCHEMA: &'static str = "s000916";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120294,8 +119491,7 @@ impl GatewayMcpServerCapabilitiesCountsPrompts {
     }
     pub const SCHEMA: &'static str = "s000926";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120389,8 +119585,7 @@ impl GatewayMcpServerCapabilitiesCountsResourceTemplates {
     }
     pub const SCHEMA: &'static str = "s000940";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120484,8 +119679,7 @@ impl GatewayMcpServerCapabilitiesCountsResources {
     }
     pub const SCHEMA: &'static str = "s000933";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120579,8 +119773,7 @@ impl GatewayMcpServerCapabilitiesCountsTools {
     }
     pub const SCHEMA: &'static str = "s000919";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120684,8 +119877,7 @@ impl GatewayMcpServerCapabilitiesListResponse {
     }
     pub const SCHEMA: &'static str = "s000946";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -120878,8 +120070,7 @@ impl GatewayMcpServerCapabilityItem {
     }
     pub const SCHEMA: &'static str = "s000863";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121050,8 +120241,7 @@ impl GatewayMcpServerCapabilityItemAnnotations {
     }
     pub const SCHEMA: &'static str = "s000898";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121123,8 +120313,7 @@ impl GatewayMcpServerCapabilityItemExecution {
     }
     pub const SCHEMA: &'static str = "s000894";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121196,8 +120385,7 @@ impl GatewayMcpServerCapabilityItemInputSchema {
     }
     pub const SCHEMA: &'static str = "s000886";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121269,8 +120457,7 @@ impl GatewayMcpServerCapabilityItemOutputSchema {
     }
     pub const SCHEMA: &'static str = "s000890";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121347,8 +120534,7 @@ impl GatewayMcpServerConnectionDeleteResponse {
     }
     pub const SCHEMA: &'static str = "s001049";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121446,8 +120632,7 @@ impl GatewayMcpServerConnectionItem {
     }
     pub const SCHEMA: &'static str = "s001025";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121558,8 +120743,7 @@ impl GatewayMcpServerConnectionsListResponse {
     }
     pub const SCHEMA: &'static str = "s001035";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121659,8 +120843,7 @@ impl GatewayMcpServerCreateResponse {
     }
     pub const SCHEMA: &'static str = "s000780";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -121841,8 +121024,7 @@ impl GatewayMcpServerListItem {
     }
     pub const SCHEMA: &'static str = "s000723";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122020,8 +121202,7 @@ impl GatewayMcpServerListResponse {
     }
     pub const SCHEMA: &'static str = "s000763";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122128,8 +121309,7 @@ impl GatewayMcpServerMapping {
     }
     pub const SCHEMA: &'static str = "s000544";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122296,8 +121476,7 @@ impl GatewayMcpServerMcpIntegrationDetails {
     }
     pub const SCHEMA: &'static str = "s000805";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122414,8 +121593,7 @@ impl GatewayMcpServerMcpIntegrationDetailsConfigurations {
     }
     pub const SCHEMA: &'static str = "s000815";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122524,8 +121702,7 @@ impl GatewayMcpServerUserAccessItem {
     }
     pub const SCHEMA: &'static str = "s000975";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122660,8 +121837,7 @@ impl GatewayMcpServersClientCreateRequest {
     }
     pub const SCHEMA: &'static str = "s000769";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122777,8 +121953,7 @@ impl GatewayMcpServersClientDeleteConnectionsOptions {
     }
     pub const SCHEMA: &'static str = "s001043";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122862,8 +122037,7 @@ impl GatewayMcpServersClientDeleteResponse {
     }
     pub const SCHEMA: &'static str = "s000835";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -122950,8 +122124,7 @@ impl GatewayMcpServersClientGetCapabilitiesOptions {
     }
     pub const SCHEMA: &'static str = "s000855";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123061,8 +122234,7 @@ impl GatewayMcpServersClientGetConnectionsOptions {
     }
     pub const SCHEMA: &'static str = "s001015";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123173,8 +122345,7 @@ impl GatewayMcpServersClientGetUserAccessOptions {
     }
     pub const SCHEMA: &'static str = "s000967";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123284,8 +122455,7 @@ impl GatewayMcpServersClientGetUserAccessResponse {
     }
     pub const SCHEMA: &'static str = "s000991";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123406,8 +122576,7 @@ impl GatewayMcpServersClientListOptions {
     }
     pub const SCHEMA: &'static str = "s000711";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123546,8 +122715,7 @@ impl GatewayMcpServersClientTestResponse {
     }
     pub const SCHEMA: &'static str = "s000837";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123658,8 +122826,7 @@ impl GatewayMcpServersClientUpdateCapabilitiesRequest {
     }
     pub const SCHEMA: &'static str = "s000955";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123751,8 +122918,7 @@ impl GatewayMcpServersClientUpdateCapabilitiesRequestCapabilitiesItem {
     }
     pub const SCHEMA: &'static str = "s000958";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123864,8 +123030,7 @@ impl GatewayMcpServersClientUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s000826";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -123949,8 +123114,7 @@ impl GatewayMcpServersClientUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s000833";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124032,8 +123196,7 @@ impl GatewayMcpServersClientUpdateUserAccessRequest {
     }
     pub const SCHEMA: &'static str = "s001001";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124126,8 +123289,7 @@ impl GatewayMcpServersClientUpdateUserAccessRequestUserAccessItem {
     }
     pub const SCHEMA: &'static str = "s001005";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124226,8 +123388,7 @@ impl GatewayMcpServersClientUpdateUserAccessResponse {
     }
     pub const SCHEMA: &'static str = "s001011";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124334,8 +123495,7 @@ impl GatewayMistralModerationParameters {
     }
     pub const SCHEMA: &'static str = "s000384";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124431,8 +123591,7 @@ impl GatewayModelCalculateConfig {
     }
     pub const SCHEMA: &'static str = "s006098";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124526,8 +123685,7 @@ impl GatewayModelFinetuneConfig {
     }
     pub const SCHEMA: &'static str = "s006102";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124690,8 +123848,7 @@ impl GatewayModelPayAsYouGo {
     }
     pub const SCHEMA: &'static str = "s006076";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124832,8 +123989,7 @@ impl GatewayModelPricingCalculation {
     }
     pub const SCHEMA: &'static str = "s006089";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -124981,8 +124137,7 @@ impl GatewayModelPricingConfig {
     }
     pub const SCHEMA: &'static str = "s006106";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -125116,8 +124271,7 @@ impl GatewayModelTokenPrice {
     }
     pub const SCHEMA: &'static str = "s006068";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -125198,8 +124352,7 @@ impl GatewayModelWhitelistParameters {
     }
     pub const SCHEMA: &'static str = "s000238";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -125330,8 +124483,7 @@ impl GatewayOpenAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s006542";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -125433,8 +124585,7 @@ impl GatewayOrganisationAuthSettingsUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006536";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -125565,8 +124716,7 @@ impl GatewayOrganisationInfo {
     }
     pub const SCHEMA: &'static str = "s000637";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -125724,8 +124874,7 @@ impl GatewayOrganisationInfoBenefits {
     }
     pub const SCHEMA: &'static str = "s000659";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -125920,8 +125069,7 @@ impl GatewayOrganisationInfoSettings {
     }
     pub const SCHEMA: &'static str = "s000646";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126085,8 +125233,7 @@ impl GatewayOrganisationInfoSubscription {
     }
     pub const SCHEMA: &'static str = "s000670";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126179,8 +125326,7 @@ impl GatewayOrganisationUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006533";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126271,8 +125417,7 @@ impl GatewayPANWPrismaParameters {
     }
     pub const SCHEMA: &'static str = "s000476";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126372,8 +125517,7 @@ impl GatewayPatronusCustomParameters {
     }
     pub const SCHEMA: &'static str = "s000357";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126469,8 +125613,7 @@ impl GatewayPatronusParameters {
     }
     pub const SCHEMA: &'static str = "s000351";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126564,8 +125707,7 @@ impl GatewayPayAsYouGoPricing {
     }
     pub const SCHEMA: &'static str = "s001972";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126657,8 +125799,7 @@ impl GatewayPillarScanParameters {
     }
     pub const SCHEMA: &'static str = "s000345";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126789,8 +125930,7 @@ impl GatewayPlugin {
     }
     pub const SCHEMA: &'static str = "s007677";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -126956,8 +126096,7 @@ impl GatewayPluginCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006527";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -127068,8 +126207,7 @@ impl GatewayPortkeyLanguageParameters {
     }
     pub const SCHEMA: &'static str = "s000368";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -127167,8 +126305,7 @@ impl GatewayPortkeyModerationParameters {
     }
     pub const SCHEMA: &'static str = "s000362";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -127267,8 +126404,7 @@ impl GatewayPortkeyPIIParameters {
     }
     pub const SCHEMA: &'static str = "s000376";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -127414,8 +126550,7 @@ impl GatewayPricingConfig {
     }
     pub const SCHEMA: &'static str = "s001976";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -127509,8 +126644,7 @@ impl GatewayPricingConfigRequest {
     }
     pub const SCHEMA: &'static str = "s002077";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -127736,8 +126870,7 @@ impl GatewayPricingMultiplier {
     }
     pub const SCHEMA: &'static str = "s001893";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -127938,8 +127071,7 @@ impl GatewayPricingMultiplierAdditionalUnits {
     }
     pub const SCHEMA: &'static str = "s001961";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -128020,8 +127152,7 @@ impl GatewayPricingMultiplierImage {
     }
     pub const SCHEMA: &'static str = "s001954";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -128109,8 +127240,7 @@ impl GatewayPromptfooParameters {
     }
     pub const SCHEMA: &'static str = "s000398";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -128265,8 +127395,7 @@ impl GatewayProvider {
     }
     pub const SCHEMA: &'static str = "s007172";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -128454,8 +127583,7 @@ impl GatewayProviderCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006263";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -128600,8 +127728,7 @@ impl GatewayProviderCreateResponse {
     }
     pub const SCHEMA: &'static str = "s007248";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -128780,8 +127907,7 @@ impl GatewayProviderDetail {
     }
     pub const SCHEMA: &'static str = "s007214";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -129147,8 +128273,7 @@ impl GatewayProviderUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006274";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -129286,8 +128411,7 @@ impl GatewayRateLimit {
     }
     pub const SCHEMA: &'static str = "s006649";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -129383,8 +128507,7 @@ impl GatewayRateLimitInput {
     }
     pub const SCHEMA: &'static str = "s006124";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -129522,8 +128645,7 @@ impl GatewayRateLimitsClientDeleteResponse {
     }
     pub const SCHEMA: &'static str = "s001320";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -129600,8 +128722,7 @@ impl GatewayRateLimitsClientGetOptions {
     }
     pub const SCHEMA: &'static str = "s001299";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -129746,8 +128867,7 @@ impl GatewayRateLimitsClientGetResponse {
     }
     pub const SCHEMA: &'static str = "s001303";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -129964,8 +129084,7 @@ impl GatewayRateLimitsClientListOptions {
     }
     pub const SCHEMA: &'static str = "s001240";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130094,8 +129213,7 @@ impl GatewayRateLimitsClientListResponse {
     }
     pub const SCHEMA: &'static str = "s001276";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130205,8 +129323,7 @@ impl GatewayRateLimitsClientUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s001308";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130302,8 +129419,7 @@ impl GatewayRateLimitsClientUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s001318";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130436,8 +129552,7 @@ impl GatewayRateLimitsPolicy {
     }
     pub const SCHEMA: &'static str = "s001256";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130610,8 +129725,7 @@ impl GatewayRealtimeConnectRequest {
     }
     pub const SCHEMA: &'static str = "s006113";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130692,8 +129806,7 @@ impl GatewayRealtimeEvent {
     }
     pub const SCHEMA: &'static str = "s006118";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130781,8 +129894,7 @@ impl GatewayRegexMatchParameters {
     }
     pub const SCHEMA: &'static str = "s000242";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -130885,8 +129997,7 @@ impl GatewayRequestAwsAccessKeyAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001558";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -131042,8 +130153,7 @@ impl GatewayRequestAwsAssumedRoleAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001564";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -131189,8 +130299,7 @@ impl GatewayRequestAwsServiceRoleAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001572";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -131318,8 +130427,7 @@ impl GatewayRequestAzureDefaultAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001590";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -131464,8 +130572,7 @@ impl GatewayRequestAzureEntraAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001577";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -131628,8 +130735,7 @@ impl GatewayRequestAzureManagedAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001584";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -131770,8 +130876,7 @@ impl GatewayRequestCondition {
     }
     pub const SCHEMA: &'static str = "s001133";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -131898,8 +131003,7 @@ impl GatewayRequestGroupBy {
     }
     pub const SCHEMA: &'static str = "s001145";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -132002,8 +131106,7 @@ impl GatewayRequestHashicorpAppRoleAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001601";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -132168,8 +131271,7 @@ impl GatewayRequestHashicorpKubernetesAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001609";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -132326,8 +131428,7 @@ impl GatewayRequestHashicorpTokenAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001594";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -132496,8 +131597,7 @@ impl GatewayRequestPayAsYouGoPricing {
     }
     pub const SCHEMA: &'static str = "s002073";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -132723,8 +131823,7 @@ impl GatewayRequestPricingMultiplier {
     }
     pub const SCHEMA: &'static str = "s001994";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -132925,8 +132024,7 @@ impl GatewayRequestPricingMultiplierAdditionalUnits {
     }
     pub const SCHEMA: &'static str = "s002062";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133007,8 +132105,7 @@ impl GatewayRequestPricingMultiplierImage {
     }
     pub const SCHEMA: &'static str = "s002055";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133091,8 +132188,7 @@ impl GatewayRequestTokenPricing {
     }
     pub const SCHEMA: &'static str = "s002069";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133176,8 +132272,7 @@ impl GatewayRequiredMetadataKeysParameters {
     }
     pub const SCHEMA: &'static str = "s000317";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133275,8 +132370,7 @@ impl GatewayRoutingCache {
     }
     pub const SCHEMA: &'static str = "s006221";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133397,8 +132491,7 @@ impl GatewayRoutingConfig {
     }
     pub const SCHEMA: &'static str = "s006212";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133516,8 +132609,7 @@ impl GatewayRoutingRetry {
     }
     pub const SCHEMA: &'static str = "s006214";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133604,8 +132696,7 @@ impl GatewayRoutingStrategy {
     }
     pub const SCHEMA: &'static str = "s006227";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133695,8 +132786,7 @@ impl GatewayRoutingTarget {
     }
     pub const SCHEMA: &'static str = "s006231";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -133888,8 +132978,7 @@ impl GatewaySageMakerConfiguration {
     }
     pub const SCHEMA: &'static str = "s006579";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -134207,8 +133296,7 @@ impl GatewaySecretMapping {
     }
     pub const SCHEMA: &'static str = "s006154";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -134525,8 +133613,7 @@ impl GatewaySecretReferenceDetailResponse {
     }
     pub const SCHEMA: &'static str = "s001653";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -134697,8 +133784,7 @@ impl GatewaySecretReferenceDetailResponseAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001688";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -134770,8 +133856,7 @@ impl GatewaySecretReferenceDetailResponseTags {
     }
     pub const SCHEMA: &'static str = "s001677";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -134892,8 +133977,7 @@ impl GatewaySecretReferenceListItem {
     }
     pub const SCHEMA: &'static str = "s001532";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135028,8 +134112,7 @@ impl GatewaySecretReferencesClientCreateResponse {
     }
     pub const SCHEMA: &'static str = "s001645";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135119,8 +134202,7 @@ impl GatewaySecretReferencesClientDeleteResponse {
     }
     pub const SCHEMA: &'static str = "s001718";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135223,8 +134305,7 @@ impl GatewaySecretReferencesClientListOptions {
     }
     pub const SCHEMA: &'static str = "s001517";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135385,8 +134466,7 @@ impl GatewaySecretReferencesClientListResponse {
     }
     pub const SCHEMA: &'static str = "s001550";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135525,8 +134605,7 @@ impl GatewaySecretReferencesClientUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s001692";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135649,8 +134728,7 @@ impl GatewaySecretReferencesClientUpdateRequestAuthConfig {
     }
     pub const SCHEMA: &'static str = "s001701";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135722,8 +134800,7 @@ impl GatewaySecretReferencesClientUpdateRequestTags {
     }
     pub const SCHEMA: &'static str = "s001714";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135795,8 +134872,7 @@ impl GatewaySecretReferencesClientUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s001716";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -135883,8 +134959,7 @@ impl GatewaySentenceCountParameters {
     }
     pub const SCHEMA: &'static str = "s000247";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136037,8 +135112,7 @@ impl GatewayServiceApiKeyCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006300";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136220,8 +135294,7 @@ impl GatewaySydeGuardParameters {
     }
     pub const SCHEMA: &'static str = "s000330";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136322,8 +135395,7 @@ impl GatewayTokenPricing {
     }
     pub const SCHEMA: &'static str = "s001968";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136456,8 +135528,7 @@ impl GatewayUpdateUsageLimitsPolicyRequest {
     }
     pub const SCHEMA: &'static str = "s001183";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136588,8 +135659,7 @@ impl GatewayUppercaseParameters {
     }
     pub const SCHEMA: &'static str = "s000313";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136680,8 +135750,7 @@ impl GatewayUpsertMcpServerMappingRequest {
     }
     pub const SCHEMA: &'static str = "s001737";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136768,8 +135837,7 @@ impl GatewayUpsertMcpServerMappingResponse {
     }
     pub const SCHEMA: &'static str = "s001745";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -136886,8 +135954,7 @@ impl GatewayUsageLimit {
     }
     pub const SCHEMA: &'static str = "s006632";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -137032,8 +136099,7 @@ impl GatewayUsageLimitInput {
     }
     pub const SCHEMA: &'static str = "s006129";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -137217,8 +136283,7 @@ impl GatewayUsageLimitsClientDeleteResponse {
     }
     pub const SCHEMA: &'static str = "s001210";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -137300,8 +136365,7 @@ impl GatewayUsageLimitsClientGetOptions {
     }
     pub const SCHEMA: &'static str = "s001172";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -137480,8 +136544,7 @@ impl GatewayUsageLimitsClientGetResponse {
     }
     pub const SCHEMA: &'static str = "s001178";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -137678,8 +136741,7 @@ impl GatewayUsageLimitsClientGetResponseValueKeyUsageMap {
     }
     pub const SCHEMA: &'static str = "s001124";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -137775,8 +136837,7 @@ impl GatewayUsageLimitsClientListEntitiesOptions {
     }
     pub const SCHEMA: &'static str = "s001212";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -137887,8 +136948,7 @@ impl GatewayUsageLimitsClientListEntitiesResponse {
     }
     pub const SCHEMA: &'static str = "s001230";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138009,8 +137069,7 @@ impl GatewayUsageLimitsClientListOptions {
     }
     pub const SCHEMA: &'static str = "s001053";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138127,8 +137186,7 @@ impl GatewayUsageLimitsClientListResponse {
     }
     pub const SCHEMA: &'static str = "s001125";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138218,8 +137276,7 @@ impl GatewayUsageLimitsClientResetEntityResponse {
     }
     pub const SCHEMA: &'static str = "s001238";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138291,8 +137348,7 @@ impl GatewayUsageLimitsClientUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s001208";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138453,8 +137509,7 @@ impl GatewayUsageLimitsPolicy {
     }
     pub const SCHEMA: &'static str = "s001090";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138660,8 +137715,7 @@ impl GatewayUsageLimitsPolicyEntity {
     }
     pub const SCHEMA: &'static str = "s001222";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138818,8 +137872,7 @@ impl GatewayUserApiKeyCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006320";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -138991,8 +138044,7 @@ impl GatewayValidUrlsParameters {
     }
     pub const SCHEMA: &'static str = "s000287";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139101,8 +138153,7 @@ impl GatewayValueKeyUsage {
     }
     pub const SCHEMA: &'static str = "s001080";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139222,8 +138273,7 @@ impl GatewayVertexAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s006598";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139379,8 +138429,7 @@ impl GatewayWebhookParameters {
     }
     pub const SCHEMA: &'static str = "s000298";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139478,8 +138527,7 @@ impl GatewayWebhookParametersHeaders {
     }
     pub const SCHEMA: &'static str = "s000302";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139566,8 +138614,7 @@ impl GatewayWordCountParameters {
     }
     pub const SCHEMA: &'static str = "s000255";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139660,8 +138707,7 @@ impl GatewayWorkersAIConfiguration {
     }
     pub const SCHEMA: &'static str = "s006618";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139786,8 +138832,7 @@ impl GatewayWorkspace {
     }
     pub const SCHEMA: &'static str = "s006967";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -139983,8 +139028,7 @@ impl GatewayWorkspaceBinding {
     }
     pub const SCHEMA: &'static str = "s006170";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -140147,8 +139191,7 @@ impl GatewayWorkspaceCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006184";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -140317,8 +139360,7 @@ impl GatewayWorkspaceCreateResponse {
     }
     pub const SCHEMA: &'static str = "s007025";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -140538,8 +139580,7 @@ impl GatewayWorkspaceDetail {
     }
     pub const SCHEMA: &'static str = "s006982";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -141133,8 +140174,7 @@ impl GatewayWorkspaceUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006197";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -141267,8 +140307,7 @@ impl GatewayWriteResponse {
     }
     pub const SCHEMA: &'static str = "s006936";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -141449,8 +140488,7 @@ impl Goal {
     }
     pub const SCHEMA: &'static str = "s011592";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -141627,8 +140665,7 @@ impl GoalCategoryListResponse {
     }
     pub const SCHEMA: &'static str = "s010347";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -141725,8 +140762,7 @@ impl GoalCategoryOption {
     }
     pub const SCHEMA: &'static str = "s010342";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -141828,8 +140864,7 @@ impl GoalListResponse {
     }
     pub const SCHEMA: &'static str = "s011629";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142003,8 +141038,7 @@ impl GroupListResponse {
     }
     pub const SCHEMA: &'static str = "s006880";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142114,8 +141148,7 @@ impl GroupedErrorsResponse {
     }
     pub const SCHEMA: &'static str = "s000592";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142212,8 +141245,7 @@ impl GroupedErrorsResponseData {
     }
     pub const SCHEMA: &'static str = "s000595";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142315,8 +141347,7 @@ impl GroupedErrorsResponseDataTrendItem {
     }
     pub const SCHEMA: &'static str = "s000598";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142446,8 +141477,7 @@ impl HTTPValidationError {
     }
     pub const SCHEMA: &'static str = "s010616";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142528,8 +141558,7 @@ impl HeadersAuthConfig {
     }
     pub const SCHEMA: &'static str = "s010716";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142615,8 +141644,7 @@ impl HuggingfaceConnectionParams {
     }
     pub const SCHEMA: &'static str = "s010762";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142709,8 +141737,7 @@ impl IODetected {
     }
     pub const SCHEMA: &'static str = "s012981";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -142800,8 +141827,7 @@ impl IamScope {
     }
     pub const SCHEMA: &'static str = "s008757";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143012,8 +142038,7 @@ impl IamScopeCreateRequest {
     }
     pub const SCHEMA: &'static str = "s008773";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143115,8 +142140,7 @@ impl IamScopeListResponse {
     }
     pub const SCHEMA: &'static str = "s008764";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143215,8 +142239,7 @@ impl IamScopeResource {
     }
     pub const SCHEMA: &'static str = "s008750";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143318,8 +142341,7 @@ impl IamScopeResourceInput {
     }
     pub const SCHEMA: &'static str = "s008768";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143504,8 +142526,7 @@ impl IamScopeUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s008777";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143620,8 +142641,7 @@ impl InstanceExtraDetails {
     }
     pub const SCHEMA: &'static str = "s012818";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143764,8 +142784,7 @@ impl InstanceGetResponse {
     }
     pub const SCHEMA: &'static str = "s012860";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -143982,8 +143001,7 @@ impl InstanceRequest {
     }
     pub const SCHEMA: &'static str = "s012826";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -144162,8 +143180,7 @@ impl InstanceResponse {
     }
     pub const SCHEMA: &'static str = "s012851";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -144264,8 +143281,7 @@ impl JobAbortResponse {
     }
     pub const SCHEMA: &'static str = "s011175";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -144379,8 +143395,7 @@ impl JobCreateRequest {
     }
     pub const SCHEMA: &'static str = "s010999";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -144584,8 +143599,7 @@ impl JobCreateRequestJobMetadataVariant1 {
     }
     pub const SCHEMA: &'static str = "s011004";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -144849,8 +143863,7 @@ impl JobCreateRequestJobMetadataVariant2 {
     }
     pub const SCHEMA: &'static str = "s011008";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -145104,8 +144117,7 @@ impl JobCreateRequestJobMetadataVariant3 {
     }
     pub const SCHEMA: &'static str = "s011012";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -145295,8 +144307,7 @@ impl JobListResponse {
     }
     pub const SCHEMA: &'static str = "s011172";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -145504,8 +144515,7 @@ impl JobResponse {
     }
     pub const SCHEMA: &'static str = "s011119";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -145881,8 +144891,7 @@ impl JobTimeRecord {
     }
     pub const SCHEMA: &'static str = "s010838";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146027,8 +145036,7 @@ impl Label {
     }
     pub const SCHEMA: &'static str = "s009806";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146127,8 +145135,7 @@ impl LabelCondition {
     }
     pub const SCHEMA: &'static str = "s009673";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146310,8 +145317,7 @@ impl LabelKeyList {
     }
     pub const SCHEMA: &'static str = "s009815";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146402,8 +145408,7 @@ impl LabelValueList {
     }
     pub const SCHEMA: &'static str = "s009819";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146491,8 +145496,7 @@ impl LabelsCreateRequest {
     }
     pub const SCHEMA: &'static str = "s009810";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146572,8 +145576,7 @@ impl LabelsResponse {
     }
     pub const SCHEMA: &'static str = "s009813";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146648,8 +145651,7 @@ impl LanguageOption {
     }
     pub const SCHEMA: &'static str = "s010857";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146740,8 +145742,7 @@ impl LatencyChartResponse {
     }
     pub const SCHEMA: &'static str = "s006704";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146847,8 +145848,7 @@ impl LatencyChartResponseData {
     }
     pub const SCHEMA: &'static str = "s006707";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -146983,8 +145983,7 @@ impl LatencyChartResponseDataRecordsItem {
     }
     pub const SCHEMA: &'static str = "s006710";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147115,8 +146114,7 @@ impl ListApiKeysResponse {
     }
     pub const SCHEMA: &'static str = "s007260";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147232,8 +146230,7 @@ impl ListCatalogProvidersResponse {
     }
     pub const SCHEMA: &'static str = "s007358";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147338,8 +146335,7 @@ impl ListConfigVersionsResponse {
     }
     pub const SCHEMA: &'static str = "s007090";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147466,8 +146462,7 @@ impl ListConfigsResponse {
     }
     pub const SCHEMA: &'static str = "s007067";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147581,8 +146576,7 @@ impl ListCustomRuleSecurityGroupsResponse {
     }
     pub const SCHEMA: &'static str = "s009772";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147676,8 +146670,7 @@ impl ListCustomRulesResponse {
     }
     pub const SCHEMA: &'static str = "s009758";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147784,8 +146777,7 @@ impl ListDeploymentsResponse {
     }
     pub const SCHEMA: &'static str = "s007668";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -147912,8 +146904,7 @@ impl ListGuardrailsResponse {
     }
     pub const SCHEMA: &'static str = "s007130";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148040,8 +147031,7 @@ impl ListIntegrationsResponse {
     }
     pub const SCHEMA: &'static str = "s007334";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148168,8 +147158,7 @@ impl ListMcpIntegrationsResponse {
     }
     pub const SCHEMA: &'static str = "s007449";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148283,8 +147272,7 @@ impl ListModelSecurityGroupsResponse {
     }
     pub const SCHEMA: &'static str = "s010292";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148378,8 +147366,7 @@ impl ListModelSecurityRuleInstancesResponse {
     }
     pub const SCHEMA: &'static str = "s010258";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148473,8 +147460,7 @@ impl ListModelSecurityRulesResponse {
     }
     pub const SCHEMA: &'static str = "s010203";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148581,8 +147567,7 @@ impl ListPluginsResponse {
     }
     pub const SCHEMA: &'static str = "s007692";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148709,8 +147694,7 @@ impl ListProvidersResponse {
     }
     pub const SCHEMA: &'static str = "s007205";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148837,8 +147821,7 @@ impl ListWorkspacesResponse {
     }
     pub const SCHEMA: &'static str = "s007044";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -148971,8 +147954,7 @@ impl MSCopilotStudioAuthUrlRequest {
     }
     pub const SCHEMA: &'static str = "s010358";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149089,8 +148071,7 @@ impl MSCopilotStudioAuthUrlResponse {
     }
     pub const SCHEMA: &'static str = "s010369";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149213,8 +148194,7 @@ impl MSCopilotStudioTokenRequest {
     }
     pub const SCHEMA: &'static str = "s010374";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149335,8 +148315,7 @@ impl MSCopilotStudioTokenResponse {
     }
     pub const SCHEMA: &'static str = "s010386";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149427,8 +148406,7 @@ impl MaliciousCodeProtection {
     }
     pub const SCHEMA: &'static str = "s009510";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149527,8 +148505,7 @@ impl MalwareReport {
     }
     pub const SCHEMA: &'static str = "s007835";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149613,8 +148590,7 @@ impl MaskedData {
     }
     pub const SCHEMA: &'static str = "s012942";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149705,8 +148681,7 @@ impl McEntry {
     }
     pub const SCHEMA: &'static str = "s007829";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149818,8 +148793,7 @@ impl McReport {
     }
     pub const SCHEMA: &'static str = "s007846";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -149997,8 +148971,7 @@ impl McpIntegration {
     }
     pub const SCHEMA: &'static str = "s007421";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -150196,8 +149169,7 @@ impl McpIntegrationCapabilitiesBulkUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006452";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -150292,8 +149264,7 @@ impl McpIntegrationCapabilitiesResponse {
     }
     pub const SCHEMA: &'static str = "s007533";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -150425,8 +149396,7 @@ impl McpIntegrationCapabilitiesResponseCounts {
     }
     pub const SCHEMA: &'static str = "s007536";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -150537,8 +149507,7 @@ impl McpIntegrationCapabilitiesResponseCountsTools {
     }
     pub const SCHEMA: &'static str = "s007482";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -150629,8 +149598,7 @@ impl McpIntegrationCapabilitiesUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s007545";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -150793,8 +149761,7 @@ impl McpIntegrationCapability {
     }
     pub const SCHEMA: &'static str = "s007486";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -151009,8 +149976,7 @@ impl McpIntegrationCapabilityUpdate {
     }
     pub const SCHEMA: &'static str = "s006448";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -151155,8 +150121,7 @@ impl McpIntegrationCreateRequest {
     }
     pub const SCHEMA: &'static str = "s006420";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -151398,8 +150363,7 @@ impl McpIntegrationDetail {
     }
     pub const SCHEMA: &'static str = "s007458";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -151613,8 +150577,7 @@ impl McpIntegrationDetailGlobalWorkspaceAccess {
     }
     pub const SCHEMA: &'static str = "s007469";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -151749,8 +150712,7 @@ impl McpIntegrationMetadata {
     }
     pub const SCHEMA: &'static str = "s007550";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -151967,8 +150929,7 @@ impl McpIntegrationUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006433";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152134,8 +151095,7 @@ impl McpIntegrationWorkspacesBulkUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s006455";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152234,8 +151194,7 @@ impl McpIntegrationWorkspacesBulkUpdateRequestGlobalWorkspaceAccess {
     }
     pub const SCHEMA: &'static str = "s006465";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152327,8 +151286,7 @@ impl McpIntegrationWorkspacesBulkUpdateRequestWorkspacesItem {
     }
     pub const SCHEMA: &'static str = "s006460";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152416,8 +151374,7 @@ impl McpIntegrationWorkspacesUpdateResponse {
     }
     pub const SCHEMA: &'static str = "s007548";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152514,8 +151471,7 @@ impl Metadata {
     }
     pub const SCHEMA: &'static str = "s007755";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152634,8 +151590,7 @@ impl MetadataCriterion {
     }
     pub const SCHEMA: &'static str = "s008315";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152768,8 +151723,7 @@ impl ModelConfiguration {
     }
     pub const SCHEMA: &'static str = "s009588";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -152883,8 +151837,7 @@ impl ModelList {
     }
     pub const SCHEMA: &'static str = "s010028";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -153012,8 +151965,7 @@ impl ModelProtectionItem {
     }
     pub const SCHEMA: &'static str = "s009544";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -153205,8 +152157,7 @@ impl ModelResponse {
     }
     pub const SCHEMA: &'static str = "s009995";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -153384,8 +152335,7 @@ impl ModelScanIssue {
     }
     pub const SCHEMA: &'static str = "s009834";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -153666,8 +152616,7 @@ impl ModelSecurityGroupCreateRequest {
     }
     pub const SCHEMA: &'static str = "s010261";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -153866,8 +152815,7 @@ impl ModelSecurityGroupResponse {
     }
     pub const SCHEMA: &'static str = "s010271";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -154064,8 +153012,7 @@ impl ModelSecurityGroupUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s010284";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -154154,8 +153101,7 @@ impl ModelSecurityPagination {
     }
     pub const SCHEMA: &'static str = "s009760";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -154304,8 +153250,7 @@ impl ModelSecurityRuleInstanceResponse {
     }
     pub const SCHEMA: &'static str = "s010206";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -154475,8 +153420,7 @@ impl ModelSecurityRuleInstanceResponseCustomRule {
     }
     pub const SCHEMA: &'static str = "s010214";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -154585,8 +153529,7 @@ impl ModelSecurityRuleInstanceUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s010247";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -154769,8 +153712,7 @@ impl ModelSecurityRuleResponse {
     }
     pub const SCHEMA: &'static str = "s010183";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -154934,8 +153876,7 @@ impl ModelVersionList {
     }
     pub const SCHEMA: &'static str = "s010080";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -155123,8 +154064,7 @@ impl ModelVersionResponse {
     }
     pub const SCHEMA: &'static str = "s010031";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -155332,8 +154272,7 @@ impl MultiProfileDataNode {
     }
     pub const SCHEMA: &'static str = "s008521";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -155425,8 +154364,7 @@ impl MultiProfileDetectionRule {
     }
     pub const SCHEMA: &'static str = "s008534";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -155577,8 +154515,7 @@ impl MultiTurnStatefulConfig {
     }
     pub const SCHEMA: &'static str = "s010703";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -155682,8 +154619,7 @@ impl MultiTurnStatelessConfig {
     }
     pub const SCHEMA: &'static str = "s010709";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -155800,8 +154736,7 @@ impl OAuth2AuthConfig {
     }
     pub const SCHEMA: &'static str = "s010730";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -155945,8 +154880,7 @@ impl Oauth2Token {
     }
     pub const SCHEMA: &'static str = "s009288";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -156080,8 +155014,7 @@ impl OpenAIConnectionParams {
     }
     pub const SCHEMA: &'static str = "s010758";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -156175,8 +155108,7 @@ impl OrganisationSelfResponse {
     }
     pub const SCHEMA: &'static str = "s007701";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -156442,8 +155374,7 @@ impl PageDataFilteringProfileResponse {
     }
     pub const SCHEMA: &'static str = "s008263";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -156648,8 +155579,7 @@ impl PageDataPatternResponse {
     }
     pub const SCHEMA: &'static str = "s008416";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -156854,8 +155784,7 @@ impl PageDataProfileResponse {
     }
     pub const SCHEMA: &'static str = "s008595";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157060,8 +155989,7 @@ impl PageDictionaryResponse {
     }
     pub const SCHEMA: &'static str = "s008710";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157238,8 +156166,7 @@ impl PageableObject {
     }
     pub const SCHEMA: &'static str = "s008277";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157381,8 +156308,7 @@ impl PaginatedScanResults {
     }
     pub const SCHEMA: &'static str = "s009445";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157500,8 +156426,7 @@ impl PatternDetection {
     }
     pub const SCHEMA: &'static str = "s007905";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157592,8 +156517,7 @@ impl Policy {
     }
     pub const SCHEMA: &'static str = "s009606";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157717,8 +156641,7 @@ impl PolicyAppProtection {
     }
     pub const SCHEMA: &'static str = "s009516";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157842,8 +156765,7 @@ impl PolicyLatency {
     }
     pub const SCHEMA: &'static str = "s009458";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -157982,8 +156904,7 @@ impl PrerequisiteModel {
     }
     pub const SCHEMA: &'static str = "s011179";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -158194,8 +157115,7 @@ impl PromptDetailResponse {
     }
     pub const SCHEMA: &'static str = "s011813";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -158410,8 +157330,7 @@ impl PromptDetected {
     }
     pub const SCHEMA: &'static str = "s010324";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -158538,8 +157457,7 @@ impl PromptDetectionDetails {
     }
     pub const SCHEMA: &'static str = "s010307";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -158631,8 +157549,7 @@ impl PromptDetectionDetailsToxicContentDetails {
     }
     pub const SCHEMA: &'static str = "s010310";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -158735,8 +157652,7 @@ impl PromptSetStats {
     }
     pub const SCHEMA: &'static str = "s012461";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -158882,8 +157798,7 @@ impl PromptSetSummary {
     }
     pub const SCHEMA: &'static str = "s011779";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159031,8 +157946,7 @@ impl PromptSetsReportResponse {
     }
     pub const SCHEMA: &'static str = "s011805";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159132,8 +158046,7 @@ impl PropertyAssignment {
     }
     pub const SCHEMA: &'static str = "s011762";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159227,8 +158140,7 @@ impl PropertyDefinition {
     }
     pub const SCHEMA: &'static str = "s012522";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159319,8 +158231,7 @@ impl PropertyNameCreateRequest {
     }
     pub const SCHEMA: &'static str = "s012680";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159420,8 +158331,7 @@ impl PropertyNamesListResponse {
     }
     pub const SCHEMA: &'static str = "s012687";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159505,8 +158415,7 @@ impl PropertyStatistic {
     }
     pub const SCHEMA: &'static str = "s011772";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159604,8 +158513,7 @@ impl PropertyStatisticResult {
     }
     pub const SCHEMA: &'static str = "s011776";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159695,8 +158603,7 @@ impl PropertyValueCreateRequest {
     }
     pub const SCHEMA: &'static str = "s012683";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159801,8 +158708,7 @@ impl PropertyValueStatistic {
     }
     pub const SCHEMA: &'static str = "s011766";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159911,8 +158817,7 @@ impl PropertyValuesMultipleResponse {
     }
     pub const SCHEMA: &'static str = "s012699";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -159998,8 +158903,7 @@ impl PropertyValuesResponse {
     }
     pub const SCHEMA: &'static str = "s012693";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160091,8 +158995,7 @@ impl PyPIAuthResponse {
     }
     pub const SCHEMA: &'static str = "s010295";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160186,8 +159089,7 @@ impl QuotaDetails {
     }
     pub const SCHEMA: &'static str = "s011893";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160289,8 +159191,7 @@ impl QuotaSummary {
     }
     pub const SCHEMA: &'static str = "s011898";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160483,8 +159384,7 @@ impl RedTeamPagination {
     }
     pub const SCHEMA: &'static str = "s010599";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160568,8 +159468,7 @@ impl RegistryCredentials {
     }
     pub const SCHEMA: &'static str = "s012878";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160693,8 +159592,7 @@ impl RemediationDetail {
     }
     pub const SCHEMA: &'static str = "s011570";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160811,8 +159709,7 @@ impl RemediationResponse {
     }
     pub const SCHEMA: &'static str = "s011583";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -160896,8 +159793,7 @@ impl RescuedRetriesResponse {
     }
     pub const SCHEMA: &'static str = "s006817";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161010,8 +159906,7 @@ impl RescuedRetriesResponseData {
     }
     pub const SCHEMA: &'static str = "s006820";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161137,8 +160032,7 @@ impl RescuedRetriesResponseDataTrendItem {
     }
     pub const SCHEMA: &'static str = "s006823";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161235,8 +160129,7 @@ impl RescuedRetriesResponseDataTrendsItem {
     }
     pub const SCHEMA: &'static str = "s006830";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161342,8 +160235,7 @@ impl ResourceModelExtension {
     }
     pub const SCHEMA: &'static str = "s008637";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161476,8 +160368,7 @@ impl ResponseDetected {
     }
     pub const SCHEMA: &'static str = "s012891";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161604,8 +160495,7 @@ impl ResponseDetectionDetails {
     }
     pub const SCHEMA: &'static str = "s012882";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161697,8 +160587,7 @@ impl ResponseDetectionDetailsToxicContentDetails {
     }
     pub const SCHEMA: &'static str = "s012885";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -161874,8 +160763,7 @@ impl RestConnectionParams {
     }
     pub const SCHEMA: &'static str = "s010789";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -162018,8 +160906,7 @@ impl RiskLevel {
     }
     pub const SCHEMA: &'static str = "s011852";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -162163,8 +161050,7 @@ impl RuleConfiguration {
     }
     pub const SCHEMA: &'static str = "s010174";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -162277,8 +161163,7 @@ impl RuleEditableField {
     }
     pub const SCHEMA: &'static str = "s010156";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -162400,8 +161285,7 @@ impl RuleEditableFieldDropdown {
     }
     pub const SCHEMA: &'static str = "s010152";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -162532,8 +161416,7 @@ impl RuleEvaluationList {
     }
     pub const SCHEMA: &'static str = "s010098";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -162672,8 +161555,7 @@ impl RuleEvaluationResponse {
     }
     pub const SCHEMA: &'static str = "s010083";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -163206,8 +162088,7 @@ impl RuleRemediation {
     }
     pub const SCHEMA: &'static str = "s010168";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -163312,8 +162193,7 @@ impl RuleResultCondition {
     }
     pub const SCHEMA: &'static str = "s009681";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -163607,8 +162487,7 @@ impl RuntimeSecurityPolicy {
     }
     pub const SCHEMA: &'static str = "s011496";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -163735,8 +162614,7 @@ impl RuntimeSecurityPolicyConfig {
     }
     pub const SCHEMA: &'static str = "s010407";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -163843,8 +162721,7 @@ impl RuntimeSecurityProfileResponse {
     }
     pub const SCHEMA: &'static str = "s011587";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -164109,8 +162986,7 @@ impl ScanBaseResponse {
     }
     pub const SCHEMA: &'static str = "s009914";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -164402,8 +163278,7 @@ impl ScanCreateRequest {
     }
     pub const SCHEMA: &'static str = "s009885";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -164628,8 +163503,7 @@ impl ScanDetails {
     }
     pub const SCHEMA: &'static str = "s009868";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -164885,8 +163759,7 @@ impl ScanIdResult {
     }
     pub const SCHEMA: &'static str = "s012909";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -164996,8 +163869,7 @@ impl ScanList {
     }
     pub const SCHEMA: &'static str = "s009966";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -165152,8 +164024,7 @@ impl ScanRequest {
     }
     pub const SCHEMA: &'static str = "s007748";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -165293,8 +164164,7 @@ impl ScanRequestContentsInner {
     }
     pub const SCHEMA: &'static str = "s007775";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -165518,8 +164388,7 @@ impl ScanResponse {
     }
     pub const SCHEMA: &'static str = "s012920";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -166121,8 +164990,7 @@ impl ScanResultEntry {
     }
     pub const SCHEMA: &'static str = "s009301";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -166652,8 +165520,7 @@ impl ScanResultForDashboard {
     }
     pub const SCHEMA: &'static str = "s009431";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -166788,8 +165655,7 @@ impl ScanStatisticsResponse {
     }
     pub const SCHEMA: &'static str = "s011858";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -166901,8 +165767,7 @@ impl ScanSummary {
     }
     pub const SCHEMA: &'static str = "s012958";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -166993,8 +165858,7 @@ impl ScoreTrendResponse {
     }
     pub const SCHEMA: &'static str = "s011874";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167088,8 +165952,7 @@ impl ScoreTrendSeries {
     }
     pub const SCHEMA: &'static str = "s011868";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167233,8 +166096,7 @@ impl SecurityProfile {
     }
     pub const SCHEMA: &'static str = "s009612";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167375,8 +166237,7 @@ impl SecurityProfileListResponse {
     }
     pub const SCHEMA: &'static str = "s009651";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167534,8 +166395,7 @@ impl SentimentRequest {
     }
     pub const SCHEMA: &'static str = "s011879";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167637,8 +166497,7 @@ impl SentimentResponse {
     }
     pub const SCHEMA: &'static str = "s011886";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167740,8 +166599,7 @@ impl SeverityByConfidence {
     }
     pub const SCHEMA: &'static str = "s009483";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167886,8 +166744,7 @@ impl SeverityReport {
     }
     pub const SCHEMA: &'static str = "s011461";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -167995,8 +166852,7 @@ impl SeverityStats {
     }
     pub const SCHEMA: &'static str = "s011454";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -168091,8 +166947,7 @@ impl SnapshotVersion {
     }
     pub const SCHEMA: &'static str = "s009799";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -168183,8 +167038,7 @@ impl SnapshotVersionListResponse {
     }
     pub const SCHEMA: &'static str = "s009803";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -168398,8 +167252,7 @@ impl SortObject {
     }
     pub const SCHEMA: &'static str = "s008290";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -168501,8 +167354,7 @@ impl SourceAttributes {
     }
     pub const SCHEMA: &'static str = "s008076";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -168599,8 +167451,7 @@ impl SourceCodeDetection {
     }
     pub const SCHEMA: &'static str = "s009477";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -168742,8 +167593,7 @@ impl StartProfilingResponse {
     }
     pub const SCHEMA: &'static str = "s010355";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -168897,8 +167747,7 @@ impl StaticJobMetadata {
     }
     pub const SCHEMA: &'static str = "s010852";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -169095,8 +167944,7 @@ impl StaticJobRemediation {
     }
     pub const SCHEMA: &'static str = "s011500";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -169239,8 +168087,7 @@ impl StaticJobRemediationRecommendation {
     }
     pub const SCHEMA: &'static str = "s011524";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -169380,8 +168227,7 @@ impl StaticJobReport {
     }
     pub const SCHEMA: &'static str = "s011531";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -169535,8 +168381,7 @@ impl StaticJobReportStats {
     }
     pub const SCHEMA: &'static str = "s011024";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -169788,8 +168633,7 @@ impl StreamDetailResponse {
     }
     pub const SCHEMA: &'static str = "s011686";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -170012,8 +168856,7 @@ impl StreamDetailResponseGoalMetadata {
     }
     pub const SCHEMA: &'static str = "s011702";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -170170,8 +169013,7 @@ impl StreamDetailResponseGoalVariant2 {
     }
     pub const SCHEMA: &'static str = "s010423";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -170489,8 +169331,7 @@ impl StreamIterationData {
     }
     pub const SCHEMA: &'static str = "s011632";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -170728,8 +169569,7 @@ impl StreamListResponse {
     }
     pub const SCHEMA: &'static str = "s011739";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -170917,8 +169757,7 @@ impl StreamingConnectionParams {
     }
     pub const SCHEMA: &'static str = "s010821";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -171092,8 +169931,7 @@ impl StreamingConnectionParamsMultiTurnConfigVariant1 {
     }
     pub const SCHEMA: &'static str = "s010505";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -171233,8 +170071,7 @@ impl StreamingConnectionParamsMultiTurnConfigVariant2 {
     }
     pub const SCHEMA: &'static str = "s010511";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -171377,8 +170214,7 @@ impl StreamingConnectionParamsTargetConnectionConfigVariant1 {
     }
     pub const SCHEMA: &'static str = "s010463";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -171497,8 +170333,7 @@ impl StreamingConnectionParamsTargetConnectionConfigVariant2 {
     }
     pub const SCHEMA: &'static str = "s010467";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -171635,8 +170470,7 @@ impl StreamingConnectionParamsTargetConnectionConfigVariant3 {
     }
     pub const SCHEMA: &'static str = "s010481";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -171779,8 +170613,7 @@ impl StreamingConnectionParamsTargetConnectionConfigVariant4 {
     }
     pub const SCHEMA: &'static str = "s010490";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -171941,8 +170774,7 @@ impl SubCategoryModel {
     }
     pub const SCHEMA: &'static str = "s011184";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -172110,8 +170942,7 @@ impl SubCategoryStats {
     }
     pub const SCHEMA: &'static str = "s011423";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -172287,8 +171118,7 @@ impl TargetAdditionalContext {
     }
     pub const SCHEMA: &'static str = "s010634";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -172463,8 +171293,7 @@ impl TargetAuthValidationRequest {
     }
     pub const SCHEMA: &'static str = "s012261";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -172621,8 +171450,7 @@ impl TargetAuthValidationResponse {
     }
     pub const SCHEMA: &'static str = "s012270";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -172739,8 +171567,7 @@ impl TargetBackground {
     }
     pub const SCHEMA: &'static str = "s010620";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -172928,8 +171755,7 @@ impl TargetContextUpdate {
     }
     pub const SCHEMA: &'static str = "s012101";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -173126,8 +171952,7 @@ impl TargetCreateRequest {
     }
     pub const SCHEMA: &'static str = "s012050";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -173552,8 +172377,7 @@ impl TargetJobRequest {
     }
     pub const SCHEMA: &'static str = "s010832";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -173644,8 +172468,7 @@ impl TargetList {
     }
     pub const SCHEMA: &'static str = "s012248";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -173851,8 +172674,7 @@ impl TargetListItem {
     }
     pub const SCHEMA: &'static str = "s012189";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -174172,8 +172994,7 @@ impl TargetMetadata {
     }
     pub const SCHEMA: &'static str = "s010657";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -174457,8 +173278,7 @@ impl TargetProbeRequest {
     }
     pub const SCHEMA: &'static str = "s012252";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -174719,8 +173539,7 @@ impl TargetProfileResponse {
     }
     pub const SCHEMA: &'static str = "s012279";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -174919,8 +173738,7 @@ impl TargetProfileResponseAiGeneratedItems {
     }
     pub const SCHEMA: &'static str = "s012309";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175076,8 +173894,7 @@ impl TargetProfileResponseAiGeneratedItemsBannedKeywords {
     }
     pub const SCHEMA: &'static str = "s012349";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175186,8 +174003,7 @@ impl TargetProfileResponseAiGeneratedItemsBannedKeywordsCurrentItemsItem {
     }
     pub const SCHEMA: &'static str = "s012354";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175289,8 +174105,7 @@ impl TargetProfileResponseAiGeneratedItemsBaseModel {
     }
     pub const SCHEMA: &'static str = "s012381";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175397,8 +174212,7 @@ impl TargetProfileResponseAiGeneratedItemsCompetitors {
     }
     pub const SCHEMA: &'static str = "s012365";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175507,8 +174321,7 @@ impl TargetProfileResponseAiGeneratedItemsCompetitorsCurrentItemsItem {
     }
     pub const SCHEMA: &'static str = "s012370";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175610,8 +174423,7 @@ impl TargetProfileResponseAiGeneratedItemsCoreArchitecture {
     }
     pub const SCHEMA: &'static str = "s012389";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175718,8 +174530,7 @@ impl TargetProfileResponseAiGeneratedItemsLanguagesSupported {
     }
     pub const SCHEMA: &'static str = "s012313";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175835,8 +174646,7 @@ impl TargetProfileResponseAiGeneratedItemsLanguagesSupportedCurrentItemsItem {
     }
     pub const SCHEMA: &'static str = "s012318";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -175946,8 +174756,7 @@ impl TargetProfileResponseAiGeneratedItemsSystemPrompt {
     }
     pub const SCHEMA: &'static str = "s012397";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176054,8 +174863,7 @@ impl TargetProfileResponseAiGeneratedItemsToolsAccessible {
     }
     pub const SCHEMA: &'static str = "s012333";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176166,8 +174974,7 @@ impl TargetProfileResponseAiGeneratedItemsToolsAccessibleCurrentItemsItem {
     }
     pub const SCHEMA: &'static str = "s012338";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176266,8 +175073,7 @@ impl TargetProfileResponseOtherDetails {
     }
     pub const SCHEMA: &'static str = "s012428";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176396,8 +175202,7 @@ impl TargetProfileResponseOtherDetailsPrettified {
     }
     pub const SCHEMA: &'static str = "s012283";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176537,8 +175342,7 @@ impl TargetProfileResponseOtherDetailsPrettifiedAudienceAndGovernance {
     }
     pub const SCHEMA: &'static str = "s012295";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176616,8 +175420,7 @@ impl TargetProfileResponseOtherDetailsPrettifiedContentPolicy {
     }
     pub const SCHEMA: &'static str = "s012301";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176690,8 +175493,7 @@ impl TargetProfileResponseOtherDetailsPrettifiedCoreArchitectureAndIdentity {
     }
     pub const SCHEMA: &'static str = "s012289";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176769,8 +175571,7 @@ impl TargetProfileResponseOtherDetailsPrettifiedExecutionEnvironment {
     }
     pub const SCHEMA: &'static str = "s012286";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176848,8 +175649,7 @@ impl TargetProfileResponseOtherDetailsPrettifiedOtherDiscoveries {
     }
     pub const SCHEMA: &'static str = "s012304";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -176927,8 +175727,7 @@ impl TargetProfileResponseOtherDetailsPrettifiedPerformanceAndMetrics {
     }
     pub const SCHEMA: &'static str = "s012298";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -177006,8 +175805,7 @@ impl TargetProfileResponseOtherDetailsPrettifiedToolsAndIntegrations {
     }
     pub const SCHEMA: &'static str = "s012292";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -177238,8 +176036,7 @@ impl TargetReference {
     }
     pub const SCHEMA: &'static str = "s011048";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -177675,8 +176472,7 @@ impl TargetResponse {
     }
     pub const SCHEMA: &'static str = "s012107";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -178034,8 +176830,7 @@ impl TargetTemplateCollection {
     }
     pub const SCHEMA: &'static str = "s012434";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -178316,8 +177111,7 @@ impl TargetUpdateRequest {
     }
     pub const SCHEMA: &'static str = "s012099";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -178514,8 +177308,7 @@ impl TcReport {
     }
     pub const SCHEMA: &'static str = "s007811";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -178611,8 +177404,7 @@ impl TenantLanguagesResponse {
     }
     pub const SCHEMA: &'static str = "s011940";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -178733,8 +177525,7 @@ impl TgReport {
     }
     pub const SCHEMA: &'static str = "s007871";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -178991,8 +177782,7 @@ impl ThreatScanReport {
     }
     pub const SCHEMA: &'static str = "s013003";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -179267,8 +178057,7 @@ impl TokenStats {
     }
     pub const SCHEMA: &'static str = "s009119";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -179367,8 +178156,7 @@ impl TokensChartResponse {
     }
     pub const SCHEMA: &'static str = "s006725";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -179517,8 +178305,7 @@ impl TokensChartResponseData {
     }
     pub const SCHEMA: &'static str = "s006728";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -179731,8 +178518,7 @@ impl TokensChartResponseDataRecordsItem {
     }
     pub const SCHEMA: &'static str = "s006731";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -179911,8 +178697,7 @@ impl ToolDetected {
     }
     pub const SCHEMA: &'static str = "s012952";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180016,8 +178801,7 @@ impl ToolDetectionDetails {
     }
     pub const SCHEMA: &'static str = "s012994";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180126,8 +178910,7 @@ impl ToolDetectionEntry {
     }
     pub const SCHEMA: &'static str = "s012985";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180278,8 +179061,7 @@ impl ToolDetectionFlags {
     }
     pub const SCHEMA: &'static str = "s012960";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180414,8 +179196,7 @@ impl ToolEvent {
     }
     pub const SCHEMA: &'static str = "s007788";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180516,8 +179297,7 @@ impl ToolEventMetadata {
     }
     pub const SCHEMA: &'static str = "s007792";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180625,8 +179405,7 @@ impl TopicArray {
     }
     pub const SCHEMA: &'static str = "s009534";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180721,8 +179500,7 @@ impl TopicGuardrailDetails {
     }
     pub const SCHEMA: &'static str = "s010316";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180820,8 +179598,7 @@ impl TopicObject {
     }
     pub const SCHEMA: &'static str = "s009527";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -180931,8 +179708,7 @@ impl ToxicCategory {
     }
     pub const SCHEMA: &'static str = "s009539";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181038,8 +179814,7 @@ impl URLExclusion {
     }
     pub const SCHEMA: &'static str = "s008051";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181136,8 +179911,7 @@ impl UpdateChannelRequest {
     }
     pub const SCHEMA: &'static str = "s010524";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181226,8 +180000,7 @@ impl UrlCategory {
     }
     pub const SCHEMA: &'static str = "s009504";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181322,8 +180095,7 @@ impl UrlfEntry {
     }
     pub const SCHEMA: &'static str = "s007953";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181422,8 +180194,7 @@ impl UserGroupResponse {
     }
     pub const SCHEMA: &'static str = "s006886";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181520,8 +180291,7 @@ impl UserGroupResponseData {
     }
     pub const SCHEMA: &'static str = "s006889";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181626,8 +180396,7 @@ impl UserGroupResponseDataRecordsItem {
     }
     pub const SCHEMA: &'static str = "s006892";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181729,8 +180498,7 @@ impl UserTrendsResponse {
     }
     pub const SCHEMA: &'static str = "s006797";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181827,8 +180595,7 @@ impl UserTrendsResponseData {
     }
     pub const SCHEMA: &'static str = "s006800";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -181933,8 +180700,7 @@ impl UserTrendsResponseDataSummary {
     }
     pub const SCHEMA: &'static str = "s006802";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -182039,8 +180805,7 @@ impl ValidationError {
     }
     pub const SCHEMA: &'static str = "s010608";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -182227,8 +180992,7 @@ impl ViolationList {
     }
     pub const SCHEMA: &'static str = "s010149";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -182321,8 +181085,7 @@ impl ViolationRemediation {
     }
     pub const SCHEMA: &'static str = "s010101";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -182505,8 +181268,7 @@ impl ViolationResponse {
     }
     pub const SCHEMA: &'static str = "s010108";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -182735,8 +181497,7 @@ impl ViolationSeverityCounts {
     }
     pub const SCHEMA: &'static str = "s008994";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -182899,8 +181660,7 @@ impl WebSocketConnectionParams {
     }
     pub const SCHEMA: &'static str = "s010824";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]
@@ -183044,8 +181804,7 @@ impl WeightedRegex {
     }
     pub const SCHEMA: &'static str = "s008311";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
-        let value = crate::validation::parse(Self::SCHEMA, value, mode)?;
-        serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+        super::support::parse(Self::SCHEMA, value, mode)
     }
 }
 #[derive(Default)]

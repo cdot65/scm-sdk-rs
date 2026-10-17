@@ -140,6 +140,8 @@ pub struct GatewayRealtimeOptions {
     pub idle_timeout: Duration,
     pub close_timeout: Duration,
     pub max_event_bytes: usize,
+    /// The native pull implementation has no SDK event queue. This value is range-validated
+    /// as a bound that its zero-event queue satisfies; it does not create a reader or worker.
     pub max_buffered_events: usize,
     pub max_buffered_bytes: usize,
 }
@@ -193,6 +195,7 @@ struct Shared {
     settings: GatewayRealtimeOptions,
     validation: crate::validation::ValidationLimits,
     request_id: Option<String>,
+    lifecycle: crate::observability::Lifecycle,
 }
 impl Shared {
     fn lock(&self) -> std::sync::MutexGuard<'_, Owned> {
@@ -219,6 +222,7 @@ impl Shared {
             state.failure = failure;
             (state.socket.take(), state.permit.take())
         };
+        self.lifecycle.success();
         self.cancellation.cancel();
         drop(socket);
         drop(permit);
@@ -240,6 +244,7 @@ impl Shared {
             state.failure = Some(error.clone());
             (state.socket.take(), state.permit.take())
         };
+        self.lifecycle.failed(&error);
         self.cancellation.cancel();
         drop(socket);
         drop(permit);
@@ -317,7 +322,7 @@ impl Shared {
                         if bytes.len() > self.settings.max_event_bytes {
                             return Err(Error::new(ErrorKind::Limit));
                         }
-                        let value = serde_json::from_slice(&bytes)
+                        let value = crate::json_decode::from_slice(&bytes)
                             .map_err(|_| Error::new(ErrorKind::Decode))?;
                         let value = crate::validation::parse_with_limits(
                             "GatewayRealtimeEventSchema",
@@ -332,7 +337,7 @@ impl Shared {
                                 ErrorKind::Decode
                             })
                         })?;
-                        serde_json::from_value(value)
+                        crate::json_decode::from_value(value)
                             .map(Some)
                             .map_err(|_| Error::new(ErrorKind::Decode))
                     })
@@ -352,7 +357,7 @@ impl Shared {
                     .max_event_bytes
                     .min(self.settings.max_buffered_bytes);
                 let bytes = crate::engine::serialize_bounded(event, limit)?;
-                let value = serde_json::from_slice(&bytes)
+                let value = crate::json_decode::from_slice(&bytes)
                     .map_err(|_| Error::new(ErrorKind::Validation))?;
                 let value = crate::validation::parse_with_limits(
                     "GatewayRealtimeEventSchema",
@@ -440,8 +445,14 @@ impl GatewayRealtimeConnection {
         validation: crate::validation::ValidationLimits,
     ) -> Self {
         let request_id = crate::engine::error_metadata(&upgrade.headers, None).0;
+        let lifecycle = crate::observability::Lifecycle::received(
+            crate::observability::Operation::RealtimeSession,
+            upgrade.status.as_u16(),
+            request_id.is_some(),
+        );
         Self {
             shared: Some(Arc::new(Shared {
+                lifecycle,
                 owned: Mutex::new(Owned {
                     socket: Some(upgrade.socket),
                     permit: Some(permit),

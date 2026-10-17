@@ -1,6 +1,6 @@
 # Gateway runtime
 
-Enable `gateway` for `airs::gateway::RuntimeClient`. It implements the 48 frozen runtime resource methods and six HTTP inference methods, with separate typed streaming variants for four inference methods. Typed request/response models live under `airs::gateway::models`. Realtime connections remain a Phase 7 obligation. Offline implementation evidence does not establish tenant, provider or live service availability; live acceptance is unverified.
+Enable `gateway` for `airs::gateway::RuntimeClient`. It implements the 48 frozen runtime resource methods and six HTTP inference methods, with separate typed streaming variants for four inference methods. Typed request/response models live under `airs::gateway::models`. Phase 7 also implemented the separately gated `connect_realtime` method; see [REALTIME.md](REALTIME.md). Offline contracts do not establish tenant, provider or universal live service availability. Current per-method status is in [LIVE_ACCEPTANCE.md](LIVE_ACCEPTANCE.md) and the [operation matrix](../contracts/native-operations.json).
 
 ## Explicit runtime configuration
 
@@ -24,6 +24,7 @@ All async methods take `Option<&RequestOptions>` last. One absolute deadline cov
 | Vector stores | `create_vector_store`, `list_vector_stores`, `get_vector_store`, `modify_vector_store`, `delete_vector_store`, `create_vector_store_file`, `list_vector_store_files`, `get_vector_store_file`, `delete_vector_store_file`, `create_vector_store_file_batch`, `get_vector_store_file_batch`, `cancel_vector_store_file_batch`, `list_files_in_vector_store_batch` |
 | Batches | `create_batch`, `list_batches`, `retrieve_batch`, `cancel_batch`, `get_batch_output` |
 | Logs and feedback | `get_log`, `create_logs`, `create_feedback`, `update_feedback` |
+| Experimental realtime (`realtime` feature) | `connect_realtime`; separate WebSocket connector and runtime-key upgrade |
 
 Requests use the exact frozen route literals and schema-specific query contracts. Optional query fields are omitted when unset. Explicit zero, negative values permitted by their own schemas, false and empty strings are retained. Arrays become repeated ordered keys, including duplicates. No unrelated control-plane identifier length limit is imposed on runtime IDs; URL, traversal and control checks still apply. IDs are encoded once as individual path segments. `update_feedback` retains its separate UUID requirement.
 
@@ -46,6 +47,8 @@ Streams are caller-driven, bounded and cancellable, with typed schema validation
 The default `RuntimeReplay::Never` sends each operation once, including GET resources. `RequestOptions::with_retries` alone cannot enable runtime replay. A transport failure after dispatch reports `RemoteOutcome::Unknown`; applications reconcile before repeating work.
 
 Applications may explicitly opt in with `with_replay(RuntimeReplay::bounded(n)?)`, where `n` is zero through five additional attempts within the original total deadline. Only transport failure before successful headers and HTTP 500, 502, 503 or 504 qualify. HTTP 429, malformed successful responses and interrupted successful bodies do not. Prepared body bytes and routing remain identical across attempts. Explicit replay can duplicate computation, remote mutations and charges when an earlier result was lost. The explicit runtime permit controls this budget; the safe-read retry override does not alter it.
+
+Optional [metadata tracing](OBSERVABILITY.md) records fixed HTTP, decoding, body/typed-stream and realtime lifecycle phases. It does not record model, routing, body, URL or correlation values, and installs no subscriber.
 
 ## Deliberate adaptations and evidence
 

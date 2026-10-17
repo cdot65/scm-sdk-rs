@@ -60,7 +60,7 @@ impl<'de, T: Deserialize<'de>> Deserialize<'de> for Optional<T> {
         if value.is_null() {
             return Err(D::Error::custom("nonnull field cannot be null"));
         }
-        T::deserialize(value)
+        crate::json_decode::from_value(value)
             .map(Self::Value)
             .map_err(|_| D::Error::custom("field value invalid"))
     }
@@ -112,7 +112,7 @@ impl<'de, T: Deserialize<'de>> Deserialize<'de> for Nullable<T> {
         if value.is_null() {
             Ok(Self::Null)
         } else {
-            T::deserialize(value)
+            crate::json_decode::from_value(value)
                 .map(Self::Value)
                 .map_err(|_| D::Error::custom("field value invalid"))
         }
@@ -173,7 +173,7 @@ impl<'de, T: Deserialize<'de>> Deserialize<'de> for Patch<T> {
         if value.is_null() {
             Ok(Self::Null)
         } else {
-            T::deserialize(value)
+            crate::json_decode::from_value(value)
                 .map(Self::Value)
                 .map_err(|_| D::Error::custom("field value invalid"))
         }
@@ -320,6 +320,18 @@ impl fmt::Debug for JsonObject {
     }
 }
 
+/// Frozen UUID wire grammar; version and variant bits are deliberately unconstrained.
+pub(crate) fn is_uuid(value: &str) -> bool {
+    value.len() == 36
+        && value.bytes().enumerate().all(|(index, byte)| {
+            if matches!(index, 8 | 13 | 18 | 23) {
+                byte == b'-'
+            } else {
+                byte.is_ascii_hexdigit()
+            }
+        })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -330,6 +342,27 @@ mod tests {
         required: Nullable<String>,
         #[serde(default, skip_serializing_if = "Patch::is_unset")]
         patch: Patch<String>,
+    }
+    #[test]
+    fn shared_uuid_preserves_frozen_case_nil_and_position_grammar() {
+        for value in [
+            "550e8400-e29b-41d4-a716-446655440000",
+            "ABCDEF00-ABCD-ABCD-ABCD-ABCDEF012345",
+            "00000000-0000-0000-0000-000000000000",
+        ] {
+            assert!(is_uuid(value));
+        }
+        for value in [
+            "",
+            "550e8400e29b-41d4-a716-446655440000",
+            "550e8400-e29b-41d4-a716-44665544000g",
+            "550e8400_e29b-41d4-a716-446655440000",
+            "é50e8400-e29b-41d4-a716-446655440000",
+            "550e8400-e29b-41d4-a716-446655440000/",
+            "550e8400-e29b-41d4-a716-446655440000\n",
+        ] {
+            assert!(!is_uuid(value));
+        }
     }
     #[test]
     fn omission_null_and_value_are_distinct() {

@@ -205,10 +205,12 @@ struct BufferedResponse {
 }
 impl BufferedResponse {
     fn annotate(&self, error: Error) -> Error {
-        error
+        let error = error
             .with_status(self.status)
             .with_metadata(self.request_id.clone(), None, None)
-            .with_outcome(RemoteOutcome::Unknown)
+            .with_outcome(RemoteOutcome::Unknown);
+        crate::observability::failure(crate::observability::Operation::Decode, &error);
+        error
     }
 }
 #[cfg(any(
@@ -528,7 +530,7 @@ impl Client {
         options
             .run(&self.inner.session, async {
                 let bytes = serialize_bounded(body, self.inner.limits.max_request_bytes)?;
-                let value = serde_json::from_slice(&bytes)
+                let value = crate::json_decode::from_slice(&bytes)
                     .map_err(|_| Error::new(ErrorKind::Validation))?;
                 let value = normalize_contract(
                     schema,
@@ -633,8 +635,8 @@ impl Client {
                 } else {
                     &response.body
                 };
-                let value =
-                    serde_json::from_slice(body).map_err(|_| Error::new(ErrorKind::Decode))?;
+                let value = crate::json_decode::from_slice(body)
+                    .map_err(|_| Error::new(ErrorKind::Decode))?;
                 let value = crate::validation::parse_one_of_with_limits(
                     schemas,
                     value,
@@ -648,7 +650,7 @@ impl Client {
                         ErrorKind::Decode
                     })
                 })?;
-                serde_json::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
+                crate::json_decode::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
             })
             .await
             .map_err(|error| response.annotate(error).with_operation(name))
@@ -711,8 +713,8 @@ impl Client {
                 } else {
                     response.body.as_ref()
                 };
-                let value =
-                    serde_json::from_slice(body).map_err(|_| Error::new(ErrorKind::Decode))?;
+                let value = crate::json_decode::from_slice(body)
+                    .map_err(|_| Error::new(ErrorKind::Decode))?;
                 let value = normalize_contract(
                     schema,
                     value,
@@ -726,7 +728,7 @@ impl Client {
                         ErrorKind::Decode
                     })
                 })?;
-                serde_json::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
+                crate::json_decode::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
             })
             .await
     }
@@ -765,9 +767,26 @@ impl Client {
     #[cfg(feature = "realtime")]
     pub(crate) async fn open_realtime(
         &self,
+        request: RawRequest,
+        settings: &crate::realtime::GatewayRealtimeOptions,
+        options: &RequestOptions,
+    ) -> Result<crate::realtime::GatewayRealtimeConnection> {
+        let lifecycle = crate::observability::Lifecycle::start(
+            crate::observability::Operation::RealtimeUpgrade,
+        );
+        let result = self
+            .open_realtime_observed(request, settings, options, &lifecycle)
+            .await;
+        lifecycle.finish(&result);
+        result
+    }
+    #[cfg(feature = "realtime")]
+    async fn open_realtime_observed(
+        &self,
         mut request: RawRequest,
         settings: &crate::realtime::GatewayRealtimeOptions,
         options: &RequestOptions,
+        lifecycle: &crate::observability::Lifecycle,
     ) -> Result<crate::realtime::GatewayRealtimeConnection> {
         use crate::realtime::{GatewayRealtimeConnection, OPERATION, WebSocketRequest};
         self.require_auth(AuthKind::Runtime)?;
@@ -824,6 +843,7 @@ impl Client {
                         value.set_sensitive(true);
                     }
                     options.run(&self.inner.session, async { Ok(()) }).await?;
+                    lifecycle.dispatched();
                     sent.store(true, Ordering::Relaxed);
                     let upgrade = settings
                         .connector
@@ -835,6 +855,10 @@ impl Client {
                             max_event_bytes: settings.max_event_bytes,
                         })
                         .await?;
+                    lifecycle.response(
+                        upgrade.status.as_u16(),
+                        error_metadata(&upgrade.headers, None).0.is_some(),
+                    );
                     if upgrade.status != StatusCode::SWITCHING_PROTOCOLS {
                         return Err(Error::new(if upgrade.status.is_redirection() {
                             ErrorKind::Destination
@@ -880,6 +904,7 @@ impl Client {
             error.with_operation(OPERATION).with_outcome(outcome)
         })
     }
+
     fn preflight(&self, request: &RawRequest) -> Result<(url::Url, Bytes)> {
         let url = self
             .inner
@@ -909,7 +934,7 @@ impl Client {
                     && (v.subtype() == mime::JSON || v.suffix() == Some(mime::JSON))
             })
             && request.body.is_some()
-            && serde_json::from_slice::<serde_json::Value>(&body).is_err()
+            && crate::json_decode::from_slice(&body).is_err()
         {
             return Err(Error::new(ErrorKind::Validation).with_operation(request.name));
         }
@@ -922,6 +947,20 @@ impl Client {
         &self,
         request: RawRequest,
         options: Option<&RequestOptions>,
+    ) -> Result<crate::streaming::ResponseStream> {
+        let lifecycle =
+            crate::observability::Lifecycle::start(crate::observability::Operation::HttpStream);
+        let result = self
+            .send_stream_observed(request, options, &lifecycle)
+            .await;
+        lifecycle.finish(&result);
+        result
+    }
+    async fn send_stream_observed(
+        &self,
+        request: RawRequest,
+        options: Option<&RequestOptions>,
+        lifecycle: &crate::observability::Lifecycle,
     ) -> Result<crate::streaming::ResponseStream> {
         let (url, body) = self.preflight(&request)?;
         let explicit_deadline = options.is_some();
@@ -954,6 +993,7 @@ impl Client {
                         return Err(Error::new(ErrorKind::Limit));
                     }
                     options.run(&self.inner.session, async { Ok(()) }).await?;
+                    lifecycle.dispatched();
                     sent.store(true, Ordering::Relaxed);
                     let mut response = match self
                         .inner
@@ -980,6 +1020,7 @@ impl Client {
                     };
                     let status = response.status;
                     let request_id = error_metadata(&response.headers, None).0;
+                    lifecycle.response(status.as_u16(), request_id.is_some());
                     if let Ok(mut slot) = received.lock() {
                         *slot = Some((status.as_u16(), request_id));
                     }
@@ -1049,6 +1090,7 @@ impl Client {
                 error.with_operation(name).with_outcome(outcome)
             })
     }
+
     pub async fn send_bytes(
         &self,
         request: RawRequest,
@@ -1062,6 +1104,20 @@ impl Client {
         &self,
         request: RawRequest,
         options: Option<&RequestOptions>,
+    ) -> Result<BufferedResponse> {
+        let lifecycle =
+            crate::observability::Lifecycle::start(crate::observability::Operation::Http);
+        let result = self
+            .send_buffered_observed(request, options, &lifecycle)
+            .await;
+        lifecycle.finish(&result);
+        result
+    }
+    async fn send_buffered_observed(
+        &self,
+        request: RawRequest,
+        options: Option<&RequestOptions>,
+        lifecycle: &crate::observability::Lifecycle,
     ) -> Result<BufferedResponse> {
         let default_options;
         let options = match options {
@@ -1104,6 +1160,7 @@ impl Client {
                     return Err(Error::new(ErrorKind::Limit));
                 }
                 options.run(&self.inner.session, async { Ok(()) }).await?;
+                lifecycle.dispatched();
                 sent.store(true, Ordering::Relaxed);
                 let prepared = TransportRequest::new(
                     request.method.clone(),
@@ -1129,6 +1186,7 @@ impl Client {
                 };
                 let status = response.status;
                 let request_id = error_metadata(&response.headers, None).0;
+                lifecycle.response(status.as_u16(), request_id.is_some());
                 if let Ok(mut slot) = received.lock() {
                     *slot = Some((status.as_u16(), request_id.clone()));
                 }
@@ -1205,6 +1263,7 @@ impl Client {
             e.with_operation(name).with_outcome(outcome)
         })
     }
+
     /// Read a bounded text response using UTF-8 replacement decoding, as Fetch does.
     /// A leading UTF-8 BOM is omitted; content-type does not select another encoding.
     pub async fn send_text(
@@ -1236,11 +1295,12 @@ impl Client {
         let response = self.send_buffered(request, Some(&options)).await?;
         options
             .run(&self.inner.session, async {
-                serde_json::from_slice(if response.body.is_empty() {
+                crate::json_decode::from_slice(if response.body.is_empty() {
                     b"{}"
                 } else {
                     &response.body
                 })
+                .and_then(crate::json_decode::from_value)
                 .map_err(|_| Error::new(ErrorKind::Decode))
             })
             .await
@@ -1259,7 +1319,8 @@ impl Client {
         }
         options
             .run(&self.inner.session, async {
-                serde_json::from_slice(&response.body)
+                crate::json_decode::from_slice(&response.body)
+                    .and_then(crate::json_decode::from_value)
                     .map(Some)
                     .map_err(|_| Error::new(ErrorKind::Decode))
             })
@@ -1352,7 +1413,7 @@ pub(crate) fn error_metadata(
                 .map(str::to_owned)
         });
     let code = body
-        .and_then(|v| serde_json::from_slice::<serde_json::Value>(v).ok())
+        .and_then(|v| crate::json_decode::from_slice(v).ok())
         .and_then(|v| {
             v.get("code")
                 .or_else(|| v.get("error").and_then(|v| v.get("code")))

@@ -126,14 +126,15 @@ impl<T> fmt::Debug for OpenString<T> { fn fmt(&self, f: &mut fmt::Formatter<'_>)
 
 /// Validate and normalize a schema before decoding its native model.
 pub fn parse<T: serde::de::DeserializeOwned>(schema: &str, value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<T> {
+    let value = crate::json_decode::ensure_supported(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))?;
     let value = crate::validation::parse(schema, value, mode)?;
-    serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+    crate::json_decode::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
 }
 
 /// Convert a typed model within the standalone validator's default byte bound.
 pub(super) fn wire_value<T: Serialize>(value: &T) -> crate::Result<serde_json::Value> {
     let bytes=crate::engine::serialize_bounded(value,crate::validation::ValidationLimits::default().max_input_bytes)?;
-    serde_json::from_slice(&bytes).map_err(|_|crate::Error::new(crate::ErrorKind::Validation))
+    crate::json_decode::from_slice(&bytes).map_err(|_|crate::Error::new(crate::ErrorKind::Validation))
 }
 
 /// Merge compatible independently normalized intersection representations.
@@ -211,8 +212,8 @@ impl<'de,A:serde::de::DeserializeOwned+Serialize,B:serde::de::DeserializeOwned+S
         let value=serde_json::Value::deserialize(d)?;
         let value=wire_value(&value).map_err(|_|serde::de::Error::custom("intersection input exceeds limits"))?;
         bound_intersection_value(&value,&crate::validation::ValidationLimits::default()).map_err(|_|serde::de::Error::custom("intersection input exceeds limits"))?;
-        let left=serde_json::from_value(value.clone()).map_err(|_|serde::de::Error::custom("left intersection invalid"))?;
-        let right=serde_json::from_value(value).map_err(|_|serde::de::Error::custom("right intersection invalid"))?;
+        let left=crate::json_decode::from_value(value.clone()).map_err(|_|serde::de::Error::custom("left intersection invalid"))?;
+        let right=crate::json_decode::from_value(value).map_err(|_|serde::de::Error::custom("right intersection invalid"))?;
         Self::new(left,right).map_err(|_|serde::de::Error::custom("intersection representations conflict or exceed limits"))
     }
 }
@@ -478,7 +479,7 @@ class Generator:
         self.used.add(builder)
         body += f"impl {name} {{pub fn builder()->{builder}{{{builder}::default()}}\n"
         if sid.startswith("s"):
-            body += f"pub const SCHEMA:&'static str={quoted(sid)};\npub fn parse(value:serde_json::Value,mode:crate::validation::Mode)->crate::Result<Self>{{let value=crate::validation::parse(Self::SCHEMA,value,mode)?;serde_json::from_value(value).map_err(|_|crate::Error::new(crate::ErrorKind::Validation))}}}}\n"
+            body += f"pub const SCHEMA:&'static str={quoted(sid)};\npub fn parse(value:serde_json::Value,mode:crate::validation::Mode)->crate::Result<Self>{{super::support::parse(Self::SCHEMA,value,mode)}}}}\n"
         else:
             body += "}\n"
         body += f"#[derive(Default)]\npub struct {builder} {{" + "".join(f"{field}:" + (typed if optional else f"Option<{typed}>") + "," for _, field, typed, optional in fields) + f"extensions:Extensions<{extension_type}>}}\n"
@@ -931,7 +932,7 @@ def verify_fixtures():
     (directory/"src").mkdir(parents=True,exist_ok=True)
     manifest='[workspace]\n[package]\nname="scm-typed-model-oracle"\nversion="0.0.0"\nedition="2024"\nrust-version="1.89"\n[dependencies]\nscm-sdk={path="../../crates/scm-sdk",default-features=false,features=["models"]}\nserde="=1.0.229"\nserde_json="=1.0.154"\n'
     (directory/"Cargo.toml").write_text(manifest)
-    program='use serde::{Serialize,de::DeserializeOwned};\nuse serde_json::Value;\nfn typed<T:Serialize+DeserializeOwned>(value:Value)->Result<Value,String>{let decoded:T=serde_json::from_value(value).map_err(|_|"typed decode failed".to_string())?;serde_json::to_value(decoded).map_err(|_|"typed encode failed".to_string())}\nfn roundtrip(schema:&str,value:Value)->Result<Value,String>{match schema{\n'
+    program='use serde::{Serialize,de::DeserializeOwned};\nuse serde_json::Value;\nfn typed<T:Serialize+DeserializeOwned>(value:Value)->Result<Value,String>{let bytes=serde_json::to_vec(&value).map_err(|_|"fixture wire encode failed".to_string())?;let decoded:T=serde_json::from_slice(&bytes).map_err(|_|"typed decode failed".to_string())?;serde_json::to_value(decoded).map_err(|_|"typed encode failed".to_string())}\nfn roundtrip(schema:&str,value:Value)->Result<Value,String>{match schema{\n'
     for row in ledger["schemas"]:
         namespace=row["namespace"]
         path="scm_sdk::"+namespace+"::models::"+row["rustType"]

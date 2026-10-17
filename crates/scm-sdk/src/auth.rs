@@ -321,7 +321,7 @@ struct Cache {
     next_generation: u64,
 }
 
-fn cache_info(cache: &Cache) -> TokenInfo {
+fn cache_info(cache: &Cache, refresh_in_progress: bool) -> TokenInfo {
     let now = Instant::now();
     let is_expired = cache
         .token
@@ -338,11 +338,7 @@ fn cache_info(cache: &Cache) -> TokenInfo {
             .token
             .as_ref()
             .map(|token| token.expires_at.saturating_duration_since(now)),
-        refresh_in_progress: cache
-            .pending
-            .as_ref()
-            .and_then(|pending| pending.future.upgrade())
-            .is_some(),
+        refresh_in_progress,
         is_valid: cache.token.is_some() && !is_expiring_soon,
         is_expired,
         is_expiring_soon,
@@ -466,7 +462,16 @@ impl OAuthProvider {
             .cache
             .lock()
             .map_err(|_| Error::new(ErrorKind::Authentication))?;
-        Ok(cache_info(&cache))
+        let pending = cache
+            .pending
+            .as_ref()
+            .and_then(|pending| pending.future.upgrade());
+        let snapshot = cache_info(&cache, pending.is_some());
+        // A concurrent waiter drop can make this temporary upgrade the final owner.
+        // Release it after the lock so a future's drop/subscriber cannot reenter it.
+        drop(cache);
+        drop(pending);
+        Ok(snapshot)
     }
 
     fn shared_refresh(&self) -> Result<Shared<Refresh>> {
@@ -515,12 +520,13 @@ impl OAuthProvider {
             }
             let event = if let Ok(token) = &result {
                 cache.token = Some(token.clone());
-                Some(cache_info(&cache))
+                Some(cache_info(&cache, false))
             } else {
                 None
             };
             drop(cache);
             if let Some(event) = event {
+                crate::observability::published();
                 // Publishing metadata is synchronous and bounded, with no callbacks
                 // or workers. Slow/absent receivers never hold up token delivery.
                 let _ = inner.refresh_events.send(event);
@@ -588,6 +594,17 @@ struct WireToken {
 
 impl OAuthInner {
     async fn refresh(&self, generation: u64) -> Result<TokenLease> {
+        let lifecycle =
+            crate::observability::Lifecycle::start(crate::observability::Operation::OAuthRefresh);
+        let result = self.refresh_observed(generation, &lifecycle).await;
+        lifecycle.finish(&result);
+        result
+    }
+    async fn refresh_observed(
+        &self,
+        generation: u64,
+        lifecycle: &crate::observability::Lifecycle,
+    ) -> Result<TokenLease> {
         let options = RequestOptions::with_timeout(MAX_REFRESH_TIME)?;
         options
             .run(&self.session, async {
@@ -620,6 +637,7 @@ impl OAuthInner {
                     HeaderValue::from_static("application/x-www-form-urlencoded"),
                 );
                 let issued_at = Instant::now();
+                lifecycle.dispatched();
                 let mut response = self
                     .transport
                     .send(TransportRequest::new(
@@ -630,14 +648,21 @@ impl OAuthInner {
                         "oauth.token",
                     ))
                     .await?;
+                lifecycle.response(
+                    response.status.as_u16(),
+                    crate::engine::error_metadata(&response.headers, None)
+                        .0
+                        .is_some(),
+                );
                 if !response.status.is_success() {
                     return Err(
                         Error::new(ErrorKind::Authentication).with_status(response.status.as_u16())
                     );
                 }
                 let body = read_limited(&mut response.body, MAX_TOKEN_RESPONSE).await?;
-                let wire: WireToken =
-                    serde_json::from_slice(&body).map_err(|_| Error::new(ErrorKind::Decode))?;
+                let wire: WireToken = crate::json_decode::from_slice(&body)
+                    .and_then(crate::json_decode::from_value)
+                    .map_err(|_| Error::new(ErrorKind::Decode))?;
                 let access_token = Zeroizing::new(wire.access_token);
                 if !wire.token_type.eq_ignore_ascii_case("bearer") {
                     return Err(Error::new(ErrorKind::Authentication));

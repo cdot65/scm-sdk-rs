@@ -4,9 +4,9 @@ Models are ordinary Rust data, generated from the frozen TypeScript contract inv
 
 ## Public namespaces
 
-Typed contracts live under `airs::{scan,management,model_security,red_team,gateway,agentguard}::models`, `dlp::models`, `shared::iam::models`, and `shared::models`. Each family reexports its own contracts and reachable nested types. Structurally identical schema roots share canonical Rust declarations. Model availability does not imply that a product client is implemented; the phase and operation ledgers record client availability separately.
+Typed contracts live under `airs::{scan,management,model_security,red_team,gateway,agentguard}::models`, `dlp::models`, `shared::iam::models`, and `shared::models`. Each family reexports its own contracts and reachable nested types. Structurally identical schema roots share canonical Rust declarations. The `models` feature does not select every product client. All frozen baseline methods are now implemented under their owning product features; the operation and export ledgers record those requirements and separate live status.
 
-The generation ledger, `contracts/native-models.json`, lists all 1,086 public schema exports and 1,157 source model type/interface exports. Every known object field has a concrete Rust type. Additional plain JSON interfaces and exact source aliases cover workspace provisioning records, IAM inputs, Gateway chat/embedding aliases, token information, and secret metadata. Behavioral configuration, client, pagination, and realtime interfaces have explicit owning phases; they are not advertised as generated wire models. `Error` provides the native sanitized error metadata equivalent.
+The generation ledger, `contracts/native-models.json`, lists all 1,086 public schema exports and 1,157 source model type/interface exports. Every known object field has a concrete Rust type. Additional plain JSON interfaces and exact source aliases cover workspace provisioning records, IAM inputs, Gateway chat/embedding aliases, token information, and secret metadata. Behavioral configuration, client, pagination, and realtime interfaces have concrete native adapters with recorded ownership; they are distinct from generated wire models. `Error` provides the native sanitized error metadata equivalent.
 
 ## Construction and validation
 
@@ -57,9 +57,26 @@ Extensions cannot override or duplicate known fields: each object serializer che
 
 The five native multipart builders (image edit, image variation, transcription, translation and file upload) expose `build()` for required-field construction. Their owning runtime operations perform full mixed JSON/native-file validation under the request budget. Prerelease review removed their always-failing JSON-only `build_validated` method; JSON-capable builders retain that method. JSON parsing and serialization continue to reject fake binary values. A generator regression pins the exact five-builder exception.
 
-The model ledger also records handwritten behavioral adapters separately from JSON declarations. All 54 exported Model Security and Red Team option/configuration interfaces and 18 Gateway client/query/window/runtime/pricing adapters map to implemented native types. Phase 7 closes the remaining 40 behavioral adapters, including management/listing metadata, standalone helpers, isolated configuration, configurable OAuth refresh, realtime, provisioning options and AgentGuard. Concrete `error::ProblemDetails` and `error::ErrorMetadata` preserve bounded diagnostic capabilities. No behavioral adapter remains deferred. `contracts/native-exports.json` binds the complete exported capability surface to concrete public paths and compiled probes.
+The model ledger also records handwritten behavioral adapters separately from JSON declarations. All 54 exported Model Security and Red Team option/configuration interfaces and 18 Gateway client/query/window/runtime/pricing adapters map to implemented native types. Phase 7 closed the remaining 40 behavioral adapters, including management/listing metadata, standalone helpers, isolated configuration, configurable OAuth refresh, realtime, provisioning options and AgentGuard. Concrete `error::ProblemDetails` and `error::ErrorMetadata` preserve bounded diagnostic capabilities. No behavioral adapter remains deferred. `contracts/native-exports.json` binds the complete exported capability surface to concrete public paths and compiled probes.
 
 Provisioning uses the handwritten `airs::gateway::GatewayWorkspaceProvisionRequest` and `GatewayWorkspaceProvisionResult` operation types. The models namespace retains its source-only wire-compatible versions for models-only consumers; those generated versions are not accepted directly by the provisioning method. The ledger records that distinction explicitly. Generic list-all settings retain bounded `CollectOptions`; request lifecycle remains separate `RequestOptions`. Directional secret redaction is an implemented helper with its own rule table and independent oracle, separate from safe model formatting.
+
+## Reserved JSON protocol keys
+
+SDK JSON boundaries reject literal objects containing either exact key
+`$serde_json::private::Number` or `$serde_json::private::RawValue`, including
+escaped spellings and nested objects. These names collide with Serde JSON's
+internal value protocols under dependency feature unification and can otherwise
+silently change an object into a scalar before validation. This deliberate Rust
+security restriction returns a sanitized decoding or validation error; it does
+not drop the field or report a successful response with altered data.
+
+The guard applies to SDK HTTP, stream, realtime and model parsing boundaries,
+including programmatically constructed `serde_json::Value` inputs. Byte, depth,
+node and work limits still apply. Other unknown fields and unfamiliar values
+retain their documented handling. Direct calls to downstream
+`serde_json::from_value::<SdkModel>` or `from_slice::<SdkModel>` use that crate's
+own behavior; use SDK model `parse` methods for the guarded validation boundary.
 
 ## Union compatibility and generator guards
 
@@ -80,3 +97,8 @@ python3 tools/generate_models.py --verify-fixtures
 Generation uses Python's standard library, the committed inventory, and pinned Rustfmt 1.99.0. Consumer builds need none of that tooling. `--graph-only` checks or regenerates the native validator graph separately. `--only scan` is a development slice and must not be accepted as a complete generation ledger.
 
 The separate native consumer compiles a concrete type match for every public schema and roundtrips successful independent Zod/response fixtures. The initial complete run passed 27,216 accepted cases across 1,081 JSON-capable public schemas; five public schema roots require actual native binary input. The independent native boundary tests cover those inputs. The schema oracle also contains rejected and private-root cases, exercised by the native validator suite rather than the model roundtrip check. This is offline contract evidence, not live service acceptance.
+
+Packaged unit regressions use a compact independently bound oracle subset rather
+than the full development corpus. See [PACKAGING.md](PACKAGING.md) for actual
+extracted-archive tests, [STABILITY.md](STABILITY.md) for public union/API policy,
+and [LIVE_ACCEPTANCE.md](LIVE_ACCEPTANCE.md) for service qualification.

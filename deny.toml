@@ -1,0 +1,26 @@
+# Complete all-feature/all-target resolved graph. No excluded crates or exceptions.
+[graph]
+all-features = true
+
+[advisories]
+ignore = []
+
+[licenses]
+allow = ["Apache-2.0", "MIT", "BSD-3-Clause", "ISC", "Zlib", "Unicode-3.0", "CDLA-Permissive-2.0", "0BSD", "Unlicense", "BSL-1.0", "CC0-1.0", "MIT-0"]
+confidence-threshold = 0.95
+unused-allowed-license = "allow"
+exceptions = []
+
+[licenses.private]
+ignore = false
+
+[bans]
+# Multiple compatible versions are recorded in the report; not an advisory waiver.
+multiple-versions = "allow"
+wildcards = "deny"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

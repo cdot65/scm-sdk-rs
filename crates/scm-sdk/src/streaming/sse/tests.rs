@@ -106,7 +106,12 @@ async fn from_bytes(bytes: impl Into<Bytes>, policy: TerminalPolicy) -> SseStrea
 
 #[tokio::test]
 async fn fields_multiline_comments_ids_retry_empty_data_and_eof() {
-    let bytes=b": comment\r\nid: fixture-id\r\nretry: 15\r\nignored: fixture\r\nevent: delta\r\ndata: {\"value\":\r\ndata: 1}\r\n\r\ndata: second\rid: ignored\0value\rretry: not-a-number\r\rid:\ndata:\n\n";
+    let bytes = concat!(
+        ": comment\r\nid: fixture-id\r\nretry: 15\r\nignored: fixture\r\nevent: delta\r\n",
+        "data: {\"value\":\r\ndata: 1}\r\n\r\ndata: second\rid: ignored\0value\r",
+        "retry: not-a-number\r\rid:\ndata:\n\n",
+    )
+    .as_bytes();
     let mut stream = from_bytes(Bytes::from_static(bytes), TerminalPolicy::Eof).await;
     let first = stream.next().await.unwrap().unwrap();
     assert_eq!(first.event(), "delta");
@@ -176,7 +181,11 @@ async fn bom_crlf_and_utf8_survive_every_two_chunk_split() {
 
 #[tokio::test]
 async fn independently_chunked_frames_preserve_event_sequence() {
-    let input="data: {\"text\":\"café 👋\"}\r\n\r\ndata: {\"text\":\"next λ\"}\n\ndata: [DONE]\r\rignored: after-terminal".as_bytes();
+    let input = concat!(
+        "data: {\"text\":\"café 👋\"}\r\n\r\ndata: {\"text\":\"next λ\"}\n\n",
+        "data: [DONE]\r\rignored: after-terminal",
+    )
+    .as_bytes();
     for initial_seed in 1..=32u32 {
         let mut seed = initial_seed;
         let mut cursor = 0;
@@ -533,7 +542,17 @@ async fn idle_body_and_transport_failures_are_bounded_and_sanitized() {
 
 #[tokio::test]
 async fn typed_json_errors_and_formatting_never_echo_data_ids_or_event_names() {
-    let mut stream=from_bytes(Bytes::from_static(b"event: synthetic-event-secret\nid: synthetic-id-secret\ndata: synthetic-data-secret\n\n"),TerminalPolicy::Eof).await;
+    let mut stream = from_bytes(
+        Bytes::from_static(
+            concat!(
+                "event: synthetic-event-secret\nid: synthetic-id-secret\n",
+                "data: synthetic-data-secret\n\n",
+            )
+            .as_bytes(),
+        ),
+        TerminalPolicy::Eof,
+    )
+    .await;
     let event = stream.next().await.unwrap().unwrap();
     let error = event.json::<Value>().unwrap_err();
     assert_eq!(error.kind(), ErrorKind::Decode);
@@ -559,6 +578,145 @@ async fn typed_json_errors_and_formatting_never_echo_data_ids_or_event_names() {
         .unwrap_err();
     assert_eq!(error.kind(), ErrorKind::Protocol);
     assert!(!format!("{error:?} {error}").contains("synthetic-secret"));
+}
+
+#[tokio::test]
+async fn numeric_error_envelopes_follow_javascript_truthiness_including_overflow() {
+    for (number, truthy) in [
+        ("0", false),
+        ("-0", false),
+        ("0.0", false),
+        ("-0.0", false),
+        ("0e400", false),
+        ("-0e400", false),
+        ("1e-400", false),
+        ("-1e-400", false),
+        ("5e-324", true),
+        ("-5e-324", true),
+        ("1", true),
+        ("-1", true),
+        ("0.000001", true),
+        ("1e308", true),
+        ("1e400", true),
+        ("-1e400", true),
+    ] {
+        let data = format!("{{\"error\":{number},\"synthetic-secret\":true}}");
+        let expected = if serde_json::from_str::<Value>(&data).is_err() {
+            // Without arbitrary_precision, serde_json rejects overflow at parse.
+            Some(ErrorKind::Decode)
+        } else if truthy {
+            Some(ErrorKind::Protocol)
+        } else {
+            None
+        };
+        let mut stream = from_bytes(
+            Bytes::from(format!("data: {data}\n\n")),
+            TerminalPolicy::Eof,
+        )
+        .await;
+        let event = stream.next().await.unwrap().unwrap();
+        match (event.json::<Value>(), expected) {
+            (Ok(_), None) => {}
+            (Err(error), Some(kind)) => {
+                assert_eq!(error.kind(), kind, "numeric error {number}");
+                assert_eq!(error.status(), Some(200));
+                assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+                assert!(!format!("{error:?} {error}").contains("synthetic-secret"));
+            }
+            _ => panic!("wrong numeric error truthiness for {number}"),
+        }
+    }
+}
+
+#[tokio::test]
+async fn overflow_response_error_fails_closed_and_releases_resources() {
+    for number in ["1e400", "-1e400", r#"{"$serde_json::private::Number":"0"}"#] {
+        let fixture = response_fixture(
+            vec![Ok(Bytes::from(format!(
+                "data: {{\"type\":\"response.created\",\"error\":{number}}}\n\n"
+            )))],
+            Some("text/event-stream"),
+            true,
+            false,
+            Limits::default(),
+        )
+        .await;
+        let mut stream = SseStream::new(fixture.response, 128, TerminalPolicy::Responses).unwrap();
+        let error = stream.next().await.unwrap_err();
+        assert!(matches!(
+            error.kind(),
+            ErrorKind::Protocol | ErrorKind::Decode
+        ));
+        assert_eq!(stream.next().await.unwrap_err().kind(), error.kind());
+        assert_eq!(fixture.polls.load(Ordering::SeqCst), 1);
+        assert_eq!(fixture.drops.load(Ordering::SeqCst), 1);
+        assert_eq!(fixture.permits.available_permits(), 1);
+    }
+}
+
+#[tokio::test]
+async fn protocol_named_literal_objects_fail_closed_in_event_data() {
+    for data in [
+        r#"{"future":{"$serde_json::private::RawValue":"false"}}"#,
+        r#"{"future":{"$serde_json::private::RawValue":"{"}}"#,
+        r#"{"future":{"$serde_json::private::Number":"0"}}"#,
+        r#"{"future":[{"$serde_json::private::RawValue":"null"}]}"#,
+        r#"{"future":{"\u0024serde_json::private::RawValue":"false"}}"#,
+        r#"{"future":{"$serde_json\u003a\u003aprivate::Number":"0"}}"#,
+        r#"{"future":{"ordinary":1,"$serde_json::private::RawValue":"false"}}"#,
+        r#"{"future":{"$serde_json::private::RawValue":"false"},"future":null}"#,
+    ] {
+        let bytes = format!("data: {data}\n\n");
+        let mut stream = from_bytes(bytes, TerminalPolicy::Eof).await;
+        let event = stream.next().await.unwrap().unwrap();
+        let error = event.json::<Value>().unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Decode);
+        assert_eq!(error.status(), Some(200));
+        assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+    }
+}
+
+#[tokio::test]
+async fn reserved_number_objects_cannot_hide_a_truthy_error_envelope() {
+    for data in [
+        r#"{"error":{"$serde_json::private::Number":"0"}}"#,
+        r#"{"error":{"$serde_json::private::Number":"-0"}}"#,
+        r#"{"err\u006fr":{"$serde_json::private::Number":"0"}}"#,
+    ] {
+        let mut stream = from_bytes(
+            Bytes::from(format!("data: {data}\n\n")),
+            TerminalPolicy::Eof,
+        )
+        .await;
+        let event = stream.next().await.unwrap().unwrap();
+        assert_eq!(event.json::<Value>().unwrap_err().kind(), ErrorKind::Decode);
+    }
+}
+
+#[tokio::test]
+async fn raw_error_envelope_uses_last_duplicate_key_and_decoded_strings() {
+    for (data, truthy) in [
+        (r#"{"error":{"ordinary":0},"error":false}"#, false),
+        (r#"{"error":false,"error":{"ordinary":0}}"#, true),
+        (r#"{"error":""}"#, false),
+        (r#"{"error":"\u0000"}"#, true),
+        (r#"{"error":null}"#, false),
+        (r#"{"error":[]}"#, true),
+        (r#"{"error":{}}"#, true),
+    ] {
+        let mut stream = from_bytes(
+            Bytes::from(format!("data: {data}\n\n")),
+            TerminalPolicy::Eof,
+        )
+        .await;
+        let event = stream.next().await.unwrap().unwrap();
+        let result = event.json::<Value>();
+        if truthy {
+            assert_eq!(result.unwrap_err().kind(), ErrorKind::Protocol);
+        } else {
+            assert!(result.is_ok());
+        }
+    }
 }
 
 #[tokio::test]
@@ -633,7 +791,11 @@ async fn typed_decode_failure_and_duplicate_media_headers_are_sanitized() {
 
 #[tokio::test]
 async fn retry_advice_ignores_invalid_numbers_and_preserves_valid_zero() {
-    let input = b"retry: 7\ndata: first\n\nretry: -1\nretry: 1.5\nretry:  4\nretry: 18446744073709551616\ndata: second\n\nretry: 000\ndata: third\n\n";
+    let input = concat!(
+        "retry: 7\ndata: first\n\nretry: -1\nretry: 1.5\nretry:  4\n",
+        "retry: 18446744073709551616\ndata: second\n\nretry: 000\ndata: third\n\n",
+    )
+    .as_bytes();
     let mut stream = from_bytes(Bytes::from_static(input), TerminalPolicy::Eof).await;
     assert_eq!(
         stream.next().await.unwrap().unwrap().retry(),
@@ -679,7 +841,16 @@ async fn default_http_adapter_decodes_sse_and_terminal_releases_socket_and_permi
         let request = headers(&mut stream).await;
         assert!(request.starts_with("POST /events HTTP/1.1\r\n"));
         assert!(request.contains("x-portkey-api-key: synthetic-stream-key\r\n"));
-        stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Type: text/event-stream; charset=utf-8\r\nTransfer-Encoding: chunked\r\n\r\n").await.unwrap();
+        stream
+            .write_all(
+                concat!(
+                    "HTTP/1.1 200 OK\r\nContent-Type: text/event-stream; charset=utf-8\r\n",
+                    "Transfer-Encoding: chunked\r\n\r\n",
+                )
+                .as_bytes(),
+            )
+            .await
+            .unwrap();
         let frame = "\u{feff}data: {\"text\":\"café 👋\"}\r\n\r\ndata: [DONE]\r\n\r\n".as_bytes();
         for chunk in frame.chunks(3) {
             stream

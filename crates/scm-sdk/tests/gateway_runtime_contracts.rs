@@ -112,7 +112,11 @@ fn setup_limits(replies: Vec<Reply>, limits: Limits) -> (RuntimeClient, Arc<Wire
     (RuntimeClient::new(client).unwrap(), wire)
 }
 fn model<T: DeserializeOwned>(value: Value) -> T {
-    serde_json::from_value(value).unwrap()
+    // Fixtures describe JSON wire data. Decode that wire representation: with
+    // arbitrary_precision, direct Value deserialization emits i128/u128 calls
+    // unsupported by Serde's untagged/flatten ContentVisitor. The SDK boundary
+    // is independently exercised by the numeric response regression below.
+    serde_json::from_slice(&serde_json::to_vec(&value).unwrap()).unwrap()
 }
 fn fixture(name: &str) -> Value {
     let source: Value = serde_json::from_str(FROZEN).unwrap();
@@ -386,6 +390,136 @@ async fn all_forty_nine_frozen_json_text_and_binary_methods_match_wire_contracts
             body,
             true,
         );
+    }
+}
+
+#[tokio::test]
+async fn native_json_number_boundaries_preserve_typed_unions_and_response_extensions() {
+    // Both finite values are valid JSON/JS numbers outside a 64-bit integer
+    // visitor's range. arbitrary_precision retains their decimal tokens.
+    for (field, number) in [
+        ("seed", "-9223372036854776000"),
+        ("max_tokens", "18446744073709552000"),
+    ] {
+        let input: Value =
+            serde_json::from_str(&format!("{{\"{field}\":{number},\"variables\":{{}}}}")).unwrap();
+        let raw = serde_json::to_vec(&input).unwrap();
+        let from_wire: GatewayInferenceInputCreatePromptCompletionRequest =
+            serde_json::from_slice(&raw).unwrap();
+        assert!(matches!(
+            from_wire,
+            GatewayInferenceInputCreatePromptCompletionRequest::Variant1(_)
+        ));
+        assert_eq!(
+            serde_json::to_value(from_wire).unwrap()[field],
+            input[field]
+        );
+        let parsed = scm_sdk::airs::gateway::models::parse::<
+            GatewayInferenceInputCreatePromptCompletionRequest,
+        >(
+            "GatewayInferenceInputCreatePromptCompletionRequestSchema",
+            input.clone(),
+            scm_sdk::validation::Mode::Request,
+        )
+        .expect("native schema parse must preserve the valid known union variant");
+        assert!(matches!(
+            parsed,
+            GatewayInferenceInputCreatePromptCompletionRequest::Variant1(_)
+        ));
+        assert_eq!(serde_json::to_value(parsed).unwrap()[field], input[field]);
+
+        let mut expected = response("retrieveModel");
+        expected["future_number"] = input[field].clone();
+        expected["future_nested"] = json!([{"value": input[field].clone()}]);
+        let (client, wire) = setup(vec![Reply::Json(expected.clone())]);
+        let actual = client
+            .retrieve_model(ID, None)
+            .await
+            .expect("typed HTTP response must preserve unknown finite numeric fields");
+        assert_eq!(serde_json::to_value(actual).unwrap(), expected);
+        assert_eq!(wire.requests.lock().unwrap().len(), 1);
+    }
+}
+
+#[tokio::test]
+async fn reserved_serde_protocol_objects_fail_closed_at_http_and_model_boundaries() {
+    // Construct literal objects without parsing them through Serde's reserved
+    // protocols. A successful coercion to null/zero would hide upstream data,
+    // including an error envelope, instead of preserving the supplied object.
+    for (marker, token) in [
+        ("$serde_json::private::RawValue", "null"),
+        ("$serde_json::private::Number", "0"),
+    ] {
+        let mut reserved = serde_json::Map::new();
+        reserved.insert(marker.into(), Value::String(token.into()));
+        let reserved = Value::Object(reserved);
+
+        for field in ["future_extension", "error"] {
+            for nested in [false, true] {
+                let mut body = response("retrieveModel");
+                body[field] = if nested {
+                    Value::Array(vec![reserved.clone()])
+                } else {
+                    reserved.clone()
+                };
+                body["future_secret"] = Value::String("upstream-secret".into());
+                // Send literal wire bytes. Parsing this reply in the test harness
+                // could consume the reserved protocol before the SDK sees it.
+                let raw = serde_json::to_vec(&body).unwrap();
+                let (client, wire) = setup(vec![Reply::Raw(raw)]);
+                let error = client.retrieve_model(ID, None).await.unwrap_err();
+                assert_eq!(error.kind(), ErrorKind::Decode, "{marker}: {field}");
+                assert_eq!(error.status(), Some(200));
+                assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+                assert_eq!(error.request_id(), Some("safe-runtime-id"));
+                let diagnostic = format!("{error:?} {error}");
+                assert!(!diagnostic.contains("upstream-secret"));
+                assert!(!diagnostic.contains(marker));
+                assert_eq!(wire.requests.lock().unwrap().len(), 1);
+            }
+        }
+
+        let mut input = json!({"variables": {}});
+        input["future_extension"] = reserved.clone();
+        let error = scm_sdk::airs::gateway::models::parse::<
+            GatewayInferenceInputCreatePromptCompletionRequest,
+        >(
+            "GatewayInferenceInputCreatePromptCompletionRequestSchema",
+            input,
+            scm_sdk::validation::Mode::Request,
+        )
+        .unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Validation);
+        assert_eq!(error.status(), None);
+        assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
+        assert!(!format!("{error:?} {error}").contains(marker));
+
+        let request = GatewayInferenceInputCreatePromptCompletionRequest::Variant1(
+            GatewayInferenceInputCreatePromptCompletionRequestVariant1::builder()
+                .variables(model(json!({})))
+                .extension("future_extension", reserved.into())
+                .build()
+                .unwrap(),
+        );
+        let (client, wire) = setup(vec![]);
+        let error = client
+            .create_prompt_completion(ID, &request, None)
+            .await
+            .unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Validation);
+        assert_eq!(error.status(), None);
+        assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
+        assert!(wire.requests.lock().unwrap().is_empty());
+
+        let mut ordinary = response("retrieveModel");
+        ordinary["future_marker_as_value"] = Value::String(marker.into());
+        let mut near_match = serde_json::Map::new();
+        near_match.insert(format!("{marker}_future"), Value::String(token.into()));
+        ordinary["future_extension"] = Value::Object(near_match);
+        let (client, wire) = setup(vec![Reply::Raw(serde_json::to_vec(&ordinary).unwrap())]);
+        let actual = client.retrieve_model(ID, None).await.unwrap();
+        assert_eq!(serde_json::to_value(actual).unwrap(), ordinary);
+        assert_eq!(wire.requests.lock().unwrap().len(), 1);
     }
 }
 

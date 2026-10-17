@@ -25,12 +25,26 @@ pub struct IamScopesClient {
     client: Client,
 }
 impl IamScopesClient {
+    /// Create an IAM scope client and derive its tenant header from OAuth identity.
+    ///
+    /// Enable `iam` and supply the IAM base, including `/iam/v1`, on the client.
+    /// No environment lookup or token exchange occurs during construction.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Result, shared::iam::IamScopesClient};
+    /// async fn tenant_scopes(oauth: Client) -> Result<()> {
+    ///     let scopes = IamScopesClient::new(oauth)?;
+    ///     let _response = scopes.list(None).await?;
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(client: Client) -> Result<Self> {
         client.require_auth(crate::engine::AuthKind::OAuth)?;
         Ok(Self {
             client: client.with_tsg_header(true)?,
         })
     }
+    /// Borrow the IAM client scoped to the immutable OAuth tenant.
     pub fn client(&self) -> &Client {
         &self.client
     }

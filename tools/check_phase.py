@@ -135,15 +135,47 @@ def commands_for(phase):
                "--output", f"docs/checks/phase-07-rust-1.99.0-{feature}.json"]
               for feature in ("agentguard", "realtime", "ws-transport")],
         ]
+    if phase == 8:
+        previous = [[value.replace("phase-07", "phase-08") for value in command]
+                    for command in commands_for(7)]
+        for command in previous:
+            if command[:3] == ["python", "tools/native_operations.py", "--check"]:
+                command[-1] = "8"
+        return previous + [
+            ["python", "tools/model_fixtures.py", "--check"],
+            *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", pattern, "-v"]
+              for pattern in ("test_model_fixtures.py", "test_package_policy.py", "test_dependency_policy.py", "test_ci.py", "test_live_evidence.py", "test_qualification.py", "test_auxiliary_evidence.py")],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-08-private-material.json"],
+            ["python", "tools/live_evidence.py", "--check"],
+            ["python", "tools/qualification.py", "--check"],
+            ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-08-dependencies.json"],
+            *[["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", feature,
+               "--output", f"docs/checks/phase-08-rust-1.99.0-{feature}.json"]
+              for feature in ("reqwest-transport", "tracing", "default-tracing", "realtime-tracing", "ws-tracing", "gateway-json-unification", "native-probes", "probe-base")],
+            *[["python", "scripts/check-rust.py", "--toolchain", "1.89.0", "--feature-set", feature,
+               "--output", f"docs/checks/phase-08-rust-1.89.0-{feature}.json"]
+              for feature in ("tracing", "native-probes")],
+            *[["python", "scripts/check-package.py", "--toolchain", toolchain,
+               "--output", f"docs/checks/phase-08-package-{toolchain}.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            *[["python", "scripts/check-cross.py", "--target", target,
+               "--output", f"docs/checks/phase-08-cross-{target}.json"]
+              for target in ("x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-pc-windows-msvc")],
+            ["python", "scripts/check-tracing-stress.py", "--toolchain", "1.99.0",
+             "--processes", "100", "--test-threads", "16", "--expected-tests", "201",
+             "--output", "docs/checks/phase-08-tracing-stress-1.99.0.json", "--replace-report"],
+        ]
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--phase", required=True, type=int)
+    parser.add_argument("--verification-only", action="store_true",
+                        help="Rerun qualification in CI without changing phase status or requesting review")
     args = parser.parse_args()
     status = json.loads((ROOT / "docs/phase-status.json").read_text())
-    if status["active_phase"] != args.phase:
+    if status["active_phase"] != args.phase and not args.verification_only:
         raise ValueError("Run the active phase's checks")
     before = fingerprint(ROOT)
     commands = commands_for(args.phase)

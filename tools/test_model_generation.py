@@ -45,8 +45,8 @@ class GenerationGuards(unittest.TestCase):
 
     def test_native_dispatcher_and_pattern_drift_fail(self):
         source=(ROOT/"crates/scm-sdk/src/validation.rs").read_text()
-        for changed in [source.replace('"uuid" => {','"new_uuid_kind" => {'),source.replace('r"^\\d+$"','r"^new-pattern$"')]:
-            self.assertNotEqual(changed,source)
+        for changed in [source.replace('"uuid" =>','"new_uuid_kind" =>'),source.replace('r"^\\d+$"','r"^new-pattern$"')]:
+            self.assertTrue(changed != source, "Tamper specimen must change the intended dispatcher or pattern")
             with self.assertRaisesRegex(ValueError,"[Nn]ative"):
                 generator.validate_graph_contract(self.inventory,changed)
 

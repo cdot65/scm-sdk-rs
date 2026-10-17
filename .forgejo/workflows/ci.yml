@@ -1,4 +1,4 @@
-name: Credential-free SDK checks
+name: Credential-free SDK qualification
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       native_platforms:
-        description: Run additional native platforms after their runner labels are registered
+        description: Run native platforms only after these runner labels are registered
         type: boolean
         required: false
         default: false
@@ -14,26 +14,60 @@ on:
 permissions:
   contents: read
 
+env:
+  CARGO_TERM_COLOR: never
+  RUSTDOCFLAGS: -D warnings
+
 jobs:
-  provenance:
+  contracts-and-package:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
     steps:
       - name: Check out the reviewed source
         uses: https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1, Node 20
         with:
           persist-credentials: false
-      - name: Verify the offline source and fixture corpus
-        run: python3 tools/verify-contracts.py --self-test
-      - name: Verify review gate behavior
-        run: python3 -m unittest discover -s tools -p test_review_phase.py -v
+      - name: Install pinned development-only Node
+        uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22.23.2"
+      - name: Install reviewed Rust compilers
+        run: |
+          rustup toolchain install 1.89.0 --profile minimal --component rustfmt,clippy --no-self-update
+          rustup toolchain install 1.99.0 --profile minimal --component rustfmt,clippy --no-self-update
+      - name: Install exact dependency-policy tools
+        run: |
+          cargo +1.99.0 install cargo-audit --locked --version 0.22.2
+          cargo +1.99.0 install cargo-deny --locked --version 0.20.2
+      - name: Prepare compile-only standard libraries and locked dependency inputs
+        run: |
+          rustup target add --toolchain 1.99.0 x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu aarch64-apple-darwin x86_64-pc-windows-msvc
+          cargo +1.99.0 fetch --locked --target x86_64-unknown-linux-gnu
+          cargo +1.99.0 fetch --locked --target aarch64-unknown-linux-gnu
+          cargo +1.99.0 fetch --locked --target aarch64-apple-darwin
+          cargo +1.99.0 fetch --locked --target x86_64-pc-windows-msvc
+      - name: Restore verified frozen development sources and locked npm tooling
+        run: python3 tools/bootstrap_reference.py
+      - name: Qualify contracts, generation, security, native probes, and packaged consumers
+        run: python3 tools/check_phase.py --phase 8 --verification-only
+      - name: Record the source-bound qualification receipt in the job log
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          path = pathlib.Path("docs/checks/phase-08.json")
+          report = json.loads(path.read_text())
+          print(json.dumps({key: report[key] for key in ("phase", "source_sha256", "source_unchanged", "passed")}))
+          print(json.dumps({"report_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "commands": len(report["checks"])}))
+          PY
 
   rust:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        toolchain: ['1.88.0', '1.99.0']
-        features: [default, minimal, all]
+        toolchain: ["1.89.0", "1.99.0"]
+        features: ["default", "minimal", "all", "json-unification", "gateway-json-unification", "models", "reqwest-transport", "scan", "management", "dlp", "iam", "model-security", "red-team", "gateway", "agentguard", "realtime", "ws-transport", "tracing", "default-tracing", "realtime-tracing", "ws-tracing", "native-probes", "probe-base"]
     steps:
       - name: Check out the reviewed source
         uses: https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1, Node 20
@@ -46,6 +80,7 @@ jobs:
 
   additional-native-platforms:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.native_platforms == true }}
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:

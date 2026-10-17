@@ -53,16 +53,7 @@ pub(super) fn push_filter(
     Ok(())
 }
 pub(super) fn uuid(value: &str) -> Result<()> {
-    let bytes = value.as_bytes();
-    if bytes.len() == 36
-        && bytes.iter().enumerate().all(|(i, byte)| {
-            if [8, 13, 18, 23].contains(&i) {
-                *byte == b'-'
-            } else {
-                byte.is_ascii_hexdigit()
-            }
-        })
-    {
+    if crate::data::is_uuid(value) {
         Ok(())
     } else {
         Err(Error::new(ErrorKind::Validation))

@@ -106,6 +106,7 @@ pub use usage_limits::*;
 pub use workspaces::*;
 #[cfg(feature = "gateway")]
 #[derive(Clone, Debug)]
+/// SCM OAuth control-plane resources with separately admitted admin and IAM bases.
 pub struct AIGatewayClient {
     data: crate::Client,
     admin: crate::Client,
@@ -115,6 +116,22 @@ pub struct AIGatewayClient {
 #[cfg(feature = "gateway")]
 impl AIGatewayClient {
     /// Share one scoped SCM identity across explicitly admitted control-plane endpoints.
+    ///
+    /// Enable `gateway`. The OAuth client selects the data base; its policy must
+    /// also admit admin and IAM. Runtime inference has separate credentials.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Endpoint, Result,
+    ///     airs::gateway::{AIGatewayClient, AIGatewayWorkspaceScopedListOptions}};
+    /// async fn service_keys(
+    ///     oauth: Client, admin: Endpoint, iam: Endpoint, workspace_id: &str,
+    /// ) -> Result<()> {
+    ///     let gateway = AIGatewayClient::new(oauth, admin, iam)?;
+    ///     let query = AIGatewayWorkspaceScopedListOptions::new(workspace_id);
+    ///     let _keys = gateway.api_keys().list_service(&query, None).await?;
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(
         data: crate::Client,
         admin_endpoint: crate::Endpoint,
@@ -130,6 +147,7 @@ impl AIGatewayClient {
             runtime: None,
         })
     }
+    /// Borrow the OAuth data-plane client and its shared session.
     pub fn client(&self) -> &crate::Client {
         &self.data
     }
@@ -138,17 +156,21 @@ impl AIGatewayClient {
         self.runtime = Some(runtime);
         self
     }
+    /// Return the attached runtime client, or a configuration error if none was attached.
     pub fn inference(&self) -> crate::Result<RuntimeClient> {
         self.runtime
             .clone()
             .ok_or_else(|| crate::Error::new(crate::ErrorKind::Configuration))
     }
+    /// Return the same separately authenticated client used for runtime resources.
     pub fn runtime_resources(&self) -> crate::Result<RuntimeClient> {
         self.inference()
     }
+    /// Access tenant scope operations at the explicitly selected IAM base.
     pub fn iam_scopes(&self) -> crate::shared::iam::IamScopesClient {
         self.iam.clone()
     }
+    /// Access workspace reads and explicit admin-plane provisioning workflows.
     pub fn workspaces(&self) -> AIGatewayWorkspacesClient {
         AIGatewayWorkspacesClient {
             client: self.data.clone(),

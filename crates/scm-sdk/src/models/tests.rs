@@ -144,31 +144,24 @@ fn accepted_schema_value(name: &str) -> serde_json::Value {
     use std::sync::OnceLock;
     static CORPUS: OnceLock<serde_json::Value> = OnceLock::new();
     let corpus = CORPUS.get_or_init(|| {
-        serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../contracts/native-fixtures/schemas.json"
-        )))
-        .unwrap()
+        serde_json::from_str(include_str!("../fixtures/model-regressions.json")).unwrap()
     });
-    let root = corpus["roots"]
+    assert_eq!(
+        corpus["baselineCommit"],
+        "4a80dbdb3dc14365e1c25d838ac0bd139485d48c"
+    );
+    let matches: Vec<_> = corpus["specimens"]
         .as_array()
         .unwrap()
         .iter()
-        .find(|root| {
-            root["names"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .any(|value| value == name)
-        })
-        .expect("independent schema fixture exists");
-    root["jsonCases"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|case| case["zod"]["success"] == true)
-        .expect("independent accepted schema specimen exists")["zod"]["output"]
-        .clone()
+        .filter(|item| item["name"] == name)
+        .collect();
+    assert_eq!(
+        matches.len(),
+        1,
+        "independent schema fixture must be unique: {name}"
+    );
+    matches[0]["output"].clone()
 }
 
 #[test]

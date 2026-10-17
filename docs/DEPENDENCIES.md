@@ -1,6 +1,6 @@
 # Dependency and source review
 
-This Phase 7 dependency snapshot describes the resolved `Cargo.lock` and `cargo metadata --locked --all-features` on 2026-10-16. The lockfile fixes repository verification inputs; downstream applications resolve their own compatible dependency graph. Review lockfile changes and rerun compiler, feature, advisory, and license checks before release.
+This delivery dependency snapshot describes the resolved `Cargo.lock` and `cargo metadata --locked --all-features` on 2026-10-16. The lockfile fixes repository verification inputs; downstream applications resolve their own compatible dependency graph. Review lockfile changes and rerun compiler, feature, advisory, and license checks before release.
 
 ## Resolved direct dependencies
 
@@ -28,6 +28,7 @@ This Phase 7 dependency snapshot describes the resolved `Cargo.lock` and `cargo 
 | `tokio-rustls` | 0.26.6, optional native WS | 1.71 | MIT OR Apache-2.0 |
 | `tokio-websockets` | **=0.13.3**, optional native WS | **1.89** | MIT |
 | `tokio-util` | 0.7.20 | 1.85 | MIT |
+| `tracing` | 0.1.44, optional direct SDK instrumentation | 1.65.0 | MIT |
 | `time` | 0.3.55 | 1.88 | MIT OR Apache-2.0 |
 | `url` | 2.5.8 | 1.63 | MIT OR Apache-2.0 |
 | `zeroize` | 1.9.1 | 1.85 | Apache-2.0 OR MIT |
@@ -35,9 +36,9 @@ This Phase 7 dependency snapshot describes the resolved `Cargo.lock` and `cargo 
 
 The metadata also contains transitive `base64` 0.23.1; it does not replace the SDK's direct 0.22.1 dependency. Direct optional rustls/AWS-LC declarations serve the native WebSocket adapter; these packages also occur transitively through the independently selectable reqwest adapter. IAM uses `getrandom` for native helper generation. The validator uses regex, exact JavaScript number formatting and calendar parsing. Node and the TypeScript toolchain are absent from the crate.
 
-Product/client features are `models`, `scan`, `management`, `dlp`, `iam`, `model-security`, `red-team`, `gateway`, and `agentguard`; `realtime` adds the caller-connector lifecycle and `ws-transport` selects native framing/TCP/TLS. Default features remain reqwest HTTP plus scanning. `tracing` is an HTTP-stack transitive dependency; the SDK has no tracing feature or global subscriber.
+Product/client features are `models`, `scan`, `management`, `dlp`, `iam`, `model-security`, `red-team`, `gateway`, and `agentguard`; `realtime` adds the caller-connector lifecycle and `ws-transport` selects native framing/TCP/TLS. Default features remain reqwest HTTP plus scanning. `tracing` also occurs transitively in the HTTP stack; Phase 8 adds the direct optional dependency with only its `std` feature, using the already locked 0.1.44 version without other dependency upgrades. The opt-in metadata-only SDK `tracing` feature is described in [OBSERVABILITY.md](OBSERVABILITY.md). It installs no global subscriber and excludes credentials, payloads, caller labels and correlation values.
 
-The current resolved all-feature graph's highest declared Rust minimum is **1.89**, from pinned `tokio-websockets` 0.13.3. The workspace minimum is now 1.89 for every feature selection, including minimal builds. This replaces the earlier 1.88 choice driven by ICU 2.3 and time 0.3.55. Historical accepted 1.88.0 checks retain their prior source/dependency state. Current Phase 7 executable MSRV/feature qualification remains subject to its gate; metadata alone is not proof. The historical Forgejo 1.88 matrix has a pending Phase 8 update.
+The resolved all-feature graph's highest declared Rust minimum is **1.89**, from pinned `tokio-websockets` 0.13.3. The workspace minimum is now 1.89 for every feature selection, including minimal builds. This replaces the earlier 1.88 choice driven by ICU 2.3 and time 0.3.55. Historical accepted 1.88.0 checks retain their prior source/dependency state. Accepted Phase 7 reports record native 1.89.0 and 1.99.0 qualification. The Forgejo matrix now selects those releases and the full feature combinations; retained remote execution remains a separate delivery obligation. Metadata alone is not compiler or CI execution proof.
 
 ## HTTP, cryptography, compression, and native code
 
@@ -88,8 +89,44 @@ The frozen TypeScript source is separately licensed Apache-2.0 at commit `4a80db
 
 The official PANW Gateway specification is not bundled or used for generation while its redistribution license remains unresolved. The dated evidence and historical licensed specification records are recorded by the provenance ledger. Development-only TypeScript tooling and specification fixtures are outside the crate's package include list. Cargo dependencies retain their own licenses and notices; license expressions above report package metadata and do not replace inspection of bundled source notices.
 
-## Remaining release checks
+## Automated advisory, license and source policy
 
-This dependency review records actual choices and build requirements while preserving historical foundation evidence. Automated advisory scanning and a machine-enforced resolved license/source policy are explicitly deferred to phase 8; `docs/phase-status.json` records this phase-2 limitation. Local compiler/test/provenance reports establish only their recorded source checks. The historically configured CI matrix still needs its MSRV update and retained remote execution; dependency-policy qualification remains pending. Packaged notice verification, target execution, and release artifact validation retain their own qualification evidence.
+Phase 8 implements `scripts/check-dependencies.py` and `deny.toml`. The checker
+requires exact **cargo-audit 0.22.2** and **cargo-deny 0.20.2**, records binary
+hashes, verifies registry checksums and permits only crates.io dependency sources.
+Every all-feature/all-target resolved package is considered, including development
+dependencies and target-specific lockfile entries. No graph exclusions, advisory
+ignores, license exceptions or unapproved Git/registry sources are accepted.
 
-Applicable advisories block releases unless `cdot65` approves a scoped, documented, expiring exception. Keep any advisory database revision and tool version with the final report; an old clean scan is not a statement about future dependency safety.
+The default audit fetches the authoritative [RustSec database](https://github.com/RustSec/advisory-db)
+HEAD and checks out that exact commit in a private temporary working tree. The
+report binds its revision, fetch HEAD and commit date to the unchanged lockfile.
+Cargo-audit rejects all reported warnings, including unsound/unmaintained/yanked
+findings. Cargo-deny enforces the resolved license/source/bans policy offline with
+warnings denied. Its [license policy](https://embarkstudios.github.io/cargo-deny/checks/licenses/cfg.html)
+evaluates SPDX alternatives and detected license files; it is not an exhaustive
+legal review of every transitive source file.
+
+```sh
+python3 scripts/check-dependencies.py --output .local/checks/dependencies.json
+python3 -m unittest discover -s tools -p test_dependency_policy.py
+```
+
+Install the pinned tools on PATH, in `~/.local/share/scm-sdk-tools/bin`, or pass
+`--tools-dir`. Historical replay accepts `--advisory-revision <40-character SHA>`
+and candidly records whether that revision is the freshly fetched HEAD. Release
+qualification uses the fresh default. Applicable findings fail qualification;
+there are no approved exceptions. Multiple compatible package versions are
+recorded and permitted; this is a version-unification policy, not an advisory waiver.
+
+The preliminary Phase 8 execution on 2026-10-16 scanned **206 packages** against
+RustSec **479c888ce4401313bca61ba4aba2d0f6244c4a09**, with zero findings and passing
+license/source checks. Final retained Phase 8 reports bind the reviewed source,
+current graph and database. A clean scan describes known advisories at that
+revision and makes no statement about future findings. Downstream applications
+must audit their own resolved dependency graph and license obligations.
+
+[PACKAGING.md](PACKAGING.md) describes extracted-archive checks and clean release
+metadata. [PLATFORMS.md](PLATFORMS.md) separates native execution from compile-only
+qualification. Historical accepted reports remain evidence of their original
+compiler/source states.

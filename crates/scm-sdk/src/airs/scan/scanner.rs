@@ -1,3 +1,5 @@
+#![warn(missing_docs)]
+
 use super::{Content, content::validate_content, models::*};
 use crate::{
     Client, Endpoint, Error, ErrorKind, RawRequest, RequestOptions, Result, Secret,
@@ -7,15 +9,21 @@ use http::Method;
 use serde::Serialize;
 use std::fmt;
 
+/// Regional AIRS scan service bases; choosing a region does not select credentials.
 #[derive(Clone, Copy, Debug)]
 #[non_exhaustive]
 pub enum Region {
+    /// United States scan service.
     Us,
+    /// European scan service.
     Eu,
+    /// India scan service.
     India,
+    /// Singapore scan service.
     Singapore,
 }
 impl Region {
+    /// Return the HTTPS base used by [`Scanner::for_region`].
     pub const fn endpoint(self) -> &'static str {
         match self {
             Self::Us => "https://service.api.aisecurity.paloaltonetworks.com",
@@ -25,12 +33,17 @@ impl Region {
         }
     }
 }
+/// Optional correlation metadata and request budget for one synchronous scan.
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct SyncScanOptions {
+    /// Caller transaction identifier; an empty string is omitted.
     pub tr_id: Option<String>,
+    /// Caller session identifier; an empty string is omitted.
     pub session_id: Option<String>,
+    /// Typed application metadata sent with the scan request.
     pub metadata: Option<Metadata>,
+    /// Per-call deadline, cancellation and retry settings.
     pub request: Option<RequestOptions>,
 }
 impl fmt::Debug for SyncScanOptions {
@@ -39,15 +52,47 @@ impl fmt::Debug for SyncScanOptions {
     }
 }
 
+/// Typed synchronous scans, asynchronous batches and correlated result queries.
+///
+/// Enable `scan`; the application owns credentials, its async runtime and policy
+/// decisions based on returned actions. Unfamiliar actions require explicit handling.
 #[derive(Clone, Debug)]
 pub struct Scanner {
     client: Client,
 }
 impl Scanner {
+    /// Require scan authentication while retaining the caller's transport and session.
+    ///
+    /// The configured client supplies the endpoint, credentials and destination policy.
+    /// Construction performs no request and reads no environment variables.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Result, airs::scan::{Content, Scanner, models::AiProfile}};
+    ///
+    /// // Poll this future from the application's runtime.
+    /// async fn scan_prompt(configured: Client, profile: &AiProfile) -> Result<()> {
+    ///     let scanner = Scanner::new(configured)?;
+    ///     let content = Content::builder().prompt("A harmless example prompt").build()?;
+    ///     let response = scanner.sync_scan(profile, &content, None).await?;
+    ///     let _action = &response.action; // The application decides how to enforce it.
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(client: Client) -> Result<Self> {
         client.require_auth(AuthKind::Scan)?;
         Ok(Self { client })
     }
+    /// Build a regional scanner with explicit scan credentials and the default HTTP transport.
+    ///
+    /// Requires `reqwest-transport`. For an injected transport or custom destination
+    /// policy, configure a [`Client`] and call [`Scanner::new`] instead.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Result, Secret, airs::scan::{Region, Scanner}};
+    /// fn regional_scanner(api_key: Secret) -> Result<Scanner> {
+    ///     Scanner::for_region(Region::Eu, Some(api_key), None)
+    /// }
+    /// ```
     pub fn for_region(
         region: Region,
         api_key: Option<Secret>,
@@ -59,9 +104,14 @@ impl Scanner {
                 .build()?,
         )
     }
+    /// Borrow the underlying client, including its shared session cancellation handle.
     pub fn client(&self) -> &Client {
         &self.client
     }
+    /// Scan one validated content object with a profile and optional correlation metadata.
+    ///
+    /// Request validation finishes before authentication. Submissions do not replay
+    /// automatically; inspect the error's remote outcome before reconciling a failure.
     pub async fn sync_scan(
         &self,
         profile: &AiProfile,
@@ -98,7 +148,9 @@ impl Scanner {
             )
             .await
     }
-    /// Send a complete typed request. Content limits apply to every item, including batches.
+    /// Send a complete typed synchronous request, validating every content item's limits.
+    ///
+    /// Use this form when the request already contains profile and correlation fields.
     pub async fn scan_request(
         &self,
         request: &ScanRequest,
@@ -117,7 +169,9 @@ impl Scanner {
             )
             .await
     }
-    /// Submit 1–20 objects. Preserve the batch receipt; one scan ID may produce many unordered rows.
+    /// Submit 1–20 objects and return the asynchronous batch receipt without polling.
+    ///
+    /// Preserve the receipt; one scan ID may produce many unordered result rows.
     pub async fn async_scan(
         &self,
         requests: &[AsyncScanObject],
@@ -141,7 +195,9 @@ impl Scanner {
             )
             .await
     }
-    /// Return rows in server order without sorting, collapsing, or deduplicating.
+    /// Query 1–5 scan UUIDs and return result rows in server order.
+    ///
+    /// Input order and duplicate IDs are preserved; results are not sorted or deduplicated.
     pub async fn query_by_scan_ids(
         &self,
         ids: &[String],
@@ -158,6 +214,10 @@ impl Scanner {
             )
             .await
     }
+    /// Query 1–5 report identifiers and return threat reports in server order.
+    ///
+    /// Report IDs may be opaque strings, but commas and control characters are rejected.
+    /// Query encoding preserves the supplied order and duplicate identifiers.
     pub async fn query_by_report_ids(
         &self,
         ids: &[String],
@@ -191,12 +251,5 @@ fn validate_ids(ids: &[String], uuid: bool) -> Result<()> {
     Ok(())
 }
 pub(crate) fn is_uuid(value: &str) -> bool {
-    value.len() == 36
-        && value.bytes().enumerate().all(|(i, b)| {
-            if [8, 13, 18, 23].contains(&i) {
-                b == b'-'
-            } else {
-                b.is_ascii_hexdigit()
-            }
-        })
+    crate::data::is_uuid(value)
 }

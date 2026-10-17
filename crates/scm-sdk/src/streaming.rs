@@ -11,6 +11,7 @@ pub struct ContractStream<T> {
     options: RequestOptions,
     session: Session,
     failure: Option<Error>,
+    lifecycle: crate::observability::Lifecycle,
     marker: std::marker::PhantomData<T>,
 }
 #[cfg(feature = "gateway")]
@@ -29,7 +30,13 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
         options: RequestOptions,
         session: Session,
     ) -> Self {
+        let lifecycle = crate::observability::Lifecycle::received(
+            crate::observability::Operation::TypedStream,
+            contract.status,
+            contract.request_id.is_some(),
+        );
         Self {
+            lifecycle,
             stream,
             contract,
             options,
@@ -39,6 +46,7 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
         }
     }
     pub fn close(&mut self) {
+        self.lifecycle.closed();
         self.stream.close();
     }
     /// Consume the caller-owned stream through the standard Rust Stream interface.
@@ -77,14 +85,19 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
                             )
                             .with_operation(self.contract.operation)
                             .with_outcome(RemoteOutcome::Unknown);
+                        self.lifecycle.failed(&error);
                         self.stream.close();
                         self.failure = Some(error.clone());
                         return Err(error);
                     }
                 }
                 Ok(Some(event)) => break event,
-                Ok(None) => return Ok(None),
+                Ok(None) => {
+                    self.lifecycle.success();
+                    return Ok(None);
+                }
                 Err(error) => {
+                    self.lifecycle.failed(&error);
                     self.failure = Some(error.clone());
                     return Err(error);
                 }
@@ -107,7 +120,7 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
                         ErrorKind::Decode
                     })
                 })?;
-                serde_json::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
+                crate::json_decode::from_value(value).map_err(|_| Error::new(ErrorKind::Decode))
             })
             .await;
         match result {
@@ -117,6 +130,7 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
                     .with_response_metadata(self.contract.status, self.contract.request_id.clone())
                     .with_operation(self.contract.operation)
                     .with_outcome(RemoteOutcome::Unknown);
+                self.lifecycle.failed(&error);
                 self.stream.close();
                 self.failure = Some(error.clone());
                 Err(error)
@@ -157,6 +171,7 @@ pub struct ResponseStream {
     operation: &'static str,
     max_bytes: usize,
     consumed: usize,
+    lifecycle: crate::observability::Lifecycle,
 }
 
 impl ResponseStream {
@@ -183,7 +198,13 @@ impl ResponseStream {
         for value in headers.values_mut() {
             value.set_sensitive(true);
         }
+        let lifecycle = crate::observability::Lifecycle::received(
+            crate::observability::Operation::BodyStream,
+            response.status.as_u16(),
+            request_id.is_some(),
+        );
         Self {
+            lifecycle,
             status: response.status,
             headers,
             request_id,
@@ -213,6 +234,7 @@ impl ResponseStream {
         self.consumed
     }
     pub fn close(&mut self) {
+        self.lifecycle.closed();
         self.body = None;
         self.permit = None;
     }
@@ -278,16 +300,19 @@ impl ResponseStream {
         .await;
         match result {
             Ok(None) => {
+                self.lifecycle.success();
                 self.close();
                 Ok(None)
             }
             Ok(value) => Ok(value),
             Err(error) => {
-                self.close();
-                Err(crate::engine::body_failure(error)
+                let error = crate::engine::body_failure(error)
                     .with_response_metadata(self.status.as_u16(), self.request_id.clone())
                     .with_operation(self.operation)
-                    .with_outcome(RemoteOutcome::Unknown))
+                    .with_outcome(RemoteOutcome::Unknown);
+                self.lifecycle.failed(&error);
+                self.close();
+                Err(error)
             }
         }
     }

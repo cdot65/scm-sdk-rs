@@ -438,7 +438,8 @@ pub fn page_schema<T>(
 ) -> Result<crate::dlp::models::Page<T>> {
     bounded_json(input)?;
     let source: crate::dlp::models::Page<crate::data::JsonValue> =
-        serde_json::from_value(input.clone()).map_err(|_| Error::new(ErrorKind::Validation))?;
+        crate::json_decode::from_value(input.clone())
+            .map_err(|_| Error::new(ErrorKind::Validation))?;
     let mut page = crate::dlp::models::Page::new(
         source
             .content

@@ -371,7 +371,7 @@ fn normalized_value(input: &Value, remaining: &mut usize) -> Result<Value> {
         .ok_or_else(|| Error::new(ErrorKind::Limit))?;
     crate::validation::parse(
         "GatewayJsonValueSchema",
-        serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?,
+        crate::json_decode::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?,
         crate::validation::Mode::Request,
     )
 }
@@ -436,7 +436,7 @@ pub fn set_dotted_value(input: &JsonObject, path: &str, value: &JsonValue) -> Re
     remaining -= bytes.len();
     let object = crate::validation::parse(
         "GatewayJsonObjectSchema",
-        serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?,
+        crate::json_decode::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?,
         crate::validation::Mode::Request,
     )?;
     let mut tree = Tree::from_value(object, &mut nodes)?;

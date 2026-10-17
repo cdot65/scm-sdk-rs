@@ -46,6 +46,19 @@ pub struct ManagementClient {
 }
 #[cfg(feature = "management")]
 impl ManagementClient {
+    /// Create AIRS management resource clients from a configured SCM OAuth client.
+    ///
+    /// Enable `management`. The supplied endpoint is the AIRS management base;
+    /// dashboard requests derive their tenant header from the same OAuth identity.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Result, airs::management::{ManagementClient, PaginationOptions}};
+    /// async fn profile_page(oauth: Client) -> Result<()> {
+    ///     let management = ManagementClient::new(oauth)?;
+    ///     let _page = management.profiles().list(PaginationOptions::default(), None).await?;
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(client: Client) -> Result<Self> {
         client.require_auth(AuthKind::OAuth)?;
         let dashboard_client = client.with_tsg_header(true)?;
@@ -54,6 +67,7 @@ impl ManagementClient {
             dashboard_client,
         })
     }
+    /// Borrow the shared AIRS management client and its cancellation session.
     pub fn client(&self) -> &Client {
         &self.client
     }
@@ -62,46 +76,55 @@ impl ManagementClient {
         self.dashboard_client = self.dashboard_client.with_endpoint(endpoint)?;
         Ok(self)
     }
+    /// Access security profiles using the configured management endpoint.
     pub fn profiles(&self) -> ProfilesClient {
         ProfilesClient {
             client: self.client.clone(),
         }
     }
+    /// Access custom topics and topic associations.
     pub fn topics(&self) -> TopicsClient {
         TopicsClient {
             client: self.client.clone(),
         }
     }
+    /// Access AIRS scan API keys for this OAuth tenant.
     pub fn api_keys(&self) -> ApiKeysClient {
         ApiKeysClient {
             client: self.client.clone(),
         }
     }
+    /// Access customer applications for this OAuth tenant.
     pub fn customer_apps(&self) -> CustomerAppsClient {
         CustomerAppsClient {
             client: self.client.clone(),
         }
     }
+    /// Access dashboard reads through the explicitly scoped dashboard endpoint.
     pub fn dashboard(&self) -> DashboardClient {
         DashboardClient {
             client: self.dashboard_client.clone(),
         }
     }
+    /// Access deployment profile inventory.
     pub fn deployment_profiles(&self) -> DeploymentProfilesClient {
         DeploymentProfilesClient {
             client: self.client.clone(),
         }
     }
+    /// Access the legacy AIRS management DLP profile listing.
     pub fn dlp_profiles(&self) -> DlpProfilesClient {
         DlpProfilesClient {
             client: self.client.clone(),
         }
     }
+    /// Access scan-log inventory with the management client's request bounds.
     pub fn scan_logs(&self) -> ScanLogsClient {
         ScanLogsClient {
             client: self.client.clone(),
         }
     }
+    /// Access explicit token-management operations using the shared OAuth identity.
     pub fn oauth(&self) -> Result<OAuthManagementClient> {
         OAuthManagementClient::new(self.client.clone())
     }
@@ -119,16 +142,7 @@ fn tenant(client: &Client) -> Result<&str> {
 }
 #[cfg(feature = "management")]
 fn uuid(value: &str) -> Result<()> {
-    let bytes = value.as_bytes();
-    if bytes.len() == 36
-        && bytes.iter().enumerate().all(|(i, b)| {
-            if [8, 13, 18, 23].contains(&i) {
-                *b == b'-'
-            } else {
-                b.is_ascii_hexdigit()
-            }
-        })
-    {
+    if crate::data::is_uuid(value) {
         Ok(())
     } else {
         Err(Error::new(ErrorKind::Validation))

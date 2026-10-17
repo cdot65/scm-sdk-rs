@@ -1,11 +1,15 @@
 //! Generated public capability probes; every expression compiles outside the library.
 #![cfg(all(
-    feature = "scan",
-    feature = "management",
+    feature = "agentguard",
+    feature = "dlp",
     feature = "gateway",
+    feature = "iam",
+    feature = "management",
     feature = "model-security",
+    feature = "models",
+    feature = "realtime",
     feature = "red-team",
-    feature = "realtime"
+    feature = "scan"
 ))]
 // Futures are deliberately type-checked without polling or dispatching.
 #![allow(clippy::let_underscore_future)]

@@ -15,6 +15,9 @@ mod audio;
 mod resources;
 pub use audio::{TranscriptionResult, TranslationResult};
 
+/// Gateway inference and runtime resources authenticated with a runtime API key.
+///
+/// Enable `gateway`; caller-driven realtime additionally requires `realtime`.
 #[derive(Clone, Debug)]
 pub struct RuntimeClient {
     client: Client,
@@ -23,6 +26,21 @@ pub struct RuntimeClient {
 }
 impl RuntimeClient {
     /// Accept only runtime API-key authentication; SCM OAuth never enters this plane.
+    ///
+    /// The caller selects the runtime deployment endpoint and owns its async runtime.
+    /// Requests use the default no-replay policy unless explicitly configured otherwise.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Result, airs::gateway::{RuntimeClient,
+    ///     models::GatewayChatCompletionRequest}};
+    /// async fn chat(
+    ///     configured: Client, request: &GatewayChatCompletionRequest,
+    /// ) -> Result<()> {
+    ///     let runtime = RuntimeClient::new(configured)?;
+    ///     let _completion = runtime.create_chat_completion(request, None).await?;
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(client: Client) -> Result<Self> {
         client.require_auth(AuthKind::Runtime)?;
         Ok(Self {
@@ -31,6 +49,7 @@ impl RuntimeClient {
             replay: RuntimeReplay::default(),
         })
     }
+    /// Borrow the runtime-key client and its shared cancellation session.
     pub fn client(&self) -> &Client {
         &self.client
     }
@@ -48,8 +67,8 @@ impl RuntimeClient {
             .client
             .validated_json(query, "GatewayRealtimeConnectRequestSchema", &options)
             .await?;
-        let query: serde_json::Value =
-            serde_json::from_slice(&query).map_err(|_| Error::new(ErrorKind::Validation))?;
+        let query: serde_json::Value = crate::json_decode::from_slice(&query)
+            .map_err(|_| Error::new(ErrorKind::Validation))?;
         let query = query
             .as_object()
             .ok_or_else(|| Error::new(ErrorKind::Validation))?
@@ -110,8 +129,8 @@ impl RuntimeClient {
         let options = self.client.operation_options(options)?;
         let bytes = self.client.validated_json(body, schema, &options).await?;
         if let Some(expected) = stream {
-            let value: serde_json::Value =
-                serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?;
+            let value: serde_json::Value = crate::json_decode::from_slice(&bytes)
+                .map_err(|_| Error::new(ErrorKind::Validation))?;
             if (value.get("stream") == Some(&serde_json::Value::Bool(true))) != expected {
                 return Err(Error::new(ErrorKind::Validation));
             }

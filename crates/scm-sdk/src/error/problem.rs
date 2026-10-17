@@ -176,7 +176,7 @@ impl ProblemDetails {
         if bytes.len() > 1024 * 1024 {
             return Err(Error::new(ErrorKind::Limit));
         }
-        Ok(serde_json::from_slice::<Value>(bytes)
+        Ok(crate::json_decode::from_slice(bytes)
             .ok()
             .as_ref()
             .and_then(Self::from_value))
@@ -269,7 +269,7 @@ impl fmt::Debug for ErrorMetadata {
 
 /// Parse source-compatible body guidance for metadata. It does not authorize replay.
 pub(crate) fn body_retry_after(bytes: &[u8]) -> Option<Duration> {
-    let body: Value = serde_json::from_slice(bytes).ok()?;
+    let body: Value = crate::json_decode::from_slice(bytes).ok()?;
     let retry = body.get("retry_after")?.as_object()?;
     let interval = retry.get("interval")?.as_f64()?;
     if !interval.is_finite() || interval < 0.0 {

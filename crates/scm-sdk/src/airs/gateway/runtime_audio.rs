@@ -47,8 +47,8 @@ impl Metadata {
             .remaining
             .checked_sub(bytes.len() + key.len() + 4)
             .ok_or_else(|| Error::new(ErrorKind::Limit))?;
-        let value =
-            serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?;
+        let value = crate::json_decode::from_slice(&bytes)
+            .map_err(|_| Error::new(ErrorKind::Validation))?;
         if self.map.insert(key.into(), value).is_some() {
             return Err(Error::new(ErrorKind::Validation));
         }

@@ -1,9 +1,10 @@
 # Rust foundation
 
 The foundation supplies the async HTTP client shared by the implemented product
-clients. Phase 7 extends configuration, OAuth observation and error interfaces;
-its complete gate remains under verification. Applications own their Tokio
-runtime and credential persistence. Client construction creates no runtime and starts no background task.
+clients, including isolated configuration, OAuth observation and sanitized error
+interfaces accepted in Phase 7. Phase 8 adds optional metadata-only tracing and
+delivery qualification. Applications own their Tokio runtime and credential
+persistence. Client construction creates no runtime and starts no background task.
 Clones share their connection pool, concurrency limit, and session cancellation.
 
 ## Explicit configuration
@@ -176,7 +177,9 @@ field reasons use reviewed allowlists. See [ERRORS.md](ERRORS.md).
 Secret formatting is redacted. `Secret::expose` is an explicit access point.
 Zeroization erases its final owned buffer; it cannot erase copies in a caller,
 HTTP stack, allocator, operating system, or server. No SDK telemetry records
-payload data. OAuth refresh observation is metadata-only and caller-polled. No tracing feature or logging subscriber is installed.
+payload data. OAuth refresh observation is metadata-only and caller-polled.
+The optional `tracing` feature emits a closed metadata vocabulary without
+installing a subscriber or logger; see [OBSERVABILITY.md](OBSERVABILITY.md).
 
 ## Evidence
 
@@ -187,7 +190,7 @@ permit/body release, redirects, invalid JSON, deadlines, and redaction. Exact
 executed compiler, feature, command, and outcome evidence lives in
 `docs/checks/phase-02.json` and its linked native reports. Live service acceptance
 is a separate Phase 8 qualification milestone. Historical reports retain the
-source and compiler state they actually checked; current Phase 7 acceptance is
+source and compiler state they actually checked; accepted Phase 7 and current Phase 8 qualification are
 recorded separately in [phase status](phase-status.json).
 
 ## Phase 4 shared client additions
@@ -210,7 +213,7 @@ provider cancels the call synchronously.
 `is_token_expiring_soon`, and `token_info` provide all five frozen lifecycle
 methods. One monotonic instant determines each metadata snapshot; wall-clock
 expiry is informational. Custom expiring-soon duration comparisons cannot
-overflow timestamps. Phase 7 implements immutable provider buffer configuration
+overflow timestamps. Phase 7 completed immutable provider buffer configuration
 and bounded metadata subscriptions; these extend the original Phase 4 lifecycle
 methods without changing their delivery history.
 

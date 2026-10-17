@@ -1,5 +1,9 @@
 # Live acceptance controls
 
+These original controls are retained as the live-qualification policy. Current
+execution, receipt/matrix interpretation and cleanup status are documented in
+[LIVE_ACCEPTANCE.md](LIVE_ACCEPTANCE.md).
+
 Live evidence certifies specific Rust workflows on a named service deployment;
 offline contracts certify request and response behavior independently. Keep those
 claims separate in the parity matrix.

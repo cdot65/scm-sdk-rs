@@ -18,7 +18,13 @@ import time
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FEATURES = {"default": [], "minimal": ["--no-default-features"], "all": ["--all-features"],
             "json-unification": ["--no-default-features", "--features", "serde_json/arbitrary_precision"],
-            **{name: ["--no-default-features", "--features", name] for name in ("scan", "management", "gateway", "models", "dlp", "iam", "model-security", "red-team", "agentguard", "realtime", "ws-transport")}}
+            **{name: ["--no-default-features", "--features", name] for name in ("scan", "management", "gateway", "models", "dlp", "iam", "model-security", "red-team", "agentguard", "realtime", "ws-transport", "reqwest-transport", "tracing")},
+            "default-tracing": ["--features", "tracing"],
+            "realtime-tracing": ["--no-default-features", "--features", "realtime,tracing"],
+            "ws-tracing": ["--no-default-features", "--features", "ws-transport,tracing"],
+            "gateway-json-unification": ["--no-default-features", "--features", "gateway,serde_json/arbitrary_precision"],
+            "native-probes": ["--no-default-features", "--features", "agentguard,dlp,gateway,iam,management,model-security,models,red-team,realtime,scan"],
+            "probe-base": ["--no-default-features", "--features", "scan,management,gateway,model-security,red-team,realtime"]}
 
 
 def rust_fingerprint():
@@ -55,6 +61,7 @@ def commands(cargo, toolchain, feature_set, host):
         [*base, "check", "--workspace", "--all-targets", "--locked", "--target", host, *flags],
         [*base, "clippy", "--workspace", "--all-targets", "--locked", "--target", host, *flags, "--", "-D", "warnings"],
         [*base, "test", "--workspace", "--locked", "--target", host, *flags],
+        [*base, "test", "--workspace", "--examples", "--locked", "--target", host, *flags],
         [*base, "doc", "--workspace", "--no-deps", "--locked", "--target", host, *flags],
     ]
 
@@ -88,7 +95,8 @@ def main():
     if env.get("CARGO_BUILD_TARGET") and env["CARGO_BUILD_TARGET"] != host:
         raise ValueError("Native checks require CARGO_BUILD_TARGET to match the toolchain host")
     records = []
-    for command in commands(cargo, args.toolchain, args.feature_set, host):
+    expected_commands = commands(cargo, args.toolchain, args.feature_set, host)
+    for command in expected_commands:
         started = time.monotonic()
         try:
             result = subprocess.run(command, cwd=ROOT, env=env, capture_output=True, text=True, timeout=args.timeout)
@@ -104,7 +112,7 @@ def main():
             break
     unchanged = before == rust_fingerprint()
     notices_match = all((ROOT / name).read_bytes() == (ROOT / "crates/scm-sdk" / name).read_bytes() for name in ("LICENSE", "NOTICE"))
-    passed = unchanged and notices_match and len(records) == 5 and all(record["exit_code"] == 0 for record in records)
+    passed = unchanged and notices_match and len(records) == len(expected_commands) and all(record["exit_code"] == 0 for record in records)
     report = {
         "schemaVersion": 1, "passed": passed, "checkedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "rustInputsSha256": before, "sourceUnchanged": unchanged,

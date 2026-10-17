@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "baselineOperationsSha256": "028acb96f9740018f2fbdf699d7a110688553e667433e63abf7a137ab67d8abf",
-  "generatorSha256": "c158db339f25ed18d46f20b7c65d9d50327c1e7703af809a30b5879a55f10f79",
+  "generatorSha256": "1492ee33bc504ca1b2917a1711122d1b93650bbbf051487f46a16bb18a2e998b",
   "ownershipOverrides": {
     "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime": {
       "phase": 7,
@@ -12,6 +12,54 @@
       "phase": 7,
       "reason": "Phase 7 owns multi-step provisioning, binding recovery and uncertain remote outcomes, as specified in docs/PHASES.md."
     }
+  },
+  "jsonBoundaryContract": {
+    "status": "intentional_rust_security_difference",
+    "scope": "SDK JSON decoding and validated input boundaries: HTTP, SSE, realtime and model parsing, including programmatically constructed Value inputs.",
+    "reservedObjectKeys": [
+      "$serde_json::private::Number",
+      "$serde_json::private::RawValue"
+    ],
+    "matching": "Exact decoded object keys at any depth, including escaped spellings, independent of dependency features.",
+    "action": "Reject before Serde protocol coercion; never silently alter or drop the object.",
+    "errors": {
+      "receivedJson": "Decode",
+      "requestOrCallerValue": "Validation",
+      "diagnostics": "sanitized"
+    },
+    "acceptedControls": "Near-match keys and reserved names used as ordinary string values retain normal handling.",
+    "excludedScope": "Direct downstream serde_json deserialization bypasses SDK validation boundaries.",
+    "documentation": [
+      "docs/MODELS.md#reserved-json-protocol-keys",
+      "docs/ADVERSARIAL.md#reserved-protocol-object-rejection"
+    ],
+    "tests": [
+      "crates/scm-sdk/src/json_decode/tests.rs::literal_reserved_protocol_keys_are_rejected_before_wire_value_coercion",
+      "crates/scm-sdk/src/json_decode/tests.rs::programmatic_literal_protocol_objects_and_overdeep_values_fail_safely",
+      "crates/scm-sdk/src/json_decode/tests.rs::realtime_reserved_objects_fail_before_inbound_coercion_or_outbound_write",
+      "crates/scm-sdk/src/streaming/sse/tests.rs::protocol_named_literal_objects_fail_closed_in_event_data",
+      "crates/scm-sdk/src/streaming/sse/tests.rs::reserved_number_objects_cannot_hide_a_truthy_error_envelope",
+      "crates/scm-sdk/tests/gateway_runtime_contracts.rs::reserved_serde_protocol_objects_fail_closed_at_http_and_model_boundaries"
+    ]
+  },
+  "liveReceipt": {
+    "reference": {
+      "path": "contracts/live-evidence.json",
+      "sha256": "2e8d0619d0f58e08714938452e6bcc82b2d739e7b0d52b516eb7d98c2d0fade3"
+    },
+    "report": {
+      "path": "docs/checks/phase-08-live-attempt-06.json",
+      "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21"
+    },
+    "verifier": {
+      "path": "tools/live_evidence.py",
+      "sha256": "6563b654d15c150593d48b5087cd462504a05e42c254c34fa50e5fe6e2437e83"
+    },
+    "executedAt": "2026-10-16T23:17:00.857125+00:00",
+    "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+    "toolchain": "1.99.0",
+    "hostTarget": "x86_64-unknown-linux-musl",
+    "cleanupState": "not_needed"
   },
   "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
   "requestHeaderContracts": {
@@ -46,6 +94,10 @@
     }
   },
   "sourceBindings": [
+    {
+      "path": "contracts/live-evidence.json",
+      "sha256": "2e8d0619d0f58e08714938452e6bcc82b2d739e7b0d52b516eb7d98c2d0fade3"
+    },
     {
       "path": "contracts/native-operation-mappings/agentguard-oauth.json",
       "sha256": "9cc23596f14fd18cee17d86c5c0d06a2ea661f97b3ea47af4b1817218e5ad27a"
@@ -104,7 +156,7 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/agentguard/client.rs",
-      "sha256": "23fc18a0adcaef2a12e6a6d3b2f91c302f4fe55281830b9ab2b76c4f0153b5a3"
+      "sha256": "3414f70eac84544bd7dbf6b866aad600559ef71519e86fa37463552d0d3d9d8b"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/admin_guardrails.rs",
@@ -172,11 +224,11 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/runtime.rs",
-      "sha256": "95ecf697f6f79cb2654d7a2d1b2df9daaadb838178b98928c12259b8a4c2fb11"
+      "sha256": "2b605b5a49e38d7255b9fa364bf8537402871eda03be94a3e51f7adccbfcc104"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
-      "sha256": "ef6f54e681e7053659d4fab19dd0441c22de29438f0a7f1c4b2575a5fbeb1d03"
+      "sha256": "c616636857f42a221b709678bde49886d3757e473acf6423d63d6389d74669f7"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -188,7 +240,7 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
-      "sha256": "f756dbe5cfb7c9ce10c3bde760387388625894c21dd3425f79ebfcb75c18b825"
+      "sha256": "da6744b851de9639ff44e2f56620e1409d4f97aca2d69c236d2a404566b8b366"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/usage_limits.rs",
@@ -208,7 +260,7 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/management/dashboard.rs",
-      "sha256": "c891b2af1738fb042790f6fdf86790bfb2dbb11d25e5f29cbf6153d802f8f8fc"
+      "sha256": "cb972a2a0b90a497e1454f386dbd53034b4e05873e661a07f251340c0aa6fc35"
     },
     {
       "path": "crates/scm-sdk/src/airs/management/inventory.rs",
@@ -228,7 +280,7 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/model_security/client.rs",
-      "sha256": "aab7819f90b40e106f571b2cdb709125c52db0821f2a869f6f5cc3052c2fb6b7"
+      "sha256": "f5fb333630697da19102cbd7fd3a8c0bf5fac76c07d1c6afa575408a4d394961"
     },
     {
       "path": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
@@ -264,7 +316,7 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sha256": "e5fdd0a4965309fd0fe0e1dae78b396e45268782b3fc55186a1dfc74db34060c"
+      "sha256": "d09efb9c9b6c338c6e09b633b604d7b25ce04a714900c7a37284f51035c9c91d"
     },
     {
       "path": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -288,11 +340,11 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/scan/scanner.rs",
-      "sha256": "07a56f4279d48f51075c45c7e0161891861a84e8494a079be9190c1c9bb0cdcf"
+      "sha256": "f34c74ba224da093f71052a529ffbcd7505d3ee073d13cd1cee9f5af17a15159"
     },
     {
       "path": "crates/scm-sdk/src/auth.rs",
-      "sha256": "5a35132b2256687d86678dce3e77920d14448590c8fd94bdc3dfb53b5a315060"
+      "sha256": "e8bfe692101737c13b278b60b8b1bf22b861ab18cd6eec42276fedd5b8a255f1"
     },
     {
       "path": "crates/scm-sdk/src/config.rs",
@@ -316,7 +368,15 @@
     },
     {
       "path": "crates/scm-sdk/src/engine.rs",
-      "sha256": "cf2f9ab448be4d3c0fe26a8a953a315344f607baeee1c3f6017291271f31fb4c"
+      "sha256": "ac4250d5a89c7068dbc89a74931549d4ab974afaeb2040bee99622eec00b0510"
+    },
+    {
+      "path": "crates/scm-sdk/src/json_decode.rs",
+      "sha256": "2d383b7cceff8fe0ae296023496acc540701ae2889b0c4503bec30f14ab9bb22"
+    },
+    {
+      "path": "crates/scm-sdk/src/json_decode/tests.rs",
+      "sha256": "7313b68701b71af4d0450bea423832a307789990736c6929ba3fc3b895d5611d"
     },
     {
       "path": "crates/scm-sdk/src/multipart.rs",
@@ -332,11 +392,15 @@
     },
     {
       "path": "crates/scm-sdk/src/shared/iam/scopes.rs",
-      "sha256": "9b6c3a20a9975f836ca9b893c4cec7a66014acfc4af67afe6a68966df2b09de7"
+      "sha256": "84aaa34c7433437d82265709dc19de9781e31cdef388f6932a838ad18054a456"
     },
     {
       "path": "crates/scm-sdk/src/streaming.rs",
-      "sha256": "8c983cf7d0976274a6faaca4727cbe191a18426e51d4224384e66e3d07482e91"
+      "sha256": "3217627788cbad227832eb9ba3ffd5bf394e4cc799c6cbf1cb676083ff90594d"
+    },
+    {
+      "path": "crates/scm-sdk/src/streaming/sse/tests.rs",
+      "sha256": "cf2cf815cfb9cd875b72ea0f4df947b6838cc7dd68efa1e9cd44ceb72ab71599"
     },
     {
       "path": "crates/scm-sdk/src/transport.rs",
@@ -364,7 +428,7 @@
     },
     {
       "path": "crates/scm-sdk/tests/gateway_runtime_contracts.rs",
-      "sha256": "64fc385c35dbe230f2839a301927994ee259f3c69c79ed62a5165b97f6d242ea"
+      "sha256": "ca4fbb7752ff468ae39999b7c0c0e4a9dab77f03d836e2a55f34124afccdeb10"
     },
     {
       "path": "crates/scm-sdk/tests/iam_contracts.rs",
@@ -405,13 +469,30 @@
     {
       "path": "crates/scm-sdk/tests/scan_contracts.rs",
       "sha256": "1d462efbebc32fe7c26b6a5df0192ec46faaeba20e31adf261414b10b9343991"
+    },
+    {
+      "path": "docs/ADVERSARIAL.md",
+      "sha256": "ded85ed0aea2e4325bbc16012f6158fcdbecafdbf3a018bc8c5e74eb70fd6917"
+    },
+    {
+      "path": "docs/MODELS.md",
+      "sha256": "1c57a555f2c9fa4f2b0e8eb311a4a386b2fe4b52fc668f2158ab48d70af57068"
+    },
+    {
+      "path": "docs/checks/phase-08-live-attempt-06.json",
+      "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21"
+    },
+    {
+      "path": "tools/live_evidence.py",
+      "sha256": "6563b654d15c150593d48b5087cd462504a05e42c254c34fa50e5fe6e2437e83"
     }
   ],
   "summary": {
     "baselineConcreteMethods": 448,
     "implemented": 448,
     "pending": 0,
-    "liveVerified": 0,
+    "liveVerified": 17,
+    "liveRecorded": 22,
     "completeMethodOptionParity": 448,
     "partialMethodOptionParity": 0
   },
@@ -422,7 +503,7 @@
       "owningPhase": 7,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::agentguard::AgentGuardClient::get_scan_stats"
       ],
@@ -440,7 +521,27 @@
         "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
       ],
       "deliveredInPhase": 7,
-      "lastContractPhase": 7
+      "lastContractPhase": 7,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "agentguard.get_scan_stats",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 12,
+            "operation": "agentguard.get_scan_stats",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/agentguard/client.ts:AgentGuardClient.listRules",
@@ -448,7 +549,7 @@
       "owningPhase": 7,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::agentguard::AgentGuardClient::list_rules"
       ],
@@ -466,7 +567,27 @@
         "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
       ],
       "deliveredInPhase": 7,
-      "lastContractPhase": 7
+      "lastContractPhase": 7,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "agentguard.list_rules",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 13,
+            "operation": "agentguard.list_rules",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/agentguard/client.ts:AgentGuardClient.listScanVulnerabilities",
@@ -500,7 +621,7 @@
       "owningPhase": 7,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::agentguard::AgentGuardClient::list_scans"
       ],
@@ -518,7 +639,27 @@
         "Retries are explicit per-client Limits or per-call RequestOptions; all four operations are read-only."
       ],
       "deliveredInPhase": 7,
-      "lastContractPhase": 7
+      "lastContractPhase": 7,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "agentguard.list_scans",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 11,
+            "operation": "agentguard.list_scans",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/ai-gateway/admin-guardrails-client.ts:AIGatewayAdminGuardrailsClient.create",
@@ -5541,7 +5682,7 @@
       "owningPhase": 6,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "airs::gateway::AIGatewayWorkspacesClient::list"
       ],
@@ -5560,7 +5701,27 @@
         "Reads choose data/admin explicitly; writes remain admin-only. Provisioning/recovery is explicitly scheduled in Phase7 and is not counted as a Phase6 implementation."
       ],
       "deliveredInPhase": 6,
-      "lastContractPhase": 6
+      "lastContractPhase": 6,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "gateway.workspaces.list",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 14,
+            "operation": "gateway.workspaces.list",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.provision",
@@ -5568,7 +5729,7 @@
       "owningPhase": 7,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "service_contract_rejection",
       "rustMethods": [
         "airs::gateway::AIGatewayWorkspacesClient::provision"
       ],
@@ -5595,7 +5756,31 @@
         "Direct workspace clients must explicitly admit an IAM endpoint; the facade shares its configured IAM client."
       ],
       "deliveredInPhase": 7,
-      "lastContractPhase": 7
+      "lastContractPhase": 7,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "gateway.workspaces.provision",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 24,
+            "operation": "gateway.workspaces.provision",
+            "classification": "service_contract_rejection",
+            "status": 400,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false,
+            "rejectionDetails": {
+              "code": null,
+              "fields": []
+            }
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/ai-gateway/workspaces-client.ts:AIGatewayWorkspacesClient.update",
@@ -5656,7 +5841,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "service_contract_rejection",
       "rustMethods": [
         "shared::iam::IamScopesClient::create"
       ],
@@ -5672,7 +5857,31 @@
         "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
       ],
       "deliveredInPhase": 4,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "iam.scopes.create",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 22,
+            "operation": "iam.scopes.create",
+            "classification": "service_contract_rejection",
+            "status": 400,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false,
+            "rejectionDetails": {
+              "code": null,
+              "fields": []
+            }
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.delete",
@@ -5729,7 +5938,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "shared::iam::IamScopesClient::list"
       ],
@@ -5745,7 +5954,27 @@
         "Canonical shared namespace, explicit IAM endpoint, and tenant header derived from the immutable OAuth identity without widening destination policy."
       ],
       "deliveredInPhase": 4,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "iam.scopes.list",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 15,
+            "operation": "iam.scopes.list",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/iam/scopes-client.ts:IamScopesClient.update",
@@ -5867,7 +6096,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::management::ApiKeysClient::list_for_token"
       ],
@@ -5880,7 +6109,27 @@
       "optionParity": "complete",
       "deliberateDifferences": [],
       "deliveredInPhase": 4,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "management.api_keys.list_for_token",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 2,
+            "operation": "management.api_keys.list_for_token",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/management/api-keys.ts:ApiKeysClient.regenerate",
@@ -6914,7 +7163,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "dlp::DataProfilesClient::list"
       ],
@@ -6932,7 +7181,27 @@
         "DlpClient preserves caller-selected x-tsg-id routing; the frozen TypeScript DLP client omits this header. Authentication::oauth(provider, false) selects exact baseline omission."
       ],
       "deliveredInPhase": 4,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "dlp.data_profiles.list",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 4,
+            "operation": "dlp.data_profiles.list",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/management/dlp/data-profiles.ts:DataProfilesClient.listAll",
@@ -7239,7 +7508,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::auth::OAuthProvider::get_token"
       ],
@@ -7259,7 +7528,27 @@
         "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "deliveredInPhase": 4,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "oauth.get_token",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 0,
+            "operation": "oauth.get_token",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.getTokenInfo",
@@ -7514,7 +7803,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::management::ProfilesClient::list"
       ],
@@ -7527,7 +7816,27 @@
       "optionParity": "complete",
       "deliberateDifferences": [],
       "deliveredInPhase": 4,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "management.profiles.list",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 3,
+            "operation": "management.profiles.list",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.listAll",
@@ -7558,7 +7867,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::management::ProfilesClient::list_for_token"
       ],
@@ -7572,7 +7881,27 @@
       "optionParity": "complete",
       "deliberateDifferences": [],
       "deliveredInPhase": 3,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "management.profiles.list_for_token",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 1,
+            "operation": "management.profiles.list_for_token",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/management/profiles.ts:ProfilesClient.update",
@@ -8350,7 +8679,7 @@
       "owningPhase": 5,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::model_security::ModelSecurityModelsClient::list_models"
       ],
@@ -8367,7 +8696,27 @@
         "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
       ],
       "deliveredInPhase": 5,
-      "lastContractPhase": 5
+      "lastContractPhase": 5,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "model_security.models.list_models",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 5,
+            "operation": "model_security.models.list_models",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.addLabels",
@@ -8626,7 +8975,7 @@
       "owningPhase": 5,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::model_security::ModelSecurityScansClient::list"
       ],
@@ -8643,7 +8992,27 @@
         "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
       ],
       "deliveredInPhase": 5,
-      "lastContractPhase": 5
+      "lastContractPhase": 5,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "model_security.scans.list",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 6,
+            "operation": "model_security.scans.list",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/model-security/scans-client.ts:ModelSecurityScansClient.listAll",
@@ -8972,7 +9341,7 @@
       "owningPhase": 5,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::airs::model_security::ModelSecurityRulesClient::list"
       ],
@@ -8989,7 +9358,27 @@
         "Typed numeric inputs reject zero page limits and offsets/generations outside the JavaScript-safe nonnegative integer range before authentication; queries are bounded before allocation."
       ],
       "deliveredInPhase": 5,
-      "lastContractPhase": 5
+      "lastContractPhase": 5,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "model_security.rules.list",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 7,
+            "operation": "model_security.rules.list",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/model-security/security-rules-client.ts:ModelSecurityRulesClient.listAll",
@@ -9350,7 +9739,7 @@
       "owningPhase": 5,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "permission_prerequisite",
       "rustMethods": [
         "airs::red_team::RedTeamClient::get_management_languages"
       ],
@@ -9367,7 +9756,27 @@
         "Structured identifiers encode path data once and reject empty/traversal input locally. Direct listing numbers and filters have documented finite SDK bounds; response evolution remains open."
       ],
       "deliveredInPhase": 5,
-      "lastContractPhase": 5
+      "lastContractPhase": 5,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "red_team.get_management_languages",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 10,
+            "operation": "red_team.get_management_languages",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/red-team/client.ts:RedTeamClient.getQuota",
@@ -9426,7 +9835,7 @@
       "owningPhase": 5,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "permission_prerequisite",
       "rustMethods": [
         "airs::red_team::RedTeamClient::get_scan_metadata"
       ],
@@ -9447,7 +9856,27 @@
         "Fallback requires actual API HTTP422, excludes issuer errors and shares one absolute budget. Frozen inline ZodObject({}).passthrough() is implemented using s012087 ZodRecord(string, unknown): both accept arbitrary JSON objects and preserve their values, so behavior is equivalent in the SDK JSON domain; central validation bounds apply."
       ],
       "deliveredInPhase": 5,
-      "lastContractPhase": 5
+      "lastContractPhase": 5,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "red_team.get_scan_metadata",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 9,
+            "operation": "red_team.get_scan_metadata",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/red-team/client.ts:RedTeamClient.getScanStatistics",
@@ -10359,7 +10788,7 @@
       "owningPhase": 5,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "permission_prerequisite",
       "rustMethods": [
         "airs::red_team::RedTeamEulaClient::get_status"
       ],
@@ -10374,7 +10803,27 @@
         "Explicit OAuth client and caller endpoint; Red Team omits x-tsg-id; RequestOptions supplies deadline, cancellation and bounded lifecycle."
       ],
       "deliveredInPhase": 5,
-      "lastContractPhase": 5
+      "lastContractPhase": 5,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "red_team.eula.get_status",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 8,
+            "operation": "red_team.eula.get_status",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/red-team/instances-client.ts:RedTeamInstancesClient.createDevices",
@@ -11624,7 +12073,7 @@
       "owningPhase": 3,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "airs::scan::Scanner::async_scan"
       ],
@@ -11639,7 +12088,27 @@
         "Native raw async and scan_request inputs enforce Content primary-field and byte-limit invariants before authentication; the frozen raw async path applies only its request schema. Typed native callers retain explicit validation failures."
       ],
       "deliveredInPhase": 3,
-      "lastContractPhase": 3
+      "lastContractPhase": 3,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "scan.async_scan",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 19,
+            "operation": "scan.async_scan",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/scan/scanner.ts:Scanner.queryByReportIds",
@@ -11647,7 +12116,7 @@
       "owningPhase": 3,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "airs::scan::Scanner::query_by_report_ids"
       ],
@@ -11660,7 +12129,27 @@
       "optionParity": "complete",
       "deliberateDifferences": [],
       "deliveredInPhase": 3,
-      "lastContractPhase": 3
+      "lastContractPhase": 3,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "scan.query_report",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 18,
+            "operation": "scan.query_report",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/scan/scanner.ts:Scanner.queryByScanIds",
@@ -11668,7 +12157,7 @@
       "owningPhase": 3,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "airs::scan::Scanner::query_by_scan_ids"
       ],
@@ -11681,7 +12170,37 @@
       "optionParity": "complete",
       "deliberateDifferences": [],
       "deliveredInPhase": 3,
-      "lastContractPhase": 3
+      "lastContractPhase": 3,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "scan.query_scan_results",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 17,
+            "operation": "scan.query_scan_results",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          },
+          {
+            "section": "probes",
+            "index": 20,
+            "operation": "scan.query_async_results",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/scan/scanner.ts:Scanner.syncScan",
@@ -11689,7 +12208,7 @@
       "owningPhase": 3,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "airs::scan::Scanner::sync_scan",
         "airs::scan::Scanner::scan_request"
@@ -11705,7 +12224,27 @@
         "Native raw async and scan_request inputs enforce Content primary-field and byte-limit invariants before authentication; the frozen raw async path applies only its request schema. Typed native callers retain explicit validation failures."
       ],
       "deliveredInPhase": 3,
-      "lastContractPhase": 3
+      "lastContractPhase": 3,
+      "liveEvidence": {
+        "path": "docs/checks/phase-08-live-attempt-06.json",
+        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "probe": "scan.sync_scan",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 16,
+            "operation": "scan.sync_scan",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     }
   ]
 }

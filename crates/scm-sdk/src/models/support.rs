@@ -108,8 +108,11 @@ pub fn parse<T: serde::de::DeserializeOwned>(
     value: serde_json::Value,
     mode: crate::validation::Mode,
 ) -> crate::Result<T> {
+    let value = crate::json_decode::ensure_supported(value)
+        .map_err(|_| crate::Error::new(crate::ErrorKind::Validation))?;
     let value = crate::validation::parse(schema, value, mode)?;
-    serde_json::from_value(value).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+    crate::json_decode::from_value(value)
+        .map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
 }
 
 /// Convert a typed model within the standalone validator's default byte bound.
@@ -118,7 +121,8 @@ pub(super) fn wire_value<T: Serialize>(value: &T) -> crate::Result<serde_json::V
         value,
         crate::validation::ValidationLimits::default().max_input_bytes,
     )?;
-    serde_json::from_slice(&bytes).map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
+    crate::json_decode::from_slice(&bytes)
+        .map_err(|_| crate::Error::new(crate::ErrorKind::Validation))
 }
 
 /// Merge compatible independently normalized intersection representations.
@@ -259,9 +263,9 @@ impl<'de, A: serde::de::DeserializeOwned + Serialize, B: serde::de::DeserializeO
             .map_err(|_| serde::de::Error::custom("intersection input exceeds limits"))?;
         bound_intersection_value(&value, &crate::validation::ValidationLimits::default())
             .map_err(|_| serde::de::Error::custom("intersection input exceeds limits"))?;
-        let left = serde_json::from_value(value.clone())
+        let left = crate::json_decode::from_value(value.clone())
             .map_err(|_| serde::de::Error::custom("left intersection invalid"))?;
-        let right = serde_json::from_value(value)
+        let right = crate::json_decode::from_value(value)
             .map_err(|_| serde::de::Error::custom("right intersection invalid"))?;
         Self::new(left, right).map_err(|_| {
             serde::de::Error::custom("intersection representations conflict or exceed limits")

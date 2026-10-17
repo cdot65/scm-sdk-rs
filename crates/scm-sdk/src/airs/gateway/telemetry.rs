@@ -195,7 +195,7 @@ impl AIGatewayTelemetryClient {
             .run(&self.client.session(), async {
                 let bytes =
                     crate::engine::serialize_bounded(&chart.filters, crate::config::MAX_URL_BYTES)?;
-                serde_json::from_slice::<Value>(&bytes).map_err(|_| common::invalid())
+                crate::json_decode::from_slice(&bytes).map_err(|_| common::invalid())
             })
             .await?;
         let bytes = self
@@ -204,7 +204,8 @@ impl AIGatewayTelemetryClient {
             .await?;
         options
             .run(&self.client.session(), async {
-                let value: Value = serde_json::from_slice(&bytes).map_err(|_| common::invalid())?;
+                let value: Value =
+                    crate::json_decode::from_slice(&bytes).map_err(|_| common::invalid())?;
                 for (field, wire) in [
                     ("traceId", "traceId"),
                     ("metadata", "metadata"),

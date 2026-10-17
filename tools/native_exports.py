@@ -13,6 +13,8 @@ import pathlib
 import re
 import sys
 
+import native_operations
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "contracts/native-exports.json"
 PROBES = ROOT / "crates/scm-sdk/tests/native_export_probes.rs"
@@ -65,6 +67,9 @@ def generate():
     classification = json.loads(regular("contracts/export-classification.json").read_text())
     models = json.loads(regular("contracts/native-models.json").read_text())
     operations = json.loads(regular("contracts/native-operations.json").read_text())
+    native_operations.verify_json_boundary_contract(operations.get("jsonBoundaryContract"))
+    live_annotations, live_bindings, live_receipt = native_operations.live_projection(ROOT)
+    native_operations.verify_live_rows(operations["operations"], live_annotations)
     pin = "4a80dbdb3dc14365e1c25d838ac0bd139485d48c"
     if (inventory["baseline"]["commit"] != pin or classification["baselineCommit"] != pin
             or models["baselineCommit"] != pin or operations["baselineCommit"] != pin
@@ -76,6 +81,8 @@ def generate():
              "contracts/native-operations.json", "tools/native_exports.py", "tools/test_native_exports.py",
              "tools/verify_gateway_bindings.py",
              "scripts/check-native-exports.py", "Cargo.toml", "Cargo.lock", "crates/scm-sdk/Cargo.toml"}
+    bound.update(live_bindings)
+    bound.add("tools/native_operations.py")
     manual = {}
     for path in sorted(MAPPINGS.glob("*.json")):
         relative = path.relative_to(ROOT).as_posix()
@@ -125,6 +132,13 @@ def generate():
             structs.setdefault(match[1], []).append((relative, fields))
         for match in re.finditer(r"pub\s+type\s+(\w+)(?:<[^;=]+>)?\s*=\s*([^;]+);", text):
             aliases.setdefault(match[1], []).append(match[2].strip())
+
+    facade_tests = {
+        "AIGatewayClient": "crates/scm-sdk/tests/facade_contracts.rs::every_gateway_facade_accessor_dispatches_on_its_exact_credential_plane",
+        "ManagementClient": "crates/scm-sdk/tests/facade_contracts.rs::every_management_and_dlp_facade_accessor_preserves_shared_identity_and_explicit_origins",
+        "DlpNamespace": "crates/scm-sdk/tests/facade_contracts.rs::every_management_and_dlp_facade_accessor_preserves_shared_identity_and_explicit_origins",
+        "Content": "crates/scm-sdk/tests/facade_contracts.rs::every_content_accessor_returns_the_validated_explicit_payload_and_byte_length",
+    }
 
     def evidence(row):
         if not row.get("rustPaths") or not row.get("sources") or not row.get("tests"):
@@ -338,6 +352,8 @@ def generate():
                 short = native.rsplit("::", 1)[-1]
                 sources = [relative for relative, text in all_sources.items() if re.search(r"pub\s+struct\s+" + short + r"\b", text)]
                 tests = ["crates/scm-sdk/tests/native_export_probes.rs::all_public_export_paths_compile"]
+            if key in facade_tests:
+                tests = [facade_tests[key]]
             root = dict(rustPaths=[native], sources=sources, tests=tests,
                 deliberateDifferences=["Explicit Rust constructors and immutable caller-owned configuration replace JavaScript constructor options."],
                 verification="typed_public_client", compileProbe=f'let _ = std::marker::PhantomData::<{native}>;')
@@ -390,6 +406,11 @@ def generate():
                     resolution = dict(rustPaths=[native + "::" + method], sources=[source], tests=root["tests"],
                         deliberateDifferences=["JavaScript property/accessor is an explicit Rust accessor method."], verification="public_accessor",
                         compileProbe="let _ = " + native + "::" + method + ";")
+            if (resolution and operation and operation["implementation"] == "implemented"
+                    and member["kind"] == "method"):
+                if resolution.get("operationId", operation["baselineId"]) != operation["baselineId"]:
+                    raise ValueError("Explicit capability claims a different canonical operation")
+                resolution["operationId"] = operation["baselineId"]
             candidates.append((member_key, member, resolution))
         for capability, frozen, resolution in candidates:
             if resolution is None:
@@ -412,6 +433,16 @@ def generate():
                    "baselineFeature": classification["entries"][capability]["feature"], "implementation": "implemented",
                    "baselineSources": frozen.get("sources", frozen.get("declarations", [frozen.get("source")])),
                    **resolution, "probeIndex": index, "liveAcceptance": "unverified"}
+            if operation_id := row.get("operationId"):
+                if row["kind"] != "method":
+                    raise ValueError("Only an exact public method can inherit operation live evidence: " + capability)
+                operation = next((value for value in operations["operations"]
+                                  if value["baselineId"] == operation_id), None)
+                if operation is None or operation["implementation"] != "implemented":
+                    raise ValueError("Capability refers to an absent or unimplemented canonical operation")
+                row["liveAcceptance"] = operation["liveAcceptance"]
+                if "liveEvidence" in operation:
+                    row["liveEvidence"] = operation["liveEvidence"]
             row["requiredFeatures"] = feature_for(resolution["rustPaths"])
             explicit_feature = resolution.get("feature")
             if explicit_feature and explicit_feature not in row["requiredFeatures"]:
@@ -421,16 +452,23 @@ def generate():
     expected = set(classification["entries"])
     if len(rows) != len({row["baselineId"] for row in rows}) or set(manual) - expected:
         raise ValueError("Duplicate or extraneous native exported capability")
-    probe = "//! Generated public capability probes; every expression compiles outside the library.\n" \
-            "#![cfg(all(\n    feature = \"scan\",\n    feature = \"management\",\n    feature = \"gateway\",\n    feature = \"model-security\",\n    feature = \"red-team\",\n    feature = \"realtime\"\n))]\n" \
+    required_features = sorted({feature for row in rows for feature in row["requiredFeatures"]})
+    probe_gate = "#![cfg(all(\n" + ",\n".join('    feature = "' + feature + '"' for feature in required_features) + "\n))]\n"
+    probe = "//! Generated public capability probes; every expression compiles outside the library.\n" + probe_gate + \
             "// Futures are deliberately type-checked without polling or dispatching.\n#![allow(clippy::let_underscore_future)]\n" \
             "#[rustfmt::skip]\n#[test]\nfn all_public_export_paths_compile() {\n" + "\n".join(probe_lines) + "\n}\n"
     result = {"schemaVersion": 1, "baselineCommit": inventory["baseline"]["commit"],
         "policy": "Every frozen root/member has concrete native API evidence and a compiled external public probe; explicit language adaptations never count as missing capabilities.",
+        "jsonBoundaryContract": operations["jsonBoundaryContract"],
+        "liveReceipt": live_receipt,
         "generatorSha256": sha(pathlib.Path(__file__)), "summary": {"frozenRoots": 2630, "frozenCapabilities": len(expected),
-            "implemented": len(rows), "unresolved": len(gaps), "liveVerified": 0},
+            "implemented": len(rows), "unresolved": len(gaps),
+            "liveVerified": sum(row["liveAcceptance"] == "verified" for row in rows),
+            "liveVerifiedOperations": len({row["operationId"] for row in rows
+                                          if row["liveAcceptance"] == "verified"}),
+            "liveRecordedCapabilities": sum("liveEvidence" in row for row in rows)},
         "sourceBindings": [{"path": relative, "sha256": sha(regular(relative))} for relative in sorted(bound) if relative != PROBES.relative_to(ROOT).as_posix()],
-        "probe": {"path": PROBES.relative_to(ROOT).as_posix(), "sha256": hashlib.sha256(probe.encode()).hexdigest()}, "capabilities": rows}
+        "probe": {"requiredFeatures": required_features, "path": PROBES.relative_to(ROOT).as_posix(), "sha256": hashlib.sha256(probe.encode()).hexdigest()}, "capabilities": rows}
     return result, probe, gaps
 
 

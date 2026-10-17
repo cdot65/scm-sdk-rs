@@ -1,63 +1,82 @@
 # SCM SDK for Rust
 
-`scm-sdk` is a community-maintained native Rust SDK for Strata Cloud Manager.
-Prisma AIRS is the first product family, with shared DLP and IAM capabilities.
+`scm-sdk` is a community-maintained native Rust SDK for Strata Cloud Manager,
+beginning with Prisma AIRS and shared DLP/IAM capabilities. Consumers need Cargo
+and an application-owned async runtime; Node is absent from the packaged crate.
 
-Implementation proceeds through the gated [phases](docs/PHASES.md), following the
-[accepted design](docs/implementation-plan.md). [Phase status](docs/phase-status.json)
-records actual progress and Claude Code reviews. Implementation, independent
-contract verification, and live acceptance are measured separately.
+The implementation covers **all 448 concrete methods** and **all 3,820 exported
+capabilities** in frozen `@cdot65/prisma-airs-sdk` **0.34.0**, commit
+`4a80dbdb3dc14365e1c25d838ac0bd139485d48c`. Capabilities include 2,630 root exports
+and 1,190 public members; methods are part of that inventory. Native adaptations
+and exact public paths are recorded in the [operation matrix](contracts/native-operations.json)
+and [export ledger](contracts/native-exports.json).
 
-Current state: Phases 1–6 passed Claude Code review at 9/10 and are pushed through
-`41ddab3`. Phase 7 implements experimental AgentGuard/realtime, provisioning,
-configuration/helpers/error equivalents and export closure, and is under
-verification. Phase 8 qualification remains pending. Full parity is not yet
-accepted, and no SDK release is available.
+The eight implementation phases require actual Claude Code review of at least
+9/10 each. [Phase status](docs/phase-status.json) records their accepted reviews
+and exact source evidence. The crate is **not published to a registry**, and no
+retained remote CI execution is claimed. The [release procedure](docs/RELEASE.md)
+explains the separate clean-commit archive proof.
+The [qualification summary](contracts/qualification.json) consolidates the
+source-bound implementation, checks, live classifications and delivery limitations.
 
-The [foundation interface](docs/FOUNDATION.md) describes explicit authentication,
-transport injection, cancellation, resource limits, and safe error handling.
-[Configuration](docs/CONFIGURATION.md) covers isolated initialization and explicit
-environment loading; [OAuth](docs/OAUTH.md) covers refresh buffers and safe
-metadata subscriptions.
-See [development](docs/DEVELOPMENT.md) for native checks and CI coverage.
-The [model contracts](docs/MODELS.md), [validator](docs/VALIDATION.md), and
-[streaming interface](docs/STREAMING.md) describe the native data boundaries.
-Product guides cover [scanning](docs/SCANNING.md),
-[management](docs/MANAGEMENT.md), [DLP](docs/DLP.md),
-[IAM](docs/IAM.md), [Model Security](docs/MODEL_SECURITY.md),
+## Start here
+
+Until registry publication, use the checkout from a sibling Rust project:
+
+```toml
+[dependencies]
+scm = { package = "scm-sdk", path = "../scm-sdk-rs/crates/scm-sdk" }
+```
+
+The alias exposes `scm::airs::scan`, `scm::airs::management`, and the other product
+modules. Add opt-in product names through Cargo's `features` field. For a Git
+dependency, use `ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git` and pin `rev` to
+the accepted commit you intend to consume. The [compiled scan example](crates/scm-sdk/examples/scan.rs)
+shows typed content, profile selection, and async scan submission; the application
+owns its Tokio runtime and supplies credentials explicitly.
+
+Build the checkout with Rust **1.89** or newer. Defaults enable scanning and the
+reqwest HTTP adapter. The [foundation example](crates/scm-sdk/examples/foundation.rs)
+is compiled and included in rustdoc. Use [configuration](docs/CONFIGURATION.md)
+for isolated initialization and explicit environment loading, [OAuth](docs/OAUTH.md)
+for service credentials, and [foundation](docs/FOUNDATION.md) for transport,
+proxy/custom-CA setup, destination admission, cancellation and resource limits.
+
+Product guides cover [scanning](docs/SCANNING.md), [management](docs/MANAGEMENT.md),
+[DLP](docs/DLP.md), [IAM](docs/IAM.md), [Model Security](docs/MODEL_SECURITY.md),
 [Red Team](docs/RED_TEAM.md), [Red Team resources](docs/RED_TEAM_RESOURCES.md),
-[Gateway](docs/GATEWAY.md), [Gateway controls](docs/GATEWAY_CONTROL.md),
-[Gateway runtime](docs/GATEWAY_RUNTIME.md), and
-[pagination and partial collections](docs/PAGINATION.md). Phase 7 guides cover
-[AgentGuard](docs/AGENTGUARD.md), [realtime](docs/REALTIME.md),
+[Gateway](docs/GATEWAY.md), [Gateway controls](docs/GATEWAY_CONTROL.md), and
+[Gateway runtime](docs/GATEWAY_RUNTIME.md). Shared behavior is documented in
+[models](docs/MODELS.md), [validation](docs/VALIDATION.md),
+[pagination](docs/PAGINATION.md), [streaming](docs/STREAMING.md),
 [provisioning/recovery](docs/PROVISIONING.md), and [errors](docs/ERRORS.md).
 
-## Native crate and features
+## Features and qualification
 
-The workspace declares Rust 1.89 as its minimum. Default features enable scanning
-and the reqwest HTTP adapter. Other product families are opt-in. `realtime` adds
-caller-driven experimental connections; `ws-transport` additionally selects the
-optional native WebSocket adapter pinned to patched `tokio-websockets` 0.13.3.
-The application owns its runtime, transports, destinations and credentials.
-Node is absent from the packaged crate. Current and historical platform evidence
-and the pending CI/MSRV update are recorded in [development](docs/DEVELOPMENT.md).
+Other product clients are opt-in through their named Cargo features. Experimental
+[AgentGuard](docs/AGENTGUARD.md) uses `agentguard`. [Realtime](docs/REALTIME.md)
+uses `realtime` with a caller connector; `ws-transport` adds the native connector
+pinned to patched `tokio-websockets` 0.13.3. Optional [tracing](docs/OBSERVABILITY.md)
+emits fixed metadata fields without installing a subscriber or logging payloads.
+The application owns credentials, runtime, transports and enforcement policy.
 
-## Development contracts
+Implementation and offline contract coverage do not imply universal live support.
+See [live acceptance](docs/LIVE_ACCEPTANCE.md), its current
+[receipt pointer](contracts/live-evidence.json), and the per-method operation
+matrix for actual successful, blocked and unverified workflows. [Platforms](docs/PLATFORMS.md)
+separates Linux musl native execution from other targets' compile-only evidence.
+[Dependencies](docs/DEPENDENCIES.md) records advisory/license/source policy and
+native cryptography; [packaging](docs/PACKAGING.md) verifies the extracted archive
+and external consumers. [Stability](docs/STABILITY.md), [security](docs/SECURITY.md)
+and [release](docs/RELEASE.md) describe compatibility and remaining release steps.
 
-Restore the pinned development reference with `python tools/bootstrap_reference.py`.
-An existing source checkout can be supplied with `--source-repository PATH`.
-The reference and Node tooling are used to extract contracts during development;
-Rust consumers build the packaged crate with Cargo.
+## Development
 
-Verify frozen provenance with `python tools/verify-contracts.py`, and verify tamper
-rejection separately with `python tools/verify-contracts.py --self-test`.
-Check extraction using `.local/typescript/node_modules/.bin/tsx tools/extract-contracts.mts --check`
-and `.local/typescript/node_modules/.bin/tsx tools/extract-operations.mts --check`.
+Follow [development](docs/DEVELOPMENT.md), the [accepted design](docs/implementation-plan.md)
+and sequential [phase gates](docs/PHASES.md). Development-only frozen TypeScript
+and Zod tooling provide independent contract evidence; Cargo consumers build the
+packaged Rust sources. Preserve failed review/check attempts and require an actual
+Claude Code score of at least 9 before advancing a phase.
 
-Run `python tools/check_phase.py --phase N` to record all current phase checks.
-Request a Claude review with `python tools/review_phase.py --phase N --attempt M`.
-After an accepted review, `python tools/review_phase.py --phase N --verify REVIEW_PATH --advance`
-checks its source fingerprint and advances the active phase. Preserve failed attempts.
-
-Maintained by `cdot65`. Project-owned code is Apache-2.0. This project is not an
-official Palo Alto Networks SDK.
+Maintained by `cdot65`. Project-owned code is Apache-2.0 with retained notices.
+This is not an official Palo Alto Networks SDK. See [CHANGELOG.md](CHANGELOG.md).

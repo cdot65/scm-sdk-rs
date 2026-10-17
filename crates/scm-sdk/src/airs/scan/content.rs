@@ -78,7 +78,9 @@ impl Content {
         Ok(Self { inner: value })
     }
     pub fn from_json_slice(value: &[u8]) -> Result<Self> {
-        let model = serde_json::from_slice(value).map_err(|_| Error::new(ErrorKind::Validation))?;
+        let model = crate::json_decode::from_slice(value)
+            .and_then(crate::json_decode::from_value)
+            .map_err(|_| Error::new(ErrorKind::Validation))?;
         Self::from_json(model)
     }
     /// Read a JSON document within an explicit bound. This synchronous helper

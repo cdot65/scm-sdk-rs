@@ -6,7 +6,10 @@
 use std::{fmt, time::Duration};
 
 use bytes::Bytes;
-use serde::de::DeserializeOwned;
+use serde::{
+    Deserialize,
+    de::{self, DeserializeOwned, IgnoredAny, MapAccess, Visitor},
+};
 use serde_json::Value;
 
 use super::ResponseStream;
@@ -56,12 +59,12 @@ impl SseEvent {
     /// Decode explicitly accessed event data without retaining parse errors or
     /// echoing upstream payloads. Gateway error envelopes are rejected safely.
     pub fn json<T: DeserializeOwned>(&self) -> Result<T> {
-        let value: Value =
-            serde_json::from_str(&self.data).map_err(|_| self.error(ErrorKind::Decode))?;
-        if value.get("error").is_some_and(json_truthy) {
+        let value =
+            crate::json_decode::from_str(&self.data).map_err(|_| self.error(ErrorKind::Decode))?;
+        if raw_error_truthy(&self.data).map_err(|_| self.error(ErrorKind::Decode))? {
             return Err(self.error(ErrorKind::Protocol));
         }
-        serde_json::from_value(value).map_err(|_| self.error(ErrorKind::Decode))
+        crate::json_decode::from_value(value).map_err(|_| self.error(ErrorKind::Decode))
     }
 
     fn error(&self, kind: ErrorKind) -> Error {
@@ -83,14 +86,62 @@ impl fmt::Debug for SseEvent {
     }
 }
 
-fn json_truthy(value: &Value) -> bool {
-    match value {
-        Value::Null => false,
-        Value::Bool(value) => *value,
-        Value::Number(value) => value.as_f64().is_some_and(|value| value != 0.0),
-        Value::String(value) => !value.is_empty(),
-        Value::Array(_) | Value::Object(_) => true,
+fn raw_error_truthy(data: &str) -> std::result::Result<bool, serde_json::Error> {
+    // Inspect the actual error token without changing numeric truthiness under
+    // downstream arbitrary_precision unification. The shared JSON boundary
+    // rejects literal reserved-protocol objects first. Borrowing RawValue avoids
+    // extra payload copies, and unrelated fields are skipped.
+    if !data.trim_start().starts_with('{') {
+        return Ok(false);
     }
+    struct Envelope(bool);
+    impl<'de> Deserialize<'de> for Envelope {
+        fn deserialize<D: serde::Deserializer<'de>>(
+            deserializer: D,
+        ) -> std::result::Result<Self, D::Error> {
+            struct EnvelopeVisitor;
+            impl<'de> Visitor<'de> for EnvelopeVisitor {
+                type Value = Envelope;
+                fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+                    formatter.write_str("a JSON object")
+                }
+                fn visit_map<A: MapAccess<'de>>(
+                    self,
+                    mut map: A,
+                ) -> std::result::Result<Envelope, A::Error> {
+                    let mut truthy = false;
+                    while let Some(key) = map.next_key::<String>()? {
+                        if key == "error" {
+                            let raw: &'de serde_json::value::RawValue = map.next_value()?;
+                            let raw = raw.get().trim();
+                            truthy = match raw.as_bytes().first() {
+                                Some(b'n' | b'f') => false,
+                                Some(b't' | b'{' | b'[') => true,
+                                Some(b'"') => !serde_json::from_str::<String>(raw)
+                                    .map_err(|_| de::Error::custom("invalid JSON error token"))?
+                                    .is_empty(),
+                                // JSON.parse uses IEEE-754: underflow is zero,
+                                // overflow is infinity. Neither path rounds an
+                                // opaque API value; this is only truthiness.
+                                Some(b'-' | b'0'..=b'9') => {
+                                    raw.parse::<f64>().map_err(|_| {
+                                        de::Error::custom("invalid JSON error number")
+                                    })? != 0.0
+                                }
+                                _ => return Err(de::Error::custom("invalid JSON error token")),
+                            };
+                        } else {
+                            map.next_value::<IgnoredAny>()?;
+                        }
+                    }
+                    // Duplicate fields follow JSON.parse's last-key-wins rule.
+                    Ok(Envelope(truthy))
+                }
+            }
+            deserializer.deserialize_map(EnvelopeVisitor)
+        }
+    }
+    serde_json::from_str::<Envelope>(data).map(|value| value.0)
 }
 
 /// A bounded, single-consumer SSE decoder owning its HTTP response and permit.

@@ -39,16 +39,7 @@ fn oauth(client: Client) -> Result<Client> {
 }
 #[cfg(feature = "model-security")]
 fn uuid(value: &str) -> Result<()> {
-    let bytes = value.as_bytes();
-    if bytes.len() == 36
-        && bytes.iter().enumerate().all(|(i, b)| {
-            if [8, 13, 18, 23].contains(&i) {
-                *b == b'-'
-            } else {
-                b.is_ascii_hexdigit()
-            }
-        })
-    {
+    if crate::data::is_uuid(value) {
         Ok(())
     } else {
         Err(Error::new(ErrorKind::Validation))

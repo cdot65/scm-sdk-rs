@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "provenance": {
+    "source": "contracts/native-fixtures/schemas.json",
+    "sha256": "0c546710f5a36070912fce5abcb3a5320adecd60b6ecb9c2e0105a44ddf33b4d",
+    "oracle": "tools/schema-oracle.mts",
+    "oracleSha256": "6be71297918870dcbf6e7a26265f2ed42f7b4af08171386759a8f81bec4ed93d",
+    "inventorySha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
+    "generatorSha256": "5835cc4567b822ae141f4b9297df1f8fec337870f6a66792ee186f23e7f02e2e",
+    "attribution": "Apache-2.0 frozen @cdot65/prisma-airs-sdk; see packaged NOTICE"
+  },
+  "specimens": [
+    {
+      "name": "DefaultTreeDetectionRuleSchema",
+      "sid": "s008529",
+      "sourcePointer": "/roots/764/jsonCases/0/zod/output",
+      "output": {
+        "rule_type": "expression_tree"
+      }
+    },
+    {
+      "name": "GatewayInferenceChatCompletionRequestAssistantMessageSchema",
+      "sid": "s002959",
+      "sourcePointer": "/roots/269/jsonCases/0/zod/output",
+      "output": {
+        "role": "assistant"
+      }
+    },
+    {
+      "name": "GatewayInferenceChatCompletionRequestDeveloperMessageSchema",
+      "sid": "s002929",
+      "sourcePointer": "/roots/265/jsonCases/0/zod/output",
+      "output": {
+        "content": "fixture",
+        "role": "developer"
+      }
+    },
+    {
+      "name": "GatewayInferenceChatCompletionRequestFunctionMessageSchema",
+      "sid": "s002981",
+      "sourcePointer": "/roots/271/jsonCases/0/zod/output",
+      "output": {
+        "role": "function",
+        "content": null,
+        "name": "fixture"
+      }
+    },
+    {
+      "name": "GatewayInferenceChatCompletionRequestSystemMessageSchema",
+      "sid": "s002922",
+      "sourcePointer": "/roots/264/jsonCases/0/zod/output",
+      "output": {
+        "content": "fixture",
+        "role": "system"
+      }
+    },
+    {
+      "name": "GatewayInferenceChatCompletionRequestToolMessageSchema",
+      "sid": "s002975",
+      "sourcePointer": "/roots/270/jsonCases/0/zod/output",
+      "output": {
+        "role": "tool",
+        "content": "fixture",
+        "tool_call_id": "fixture"
+      }
+    },
+    {
+      "name": "GatewayInferenceChatCompletionRequestUserMessageSchema",
+      "sid": "s002936",
+      "sourcePointer": "/roots/266/jsonCases/0/zod/output",
+      "output": {
+        "content": "fixture",
+        "role": "user"
+      }
+    },
+    {
+      "name": "GatewayInferenceInputChatCompletionRequestAssistantMessageSchema",
+      "sid": "s002274",
+      "sourcePointer": "/roots/228/jsonCases/0/zod/output",
+      "output": {
+        "role": "assistant"
+      }
+    },
+    {
+      "name": "GatewayInferenceInputChatCompletionRequestDeveloperMessageSchema",
+      "sid": "s002239",
+      "sourcePointer": "/roots/223/jsonCases/0/zod/output",
+      "output": {
+        "content": "fixture",
+        "role": "developer"
+      }
+    },
+    {
+      "name": "GatewayInferenceInputChatCompletionRequestFunctionMessageSchema",
+      "sid": "s002307",
+      "sourcePointer": "/roots/232/jsonCases/0/zod/output",
+      "output": {
+        "role": "function",
+        "content": null,
+        "name": "fixture"
+      }
+    },
+    {
+      "name": "GatewayInferenceInputChatCompletionRequestSystemMessageSchema",
+      "sid": "s002232",
+      "sourcePointer": "/roots/222/jsonCases/0/zod/output",
+      "output": {
+        "content": "fixture",
+        "role": "system"
+      }
+    },
+    {
+      "name": "GatewayInferenceInputChatCompletionRequestToolMessageSchema",
+      "sid": "s002301",
+      "sourcePointer": "/roots/231/jsonCases/0/zod/output",
+      "output": {
+        "role": "tool",
+        "content": "fixture",
+        "tool_call_id": "fixture"
+      }
+    },
+    {
+      "name": "GatewayInferenceInputChatCompletionRequestUserMessageSchema",
+      "sid": "s002246",
+      "sourcePointer": "/roots/224/jsonCases/0/zod/output",
+      "output": {
+        "content": "fixture",
+        "role": "user"
+      }
+    },
+    {
+      "name": "GatewayInferenceResponseCompletedEventSchema",
+      "sid": "s004395",
+      "sourcePointer": "/roots/410/jsonCases/0/zod/output",
+      "output": {
+        "type": "response.completed",
+        "response": {
+          "metadata": null,
+          "temperature": null,
+          "top_p": null,
+          "model": "fixture",
+          "instructions": null,
+          "tools": [],
+          "tool_choice": "none",
+          "id": "fixture",
+          "object": "response",
+          "created_at": 0,
+          "error": null,
+          "incomplete_details": null,
+          "output": [],
+          "parallel_tool_calls": false
+        }
+      }
+    },
+    {
+      "name": "GatewayInferenceResponseCreatedEventSchema",
+      "sid": "s004413",
+      "sourcePointer": "/roots/413/jsonCases/0/zod/output",
+      "output": {
+        "type": "response.created",
+        "response": {
+          "metadata": null,
+          "temperature": null,
+          "top_p": null,
+          "model": "fixture",
+          "instructions": null,
+          "tools": [],
+          "tool_choice": "none",
+          "id": "fixture",
+          "object": "response",
+          "created_at": 0,
+          "error": null,
+          "incomplete_details": null,
+          "output": [],
+          "parallel_tool_calls": false
+        }
+      }
+    },
+    {
+      "name": "GatewayInferenceResponseFailedEventSchema",
+      "sid": "s004462",
+      "sourcePointer": "/roots/421/jsonCases/0/zod/output",
+      "output": {
+        "type": "response.failed",
+        "response": {
+          "metadata": null,
+          "temperature": null,
+          "top_p": null,
+          "model": "fixture",
+          "instructions": null,
+          "tools": [],
+          "tool_choice": "none",
+          "id": "fixture",
+          "object": "response",
+          "created_at": 0,
+          "error": null,
+          "incomplete_details": null,
+          "output": [],
+          "parallel_tool_calls": false
+        }
+      }
+    },
+    {
+      "name": "GatewayInferenceResponseIncompleteEventSchema",
+      "sid": "s004466",
+      "sourcePointer": "/roots/422/jsonCases/0/zod/output",
+      "output": {
+        "type": "response.incomplete",
+        "response": {
+          "metadata": null,
+          "temperature": null,
+          "top_p": null,
+          "model": "fixture",
+          "instructions": null,
+          "tools": [],
+          "tool_choice": "none",
+          "id": "fixture",
+          "object": "response",
+          "created_at": 0,
+          "error": null,
+          "incomplete_details": null,
+          "output": [],
+          "parallel_tool_calls": false
+        }
+      }
+    },
+    {
+      "name": "MultiProfileDetectionRuleSchema",
+      "sid": "s008534",
+      "sourcePointer": "/roots/765/jsonCases/0/zod/output",
+      "output": {
+        "rule_type": "multi_profile"
+      }
+    }
+  ]
+}

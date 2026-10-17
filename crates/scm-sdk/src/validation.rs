@@ -387,7 +387,7 @@ fn preflight(value: &Value, limits: &ValidationLimits) -> Result<()> {
     Ok(())
 }
 // An overdeep caller-created Value must not overflow the stack while being dropped.
-fn discard(value: Value) {
+pub(crate) fn discard(value: Value) {
     let mut values = vec![value];
     while let Some(value) = values.pop() {
         match value {
@@ -1066,17 +1066,7 @@ fn check_string(value: &str, checks: &[Value]) -> Result<()> {
         {
             "min" => length >= check["value"].as_u64().ok_or_else(invalid)?,
             "max" => length <= check["value"].as_u64().ok_or_else(invalid)?,
-            "uuid" => {
-                let bytes = value.as_bytes();
-                bytes.len() == 36
-                    && bytes.iter().enumerate().all(|(index, byte)| {
-                        if [8, 13, 18, 23].contains(&index) {
-                            *byte == b'-'
-                        } else {
-                            byte.is_ascii_hexdigit()
-                        }
-                    })
-            }
+            "uuid" => crate::data::is_uuid(value),
             "email" => email(value),
             "url" => url::Url::parse(value).is_ok(),
             "datetime" => datetime(value),

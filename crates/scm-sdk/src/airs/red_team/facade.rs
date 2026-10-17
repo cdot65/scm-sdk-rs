@@ -26,6 +26,21 @@ pub struct RedTeamClient {
     broker: Client,
 }
 impl RedTeamClient {
+    /// Share one OAuth identity across explicitly admitted data, management and broker bases.
+    ///
+    /// Enable `red-team`. The supplied client selects the data base and transport;
+    /// its destination policy must also admit the management and broker endpoints.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Endpoint, Result,
+    ///     airs::red_team::{RedTeamClient, RedTeamScanListOptions}};
+    /// async fn scan_page(oauth: Client, management: Endpoint, broker: Endpoint) -> Result<()> {
+    ///     let red_team = RedTeamClient::new(oauth, management, broker)?;
+    ///     let query = RedTeamScanListOptions::default();
+    ///     let _page = red_team.scans().list(&query, None).await?;
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(
         data: Client,
         management_endpoint: Endpoint,
@@ -41,49 +56,59 @@ impl RedTeamClient {
             broker,
         })
     }
+    /// Borrow the data-plane client and its shared cancellation session.
     pub fn client(&self) -> &Client {
         &self.data
     }
+    /// Access attack scan submission, status and bounded listing.
     pub fn scans(&self) -> RedTeamScansClient {
         RedTeamScansClient {
             client: self.data.clone(),
         }
     }
+    /// Access scan report and attack result reads.
     pub fn reports(&self) -> RedTeamReportsClient {
         RedTeamReportsClient {
             client: self.data.clone(),
         }
     }
+    /// Access reports for custom attack workflows.
     pub fn custom_attack_reports(&self) -> RedTeamCustomAttackReportsClient {
         RedTeamCustomAttackReportsClient {
             client: self.data.clone(),
         }
     }
+    /// Access management-plane instance capabilities.
     pub fn instances(&self) -> RedTeamInstancesClient {
         RedTeamInstancesClient {
             client: self.management.clone(),
         }
     }
+    /// Access attack target configuration.
     pub fn targets(&self) -> RedTeamTargetsClient {
         RedTeamTargetsClient {
             client: self.management.clone(),
         }
     }
+    /// Access custom prompt sets, prompts and attack definitions.
     pub fn custom_attacks(&self) -> RedTeamCustomAttacksClient {
         RedTeamCustomAttacksClient {
             client: self.management.clone(),
         }
     }
+    /// Access target adapters and connection validation.
     pub fn adapters(&self) -> RedTeamAdaptersClient {
         RedTeamAdaptersClient {
             client: self.management.clone(),
         }
     }
+    /// Access explicit license agreement status and acceptance.
     pub fn eula(&self) -> RedTeamEulaClient {
         RedTeamEulaClient {
             client: self.management.clone(),
         }
     }
+    /// Access the separately scoped network broker client.
     pub fn network_broker(&self) -> RedTeamNetworkBrokerClient {
         RedTeamNetworkBrokerClient {
             client: self.broker.clone(),

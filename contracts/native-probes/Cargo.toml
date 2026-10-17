@@ -8,6 +8,6 @@ publish = false
 [workspace]
 
 [dependencies]
-scm-sdk = { path = "../../crates/scm-sdk", default-features = false, features = ["agentguard", "dlp", "gateway", "iam", "management", "model-security", "models", "realtime", "red-team", "reqwest-transport", "scan", "ws-transport"] }
+scm-sdk = { path = "../../crates/scm-sdk", default-features = false, features = ["agentguard", "dlp", "gateway", "iam", "management", "model-security", "models", "realtime", "red-team", "reqwest-transport", "scan", "tracing", "ws-transport"] }
 futures-util = "=0.3.34"
 serde_json = "=1.0.154"

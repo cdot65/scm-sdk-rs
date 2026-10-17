@@ -9,6 +9,90 @@ import native_operations as ledger
 
 
 class NativeOperationLedgerTests(unittest.TestCase):
+    def setUp(self):
+        # Ordinary ledger guards must stay independent of an in-progress live run.
+        self.live_projection = mock.patch.object(
+            ledger, "live_projection", return_value=({}, {"tools/live_evidence.py"}, None)
+        )
+        self.live_projection.start()
+        self.addCleanup(self.live_projection.stop)
+
+    def test_missing_receipt_cannot_be_promoted_by_a_mapping_declaration(self):
+        native = ledger.mappings()
+        native["src/scan/scanner.ts:Scanner.syncScan"]["liveAcceptance"] = "verified"
+        with mock.patch.object(ledger, "mappings", return_value=native):
+            result = ledger.generate()
+        self.assertEqual(result["summary"]["liveVerified"], 0)
+        self.assertTrue(all(row["liveAcceptance"] == "unverified" for row in result["operations"]))
+
+    def test_native_json_decoder_and_its_regressions_are_bound_core_inputs(self):
+        result = ledger.generate()
+        bindings = {row["path"]: row["sha256"] for row in result["sourceBindings"]}
+        for name in ("crates/scm-sdk/src/json_decode.rs", "crates/scm-sdk/src/json_decode/tests.rs"):
+            self.assertEqual(bindings[name], ledger.sha(ledger.ROOT / name))
+
+    def test_reserved_json_restriction_is_an_exact_global_intentional_difference(self):
+        result = ledger.generate()
+        contract = result["jsonBoundaryContract"]
+        self.assertEqual(contract, {
+            "status": "intentional_rust_security_difference",
+            "scope": "SDK JSON decoding and validated input boundaries: HTTP, SSE, realtime and model parsing, including programmatically constructed Value inputs.",
+            "reservedObjectKeys": ["$serde_json::private::Number", "$serde_json::private::RawValue"],
+            "matching": "Exact decoded object keys at any depth, including escaped spellings, independent of dependency features.",
+            "action": "Reject before Serde protocol coercion; never silently alter or drop the object.",
+            "errors": {"receivedJson": "Decode", "requestOrCallerValue": "Validation", "diagnostics": "sanitized"},
+            "acceptedControls": "Near-match keys and reserved names used as ordinary string values retain normal handling.",
+            "excludedScope": "Direct downstream serde_json deserialization bypasses SDK validation boundaries.",
+            "documentation": ["docs/MODELS.md#reserved-json-protocol-keys", "docs/ADVERSARIAL.md#reserved-protocol-object-rejection"],
+            "tests": [
+                "crates/scm-sdk/src/json_decode/tests.rs::literal_reserved_protocol_keys_are_rejected_before_wire_value_coercion",
+                "crates/scm-sdk/src/json_decode/tests.rs::programmatic_literal_protocol_objects_and_overdeep_values_fail_safely",
+                "crates/scm-sdk/src/json_decode/tests.rs::realtime_reserved_objects_fail_before_inbound_coercion_or_outbound_write",
+                "crates/scm-sdk/src/streaming/sse/tests.rs::protocol_named_literal_objects_fail_closed_in_event_data",
+                "crates/scm-sdk/src/streaming/sse/tests.rs::reserved_number_objects_cannot_hide_a_truthy_error_envelope",
+                "crates/scm-sdk/tests/gateway_runtime_contracts.rs::reserved_serde_protocol_objects_fail_closed_at_http_and_model_boundaries",
+            ],
+        })
+        bindings = {row["path"] for row in result["sourceBindings"]}
+        paths = {name.partition("#")[0] for name in contract["documentation"]}
+        paths.update(name.partition("::")[0] for name in contract["tests"])
+        self.assertTrue(paths <= bindings)
+        self.assertTrue(all("jsonBoundaryContract" not in row for row in result["operations"]))
+        self.assertEqual(result["summary"]["baselineConcreteMethods"], 448)
+
+    def test_only_the_exact_receipted_method_is_live_verified(self):
+        key = "src/scan/scanner.ts:Scanner.syncScan"
+        annotation = {"liveAcceptance": "verified", "liveEvidence": {
+            "path": "docs/checks/phase-08-live-attempt-01.json", "sha256": "a" * 64,
+            "probe": "scan.sync_scan", "scope": "controlled_nonproduction",
+            "runtimeInputsSha256": "b" * 64}}
+        with mock.patch.object(ledger, "live_projection", return_value=({key: annotation}, set(), None)):
+            result = ledger.generate()
+        self.assertEqual(result["summary"]["liveVerified"], 1)
+        self.assertEqual(result["summary"]["liveRecorded"], 1)
+        row = next(row for row in result["operations"] if row["baselineId"] == key)
+        self.assertEqual(row["liveEvidence"], annotation["liveEvidence"])
+        self.assertEqual(sum("liveEvidence" in row for row in result["operations"]), 1)
+
+    def test_invalid_or_stale_live_receipt_stops_generation(self):
+        for reason in ("stale source", "receipt digest mismatch", "failed execution"):
+            with mock.patch.object(ledger, "live_projection", side_effect=ValueError(reason)):
+                with self.assertRaisesRegex(ValueError, reason):
+                    ledger.generate()
+
+    def test_live_annotation_cannot_certify_an_unimplemented_or_unknown_operation(self):
+        annotation = {"liveAcceptance": "verified", "liveEvidence": {}}
+        native = ledger.mappings()
+        key = "src/scan/scanner.ts:Scanner.syncScan"
+        native.pop(key)
+        with mock.patch.object(ledger, "mappings", return_value=native), \
+                mock.patch.object(ledger, "live_projection", return_value=({key: annotation}, set(), None)):
+            with self.assertRaisesRegex(ValueError, "stale or unsupported"):
+                ledger.generate()
+        with mock.patch.object(ledger, "live_projection", return_value=({"invented": annotation}, set(), None)):
+            with self.assertRaisesRegex(ValueError, "absent frozen operation"):
+                ledger.generate()
+
     def test_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven(self):
         rows = {row["baselineId"]: row for row in ledger.generate()["operations"]}
         gateway = [row for row in rows.values() if row["family"] == "ai-gateway"]

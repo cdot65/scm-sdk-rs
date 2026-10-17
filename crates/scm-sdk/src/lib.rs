@@ -33,6 +33,8 @@ pub mod shared;
 #[cfg(any(feature = "dlp", feature = "red-team", feature = "gateway"))]
 mod multipart;
 
+mod json_decode;
+mod observability;
 mod redaction;
 
 #[cfg(feature = "gateway")]

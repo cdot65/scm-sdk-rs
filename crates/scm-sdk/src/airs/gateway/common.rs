@@ -24,13 +24,13 @@ pub(super) async fn query<T: Serialize>(
     let input = options
         .run(&client.session(), async {
             let bytes = crate::engine::serialize_bounded(input, crate::config::MAX_URL_BYTES)?;
-            serde_json::from_slice::<Value>(&bytes).map_err(|_| invalid())
+            crate::json_decode::from_slice(&bytes).map_err(|_| invalid())
         })
         .await?;
     let bytes = client.validated_json(&input, schema, options).await?;
     options
         .run(&client.session(), async {
-            let value: Value = serde_json::from_slice(&bytes).map_err(|_| invalid())?;
+            let value: Value = crate::json_decode::from_slice(&bytes).map_err(|_| invalid())?;
             let object = value.as_object().ok_or_else(invalid)?;
             if object.keys().any(|key| !keys.contains(&key.as_str())) {
                 return Err(invalid());
@@ -91,15 +91,7 @@ pub(super) fn scalar(value: &Value) -> Result<String> {
 }
 
 pub(super) fn uuid(value: &str) -> Result<()> {
-    if value.len() == 36
-        && value.bytes().enumerate().all(|(index, byte)| {
-            if [8, 13, 18, 23].contains(&index) {
-                byte == b'-'
-            } else {
-                byte.is_ascii_hexdigit()
-            }
-        })
-    {
+    if crate::data::is_uuid(value) {
         Ok(())
     } else {
         Err(invalid())

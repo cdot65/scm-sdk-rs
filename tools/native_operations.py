@@ -8,6 +8,8 @@ import pathlib
 import re
 import tomllib
 
+import live_evidence
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "contracts/operations.json"
 OUTPUT = ROOT / "contracts/native-operations.json"
@@ -74,13 +76,91 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def json_boundary_contract():
+    """One global, explicit security difference; never a per-operation omission."""
+    return {
+        "status": "intentional_rust_security_difference",
+        "scope": "SDK JSON decoding and validated input boundaries: HTTP, SSE, realtime and model parsing, including programmatically constructed Value inputs.",
+        "reservedObjectKeys": ["$serde_json::private::Number", "$serde_json::private::RawValue"],
+        "matching": "Exact decoded object keys at any depth, including escaped spellings, independent of dependency features.",
+        "action": "Reject before Serde protocol coercion; never silently alter or drop the object.",
+        "errors": {"receivedJson": "Decode", "requestOrCallerValue": "Validation", "diagnostics": "sanitized"},
+        "acceptedControls": "Near-match keys and reserved names used as ordinary string values retain normal handling.",
+        "excludedScope": "Direct downstream serde_json deserialization bypasses SDK validation boundaries.",
+        "documentation": ["docs/MODELS.md#reserved-json-protocol-keys", "docs/ADVERSARIAL.md#reserved-protocol-object-rejection"],
+        "tests": [
+            "crates/scm-sdk/src/json_decode/tests.rs::literal_reserved_protocol_keys_are_rejected_before_wire_value_coercion",
+            "crates/scm-sdk/src/json_decode/tests.rs::programmatic_literal_protocol_objects_and_overdeep_values_fail_safely",
+            "crates/scm-sdk/src/json_decode/tests.rs::realtime_reserved_objects_fail_before_inbound_coercion_or_outbound_write",
+            "crates/scm-sdk/src/streaming/sse/tests.rs::protocol_named_literal_objects_fail_closed_in_event_data",
+            "crates/scm-sdk/src/streaming/sse/tests.rs::reserved_number_objects_cannot_hide_a_truthy_error_envelope",
+            "crates/scm-sdk/tests/gateway_runtime_contracts.rs::reserved_serde_protocol_objects_fail_closed_at_http_and_model_boundaries",
+        ],
+    }
+
+
+def verify_json_boundary_contract(contract):
+    if contract != json_boundary_contract():
+        raise ValueError("Native JSON boundary intentional difference is missing or differs")
+
+
+def live_projection(root=ROOT):
+    """Load optional evidence, failing closed when an existing receipt is invalid."""
+    annotations, envelope = live_evidence.load(root)
+    bound = {"tools/live_evidence.py"}
+    if envelope is None:
+        return annotations, bound, None
+    reference_path = live_evidence.INPUT.as_posix()
+    reference = json.loads(live_evidence.regular(root, reference_path).read_text())
+    bound.update({reference_path, reference["report"]})
+    receipt = {
+        "reference": {"path": reference_path, "sha256": sha(root / reference_path)},
+        "report": {"path": reference["report"], "sha256": reference["reportSha256"]},
+        "verifier": {"path": "tools/live_evidence.py", "sha256": sha(root / "tools/live_evidence.py")},
+        "executedAt": envelope["executedAt"],
+        "runtimeInputsSha256": envelope["runtimeInputsSha256"],
+        "toolchain": envelope["toolchain"],
+        "hostTarget": envelope["hostTarget"],
+        "cleanupState": envelope["report"]["cleanupState"],
+    }
+    return annotations, bound, receipt
+
+
+def verify_live_rows(rows, annotations):
+    """Do not trust a persisted ledger's live flags over the native receipt."""
+    known = {row["baselineId"] for row in rows}
+    if set(annotations) - known:
+        raise ValueError("Live evidence references an absent frozen operation")
+    for row in rows:
+        expected = annotations.get(row["baselineId"], {})
+        if (row.get("liveAcceptance") != expected.get("liveAcceptance", "unverified")
+                or row.get("liveEvidence") != expected.get("liveEvidence")):
+            raise ValueError("Native operation live evidence is stale or unsupported by its receipt")
+        if expected and row["implementation"] != "implemented":
+            raise ValueError("Live evidence cannot promote an unimplemented native operation")
+
+
 def generate():
     inventory = json.loads(SOURCE.read_text())
     version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
     rows = []
     native = mappings()
+    live_annotations, live_bindings, live_receipt = live_projection(ROOT)
     bound = {"crates/scm-sdk/src/engine.rs", "crates/scm-sdk/src/streaming.rs", "crates/scm-sdk/src/transport.rs", "crates/scm-sdk/src/config.rs", "crates/scm-sdk/src/pagination.rs", "crates/scm-sdk/src/pagination/tests.rs", "crates/scm-sdk/src/multipart.rs"}
+    bound.update({"crates/scm-sdk/src/json_decode.rs", "crates/scm-sdk/src/json_decode/tests.rs"})
+    boundary = json_boundary_contract()
+    for documentation in boundary["documentation"]:
+        relative = documentation.partition("#")[0]
+        if not (ROOT / relative).is_file():
+            raise ValueError("JSON boundary documentation is absent")
+        bound.add(relative)
+    for reference in boundary["tests"]:
+        relative, _, test = reference.partition("::")
+        if not re.search(r"\bfn\s+" + re.escape(test) + r"\s*[(<]", (ROOT / relative).read_text()):
+            raise ValueError("JSON boundary verification function is absent")
+        bound.add(relative)
     bound.update(str(path.relative_to(ROOT)) for path in FRAGMENTS.glob("*.json"))
+    bound.update(live_bindings)
     unknown = set(native) - {operation["id"] for operation in inventory["operations"]}
     if unknown:
         raise ValueError(f"Native mappings reference absent frozen operations: {sorted(unknown)}")
@@ -123,12 +203,16 @@ def generate():
                        source=source, tests=tests, headerContract=mapping.get("headerContract", "airs_api_defaults"),
                        optionParity=mapping["optionParity"], deliberateDifferences=mapping["deliberateDifferences"],
                        deliveredInPhase=mapping["deliveredInPhase"], lastContractPhase=mapping["lastContractPhase"])
+            row.update(live_annotations.get(operation["id"], {}))
         rows.append(row)
+    verify_live_rows(rows, live_annotations)
     return {
         "schemaVersion": 1,
         "baselineCommit": inventory["baseline"]["commit"],
         "baselineOperationsSha256": sha(SOURCE), "generatorSha256": sha(pathlib.Path(__file__)),
         "ownershipOverrides": OWNERSHIP_OVERRIDES,
+        "jsonBoundaryContract": boundary,
+        "liveReceipt": live_receipt,
         "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
         "requestHeaderContracts": {
             "gateway_realtime": {
@@ -150,7 +234,9 @@ def generate():
         },
         "sourceBindings": [{"path": name, "sha256": sha(ROOT / name)} for name in sorted(bound)],
         "summary": {"baselineConcreteMethods": len(rows), "implemented": len(native),
-                    "pending": len(rows) - len(native), "liveVerified": 0,
+                    "pending": len(rows) - len(native),
+                    "liveVerified": sum(row["liveAcceptance"] == "verified" for row in rows),
+                    "liveRecorded": sum("liveEvidence" in row for row in rows),
                     "completeMethodOptionParity": sum(row.get("optionParity") == "complete" for row in rows),
                     "partialMethodOptionParity": sum(row.get("optionParity") == "partial" for row in rows)},
         "operations": rows,

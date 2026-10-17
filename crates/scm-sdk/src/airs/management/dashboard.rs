@@ -182,7 +182,8 @@ pub struct DashboardClient {
 }
 fn parsed<T: Serialize>(schema: &str, query: &T) -> Result<Map<String, Value>> {
     let bytes = crate::engine::serialize_bounded(query, crate::config::MAX_URL_BYTES)?;
-    let value = serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?;
+    let value =
+        crate::json_decode::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?;
     validation::parse(schema, value, Mode::Request)?
         .as_object()
         .cloned()

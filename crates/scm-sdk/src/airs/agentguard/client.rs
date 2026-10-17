@@ -12,6 +12,21 @@ pub struct AgentGuardClient {
     management: Client,
 }
 impl AgentGuardClient {
+    /// Scope an OAuth client to explicit AgentGuard data and management endpoints.
+    ///
+    /// Enable `agentguard`. Both bases must be admitted by the caller's destination
+    /// policy. These experimental reads share the provider, transport and session.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Endpoint, Result, airs::agentguard::{AgentGuardClient,
+    ///     models::AgentGuardScanListOptions}};
+    /// async fn scan_page(oauth: Client, data: Endpoint, management: Endpoint) -> Result<()> {
+    ///     let agentguard = AgentGuardClient::new(oauth, data, management)?;
+    ///     let query = AgentGuardScanListOptions::builder().build()?;
+    ///     let _page = agentguard.list_scans(&query, None).await?;
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(client: Client, data: Endpoint, management: Endpoint) -> Result<Self> {
         client.require_auth(AuthKind::OAuth)?;
         let client = client.with_tsg_header(true)?;
@@ -20,12 +35,15 @@ impl AgentGuardClient {
             management: client.with_endpoint(management)?,
         })
     }
+    /// Borrow the client scoped to observed scan and vulnerability reads.
     pub fn data_client(&self) -> &Client {
         &self.data
     }
+    /// Borrow the client scoped to the observed rule catalog.
     pub fn management_client(&self) -> &Client {
         &self.management
     }
+    /// Fetch one scan page with explicit query omission, bounds and request options.
     pub async fn list_scans(
         &self,
         query: &AgentGuardScanListOptions,
@@ -56,6 +74,7 @@ impl AgentGuardClient {
             )
             .await
     }
+    /// Read scan statistics, defaulting to the supported `30_DAYS` period.
     pub async fn get_scan_stats(
         &self,
         query: &AgentGuardStatsOptions,
@@ -83,19 +102,13 @@ impl AgentGuardClient {
             )
             .await
     }
+    /// Read vulnerabilities for a validated scan UUID without following returned URLs.
     pub async fn list_scan_vulnerabilities(
         &self,
         scan_uuid: &str,
         options: Option<&RequestOptions>,
     ) -> Result<AgentGuardVulnerabilityList> {
-        let valid = scan_uuid.len() == 36
-            && scan_uuid.bytes().enumerate().all(|(i, b)| {
-                if [8, 13, 18, 23].contains(&i) {
-                    b == b'-'
-                } else {
-                    b.is_ascii_hexdigit()
-                }
-            });
+        let valid = crate::data::is_uuid(scan_uuid);
         if !valid {
             return Err(Error::new(ErrorKind::Validation));
         }
@@ -149,12 +162,12 @@ async fn query_values<T: Serialize>(
         })
         .await?;
     let value: Value =
-        serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?;
+        crate::json_decode::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?;
     let bytes = client.validated_json(&value, schema, options).await?;
     options
         .run(&client.session(), async {
-            let value: Value =
-                serde_json::from_slice(&bytes).map_err(|_| Error::new(ErrorKind::Validation))?;
+            let value: Value = crate::json_decode::from_slice(&bytes)
+                .map_err(|_| Error::new(ErrorKind::Validation))?;
             let object = value
                 .as_object()
                 .ok_or_else(|| Error::new(ErrorKind::Validation))?;
