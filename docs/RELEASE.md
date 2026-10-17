@@ -52,7 +52,7 @@ The checker binds `.cargo_vcs_info.json` to the current commit, requires effecti
 `dirty=false` before and after verification, and preserves the archive SHA-256,
 file hashes, compiler/host and exact command results. Cargo may omit a false dirty
 field; that defined omission is accepted and recorded separately. It runs locked
-minimal/all-feature unit tests, examples, doctests and the independent 3,820-probe
+minimal/all-feature unit tests, compiles examples and no-run doctests, and runs the independent 3,820-probe
 consumer against extracted archive contents. A prior `--allow-dirty` smoke check
 does not satisfy this clean-commit requirement. See [PACKAGING.md](PACKAGING.md).
 

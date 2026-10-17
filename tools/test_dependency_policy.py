@@ -1,9 +1,16 @@
 """Reject relaxed advisory policy, graph omissions and unpinned/unapproved sources."""
 import copy
+import contextlib
 import importlib.util
+import io
+import json
 import pathlib
+import subprocess
+import sys
+import tempfile
 import tomllib
 import unittest
+from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('policy', ROOT/'scripts/check-dependencies.py')
@@ -12,6 +19,100 @@ spec.loader.exec_module(policy)
 
 
 class DependencyPolicyTests(unittest.TestCase):
+    def test_dependency_diagnostics_redact_url_credentials_and_authorization(self):
+        message = ('https://synthetic-user:synthetic-password@example.test/repo?access_token=synthetic-token\n'
+                   'Authorization: Bearer synthetic-authorization\n'
+                   'Proxy-Authorization: Basic synthetic-proxy\n')
+        result = policy.output_tail(message)
+        for value in ('synthetic-user', 'synthetic-password', 'synthetic-token',
+                      'synthetic-authorization', 'synthetic-proxy'):
+            self.assertNotIn(value, result)
+        self.assertIn('example.test/repo', result)
+        self.assertIn('[REDACTED]', result)
+
+    def test_precondition_failure_writes_a_partial_report_without_inventing_child_output(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = pathlib.Path(temporary) / 'failed.json'
+            diagnostic = io.StringIO()
+            with mock.patch.object(policy, 'check_policy', side_effect=ValueError('Synthetic policy rejected')), \
+                 mock.patch.object(policy.subprocess, 'run') as run, \
+                 mock.patch.object(sys, 'argv', ['check-dependencies.py', '--output', str(output)]), \
+                 contextlib.redirect_stderr(diagnostic):
+                self.assertEqual(policy.main(), 1)
+            run.assert_not_called()
+            report = json.loads(output.read_text())
+            self.assertFalse(report['passed'])
+            self.assertTrue(report['partial'])
+            self.assertEqual(report['checks'], [])
+            self.assertIn('Synthetic policy rejected', diagnostic.getvalue())
+
+    def test_early_child_failures_preserve_bounded_diagnostics_and_a_failed_report(self):
+        for failure in ('metadata', 'git_fetch', 'tool_version', 'metadata_timeout'):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as temporary:
+                directory = pathlib.Path(temporary)
+                for name in policy.VERSIONS:
+                    (directory / name).write_text('synthetic tool fixture\n')
+                output = directory / 'failed.json'
+                stdout = 'STDOUT_START' + 'o' * 20000 + 'STDOUT_TAIL'
+                stderr = 'STDERR_START' + 'e' * 20000 + 'FAILURE_TAIL'
+
+                def fake_run(command, **kwargs):
+                    values = list(map(str, command))
+                    name = pathlib.Path(values[0]).name
+                    failing = ((failure == 'metadata' and 'metadata' in values)
+                               or (failure == 'git_fetch' and 'fetch' in values)
+                               or (failure == 'tool_version' and '--version' in values))
+                    if failure == 'metadata_timeout' and 'metadata' in values:
+                        raise subprocess.TimeoutExpired(values, 3, output=stdout.encode(),
+                                                        stderr=stderr.encode())
+                    if failing:
+                        return subprocess.CompletedProcess(values, 101, stdout, stderr)
+                    if '--version' in values:
+                        text = name + ' ' + policy.VERSIONS[name] + '\n'
+                    elif 'get-url' in values:
+                        text = policy.DATABASE + '\n'
+                    elif 'rev-parse' in values:
+                        text = 'a' * 40 + '\n'
+                    elif 'show' in values:
+                        text = '2026-10-17T00:00:00+00:00\n'
+                    elif name == 'cargo-audit':
+                        text = json.dumps({'vulnerabilities': {'count': 0}, 'warnings': {}})
+                    else:
+                        text = ''
+                    return subprocess.CompletedProcess(values, 0, text, '')
+
+                def fake_output(command, **kwargs):
+                    result = fake_run(command, **kwargs)
+                    if result.returncode:
+                        raise subprocess.CalledProcessError(result.returncode, command,
+                                                            result.stdout, result.stderr)
+                    return result.stdout if kwargs.get('text') else result.stdout.encode()
+
+                diagnostic = io.StringIO()
+                returned = None
+                with mock.patch.object(policy.subprocess, 'run', side_effect=fake_run), \
+                     mock.patch.object(policy.subprocess, 'check_output', side_effect=fake_output), \
+                     mock.patch.object(sys, 'argv', ['check-dependencies.py', '--tools-dir',
+                                                    str(directory), '--output', str(output)]), \
+                     contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(diagnostic):
+                    try:
+                        returned = policy.main()
+                    except (ValueError, OSError, subprocess.SubprocessError):
+                        pass
+                self.assertTrue(output.is_file(), 'Early dependency failure lost its partial report')
+                self.assertEqual(returned, 1)
+                report = json.loads(output.read_text())
+                self.assertFalse(report['passed'])
+                failed = [item for item in report['checks'] if item['exit_code'] != 0]
+                self.assertEqual(len(failed), 1)
+                self.assertLessEqual(len(failed[0]['stdout']), 16384)
+                self.assertLessEqual(len(failed[0]['stderr']), 16384)
+                self.assertTrue(failed[0]['stdout'].endswith('STDOUT_TAIL'))
+                self.assertTrue(failed[0]['stderr'].endswith('FAILURE_TAIL'))
+                self.assertIn('FAILURE_TAIL', diagnostic.getvalue())
+                self.assertNotIn('STDERR_START', diagnostic.getvalue())
+                self.assertEqual(failed[0].get('timeout', False), failure == 'metadata_timeout')
+
     def test_real_lock_and_policy_are_accepted(self):
         policy.check_lock(tomllib.loads((ROOT/'Cargo.lock').read_text()))
         policy.check_policy(tomllib.loads((ROOT/'deny.toml').read_text()))

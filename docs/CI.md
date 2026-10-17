@@ -1,8 +1,10 @@
 # Continuous qualification
 
 [.forgejo/workflows/ci.yml](../.forgejo/workflows/ci.yml) runs credential-free
-verification for pushes and pull requests. It supports a manual opt-in for
-registered additional native runners. No external mirror, registry publication,
+verification for pushes and pull requests. Its 47 required jobs use the ordinary
+Linux runner. [The separate native workflow](../.forgejo/workflows/native-platforms.yml)
+runs only when explicitly dispatched after its three native runner labels are
+registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
 ## Required runner tools
@@ -53,7 +55,7 @@ verifies it against the Git/source ledger, installs the owned npm lock with
 lifecycle scripts disabled, and creates the development-only dependency symlink.
 Packaged Rust consumers do not need Node or TypeScript.
 
-Four distinct third-party actions are used across 13 references, all pinned to
+Four distinct third-party actions are used across 13 references in the two workflows, all pinned to
 commits. The following upstream Git references were verified with `git ls-remote`
 on 2026-10-17. [The recorded checks](checks/phase-08-ci-actions.json) retain the
 commands, exact references and results; the two newly introduced action manifests
@@ -88,11 +90,25 @@ on persistent native hosts.
 
 ## Jobs
 
+`contracts-and-package` and `rust` belong to `ci.yml`.
+`additional-native-platforms` belongs only to the dispatch-only
+`native-platforms.yml`. Its workflow trigger controls admission, so push and pull
+request runs contain only the required Linux jobs.
+
 | Job | Qualification |
 | --- | --- |
 | contracts-and-package | Installs pinned development tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 8 --verification-only. This verifies completed-phase contracts without advancing phase state or invoking live services. It includes generation/oracles, native exports, dependency policy, packaged consumers, cross compilation, and regression guards. |
 | rust | Rust 1.89.0 and 1.99.0 each run the complete feature-selection matrix through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
+
+[Run 12](https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/12) completed all 77
+qualification commands and all 47 required jobs successfully, with the reviewed
+source unchanged. Forgejo nevertheless left its three guarded native jobs queued
+and the overall run waiting. The retained [run receipt](checks/phase-08-ci-run-12/qualification-capture-receipt.json)
+distinguishes passing SDK qualification from that nonterminal workflow state.
+The native runner inventory API was unavailable to the read token; no runner
+registration or internal scheduler behavior is asserted. Separating the manual
+workflow prevents those jobs from being created for pushes and pull requests.
 
 The matrix includes default, minimal, all, every isolated Cargo feature, both JSON
 arbitrary-precision combinations, tracing combinations, and the exact native
@@ -107,6 +123,10 @@ scripts/check-dependencies.py; it refreshes and records official RustSec
 provenance, audits the complete Cargo lock with warnings denied, and checks
 all-feature license/source/ban policy. Public registry, source, npm, and advisory
 downloads are allowed; these checks need no service credentials.
+Failed dependency commands retain bounded stdout/stderr tails in a failed
+partial receipt and in the job log, including early version/provenance errors and
+timeouts. URL credentials, known token query fields, and authorization headers are
+redacted. A failed receipt replaces any earlier result at its output path.
 
 The qualification job installs standard libraries for Linux GNU x86_64/ARM64,
 Apple Silicon, and Windows MSVC x86_64. It fetches the complete locked dependency

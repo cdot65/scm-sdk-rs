@@ -40,8 +40,9 @@ Live acceptance uses the current [receipt](contracts/live-evidence.json) and
 [per-method matrix](contracts/native-operations.json); full implementation is
 separate from actual service qualification.
 
-Linux x86_64 musl has native runtime evidence. Other declared platforms have
-explicit compile-only boundaries. Current remote CI outcomes are recorded in
+Linux x86_64 musl and `x86_64-unknown-linux-gnu` have retained native execution
+evidence; GNU scope follows the recorded compiler/feature reports. The remaining
+three declared targets have compile-only boundaries. Current remote CI outcomes are recorded in
 [phase status](docs/phase-status.json).
 AgentGuard and realtime remain experimental. See [stability](docs/STABILITY.md),
 [platforms](docs/PLATFORMS.md), [security](docs/SECURITY.md),

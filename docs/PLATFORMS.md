@@ -6,8 +6,8 @@ default compiler.
 
 | Target | Evidence boundary |
 | --- | --- |
-| `x86_64-unknown-linux-musl` | Native compiler/test/example/doctest and loopback HTTP/WebSocket execution in retained phase checks. |
-| `x86_64-unknown-linux-gnu` | Native all-feature compiler/test/doctest execution on Rust 1.89.0 in the retained CI matrix receipt; portable core/product cross-compilation is also retained. |
+| `x86_64-unknown-linux-musl` | Native compiler/unit-test and loopback HTTP/WebSocket execution, with compiled examples and no-run doctests in retained phase checks. |
+| `x86_64-unknown-linux-gnu` | Native all-feature compiler/unit-test execution on Rust 1.89.0, with compiled no-run doctests in the retained CI matrix receipt; portable core/product cross-compilation is also retained. |
 | `aarch64-unknown-linux-gnu` | Compile-only minimal and all product/core features with caller transports. |
 | `aarch64-apple-darwin` | Compile-only minimal and all product/core features with caller transports. |
 | `x86_64-pc-windows-msvc` | Compile-only minimal and all product/core features with caller transports. |

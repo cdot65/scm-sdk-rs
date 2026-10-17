@@ -18,8 +18,19 @@ import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 WORKFLOW = (ROOT / ".forgejo/workflows/ci.yml").read_text()
+NATIVE_WORKFLOW = (ROOT / ".forgejo/workflows/native-platforms.yml").read_text()
+WORKFLOW_SOURCES = {"ci.yml": WORKFLOW, "native-platforms.yml": NATIVE_WORKFLOW}
+ALL_WORKFLOW_TEXT = "\n".join(WORKFLOW_SOURCES.values())
 RUST_ACTION = "https://github.com/dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8"
 UV_ACTION = "https://github.com/astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b"
+
+
+def job_workflow(name):
+    matches = [source for source in WORKFLOW_SOURCES.values()
+               if re.search(rf"^  {name}:$", source, re.MULTILINE)]
+    if len(matches) != 1:
+        raise AssertionError(f"Expected one workflow owning {name}")
+    return matches[0]
 
 
 def flow_list(name):
@@ -30,6 +41,39 @@ def flow_list(name):
 
 
 class CiContractTests(unittest.TestCase):
+    def test_workflows_share_reviewed_tool_versions_and_read_only_permissions(self):
+        pins = json.loads((ROOT / "scripts/uv-checksums.json").read_text())
+        for name, workflow in WORKFLOW_SOURCES.items():
+            with self.subTest(workflow=name):
+                version = re.search(r'^  CI_UV_VERSION: "([0-9.]+)"$', workflow, re.MULTILINE)
+                self.assertIsNotNone(version)
+                self.assertEqual(version.group(1), pins["version"])
+                self.assertIn("permissions:\n  contents: read\n", workflow)
+
+    def test_documentation_distinguishes_no_run_examples_and_native_gnu_evidence(self):
+        for name in ("docs/PLATFORMS.md", "docs/RELEASE.md"):
+            with self.subTest(document=name):
+                self.assertIn("no-run doctests", (ROOT / name).read_text())
+        self.assertIn("x86_64-unknown-linux-gnu", (ROOT / "CHANGELOG.md").read_text())
+
+    def test_push_workflow_contains_only_required_registered_runner_jobs(self):
+        jobs = WORKFLOW.split("\njobs:\n", 1)[1]
+        names = set(re.findall(r"^  ([a-z][a-z-]*):$", jobs, re.MULTILINE))
+        self.assertEqual(names, {"contracts-and-package", "rust"})
+        self.assertNotIn("native_platforms", WORKFLOW)
+        self.assertEqual(len(flow_list("toolchain")) * len(flow_list("features")) + 1, 47)
+
+    def test_native_workflow_is_dispatch_only_without_a_job_admission_condition(self):
+        path = ROOT / ".forgejo/workflows/native-platforms.yml"
+        self.assertTrue(path.is_file())
+        workflow = path.read_text()
+        triggers = workflow.split("\non:\n", 1)[1].split("\npermissions:", 1)[0]
+        self.assertEqual(set(re.findall(r"^  ([a-z_]+):", triggers, re.MULTILINE)),
+                         {"workflow_dispatch"})
+        jobs = workflow.split("\njobs:\n", 1)[1]
+        self.assertNotRegex(jobs, re.compile(r"^    if:", re.MULTILINE),
+                            "Native runner admission must follow the dispatch trigger")
+
     def test_qualification_prepares_complete_locked_graph_before_offline_checks(self):
         qualification = WORKFLOW.split("  contracts-and-package:", 1)[1].split("\n  rust:", 1)[0]
         lines = [line.strip() for line in qualification.splitlines()]
@@ -192,7 +236,7 @@ class CiContractTests(unittest.TestCase):
         version = (ROOT / ".node-version").read_text().strip()
         for job in ("contracts-and-package", "rust", "additional-native-platforms"):
             body = re.search(rf"^  {job}:\n(.*?)(?=^  [a-z][a-z-]*:\n|\Z)",
-                             WORKFLOW, re.MULTILINE | re.DOTALL).group(1)
+                             job_workflow(job), re.MULTILINE | re.DOTALL).group(1)
             with self.subTest(job=job):
                 self.assertIn(action, body)
                 self.assertIn(f'node-version: "{version}"', body)
@@ -264,7 +308,7 @@ class CiContractTests(unittest.TestCase):
         self.assertIn("tools/check_phase.py --phase 8 --verification-only", WORKFLOW)
 
     def test_actions_and_credentials_are_bounded(self):
-        actions = re.findall(r"^\s+uses: (\S+)", WORKFLOW, re.MULTILINE)
+        actions = re.findall(r"^\s+uses: (\S+)", ALL_WORKFLOW_TEXT, re.MULTILINE)
         self.assertEqual(len(actions), 13)
         self.assertEqual(set(actions), {
             "https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5",
@@ -274,12 +318,12 @@ class CiContractTests(unittest.TestCase):
         })
         for action in actions:
             self.assertRegex(action, r"^https://github\.com/(?:actions|dtolnay|astral-sh)/[a-z-]+@[0-9a-f]{40}$")
-        self.assertEqual(WORKFLOW.count("persist-credentials: false"), 3)
+        self.assertEqual(ALL_WORKFLOW_TEXT.count("persist-credentials: false"), 3)
         self.assertIn("permissions:\n  contents: read\n", WORKFLOW)
         for forbidden in ["secrets.", "pull_request_target", "contents: write",
                           "id-token: write", "enable-openid-connect", "cargo publish",
                           "npm publish", "git push"]:
-            self.assertNotIn(forbidden, WORKFLOW)
+            self.assertNotIn(forbidden, ALL_WORKFLOW_TEXT)
 
     def test_every_job_bootstraps_rust_before_running_commands(self):
         jobs = {
@@ -290,7 +334,7 @@ class CiContractTests(unittest.TestCase):
         for job, toolchains in jobs.items():
             with self.subTest(job=job):
                 match = re.search(rf"^  {job}:\n(.*?)(?=^  [a-z][a-z-]*:\n|\Z)",
-                                  WORKFLOW, re.MULTILINE | re.DOTALL)
+                                  job_workflow(job), re.MULTILINE | re.DOTALL)
                 self.assertIsNotNone(match)
                 body = match.group(1)
                 installations = re.findall(
@@ -413,12 +457,12 @@ assert.throws(() => checks.loadPins(incomplete, "0.13.1"), /not reviewed/);
 
     def test_ci_documentation_matches_action_pins_and_setup_effects(self):
         document = (ROOT / "docs/CI.md").read_text()
-        actions = set(re.findall(r"^\s+uses: https://github\.com/(\S+)", WORKFLOW, re.MULTILINE))
+        actions = set(re.findall(r"^\s+uses: https://github\.com/(\S+)", ALL_WORKFLOW_TEXT, re.MULTILINE))
         documented = {f"{name}@{commit}" for name, commit in re.findall(
             r"^\| \[([^]]+)\]\(https://github\.com/[^)]+\) \| [^|]+ \| ([0-9a-f]{40}) \|$",
             document, re.MULTILINE)}
         self.assertEqual(documented, actions)
-        self.assertEqual(WORKFLOW.count(RUST_ACTION + " # reviewed untagged master commit"), 4)
+        self.assertEqual(ALL_WORKFLOW_TEXT.count(RUST_ACTION + " # reviewed untagged master commit"), 4)
         self.assertIn((ROOT / ".python-version").read_text().strip(), document)
         self.assertIn("Rust and Python need not be preinstalled", document)
         self.assertIn("CI actions set the runner's default Rust toolchain", document)
@@ -444,10 +488,11 @@ assert.throws(() => checks.loadPins(incomplete, "0.13.1"), /not reviewed/);
         self.assertIn('.python-version text eol=lf', attributes)
 
     def test_additional_targets_are_manual_and_assert_actual_host(self):
-        self.assertIn("inputs.native_platforms == true", WORKFLOW)
-        self.assertIn("'host: ${{ matrix.target }}'", WORKFLOW)
+        self.assertNotIn("additional-native-platforms:", WORKFLOW)
+        self.assertIn("workflow_dispatch:", NATIVE_WORKFLOW)
+        self.assertIn("'host: ${{ matrix.target }}'", NATIVE_WORKFLOW)
         for target in ["aarch64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-pc-windows-msvc"]:
-            self.assertIn(target, WORKFLOW)
+            self.assertIn(target, NATIVE_WORKFLOW)
 
 
 if __name__ == "__main__":
