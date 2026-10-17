@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": null,
+  "active_phase": 8,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -472,7 +472,7 @@
     {
       "id": 8,
       "name": "Qualification and delivery",
-      "status": "complete",
+      "status": "in_progress",
       "reviews": [
         "docs/reviews/phase-08-attempt-02.json"
       ],
@@ -543,51 +543,37 @@
       ],
       "live_acceptance": "recorded_per_method_with_explicit_service_prerequisites",
       "delivery": {
+        "status": "reviewed_current_source_clean_commit_proof_and_push_pending",
         "registry_publication": "not_requested_not_performed",
         "remote_ci": "configured_unexecuted",
-        "clean_release_archive": {
-          "status": "passed",
-          "release_source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
-          "proofs": [
-            {
-              "toolchain": "1.89.0",
-              "hostTarget": "x86_64-unknown-linux-musl",
-              "report": "docs/checks/release-package-1.89.0.json",
-              "archiveSha256": "dfb20fadc2cf616e2e188e49aec52db5f6785e499b6cfd8b2f13585736c27e77",
-              "archiveBytes": 825336,
-              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-dfb20fadc2cf616e.crate",
-              "releaseCommit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
-              "effectiveDirty": false
-            },
-            {
-              "toolchain": "1.99.0",
-              "hostTarget": "x86_64-unknown-linux-musl",
-              "report": "docs/checks/release-package-1.99.0.json",
-              "archiveSha256": "21b9b0303a02df2f32ab789a6c90c2cbdd0f45e628907104b40d27cae6f6c340",
-              "archiveBytes": 825338,
-              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-21b9b0303a02df2f.crate",
-              "releaseCommit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
-              "effectiveDirty": false
-            }
-          ]
-        },
-        "status": "reviewed_source_pushed_and_clean_artifacts_verified",
-        "source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
-        "source_pushed": true,
+        "remote_ci_detail": "Original run reported missing-rustup setup failure. Corrected workflow has no retained result; API reads return 403 and its web page requires sign-in.",
+        "source_commit": null,
+        "source_pushed": false,
+        "source_sha256": "3d2c6cafb703d596f75942d66ea4ee1e35e8b2e75ca3b32734300c82661df1c4",
         "remote": "ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git",
-        "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
-        "verified_at": "2026-10-17T00:47:08.177799+00:00",
-        "evidence_records": [
-          "docs/checks/release-package-1.89.0.json",
-          "docs/checks/release-package-1.99.0.json",
-          "docs/checks/phase-08-private-material.json"
+        "clean_release_archive": {
+          "status": "pending_for_corrected_reviewed_source",
+          "proofs": []
+        },
+        "historical_delivery": "historical_deliveries[0]",
+        "completion_steps": [
+          "Accept fresh current-source Claude Code review at least 9/10.",
+          "Commit accepted source and evidence without changing its source fingerprint.",
+          "Run --require-clean archives on 1.89.0 and 1.99.0 with distinct ignored outputs; retain both only after both pass.",
+          "Push ordinary reviewed source and evidence commits; retain exact source commit and archive digests."
         ]
       },
       "milestones": {
         "implemented_scope": {
-          "status": "accepted_by_review",
+          "status": "accepted_by_current_review_delivery_pending",
           "evidence": [
-            "docs/reviews/phase-08-attempt-02.json"
+            ".forgejo/workflows/ci.yml",
+            ".python-version",
+            "docs/CI.md",
+            "docs/DEVELOPMENT.md",
+            "tools/test_ci.py",
+            "scripts/bootstrap-python.sh",
+            ".gitattributes"
           ]
         },
         "independent_verification": {
@@ -595,19 +581,21 @@
           "evidence": [
             "docs/checks/phase-08.json"
           ],
-          "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b"
+          "source_sha256": "3d2c6cafb703d596f75942d66ea4ee1e35e8b2e75ca3b32734300c82661df1c4"
         },
         "claude_review": {
-          "status": "accepted",
+          "status": "accepted_current_source_delivery_pending",
           "score": 9,
           "evidence": [
-            "docs/reviews/phase-08-attempt-02.json"
+            "docs/reviews/phase-08-attempt-04.json"
           ]
         }
       },
       "review_attempts": [
         "docs/reviews/phase-08-attempt-01.json",
-        "docs/reviews/phase-08-attempt-02.json"
+        "docs/reviews/phase-08-attempt-02.json",
+        "docs/reviews/phase-08-attempt-03.json",
+        "docs/reviews/phase-08-attempt-04.json"
       ],
       "review_fixes": [
         {
@@ -656,8 +644,8 @@
             {
               "id": "final-bookkeeping-credential-scan",
               "severity": "low",
-              "status": "completed_after_release_and_review_artifacts",
-              "scope": "Refresh the actual selected-value scan after new review and release-proof files are written.",
+              "status": "historical_scan_complete_current_delivery_scan_pending",
+              "scope": "Original final scan remains historical. Refresh the selected-value scan after the current accepted review and both new clean-archive proof records before final delivery.",
               "evidence": [
                 "docs/checks/phase-08-private-material.json"
               ]
@@ -677,11 +665,11 @@
             {
               "id": "clean-commit-proof-and-push",
               "severity": "low",
-              "status": "completed",
-              "scope": "Commit/push accepted source, run both --require-clean archive proofs, and retain delivery metadata before completing Phase8.",
+              "status": "historical_completion_superseded_current_source_obligation_reopened",
+              "scope": "Historical original source proof remains valid only for f4178928; current CI correction requires its own accepted commit, both clean archive checks and ordinary push before final completion.",
               "evidence": [
-                "docs/checks/release-package-1.89.0.json",
-                "docs/checks/release-package-1.99.0.json"
+                "docs/checks/release-source-f4178928/release-package-1.89.0.json",
+                "docs/checks/release-source-f4178928/release-package-1.99.0.json"
               ],
               "source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7"
             },
@@ -692,10 +680,242 @@
               "scope": "Reformat the enforced dependency-policy runner without altering its strict policy."
             }
           ]
+        },
+        {
+          "source": "docs/reviews/phase-08-attempt-04.json",
+          "score": 9,
+          "status": "recorded_nonblocking_findings_and_delivery_obligations",
+          "items": [
+            {
+              "id": "uv-asset-integrity",
+              "severity": "medium",
+              "status": "nonblocking_followup",
+              "path": "scripts/bootstrap-python.sh",
+              "scope": "The change under review adds a uv binary download to every CI job without using the integrity control the pinned action offers. The action's own recorded execution states \"Checksum not provided. Checking known checksums.\" and \"No known checksum found for x86_64-unknown-linux-musl-0.13.1\" (docs/checks/phase-08-ci-uv-action.json:11), so in an actual run uv is fetched from GitHub releases with no digest verification; the pinned v6.6.0 manifest predates uv 0.13.1, so its known-checksum table cannot cover the pinned version on any platform. .forgejo/workflows/ci.yml:45-50 passes only version/enable-cache/github-token even though the manifest declares a `checksum` input (.local/ci-bootstrap-2026-10-17/setup-uv-repository/action.yml:21-23), and the owned bootstrap only compares `uv --version` text, not the binary. The authoritative digests are already in the repository's own evidence (docs/checks/phase-08-ci-python-bootstrap.json:8-13 records archiveSha256 6c86040a\u2026 verified against the astral-sh/uv release API and binarySha256 752a98d0\u2026), and docs/checks/phase-08-ci-uv-action.json:23 only asserts the match for the local exercise. docs/CI.md:54-62 discusses this residual trust for rustup but never states that the CI uv acquisition itself is unverified, while docs/phase-status.json:696 says the bootstrap used \"hash-verified official uv 0.13.1\", which is true only of the local run and is easy to read as covering CI.",
+              "required_followup": "Verify the uv executable in scripts/bootstrap-python.sh against a pinned per-platform SHA-256 table (hash `command -v uv` and fail closed on mismatch), and/or pass the action's `checksum` input for the single-platform jobs. Add a tools/test_ci.py guard asserting the pinned digest(s) and the uv version stay consistent, and state in docs/CI.md that the pinned action does not checksum-verify uv 0.13.1 and that the owned bootstrap now supplies that verification."
+            },
+            {
+              "id": "live-mutation-cause",
+              "severity": "medium",
+              "status": "experimental_live_unqualified_followup",
+              "path": "docs/LIVE_ACCEPTANCE.md",
+              "scope": "Live mutation and cleanup workflows still have no successful service evidence. docs/checks/phase-08-live-attempt-06.json:212-242 shows iam.scopes.create and gateway.workspaces.provision rejected with 400 and rejectionDetails carrying no code and no field names, so the entire downstream chain (scope read/update/delete, absence verification, workspace archival and owned-binding cleanup) is unexercised live, and report `cleanup` is empty with cleanupState \"not_needed\" only because nothing was created. Milestone 8's \"controlled live workflows and cleanup\" is therefore only partly satisfied. This is recorded honestly as an experimental unqualified followup (docs/phase-status.json:624-633), the matrix keeps both operations at service_contract_rejection with the cause unestablished and an SDK request-shape defect explicitly not excluded (contracts/qualification.json:10747-10768, tools/qualification.py:27), and nothing is promoted on offline parity, so this is a scope limitation rather than a misrepresentation.",
+              "required_followup": "Keep both operations and every dependent mutation/cleanup path explicitly live-unqualified. Before any stable promotion, obtain private diagnostics for the two 400 responses, reconcile the traffic-derived IAM and Gateway provisioning request contracts against a vendor specification, and record a new source-bound receipt that exercises create/read/update/delete and confirmed cleanup."
+            },
+            {
+              "id": "namespace-rooting-convention",
+              "severity": "low",
+              "status": "nonblocking_followup",
+              "path": "contracts/qualification.json",
+              "scope": "The delivered parity matrix records Rust paths inconsistently rooted: 194 of 448 rows carry the crate prefix (`\"namespace\": \"scm_sdk::airs::gateway\"` at line 2552) while 254 do not (`\"airs::gateway\"` at line 2687, `\"dlp\"`, `\"shared::iam\"`). The value is derived at tools/qualification.py:138 from rustMethods[0], which is assembled from free-text mapping namespaces at tools/native_operations.py:202, and validation only matches the final identifier against the source file (tools/native_exports.py:379-381), so the namespace portion of every recorded Rust path is unverified. The matrix is the headline phase-8 artifact, so `namespace` is not usable as a stable grouping key and rustMethods strings are not uniformly resolvable to real Rust items.",
+              "required_followup": "Normalize all mapping namespaces to one convention (either fully crate-rooted `scm_sdk::\u2026` or consistently crate-relative) when building rustMethods in tools/native_operations.py:202, regenerate contracts/native-operations.json and contracts/qualification.json, and add an assertion in tools/test_native_operations.py that every rustMethods entry shares the chosen rooting and resolves to the recorded module path."
+            },
+            {
+              "id": "derived-probe-feature-drift-guard",
+              "severity": "low",
+              "status": "nonblocking_followup",
+              "path": "scripts/check-rust.py",
+              "scope": "The executed `native-probes` feature set still hardcodes the ten-feature union (agentguard, dlp, gateway, iam, management, model-security, models, red-team, realtime, scan). That currently equals the derived export-probe union asserted at tools/test_native_exports.py:121-129, but nothing asserts the two remain equal, so a future change to the generated union would silently leave the executed MSRV/current probe feature set behind. This is the still-open derived-probe-feature-drift-guard advisory (docs/phase-status.json:636-640).",
+              "required_followup": "Add an assertion (in tools/test_native_exports.py or tools/test_ci.py) that scripts/check-rust.py FEATURES[\"native-probes\"] equals the derived requiredFeatures union in contracts/native-exports.json."
+            },
+            {
+              "id": "consumer-unsafe-lint",
+              "severity": "low",
+              "status": "nonblocking_followup",
+              "path": "contracts/native-probes/Cargo.toml",
+              "scope": "The generated standalone public consumer declares its own `[workspace]`, so it does not inherit the repository's workspace-wide `unsafe_code = \"forbid\"` (Cargo.toml:12-13). The consumer source contains no unsafe code today and it is compiled and run from the extracted archive by scripts/check-package.py, but the policy is not enforced for it. This is the still-open consumer-unsafe-lint advisory (docs/phase-status.json:656-661).",
+              "required_followup": "Add `[lints.rust] unsafe_code = \"forbid\"` to contracts/native-probes/Cargo.toml, or `#![forbid(unsafe_code)]` at the top of contracts/native-probes/src/main.rs, and regenerate the consumer."
+            },
+            {
+              "id": "live-policy-document-name",
+              "severity": "low",
+              "status": "nonblocking_followup",
+              "path": "docs/LIVE-ACCEPTANCE.md",
+              "scope": "Two near-identically named documents still coexist: docs/LIVE-ACCEPTANCE.md (retained policy) and docs/LIVE_ACCEPTANCE.md (current execution and interpretation). Only the underscore form appears in docs/phase-status.json scope_evidence (line 531) and in README.md/RELEASE.md links, so the hyphen form is effectively unreferenced policy prose that is easy to mis-edit or mis-link. Attempt-03 raised this as a low finding; unlike the other attempt-03 lows it was neither fixed nor recorded as an advisory in docs/phase-status.json, so the review-disposition ledger is incomplete for it.",
+              "required_followup": "Merge docs/LIVE-ACCEPTANCE.md into docs/LIVE_ACCEPTANCE.md as a policy section, or rename it to docs/LIVE_ACCEPTANCE_POLICY.md and update inbound references; either way record the disposition in docs/phase-status.json review_advisories."
+            },
+            {
+              "id": "ci-verification-scope-bookkeeping",
+              "severity": "low",
+              "status": "completed_in_excluded_phase_bookkeeping",
+              "path": "docs/phase-status.json",
+              "scope": "The correction record understates the change in one field while disclosing it in others. `verification_scope` says the gate was rerun \"after attempt-03 documentation fixes\", but the reviewed source also replaced the CI Python provisioning mechanism: the attempt-03 source (e5903a90\u2026) used actions/setup-python, whereas this source uses astral-sh/setup-uv plus the new owned scripts/bootstrap-python.sh (disclosed in `scope` at line 687, `review_context` at line 711 and the `portable_python` block at lines 746-759, and corroborated by docs/checks/phase-08-python-bootstrap-transition.json:2-9). Relatedly, milestones.implemented_scope.evidence (lines 568-576) lists ci.yml, .python-version, docs/CI.md, docs/DEVELOPMENT.md and tools/test_ci.py but omits scripts/bootstrap-python.sh and .gitattributes, which are the newly added owned artifacts of this correction.",
+              "required_followup": "Reword verification_scope to state that the reviewed source changed both the CI Python provisioning mechanism and the documentation, and add scripts/bootstrap-python.sh and .gitattributes to milestones.implemented_scope.evidence."
+            },
+            {
+              "id": "current-delivery-proof-and-remote-ci",
+              "severity": "low",
+              "status": "clean_proof_and_push_in_progress_remote_ci_unverified",
+              "path": "docs/checks/phase-08-ci-bootstrap.json",
+              "scope": "The corrected workflow still has no execution receipt. The local exercises install rustup directly and run the pinned uv action and bootstrap script outside any runner, and PATH-file application is simulated (docs/checks/phase-08-ci-python-bootstrap.json:80-84, docs/checks/phase-08-ci-uv-action.json:17-20), so the fix's effectiveness on a real runner \u2014 the action's $GITHUB_PATH export, `--offline` cargo cache coverage for the separate contracts/native-probes lockfile, and the 180-minute cold-cache budget for the 77-command gate \u2014 remains unverified. Likewise the reviewed source is uncommitted, origin/main is still 4f65dc48, and the only --require-clean archive proofs bind releaseCommit f4178928. All of this is labeled honestly (docs/phase-status.json:546-564, docs/CI.md:101-119, docs/RELEASE.md:74-75) and the push/proof step must by construction follow this review, so it is an outstanding delivery obligation rather than a misstatement.",
+              "required_followup": "Keep remote_ci at \"configured_unexecuted\" until a Forgejo run log for the corrected workflow (at minimum contracts-and-package and one rust matrix job) is retained. Before marking phase 8 complete, commit the reviewed source, run both --require-clean archive checks on 1.89.0 and 1.99.0 with distinct ignored outputs, push the ordinary commits, and record the exact commit plus both archive digests and a refreshed private-material scan."
+            }
+          ]
         }
       ],
-      "accepted_source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
-      "accepted_score": 9
+      "accepted_source_sha256": null,
+      "accepted_score": null,
+      "post_delivery_corrections": [
+        {
+          "reported_at": "2026-10-17T01:43:08.808283+00:00",
+          "scope": "CI runner bootstrap: install rustup before compiler commands in every job; use pinned setup-uv plus owned job-local portable Python bootstrap, independent of Ubuntu-specific interpreter builds. No SDK runtime source changes.",
+          "reported_failure": "contracts-and-package setup exited 127 because rustup was not found.",
+          "previous_source_commit": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+          "previous_review": "docs/reviews/phase-08-attempt-02.json",
+          "preserved_checks": "docs/checks/phase-08-accepted-attempt-02/manifest.json",
+          "status": "review_accepted_clean_commit_archive_proofs_and_push_pending",
+          "checks": [
+            "tools/test_ci.py: 9 passing guards including action/documentation consistency and portable bootstrap bounds",
+            "original missing-rustup command reproduced exit 127; isolated Rust bootstrap installed both compiler pins",
+            "portable Python bootstrap succeeded with Python absent from PATH using hash-verified official uv 0.13.1",
+            "pinned setup-uv JavaScript action executed locally, installed exact uv 0.13.1 and exported its path without a GitHub token"
+          ],
+          "remote_ci_status": "reported_failed_setup; corrected workflow not yet executed remotely",
+          "independent_evidence": [
+            "docs/checks/phase-08-ci-bootstrap.json",
+            "docs/checks/phase-08-ci-regression.json",
+            "docs/checks/phase-08-ci-actions.json",
+            "docs/checks/phase-08-ci-python-bootstrap.json",
+            "docs/checks/phase-08-ci-uv-action.json",
+            "docs/checks/phase-08-python-bootstrap-transition.json"
+          ],
+          "runtime_source_sha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+          "source_sha256": "3d2c6cafb703d596f75942d66ea4ee1e35e8b2e75ca3b32734300c82661df1c4",
+          "verification_scope": "The complete unchanged 77-command gate qualified both the new setup-uv/owned portable Python provisioning mechanism and the CI documentation corrections, under actually bootstrapped CPython 3.14.7. SDK runtime inputs remain unchanged and live attempt 06 remains valid. Current source requires its own accepted commit, two --require-clean archive proofs and ordinary push before final completion.",
+          "review_context": "Focus the cumulative review on the runner-bootstrap defect and the changed .forgejo/workflows/ci.yml, .python-version, tools/test_ci.py and docs/DEVELOPMENT.md. Exact pinned external action manifests are cached only as nonsecret read-only references under .local/ci-bootstrap-2026-10-17/; their hashes and paths are recorded in docs/checks/phase-08-ci-actions.json. Local bootstrap uses --no-modify-path to preserve shell profiles and simulates PATH-file application; this is not a retained Forgejo/act execution. Preserve all earlier explicit live and platform limitations. Addressed the first three attempt-03 findings: docs/CI.md enumerates all four exact pins and verified refs, documents upstream rustup bootstrap trust and actual runner/default-toolchain effects; workflow has untagged-master comments; a new guard keeps CI documentation aligned. Original delivery/proofs are explicitly historical, current clean-proof/push obligation is reopened, and milestone hashes point at their preserved matching reports. The existing live mutation, remote CI and maintenance advisories retain their earlier limitations. Current Python provisioning uses setup-uv v6.6.0 (Node 20) at 4959332f, uv 0.13.1 and scripts/bootstrap-python.sh. The pinned action was directly executed locally under Node 22.23.2 with Forgejo server context, empty GitHub token and cache disabled; its installed binary matches the hash-verified official release. The helper installed Python 3.14.7 with no initial Python on PATH. PATH-file application remains simulated; no Forgejo run or other host execution is claimed. .gitattributes preserves shell/pin LF. The interim 0489 candidate gate was interrupted and cannot qualify current source.",
+          "full_gate_report": "docs/checks/phase-08.json",
+          "full_gate_commands": 77,
+          "full_gate_passed": true,
+          "source_unchanged": true,
+          "prior_check_attempts": [
+            {
+              "source_sha256": "e5903a901703759e94410e7e14b03b13bb85002c3826672b8a9cbd7805867737",
+              "report": "docs/checks/phase-08-reviewed-attempt-03/phase-08.json",
+              "full_gate_passed": true,
+              "commands": 77,
+              "review": "docs/reviews/phase-08-attempt-03.json",
+              "review_score": 8.5,
+              "review_gate_passed": false
+            }
+          ],
+          "review_fixes": [
+            {
+              "source": "docs/reviews/phase-08-attempt-03.json",
+              "prior_score": 8.5,
+              "status": "accepted_by_phase_8_review_attempt_04",
+              "findings": [
+                "CI action inventory and pin provenance",
+                "runner prerequisites and default-toolchain effects",
+                "current delivery and clean-proof bookkeeping"
+              ],
+              "evidence": [
+                "docs/CI.md",
+                ".forgejo/workflows/ci.yml",
+                "tools/test_ci.py",
+                "docs/phase-status.json",
+                "docs/checks/phase-08-ci-actions.json"
+              ],
+              "acceptance_evidence": "docs/reviews/phase-08-attempt-04.json"
+            }
+          ],
+          "portable_python": {
+            "uvVersion": "0.13.1",
+            "pythonVersion": "3.14.7",
+            "workflowUvVersionSinglePin": "env.CI_UV_VERSION",
+            "upstreamAction": "astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b",
+            "reason": "Forgejo ubuntu-latest can map to a Debian Node image; portable Python avoids Ubuntu build assumptions.",
+            "registryWritesDisabled": true,
+            "githubTokenExplicitlyEmpty": true,
+            "cacheUploadDisabled": true,
+            "jobLocalPaths": true,
+            "shellAndPinLfEnforced": true,
+            "localExecution": "Linux x86_64 musl",
+            "otherHosts": "download availability checked, not executed"
+          },
+          "interrupted_candidate": {
+            "source_sha256": "0489a89dab4e608b6e600d5485b686aba9c3578268e8ba78b129639968e464a1",
+            "full_gate_passed": false,
+            "report": "docs/checks/phase-08-python-bootstrap-transition.json",
+            "reason": "Improved Python portability before accepting the candidate; the complete gate must rerun."
+          },
+          "gatePython": "Actually bootstrapped portable CPython 3.14.7 (Linux x86_64 musl).",
+          "review": "docs/reviews/phase-08-attempt-04.json",
+          "review_score": 9,
+          "uv_integrity_scope": "Local official uv 0.13.1 archive and installed binary were hash-verified. The configured v6.6.0 setup action has no known checksum for this uv version and CI does not pass its checksum input; CI acquisition still trusts the upstream release. This actual review medium finding is a recorded nonblocking hardening followup, not a claim of CI digest enforcement."
+        }
+      ],
+      "historical_deliveries": [
+        {
+          "registry_publication": "not_requested_not_performed",
+          "remote_ci": "configured_unexecuted",
+          "clean_release_archive": {
+            "status": "passed",
+            "release_source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+            "proofs": [
+              {
+                "toolchain": "1.89.0",
+                "hostTarget": "x86_64-unknown-linux-musl",
+                "report": "docs/checks/release-source-f4178928/release-package-1.89.0.json",
+                "archiveSha256": "dfb20fadc2cf616e2e188e49aec52db5f6785e499b6cfd8b2f13585736c27e77",
+                "archiveBytes": 825336,
+                "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-dfb20fadc2cf616e.crate",
+                "releaseCommit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+                "effectiveDirty": false
+              },
+              {
+                "toolchain": "1.99.0",
+                "hostTarget": "x86_64-unknown-linux-musl",
+                "report": "docs/checks/release-source-f4178928/release-package-1.99.0.json",
+                "archiveSha256": "21b9b0303a02df2f32ab789a6c90c2cbdd0f45e628907104b40d27cae6f6c340",
+                "archiveBytes": 825338,
+                "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-21b9b0303a02df2f.crate",
+                "releaseCommit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+                "effectiveDirty": false
+              }
+            ]
+          },
+          "status": "historical_delivery_superseded_by_ci_correction",
+          "source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+          "source_pushed": true,
+          "remote": "ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git",
+          "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
+          "verified_at": "2026-10-17T00:47:08.177799+00:00",
+          "evidence_records": [
+            "docs/checks/release-source-f4178928/release-package-1.89.0.json",
+            "docs/checks/release-source-f4178928/release-package-1.99.0.json",
+            "docs/checks/phase-08-accepted-attempt-02/phase-08-private-material.json"
+          ],
+          "superseded_by": "post_delivery_corrections[0]",
+          "accepted_milestones": {
+            "implemented_scope": {
+              "status": "accepted_by_review",
+              "evidence": [
+                "docs/reviews/phase-08-attempt-02.json"
+              ]
+            },
+            "independent_verification": {
+              "status": "historical_accepted_snapshot_current_correction_pending",
+              "evidence": [
+                "docs/checks/phase-08-accepted-attempt-02/phase-08.json"
+              ],
+              "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b"
+            },
+            "claude_review": {
+              "status": "accepted",
+              "score": 9,
+              "evidence": [
+                "docs/reviews/phase-08-attempt-02.json"
+              ]
+            }
+          }
+        }
+      ],
+      "previous_accepted_review": {
+        "review": "docs/reviews/phase-08-attempt-02.json",
+        "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
+        "score": 9,
+        "historical_report": "docs/checks/phase-08-accepted-attempt-02/phase-08.json"
+      }
     }
   ]
 }

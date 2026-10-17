@@ -1,0 +1,325 @@
+{
+  "phase": 8,
+  "source_sha256": "f72076bc258b5d2c722f7506bf2cc34e9ad2441dcc1d5c7ab05fbec4f31c262b",
+  "source_unchanged": true,
+  "checked_at": "2026-10-16T18:56:01.779520+00:00",
+  "passed": false,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.187,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 25 tests in 0.115s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.244,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.252,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": true,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 2.074,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"rejectedTamperingCases\": [\n    \"fixture-change\",\n    \"fixture-removal\",\n    \"unmanifested-source\",\n    \"license-removal\",\n    \"fixture-inventory-omission\",\n    \"baseline-source-omission\",\n    \"tree-ledger-omission\",\n    \"excluded-source-generation\",\n    \"export-source-change\",\n    \"fixture-category-relabel\",\n    \"fixture-category-unknown\",\n    \"specification-pin-removal\",\n    \"observed-specification-pin\",\n    \"extraction-input-omission\",\n    \"extraction-input-origin-change\",\n    \"license-evidence-change\",\n    \"extracted-non-src-byte-change\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-contracts.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-contracts.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 9.969,
+      "stdout": "{\n  \"mode\": \"check\",\n  \"sourceFingerprint\": \"a972723bb524cf8fce652d50297d94ed7af278b13b9a045b5c6bdc79212eb48f\",\n  \"counts\": {\n    \"exports\": 2630,\n    \"runtimeExports\": 1379,\n    \"typeOnlyExports\": 1251,\n    \"kinds\": {\n      \"class\": 58,\n      \"constant\": 163,\n      \"enum\": 1,\n      \"function\": 14,\n      \"interface\": 144,\n      \"schema\": 1086,\n      \"type_alias\": 1164\n    },\n    \"publicMembers\": 1190,\n    \"publicMethods\": 468,\n    \"baselinePublicClassMethodBodies\": 458,\n    \"baselinePublicClassMethodDeclarations\": 478,\n    \"clientMethodBodies\": 448,\n    \"objectLiteralMethodBodies\": 11,\n    \"publicInheritedExternalClassMethods\": 2,\n    \"sourceFiles\": 145,\n    \"moduleLevelSchemas\": 1125,\n    \"publicSchemas\": 1086,\n    \"schemaNodes\": 13018,\n    \"typeNodes\": 5036,\n    \"manualSemanticNodes\": 69,\n    \"unsupportedSchemaKinds\": 0,\n    \"localSchemaDeclarations\": 0\n  },\n  \"independentChecks\": {\n    \"checkerRootExports\": 2630,\n    \"astRootExports\": 2630,\n    \"runtimeValueExports\": 1379,\n    \"rootExportNamesSha256\": \"2d1879a53b4686df7f14cc5b099adcbc2d95d0b7ff336528994a5cf155195850\",\n    \"equalNameSets\": true,\n    \"astClientMethodBodies\": 448,\n    \"checkerClientMethodBodies\": 448,\n    \"clientMethodBodiesSha256\": \"76a9f7f109ff4b576f9a515c7c560322cfdf457b43c59123f820da6918f6d5ea\",\n    \"equalClientMethodBodySets\": true\n  }\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-operations.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/extract-operations.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.83,
+      "stdout": "Operation metadata verified: 448 methods, 223 declarative, 225 explicit native adapters.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/extract-contracts.mts",
+        "tools/extract-operations.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/extract-contracts.mts",
+        "tools/extract-operations.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.821,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.197,
+      "stdout": "Native semantic registry: 69 explicit bindings\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.791,
+      "stdout": "{\"checked\": true, \"outputs\": 14, \"graphNodes\": 13018, \"partialFamily\": null}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "8"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "8"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.96,
+      "stdout": "{\"checked\": true, \"baselineConcreteMethods\": 448, \"implemented\": 448, \"pending\": 0, \"liveVerified\": 17, \"liveRecorded\": 22, \"completeMethodOptionParity\": 448, \"partialMethodOptionParity\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 13.271,
+      "stdout": "",
+      "stderr": "test_absent_verification_function_is_rejected (test_native_operations.NativeOperationLedgerTests.test_absent_verification_function_is_rejected) ... ok\ntest_completed_owning_phase_rejects_an_unimplemented_operation (test_native_operations.NativeOperationLedgerTests.test_completed_owning_phase_rejects_an_unimplemented_operation) ... ok\ntest_every_frozen_operation_is_accounted_for_without_baseline_mutation (test_native_operations.NativeOperationLedgerTests.test_every_frozen_operation_is_accounted_for_without_baseline_mutation) ... ok\ntest_fragment_baseline_and_duplicate_mappings_are_rejected (test_native_operations.NativeOperationLedgerTests.test_fragment_baseline_and_duplicate_mappings_are_rejected) ... ok\ntest_invalid_or_stale_live_receipt_stops_generation (test_native_operations.NativeOperationLedgerTests.test_invalid_or_stale_live_receipt_stops_generation) ... ok\ntest_invented_frozen_operation_is_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_frozen_operation_is_rejected) ... ok\ntest_invented_or_unexplained_ownership_overrides_are_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_or_unexplained_ownership_overrides_are_rejected) ... ok\ntest_live_annotation_cannot_certify_an_unimplemented_or_unknown_operation (test_native_operations.NativeOperationLedgerTests.test_live_annotation_cannot_certify_an_unimplemented_or_unknown_operation) ... ok\ntest_missing_receipt_cannot_be_promoted_by_a_mapping_declaration (test_native_operations.NativeOperationLedgerTests.test_missing_receipt_cannot_be_promoted_by_a_mapping_declaration) ... ok\ntest_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven (test_native_operations.NativeOperationLedgerTests.test_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven) ... ok\ntest_only_the_exact_receipted_method_is_live_verified (test_native_operations.NativeOperationLedgerTests.test_only_the_exact_receipted_method_is_live_verified) ... ok\ntest_partial_parity_without_a_declared_reason_is_rejected (test_native_operations.NativeOperationLedgerTests.test_partial_parity_without_a_declared_reason_is_rejected) ... ok\ntest_realtime_header_contract_is_distinct_and_cannot_be_forged (test_native_operations.NativeOperationLedgerTests.test_realtime_header_contract_is_distinct_and_cannot_be_forged) ... ok\ntest_removed_native_method_is_rejected (test_native_operations.NativeOperationLedgerTests.test_removed_native_method_is_rejected) ... ok\ntest_representative_gateway_scope_retains_its_real_owner_and_partial_options (test_native_operations.NativeOperationLedgerTests.test_representative_gateway_scope_retains_its_real_owner_and_partial_options) ... ok\ntest_stale_ledger_is_rejected_without_rewriting_it (test_native_operations.NativeOperationLedgerTests.test_stale_ledger_is_rejected_without_rewriting_it) ... ok\ntest_stricter_native_content_invariants_are_machine_recorded (test_native_operations.NativeOperationLedgerTests.test_stricter_native_content_invariants_are_machine_recorded) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 13.200s\n\nOK\n"
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/schema-oracle.mts",
+        "--check"
+      ],
+      "invocation": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/schema-oracle.mts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 5.892,
+      "stdout": "{\n  \"publicSchemaExports\": 1086,\n  \"moduleRoots\": 1125,\n  \"uniqueRoots\": 1085,\n  \"oracleEntries\": 1127,\n  \"manualSemanticNodes\": 69,\n  \"nativeBoundaryNodes\": 10,\n  \"jsonCoveredRoots\": 1080,\n  \"requiresNativeInput\": [\n    {\n      \"sid\": \"s004590\",\n      \"names\": [\n        \"GatewayInferenceInputCreateImageEditRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004620\",\n      \"names\": [\n        \"GatewayInferenceInputCreateImageVariationRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004771\",\n      \"names\": [\n        \"GatewayInferenceInputCreateTranscriptionRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004833\",\n      \"names\": [\n        \"GatewayInferenceInputCreateTranslationRequestSchema\"\n      ]\n    },\n    {\n      \"sid\": \"s004894\",\n      \"names\": [\n        \"GatewayInferenceInputCreateFileRequestSchema\"\n      ]\n    }\n  ],\n  \"unresolvedValidSpecimens\": [],\n  \"jsonCases\": 60271,\n  \"acceptedJsonCases\": 12956,\n  \"rejectedJsonCases\": 47315,\n  \"rootsWithoutJsonRejection\": []\n}\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/schema-oracle.mts"
+      ],
+      "invocation": [
+        "tools/node_modules/.bin/tsc",
+        "--noEmit",
+        "--target",
+        "ES2022",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--strict",
+        "--skipLibCheck",
+        "--esModuleInterop",
+        "--types",
+        "node",
+        "--typeRoots",
+        ".local/typescript/node_modules/@types",
+        "tools/schema-oracle.mts"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.715,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-default.json"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "default",
+        "--output",
+        "docs/checks/phase-08-rust-1.89.0-default.json"
+      ],
+      "exit_code": 1,
+      "duration_seconds": 125.638,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\"], \"exit_code\": 0}\n{\"passed\": false, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"default\", \"evidence\": \"docs/checks/phase-08-rust-1.89.0-default.json\"}\n",
+      "stderr": ""
+    }
+  ]
+}

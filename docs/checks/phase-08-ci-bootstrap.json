@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T01:44:21.358970+00:00",
+  "passed": true,
+  "rustAction": "https://github.com/dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8",
+  "installerUrl": "https://sh.rustup.rs",
+  "installerSha256": "7d0ea0f8eba7fa1ebfe998091cd7ec4501e33ec5ca6b884eb4d894d7da5170af",
+  "initialPath": "/usr/bin:/bin",
+  "separateCargoAndRustupHomes": true,
+  "checks": [
+    {
+      "command": [
+        "/bin/bash",
+        "--noprofile",
+        "--norc",
+        "-c",
+        "rustup toolchain install 1.89.0 --profile minimal --component rustfmt,clippy --no-self-update"
+      ],
+      "exit_code": 127,
+      "stdout": "",
+      "stderr": "/bin/bash: line 1: rustup: command not found\n"
+    },
+    {
+      "command": [
+        "/bin/sh",
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-bootstrap-2026-10-17/rustup-init.sh",
+        "--default-toolchain",
+        "none",
+        "--no-modify-path",
+        "-y"
+      ],
+      "exit_code": 0,
+      "stdout": "\n\nRust is installed now. Great!\n\nTo get started you need Cargo's bin directory \n(/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-bootstrap-2026-10-17/cargo/bin)\nin your PATH\nenvironment variable. This has not been done automatically.\n\nTo configure your current shell, you need to source\nthe corresponding env file under \n/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-bootstrap-2026-10-17/cargo.\n\nConsider running the right command for your shell (note the leading DOT):\n. \n\"/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-bootstrap-2026-10-17/cargo/env\"\n# For sh/ash/dash/pdksh/bash/zsh\ncargo:rerun-if-env-changed=CC_x86_64-unknown-linux-musl\nCC_x86_64-unknown-linux-musl = None\ncargo:rerun-if-env-changed=CC_x86_64_unknown_linux_musl\nCC_x86_64_unknown_linux_musl = None\ncargo:rerun-if-env-changed=HOST_CC\nHOST_CC = None\ncargo:rerun-if-env-changed=CC\nCC = None\ncargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT\ncargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS\nCRATE_CC_NO_DEFAULTS = None\ncargo:rerun-if-env-changed=CFLAGS\nCFLAGS = None\ncargo:rerun-if-env-changed=HOST_CFLAGS\nHOST_CFLAGS = None\ncargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_musl\nCFLAGS_x86_64_unknown_linux_musl = None\ncargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-musl\nCFLAGS_x86_64-unknown-linux-musl = None\n",
+      "stderr": "info: downloading installer\ninfo: profile set to default\ninfo: default host tuple is x86_64-unknown-linux-musl\ninfo: skipping toolchain installation\n"
+    },
+    {
+      "command": [
+        "rustup",
+        "toolchain",
+        "install",
+        "1.89.0",
+        "--profile",
+        "minimal",
+        "--component",
+        "rustfmt,clippy",
+        "--no-self-update",
+        "--force-non-host"
+      ],
+      "exit_code": 0,
+      "stdout": "\n  1.89.0-x86_64-unknown-linux-musl installed - rustc 1.89.0 (29483883e 2025-08-04)\n\n",
+      "stderr": "info: syncing channel updates for 1.89.0-x86_64-unknown-linux-musl\ninfo: latest update on 2025-08-07 for version 1.89.0 (29483883e 2025-08-04)\ninfo: downloading 5 components\ninfo: default toolchain set to 1.89.0-x86_64-unknown-linux-musl\n"
+    },
+    {
+      "command": [
+        "rustc",
+        "+1.89.0",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "rustc 1.89.0 (29483883e 2025-08-04)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.89.0",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "cargo 1.89.0 (c24e10642 2025-06-23)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rustup",
+        "toolchain",
+        "install",
+        "1.99.0",
+        "--profile",
+        "minimal",
+        "--component",
+        "rustfmt,clippy",
+        "--no-self-update",
+        "--force-non-host"
+      ],
+      "exit_code": 0,
+      "stdout": "\n  1.99.0-x86_64-unknown-linux-musl installed - rustc 1.99.0 (b940084d7 2026-09-28)\n\n",
+      "stderr": "info: syncing channel updates for 1.99.0-x86_64-unknown-linux-musl\ninfo: latest update on 2026-10-01 for version 1.99.0 (b940084d7 2026-09-28)\ninfo: downloading 5 components\n"
+    },
+    {
+      "command": [
+        "rustc",
+        "+1.99.0",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "rustc 1.99.0 (b940084d7 2026-09-28)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "cargo 1.99.0 (5f94df478 2026-08-27)\n",
+      "stderr": ""
+    }
+  ],
+  "limitations": [
+    "Local Linux x86_64 musl bootstrap exercise; not an execution by Forgejo/act.",
+    "Installer uses --no-modify-path to preserve user shell profiles; the pinned action omits that flag on non-Windows.",
+    "PATH-file application is simulated locally; actual runner environment-file behavior and other native hosts require remote execution.",
+    "This exercise installs tools and checks version selection; it does not execute SDK tests."
+  ]
+}

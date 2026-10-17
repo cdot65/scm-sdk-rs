@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-16T23:53:59.590592+00:00",
+  "checkedAt": "2026-10-17T03:33:39.710028+00:00",
   "passed": true,
   "lockfileSha256": "fba4bdef0c3860a9d3034a036c02c2364adc63fb32c004922041ec3574a26e79",
   "lockfileUnchanged": true,
@@ -1510,7 +1510,7 @@
       "exit_code": 0,
       "stdout": "",
       "stderr": "From https://github.com/RustSec/advisory-db\n * branch              HEAD       -> FETCH_HEAD\n",
-      "durationSeconds": 0.56
+      "durationSeconds": 0.344
     },
     {
       "command": [
@@ -1519,18 +1519,18 @@
         "--shared",
         "--no-checkout",
         "/home/cdot/development/cdot65/scm-sdk-rs/.local/security/advisory-db.git",
-        "/tmp/scm-rustsec-pft1rwwx/advisory-db"
+        "/tmp/scm-rustsec-q8o121fj/advisory-db"
       ],
       "exit_code": 0,
       "stdout": "",
-      "stderr": "Cloning into '/tmp/scm-rustsec-pft1rwwx/advisory-db'...\ndone.\n",
-      "durationSeconds": 0.008
+      "stderr": "Cloning into '/tmp/scm-rustsec-q8o121fj/advisory-db'...\ndone.\n",
+      "durationSeconds": 0.007
     },
     {
       "command": [
         "git",
         "-C",
-        "/tmp/scm-rustsec-pft1rwwx/advisory-db",
+        "/tmp/scm-rustsec-q8o121fj/advisory-db",
         "checkout",
         "--detach",
         "64f92cdc64401fab47baa10e2e11fe382aa57155"
@@ -1538,7 +1538,7 @@
       "exit_code": 0,
       "stdout": "",
       "stderr": "HEAD is now at 64f92cdc Assigned RUSTSEC-2026-0365 to negentropy, RUSTSEC-2026-0366 to pest_grammars, RUSTSEC-2026-0367 to zip, RUSTSEC-2026-0368 to zip, RUSTSEC-2026-0369 to zip\n",
-      "durationSeconds": 0.089
+      "durationSeconds": 0.09
     },
     {
       "command": [
@@ -1547,7 +1547,7 @@
         "--file",
         "/home/cdot/development/cdot65/scm-sdk-rs/Cargo.lock",
         "--db",
-        "/tmp/scm-rustsec-pft1rwwx/advisory-db",
+        "/tmp/scm-rustsec-q8o121fj/advisory-db",
         "--no-fetch",
         "--json",
         "--deny",
@@ -1556,7 +1556,7 @@
       "exit_code": 0,
       "stdout": "{\"database\":{\"advisory-count\":1334,\"last-commit\":null,\"last-updated\":null},\"lockfile\":{\"dependency-count\":206},\"settings\":{\"target_arch\":[],\"target_os\":[],\"severity\":null,\"ignore\":[],\"informational_warnings\":[\"unmaintained\",\"unsound\",\"notice\"]},\"vulnerabilities\":{\"found\":false,\"count\":0,\"list\":[]},\"warnings\":{}}\n",
       "stderr": "",
-      "durationSeconds": 0.158
+      "durationSeconds": 0.204
     },
     {
       "command": [
@@ -1576,7 +1576,7 @@
       "exit_code": 0,
       "stdout": "",
       "stderr": "{\"fields\":{\"bans\":{\"errors\":0,\"helps\":0,\"notes\":0,\"warnings\":0},\"licenses\":{\"errors\":0,\"helps\":179,\"notes\":0,\"warnings\":0},\"sources\":{\"errors\":0,\"helps\":0,\"notes\":0,\"warnings\":0}},\"type\":\"summary\"}\n",
-      "durationSeconds": 0.383
+      "durationSeconds": 0.405
     }
   ],
   "limitations": [

@@ -1,0 +1,21 @@
+{
+  "actions": [
+    {
+      "action": "https://github.com/dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8",
+      "manifestUrl": "https://raw.githubusercontent.com/dtolnay/rust-toolchain/683b588c487a69d01f6c6ddf40f036ff682cc2c8/action.yml",
+      "manifestSha256": "ad8ad6383b6ce8c08579fc6f6a3fabd6a01f90b4007f65e2a5160944ba2988d4",
+      "localReadOnlyReference": ".local/ci-bootstrap-2026-10-17/rust-toolchain.action.yml"
+    },
+    {
+      "action": "https://github.com/actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+      "manifestUrl": "https://raw.githubusercontent.com/actions/setup-python/a26af69be951a213d495a4c3e4e4022e16d87065/action.yml",
+      "manifestSha256": "0acca40eee6f548ea8269ece66fd625fe9deb1f61f31f0b58562068fc083eb37",
+      "localReadOnlyReference": ".local/ci-bootstrap-2026-10-17/setup-python.action.yml"
+    }
+  ],
+  "scope": "Read-only review of exact pinned action manifests; no action source is redistributed in the crate.",
+  "limitations": [
+    "A pinned action still fetches compilers/interpreters and rustup from its upstream distribution services.",
+    "No assertion of complete remote workflow execution."
+  ]
+}

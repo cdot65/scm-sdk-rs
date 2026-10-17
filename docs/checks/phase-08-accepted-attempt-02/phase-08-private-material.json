@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "checkedAt": "2026-10-17T00:47:08.993041+00:00",
+  "sourceSha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
+  "headCommit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+  "sourceUnchanged": true,
+  "passed": true,
+  "gitVisibleFilesChecked": 691,
+  "selectedExternalClientIdentityOrSecretMatches": 0,
+  "publishedCrateSourceAndExampleCandidatesChecked": 124,
+  "publishedCrateSourceAndExamplesSha256": "5aeb922e45b3fd29c935ad092241cce14a1fb890b406d2dd4a86aa985ad903cb",
+  "publishedCrateSourceOrExampleRegistrationValueMatches": 0,
+  "existingTenantIdentifier": {
+    "matchingFilesCount": 3,
+    "alreadyPresentInHeadFilesCount": 3,
+    "newOrChangedFilesCount": 0,
+    "classification": "Only unchanged preexisting HEAD occurrences outside package source may be historical nonsecret tenant identifiers."
+  },
+  "scope": "Exact UTF-8 selected values checked in file contents and names; no selected values or config path retained.",
+  "limits": {
+    "registrationBytes": 65536,
+    "selectedValueBytes": 4096,
+    "filesPerTree": 32768,
+    "bytesPerTree": 268435456,
+    "bytesPerFile": 67108864,
+    "historicalLookupBudgetSeconds": 120
+  },
+  "limitations": [
+    "Exact-value scanning does not detect encodings, split/transformed secrets or unrelated credentials.",
+    "All regular src/examples files are scanned as a conservative superset; actual archive membership is separately qualified by check-package.py.",
+    "HEAD presence is historical evidence, not proof a tenant is public or authorized; no new tenant occurrences are accepted.",
+    "Python holds selected strings in process memory and cannot guarantee zeroization; no raw values, registration content or secret hashes are persisted.",
+    "Credential-free --check validates source freshness and structure only; it does not re-execute private matching or certify later changes in excluded review/check/status bookkeeping."
+  ]
+}

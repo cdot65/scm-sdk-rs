@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-17T01:46:15.023204+00:00",
+  "passed": true,
+  "originalCommit": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+  "cases": [
+    {
+      "case": "reported_source",
+      "workflowSha256": "31c98322fc92b468d92dcc7611426db15f0be2a7eb418c23670d7450a524ac50",
+      "succeeded": false,
+      "expectedSucceeded": false,
+      "output": "test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... \n  test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='contracts-and-package') ... FAIL\n  test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='rust') ... FAIL\n  test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='additional-native-platforms') ... FAIL\n\n======================================================================\nFAIL: test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='contracts-and-package')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 77, in test_every_job_bootstraps_rust_before_running_commands\n    self.assertEqual(installations, toolchains)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['\"1.89.0\"', '\"1.99.0\"']\n\nSecond list contains 2 additional elements.\nFirst extra element 0:\n'\"1.89.0\"'\n\n- []\n+ ['\"1.89.0\"', '\"1.99.0\"']\n\n======================================================================\nFAIL: test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='rust')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 77, in test_every_job_bootstraps_rust_before_running_commands\n    self.assertEqual(installations, toolchains)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['${{ matrix.toolchain }}']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'${{ matrix.toolchain }}'\n\n- []\n+ ['${{ matrix.toolchain }}']\n\n======================================================================\nFAIL: test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) (job='additional-native-platforms')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/cdot/development/cdot65/scm-sdk-rs/tools/test_ci.py\", line 77, in test_every_job_bootstraps_rust_before_running_commands\n    self.assertEqual(installations, toolchains)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['\"1.99.0\"']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'\"1.99.0\"'\n\n- []\n+ ['\"1.99.0\"']\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=3)\n"
+    },
+    {
+      "case": "corrected_source",
+      "workflowSha256": "3320f74b9a087143869c0b974bdb61430d579b841af364475573e3f9c084233a",
+      "succeeded": true,
+      "expectedSucceeded": true,
+      "output": "test_every_job_bootstraps_rust_before_running_commands (ci_guards.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+    }
+  ],
+  "limitations": [
+    "Offline workflow guard verifies setup declarations and ordering; actual runner action execution is separate."
+  ]
+}

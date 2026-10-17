@@ -12,7 +12,8 @@ acceptance and release publication retain separate evidence.
 
 ## Prerequisites
 
-Use Python 3.11+, Git, rustup and a native C/C++ toolchain. The default
+Use Python 3.12+ (CI pins 3.14.7 in `.python-version`), Git, rustup and a native
+C/C++ toolchain. The default
 reqwest/rustls transport uses non-FIPS AWS-LC native code with generated bindings;
 the selected configuration does not require CMake, Go or bindgen. Windows native
 runners need MSVC tools. See [DEPENDENCIES.md](DEPENDENCIES.md).
@@ -186,14 +187,25 @@ binary. Other runtime targets, Wasm and 32-bit native adapters remain unqualifie
 The configured [Forgejo workflow](../.forgejo/workflows/ci.yml) now selects Rust
 1.89.0/1.99.0, default/minimal/all and the complete isolated/combination matrix.
 It configures pinned development tooling, source/oracle checks, dependency policy,
-compile-only targets and archive/consumer verification. No retained remote run
-has executed this workflow; configuration alone is not CI evidence.
+compile-only targets and archive/consumer verification. The first reported remote
+run failed during setup because `rustup` was absent. No successful complete remote
+run has been retained; configuration alone is not CI evidence.
 
 Checkout/setup actions are pinned to exact commits and do not retain checkout
 credentials. No service credentials, registry tokens, publication step or mirror
-configuration is installed. The `ubuntu-latest` runner must provide Git, Python,
-rustup, Node for JavaScript actions, and a C/C++ compiler; setup-node selects the
-pinned development generator version. Additional native platform jobs require
+configuration is installed. Every job uses the pinned `dtolnay/rust-toolchain`
+action to bootstrap rustup when absent, expose Cargo on subsequent steps' PATH,
+and install its exact Rust compiler with rustfmt and Clippy. Pinned setup-uv
+installs uv 0.13.1; the owned `scripts/bootstrap-python.sh` installs the portable
+interpreter selected by `.python-version` into job-local directories and exports
+its executables through the runner PATH file. It requires no preinstalled Python
+or Ubuntu-specific interpreter distribution. setup-node selects the
+pinned development generator version. The runner must provide Git, Node 20 for
+JavaScript actions, Bash, HTTPS/curl support, and a C/C++ compiler. Rust and Python
+need not be preinstalled. uv is also installed explicitly. The Rust CI action
+sets the runner's default compiler;
+project scripts select explicit versions and preserve the developer's default.
+Additional native platform jobs require
 registered runner labels and explicit dispatch. Their declarations are not runtime
 qualification. Local native and cross reports remain independently retained.
 

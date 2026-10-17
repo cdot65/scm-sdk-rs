@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-17T03:07:36.833401+00:00",
+  "passed": true,
+  "action": "https://github.com/astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b",
+  "actionEntrySha256": "a771fe48447c94a58a69cf65f9f596c5301edcb41bf5ee7fad23e5be99d45a7a",
+  "version": "0.13.1",
+  "githubTokenEmpty": true,
+  "cacheUploadDisabled": true,
+  "nodeVersion": "v22.23.2",
+  "exit_code": 0,
+  "stdout": "::debug::Resolving relative path **/uv.lock to /home/cdot/development/cdot65/scm-sdk-rs/**/uv.lock\n::debug::Resolving version: 0.13.1\n::debug::isExplicit: 0.13.1\n::debug::explicit? true\n::debug::Version 0.13.1 is an explicit version.\n::debug::Trying to get uv from tool cache for 0.13.1...\n::debug::Cached versions: \n::debug::evaluating 0 versions\n::debug::match not found\n::debug::isExplicit: 0.13.1\n::debug::explicit? true\n::debug::checking cache: /home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tools/uv/0.13.1/x86_64\n::debug::not found\nmanifest-file not provided, reading from local file.\nmanifest-file does not contain version 0.13.1, arch x86_64, platform unknown-linux-musl. Falling back to GitHub releases.\nDownloading uv from \"https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz\" ...\n::debug::Downloading https://github.com/astral-sh/uv/releases/download/0.13.1/uv-x86_64-unknown-linux-musl.tar.gz\n::debug::Destination /home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tmp/e6e9bc69-6c31-47e8-936d-6b050b67d3e5\n::debug::download complete\n::debug::Checksum not provided. Checking known checksums.\n::debug::No known checksum found for x86_64-unknown-linux-musl-0.13.1.\n::debug::Checking tar --version\n::debug::tar (busybox) 1.37.0\n[command]/bin/tar xz -C /home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tmp/5bd3f392-b60b-4b92-878f-078a8c9ff19a -f /home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tmp/e6e9bc69-6c31-47e8-936d-6b050b67d3e5\n::debug::Caching tool uv 0.13.1 x86_64\n::debug::source dir: /home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tmp/5bd3f392-b60b-4b92-878f-078a8c9ff19a/uv-x86_64-unknown-linux-musl\n::debug::destination /home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tools/uv/0.13.1/x86_64\n::debug::finished caching tool\nAdded /home/cdot/.local/bin to the path\nAdded /home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tools/uv/0.13.1/x86_64 to the path\n##[add-matcher]/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-bootstrap-2026-10-17/setup-uv-repository/.github/python.json\nSet UV_CACHE_DIR to /home/cdot/.cache/uv\nSuccessfully installed uv version 0.13.1\n",
+  "stderr": "(node:2099800) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n(Use `node --trace-deprecation ...` to show where the warning was created)\n",
+  "exportedPaths": [
+    "/home/cdot/.local/bin",
+    "/home/cdot/development/cdot65/scm-sdk-rs/.local/ci-uv-action-execution/tools/uv/0.13.1/x86_64"
+  ],
+  "limitations": [
+    "Direct local execution of the pinned JavaScript action on Linux x86_64 musl, using Node 22.23.2; the action declares Node 20.",
+    "Forgejo/act orchestration and other native hosts are not executed."
+  ],
+  "installedUvVersion": "uv 0.13.1 (x86_64-unknown-linux-musl)",
+  "installedUvBinarySha256": "752a98d0e2aa983cc2f82d1ca53a1f3374b81d523fb743c06c10286fdf29f014",
+  "installedUvMatchesVerifiedOfficialBinary": true
+}
