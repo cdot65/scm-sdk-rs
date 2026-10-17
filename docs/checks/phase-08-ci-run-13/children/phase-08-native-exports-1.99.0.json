@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T17:11:00.720432+00:00",
+  "passed": true,
+  "sourceUnchanged": true,
+  "nativeExportsSha256": "bb8b8ce6fa2976f3895f4770cc311202391a878da79f3ccab784a54624fa166f",
+  "frozenCapabilities": 3820,
+  "toolchain": "1.99.0",
+  "rustcVersion": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1\n",
+  "hostTarget": "x86_64-unknown-linux-gnu",
+  "execution": "separate_public_consumer_compile_and_execution",
+  "cargoTargetDir": "/workspace/cdot/scm-sdk-rs/target",
+  "command": [
+    "/root/.cargo/bin/cargo",
+    "+1.99.0",
+    "run",
+    "--manifest-path",
+    "contracts/native-probes/Cargo.toml",
+    "--locked",
+    "--offline",
+    "--target",
+    "x86_64-unknown-linux-gnu"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "   Compiling tokio v1.53.3\n   Compiling tokio-util v0.7.20\n   Compiling tower v0.5.3\n   Compiling tokio-rustls v0.26.6\n   Compiling async-compression v0.4.50\n   Compiling h2 v0.4.20\n   Compiling tower-http v0.6.11\n   Compiling tokio-websockets v0.13.3\n   Compiling hyper v1.12.0\n   Compiling hyper-util v0.1.21\n   Compiling hyper-rustls v0.27.10\n   Compiling reqwest v0.13.5\n   Compiling scm-sdk v0.1.0 (/workspace/cdot/scm-sdk-rs/crates/scm-sdk)\n   Compiling scm-sdk-export-probes v0.0.0 (/workspace/cdot/scm-sdk-rs/contracts/native-probes)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 50.11s\n     Running `target/x86_64-unknown-linux-gnu/debug/scm-sdk-export-probes`\n",
+  "durationSeconds": 53.006,
+  "limitations": [
+    "This proves the recorded native host/compiler public API probes and literal assertions, not successful live service workflows."
+  ]
+}

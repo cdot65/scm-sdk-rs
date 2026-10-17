@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-17T17:35:03.915830+00:00",
+  "passed": true,
+  "toolchain": "1.99.0",
+  "rustcVersion": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1\n",
+  "installedTargets": [
+    "aarch64-apple-darwin",
+    "aarch64-unknown-linux-gnu",
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu"
+  ],
+  "qualification": "compile_only_no_native_transports",
+  "checks": [
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "selection": "minimal",
+      "features": [],
+      "command": [
+        "/root/.cargo/bin/cargo",
+        "+1.99.0",
+        "check",
+        "-p",
+        "scm-sdk",
+        "--lib",
+        "--locked",
+        "--offline",
+        "--no-default-features",
+        "--target",
+        "x86_64-pc-windows-msvc"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "    Checking stable_deref_trait v1.2.1\n    Checking litemap v0.8.3\n    Checking writeable v0.6.4\n    Checking typenum v1.20.1\n    Checking utf8_iter v1.0.4\n    Checking memchr v2.8.3\n    Checking smallvec v1.16.3\n    Checking bytes v1.12.1\n   Compiling icu_normalizer_data v2.3.0\n   Compiling icu_properties_data v2.3.0\n   Compiling serde_core v1.0.229\n    Checking pin-project-lite v0.2.17\n    Checking subtle v2.6.1\n   Compiling zmij v1.0.23\n    Checking futures-core v0.3.34\n    Checking itoa v1.0.18\n    Checking regex-syntax v0.8.11\n    Checking futures-task v0.3.34\n    Checking futures-sink v0.3.34\n    Checking slab v0.4.12\n    Checking percent-encoding v2.3.2\n    Checking deranged v0.5.9\n    Checking cpufeatures v0.2.17\n    Checking cfg-if v1.0.5\n    Checking time-core v0.1.9\n    Checking powerfmt v0.2.1\n    Checking num-conv v0.2.2\n   Compiling generic-array v0.14.7\n   Compiling serde_json v1.0.154\n   Compiling serde v1.0.229\n    Checking zeroize v1.9.1\n    Checking zerofrom v0.1.8\n    Checking base64 v0.22.1\n    Checking mime v0.3.17\n    Checking httpdate v1.0.3\n    Checking ryu-js v1.0.3\n    Checking form_urlencoded v1.2.2\n    Checking futures-util v0.3.34\n    Checking yoke v0.8.3\n    Checking zerovec v0.11.8\n    Checking zerotrie v0.2.5\n    Checking aho-corasick v1.1.5\n    Checking tokio v1.53.3\n    Checking http v1.5.0\n    Checking tinystr v0.8.4\n    Checking potential_utf v0.1.6\n    Checking icu_collections v2.3.0\n    Checking icu_locale_core v2.3.0\n    Checking crypto-common v0.1.7\n    Checking block-buffer v0.10.4\n    Checking time v0.3.55\n    Checking digest v0.10.7\n    Checking sha2 v0.10.9\n    Checking hmac v0.12.1\n    Checking regex-automata v0.4.18\n    Checking icu_provider v2.3.1\n    Checking icu_properties v2.3.0\n    Checking icu_normalizer v2.3.0\n    Checking idna_adapter v1.2.2\n    Checking idna v1.1.0\n    Checking url v2.5.8\n    Checking regex v1.13.1\n    Checking tokio-util v0.7.20\n    Checking scm-sdk v0.1.0 (/workspace/cdot/scm-sdk-rs/crates/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.77s\n",
+      "dependencyTree": "scm-sdk v0.1.0 (/workspace/cdot/scm-sdk-rs/crates/scm-sdk)\nbase64 v0.22.1\nbytes v1.12.1\nfutures-util v0.3.34\nfutures-core v0.3.34\nfutures-macro v0.3.34 (proc-macro)\nproc-macro2 v1.0.107\nunicode-ident v1.0.27\nquote v1.0.47\nproc-macro2 v1.0.107 (*)\nsyn v3.0.9\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nunicode-ident v1.0.27\nfutures-sink v0.3.34\nfutures-task v0.3.34\npin-project-lite v0.2.17\nslab v0.4.12\nhmac v0.12.1\ndigest v0.10.7\nblock-buffer v0.10.4\ngeneric-array v0.14.7\ntypenum v1.20.1\nversion_check v0.9.5\ncrypto-common v0.1.7\ngeneric-array v0.14.7 (*)\ntypenum v1.20.1\nsubtle v2.6.1\nhttp v1.5.0\nbytes v1.12.1\nitoa v1.0.18\nhttpdate v1.0.3\nmime v0.3.17\nregex v1.13.1\naho-corasick v1.1.5\nmemchr v2.8.3\nmemchr v2.8.3\nregex-automata v0.4.18\naho-corasick v1.1.5 (*)\nmemchr v2.8.3\nregex-syntax v0.8.11\nregex-syntax v0.8.11\nryu-js v1.0.3\nserde v1.0.229\nserde_core v1.0.229\nserde_derive v1.0.229 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nserde_json v1.0.154\nitoa v1.0.18\nmemchr v2.8.3\nserde_core v1.0.229\nzmij v1.0.23\nsha2 v0.10.9\ncfg-if v1.0.5\ncpufeatures v0.2.17\ndigest v0.10.7 (*)\ntime v0.3.55\nderanged v0.5.9\nnum-conv v0.2.2\npowerfmt v0.2.1\ntime-core v0.1.9\ntokio v1.53.3\nbytes v1.12.1\npin-project-lite v0.2.17\ntokio-macros v2.7.2 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\ntokio-util v0.7.20\nbytes v1.12.1\nfutures-core v0.3.34\nfutures-sink v0.3.34\nfutures-util v0.3.34 (*)\npin-project-lite v0.2.17\ntokio v1.53.3 (*)\nurl v2.5.8\nform_urlencoded v1.2.2\npercent-encoding v2.3.2\nidna v1.1.0\nidna_adapter v1.2.2\nicu_normalizer v2.3.0\nicu_collections v2.3.0\ndisplaydoc v0.2.7 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\npotential_utf v0.1.6\nzerovec v0.11.8\nyoke v0.8.3\nstable_deref_trait v1.2.1\nyoke-derive v0.8.4 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nsynstructure v0.14.0\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nzerofrom v0.1.8\nzerofrom-derive v0.1.8 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nsynstructure v0.14.0 (*)\nzerofrom v0.1.8 (*)\nzerovec-derive v0.11.6 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nutf8_iter v1.0.4\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerovec v0.11.8 (*)\nicu_normalizer_data v2.3.0\nicu_provider v2.3.1\ndisplaydoc v0.2.7 (proc-macro) (*)\nicu_locale_core v2.3.0\ndisplaydoc v0.2.7 (proc-macro) (*)\nlitemap v0.8.3\ntinystr v0.8.4\ndisplaydoc v0.2.7 (proc-macro) (*)\nzerovec v0.11.8 (*)\nwriteable v0.6.4\nzerovec v0.11.8 (*)\nwriteable v0.6.4\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerotrie v0.2.5\ndisplaydoc v0.2.7 (proc-macro) (*)\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerovec v0.11.8 (*)\nsmallvec v1.16.3\nzerovec v0.11.8 (*)\nicu_properties v2.3.0\ndisplaydoc v0.2.7 (proc-macro) (*)\nicu_collections v2.3.0 (*)\nicu_locale_core v2.3.0 (*)\nicu_properties_data v2.3.0\nicu_provider v2.3.1 (*)\nzerotrie v0.2.5 (*)\nzerovec v0.11.8 (*)\nsmallvec v1.16.3\nutf8_iter v1.0.4\npercent-encoding v2.3.2\nzeroize v1.9.1\n",
+      "durationSeconds": 1.786
+    },
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "selection": "products-and-caller-transports",
+      "features": [
+        "models",
+        "scan",
+        "management",
+        "dlp",
+        "iam",
+        "gateway",
+        "agentguard",
+        "realtime",
+        "model-security",
+        "red-team",
+        "tracing"
+      ],
+      "command": [
+        "/root/.cargo/bin/cargo",
+        "+1.99.0",
+        "check",
+        "-p",
+        "scm-sdk",
+        "--lib",
+        "--locked",
+        "--offline",
+        "--no-default-features",
+        "--target",
+        "x86_64-pc-windows-msvc",
+        "--features",
+        "models,scan,management,dlp,iam,gateway,agentguard,realtime,model-security,red-team,tracing"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "    Checking once_cell v1.21.4\n   Compiling getrandom v0.4.3\n    Checking tracing-core v0.1.36\n    Checking tracing v0.1.44\n    Checking scm-sdk v0.1.0 (/workspace/cdot/scm-sdk-rs/crates/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 17.96s\n",
+      "dependencyTree": "scm-sdk v0.1.0 (/workspace/cdot/scm-sdk-rs/crates/scm-sdk)\nbase64 v0.22.1\nbytes v1.12.1\nfutures-util v0.3.34\nfutures-core v0.3.34\nfutures-macro v0.3.34 (proc-macro)\nproc-macro2 v1.0.107\nunicode-ident v1.0.27\nquote v1.0.47\nproc-macro2 v1.0.107 (*)\nsyn v3.0.9\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nunicode-ident v1.0.27\nfutures-sink v0.3.34\nfutures-task v0.3.34\npin-project-lite v0.2.17\nslab v0.4.12\ngetrandom v0.4.3\ncfg-if v1.0.5\nhmac v0.12.1\ndigest v0.10.7\nblock-buffer v0.10.4\ngeneric-array v0.14.7\ntypenum v1.20.1\nversion_check v0.9.5\ncrypto-common v0.1.7\ngeneric-array v0.14.7 (*)\ntypenum v1.20.1\nsubtle v2.6.1\nhttp v1.5.0\nbytes v1.12.1\nitoa v1.0.18\nhttpdate v1.0.3\nmime v0.3.17\nregex v1.13.1\naho-corasick v1.1.5\nmemchr v2.8.3\nmemchr v2.8.3\nregex-automata v0.4.18\naho-corasick v1.1.5 (*)\nmemchr v2.8.3\nregex-syntax v0.8.11\nregex-syntax v0.8.11\nryu-js v1.0.3\nserde v1.0.229\nserde_core v1.0.229\nserde_derive v1.0.229 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nserde_json v1.0.154\nitoa v1.0.18\nmemchr v2.8.3\nserde_core v1.0.229\nzmij v1.0.23\nsha2 v0.10.9\ncfg-if v1.0.5\ncpufeatures v0.2.17\ndigest v0.10.7 (*)\ntime v0.3.55\nderanged v0.5.9\nnum-conv v0.2.2\npowerfmt v0.2.1\ntime-core v0.1.9\ntokio v1.53.3\nbytes v1.12.1\npin-project-lite v0.2.17\ntokio-macros v2.7.2 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\ntokio-util v0.7.20\nbytes v1.12.1\nfutures-core v0.3.34\nfutures-sink v0.3.34\nfutures-util v0.3.34 (*)\npin-project-lite v0.2.17\ntokio v1.53.3 (*)\ntracing v0.1.44\npin-project-lite v0.2.17\ntracing-core v0.1.36\nonce_cell v1.21.4\nurl v2.5.8\nform_urlencoded v1.2.2\npercent-encoding v2.3.2\nidna v1.1.0\nidna_adapter v1.2.2\nicu_normalizer v2.3.0\nicu_collections v2.3.0\ndisplaydoc v0.2.7 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\npotential_utf v0.1.6\nzerovec v0.11.8\nyoke v0.8.3\nstable_deref_trait v1.2.1\nyoke-derive v0.8.4 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nsynstructure v0.14.0\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nzerofrom v0.1.8\nzerofrom-derive v0.1.8 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nsynstructure v0.14.0 (*)\nzerofrom v0.1.8 (*)\nzerovec-derive v0.11.6 (proc-macro)\nproc-macro2 v1.0.107 (*)\nquote v1.0.47 (*)\nsyn v3.0.9 (*)\nutf8_iter v1.0.4\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerovec v0.11.8 (*)\nicu_normalizer_data v2.3.0\nicu_provider v2.3.1\ndisplaydoc v0.2.7 (proc-macro) (*)\nicu_locale_core v2.3.0\ndisplaydoc v0.2.7 (proc-macro) (*)\nlitemap v0.8.3\ntinystr v0.8.4\ndisplaydoc v0.2.7 (proc-macro) (*)\nzerovec v0.11.8 (*)\nwriteable v0.6.4\nzerovec v0.11.8 (*)\nwriteable v0.6.4\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerotrie v0.2.5\ndisplaydoc v0.2.7 (proc-macro) (*)\nyoke v0.8.3 (*)\nzerofrom v0.1.8 (*)\nzerovec v0.11.8 (*)\nsmallvec v1.16.3\nzerovec v0.11.8 (*)\nicu_properties v2.3.0\ndisplaydoc v0.2.7 (proc-macro) (*)\nicu_collections v2.3.0 (*)\nicu_locale_core v2.3.0 (*)\nicu_properties_data v2.3.0\nicu_provider v2.3.1 (*)\nzerotrie v0.2.5 (*)\nzerovec v0.11.8 (*)\nsmallvec v1.16.3\nutf8_iter v1.0.4\npercent-encoding v2.3.2\nzeroize v1.9.1\n",
+      "durationSeconds": 17.974
+    }
+  ],
+  "limitations": [
+    "No target binaries are linked or executed by cargo check.",
+    "Reqwest, native WebSocket, TLS, proxies, roots and native cryptography are excluded; their non-musl platform behavior remains unqualified."
+  ]
+}

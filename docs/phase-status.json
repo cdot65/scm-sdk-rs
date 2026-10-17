@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 8,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -60,26 +60,23 @@
         },
         {
           "id": "remote-ci-execution",
-          "status": "run12_required47_and_full77_passed_current_workflow_admission_fix_pending",
+          "status": "resolved_in_phase_8_current_main_terminal_success",
           "due_phase": 8,
           "evidence": [
-            "docs/checks/phase-08-ci-run-11/qualification-capture-receipt.json",
-            "docs/checks/phase-08-ci-run-11/matrix-capture-receipt.json",
-            "docs/checks/phase-08-cold-cargo-inputs.json",
-            "docs/checks/phase-08-exact-ci-preparation.json",
-            "docs/checks/phase-08-cold-prepared-audit.json",
-            "docs/CI.md",
-            "docs/checks/phase-08-ci-run-12/qualification-capture-receipt.json",
-            "docs/checks/phase-08-review09-fixes.json"
+            "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+            "docs/checks/phase-08-ci-run-13/run-status.json",
+            "docs/checks/phase-08-ci-run-14-historical-tag.json"
           ],
-          "scope": "Run 12 at 8034e366 passed all 47 required jobs and all 77 qualification commands on unchanged source 68cd8aa9, with original report bytes and end-source inventory retained. Its overall workflow remains waiting on optional native jobs. Current candidate cf44fb56 separates native qualification into a dispatch-only workflow; its full local gate, review 09, push, clean package proofs and terminal-success CI remain required before this delivery limitation closes."
+          "scope": "Run13 at f60e479 passed all47 required jobs and all77 qualification commands with unchanged source cf44fb56. Original parent/children and end-source inventory are retained. Published-tag run14 is a separate observed failure at immutable source4f65 and is not represented as current-main success."
         },
         {
           "id": "native-platform-qualification",
           "status": "qualified_with_explicit_limits",
           "due_phase": 8,
           "evidence": [
-            "docs/PLATFORMS.md"
+            "docs/PLATFORMS.md",
+            "docs/checks/phase-08-ci-run-13/children/phase-08-rust-1.89.0-all.json",
+            "docs/checks/phase-08-ci-run-13/children/phase-08-rust-1.99.0-all.json"
           ],
           "scope": "Actual native Linux x86_64 musl execution and retained Linux x86_64 GNU execution, with exact compiler/feature scope recorded in docs/PLATFORMS.md. Linux ARM64, Apple Silicon and Windows portable-core/product checks remain compile-only; those native-host workflows have not executed."
         }
@@ -479,7 +476,7 @@
     {
       "id": 8,
       "name": "Qualification and delivery",
-      "status": "in_progress",
+      "status": "complete",
       "reviews": [
         "docs/reviews/phase-08-attempt-02.json",
         "docs/reviews/phase-08-attempt-04.json",
@@ -571,10 +568,10 @@
       ],
       "live_acceptance": "recorded_per_method_with_explicit_service_prerequisites",
       "delivery": {
-        "status": "all_required_run12_checks_passed_workflow_admission_fix_pending",
+        "status": "complete_reviewed_source_current_ci_clean_packages_exact_tag_and_private_matching_verified",
         "registry_publication": "verified_existing_publication",
         "registry_publication_evidence": "docs/checks/release-registry-0.1.0.json",
-        "remote_ci": "run12_required47_passed_overall_waiting_on_optional_jobs",
+        "remote_ci": "success",
         "previous_remote_ci": {
           "status": "failure",
           "source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
@@ -582,33 +579,33 @@
           "failed_command": "scripts/check-private-material.py --check",
           "cause": "Exact captured exception unavailable; a separately reproduced validator defect is fixed."
         },
-        "source_commit": "8034e36610c34a6d4bbe2a26d18ad82de3e48bc1",
+        "source_commit": "f60e479820122946a71ac682b9b3f26275674553",
         "source_pushed": true,
-        "source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
+        "source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
         "remote": "ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git",
         "clean_release_archive": {
           "status": "passed_for_reviewed_development_snapshot_not_registry_republication",
-          "release_source_commit": "8034e36610c34a6d4bbe2a26d18ad82de3e48bc1",
+          "release_source_commit": "f60e479820122946a71ac682b9b3f26275674553",
           "proofs": [
             {
               "toolchain": "1.89.0",
               "hostTarget": "x86_64-unknown-linux-musl",
-              "report": "docs/checks/release-source-8034e36/release-package-1.89.0.json",
-              "archiveSha256": "627dc9413cf112d56ee20cb5896e703d9f70b7468c0a23719cd1f353b7df24ea",
-              "archiveBytes": 825418,
-              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-627dc9413cf112d5.crate",
-              "releaseCommit": "8034e36610c34a6d4bbe2a26d18ad82de3e48bc1",
+              "report": "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+              "archiveSha256": "2d7148fc0878f6547b5c4eb57c2d94e2472ea45120a7211c11f2f05e9d5f0140",
+              "archiveBytes": 825416,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-2d7148fc0878f654.crate",
+              "releaseCommit": "f60e479820122946a71ac682b9b3f26275674553",
               "effectiveDirty": false,
               "requireClean": true
             },
             {
               "toolchain": "1.99.0",
               "hostTarget": "x86_64-unknown-linux-musl",
-              "report": "docs/checks/release-source-8034e36/release-package-1.99.0.json",
-              "archiveSha256": "929d1125819f34645f266e244959dc93dea2c47db246980033c66225305b82c2",
-              "archiveBytes": 825420,
-              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-929d1125819f3464.crate",
-              "releaseCommit": "8034e36610c34a6d4bbe2a26d18ad82de3e48bc1",
+              "report": "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+              "archiveSha256": "27a20664bde5347b625e9eacb1982d4e89479146935c7b1bcfce38c735ed11e2",
+              "archiveBytes": 825419,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-27a20664bde5347b.crate",
+              "releaseCommit": "f60e479820122946a71ac682b9b3f26275674553",
               "effectiveDirty": false,
               "requireClean": true
             }
@@ -617,48 +614,65 @@
         "release_tag": {
           "name": "v0.1.0",
           "required_target": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
-          "status": "annotated_tag_created_locally_remote_push_pending_ci",
+          "status": "pushed_remote_object_and_peel_verified",
           "tag_object": "5ee6a3f30ceee413ed7b9aef7d5cfcc45b34a140",
-          "local_target_verified": "4f65dc48686a3b701ed0585812fcca46859f7e5a"
+          "local_target_verified": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+          "remote_target": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+          "evidence": "docs/checks/release-tag-v0.1.0.json",
+          "historical_tag_workflow_status": "failure",
+          "historical_tag_workflow_evidence": "docs/checks/phase-08-ci-run-14-historical-tag.json"
         },
         "completion_steps": [
-          "Pass all 77 checks on unchanged source and obtain an actual Claude review of at least 9/10.",
-          "Commit and push the reviewed source; qualify both clean compiler archives.",
-          "Retain a successful source-bound remote run and all required job statuses.",
-          "Push the annotated release tag at the exact published source and verify its remote peeled commit.",
-          "Refresh private matching and final delivery records; push the evidence-only completion commit."
+          "Complete unchanged77-command local gate and actual Claude review09 at9/10 passed.",
+          "Reviewed source f60e479 pushed and both exact --require-clean compiler archives passed.",
+          "Run13 reached terminal success with47 jobs and77 qualification commands; original reports and end-source fingerprint retained.",
+          "Exact published-source v0.1.0 tag pushed and remote object/peel verified; historical tag run14 failure retained separately.",
+          "Actual selected-value matching refreshed over delivery artifacts; only excluded completion bookkeeping is committed afterward."
         ],
-        "remote_ci_evidence": "docs/checks/phase-08-ci-run-12/qualification-capture-receipt.json",
-        "verified_at": "2026-10-17T14:31:37.580390+00:00",
+        "remote_ci_evidence": "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+        "verified_at": "2026-10-17T17:38:52.542031+00:00",
         "current_source_candidate": {
           "source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
-          "status": "all77_and_actual_review09_score9_accepted_push_pending",
+          "status": "accepted_and_delivered",
           "sdk_runtime_unchanged": true
-        }
+        },
+        "accepted_review": "docs/reviews/phase-08-attempt-09.json",
+        "accepted_review_score": 9,
+        "remote_ci_observation": {
+          "runId": 4852,
+          "runNumber": 13,
+          "sourceCommit": "f60e479820122946a71ac682b9b3f26275674553",
+          "status": "success",
+          "htmlUrl": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/13",
+          "requiredJobs": 47,
+          "successfulJobs": 47,
+          "fullQualificationCommands": 77
+        },
+        "completion_evidence": "docs/checks/phase-08-delivery-completion.json",
+        "final_private_material_evidence": "docs/checks/phase-08-private-material.json"
       },
       "milestones": {
         "implemented_scope": {
-          "status": "current_candidate_implemented_full_gate_review_and_delivery_pending",
+          "status": "accepted_by_review",
           "evidence": [
-            ".forgejo/workflows/ci.yml",
-            ".forgejo/workflows/native-platforms.yml",
-            "scripts/check-dependencies.py",
-            "tools/test_ci.py",
-            "tools/test_dependency_policy.py",
-            "docs/checks/phase-08-review09-fixes.json"
+            "docs/reviews/phase-08-attempt-09.json"
           ]
         },
         "independent_verification": {
-          "status": "passed_for_current_source_delivery_pending",
-          "source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
+          "status": "passed",
           "evidence": [
-            "docs/checks/phase-08.json"
-          ]
+            "docs/checks/phase-08.json",
+            "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+            "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+            "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+            "docs/checks/release-tag-v0.1.0.json",
+            "docs/checks/phase-08-private-material.json"
+          ],
+          "source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9"
         },
         "claude_review": {
-          "status": "accepted_current_source_delivery_pending",
+          "status": "accepted",
           "score": 9,
-          "source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
           "evidence": [
             "docs/reviews/phase-08-attempt-09.json"
           ]
@@ -728,7 +742,7 @@
             {
               "id": "final-bookkeeping-credential-scan",
               "severity": "low",
-              "status": "required_after_current_review_and_delivery_records",
+              "status": "actual_selected_value_scan_refreshed_after_review_ci_tag_records",
               "scope": "Original final scan remains historical. Refresh the selected-value scan after the current accepted review and both new clean-archive proof records before final delivery.",
               "evidence": [
                 "docs/checks/phase-08-private-material.json"
@@ -737,11 +751,11 @@
             {
               "id": "isolated-msrv-matrix",
               "severity": "low",
-              "status": "server_reported_success_for_preceding_reviewed_source_current_source_pending",
-              "scope": "Run 10 at 6fe1fac reports all 46 Rust matrix jobs successful, including every isolated MSRV feature. Detailed native-host execution evidence is directly retained for its1.99default job; no other platform execution is inferred from statuses. The SDK runtime is unchanged in the build-output correction; its full new CI run remains required.",
+              "status": "all46_current_source_matrix_statuses_passed",
+              "scope": "Run13 reports all46 matrix jobs successful for exact reviewed source f60e479. Detailed native GNU compiler/feature evidence is retained in its full qualification child reports; no separate run13 isolated-matrix report capture is claimed.",
               "evidence": [
-                "docs/checks/phase-08-ci-run-10/run-status.json",
-                "docs/checks/phase-08-ci-run-10/matrix-capture-receipt.json"
+                "docs/checks/phase-08-ci-run-13/run-status.json",
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json"
               ]
             },
             {
@@ -759,13 +773,20 @@
             {
               "id": "clean-commit-proof-and-push",
               "severity": "low",
-              "status": "historical_proof_current_source_delivery_pending",
+              "status": "resolved_by_current_accepted_source_delivery",
               "scope": "Accepted CI correction committed and pushed; both clean native archives passed for the exact new source commit. Original f4178928 proofs remain historical.",
               "evidence": [
                 "docs/checks/release-source-bde0f4e5/release-package-1.89.0.json",
                 "docs/checks/release-source-bde0f4e5/release-package-1.99.0.json"
               ],
-              "source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8"
+              "source_commit": "bde0f4e53302d8a8c541fe6ca5f37d2f833355c8",
+              "resolution_evidence": [
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+                "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+                "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+                "docs/checks/release-tag-v0.1.0.json"
+              ],
+              "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553"
             },
             {
               "id": "dependency-runner-layout",
@@ -869,7 +890,7 @@
             {
               "id": "current-delivery-proof-and-remote-ci",
               "severity": "low",
-              "status": "source_delivery_and_clean_proofs_complete_remote_ci_unverified",
+              "status": "resolved_by_current_accepted_source_delivery",
               "path": "docs/checks/phase-08-ci-bootstrap.json",
               "scope": "The corrected workflow still has no execution receipt. The local exercises install rustup directly and run the pinned uv action and bootstrap script outside any runner, and PATH-file application is simulated (docs/checks/phase-08-ci-python-bootstrap.json:80-84, docs/checks/phase-08-ci-uv-action.json:17-20), so the fix's effectiveness on a real runner \u2014 the action's $GITHUB_PATH export, `--offline` cargo cache coverage for the separate contracts/native-probes lockfile, and the 180-minute cold-cache budget for the 77-command gate \u2014 remains unverified. Likewise the reviewed source is uncommitted, origin/main is still 4f65dc48, and the only --require-clean archive proofs bind releaseCommit f4178928. All of this is labeled honestly (docs/phase-status.json:546-564, docs/CI.md:101-119, docs/RELEASE.md:74-75) and the push/proof step must by construction follow this review, so it is an outstanding delivery obligation rather than a misstatement.",
               "required_followup": "Keep remote_ci at \"configured_unexecuted\" until a Forgejo run log for the corrected workflow (at minimum contracts-and-package and one rust matrix job) is retained. Before marking phase 8 complete, commit the reviewed source, run both --require-clean archive checks on 1.89.0 and 1.99.0 with distinct ignored outputs, push the ordinary commits, and record the exact commit plus both archive digests and a refreshed private-material scan.",
@@ -877,7 +898,14 @@
               "current_proof_evidence": [
                 "docs/checks/release-package-1.89.0.json",
                 "docs/checks/release-package-1.99.0.json"
-              ]
+              ],
+              "resolution_evidence": [
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+                "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+                "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+                "docs/checks/release-tag-v0.1.0.json"
+              ],
+              "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553"
             }
           ]
         },
@@ -967,10 +995,17 @@
             },
             {
               "id": "reviewed-source-delivery",
-              "status": "pending_current_review_and_actual_delivery",
+              "status": "resolved_by_current_accepted_source_delivery",
               "evidence": [
                 "docs/phase-status.json"
-              ]
+              ],
+              "resolution_evidence": [
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+                "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+                "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+                "docs/checks/release-tag-v0.1.0.json"
+              ],
+              "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553"
             }
           ]
         },
@@ -1016,10 +1051,17 @@
             },
             {
               "id": "source-clean-proofs-ci-and-tag",
-              "status": "post_review_delivery_pending",
+              "status": "resolved_by_current_accepted_source_delivery",
               "evidence": [
                 "docs/phase-status.json"
-              ]
+              ],
+              "resolution_evidence": [
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+                "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+                "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+                "docs/checks/release-tag-v0.1.0.json"
+              ],
+              "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553"
             }
           ]
         },
@@ -1037,8 +1079,15 @@
             {
               "id": "current-source-remote-delivery",
               "severity": "medium",
-              "status": "required_delivery_pending",
-              "scope": "Push reviewed source, both --require-clean package proofs, retain successful source-bound qualification, then exact v0.1.0 tag."
+              "status": "resolved_by_current_accepted_source_delivery",
+              "scope": "Push reviewed source, both --require-clean package proofs, retain successful source-bound qualification, then exact v0.1.0 tag.",
+              "resolution_evidence": [
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+                "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+                "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+                "docs/checks/release-tag-v0.1.0.json"
+              ],
+              "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553"
             },
             {
               "id": "actual-default-cargo-directory",
@@ -1081,8 +1130,15 @@
             {
               "id": "review08-source-delivery",
               "severity": "medium",
-              "status": "required_delivery_pending",
-              "scope": "Push the reviewed source, qualify both clean compiler archives, retain complete successful remote qualification, and verify the exact published-source tag."
+              "status": "resolved_by_current_accepted_source_delivery",
+              "scope": "Push the reviewed source, qualify both clean compiler archives, retain complete successful remote qualification, and verify the exact published-source tag.",
+              "resolution_evidence": [
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+                "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+                "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+                "docs/checks/release-tag-v0.1.0.json"
+              ],
+              "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553"
             },
             {
               "id": "dependency-checker-partial-failure-report",
@@ -1134,9 +1190,16 @@
               "id": "review09-finding-1",
               "severity": "medium",
               "path": "docs/phase-status.json",
-              "status": "current_delivery_required",
+              "status": "resolved_by_current_accepted_source_delivery",
               "scope": "Phase 8's acceptance evidence includes \"push reviewed commits to origin\", and docs/PHASES.md:18 makes a successful delivery part of the phase. The reviewed source cf44fb56 is uncommitted (origin/main is at 8034e36), the only --require-clean archive proofs bind releaseCommit 8034e36 (docs/checks/release-source-8034e36/*), run 12 at 8034e36 passed all 47 required jobs and all 77 commands but never reached terminal success because three optional native jobs stayed pending (docs/checks/phase-08-ci-run-12/run-status.json:10-31), and release_tag v0.1.0 remains local only. This is recorded honestly and is structurally post-review, but phase 8 cannot be marked complete on this review alone.",
-              "required_followup": "After accepting this review, commit and push the reviewed source, run both --require-clean package proofs on 1.89.0 and 1.99.0 against the new commit, retain a terminal-successful source-bound Forgejo run for the dispatch-split workflow, push the v0.1.0 tag at the exact published source and verify its remote peeled commit, then refresh the private-material scan and set the phase-8 milestones from the actual artifacts."
+              "required_followup": "After accepting this review, commit and push the reviewed source, run both --require-clean package proofs on 1.89.0 and 1.99.0 against the new commit, retain a terminal-successful source-bound Forgejo run for the dispatch-split workflow, push the v0.1.0 tag at the exact published source and verify its remote peeled commit, then refresh the private-material scan and set the phase-8 milestones from the actual artifacts.",
+              "resolution_evidence": [
+                "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+                "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+                "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+                "docs/checks/release-tag-v0.1.0.json"
+              ],
+              "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553"
             },
             {
               "id": "review09-finding-2",
@@ -1197,7 +1260,7 @@
           ]
         }
       ],
-      "accepted_source_sha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
+      "accepted_source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
       "accepted_score": 9,
       "post_delivery_corrections": [
         {
@@ -1295,7 +1358,7 @@
         },
         {
           "id": "release-followups-2026-10-17",
-          "status": "in_progress",
+          "status": "complete_cumulative_reviewed_source_delivery_verified",
           "scope": [
             "Enforce uv archive and installed executable digests on every configured host.",
             "Record the actual crates.io 0.1.0 publication and tag its exact source.",
@@ -1322,7 +1385,7 @@
           "source_sha256": "3e77197835e1f9b6f56e05b775b8e8403f7449c8fe1cbf31fbe725ff8391543c",
           "runtime_source_sha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
           "sdk_runtime_unchanged": true,
-          "scope_status": "local_review_and_clean_proofs_passed_ci_only_build_output_failure_diagnosed",
+          "scope_status": "complete_current_source_delivery_verified",
           "independent_evidence": [
             "docs/checks/phase-08-uv-integrity.json",
             "docs/checks/phase-08-ci-run-09.json",
@@ -1376,11 +1439,20 @@
             "rustJobsSuccessful": 46,
             "parentReceipt": "docs/checks/phase-08-ci-run-10/qualification-capture-receipt.json"
           },
-          "remoteDiagnosis": "docs/checks/phase-08-ci-run-10/build-output-diagnosis.json"
+          "remoteDiagnosis": "docs/checks/phase-08-ci-run-10/build-output-diagnosis.json",
+          "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553",
+          "closure_source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
+          "closure_evidence": [
+            "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+            "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+            "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+            "docs/checks/release-tag-v0.1.0.json"
+          ],
+          "private_material_evidence": "docs/checks/phase-08-private-material.json"
         },
         {
           "id": "ci-build-output-boundary-2026-10-17",
-          "status": "in_progress",
+          "status": "complete_cumulative_reviewed_source_delivery_verified",
           "scope": [
             "Ignore Cargo build directories at every workspace depth.",
             "Give the standalone export checker an explicit ignored target directory when callers do not configure one.",
@@ -1397,7 +1469,7 @@
           ],
           "diagnosis": "docs/checks/phase-08-ci-run-10/build-output-diagnosis.json",
           "runtimeSourceSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
-          "scope_status": "source_fix_confirmed_in_remote_private_check_dependency_delivery_failure_separate",
+          "scope_status": "complete_current_source_delivery_verified",
           "review_context": "Run 10 directly reproduces public receipt failure repository_byte_limit. Source inventory contains4GB under contracts/native-probes/target because .gitignore anchors /target/ at repository root, while check-native-exports invokes an independent workspace without selecting an owned build output directory. Local CARGO_TARGET_DIR points outside the repository and masked this. Read-only virtual exclusion of 3325 build files restores exactly source 3e771978 with 108781268 source bytes. No CI worktree change, receipt rewrite or cleanup was used to make the old run pass. The next source must pass regressions, the complete77 command gate, actual Claude Code review>=9, ordinary source push, both new clean proofs and new remote execution. SDK runtime remains unchanged; live limits remain. Both new regressions failed on preceding source and now all 21 CI tooling tests pass. Native export/qualification metadata regenerated for the owned checker hash. Run 10 finished with 46 Rust successes and one qualification failure; its original parent report was captured read-only with byte-exact SHA verification, retaining the actual repository_byte_limit error and source drift. No optional native platform job executed.",
           "source_sha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
           "focused_verification": "docs/checks/phase-08-build-output-fix.json",
@@ -1428,12 +1500,21 @@
             "parentReceipt": "docs/checks/phase-08-ci-run-11/qualification-capture-receipt.json"
           },
           "actual_default_cargo_proof": "docs/checks/phase-08-default-cargo-proof.json",
-          "source_inventory_headroom": "docs/checks/phase-08-source-inventory-headroom.json"
+          "source_inventory_headroom": "docs/checks/phase-08-source-inventory-headroom.json",
+          "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553",
+          "closure_source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
+          "closure_evidence": [
+            "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+            "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+            "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+            "docs/checks/release-tag-v0.1.0.json"
+          ],
+          "private_material_evidence": "docs/checks/phase-08-private-material.json"
         },
         {
           "id": "ci-offline-dependency-inputs-2026-10-17",
-          "status": "in_progress",
-          "scope_status": "local_gate_review08_push_clean_proofs_passed_run12_pending",
+          "status": "complete_cumulative_reviewed_source_delivery_verified",
+          "scope_status": "complete_current_source_delivery_verified",
           "precedingSourceCommit": "72765d5346afe985d80b87daa1891ea8e6e99302",
           "precedingSourceSha256": "835b739b020195c29237662d4529b7b48f3600c1359753d7258ece3fa28ded5a",
           "precedingReview": "docs/reviews/phase-08-attempt-07.json",
@@ -1477,12 +1558,21 @@
             "sourceCommit": "8034e36610c34a6d4bbe2a26d18ad82de3e48bc1",
             "readinessPassedByAdvancement": true,
             "matrixReport": "docs/checks/phase-08-ci-run-12/matrix-capture-receipt.json"
-          }
+          },
+          "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553",
+          "closure_source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
+          "closure_evidence": [
+            "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+            "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+            "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+            "docs/checks/release-tag-v0.1.0.json"
+          ],
+          "private_material_evidence": "docs/checks/phase-08-private-material.json"
         },
         {
           "id": "ci-manual-workflow-admission-2026-10-17",
-          "status": "in_progress",
-          "scope_status": "all77_and_actual_review09_score9_accepted_delivery_pending",
+          "status": "complete_cumulative_reviewed_source_delivery_verified",
+          "scope_status": "complete_current_source_delivery_verified",
           "precedingSourceCommit": "8034e36610c34a6d4bbe2a26d18ad82de3e48bc1",
           "precedingSourceSha256": "68cd8aa9b4f632a3b75a0f77d1c21291b31737dae6a0f051ccce7a0de3fc8e96",
           "precedingReview": "docs/reviews/phase-08-attempt-08.json",
@@ -1501,7 +1591,41 @@
           "source_unchanged": true,
           "full_gate_report": "docs/checks/phase-08.json",
           "review": "docs/reviews/phase-08-attempt-09.json",
-          "review_score": 9
+          "review_score": 9,
+          "source_commit": "f60e479820122946a71ac682b9b3f26275674553",
+          "clean_archive_proofs": [
+            {
+              "toolchain": "1.89.0",
+              "hostTarget": "x86_64-unknown-linux-musl",
+              "report": "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+              "archiveSha256": "2d7148fc0878f6547b5c4eb57c2d94e2472ea45120a7211c11f2f05e9d5f0140",
+              "archiveBytes": 825416,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-2d7148fc0878f654.crate",
+              "releaseCommit": "f60e479820122946a71ac682b9b3f26275674553",
+              "effectiveDirty": false,
+              "requireClean": true
+            },
+            {
+              "toolchain": "1.99.0",
+              "hostTarget": "x86_64-unknown-linux-musl",
+              "report": "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+              "archiveSha256": "27a20664bde5347b625e9eacb1982d4e89479146935c7b1bcfce38c735ed11e2",
+              "archiveBytes": 825419,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-27a20664bde5347b.crate",
+              "releaseCommit": "f60e479820122946a71ac682b9b3f26275674553",
+              "effectiveDirty": false,
+              "requireClean": true
+            }
+          ],
+          "closure_source_commit": "f60e479820122946a71ac682b9b3f26275674553",
+          "closure_source_sha256": "cf44fb56369266ab59d11772d60899e7e26770fa1c947cb995405f8d7589e3b9",
+          "closure_evidence": [
+            "docs/checks/phase-08-ci-run-13/qualification-capture-receipt.json",
+            "docs/checks/release-source-f60e479/release-package-1.89.0.json",
+            "docs/checks/release-source-f60e479/release-package-1.99.0.json",
+            "docs/checks/release-tag-v0.1.0.json"
+          ],
+          "private_material_evidence": "docs/checks/phase-08-private-material.json"
         }
       ],
       "historical_deliveries": [
@@ -1669,7 +1793,8 @@
         "required_attempt": 9,
         "preceding_review": "docs/reviews/phase-08-attempt-08.json",
         "preceding_score": 9
-      }
+      },
+      "accepted_review": "docs/reviews/phase-08-attempt-09.json"
     }
   ]
 }

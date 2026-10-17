@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-17T17:37:04.547110+00:00",
+  "pushStartedAt": "2026-10-17T17:36:53.327122+00:00",
+  "tag": "v0.1.0",
+  "tagObject": "5ee6a3f30ceee413ed7b9aef7d5cfcc45b34a140",
+  "remotePeeledSourceCommit": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+  "remoteTagObjectVerified": true,
+  "reviewedMainSourceCommit": "f60e479820122946a71ac682b9b3f26275674553",
+  "reviewedMainCiRun": 13,
+  "reviewedMainCiStatus": "success",
+  "reviewedMainJobsSuccessful": 47,
+  "registryArchiveSha256": "6d555d955c3734dd5ee78f7173569bdecd4426095b2ffedc4b77d8f0f2c2e8d9",
+  "registryExecutionEvidence": "docs/checks/release-registry-execution-0.1.0.json",
+  "preexistingPublishedSourceRuns": [
+    {
+      "id": 4824,
+      "index_in_repo": 8,
+      "commit_sha": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+      "event": "push",
+      "workflow_id": "ci.yml",
+      "status": "cancelled",
+      "started": "2026-10-17T00:47:40Z",
+      "stopped": "2026-10-17T00:47:43Z",
+      "html_url": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/8"
+    }
+  ],
+  "newPublishedSourceRunsObservedAfterPush": [
+    {
+      "id": 4854,
+      "index_in_repo": 14,
+      "commit_sha": "4f65dc48686a3b701ed0585812fcca46859f7e5a",
+      "event": "push",
+      "workflow_id": "ci.yml",
+      "status": "failure",
+      "started": "2026-10-17T17:36:56Z",
+      "stopped": "2026-10-17T17:36:59Z",
+      "html_url": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/14"
+    }
+  ],
+  "observedForUpToSeconds": 90,
+  "newRegistryPublicationPerformed": false,
+  "limitations": [
+    "The immutable published source predates current CI bootstrap corrections; any historical-source workflow outcome is separate from the terminal-successful current-main qualification.",
+    "No workflow status was changed, skipped, or replaced; no existing remote tag or history was rewritten.",
+    "No new observed run within this window is not proof that no delayed tag workflow can start."
+  ]
+}
