@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 8,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -472,8 +472,10 @@
     {
       "id": 8,
       "name": "Qualification and delivery",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-08-attempt-02.json"
+      ],
       "qualification_candidates": [
         {
           "id": "sse-json-number-overflow",
@@ -543,23 +545,57 @@
       "delivery": {
         "registry_publication": "not_requested_not_performed",
         "remote_ci": "configured_unexecuted",
-        "clean_release_archive": "scheduled_after_accepted_source_commit",
-        "status": "accepted_source_pending_delivery"
+        "clean_release_archive": {
+          "status": "passed",
+          "release_source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+          "proofs": [
+            {
+              "toolchain": "1.89.0",
+              "hostTarget": "x86_64-unknown-linux-musl",
+              "report": "docs/checks/release-package-1.89.0.json",
+              "archiveSha256": "dfb20fadc2cf616e2e188e49aec52db5f6785e499b6cfd8b2f13585736c27e77",
+              "archiveBytes": 825336,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-dfb20fadc2cf616e.crate",
+              "releaseCommit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+              "effectiveDirty": false
+            },
+            {
+              "toolchain": "1.99.0",
+              "hostTarget": "x86_64-unknown-linux-musl",
+              "report": "docs/checks/release-package-1.99.0.json",
+              "archiveSha256": "21b9b0303a02df2f32ab789a6c90c2cbdd0f45e628907104b40d27cae6f6c340",
+              "archiveBytes": 825338,
+              "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.1.0-21b9b0303a02df2f.crate",
+              "releaseCommit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+              "effectiveDirty": false
+            }
+          ]
+        },
+        "status": "reviewed_source_pushed_and_clean_artifacts_verified",
+        "source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7",
+        "source_pushed": true,
+        "remote": "ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git",
+        "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
+        "verified_at": "2026-10-17T00:47:08.177799+00:00",
+        "evidence_records": [
+          "docs/checks/release-package-1.89.0.json",
+          "docs/checks/release-package-1.99.0.json",
+          "docs/checks/phase-08-private-material.json"
+        ]
       },
       "milestones": {
         "implemented_scope": {
-          "status": "accepted_by_review_pending_delivery",
+          "status": "accepted_by_review",
           "evidence": [
             "docs/reviews/phase-08-attempt-02.json"
           ]
         },
         "independent_verification": {
           "status": "passed",
-          "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
-          "commands_passed": 77,
           "evidence": [
             "docs/checks/phase-08.json"
-          ]
+          ],
+          "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b"
         },
         "claude_review": {
           "status": "accepted",
@@ -570,7 +606,8 @@
         }
       },
       "review_attempts": [
-        "docs/reviews/phase-08-attempt-01.json"
+        "docs/reviews/phase-08-attempt-01.json",
+        "docs/reviews/phase-08-attempt-02.json"
       ],
       "review_fixes": [
         {
@@ -594,12 +631,6 @@
           "acceptance_evidence": "docs/reviews/phase-08-attempt-02.json"
         }
       ],
-      "accepted_review_pending_delivery": {
-        "path": "docs/reviews/phase-08-attempt-02.json",
-        "score": 9,
-        "source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
-        "status": "verified_pending_clean_archive_and_push"
-      },
       "review_advisories": [
         {
           "source": "docs/reviews/phase-08-attempt-02.json",
@@ -625,7 +656,7 @@
             {
               "id": "final-bookkeeping-credential-scan",
               "severity": "low",
-              "status": "passed_before_source_commit_pending_release_proof_refresh",
+              "status": "completed_after_release_and_review_artifacts",
               "scope": "Refresh the actual selected-value scan after new review and release-proof files are written.",
               "evidence": [
                 "docs/checks/phase-08-private-material.json"
@@ -646,8 +677,13 @@
             {
               "id": "clean-commit-proof-and-push",
               "severity": "low",
-              "status": "in_progress_required_before_phase_completion",
-              "scope": "Commit/push accepted source, run both --require-clean archive proofs, and retain delivery metadata before completing Phase8."
+              "status": "completed",
+              "scope": "Commit/push accepted source, run both --require-clean archive proofs, and retain delivery metadata before completing Phase8.",
+              "evidence": [
+                "docs/checks/release-package-1.89.0.json",
+                "docs/checks/release-package-1.99.0.json"
+              ],
+              "source_commit": "f417892835b558ecc137a8b624cb1aaa6c220ea7"
             },
             {
               "id": "dependency-runner-layout",
@@ -657,7 +693,9 @@
             }
           ]
         }
-      ]
+      ],
+      "accepted_source_sha256": "ce2a547a3921d50b71da85ea90782bf792addf069544c565d7fded626785672b",
+      "accepted_score": 9
     }
   ]
 }
