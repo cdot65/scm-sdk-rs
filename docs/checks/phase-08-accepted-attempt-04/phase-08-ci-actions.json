@@ -1,0 +1,74 @@
+{
+  "checkedAt": "2026-10-17T03:09:20.298232+00:00",
+  "actions": [
+    {
+      "action": "https://github.com/dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8",
+      "manifestUrl": "https://raw.githubusercontent.com/dtolnay/rust-toolchain/683b588c487a69d01f6c6ddf40f036ff682cc2c8/action.yml",
+      "manifestSha256": "ad8ad6383b6ce8c08579fc6f6a3fabd6a01f90b4007f65e2a5160944ba2988d4",
+      "localReadOnlyReference": ".local/ci-bootstrap-2026-10-17/rust-toolchain.action.yml"
+    },
+    {
+      "action": "https://github.com/astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b",
+      "manifestUrl": "https://raw.githubusercontent.com/astral-sh/setup-uv/4959332f0f014c5280e7eac8b70c90cb574c9f9b/action.yml",
+      "manifestSha256": "e596a478e6cf2da1449a6dd87f80bb4f2c2061aa8719bfb2cef6e18e562dc83e",
+      "localReadOnlyReference": ".local/ci-bootstrap-2026-10-17/setup-uv-repository/action.yml"
+    }
+  ],
+  "gitReferenceChecks": [
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "https://github.com/actions/checkout.git",
+        "refs/tags/v4.3.1"
+      ],
+      "exit_code": 0,
+      "stdout": "34e114876b0b11c390a56381ad16ebd13914f8d5\trefs/tags/v4.3.1\n",
+      "verifiedCommit": "34e114876b0b11c390a56381ad16ebd13914f8d5",
+      "reviewedRefKind": "release_tag"
+    },
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "https://github.com/actions/setup-node.git",
+        "refs/tags/v4.4.0"
+      ],
+      "exit_code": 0,
+      "stdout": "49933ea5288caeca8642d1e84afbd3f7d6820020\trefs/tags/v4.4.0\n",
+      "verifiedCommit": "49933ea5288caeca8642d1e84afbd3f7d6820020",
+      "reviewedRefKind": "release_tag"
+    },
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "https://github.com/astral-sh/setup-uv.git",
+        "refs/tags/v6.6.0"
+      ],
+      "exit_code": 0,
+      "stdout": "4959332f0f014c5280e7eac8b70c90cb574c9f9b\trefs/tags/v6.6.0\n",
+      "verifiedCommit": "4959332f0f014c5280e7eac8b70c90cb574c9f9b",
+      "reviewedRefKind": "release_tag"
+    },
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "https://github.com/dtolnay/rust-toolchain.git",
+        "refs/heads/master"
+      ],
+      "exit_code": 0,
+      "stdout": "683b588c487a69d01f6c6ddf40f036ff682cc2c8\trefs/heads/master\n",
+      "verifiedCommit": "683b588c487a69d01f6c6ddf40f036ff682cc2c8",
+      "reviewedRefKind": "untagged_master_commit"
+    }
+  ],
+  "rustPinRationale": "Exact untagged observed master head, following upstream guidance that full commit pins belong to master history; explicit inputs select exact compiler releases.",
+  "scope": "Read-only review of exact pinned action manifests; no action source is redistributed in the crate.",
+  "limitations": [
+    "Pinned actions still fetch compiler, rustup, uv and Python assets from upstream distribution services.",
+    "The uv action receives an explicitly empty GitHub token and disables cache upload.",
+    "No assertion of complete remote workflow execution."
+  ]
+}

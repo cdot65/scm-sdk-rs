@@ -76,6 +76,29 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def canonical_namespace(namespace, source):
+    """Use one crate-rooted path and bind its module and receiver to source."""
+    if not isinstance(namespace, str) or not re.fullmatch(r"[A-Za-z_]\w*(?:::[A-Za-z_]\w*)+", namespace):
+        raise ValueError("Native namespace is not a Rust path")
+    relative = namespace.removeprefix("scm_sdk::").removeprefix("crate::")
+    *module, receiver = relative.split("::")
+    source_path = pathlib.PurePosixPath(source)
+    if (not source_path.is_relative_to("crates/scm-sdk/src") or ".." in source_path.parts
+            or source_path.is_absolute()):
+        raise ValueError("Native namespace source must be inside the crate")
+    module_path = ROOT.joinpath("crates/scm-sdk/src", *module)
+    actual_source = ROOT / source_path
+    if module_path.is_dir():
+        matches = actual_source.parent == module_path
+    else:
+        matches = actual_source == module_path.with_suffix(".rs")
+    if not matches or not actual_source.is_file():
+        raise ValueError("Native namespace module does not match its source")
+    if not re.search(r"\b(?:struct|impl)[^\n{};]*\b" + re.escape(receiver) + r"\b", actual_source.read_text()):
+        raise ValueError("Native namespace receiver is absent from its source")
+    return "scm_sdk::" + relative
+
+
 def json_boundary_contract():
     """One global, explicit security difference; never a per-operation omission."""
     return {
@@ -178,7 +201,8 @@ def generate():
                 raise ValueError("Incomplete native mapping contract")
             if mapping["optionParity"] == "partial" and not mapping["deliberateDifferences"]:
                 raise ValueError("Partial native parity requires an explicit difference")
-            feature, namespace = mapping["feature"], mapping["namespace"]
+            feature = mapping["feature"]
+            namespace = canonical_namespace(mapping["namespace"], mapping["source"])
             expected_headers = ("gateway_realtime" if operation["id"] ==
                 "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime" else "airs_api_defaults")
             if mapping.get("headerContract", "airs_api_defaults") != expected_headers:

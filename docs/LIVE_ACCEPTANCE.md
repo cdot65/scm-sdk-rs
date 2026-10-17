@@ -1,5 +1,8 @@
 # Native service qualification
 
+The [live acceptance policy](LIVE_ACCEPTANCE_POLICY.md) governs tenant selection,
+owned fixtures, cost limits, promotion, and cleanup.
+
 The source of truth is [the exhaustive qualification matrix](../contracts/qualification.json),
 with one row for each of the 448 frozen methods. Implementation, independent
 contract verification, and successful service execution have separate fields.
@@ -116,5 +119,7 @@ and DLP service deployment are similarly assessed from actual receipts without
 assuming that management-console access grants product permissions.
 
 Native execution currently covers Linux x86_64 musl. See [platform evidence](PLATFORMS.md)
-for the separately labeled compile checks. Remote Forgejo CI execution and registry
-publication have no successful execution receipt in this delivery.
+for the separately labeled compile checks and [phase status](phase-status.json)
+for retained remote Forgejo qualification. The [registry publication receipt](checks/release-registry-0.1.0.json)
+separately records the published artifact and its exact source; publication does
+not expand live or native platform acceptance.

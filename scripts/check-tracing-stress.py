@@ -102,7 +102,7 @@ def main():
     host = host[1]
     if environment.get("CARGO_BUILD_TARGET", host) != host:
         raise ValueError("Stress tests must execute on the exact compiler host")
-    before, runtime_before = source_fingerprint(git_files(ROOT)), runtime_fingerprint(ROOT)
+    before, runtime_before = source_fingerprint(git_files(ROOT, source_only=True)), runtime_fingerprint(ROOT)
     build_command = [str(cargo), "+" + args.toolchain, "test", "-p", "scm-sdk", "--lib",
                      "--all-features", "--locked", "--offline", "--target", host,
                      "--no-run", "--message-format=json"]
@@ -130,7 +130,7 @@ def main():
                                        args.expected_tests, args.timeout, args.total_timeout)
         report["binaryUnchanged"] = binary_before == hashlib.sha256(
             read_regular(binary, 512 * 1024 * 1024)).hexdigest()
-    report["sourceUnchanged"] = before == source_fingerprint(git_files(ROOT))
+    report["sourceUnchanged"] = before == source_fingerprint(git_files(ROOT, source_only=True))
     report["runtimeUnchanged"] = runtime_before == runtime_fingerprint(ROOT)
     report["passed"] = (report["sourceUnchanged"] and report["runtimeUnchanged"]
                         and report["binaryUnchanged"] and len(report["runs"]) == args.processes

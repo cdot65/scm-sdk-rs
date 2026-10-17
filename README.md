@@ -13,19 +13,24 @@ and [export ledger](contracts/native-exports.json).
 
 The eight implementation phases require actual Claude Code review of at least
 9/10 each. [Phase status](docs/phase-status.json) records their accepted reviews
-and exact source evidence. The crate is **not published to a registry**, and no
-retained remote CI execution is claimed. The [release procedure](docs/RELEASE.md)
-explains the separate clean-commit archive proof.
+and exact source evidence. **Version 0.1.0 is published on
+[crates.io](https://crates.io/crates/scm-sdk/0.1.0)**, with
+[API documentation](https://docs.rs/scm-sdk/0.1.0/scm_sdk/).
+The [publication receipt](docs/checks/release-registry-0.1.0.json) records the
+downloaded checksum and source commit. See [CI evidence](docs/CI.md) and
+[phase status](docs/phase-status.json) for retained remote qualification.
+The [release procedure](docs/RELEASE.md)
+explains the clean-commit archive proof and release provenance.
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
 
 ## Start here
 
-Until registry publication, use the checkout from a sibling Rust project:
+Add the published crate, optionally using the shorter dependency alias:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", path = "../scm-sdk-rs/crates/scm-sdk" }
+scm = { package = "scm-sdk", version = "0.1" }
 ```
 
 The alias exposes `scm::airs::scan`, `scm::airs::management`, and the other product

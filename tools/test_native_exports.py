@@ -10,6 +10,10 @@ import native_exports as ledger
 
 
 class NativeExportTests(unittest.TestCase):
+    def test_generated_standalone_consumer_forbids_unsafe_code(self):
+        files = ledger.consumer_files(ledger.PROBES.read_text())
+        self.assertIn("#![forbid(unsafe_code)]", files["src/main.rs"])
+
     def setUp(self):
         self.live = patch.object(ledger.native_operations, "live_projection",
                                  return_value=({}, {"tools/live_evidence.py"}, None))

@@ -162,14 +162,36 @@ def check_receipt(root, path):
             or tenant["newOrChangedFilesCount"] != 0
             or tenant["matchingFilesCount"] != tenant["alreadyPresentInHeadFilesCount"]):
         raise ValueError("Receipt is not a successful sanitized scan")
-    files, package_files = git_files(root), published_candidates(root)
-    if (report["sourceSha256"] != source_fingerprint(files)
-            or report["publishedCrateSourceAndExampleCandidatesChecked"] != len(package_files)
-            or report["publishedCrateSourceAndExamplesSha256"] != source_fingerprint(package_files)
-            or not isinstance(report["headCommit"], str)
-            or not re.fullmatch(r"[0-9a-f]{40,64}", report["headCommit"])):
-        raise ValueError("Receipt is stale or not bound to this source")
+    # This public check certifies source freshness only. Private scan mode still
+    # reads every Git-visible file, including excluded review/check bookkeeping.
+    files, package_files = git_files(root, source_only=True), published_candidates(root)
+    if report["sourceSha256"] != source_fingerprint(files):
+        raise ValueError("Receipt source fingerprint mismatch")
+    if report["publishedCrateSourceAndExampleCandidatesChecked"] != len(package_files):
+        raise ValueError("Receipt published candidate count mismatch")
+    if report["publishedCrateSourceAndExamplesSha256"] != source_fingerprint(package_files):
+        raise ValueError("Receipt published candidate fingerprint mismatch")
+    if not isinstance(report["headCommit"], str) or not re.fullmatch(r"[0-9a-f]{40,64}", report["headCommit"]):
+        raise ValueError("Receipt head identity invalid")
     return report
+
+
+def check_failure_code(error):
+    """Closed public diagnostics; never echo arbitrary exceptions or paths."""
+    if isinstance(error, OSError):
+        return "filesystem_read_failed"
+    return {
+        "Repository byte-count bound exceeded": "repository_byte_limit",
+        "Repository file-count bound exceeded": "repository_file_limit",
+        "Git evidence acquisition failed": "git_read_failed",
+        "Symlink paths are not accepted": "symlink_input",
+        "Input must be a bounded regular file": "invalid_file",
+        "Input exceeded its bound or changed during reading": "input_changed",
+        "Receipt source fingerprint mismatch": "source_changed",
+        "Receipt published candidate count mismatch": "published_candidate_count_changed",
+        "Receipt published candidate fingerprint mismatch": "published_candidates_changed",
+        "Receipt head identity invalid": "invalid_head_identity",
+    }.get(str(error), "invalid_receipt")
 
 
 def main():
@@ -201,5 +223,7 @@ def main():
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except (ValueError, OSError, UnicodeError, KeyError, TypeError, RecursionError):
+    except (ValueError, OSError, UnicodeError, KeyError, TypeError, RecursionError) as error:
+        if any(arg == "--check" or arg.startswith("--check=") for arg in sys.argv[1:]):
+            sys.exit("Public receipt verification failed: " + check_failure_code(error))
         sys.exit("Private material verification failed; selected input or repository could not be validated.")

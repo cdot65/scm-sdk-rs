@@ -16,6 +16,7 @@ import time
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+DEFAULT_COMMAND_TIMEOUT_SECONDS = 900
 FEATURES = {"default": [], "minimal": ["--no-default-features"], "all": ["--all-features"],
             "json-unification": ["--no-default-features", "--features", "serde_json/arbitrary_precision"],
             **{name: ["--no-default-features", "--features", name] for name in ("scan", "management", "gateway", "models", "dlp", "iam", "model-security", "red-team", "agentguard", "realtime", "ws-transport", "reqwest-transport", "tracing")},
@@ -72,7 +73,8 @@ def main():
     parser.add_argument("--feature-set", choices=FEATURES, required=True)
     parser.add_argument("--cargo", help="Path to the rustup cargo proxy")
     parser.add_argument("--output", type=pathlib.Path, help="Evidence JSON; default .local/checks/rust-TOOLCHAIN-FEATURE.json")
-    parser.add_argument("--timeout", type=int, default=900, help="Seconds allowed per command")
+    parser.add_argument("--timeout", type=int, default=DEFAULT_COMMAND_TIMEOUT_SECONDS,
+                        help="Seconds allowed per command")
     args = parser.parse_args()
     if not re.fullmatch(r"\d+\.\d+\.\d+", args.toolchain) or args.timeout <= 0:
         parser.error("Use an exact stable release and a positive command timeout")

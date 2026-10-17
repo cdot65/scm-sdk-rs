@@ -188,19 +188,24 @@ The configured [Forgejo workflow](../.forgejo/workflows/ci.yml) now selects Rust
 1.89.0/1.99.0, default/minimal/all and the complete isolated/combination matrix.
 It configures pinned development tooling, source/oracle checks, dependency policy,
 compile-only targets and archive/consumer verification. The first reported remote
-run failed during setup because `rustup` was absent. No successful complete remote
-run has been retained; configuration alone is not CI evidence.
+run failed during setup because `rustup` was absent. Current execution evidence is
+recorded in [phase status](phase-status.json); configuration alone is not CI evidence.
 
 Checkout/setup actions are pinned to exact commits and do not retain checkout
 credentials. No service credentials, registry tokens, publication step or mirror
 configuration is installed. Every job uses the pinned `dtolnay/rust-toolchain`
 action to bootstrap rustup when absent, expose Cargo on subsequent steps' PATH,
 and install its exact Rust compiler with rustfmt and Clippy. Pinned setup-uv
-installs uv 0.13.1; the owned `scripts/bootstrap-python.sh` installs the portable
+installs uv 0.13.1 with an explicit archive checksum and a fresh owned tool cache.
+`scripts/uv-integrity.cjs` selects the host/libc pins from
+`scripts/uv-checksums.json`; `scripts/bootstrap-python.sh` hashes the exact
+installed executable before invoking it, then installs the portable
 interpreter selected by `.python-version` into job-local directories and exports
 its executables through the runner PATH file. It requires no preinstalled Python
-or Ubuntu-specific interpreter distribution. setup-node selects the
-pinned development generator version. The runner must provide Git, Node 20 for
+or Ubuntu-specific interpreter distribution. Updating uv requires reviewed
+archive and executable digests for every configured host. Every job uses
+setup-node to select the pinned development version before the integrity helper.
+The runner must provide Git, Node 20 for
 JavaScript actions, Bash, HTTPS/curl support, and a C/C++ compiler. Rust and Python
 need not be preinstalled. uv is also installed explicitly. The Rust CI action
 sets the runner's default compiler;

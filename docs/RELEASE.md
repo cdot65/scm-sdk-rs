@@ -1,6 +1,17 @@
 # Release and delivery procedure
 
-The workspace version is **0.1.0**. Registry publication has not occurred.
+The workspace version is **0.1.0**, published on
+[crates.io](https://crates.io/crates/scm-sdk/0.1.0) on 2026-10-17 at 01:14:40 UTC.
+The owner is `cdot65`. The
+[publication receipt](checks/release-registry-0.1.0.json) verifies the downloaded
+archive SHA-256 `6d555d955c3734dd5ee78f7173569bdecd4426095b2ffedc4b77d8f0f2c2e8d9`
+and embedded source commit `4f65dc48686a3b701ed0585812fcca46859f7e5a`.
+All archive file bytes match the earlier qualified clean archive except
+`.cargo_vcs_info.json`, which identifies that subsequent evidence-only commit.
+This is an exact payload comparison, not a claim that the publication receipt
+reran the archive tests. The matching tag is `v0.1.0`; its required target is the
+published source commit. Remote tag confirmation is recorded after its push.
+
 [Phase records](phase-status.json) bind accepted Claude Code reviews and passing
 checks to each source snapshot. Clean release-commit package proof follows the
 accepted source commit. Its retained receipt, rather than this procedure,
@@ -56,20 +67,22 @@ Push ordinary commits to the authorized remote
 actual pushed commit and retained clean artifact. Source delivery does not imply
 registry publication or a successful remote CI run.
 
-## Publication remains a separate action
+## Publication authorization and provenance
 
-Before first publication, verify registry-name availability and ownership,
+Before a new publication, verify registry-name ownership,
 maintainer credentials, notices and the exact reviewed release commit/artifact.
 No registry token belongs in the repository, tenant files or knowledge workspace.
 The accepted design assigns releases to `cdot65` with minimal-permission,
 owner-controlled automation and supported trusted publishing after setup.
 
-Publication requires explicit maintainer authorization. No publishing job or
+New registry publication requires explicit maintainer authorization. No publishing job or
 registry credentials are currently installed by this delivery workflow. After an
 actual publication, record the registry version/checksum, source commit and
 corresponding archive proof. Do not advertise an unpublished dependency as
 installable from crates.io.
 
-Remote CI is configured but has no retained successful execution. Other target
+The previous corrected workflow ran remotely at source `bde0f4e5`: all 46 Rust
+matrix jobs succeeded, while `contracts-and-package` failed after setup.
+Current remote qualification is recorded in [phase status](phase-status.json). Other target
 builds remain compile-only where [PLATFORMS.md](PLATFORMS.md) says so; those facts
 are release limitations, not platform runtime or live-provider acceptance.

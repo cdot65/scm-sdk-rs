@@ -4,7 +4,9 @@
 import argparse
 import datetime
 import json
+import os
 import pathlib
+import signal
 import subprocess
 import sys
 import time
@@ -12,6 +14,41 @@ import time
 from review_phase import fingerprint
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+# The longest Rust checker runs six subprocesses with 900-second limits.
+# Preserve an outer bound while allowing their full budget and cleanup overhead.
+COMMAND_TIMEOUT_SECONDS = 6 * 900 + 60
+
+
+def run_check(command):
+    """Retain output and terminate the checker's process group on timeout."""
+    process = subprocess.Popen(command, cwd=ROOT, text=True, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, start_new_session=os.name == "posix")
+    timed_out = False
+
+    def stop():
+        try:
+            if os.name == "posix":
+                os.killpg(process.pid, signal.SIGKILL)
+            else:
+                process.kill()
+        except ProcessLookupError:
+            pass
+
+    try:
+        try:
+            stdout, stderr = process.communicate(timeout=COMMAND_TIMEOUT_SECONDS)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            stop()
+            stdout, stderr = process.communicate()
+    finally:
+        if process.poll() is None:
+            stop()
+            process.wait()
+        process.stdout.close()
+        process.stderr.close()
+    return {"exit_code": None if timed_out else process.returncode,
+            "timeout": timed_out, "stdout": stdout, "stderr": stderr}
 
 
 def commands_for(phase):
@@ -183,12 +220,18 @@ def main():
     for command in commands:
         started = time.monotonic()
         invocation = [sys.executable, *command[1:]] if command[0] == "python" else command
-        result = subprocess.run(invocation, cwd=ROOT, text=True, capture_output=True, timeout=600)
-        records.append({"command": command, "invocation": invocation, "exit_code": result.returncode,
-                        "duration_seconds": round(time.monotonic() - started, 3),
-                        "stdout": result.stdout, "stderr": result.stderr})
-        print(json.dumps({"command": command, "exit_code": result.returncode}), flush=True)
-        if result.returncode:
+        result = run_check(invocation)
+        records.append({"command": command, "invocation": invocation, **result,
+                        "duration_seconds": round(time.monotonic() - started, 3)})
+        print(json.dumps({"command": command, "exit_code": result["exit_code"],
+                          "timeout": result["timeout"]}), flush=True)
+        if result["exit_code"] != 0:
+            # These fixed verification commands are credential-free. Keep the
+            # full streams in the report and bounded failure tails in CI logs.
+            print(json.dumps({"failed_command": command, "exit_code": result["exit_code"],
+                              "timeout": result["timeout"],
+                              "stdout_tail": result["stdout"][-16384:],
+                              "stderr_tail": result["stderr"][-16384:]}), file=sys.stderr, flush=True)
             break
     unchanged = before == fingerprint(ROOT)
     report = {"phase": args.phase, "source_sha256": before, "source_unchanged": unchanged,

@@ -169,9 +169,12 @@ def git_output(root, *arguments, timeout=30, output_limit=8 * 1024 * 1024):
     return result["stdout"]
 
 
-def git_files(root):
+def git_files(root, *, source_only=False):
     content = git_output(root, "ls-files", "--cached", "--others", "--exclude-standard", "-z")
     names = sorted(set(content.decode("utf-8").split("\0")) - {""})
+    if source_only:
+        names = [name for name in names
+                 if name not in EXCLUDED_FILES and not name.startswith(EXCLUDED_DIRECTORIES)]
     if len(names) > MAX_FILES:
         raise ValueError("Repository file-count bound exceeded")
     files, total = {}, 0

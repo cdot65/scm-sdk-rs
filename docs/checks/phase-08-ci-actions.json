@@ -70,5 +70,17 @@
     "Pinned actions still fetch compiler, rustup, uv and Python assets from upstream distribution services.",
     "The uv action receives an explicitly empty GitHub token and disables cache upload.",
     "No assertion of complete remote workflow execution."
-  ]
+  ],
+  "currentWorkflowObservation": {
+    "checkedAt": "2026-10-17T09:52:46.512750+00:00",
+    "workflowSha256": "5591cf5cbd68444a08262540abbf4219b2615895140d216b3bcc345ee9cdda3e",
+    "references": 13,
+    "actionCounts": {
+      "https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5": 3,
+      "https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020": 3,
+      "https://github.com/astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b": 3,
+      "https://github.com/dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8": 4
+    },
+    "scope": "Current workflow uses the same four exact action pins documented by the earlier upstream observations; all three jobs explicitly install pinned Node before the helper. No remote execution is implied."
+  }
 }

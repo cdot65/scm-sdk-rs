@@ -27,18 +27,33 @@ does not edit shell profiles. This supports portable Python distributions withou
 requiring Ubuntu-specific interpreter builds or an existing Python installation.
 The action receives an explicitly empty GitHub token and has cache upload disabled.
 
+[Reviewed SHA-256 pins](../scripts/uv-checksums.json) cover both GNU and musl
+Linux x86_64/ARM64, macOS ARM64, and Windows x86_64. Before setup-uv runs,
+[the integrity helper](../scripts/uv-integrity.cjs) selects the exact host/libc
+archive digest and creates a fresh owned tool cache. The workflow passes that
+digest to the pinned action's `checksum` input, which checks the archive before
+extraction. A fresh cache prevents reuse of an unchecked preexisting executable.
+The Python bootstrap independently hashes the exact `uv-path` output before
+executing it, then verifies the version and installs Python. Unsupported hosts,
+stale pins and mismatched bytes fail closed. Updating uv requires new reviewed
+archive and executable digests for every configured host. The pins were obtained
+from the official release asset API and independently checked against downloaded
+archives; [the execution receipt](checks/phase-08-uv-integrity.json) records both
+successful verification and an actual rejected wrong-checksum download.
+
 Development scripts require Python 3.12 or newer for TOML loading and filtered tar
 extraction. uv and Python are development tools, not Rust consumer dependencies.
 See [Forgejo label configuration](https://forgejo.org/docs/latest/admin/actions/configuration/)
 and [uv Python installation](https://docs.astral.sh/uv/guides/install-python/).
 
 Development generation uses Node 22.23.2, matching .node-version.
+Every job installs that exact version before running the uv integrity helper.
 tools/bootstrap_reference.py retrieves the exact public frozen TypeScript commit,
 verifies it against the Git/source ledger, installs the owned npm lock with
 lifecycle scripts disabled, and creates the development-only dependency symlink.
 Packaged Rust consumers do not need Node or TypeScript.
 
-Four distinct third-party actions are used across 11 references, all pinned to
+Four distinct third-party actions are used across 13 references, all pinned to
 commits. The following upstream Git references were verified with `git ls-remote`
 on 2026-10-17. [The recorded checks](checks/phase-08-ci-actions.json) retain the
 commands, exact references and results; the two newly introduced action manifests
@@ -107,16 +122,44 @@ The correction reproduces that missing-tool failure and records a successful
 isolated local bootstrap plus a workflow guard that rejects the original source.
 That local exercise simulates PATH-file application and uses `--no-modify-path`
 to preserve shell profiles; it does not execute Forgejo/act or the complete
-composite action. No successful remote receipt for the corrected workflow is
-retained. The Forgejo API returns 403 from this environment.
+composite action. The corrected source `bde0f4e5` ran as
+[run 9](https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/9): all 46 Rust matrix jobs
+succeeded, while `contracts-and-package` failed after 38m35s. A separately
+supplied Forgejo token now permits reading run and commit-status metadata.
+Forgejo 15.0.6 exposes no job-log API here, and web logs require a signed-in
+session. The owner-supplied log identifies
+`scripts/check-private-material.py --check` as the failed command after every
+preceding check passed. That older runner did not expose its captured stderr. The
+[server-status observation](checks/phase-08-ci-run-09.json) preserves these
+outcomes; it does not establish a successful complete workflow or native host
+qualification without the corresponding reports.
+The committed receipt passes in both a clean local clone and the restored
+development environment. A focused regression separately reproduces a validator
+defect: excluded generated reports can exhaust the read budget even with a
+matching source fingerprint. Public freshness checks now read only the source
+inputs that their fingerprint covers; full private scans still inspect all
+Git-visible files. The same source snapshot rule applies to the tracing stress
+runner. Public receipt failures emit closed diagnostic categories without
+reflecting paths, values or arbitrary exception text. This fixes the reproduced
+defect; the exact cause of run 9 needs source-bound remote execution evidence.
+The latest retained outcome is recorded in [phase status](phase-status.json).
 Local phase reports identify the executed compiler, native musl host, feature set,
 source fingerprint, commands, and outcomes. The portable Python bootstrap has
 separate local execution evidence with job-local paths and exact version checks;
 other host platforms and runner PATH-file behavior still require remote evidence.
-Retained Forgejo run logs are
-required before reporting this workflow as remotely qualified. The qualification
+Retain server-reported run and per-job statuses bound to the reviewed commit
+before reporting the workflow as successful. Detailed compiler, native host and
+feature qualification claims require the corresponding reports or logs. The qualification
 job logs its passing source fingerprint, command count, and report hash; complete
 report files remain local to the job unless separately retained by the operator.
+For a failed credential-free command, the phase runner now prints the final
+16,384 characters of each output stream to the job log while preserving the full
+streams in its report. A behavioral regression checks the real failed-command
+path, its output bounds, and the complete retained report.
+The phase runner also records timeouts with a null exit code, retains partial
+output, and kills the checker's POSIX process group. Its 5,460-second checker
+budget accommodates the Rust checker's six 900-second command bounds plus
+cleanup overhead. Real subprocess tests cover timeout reports and child cleanup.
 
 The additional runner labels are linux-arm64, macos-arm64, and windows-amd64;
 registration and native execution remain pending until retained runner evidence

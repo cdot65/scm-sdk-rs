@@ -9,6 +9,24 @@ import native_operations as ledger
 
 
 class NativeOperationLedgerTests(unittest.TestCase):
+    def test_method_namespaces_are_crate_rooted_and_bound_to_their_source_module(self):
+        for row in ledger.generate()["operations"]:
+            if row["implementation"] != "implemented":
+                continue
+            for method in row["rustMethods"]:
+                self.assertTrue(method.startswith("scm_sdk::"), method)
+                namespace = method.rsplit("::", 1)[0]
+                self.assertEqual(ledger.canonical_namespace(namespace, row["source"]), namespace)
+
+    def test_forged_method_module_or_receiver_is_rejected(self):
+        key = "src/scan/scanner.ts:Scanner.syncScan"
+        for namespace in ("scm_sdk::airs::gateway::Scanner", "scm_sdk::airs::scan::InventedScanner"):
+            native = ledger.mappings()
+            native[key]["namespace"] = namespace
+            with mock.patch.object(ledger, "mappings", return_value=native):
+                with self.assertRaisesRegex(ValueError, "namespace"):
+                    ledger.generate()
+
     def setUp(self):
         # Ordinary ledger guards must stay independent of an in-progress live run.
         self.live_projection = mock.patch.object(

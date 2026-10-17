@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "baselineOperationsSha256": "028acb96f9740018f2fbdf699d7a110688553e667433e63abf7a137ab67d8abf",
-  "generatorSha256": "1492ee33bc504ca1b2917a1711122d1b93650bbbf051487f46a16bb18a2e998b",
+  "generatorSha256": "838e3c054b892dfbd75c65e89bfca1f821768ff233e77a743dc32369f221a6a0",
   "ownershipOverrides": {
     "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime": {
       "phase": 7,
@@ -1180,7 +1180,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayConfigsClient::create"
+        "scm_sdk::airs::gateway::AIGatewayConfigsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
@@ -1206,7 +1206,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayConfigsClient::delete"
+        "scm_sdk::airs::gateway::AIGatewayConfigsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
@@ -1232,7 +1232,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayConfigsClient::get"
+        "scm_sdk::airs::gateway::AIGatewayConfigsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
@@ -1257,7 +1257,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayConfigsClient::list"
+        "scm_sdk::airs::gateway::AIGatewayConfigsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
@@ -1282,7 +1282,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayConfigsClient::list_versions"
+        "scm_sdk::airs::gateway::AIGatewayConfigsClient::list_versions"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
@@ -1307,7 +1307,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayConfigsClient::update"
+        "scm_sdk::airs::gateway::AIGatewayConfigsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/configs.rs",
@@ -1333,7 +1333,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayDeploymentsClient::create"
+        "scm_sdk::airs::gateway::AIGatewayDeploymentsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
@@ -1359,7 +1359,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayDeploymentsClient::delete"
+        "scm_sdk::airs::gateway::AIGatewayDeploymentsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
@@ -1385,7 +1385,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayDeploymentsClient::get"
+        "scm_sdk::airs::gateway::AIGatewayDeploymentsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
@@ -1410,7 +1410,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayDeploymentsClient::list"
+        "scm_sdk::airs::gateway::AIGatewayDeploymentsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
@@ -1435,7 +1435,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayDeploymentsClient::ping"
+        "scm_sdk::airs::gateway::AIGatewayDeploymentsClient::ping"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
@@ -1460,7 +1460,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayDeploymentsClient::update"
+        "scm_sdk::airs::gateway::AIGatewayDeploymentsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/deployments.rs",
@@ -1749,8 +1749,8 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_chat_completion",
-        "airs::gateway::RuntimeClient::create_chat_completion_stream"
+        "scm_sdk::airs::gateway::RuntimeClient::create_chat_completion",
+        "scm_sdk::airs::gateway::RuntimeClient::create_chat_completion_stream"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
@@ -1783,8 +1783,8 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_completion",
-        "airs::gateway::RuntimeClient::create_completion_stream"
+        "scm_sdk::airs::gateway::RuntimeClient::create_completion",
+        "scm_sdk::airs::gateway::RuntimeClient::create_completion_stream"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
@@ -1813,7 +1813,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_embedding"
+        "scm_sdk::airs::gateway::RuntimeClient::create_embedding"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
@@ -1839,8 +1839,8 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_prompt_completion",
-        "airs::gateway::RuntimeClient::create_prompt_completion_stream"
+        "scm_sdk::airs::gateway::RuntimeClient::create_prompt_completion",
+        "scm_sdk::airs::gateway::RuntimeClient::create_prompt_completion_stream"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
@@ -1869,7 +1869,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_prompt_render"
+        "scm_sdk::airs::gateway::RuntimeClient::create_prompt_render"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
@@ -1895,8 +1895,8 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_response",
-        "airs::gateway::RuntimeClient::create_response_stream"
+        "scm_sdk::airs::gateway::RuntimeClient::create_response",
+        "scm_sdk::airs::gateway::RuntimeClient::create_response_stream"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime.rs",
@@ -2216,7 +2216,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayLogExportsClient::cancel"
+        "scm_sdk::airs::gateway::AIGatewayLogExportsClient::cancel"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
@@ -2243,7 +2243,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayLogExportsClient::create"
+        "scm_sdk::airs::gateway::AIGatewayLogExportsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
@@ -2270,7 +2270,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayLogExportsClient::download"
+        "scm_sdk::airs::gateway::AIGatewayLogExportsClient::download"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
@@ -2296,7 +2296,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayLogExportsClient::get"
+        "scm_sdk::airs::gateway::AIGatewayLogExportsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
@@ -2322,7 +2322,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayLogExportsClient::list"
+        "scm_sdk::airs::gateway::AIGatewayLogExportsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
@@ -2348,7 +2348,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayLogExportsClient::start"
+        "scm_sdk::airs::gateway::AIGatewayLogExportsClient::start"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
@@ -2375,7 +2375,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayLogExportsClient::update"
+        "scm_sdk::airs::gateway::AIGatewayLogExportsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/log_exports.rs",
@@ -2975,7 +2975,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayOrganisationsClient::get_auth_settings"
+        "scm_sdk::airs::gateway::AIGatewayOrganisationsClient::get_auth_settings"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
@@ -3000,7 +3000,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayOrganisationsClient::get_info"
+        "scm_sdk::airs::gateway::AIGatewayOrganisationsClient::get_info"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
@@ -3025,7 +3025,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayOrganisationsClient::get_self"
+        "scm_sdk::airs::gateway::AIGatewayOrganisationsClient::get_self"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
@@ -3050,7 +3050,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayOrganisationsClient::update_auth_settings"
+        "scm_sdk::airs::gateway::AIGatewayOrganisationsClient::update_auth_settings"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
@@ -3076,7 +3076,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayOrganisationsClient::update_self"
+        "scm_sdk::airs::gateway::AIGatewayOrganisationsClient::update_self"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/organisations.rs",
@@ -3150,7 +3150,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayProvidersClient::create"
+        "scm_sdk::airs::gateway::AIGatewayProvidersClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
@@ -3176,7 +3176,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayProvidersClient::delete"
+        "scm_sdk::airs::gateway::AIGatewayProvidersClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
@@ -3202,7 +3202,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayProvidersClient::get"
+        "scm_sdk::airs::gateway::AIGatewayProvidersClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
@@ -3227,7 +3227,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayProvidersClient::list"
+        "scm_sdk::airs::gateway::AIGatewayProvidersClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
@@ -3252,7 +3252,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayProvidersClient::update"
+        "scm_sdk::airs::gateway::AIGatewayProvidersClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/providers.rs",
@@ -3278,7 +3278,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayRateLimitsClient::create"
+        "scm_sdk::airs::gateway::AIGatewayRateLimitsClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
@@ -3305,7 +3305,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayRateLimitsClient::delete"
+        "scm_sdk::airs::gateway::AIGatewayRateLimitsClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
@@ -3332,7 +3332,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayRateLimitsClient::get"
+        "scm_sdk::airs::gateway::AIGatewayRateLimitsClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
@@ -3358,7 +3358,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayRateLimitsClient::list"
+        "scm_sdk::airs::gateway::AIGatewayRateLimitsClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
@@ -3384,7 +3384,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayRateLimitsClient::update"
+        "scm_sdk::airs::gateway::AIGatewayRateLimitsClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/rate_limits.rs",
@@ -3411,7 +3411,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::cancel_batch"
+        "scm_sdk::airs::gateway::RuntimeClient::cancel_batch"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3437,7 +3437,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::cancel_fine_tuning_job"
+        "scm_sdk::airs::gateway::RuntimeClient::cancel_fine_tuning_job"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3463,7 +3463,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::cancel_vector_store_file_batch"
+        "scm_sdk::airs::gateway::RuntimeClient::cancel_vector_store_file_batch"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3489,7 +3489,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_batch"
+        "scm_sdk::airs::gateway::RuntimeClient::create_batch"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3515,7 +3515,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_feedback"
+        "scm_sdk::airs::gateway::RuntimeClient::create_feedback"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3541,7 +3541,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_file"
+        "scm_sdk::airs::gateway::RuntimeClient::create_file"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
@@ -3570,7 +3570,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_fine_tuning_job"
+        "scm_sdk::airs::gateway::RuntimeClient::create_fine_tuning_job"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3596,7 +3596,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_image"
+        "scm_sdk::airs::gateway::RuntimeClient::create_image"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3622,7 +3622,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_image_edit"
+        "scm_sdk::airs::gateway::RuntimeClient::create_image_edit"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
@@ -3651,7 +3651,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_image_variation"
+        "scm_sdk::airs::gateway::RuntimeClient::create_image_variation"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
@@ -3679,7 +3679,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_logs"
+        "scm_sdk::airs::gateway::RuntimeClient::create_logs"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
@@ -3705,7 +3705,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_moderation"
+        "scm_sdk::airs::gateway::RuntimeClient::create_moderation"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3731,7 +3731,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_ocr"
+        "scm_sdk::airs::gateway::RuntimeClient::create_ocr"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3757,7 +3757,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_rerank"
+        "scm_sdk::airs::gateway::RuntimeClient::create_rerank"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3783,7 +3783,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_speech"
+        "scm_sdk::airs::gateway::RuntimeClient::create_speech"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
@@ -3809,7 +3809,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_transcription"
+        "scm_sdk::airs::gateway::RuntimeClient::create_transcription"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
@@ -3839,7 +3839,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_translation"
+        "scm_sdk::airs::gateway::RuntimeClient::create_translation"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_audio.rs",
@@ -3869,7 +3869,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_vector_store"
+        "scm_sdk::airs::gateway::RuntimeClient::create_vector_store"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3895,7 +3895,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_vector_store_file"
+        "scm_sdk::airs::gateway::RuntimeClient::create_vector_store_file"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3921,7 +3921,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::create_vector_store_file_batch"
+        "scm_sdk::airs::gateway::RuntimeClient::create_vector_store_file_batch"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3947,7 +3947,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::delete_file"
+        "scm_sdk::airs::gateway::RuntimeClient::delete_file"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3973,7 +3973,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::delete_model"
+        "scm_sdk::airs::gateway::RuntimeClient::delete_model"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -3999,7 +3999,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::delete_response"
+        "scm_sdk::airs::gateway::RuntimeClient::delete_response"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4025,7 +4025,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::delete_vector_store"
+        "scm_sdk::airs::gateway::RuntimeClient::delete_vector_store"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4051,7 +4051,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::delete_vector_store_file"
+        "scm_sdk::airs::gateway::RuntimeClient::delete_vector_store_file"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4077,7 +4077,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::download_file"
+        "scm_sdk::airs::gateway::RuntimeClient::download_file"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4105,7 +4105,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::get_batch_output"
+        "scm_sdk::airs::gateway::RuntimeClient::get_batch_output"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4132,7 +4132,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::get_log"
+        "scm_sdk::airs::gateway::RuntimeClient::get_log"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4158,7 +4158,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::get_response"
+        "scm_sdk::airs::gateway::RuntimeClient::get_response"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4185,7 +4185,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::get_vector_store"
+        "scm_sdk::airs::gateway::RuntimeClient::get_vector_store"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4211,7 +4211,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::get_vector_store_file"
+        "scm_sdk::airs::gateway::RuntimeClient::get_vector_store_file"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4237,7 +4237,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::get_vector_store_file_batch"
+        "scm_sdk::airs::gateway::RuntimeClient::get_vector_store_file_batch"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4263,7 +4263,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_batches"
+        "scm_sdk::airs::gateway::RuntimeClient::list_batches"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4289,7 +4289,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_files"
+        "scm_sdk::airs::gateway::RuntimeClient::list_files"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4316,7 +4316,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_files_in_vector_store_batch"
+        "scm_sdk::airs::gateway::RuntimeClient::list_files_in_vector_store_batch"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4342,7 +4342,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_fine_tuning_events"
+        "scm_sdk::airs::gateway::RuntimeClient::list_fine_tuning_events"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4368,7 +4368,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_fine_tuning_job_checkpoints"
+        "scm_sdk::airs::gateway::RuntimeClient::list_fine_tuning_job_checkpoints"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4394,7 +4394,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_input_items"
+        "scm_sdk::airs::gateway::RuntimeClient::list_input_items"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4420,7 +4420,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_models"
+        "scm_sdk::airs::gateway::RuntimeClient::list_models"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4447,7 +4447,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_paginated_fine_tuning_jobs"
+        "scm_sdk::airs::gateway::RuntimeClient::list_paginated_fine_tuning_jobs"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4473,7 +4473,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_vector_store_files"
+        "scm_sdk::airs::gateway::RuntimeClient::list_vector_store_files"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4499,7 +4499,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::list_vector_stores"
+        "scm_sdk::airs::gateway::RuntimeClient::list_vector_stores"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4525,7 +4525,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::modify_vector_store"
+        "scm_sdk::airs::gateway::RuntimeClient::modify_vector_store"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4551,7 +4551,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::retrieve_batch"
+        "scm_sdk::airs::gateway::RuntimeClient::retrieve_batch"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4577,7 +4577,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::retrieve_file"
+        "scm_sdk::airs::gateway::RuntimeClient::retrieve_file"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4603,7 +4603,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::retrieve_fine_tuning_job"
+        "scm_sdk::airs::gateway::RuntimeClient::retrieve_fine_tuning_job"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4629,7 +4629,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::retrieve_model"
+        "scm_sdk::airs::gateway::RuntimeClient::retrieve_model"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4655,7 +4655,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::RuntimeClient::update_feedback"
+        "scm_sdk::airs::gateway::RuntimeClient::update_feedback"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/runtime_resources.rs",
@@ -4808,7 +4808,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::by_status_code"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::by_status_code"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -4836,7 +4836,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::by_user"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::by_user"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -4864,7 +4864,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::cache_hit_trend"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::cache_hit_trend"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -4892,7 +4892,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::cache_summary"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::cache_summary"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -4920,7 +4920,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::cost"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::cost"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -4948,7 +4948,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::error_category_trends"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::error_category_trends"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -4976,7 +4976,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::error_trends"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::error_trends"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5004,7 +5004,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::errors"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::errors"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5032,7 +5032,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::feedback_models"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::feedback_models"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5060,7 +5060,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::feedback_score_distribution"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::feedback_score_distribution"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5088,7 +5088,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::feedback_trend"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::feedback_trend"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5116,7 +5116,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::feedback_weighted"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::feedback_weighted"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5144,7 +5144,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::filter_boundaries"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::filter_boundaries"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5172,7 +5172,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::group_by"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::group_by"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5200,7 +5200,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::grouped_errors"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::grouped_errors"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5228,7 +5228,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::latency"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::latency"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5256,7 +5256,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::logs"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::logs"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5284,7 +5284,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::requests"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::requests"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5312,7 +5312,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::rescued_retries"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::rescued_retries"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5340,7 +5340,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::tokens"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::tokens"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5368,7 +5368,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::user_trends"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::user_trends"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5396,7 +5396,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayTelemetryClient::users"
+        "scm_sdk::airs::gateway::AIGatewayTelemetryClient::users"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/telemetry.rs",
@@ -5601,7 +5601,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayWorkspacesClient::create"
+        "scm_sdk::airs::gateway::AIGatewayWorkspacesClient::create"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
@@ -5629,7 +5629,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayWorkspacesClient::delete"
+        "scm_sdk::airs::gateway::AIGatewayWorkspacesClient::delete"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
@@ -5657,7 +5657,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayWorkspacesClient::get"
+        "scm_sdk::airs::gateway::AIGatewayWorkspacesClient::get"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
@@ -5684,7 +5684,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "verified",
       "rustMethods": [
-        "airs::gateway::AIGatewayWorkspacesClient::list"
+        "scm_sdk::airs::gateway::AIGatewayWorkspacesClient::list"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
@@ -5731,7 +5731,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "service_contract_rejection",
       "rustMethods": [
-        "airs::gateway::AIGatewayWorkspacesClient::provision"
+        "scm_sdk::airs::gateway::AIGatewayWorkspacesClient::provision"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/provision.rs",
@@ -5790,7 +5790,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::gateway::AIGatewayWorkspacesClient::update"
+        "scm_sdk::airs::gateway::AIGatewayWorkspacesClient::update"
       ],
       "feature": "gateway",
       "source": "crates/scm-sdk/src/airs/gateway/workspaces.rs",
@@ -5818,7 +5818,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "shared::iam::IamScopesClient::bind_workspace"
+        "scm_sdk::shared::iam::IamScopesClient::bind_workspace"
       ],
       "feature": "iam",
       "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
@@ -5843,7 +5843,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "service_contract_rejection",
       "rustMethods": [
-        "shared::iam::IamScopesClient::create"
+        "scm_sdk::shared::iam::IamScopesClient::create"
       ],
       "feature": "iam",
       "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
@@ -5891,7 +5891,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "shared::iam::IamScopesClient::delete"
+        "scm_sdk::shared::iam::IamScopesClient::delete"
       ],
       "feature": "iam",
       "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
@@ -5916,7 +5916,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "shared::iam::IamScopesClient::get"
+        "scm_sdk::shared::iam::IamScopesClient::get"
       ],
       "feature": "iam",
       "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
@@ -5940,7 +5940,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "verified",
       "rustMethods": [
-        "shared::iam::IamScopesClient::list"
+        "scm_sdk::shared::iam::IamScopesClient::list"
       ],
       "feature": "iam",
       "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
@@ -5984,7 +5984,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "shared::iam::IamScopesClient::update"
+        "scm_sdk::shared::iam::IamScopesClient::update"
       ],
       "feature": "iam",
       "source": "crates/scm-sdk/src/shared/iam/scopes.rs",
@@ -6823,7 +6823,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataFilteringProfilesClient::get"
+        "scm_sdk::dlp::DataFilteringProfilesClient::get"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
@@ -6847,7 +6847,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataFilteringProfilesClient::list"
+        "scm_sdk::dlp::DataFilteringProfilesClient::list"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
@@ -6873,9 +6873,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataFilteringProfilesClient::list_all",
-        "dlp::DataFilteringProfilesClient::list_pages",
-        "dlp::DataFilteringProfilesClient::list_items"
+        "scm_sdk::dlp::DataFilteringProfilesClient::list_all",
+        "scm_sdk::dlp::DataFilteringProfilesClient::list_pages",
+        "scm_sdk::dlp::DataFilteringProfilesClient::list_items"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
@@ -6904,7 +6904,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataFilteringProfilesClient::replace"
+        "scm_sdk::dlp::DataFilteringProfilesClient::replace"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/filtering_profiles.rs",
@@ -6930,7 +6930,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataPatternsClient::create"
+        "scm_sdk::dlp::DataPatternsClient::create"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -6956,7 +6956,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataPatternsClient::delete"
+        "scm_sdk::dlp::DataPatternsClient::delete"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -6982,7 +6982,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataPatternsClient::get"
+        "scm_sdk::dlp::DataPatternsClient::get"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -7006,7 +7006,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataPatternsClient::list"
+        "scm_sdk::dlp::DataPatternsClient::list"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -7032,9 +7032,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataPatternsClient::list_all",
-        "dlp::DataPatternsClient::list_pages",
-        "dlp::DataPatternsClient::list_items"
+        "scm_sdk::dlp::DataPatternsClient::list_all",
+        "scm_sdk::dlp::DataPatternsClient::list_pages",
+        "scm_sdk::dlp::DataPatternsClient::list_items"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -7063,7 +7063,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataPatternsClient::patch"
+        "scm_sdk::dlp::DataPatternsClient::patch"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -7089,7 +7089,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataPatternsClient::replace"
+        "scm_sdk::dlp::DataPatternsClient::replace"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -7115,7 +7115,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataProfilesClient::create"
+        "scm_sdk::dlp::DataProfilesClient::create"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
@@ -7141,7 +7141,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataProfilesClient::get"
+        "scm_sdk::dlp::DataProfilesClient::get"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
@@ -7165,7 +7165,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "verified",
       "rustMethods": [
-        "dlp::DataProfilesClient::list"
+        "scm_sdk::dlp::DataProfilesClient::list"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
@@ -7211,9 +7211,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataProfilesClient::list_all",
-        "dlp::DataProfilesClient::list_pages",
-        "dlp::DataProfilesClient::list_items"
+        "scm_sdk::dlp::DataProfilesClient::list_all",
+        "scm_sdk::dlp::DataProfilesClient::list_pages",
+        "scm_sdk::dlp::DataProfilesClient::list_items"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
@@ -7242,7 +7242,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataProfilesClient::patch"
+        "scm_sdk::dlp::DataProfilesClient::patch"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
@@ -7268,7 +7268,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DataProfilesClient::replace"
+        "scm_sdk::dlp::DataProfilesClient::replace"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/data_profiles.rs",
@@ -7294,7 +7294,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DictionariesClient::create"
+        "scm_sdk::dlp::DictionariesClient::create"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
@@ -7321,7 +7321,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DictionariesClient::delete"
+        "scm_sdk::dlp::DictionariesClient::delete"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
@@ -7347,7 +7347,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DictionariesClient::get"
+        "scm_sdk::dlp::DictionariesClient::get"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
@@ -7371,7 +7371,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DictionariesClient::list"
+        "scm_sdk::dlp::DictionariesClient::list"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
@@ -7397,9 +7397,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DictionariesClient::list_all",
-        "dlp::DictionariesClient::list_pages",
-        "dlp::DictionariesClient::list_items"
+        "scm_sdk::dlp::DictionariesClient::list_all",
+        "scm_sdk::dlp::DictionariesClient::list_pages",
+        "scm_sdk::dlp::DictionariesClient::list_items"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
@@ -7428,7 +7428,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DictionariesClient::patch"
+        "scm_sdk::dlp::DictionariesClient::patch"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
@@ -7454,7 +7454,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "dlp::DictionariesClient::replace"
+        "scm_sdk::dlp::DictionariesClient::replace"
       ],
       "feature": "dlp",
       "source": "crates/scm-sdk/src/dlp/dictionaries.rs",
@@ -7642,7 +7642,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::management::OAuthManagementClient::get_access_token"
+        "scm_sdk::airs::management::OAuthManagementClient::get_access_token"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/oauth_management.rs",
@@ -7666,7 +7666,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::management::OAuthManagementClient::invalidate_token"
+        "scm_sdk::airs::management::OAuthManagementClient::invalidate_token"
       ],
       "feature": "management",
       "source": "crates/scm-sdk/src/airs/management/oauth_management.rs",
@@ -9439,7 +9439,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::create"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::create"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9464,7 +9464,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::delete"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::delete"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9489,7 +9489,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::get"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::get"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9512,7 +9512,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::get_config"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::get_config"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9535,7 +9535,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::list"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::list"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9559,9 +9559,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::list_all",
-        "airs::red_team::RedTeamAdaptersClient::list_pages",
-        "airs::red_team::RedTeamAdaptersClient::list_items"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::list_all",
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::list_pages",
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::list_items"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9591,7 +9591,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::update"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::update"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9616,7 +9616,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamAdaptersClient::validate"
+        "scm_sdk::airs::red_team::RedTeamAdaptersClient::validate"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/adapters.rs",
@@ -9641,7 +9641,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_dashboard_overview"
+        "scm_sdk::airs::red_team::RedTeamClient::get_dashboard_overview"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9666,7 +9666,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_error_logs"
+        "scm_sdk::airs::red_team::RedTeamClient::get_error_logs"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9691,7 +9691,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_goal_categories"
+        "scm_sdk::airs::red_team::RedTeamClient::get_goal_categories"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9716,7 +9716,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_languages"
+        "scm_sdk::airs::red_team::RedTeamClient::get_languages"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9741,7 +9741,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "permission_prerequisite",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_management_languages"
+        "scm_sdk::airs::red_team::RedTeamClient::get_management_languages"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9786,7 +9786,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_quota"
+        "scm_sdk::airs::red_team::RedTeamClient::get_quota"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9812,7 +9812,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_quota_summary"
+        "scm_sdk::airs::red_team::RedTeamClient::get_quota_summary"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9837,7 +9837,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "permission_prerequisite",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_scan_metadata"
+        "scm_sdk::airs::red_team::RedTeamClient::get_scan_metadata"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9886,7 +9886,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_scan_statistics"
+        "scm_sdk::airs::red_team::RedTeamClient::get_scan_statistics"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9911,7 +9911,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_score_trend"
+        "scm_sdk::airs::red_team::RedTeamClient::get_score_trend"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9936,7 +9936,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_sentiment"
+        "scm_sdk::airs::red_team::RedTeamClient::get_sentiment"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9961,7 +9961,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::get_target_profile_error_logs"
+        "scm_sdk::airs::red_team::RedTeamClient::get_target_profile_error_logs"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -9986,7 +9986,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamClient::update_sentiment"
+        "scm_sdk::airs::red_team::RedTeamClient::update_sentiment"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
@@ -10012,7 +10012,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttackReportsClient::get_attack_outputs"
+        "scm_sdk::airs::red_team::RedTeamCustomAttackReportsClient::get_attack_outputs"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
@@ -10037,7 +10037,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttackReportsClient::get_prompt_detail"
+        "scm_sdk::airs::red_team::RedTeamCustomAttackReportsClient::get_prompt_detail"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
@@ -10062,7 +10062,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttackReportsClient::get_prompt_sets"
+        "scm_sdk::airs::red_team::RedTeamCustomAttackReportsClient::get_prompt_sets"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
@@ -10087,7 +10087,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttackReportsClient::get_prompts_by_set"
+        "scm_sdk::airs::red_team::RedTeamCustomAttackReportsClient::get_prompts_by_set"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
@@ -10112,7 +10112,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttackReportsClient::get_property_stats"
+        "scm_sdk::airs::red_team::RedTeamCustomAttackReportsClient::get_property_stats"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
@@ -10137,7 +10137,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttackReportsClient::get_report"
+        "scm_sdk::airs::red_team::RedTeamCustomAttackReportsClient::get_report"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
@@ -10162,7 +10162,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttackReportsClient::list_custom_attacks"
+        "scm_sdk::airs::red_team::RedTeamCustomAttackReportsClient::list_custom_attacks"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
@@ -10187,7 +10187,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::archive_prompt_set"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::archive_prompt_set"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10212,7 +10212,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::create_prompt"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::create_prompt"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10237,7 +10237,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::create_prompt_set"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::create_prompt_set"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10262,7 +10262,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::create_property_name"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::create_property_name"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10287,7 +10287,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::create_property_value"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::create_property_value"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10312,7 +10312,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::delete_prompt"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::delete_prompt"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10337,7 +10337,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::download_template"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::download_template"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10362,7 +10362,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::get_prompt"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::get_prompt"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10385,7 +10385,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::get_prompt_set"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::get_prompt_set"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10408,7 +10408,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::get_prompt_set_reference"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::get_prompt_set_reference"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10431,7 +10431,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::get_prompt_set_version_info"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::get_prompt_set_version_info"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10456,7 +10456,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::get_property_names"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::get_property_names"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10479,7 +10479,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::get_property_values"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::get_property_values"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10504,7 +10504,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::get_property_values_multiple"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::get_property_values_multiple"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10528,7 +10528,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::list_active_prompt_sets"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::list_active_prompt_sets"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10551,9 +10551,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::list_all_prompt_sets",
-        "airs::red_team::RedTeamCustomAttacksClient::prompt_set_pages",
-        "airs::red_team::RedTeamCustomAttacksClient::prompt_set_items"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::list_all_prompt_sets",
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::prompt_set_pages",
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::prompt_set_items"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10583,9 +10583,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::list_all_prompts",
-        "airs::red_team::RedTeamCustomAttacksClient::prompt_pages",
-        "airs::red_team::RedTeamCustomAttacksClient::prompt_items"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::list_all_prompts",
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::prompt_pages",
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::prompt_items"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10615,7 +10615,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::list_prompt_sets"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::list_prompt_sets"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10639,7 +10639,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::list_prompts"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::list_prompts"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10663,7 +10663,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::update_prompt"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::update_prompt"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10688,7 +10688,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::update_prompt_set"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::update_prompt_set"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10714,7 +10714,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamCustomAttacksClient::upload_prompts_csv"
+        "scm_sdk::airs::red_team::RedTeamCustomAttacksClient::upload_prompts_csv"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs",
@@ -10742,7 +10742,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamEulaClient::accept"
+        "scm_sdk::airs::red_team::RedTeamEulaClient::accept"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/eula.rs",
@@ -10767,7 +10767,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamEulaClient::get_content"
+        "scm_sdk::airs::red_team::RedTeamEulaClient::get_content"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/eula.rs",
@@ -10790,7 +10790,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "permission_prerequisite",
       "rustMethods": [
-        "airs::red_team::RedTeamEulaClient::get_status"
+        "scm_sdk::airs::red_team::RedTeamEulaClient::get_status"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/eula.rs",
@@ -10833,7 +10833,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::create_devices"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::create_devices"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -10860,7 +10860,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::create_instance"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::create_instance"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -10887,7 +10887,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::delete_devices"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::delete_devices"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -10914,7 +10914,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::delete_instance"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::delete_instance"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -10941,7 +10941,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::get_instance"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::get_instance"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -10967,7 +10967,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::get_registry_credentials"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::get_registry_credentials"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -10994,7 +10994,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::update_devices"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::update_devices"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -11021,7 +11021,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamInstancesClient::update_instance"
+        "scm_sdk::airs::red_team::RedTeamInstancesClient::update_instance"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/instances.rs",
@@ -11048,7 +11048,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamNetworkBrokerClient::create_channel"
+        "scm_sdk::airs::red_team::RedTeamNetworkBrokerClient::create_channel"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
@@ -11073,7 +11073,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamNetworkBrokerClient::get_channel"
+        "scm_sdk::airs::red_team::RedTeamNetworkBrokerClient::get_channel"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
@@ -11096,7 +11096,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamNetworkBrokerClient::get_channel_stats"
+        "scm_sdk::airs::red_team::RedTeamNetworkBrokerClient::get_channel_stats"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
@@ -11119,7 +11119,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamNetworkBrokerClient::list_channels"
+        "scm_sdk::airs::red_team::RedTeamNetworkBrokerClient::list_channels"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
@@ -11143,7 +11143,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamNetworkBrokerClient::update_channel"
+        "scm_sdk::airs::red_team::RedTeamNetworkBrokerClient::update_channel"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/network_broker.rs",
@@ -11168,7 +11168,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::download_report"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::download_report"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11194,7 +11194,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::generate_partial_report"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::generate_partial_report"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11220,7 +11220,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_attack_detail"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_attack_detail"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11245,7 +11245,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_dynamic_remediation"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_dynamic_remediation"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11270,7 +11270,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_dynamic_report"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_dynamic_report"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11295,7 +11295,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_dynamic_runtime_policy"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_dynamic_runtime_policy"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11320,7 +11320,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_multi_turn_attack_detail"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_multi_turn_attack_detail"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11345,7 +11345,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_static_remediation"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_static_remediation"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11370,7 +11370,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_static_report"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_static_report"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11395,7 +11395,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_static_runtime_policy"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_static_runtime_policy"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11420,7 +11420,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::get_stream_detail"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::get_stream_detail"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11445,7 +11445,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::list_attacks"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::list_attacks"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11470,7 +11470,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::list_goal_streams"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::list_goal_streams"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11495,7 +11495,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamReportsClient::list_goals"
+        "scm_sdk::airs::red_team::RedTeamReportsClient::list_goals"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
@@ -11520,7 +11520,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamScansClient::abort"
+        "scm_sdk::airs::red_team::RedTeamScansClient::abort"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
@@ -11546,7 +11546,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamScansClient::create"
+        "scm_sdk::airs::red_team::RedTeamScansClient::create"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
@@ -11572,7 +11572,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamScansClient::get"
+        "scm_sdk::airs::red_team::RedTeamScansClient::get"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
@@ -11597,7 +11597,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamScansClient::get_categories"
+        "scm_sdk::airs::red_team::RedTeamScansClient::get_categories"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
@@ -11622,7 +11622,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamScansClient::list"
+        "scm_sdk::airs::red_team::RedTeamScansClient::list"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
@@ -11647,7 +11647,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamScansClient::list_all"
+        "scm_sdk::airs::red_team::RedTeamScansClient::list_all"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
@@ -11675,7 +11675,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::create"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::create"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11700,7 +11700,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::delete"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::delete"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11725,7 +11725,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::delete_copilot_token"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::delete_copilot_token"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11750,7 +11750,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::exchange_copilot_token"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::exchange_copilot_token"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11775,7 +11775,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::get"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::get"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11798,7 +11798,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::get_copilot_auth_url"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::get_copilot_auth_url"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11823,7 +11823,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::get_profile"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::get_profile"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11846,7 +11846,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::get_target_metadata"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::get_target_metadata"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11871,7 +11871,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::get_target_templates"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::get_target_templates"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11894,7 +11894,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::list"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::list"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11918,9 +11918,9 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::list_all",
-        "airs::red_team::RedTeamTargetsClient::list_pages",
-        "airs::red_team::RedTeamTargetsClient::list_items"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::list_all",
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::list_pages",
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::list_items"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11950,7 +11950,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::probe"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::probe"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -11975,7 +11975,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::start_profiling"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::start_profiling"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -12000,7 +12000,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::update"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::update"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -12025,7 +12025,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::update_profile"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::update_profile"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -12050,7 +12050,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "unverified",
       "rustMethods": [
-        "airs::red_team::RedTeamTargetsClient::validate_auth"
+        "scm_sdk::airs::red_team::RedTeamTargetsClient::validate_auth"
       ],
       "feature": "red-team",
       "source": "crates/scm-sdk/src/airs/red_team/targets.rs",
@@ -12075,7 +12075,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "verified",
       "rustMethods": [
-        "airs::scan::Scanner::async_scan"
+        "scm_sdk::airs::scan::Scanner::async_scan"
       ],
       "feature": "scan",
       "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
@@ -12118,7 +12118,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "verified",
       "rustMethods": [
-        "airs::scan::Scanner::query_by_report_ids"
+        "scm_sdk::airs::scan::Scanner::query_by_report_ids"
       ],
       "feature": "scan",
       "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
@@ -12159,7 +12159,7 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "verified",
       "rustMethods": [
-        "airs::scan::Scanner::query_by_scan_ids"
+        "scm_sdk::airs::scan::Scanner::query_by_scan_ids"
       ],
       "feature": "scan",
       "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
@@ -12210,8 +12210,8 @@
       "contractVerification": "offline_fixture_verified",
       "liveAcceptance": "verified",
       "rustMethods": [
-        "airs::scan::Scanner::sync_scan",
-        "airs::scan::Scanner::scan_request"
+        "scm_sdk::airs::scan::Scanner::sync_scan",
+        "scm_sdk::airs::scan::Scanner::scan_request"
       ],
       "feature": "scan",
       "source": "crates/scm-sdk/src/airs/scan/scanner.rs",

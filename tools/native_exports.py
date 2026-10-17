@@ -475,7 +475,7 @@ def generate():
 def consumer_files(probe):
     # This is a genuinely separate Cargo package with no access to crate-private
     # items. It shares the committed dependency resolution, not a fresh solver.
-    source = "//! Generated standalone public SDK capability consumer.\n#![allow(clippy::let_underscore_future)]\n#[rustfmt::skip]\nfn main()" \
+    source = "//! Generated standalone public SDK capability consumer.\n#![forbid(unsafe_code)]\n#![allow(clippy::let_underscore_future)]\n#[rustfmt::skip]\nfn main()" \
         + probe.split("fn all_public_export_paths_compile()", 1)[1]
     manifest = '''[package]
 name = "scm-sdk-export-probes"

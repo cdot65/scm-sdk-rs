@@ -54,9 +54,12 @@ and checker must reflect any future approval explicitly.
 
 A fresh audit records its RustSec revision, pinned tool versions and unchanged
 lockfile. A clean result describes known findings at that revision. Downstream
-applications resolve and audit their own dependency graphs. The current
-unpublished workspace is the supported development line; future supported
-release lines and migration requirements will be stated in release notes.
+applications resolve and audit their own dependency graphs. The published
+[0.1.0 line on crates.io](https://crates.io/crates/scm-sdk/0.1.0) is the initial
+supported release; the main branch contains ongoing development. Future supported
+release lines and migration requirements will be stated in release notes. The
+[publication receipt](checks/release-registry-0.1.0.json) binds the published
+archive and source commit.
 
 [RELEASE.md](RELEASE.md) requires source review, exact artifact/commit proof and
 explicit publication control. Service qualification is recorded separately in

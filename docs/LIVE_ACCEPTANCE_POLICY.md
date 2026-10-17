@@ -1,4 +1,4 @@
-# Live acceptance controls
+# Live acceptance policy
 
 These original controls are retained as the live-qualification policy. Current
 execution, receipt/matrix interpretation and cleanup status are documented in

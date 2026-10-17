@@ -1,6 +1,9 @@
 # Compatibility and support status
 
-The initial Rust version is **0.1.0**, currently unpublished. The frozen parity
+The initial Rust version is **0.1.0**, published on
+[crates.io](https://crates.io/crates/scm-sdk/0.1.0). The
+[publication receipt](checks/release-registry-0.1.0.json) records its exact source
+and archive checksum. The frozen parity
 baseline is TypeScript SDK **0.34.0** at
 `4a80dbdb3dc14365e1c25d838ac0bd139485d48c`. All 448 concrete methods and 3,820
 exported capabilities have implemented native mappings. [EXPORTS.md](EXPORTS.md)

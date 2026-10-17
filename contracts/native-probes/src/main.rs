@@ -1,4 +1,5 @@
 //! Generated standalone public SDK capability consumer.
+#![forbid(unsafe_code)]
 #![allow(clippy::let_underscore_future)]
 #[rustfmt::skip]
 fn main() {

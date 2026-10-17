@@ -202,6 +202,58 @@ class PrivateMaterialTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             private.check_receipt(self.root, destination)
 
+    def test_public_receipt_does_not_read_excluded_evidence_into_its_source_budget(self):
+        report = self.receipt()
+        destination = self.directory / "receipt.json"
+        destination.write_text(json.dumps(report))
+        source_bytes = sum(map(len, common.git_files(self.root).values()))
+        for name in ["docs/checks/generated.json", "docs/reviews/generated.json", "docs/phase-status.json"]:
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("x" * 1024)
+        with mock.patch.object(common, "MAX_TREE_BYTES", source_bytes + 128):
+            self.assertEqual(private.check_receipt(self.root, destination), report)
+            with self.assertRaisesRegex(ValueError, "byte-count bound"):
+                common.git_files(self.root)
+
+    def test_public_receipt_skips_excluded_symlinks_and_private_scan_rejects_them(self):
+        report = self.receipt()
+        destination = self.directory / "receipt.json"
+        destination.write_text(json.dumps(report))
+        path = self.root / "docs/checks/generated.json"
+        path.parent.mkdir(parents=True)
+        path.symlink_to(self.config)
+        self.assertEqual(private.check_receipt(self.root, destination), report)
+        with self.assertRaises(ValueError):
+            self.receipt()
+
+    def test_private_scan_still_detects_credentials_in_excluded_evidence(self):
+        path = self.root / "docs/checks/generated.json"
+        path.parent.mkdir(parents=True)
+        path.write_text(SYNTHETIC["mgmtClientSecret"])
+        report = self.receipt()
+        self.assertFalse(report["passed"])
+        self.assertEqual(report["selectedExternalClientIdentityOrSecretMatches"], 1)
+        self.assert_sanitized(report)
+
+    def test_public_failure_categories_do_not_reflect_values_or_paths(self):
+        errors = [(ValueError("Repository byte-count bound exceeded"), "repository_byte_limit"),
+            (ValueError("Git evidence acquisition failed"), "git_read_failed"),
+            (ValueError("Receipt source fingerprint mismatch"), "source_changed"),
+            (ValueError(SYNTHETIC["mgmtClientSecret"]), "invalid_receipt"),
+            (OSError(str(self.config)), "filesystem_read_failed")]
+        for error, expected in errors:
+            result = private.check_failure_code(error)
+            self.assertEqual(result, expected)
+            self.assert_sanitized(result)
+
+    def test_check_cli_emits_a_closed_category_without_echoing_invalid_receipt(self):
+        completed = subprocess.run([sys.executable, str(ROOT / "scripts/check-private-material.py"),
+            "--check", str(self.config)], text=True, capture_output=True, timeout=10)
+        self.assertEqual(completed.returncode, 1)
+        self.assertIn("Public receipt verification failed: invalid_receipt", completed.stderr)
+        self.assert_sanitized(completed.stdout + completed.stderr)
+
     def test_receipt_schema_success_counts_and_scope_are_enforced(self):
         report = self.receipt()
         destination = self.directory / "receipt.json"
