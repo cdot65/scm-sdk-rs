@@ -2076,7 +2076,6 @@
       "name": "Red Team dataplane qualification and delivery",
       "status": "complete",
       "reviews": [
-        "docs/reviews/phase-12-attempt-01.json",
         "docs/reviews/phase-12-attempt-01.json"
       ],
       "plan": "docs/red-team-data-plane-0.93.0-plan.md",
@@ -2304,7 +2303,69 @@
           ]
         }
       },
-      "plan": "docs/release-0.2.0-plan.md"
+      "plan": "docs/release-0.2.0-plan.md",
+      "review_advisories": [
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 0,
+          "status": "implemented",
+          "resolution": "README explicitly permitted; both clean archives bind final README."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 1,
+          "status": "implemented",
+          "resolution": "Pagination and GNU guidance corrected; generator advisories explicitly deferred in release plan."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 2,
+          "status": "implemented",
+          "resolution": "PHASES and implementation plan link release plan."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 3,
+          "status": "implemented",
+          "resolution": "Both phases name the release plan."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 4,
+          "status": "implemented",
+          "resolution": "Filesystem guard rejects untracked, ignored and symlink inputs."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 5,
+          "status": "post_release_maintenance",
+          "resolution": "Additional cross-assertion test deferred; actual baseline and phase12 CI source both equal 167a359fb3d51aad37c4dff311060b069c620bdd."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 6,
+          "status": "resolved_in_release_gate",
+          "resolution": "Planning deferred privacy and staged whitespace to phase14; both now passed."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 7,
+          "status": "post_release_maintenance",
+          "resolution": "Generalized future-version wording guard deferred; actual 0.2.0 registry verification now resolves current publication claims."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 8,
+          "status": "operationally_enforced",
+          "resolution": "Cargo uses /home/cdot/.cargo/credentials.toml outside repository/vault. No token is passed on command line, copied into receipts or supplied to CI; explicit plan wording deferred."
+        },
+        {
+          "review": "docs/reviews/phase-13-attempt-01.json",
+          "finding": 9,
+          "status": "implemented",
+          "resolution": "Removed duplicate phase12 accepted review entry."
+        }
+      ]
     },
     {
       "id": 14,
@@ -2332,6 +2393,50 @@
         "same_as_release_scan": "docs/checks/phase-14-private-material.json",
         "historical_original": "docs/checks/phase-12-private-material-reviewed-de311207.json",
         "reason": "The existing CI command retains its filename and validates current source. Original Phase 12 scan bytes are preserved separately. No accepted command set or SDK source changed."
+      },
+      "review_advisories": [
+        {
+          "review": "docs/reviews/phase-14-attempt-01.json",
+          "finding": 0,
+          "status": "resolved_by_publication",
+          "resolution": "Registry 0.2.0 downloaded and verified against both proofs; advancement remains blocked until remote tag and terminal CI evidence."
+        },
+        {
+          "review": "docs/reviews/phase-14-attempt-01.json",
+          "finding": 1,
+          "status": "operationally_enforced",
+          "resolution": "Owner Cargo credential remains external at /home/cdot/.cargo/credentials.toml; never passed as command argument, copied to receipts, or supplied to CI. Documentation specificity deferred."
+        },
+        {
+          "review": "docs/reviews/phase-14-attempt-01.json",
+          "finding": 2,
+          "status": "implemented",
+          "resolution": "All phase13 findings now dispositioned and duplicate removed; extra test remains explicit maintenance."
+        },
+        {
+          "review": "docs/reviews/phase-14-attempt-01.json",
+          "finding": 3,
+          "status": "post_release_maintenance",
+          "resolution": "Additional adversarial verifier unit tests deferred; actual archive/file/VCS/example/consumer checks executed and passed for this release."
+        },
+        {
+          "review": "docs/reviews/phase-14-attempt-01.json",
+          "finding": 4,
+          "status": "verified_for_this_release",
+          "resolution": "Proof source equaled HEAD at publication. Integration tests, native probe manifest and cargo/toolchain inputs separately compared against accepted baseline; extending generic guard deferred."
+        }
+      ],
+      "qualified_review": "docs/reviews/phase-14-attempt-01.json",
+      "qualified_score": 9,
+      "registry_publication": {
+        "version": "0.2.0",
+        "status": "verified",
+        "source_commit": "b0d7833cdc2d68111f084482e3592a6e64cc26fb",
+        "evidence": "docs/checks/release-registry-0.2.0.json"
+      },
+      "delivery": {
+        "status": "awaiting_remote_ci",
+        "advance_only_after_remote_gate_passes": true
       }
     },
     {
