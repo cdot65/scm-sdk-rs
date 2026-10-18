@@ -22,6 +22,9 @@ class VendorPlanReference(unittest.TestCase):
         self.assertEqual(pin["sha256"], EXPECTED_SHA)
         self.assertEqual(pin["license"], "MIT")
         self.assertIn(pin["commit"], pin["sourceUrl"])
+        if "licensePath" in pin:
+            notice = ROOT / pin["licensePath"]
+            self.assertEqual(hashlib.sha256(notice.read_bytes()).hexdigest(), pin["licenseSha256"])
         path = ROOT / pin["path"]
         self.assertFalse(path.is_symlink())
         verify_bytes(pin, path.read_bytes())
@@ -47,6 +50,19 @@ process.stdout.write(JSON.stringify({version:s.info.version,openapi:s.openapi,
         result = json.loads(subprocess.check_output(["node", "-e", script], cwd=ROOT, text=True))
         self.assertEqual(result, {"version": "0.93.0", "openapi": "3.1.0", "operations": 47,
                                   "previous": 36, "added": 11, "removed": [], "parser": "4.3.2"})
+        import red_team_dataplane
+        _, _, operations = red_team_dataplane.load()
+        # identities, not just the count, are bound to the accepted plan's table.
+        import re
+        plan = (ROOT / "docs/red-team-data-plane-0.93.0-plan.md").read_text()
+        declared = set(re.findall(r"\| (GET|POST|PUT) `([^`]+)` \|", plan))
+        actual = {(method, path) for method, path, _ in operations
+                  if method + " " + path in red_team_dataplane.NEW}
+        self.assertEqual(declared, actual)
+        package = json.loads((ROOT / "tools/package.json").read_text())
+        lock = json.loads((ROOT / "tools/package-lock.json").read_text())
+        self.assertEqual(package["dependencies"]["js-yaml"], pin_version := "4.3.2")
+        self.assertEqual(lock["packages"]["node_modules/js-yaml"]["version"], pin_version)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "corrections": [
+    {
+      "class": "RedTeamScansClient",
+      "method": "create",
+      "pointer": "/responseBody/time_record/time_taken",
+      "from": "x",
+      "to": "PT1S",
+      "reason": "Frozen Zod specimen accepted an arbitrary string; current vendor duration format requires an RFC 3339 duration."
+    },
+    {
+      "class": "RedTeamScansClient",
+      "method": "list",
+      "pointer": "/responseBody/data/0/time_record/time_taken",
+      "from": "x",
+      "to": "PT1S",
+      "reason": "Frozen Zod specimen accepted an arbitrary string; current vendor duration format requires an RFC 3339 duration."
+    },
+    {
+      "class": "RedTeamScansClient",
+      "method": "get",
+      "pointer": "/responseBody/time_record/time_taken",
+      "from": "x",
+      "to": "PT1S",
+      "reason": "Frozen Zod specimen accepted an arbitrary string; current vendor duration format requires an RFC 3339 duration."
+    }
+  ]
+}

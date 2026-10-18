@@ -1847,14 +1847,36 @@
       ],
       "accepted_limitations": [
         "SDK implementation not yet present at plan acceptance; Phase 10 must complete vendor license notice/provenance, parser direct pin, exact added-route identities and fail closed on any newly discovered required-field change beyond the four named response waivers."
-      ]
+      ],
+      "followup_fixes_in_phase_10": {
+        "license": "Vendor source.json licensePath/licenseSha256, full MIT notice retained in package NOTICE",
+        "operation_identities": "tools/test_vendor_red_team_plan.py compares plan table with actual eleven additions",
+        "parser": "Direct js-yaml 4.3.2 dependency and installed/lockfile assertions",
+        "fifth_presence_waiver": "tools/red_team_dataplane.py fails closed and requires fresh plan review",
+        "runtime_version": "Target 0.2.0 because twelve legacy options now fail before auth",
+        "private_material": "Fresh scoped Phase 10 scan and source-bound check"
+      }
     },
     {
       "id": 10,
       "name": "Red Team vendor contracts and model evolution",
       "status": "in_progress",
       "reviews": [],
-      "plan": "docs/red-team-data-plane-0.93.0-plan.md"
+      "plan": "docs/red-team-data-plane-0.93.0-plan.md",
+      "scope_evidence": [
+        "tools/red_team_dataplane.py",
+        "tools/generate_models.py",
+        "tools/make-red-team-fixtures.mjs",
+        "tools/red-team-dataplane.mjs",
+        "tools/test_red_team_dataplane.py",
+        "contracts/vendor/red-team-data-plane/0.93.0/",
+        "crates/scm-sdk/src/airs/red_team/",
+        "crates/scm-sdk/src/validation.rs",
+        "crates/scm-sdk/src/models/red_team_data_plane.rs",
+        "crates/scm-sdk/tests/red_team_vendor_models_generated.rs",
+        "crates/scm-sdk/tests/red_team_contracts.rs"
+      ],
+      "check_scope_rationale": "Vendor compilation, complete schema/operation accounting, additive models, existing dataplane preflight/decoding and affected frozen-model/export regressions. Eleven new methods remain Phase 11 obligations."
     },
     {
       "id": 11,

@@ -1,6 +1,8 @@
 //! Prisma AIRS Red Teaming, with explicit data, management and broker endpoints.
 pub mod models {
     pub use crate::models::red_team::*;
+    /// Exact current vendor schemas, alongside the compatible existing models.
+    pub use crate::models::red_team_data_plane as data_plane;
 }
 #[cfg(feature = "red-team")]
 mod adapters;

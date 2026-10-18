@@ -6020,6 +6020,12 @@ pub struct AttackDetailResponse {
     pub severity: Optional<String>,
     #[serde(rename = "outputs", default)]
     pub outputs: Optional<Vec<AttackOutput>>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    #[serde(rename = "audio", default)]
+    pub audio: Patch<super::red_team_data_plane::AttackAudio>,
+    #[serde(rename = "audio_technique", default)]
+    pub audio_technique: Patch<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -6055,6 +6061,9 @@ impl Serialize for AttackDetailResponse {
             "version",
             "severity",
             "outputs",
+            "threat_details",
+            "audio",
+            "audio_technique",
         ];
         if self
             .extensions
@@ -6118,6 +6127,15 @@ impl Serialize for AttackDetailResponse {
         if !self.outputs.is_unset() {
             map.serialize_entry("outputs", &self.outputs)?;
         }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
+        if !self.audio.is_unset() {
+            map.serialize_entry("audio", &self.audio)?;
+        }
+        if !self.audio_technique.is_unset() {
+            map.serialize_entry("audio_technique", &self.audio_technique)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -6161,6 +6179,9 @@ pub struct AttackDetailResponseBuilder {
     version: Patch<FiniteNumber>,
     severity: Optional<String>,
     outputs: Optional<Vec<AttackOutput>>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    audio: Patch<super::red_team_data_plane::AttackAudio>,
+    audio_technique: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl AttackDetailResponseBuilder {
@@ -6268,6 +6289,21 @@ impl AttackDetailResponseBuilder {
         self.outputs = value;
         self
     }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
+    pub fn audio(mut self, value: Patch<super::red_team_data_plane::AttackAudio>) -> Self {
+        self.audio = value;
+        self
+    }
+    pub fn audio_technique(mut self, value: Patch<String>) -> Self {
+        self.audio_technique = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -6326,6 +6362,9 @@ impl AttackDetailResponseBuilder {
             version: self.version,
             severity: self.severity,
             outputs: self.outputs,
+            threat_details: self.threat_details,
+            audio: self.audio,
+            audio_technique: self.audio_technique,
             extensions: self.extensions,
         })
     }
@@ -6938,6 +6977,12 @@ pub struct AttackMultiTurnDetailResponse {
     pub severity: Optional<String>,
     #[serde(rename = "outputs", default)]
     pub outputs: Optional<AttackMultiTurnDetailResponseOutputs>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    #[serde(rename = "audio", default)]
+    pub audio: Patch<super::red_team_data_plane::AttackAudio>,
+    #[serde(rename = "audio_technique", default)]
+    pub audio_technique: Patch<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -6973,6 +7018,9 @@ impl Serialize for AttackMultiTurnDetailResponse {
             "version",
             "severity",
             "outputs",
+            "threat_details",
+            "audio",
+            "audio_technique",
         ];
         if self
             .extensions
@@ -7036,6 +7084,15 @@ impl Serialize for AttackMultiTurnDetailResponse {
         if !self.outputs.is_unset() {
             map.serialize_entry("outputs", &self.outputs)?;
         }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
+        if !self.audio.is_unset() {
+            map.serialize_entry("audio", &self.audio)?;
+        }
+        if !self.audio_technique.is_unset() {
+            map.serialize_entry("audio_technique", &self.audio_technique)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -7079,6 +7136,9 @@ pub struct AttackMultiTurnDetailResponseBuilder {
     version: Patch<FiniteNumber>,
     severity: Optional<String>,
     outputs: Optional<AttackMultiTurnDetailResponseOutputs>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    audio: Patch<super::red_team_data_plane::AttackAudio>,
+    audio_technique: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl AttackMultiTurnDetailResponseBuilder {
@@ -7186,6 +7246,21 @@ impl AttackMultiTurnDetailResponseBuilder {
         self.outputs = value;
         self
     }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
+    pub fn audio(mut self, value: Patch<super::red_team_data_plane::AttackAudio>) -> Self {
+        self.audio = value;
+        self
+    }
+    pub fn audio_technique(mut self, value: Patch<String>) -> Self {
+        self.audio_technique = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -7244,6 +7319,9 @@ impl AttackMultiTurnDetailResponseBuilder {
             version: self.version,
             severity: self.severity,
             outputs: self.outputs,
+            threat_details: self.threat_details,
+            audio: self.audio,
+            audio_technique: self.audio_technique,
             extensions: self.extensions,
         })
     }
@@ -7419,6 +7497,17 @@ pub struct AttackMultiTurnOutput {
     pub generation: Optional<FiniteNumber>,
     #[serde(rename = "multi_turn", default)]
     pub multi_turn: Optional<bool>,
+    #[serde(rename = "response_audio", default)]
+    pub response_audio: Patch<super::red_team_data_plane::AttackAudio>,
+    #[serde(rename = "transcript", default)]
+    pub transcript: Patch<String>,
+    #[serde(rename = "transcript_source", default)]
+    pub transcript_source:
+        Patch<super::red_team_data_plane::AttackMultiTurnOutputResponseTranscriptSource>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    #[serde(rename = "judge_reasoning", default)]
+    pub judge_reasoning: Optional<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -7442,6 +7531,11 @@ impl Serialize for AttackMultiTurnOutput {
             "marked_safe",
             "generation",
             "multi_turn",
+            "response_audio",
+            "transcript",
+            "transcript_source",
+            "threat_details",
+            "judge_reasoning",
         ];
         if self
             .extensions
@@ -7479,6 +7573,21 @@ impl Serialize for AttackMultiTurnOutput {
         if !self.multi_turn.is_unset() {
             map.serialize_entry("multi_turn", &self.multi_turn)?;
         }
+        if !self.response_audio.is_unset() {
+            map.serialize_entry("response_audio", &self.response_audio)?;
+        }
+        if !self.transcript.is_unset() {
+            map.serialize_entry("transcript", &self.transcript)?;
+        }
+        if !self.transcript_source.is_unset() {
+            map.serialize_entry("transcript_source", &self.transcript_source)?;
+        }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
+        if !self.judge_reasoning.is_unset() {
+            map.serialize_entry("judge_reasoning", &self.judge_reasoning)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -7510,6 +7619,12 @@ pub struct AttackMultiTurnOutputBuilder {
     marked_safe: Patch<bool>,
     generation: Optional<FiniteNumber>,
     multi_turn: Optional<bool>,
+    response_audio: Patch<super::red_team_data_plane::AttackAudio>,
+    transcript: Patch<String>,
+    transcript_source:
+        Patch<super::red_team_data_plane::AttackMultiTurnOutputResponseTranscriptSource>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    judge_reasoning: Optional<String>,
     extensions: Extensions<JsonValue>,
 }
 impl AttackMultiTurnOutputBuilder {
@@ -7569,6 +7684,32 @@ impl AttackMultiTurnOutputBuilder {
         self.multi_turn = value;
         self
     }
+    pub fn response_audio(mut self, value: Patch<super::red_team_data_plane::AttackAudio>) -> Self {
+        self.response_audio = value;
+        self
+    }
+    pub fn transcript(mut self, value: Patch<String>) -> Self {
+        self.transcript = value;
+        self
+    }
+    pub fn transcript_source(
+        mut self,
+        value: Patch<super::red_team_data_plane::AttackMultiTurnOutputResponseTranscriptSource>,
+    ) -> Self {
+        self.transcript_source = value;
+        self
+    }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
+    pub fn judge_reasoning(mut self, value: Optional<String>) -> Self {
+        self.judge_reasoning = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -7605,6 +7746,11 @@ impl AttackMultiTurnOutputBuilder {
             marked_safe: self.marked_safe,
             generation: self.generation,
             multi_turn: self.multi_turn,
+            response_audio: self.response_audio,
+            transcript: self.transcript,
+            transcript_source: self.transcript_source,
+            threat_details: self.threat_details,
+            judge_reasoning: self.judge_reasoning,
             extensions: self.extensions,
         })
     }
@@ -7652,6 +7798,16 @@ pub struct AttackOutput {
     pub threat: Patch<bool>,
     #[serde(rename = "marked_safe", default)]
     pub marked_safe: Patch<bool>,
+    #[serde(rename = "response_audio", default)]
+    pub response_audio: Patch<super::red_team_data_plane::AttackAudio>,
+    #[serde(rename = "transcript", default)]
+    pub transcript: Patch<String>,
+    #[serde(rename = "transcript_source", default)]
+    pub transcript_source: Patch<super::red_team_data_plane::AttackOutputResponseTranscriptSource>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    #[serde(rename = "judge_reasoning", default)]
+    pub judge_reasoning: Optional<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -7671,6 +7827,11 @@ impl Serialize for AttackOutput {
             "output",
             "threat",
             "marked_safe",
+            "response_audio",
+            "transcript",
+            "transcript_source",
+            "threat_details",
+            "judge_reasoning",
         ];
         if self
             .extensions
@@ -7700,6 +7861,21 @@ impl Serialize for AttackOutput {
         if !self.marked_safe.is_unset() {
             map.serialize_entry("marked_safe", &self.marked_safe)?;
         }
+        if !self.response_audio.is_unset() {
+            map.serialize_entry("response_audio", &self.response_audio)?;
+        }
+        if !self.transcript.is_unset() {
+            map.serialize_entry("transcript", &self.transcript)?;
+        }
+        if !self.transcript_source.is_unset() {
+            map.serialize_entry("transcript_source", &self.transcript_source)?;
+        }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
+        if !self.judge_reasoning.is_unset() {
+            map.serialize_entry("judge_reasoning", &self.judge_reasoning)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -7727,6 +7903,11 @@ pub struct AttackOutputBuilder {
     output: Option<String>,
     threat: Patch<bool>,
     marked_safe: Patch<bool>,
+    response_audio: Patch<super::red_team_data_plane::AttackAudio>,
+    transcript: Patch<String>,
+    transcript_source: Patch<super::red_team_data_plane::AttackOutputResponseTranscriptSource>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
+    judge_reasoning: Optional<String>,
     extensions: Extensions<JsonValue>,
 }
 impl AttackOutputBuilder {
@@ -7770,6 +7951,32 @@ impl AttackOutputBuilder {
         self.marked_safe = value;
         self
     }
+    pub fn response_audio(mut self, value: Patch<super::red_team_data_plane::AttackAudio>) -> Self {
+        self.response_audio = value;
+        self
+    }
+    pub fn transcript(mut self, value: Patch<String>) -> Self {
+        self.transcript = value;
+        self
+    }
+    pub fn transcript_source(
+        mut self,
+        value: Patch<super::red_team_data_plane::AttackOutputResponseTranscriptSource>,
+    ) -> Self {
+        self.transcript_source = value;
+        self
+    }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
+    pub fn judge_reasoning(mut self, value: Optional<String>) -> Self {
+        self.judge_reasoning = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -7798,6 +8005,11 @@ impl AttackOutputBuilder {
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
             threat: self.threat,
             marked_safe: self.marked_safe,
+            response_audio: self.response_audio,
+            transcript: self.transcript,
+            transcript_source: self.transcript_source,
+            threat_details: self.threat_details,
+            judge_reasoning: self.judge_reasoning,
             extensions: self.extensions,
         })
     }
@@ -13652,6 +13864,10 @@ pub struct CustomAttackOutput {
     pub threat: Patch<bool>,
     #[serde(rename = "marked_safe", default)]
     pub marked_safe: Patch<bool>,
+    #[serde(rename = "judge_reasoning", default)]
+    pub judge_reasoning: Optional<String>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -13671,6 +13887,8 @@ impl Serialize for CustomAttackOutput {
             "output",
             "threat",
             "marked_safe",
+            "judge_reasoning",
+            "threat_details",
         ];
         if self
             .extensions
@@ -13700,6 +13918,12 @@ impl Serialize for CustomAttackOutput {
         if !self.marked_safe.is_unset() {
             map.serialize_entry("marked_safe", &self.marked_safe)?;
         }
+        if !self.judge_reasoning.is_unset() {
+            map.serialize_entry("judge_reasoning", &self.judge_reasoning)?;
+        }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -13727,6 +13951,8 @@ pub struct CustomAttackOutputBuilder {
     output: Option<String>,
     threat: Patch<bool>,
     marked_safe: Patch<bool>,
+    judge_reasoning: Optional<String>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     extensions: Extensions<JsonValue>,
 }
 impl CustomAttackOutputBuilder {
@@ -13770,6 +13996,17 @@ impl CustomAttackOutputBuilder {
         self.marked_safe = value;
         self
     }
+    pub fn judge_reasoning(mut self, value: Optional<String>) -> Self {
+        self.judge_reasoning = value;
+        self
+    }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -13798,6 +14035,8 @@ impl CustomAttackOutputBuilder {
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
             threat: self.threat,
             marked_safe: self.marked_safe,
+            judge_reasoning: self.judge_reasoning,
+            threat_details: self.threat_details,
             extensions: self.extensions,
         })
     }
@@ -14132,6 +14371,8 @@ pub struct CustomJobMetadata {
     pub content_filter_error_message: Patch<String>,
     #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    #[serde(rename = "runtime_profile_id", default)]
+    pub runtime_profile_id: Patch<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -14152,6 +14393,7 @@ impl Serialize for CustomJobMetadata {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
+            "runtime_profile_id",
         ];
         if self
             .extensions
@@ -14197,6 +14439,9 @@ impl Serialize for CustomJobMetadata {
         if !self.content_filter_error_json.is_unset() {
             map.serialize_entry("content_filter_error_json", &self.content_filter_error_json)?;
         }
+        if !self.runtime_profile_id.is_unset() {
+            map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -14225,6 +14470,7 @@ pub struct CustomJobMetadataBuilder {
     content_filter_error_code: Patch<FiniteNumber>,
     content_filter_error_message: Patch<String>,
     content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    runtime_profile_id: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl CustomJobMetadataBuilder {
@@ -14272,6 +14518,10 @@ impl CustomJobMetadataBuilder {
         self.content_filter_error_json = value;
         self
     }
+    pub fn runtime_profile_id(mut self, value: Patch<String>) -> Self {
+        self.runtime_profile_id = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -14291,6 +14541,7 @@ impl CustomJobMetadataBuilder {
             content_filter_error_code: self.content_filter_error_code,
             content_filter_error_message: self.content_filter_error_message,
             content_filter_error_json: self.content_filter_error_json,
+            runtime_profile_id: self.runtime_profile_id,
             extensions: self.extensions,
         })
     }
@@ -31391,6 +31642,10 @@ pub struct DynamicJobMetadata {
     pub use_case: Patch<String>,
     #[serde(rename = "system_prompt", default)]
     pub system_prompt: Patch<String>,
+    #[serde(rename = "runtime_profile_id", default)]
+    pub runtime_profile_id: Patch<String>,
+    #[serde(rename = "multi_turn_enabled", default)]
+    pub multi_turn_enabled: Patch<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -31419,6 +31674,8 @@ impl Serialize for DynamicJobMetadata {
             "base_model",
             "use_case",
             "system_prompt",
+            "runtime_profile_id",
+            "multi_turn_enabled",
         ];
         if self
             .extensions
@@ -31490,6 +31747,12 @@ impl Serialize for DynamicJobMetadata {
         if !self.system_prompt.is_unset() {
             map.serialize_entry("system_prompt", &self.system_prompt)?;
         }
+        if !self.runtime_profile_id.is_unset() {
+            map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
+        }
+        if !self.multi_turn_enabled.is_unset() {
+            map.serialize_entry("multi_turn_enabled", &self.multi_turn_enabled)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -31526,6 +31789,8 @@ pub struct DynamicJobMetadataBuilder {
     base_model: Patch<String>,
     use_case: Patch<String>,
     system_prompt: Patch<String>,
+    runtime_profile_id: Patch<String>,
+    multi_turn_enabled: Patch<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl DynamicJobMetadataBuilder {
@@ -31605,6 +31870,14 @@ impl DynamicJobMetadataBuilder {
         self.system_prompt = value;
         self
     }
+    pub fn runtime_profile_id(mut self, value: Patch<String>) -> Self {
+        self.runtime_profile_id = value;
+        self
+    }
+    pub fn multi_turn_enabled(mut self, value: Patch<bool>) -> Self {
+        self.multi_turn_enabled = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -31630,6 +31903,8 @@ impl DynamicJobMetadataBuilder {
             base_model: self.base_model,
             use_case: self.use_case,
             system_prompt: self.system_prompt,
+            runtime_profile_id: self.runtime_profile_id,
+            multi_turn_enabled: self.multi_turn_enabled,
             extensions: self.extensions,
         })
     }
@@ -140408,6 +140683,10 @@ pub struct Goal {
     pub version: Patch<FiniteNumber>,
     #[serde(rename = "extra_info", default)]
     pub extra_info: Patch<TypedMap<JsonValue>>,
+    #[serde(rename = "goal_subtype", default)]
+    pub goal_subtype: Patch<super::red_team_data_plane::GoalResponseGoalSubtype>,
+    #[serde(rename = "goal_english", default)]
+    pub goal_english: Patch<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -140432,6 +140711,8 @@ impl Serialize for Goal {
             "threat",
             "version",
             "extra_info",
+            "goal_subtype",
+            "goal_english",
         ];
         if self
             .extensions
@@ -140476,6 +140757,12 @@ impl Serialize for Goal {
         if !self.extra_info.is_unset() {
             map.serialize_entry("extra_info", &self.extra_info)?;
         }
+        if !self.goal_subtype.is_unset() {
+            map.serialize_entry("goal_subtype", &self.goal_subtype)?;
+        }
+        if !self.goal_english.is_unset() {
+            map.serialize_entry("goal_english", &self.goal_english)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -140508,6 +140795,8 @@ pub struct GoalBuilder {
     threat: Optional<bool>,
     version: Patch<FiniteNumber>,
     extra_info: Patch<TypedMap<JsonValue>>,
+    goal_subtype: Patch<super::red_team_data_plane::GoalResponseGoalSubtype>,
+    goal_english: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl GoalBuilder {
@@ -140571,6 +140860,17 @@ impl GoalBuilder {
         self.extra_info = value;
         self
     }
+    pub fn goal_subtype(
+        mut self,
+        value: Patch<super::red_team_data_plane::GoalResponseGoalSubtype>,
+    ) -> Self {
+        self.goal_subtype = value;
+        self
+    }
+    pub fn goal_english(mut self, value: Patch<String>) -> Self {
+        self.goal_english = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -140604,6 +140904,8 @@ impl GoalBuilder {
             threat: self.threat,
             version: self.version,
             extra_info: self.extra_info,
+            goal_subtype: self.goal_subtype,
+            goal_english: self.goal_english,
             extensions: self.extensions,
         })
     }
@@ -143518,6 +143820,12 @@ pub struct JobCreateRequestJobMetadataVariant1 {
     pub content_filter_error_message: Patch<String>,
     #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    #[serde(rename = "runtime_profile_id", default)]
+    pub runtime_profile_id: Patch<String>,
+    #[serde(rename = "include_audio_attacks", default)]
+    pub include_audio_attacks: Optional<bool>,
+    #[serde(rename = "include_text_attacks", default)]
+    pub include_text_attacks: Optional<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -143539,6 +143847,9 @@ impl Serialize for JobCreateRequestJobMetadataVariant1 {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
+            "runtime_profile_id",
+            "include_audio_attacks",
+            "include_text_attacks",
         ];
         if self
             .extensions
@@ -143587,6 +143898,15 @@ impl Serialize for JobCreateRequestJobMetadataVariant1 {
         if !self.content_filter_error_json.is_unset() {
             map.serialize_entry("content_filter_error_json", &self.content_filter_error_json)?;
         }
+        if !self.runtime_profile_id.is_unset() {
+            map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
+        }
+        if !self.include_audio_attacks.is_unset() {
+            map.serialize_entry("include_audio_attacks", &self.include_audio_attacks)?;
+        }
+        if !self.include_text_attacks.is_unset() {
+            map.serialize_entry("include_text_attacks", &self.include_text_attacks)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -143616,6 +143936,9 @@ pub struct JobCreateRequestJobMetadataVariant1Builder {
     content_filter_error_code: Patch<FiniteNumber>,
     content_filter_error_message: Patch<String>,
     content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    runtime_profile_id: Patch<String>,
+    include_audio_attacks: Optional<bool>,
+    include_text_attacks: Optional<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl JobCreateRequestJobMetadataVariant1Builder {
@@ -143667,6 +143990,18 @@ impl JobCreateRequestJobMetadataVariant1Builder {
         self.content_filter_error_json = value;
         self
     }
+    pub fn runtime_profile_id(mut self, value: Patch<String>) -> Self {
+        self.runtime_profile_id = value;
+        self
+    }
+    pub fn include_audio_attacks(mut self, value: Optional<bool>) -> Self {
+        self.include_audio_attacks = value;
+        self
+    }
+    pub fn include_text_attacks(mut self, value: Optional<bool>) -> Self {
+        self.include_text_attacks = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -143687,6 +144022,9 @@ impl JobCreateRequestJobMetadataVariant1Builder {
             content_filter_error_code: self.content_filter_error_code,
             content_filter_error_message: self.content_filter_error_message,
             content_filter_error_json: self.content_filter_error_json,
+            runtime_profile_id: self.runtime_profile_id,
+            include_audio_attacks: self.include_audio_attacks,
+            include_text_attacks: self.include_text_attacks,
             extensions: self.extensions,
         })
     }
@@ -143752,6 +144090,10 @@ pub struct JobCreateRequestJobMetadataVariant2 {
     pub use_case: Patch<String>,
     #[serde(rename = "system_prompt", default)]
     pub system_prompt: Patch<String>,
+    #[serde(rename = "runtime_profile_id", default)]
+    pub runtime_profile_id: Patch<String>,
+    #[serde(rename = "multi_turn_enabled", default)]
+    pub multi_turn_enabled: Patch<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -143780,6 +144122,8 @@ impl Serialize for JobCreateRequestJobMetadataVariant2 {
             "base_model",
             "use_case",
             "system_prompt",
+            "runtime_profile_id",
+            "multi_turn_enabled",
         ];
         if self
             .extensions
@@ -143851,6 +144195,12 @@ impl Serialize for JobCreateRequestJobMetadataVariant2 {
         if !self.system_prompt.is_unset() {
             map.serialize_entry("system_prompt", &self.system_prompt)?;
         }
+        if !self.runtime_profile_id.is_unset() {
+            map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
+        }
+        if !self.multi_turn_enabled.is_unset() {
+            map.serialize_entry("multi_turn_enabled", &self.multi_turn_enabled)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -143887,6 +144237,8 @@ pub struct JobCreateRequestJobMetadataVariant2Builder {
     base_model: Patch<String>,
     use_case: Patch<String>,
     system_prompt: Patch<String>,
+    runtime_profile_id: Patch<String>,
+    multi_turn_enabled: Patch<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl JobCreateRequestJobMetadataVariant2Builder {
@@ -143966,6 +144318,14 @@ impl JobCreateRequestJobMetadataVariant2Builder {
         self.system_prompt = value;
         self
     }
+    pub fn runtime_profile_id(mut self, value: Patch<String>) -> Self {
+        self.runtime_profile_id = value;
+        self
+    }
+    pub fn multi_turn_enabled(mut self, value: Patch<bool>) -> Self {
+        self.multi_turn_enabled = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -143991,6 +144351,8 @@ impl JobCreateRequestJobMetadataVariant2Builder {
             base_model: self.base_model,
             use_case: self.use_case,
             system_prompt: self.system_prompt,
+            runtime_profile_id: self.runtime_profile_id,
+            multi_turn_enabled: self.multi_turn_enabled,
             extensions: self.extensions,
         })
     }
@@ -144040,6 +144402,8 @@ pub struct JobCreateRequestJobMetadataVariant3 {
     pub content_filter_error_message: Patch<String>,
     #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    #[serde(rename = "runtime_profile_id", default)]
+    pub runtime_profile_id: Patch<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -144060,6 +144424,7 @@ impl Serialize for JobCreateRequestJobMetadataVariant3 {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
+            "runtime_profile_id",
         ];
         if self
             .extensions
@@ -144105,6 +144470,9 @@ impl Serialize for JobCreateRequestJobMetadataVariant3 {
         if !self.content_filter_error_json.is_unset() {
             map.serialize_entry("content_filter_error_json", &self.content_filter_error_json)?;
         }
+        if !self.runtime_profile_id.is_unset() {
+            map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -144133,6 +144501,7 @@ pub struct JobCreateRequestJobMetadataVariant3Builder {
     content_filter_error_code: Patch<FiniteNumber>,
     content_filter_error_message: Patch<String>,
     content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    runtime_profile_id: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl JobCreateRequestJobMetadataVariant3Builder {
@@ -144180,6 +144549,10 @@ impl JobCreateRequestJobMetadataVariant3Builder {
         self.content_filter_error_json = value;
         self
     }
+    pub fn runtime_profile_id(mut self, value: Patch<String>) -> Self {
+        self.runtime_profile_id = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -144199,6 +144572,7 @@ impl JobCreateRequestJobMetadataVariant3Builder {
             content_filter_error_code: self.content_filter_error_code,
             content_filter_error_message: self.content_filter_error_message,
             content_filter_error_json: self.content_filter_error_json,
+            runtime_profile_id: self.runtime_profile_id,
             extensions: self.extensions,
         })
     }
@@ -144407,6 +144781,10 @@ pub struct JobResponse {
     pub counted_towards_quota: Optional<String>,
     #[serde(rename = "invocation_id", default)]
     pub invocation_id: Patch<String>,
+    #[serde(rename = "runtime_metrics", default)]
+    pub runtime_metrics: Patch<super::red_team_data_plane::JobRuntimeMetrics>,
+    #[serde(rename = "progress", default)]
+    pub progress: Patch<super::red_team_data_plane::JobResponseProgress>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -144439,6 +144817,8 @@ impl Serialize for JobResponse {
             "metering_quota_uuid",
             "counted_towards_quota",
             "invocation_id",
+            "runtime_metrics",
+            "progress",
         ];
         if self
             .extensions
@@ -144503,6 +144883,12 @@ impl Serialize for JobResponse {
         if !self.invocation_id.is_unset() {
             map.serialize_entry("invocation_id", &self.invocation_id)?;
         }
+        if !self.runtime_metrics.is_unset() {
+            map.serialize_entry("runtime_metrics", &self.runtime_metrics)?;
+        }
+        if !self.progress.is_unset() {
+            map.serialize_entry("progress", &self.progress)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -144543,6 +144929,8 @@ pub struct JobResponseBuilder {
     metering_quota_uuid: Patch<String>,
     counted_towards_quota: Optional<String>,
     invocation_id: Patch<String>,
+    runtime_metrics: Patch<super::red_team_data_plane::JobRuntimeMetrics>,
+    progress: Patch<super::red_team_data_plane::JobResponseProgress>,
     extensions: Extensions<JsonValue>,
 }
 impl JobResponseBuilder {
@@ -144638,6 +145026,20 @@ impl JobResponseBuilder {
         self.invocation_id = value;
         self
     }
+    pub fn runtime_metrics(
+        mut self,
+        value: Patch<super::red_team_data_plane::JobRuntimeMetrics>,
+    ) -> Self {
+        self.runtime_metrics = value;
+        self
+    }
+    pub fn progress(
+        mut self,
+        value: Patch<super::red_team_data_plane::JobResponseProgress>,
+    ) -> Self {
+        self.progress = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -144683,6 +145085,8 @@ impl JobResponseBuilder {
             metering_quota_uuid: self.metering_quota_uuid,
             counted_towards_quota: self.counted_towards_quota,
             invocation_id: self.invocation_id,
+            runtime_metrics: self.runtime_metrics,
+            progress: self.progress,
             extensions: self.extensions,
         })
     }
@@ -145618,6 +146022,8 @@ pub struct LanguageOption {
     pub code: String,
     #[serde(rename = "name")]
     pub name: String,
+    #[serde(rename = "country_code", default)]
+    pub country_code: Patch<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -145626,7 +146032,7 @@ impl Serialize for LanguageOption {
         &self,
         serializer: S,
     ) -> std::result::Result<S::Ok, S::Error> {
-        const KNOWN: &[&str] = &["code", "name"];
+        const KNOWN: &[&str] = &["code", "name", "country_code"];
         if self
             .extensions
             .keys()
@@ -145639,6 +146045,9 @@ impl Serialize for LanguageOption {
         let mut map = serializer.serialize_map(None)?;
         map.serialize_entry("code", &self.code)?;
         map.serialize_entry("name", &self.name)?;
+        if !self.country_code.is_unset() {
+            map.serialize_entry("country_code", &self.country_code)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -145658,6 +146067,7 @@ impl LanguageOption {
 pub struct LanguageOptionBuilder {
     code: Option<String>,
     name: Option<String>,
+    country_code: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl LanguageOptionBuilder {
@@ -145667,6 +146077,10 @@ impl LanguageOptionBuilder {
     }
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+    pub fn country_code(mut self, value: Patch<String>) -> Self {
+        self.country_code = value;
         self
     }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
@@ -145681,6 +146095,7 @@ impl LanguageOptionBuilder {
             name: self
                 .name
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
+            country_code: self.country_code,
             extensions: self.extensions,
         })
     }
@@ -157039,6 +157454,8 @@ pub struct PromptDetailResponse {
     pub prompt_set_id: Patch<String>,
     #[serde(rename = "prompt_set_name", default)]
     pub prompt_set_name: Patch<String>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -157060,6 +157477,7 @@ impl Serialize for PromptDetailResponse {
             "asr",
             "prompt_set_id",
             "prompt_set_name",
+            "threat_details",
         ];
         if self
             .extensions
@@ -157103,6 +157521,9 @@ impl Serialize for PromptDetailResponse {
         if !self.prompt_set_name.is_unset() {
             map.serialize_entry("prompt_set_name", &self.prompt_set_name)?;
         }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -157132,6 +157553,7 @@ pub struct PromptDetailResponseBuilder {
     asr: Patch<FiniteNumber>,
     prompt_set_id: Patch<String>,
     prompt_set_name: Patch<String>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     extensions: Extensions<JsonValue>,
 }
 impl PromptDetailResponseBuilder {
@@ -157186,6 +157608,13 @@ impl PromptDetailResponseBuilder {
         self.prompt_set_name = value;
         self
     }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -157208,6 +157637,7 @@ impl PromptDetailResponseBuilder {
             asr: self.asr,
             prompt_set_id: self.prompt_set_id,
             prompt_set_name: self.prompt_set_name,
+            threat_details: self.threat_details,
             extensions: self.extensions,
         })
     }
@@ -157744,6 +158174,10 @@ pub struct PromptSetSummary {
     pub property_names: Optional<Vec<String>>,
     #[serde(rename = "property_statistics", default)]
     pub property_statistics: Optional<Vec<PropertyStatistic>>,
+    #[serde(rename = "errored_attacks", default)]
+    pub errored_attacks: Optional<FiniteNumber>,
+    #[serde(rename = "has_errors", default)]
+    pub has_errors: Optional<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -157762,6 +158196,8 @@ impl Serialize for PromptSetSummary {
             "threat_rate",
             "property_names",
             "property_statistics",
+            "errored_attacks",
+            "has_errors",
         ];
         if self
             .extensions
@@ -157785,6 +158221,12 @@ impl Serialize for PromptSetSummary {
         }
         if !self.property_statistics.is_unset() {
             map.serialize_entry("property_statistics", &self.property_statistics)?;
+        }
+        if !self.errored_attacks.is_unset() {
+            map.serialize_entry("errored_attacks", &self.errored_attacks)?;
+        }
+        if !self.has_errors.is_unset() {
+            map.serialize_entry("has_errors", &self.has_errors)?;
         }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
@@ -157812,6 +158254,8 @@ pub struct PromptSetSummaryBuilder {
     threat_rate: Option<FiniteNumber>,
     property_names: Optional<Vec<String>>,
     property_statistics: Optional<Vec<PropertyStatistic>>,
+    errored_attacks: Optional<FiniteNumber>,
+    has_errors: Optional<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl PromptSetSummaryBuilder {
@@ -157851,6 +158295,14 @@ impl PromptSetSummaryBuilder {
         self.property_statistics = value;
         self
     }
+    pub fn errored_attacks(mut self, value: Optional<FiniteNumber>) -> Self {
+        self.errored_attacks = value;
+        self
+    }
+    pub fn has_errors(mut self, value: Optional<bool>) -> Self {
+        self.has_errors = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -157880,6 +158332,8 @@ impl PromptSetSummaryBuilder {
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
             property_names: self.property_names,
             property_statistics: self.property_statistics,
+            errored_attacks: self.errored_attacks,
+            has_errors: self.has_errors,
             extensions: self.extensions,
         })
     }
@@ -159537,6 +159991,8 @@ pub struct RemediationDetail {
     pub ease_of_implementation_level: Optional<String>,
     #[serde(rename = "effectiveness_level", default)]
     pub effectiveness_level: Optional<String>,
+    #[serde(rename = "categories", default)]
+    pub categories: Optional<Vec<super::red_team_data_plane::GoalCategoryDetail>>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -159552,6 +160008,7 @@ impl Serialize for RemediationDetail {
             "priority_level",
             "ease_of_implementation_level",
             "effectiveness_level",
+            "categories",
         ];
         if self
             .extensions
@@ -159580,6 +160037,9 @@ impl Serialize for RemediationDetail {
         if !self.effectiveness_level.is_unset() {
             map.serialize_entry("effectiveness_level", &self.effectiveness_level)?;
         }
+        if !self.categories.is_unset() {
+            map.serialize_entry("categories", &self.categories)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -159603,6 +160063,7 @@ pub struct RemediationDetailBuilder {
     priority_level: Optional<String>,
     ease_of_implementation_level: Optional<String>,
     effectiveness_level: Optional<String>,
+    categories: Optional<Vec<super::red_team_data_plane::GoalCategoryDetail>>,
     extensions: Extensions<JsonValue>,
 }
 impl RemediationDetailBuilder {
@@ -159630,6 +160091,13 @@ impl RemediationDetailBuilder {
         self.effectiveness_level = value;
         self
     }
+    pub fn categories(
+        mut self,
+        value: Optional<Vec<super::red_team_data_plane::GoalCategoryDetail>>,
+    ) -> Self {
+        self.categories = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -159646,6 +160114,7 @@ impl RemediationDetailBuilder {
             priority_level: self.priority_level,
             ease_of_implementation_level: self.ease_of_implementation_level,
             effectiveness_level: self.effectiveness_level,
+            categories: self.categories,
             extensions: self.extensions,
         })
     }
@@ -165825,6 +166294,8 @@ pub struct ScoreTrendResponse {
     pub labels: Vec<String>,
     #[serde(rename = "series")]
     pub series: Vec<ScoreTrendSeries>,
+    #[serde(rename = "iso_labels", default)]
+    pub iso_labels: Optional<Vec<String>>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -165833,7 +166304,7 @@ impl Serialize for ScoreTrendResponse {
         &self,
         serializer: S,
     ) -> std::result::Result<S::Ok, S::Error> {
-        const KNOWN: &[&str] = &["labels", "series"];
+        const KNOWN: &[&str] = &["labels", "series", "iso_labels"];
         if self
             .extensions
             .keys()
@@ -165846,6 +166317,9 @@ impl Serialize for ScoreTrendResponse {
         let mut map = serializer.serialize_map(None)?;
         map.serialize_entry("labels", &self.labels)?;
         map.serialize_entry("series", &self.series)?;
+        if !self.iso_labels.is_unset() {
+            map.serialize_entry("iso_labels", &self.iso_labels)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -165865,6 +166339,7 @@ impl ScoreTrendResponse {
 pub struct ScoreTrendResponseBuilder {
     labels: Option<Vec<String>>,
     series: Option<Vec<ScoreTrendSeries>>,
+    iso_labels: Optional<Vec<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl ScoreTrendResponseBuilder {
@@ -165874,6 +166349,10 @@ impl ScoreTrendResponseBuilder {
     }
     pub fn series(mut self, value: Vec<ScoreTrendSeries>) -> Self {
         self.series = Some(value);
+        self
+    }
+    pub fn iso_labels(mut self, value: Optional<Vec<String>>) -> Self {
+        self.iso_labels = value;
         self
     }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
@@ -165888,6 +166367,7 @@ impl ScoreTrendResponseBuilder {
             series: self
                 .series
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
+            iso_labels: self.iso_labels,
             extensions: self.extensions,
         })
     }
@@ -167666,6 +168146,12 @@ pub struct StaticJobMetadata {
     pub content_filter_error_message: Patch<String>,
     #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    #[serde(rename = "runtime_profile_id", default)]
+    pub runtime_profile_id: Patch<String>,
+    #[serde(rename = "include_audio_attacks", default)]
+    pub include_audio_attacks: Optional<bool>,
+    #[serde(rename = "include_text_attacks", default)]
+    pub include_text_attacks: Optional<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -167687,6 +168173,9 @@ impl Serialize for StaticJobMetadata {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
+            "runtime_profile_id",
+            "include_audio_attacks",
+            "include_text_attacks",
         ];
         if self
             .extensions
@@ -167735,6 +168224,15 @@ impl Serialize for StaticJobMetadata {
         if !self.content_filter_error_json.is_unset() {
             map.serialize_entry("content_filter_error_json", &self.content_filter_error_json)?;
         }
+        if !self.runtime_profile_id.is_unset() {
+            map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
+        }
+        if !self.include_audio_attacks.is_unset() {
+            map.serialize_entry("include_audio_attacks", &self.include_audio_attacks)?;
+        }
+        if !self.include_text_attacks.is_unset() {
+            map.serialize_entry("include_text_attacks", &self.include_text_attacks)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -167764,6 +168262,9 @@ pub struct StaticJobMetadataBuilder {
     content_filter_error_code: Patch<FiniteNumber>,
     content_filter_error_message: Patch<String>,
     content_filter_error_json: Patch<TypedMap<JsonValue>>,
+    runtime_profile_id: Patch<String>,
+    include_audio_attacks: Optional<bool>,
+    include_text_attacks: Optional<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl StaticJobMetadataBuilder {
@@ -167815,6 +168316,18 @@ impl StaticJobMetadataBuilder {
         self.content_filter_error_json = value;
         self
     }
+    pub fn runtime_profile_id(mut self, value: Patch<String>) -> Self {
+        self.runtime_profile_id = value;
+        self
+    }
+    pub fn include_audio_attacks(mut self, value: Optional<bool>) -> Self {
+        self.include_audio_attacks = value;
+        self
+    }
+    pub fn include_text_attacks(mut self, value: Optional<bool>) -> Self {
+        self.include_text_attacks = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -167835,6 +168348,9 @@ impl StaticJobMetadataBuilder {
             content_filter_error_code: self.content_filter_error_code,
             content_filter_error_message: self.content_filter_error_message,
             content_filter_error_json: self.content_filter_error_json,
+            runtime_profile_id: self.runtime_profile_id,
+            include_audio_attacks: self.include_audio_attacks,
+            include_text_attacks: self.include_text_attacks,
             extensions: self.extensions,
         })
     }
@@ -168527,6 +169043,8 @@ pub struct StreamDetailResponse {
     pub version: Patch<FiniteNumber>,
     #[serde(rename = "iterations", default)]
     pub iterations: Optional<Vec<StreamIterationData>>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -168557,6 +169075,7 @@ impl Serialize for StreamDetailResponse {
             "extra_info",
             "version",
             "iterations",
+            "threat_details",
         ];
         if self
             .extensions
@@ -168621,6 +169140,9 @@ impl Serialize for StreamDetailResponse {
         if !self.iterations.is_unset() {
             map.serialize_entry("iterations", &self.iterations)?;
         }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -168659,6 +169181,7 @@ pub struct StreamDetailResponseBuilder {
     extra_info: Optional<TypedMap<JsonValue>>,
     version: Patch<FiniteNumber>,
     iterations: Optional<Vec<StreamIterationData>>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     extensions: Extensions<JsonValue>,
 }
 impl StreamDetailResponseBuilder {
@@ -168746,6 +169269,13 @@ impl StreamDetailResponseBuilder {
         self.iterations = value;
         self
     }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -168783,6 +169313,7 @@ impl StreamDetailResponseBuilder {
             extra_info: self.extra_info,
             version: self.version,
             iterations: self.iterations,
+            threat_details: self.threat_details,
             extensions: self.extensions,
         })
     }
@@ -168929,6 +169460,8 @@ pub struct StreamDetailResponseGoalVariant2 {
     pub extra_info: Patch<TypedMap<JsonValue>>,
     #[serde(rename = "error", default)]
     pub error: Patch<bool>,
+    #[serde(rename = "goal_subtype", default)]
+    pub goal_subtype: Patch<super::red_team_data_plane::GoalGoalSubtype>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -168954,6 +169487,7 @@ impl Serialize for StreamDetailResponseGoalVariant2 {
             "version",
             "extra_info",
             "error",
+            "goal_subtype",
         ];
         if self
             .extensions
@@ -169001,6 +169535,9 @@ impl Serialize for StreamDetailResponseGoalVariant2 {
         if !self.error.is_unset() {
             map.serialize_entry("error", &self.error)?;
         }
+        if !self.goal_subtype.is_unset() {
+            map.serialize_entry("goal_subtype", &self.goal_subtype)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -169034,6 +169571,7 @@ pub struct StreamDetailResponseGoalVariant2Builder {
     version: Patch<FiniteNumber>,
     extra_info: Patch<TypedMap<JsonValue>>,
     error: Patch<bool>,
+    goal_subtype: Patch<super::red_team_data_plane::GoalGoalSubtype>,
     extensions: Extensions<JsonValue>,
 }
 impl StreamDetailResponseGoalVariant2Builder {
@@ -169101,6 +169639,13 @@ impl StreamDetailResponseGoalVariant2Builder {
         self.error = value;
         self
     }
+    pub fn goal_subtype(
+        mut self,
+        value: Patch<super::red_team_data_plane::GoalGoalSubtype>,
+    ) -> Self {
+        self.goal_subtype = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -169135,6 +169680,7 @@ impl StreamDetailResponseGoalVariant2Builder {
             version: self.version,
             extra_info: self.extra_info,
             error: self.error,
+            goal_subtype: self.goal_subtype,
             extensions: self.extensions,
         })
     }
@@ -169229,6 +169775,10 @@ pub struct StreamIterationData {
     pub extra_info: Patch<TypedMap<JsonValue>>,
     #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
+    #[serde(rename = "judge_explanation", default)]
+    pub judge_explanation: Patch<String>,
+    #[serde(rename = "threat_details", default)]
+    pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -169261,6 +169811,8 @@ impl Serialize for StreamIterationData {
             "updated_at",
             "extra_info",
             "version",
+            "judge_explanation",
+            "threat_details",
         ];
         if self
             .extensions
@@ -169319,6 +169871,12 @@ impl Serialize for StreamIterationData {
         if !self.version.is_unset() {
             map.serialize_entry("version", &self.version)?;
         }
+        if !self.judge_explanation.is_unset() {
+            map.serialize_entry("judge_explanation", &self.judge_explanation)?;
+        }
+        if !self.threat_details.is_unset() {
+            map.serialize_entry("threat_details", &self.threat_details)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -169359,6 +169917,8 @@ pub struct StreamIterationDataBuilder {
     updated_at: Patch<String>,
     extra_info: Patch<TypedMap<JsonValue>>,
     version: Patch<FiniteNumber>,
+    judge_explanation: Patch<String>,
+    threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
     extensions: Extensions<JsonValue>,
 }
 impl StreamIterationDataBuilder {
@@ -169454,6 +170014,17 @@ impl StreamIterationDataBuilder {
         self.version = value;
         self
     }
+    pub fn judge_explanation(mut self, value: Patch<String>) -> Self {
+        self.judge_explanation = value;
+        self
+    }
+    pub fn threat_details(
+        mut self,
+        value: Optional<super::red_team_data_plane::ThreatDetails>,
+    ) -> Self {
+        self.threat_details = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -169505,6 +170076,8 @@ impl StreamIterationDataBuilder {
             updated_at: self.updated_at,
             extra_info: self.extra_info,
             version: self.version,
+            judge_explanation: self.judge_explanation,
+            threat_details: self.threat_details,
             extensions: self.extensions,
         })
     }
@@ -170720,6 +171293,8 @@ pub struct SubCategoryModel {
     pub prerequisites: Patch<Vec<PrerequisiteModel>>,
     #[serde(rename = "active", default)]
     pub active: Optional<bool>,
+    #[serde(rename = "audio_supported", default)]
+    pub audio_supported: Optional<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -170736,6 +171311,7 @@ impl Serialize for SubCategoryModel {
             "preselect",
             "prerequisites",
             "active",
+            "audio_supported",
         ];
         if self
             .extensions
@@ -170762,6 +171338,9 @@ impl Serialize for SubCategoryModel {
         if !self.active.is_unset() {
             map.serialize_entry("active", &self.active)?;
         }
+        if !self.audio_supported.is_unset() {
+            map.serialize_entry("audio_supported", &self.audio_supported)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -170786,6 +171365,7 @@ pub struct SubCategoryModelBuilder {
     preselect: Optional<bool>,
     prerequisites: Patch<Vec<PrerequisiteModel>>,
     active: Optional<bool>,
+    audio_supported: Optional<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl SubCategoryModelBuilder {
@@ -170817,6 +171397,10 @@ impl SubCategoryModelBuilder {
         self.active = value;
         self
     }
+    pub fn audio_supported(mut self, value: Optional<bool>) -> Self {
+        self.audio_supported = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -170836,6 +171420,7 @@ impl SubCategoryModelBuilder {
             preselect: self.preselect,
             prerequisites: self.prerequisites,
             active: self.active,
+            audio_supported: self.audio_supported,
             extensions: self.extensions,
         })
     }
@@ -170880,6 +171465,8 @@ pub struct SubCategoryStats {
     pub failed: FiniteNumber,
     #[serde(rename = "total", default)]
     pub total: Optional<FiniteNumber>,
+    #[serde(rename = "audio_supported", default)]
+    pub audio_supported: Optional<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -170899,6 +171486,7 @@ impl Serialize for SubCategoryStats {
             "successful",
             "failed",
             "total",
+            "audio_supported",
         ];
         if self
             .extensions
@@ -170930,6 +171518,9 @@ impl Serialize for SubCategoryStats {
         if !self.total.is_unset() {
             map.serialize_entry("total", &self.total)?;
         }
+        if !self.audio_supported.is_unset() {
+            map.serialize_entry("audio_supported", &self.audio_supported)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -170957,6 +171548,7 @@ pub struct SubCategoryStatsBuilder {
     successful: Option<FiniteNumber>,
     failed: Option<FiniteNumber>,
     total: Optional<FiniteNumber>,
+    audio_supported: Optional<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl SubCategoryStatsBuilder {
@@ -171000,6 +171592,10 @@ impl SubCategoryStatsBuilder {
         self.total = value;
         self
     }
+    pub fn audio_supported(mut self, value: Optional<bool>) -> Self {
+        self.audio_supported = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -171026,6 +171622,7 @@ impl SubCategoryStatsBuilder {
                 .failed
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
             total: self.total,
+            audio_supported: self.audio_supported,
             extensions: self.extensions,
         })
     }
@@ -172896,6 +173493,20 @@ pub struct TargetMetadata {
     pub probe_message: Optional<String>,
     #[serde(rename = "request_timeout", default)]
     pub request_timeout: Optional<FiniteNumber>,
+    #[serde(rename = "audio_probe_passed", default)]
+    pub audio_probe_passed: Patch<bool>,
+    #[serde(rename = "audio_probe_error", default)]
+    pub audio_probe_error: Patch<String>,
+    #[serde(rename = "audio_multi_turn_probe_passed", default)]
+    pub audio_multi_turn_probe_passed: Patch<bool>,
+    #[serde(rename = "audio_multi_turn_probe_error", default)]
+    pub audio_multi_turn_probe_error: Patch<String>,
+    #[serde(rename = "supports_audio", default)]
+    pub supports_audio: Optional<bool>,
+    #[serde(rename = "audio_format", default)]
+    pub audio_format: Patch<super::red_team_data_plane::TargetMetadataAudioFormat>,
+    #[serde(rename = "supports_text", default)]
+    pub supports_text: Optional<bool>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -172920,6 +173531,13 @@ impl Serialize for TargetMetadata {
             "content_filter_error_message",
             "probe_message",
             "request_timeout",
+            "audio_probe_passed",
+            "audio_probe_error",
+            "audio_multi_turn_probe_passed",
+            "audio_multi_turn_probe_error",
+            "supports_audio",
+            "audio_format",
+            "supports_text",
         ];
         if self
             .extensions
@@ -172982,6 +173600,33 @@ impl Serialize for TargetMetadata {
         if !self.request_timeout.is_unset() {
             map.serialize_entry("request_timeout", &self.request_timeout)?;
         }
+        if !self.audio_probe_passed.is_unset() {
+            map.serialize_entry("audio_probe_passed", &self.audio_probe_passed)?;
+        }
+        if !self.audio_probe_error.is_unset() {
+            map.serialize_entry("audio_probe_error", &self.audio_probe_error)?;
+        }
+        if !self.audio_multi_turn_probe_passed.is_unset() {
+            map.serialize_entry(
+                "audio_multi_turn_probe_passed",
+                &self.audio_multi_turn_probe_passed,
+            )?;
+        }
+        if !self.audio_multi_turn_probe_error.is_unset() {
+            map.serialize_entry(
+                "audio_multi_turn_probe_error",
+                &self.audio_multi_turn_probe_error,
+            )?;
+        }
+        if !self.supports_audio.is_unset() {
+            map.serialize_entry("supports_audio", &self.supports_audio)?;
+        }
+        if !self.audio_format.is_unset() {
+            map.serialize_entry("audio_format", &self.audio_format)?;
+        }
+        if !self.supports_text.is_unset() {
+            map.serialize_entry("supports_text", &self.supports_text)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -173014,6 +173659,13 @@ pub struct TargetMetadataBuilder {
     content_filter_error_message: Patch<String>,
     probe_message: Optional<String>,
     request_timeout: Optional<FiniteNumber>,
+    audio_probe_passed: Patch<bool>,
+    audio_probe_error: Patch<String>,
+    audio_multi_turn_probe_passed: Patch<bool>,
+    audio_multi_turn_probe_error: Patch<String>,
+    supports_audio: Optional<bool>,
+    audio_format: Patch<super::red_team_data_plane::TargetMetadataAudioFormat>,
+    supports_text: Optional<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl TargetMetadataBuilder {
@@ -173077,6 +173729,37 @@ impl TargetMetadataBuilder {
         self.request_timeout = value;
         self
     }
+    pub fn audio_probe_passed(mut self, value: Patch<bool>) -> Self {
+        self.audio_probe_passed = value;
+        self
+    }
+    pub fn audio_probe_error(mut self, value: Patch<String>) -> Self {
+        self.audio_probe_error = value;
+        self
+    }
+    pub fn audio_multi_turn_probe_passed(mut self, value: Patch<bool>) -> Self {
+        self.audio_multi_turn_probe_passed = value;
+        self
+    }
+    pub fn audio_multi_turn_probe_error(mut self, value: Patch<String>) -> Self {
+        self.audio_multi_turn_probe_error = value;
+        self
+    }
+    pub fn supports_audio(mut self, value: Optional<bool>) -> Self {
+        self.supports_audio = value;
+        self
+    }
+    pub fn audio_format(
+        mut self,
+        value: Patch<super::red_team_data_plane::TargetMetadataAudioFormat>,
+    ) -> Self {
+        self.audio_format = value;
+        self
+    }
+    pub fn supports_text(mut self, value: Optional<bool>) -> Self {
+        self.supports_text = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -173098,6 +173781,13 @@ impl TargetMetadataBuilder {
             content_filter_error_message: self.content_filter_error_message,
             probe_message: self.probe_message,
             request_timeout: self.request_timeout,
+            audio_probe_passed: self.audio_probe_passed,
+            audio_probe_error: self.audio_probe_error,
+            audio_multi_turn_probe_passed: self.audio_multi_turn_probe_passed,
+            audio_multi_turn_probe_error: self.audio_multi_turn_probe_error,
+            supports_audio: self.supports_audio,
+            audio_format: self.audio_format,
+            supports_text: self.supports_text,
             extensions: self.extensions,
         })
     }
@@ -180771,6 +181461,10 @@ pub struct ValidationError {
     pub msg: String,
     #[serde(rename = "type")]
     pub r#type: String,
+    #[serde(rename = "input", default)]
+    pub input: Patch<JsonValue>,
+    #[serde(rename = "ctx", default)]
+    pub ctx: Optional<super::red_team_data_plane::ValidationErrorCtx>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
 }
@@ -180779,7 +181473,7 @@ impl Serialize for ValidationError {
         &self,
         serializer: S,
     ) -> std::result::Result<S::Ok, S::Error> {
-        const KNOWN: &[&str] = &["loc", "msg", "type"];
+        const KNOWN: &[&str] = &["loc", "msg", "type", "input", "ctx"];
         if self
             .extensions
             .keys()
@@ -180793,6 +181487,12 @@ impl Serialize for ValidationError {
         map.serialize_entry("loc", &self.loc)?;
         map.serialize_entry("msg", &self.msg)?;
         map.serialize_entry("type", &self.r#type)?;
+        if !self.input.is_unset() {
+            map.serialize_entry("input", &self.input)?;
+        }
+        if !self.ctx.is_unset() {
+            map.serialize_entry("ctx", &self.ctx)?;
+        }
         for (key, value) in self.extensions.iter() {
             map.serialize_entry(key, value)?;
         }
@@ -180813,6 +181513,8 @@ pub struct ValidationErrorBuilder {
     loc: Option<Vec<ValidationErrorLocItem>>,
     msg: Option<String>,
     r#type: Option<String>,
+    input: Patch<JsonValue>,
+    ctx: Optional<super::red_team_data_plane::ValidationErrorCtx>,
     extensions: Extensions<JsonValue>,
 }
 impl ValidationErrorBuilder {
@@ -180826,6 +181528,14 @@ impl ValidationErrorBuilder {
     }
     pub fn r#type(mut self, value: String) -> Self {
         self.r#type = Some(value);
+        self
+    }
+    pub fn input(mut self, value: Patch<JsonValue>) -> Self {
+        self.input = value;
+        self
+    }
+    pub fn ctx(mut self, value: Optional<super::red_team_data_plane::ValidationErrorCtx>) -> Self {
+        self.ctx = value;
         self
     }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
@@ -180843,6 +181553,8 @@ impl ValidationErrorBuilder {
             r#type: self
                 .r#type
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
+            input: self.input,
+            ctx: self.ctx,
             extensions: self.extensions,
         })
     }

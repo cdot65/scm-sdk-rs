@@ -488,6 +488,11 @@ impl Context<'_> {
                 .ok_or_else(invalid)?
             {
                 "ZodOptional" if input.is_none() => {
+                    if self.mode == Mode::Request
+                        && node.get("responseOnly") == Some(&Value::Bool(true))
+                    {
+                        return Err(invalid());
+                    }
                     terminal = Some(None);
                     reached_core = true;
                     break;
@@ -576,7 +581,10 @@ impl Context<'_> {
                             let normalized = self
                                 .walk(child(node, "value")?, Some(value), depth + 1)?
                                 .ok_or_else(invalid)?;
-                            if self.mode == Mode::Response || key != "__proto__" {
+                            if self.mode == Mode::Response
+                                || node.get("preserveReservedKeys") == Some(&Value::Bool(true))
+                                || key != "__proto__"
+                            {
                                 result.insert(self.copy_text(key)?, normalized);
                             }
                         }
@@ -624,15 +632,53 @@ impl Context<'_> {
                             .get("discriminator")
                             .and_then(Value::as_str)
                             .ok_or_else(invalid)?;
-                        let value = values.get(discriminator).ok_or_else(invalid)?;
+                        let value = match values.get(discriminator) {
+                            Some(value) => value,
+                            None if node.get("preserveUnknownResponse")
+                                == Some(&Value::Bool(true)) =>
+                            {
+                                // OpenAPI discriminators are hints; optional tags
+                                // still obey oneOf's exactly-one-success rule.
+                                let variants = node
+                                    .get("variants")
+                                    .and_then(Value::as_array)
+                                    .ok_or_else(invalid)?;
+                                let mut selected = None;
+                                for variant in variants {
+                                    let schema = variant
+                                        .get("$ref")
+                                        .and_then(Value::as_str)
+                                        .ok_or_else(invalid)?;
+                                    match self.walk(schema, input, depth) {
+                                        Ok(value) if selected.is_none() => selected = Some(value),
+                                        Ok(_) => return Err(invalid()),
+                                        Err(error) if error.kind() == ErrorKind::Limit => {
+                                            return Err(error);
+                                        }
+                                        Err(_) => {}
+                                    }
+                                }
+                                return selected.ok_or_else(invalid);
+                            }
+                            None => return Err(invalid()),
+                        };
                         let mapping = node
                             .get("discriminatorMapping")
                             .and_then(Value::as_array)
                             .ok_or_else(invalid)?;
                         let selected = mapping
                             .iter()
-                            .find(|mapping| mapping.get("value") == Some(value))
-                            .ok_or_else(invalid)?;
+                            .find(|mapping| mapping.get("value") == Some(value));
+                        if selected.is_none()
+                            && self.mode == Mode::Response
+                            && value.is_string()
+                            && node.get("preserveUnknownResponse") == Some(&Value::Bool(true))
+                        {
+                            return input
+                                .map(|value| self.clone_value(value, depth))
+                                .transpose();
+                        }
+                        let selected = selected.ok_or_else(invalid)?;
                         self.walk(child(selected, "schema")?, input, depth)
                     }
                     "ZodIntersection" => {
@@ -737,7 +783,9 @@ impl Context<'_> {
         for (key, property) in properties {
             let schema = child(property, "schema")?;
             if let Some(value) = self.walk(schema, values.get(key), depth + 1)?
-                && (self.mode == Mode::Response || key != "__proto__")
+                && (self.mode == Mode::Response
+                    || node.get("preserveReservedKeys") == Some(&Value::Bool(true))
+                    || key != "__proto__")
             {
                 result.insert(self.copy_text(key)?, value);
             }
@@ -763,7 +811,10 @@ impl Context<'_> {
             } else {
                 continue;
             };
-            if self.mode == Mode::Response || key != "__proto__" {
+            if self.mode == Mode::Response
+                || node.get("preserveReservedKeys") == Some(&Value::Bool(true))
+                || key != "__proto__"
+            {
                 result.insert(self.copy_text(key)?, value);
             }
         }
@@ -1059,6 +1110,11 @@ fn timestamp(value: &str) -> Option<i128> {
 fn check_string(value: &str, checks: &[Value]) -> Result<()> {
     let length = value.encode_utf16().count() as u64;
     for check in checks {
+        let length = match check.get("unit").and_then(Value::as_str) {
+            None => length,
+            Some("code_points") => value.chars().count() as u64,
+            Some(_) => return Err(invalid()),
+        };
         let valid = match check
             .get("kind")
             .and_then(Value::as_str)
@@ -1070,6 +1126,9 @@ fn check_string(value: &str, checks: &[Value]) -> Result<()> {
             "email" => email(value),
             "url" => url::Url::parse(value).is_ok(),
             "datetime" => datetime(value),
+            "duration" => duration(value),
+            "date" => date(value),
+            "rfc3339" => rfc3339(value),
             "regex" => {
                 let source = check
                     .get("regex")
@@ -1088,6 +1147,81 @@ fn check_string(value: &str, checks: &[Value]) -> Result<()> {
     }
     Ok(())
 }
+// RFC 3339 Appendix A duration grammar. Keep this separate from the frozen
+// TypeScript regexp registry and reject empty P/T forms without lookarounds.
+fn duration(value: &str) -> bool {
+    static PATTERN: OnceLock<regex::Regex> = OnceLock::new();
+    let pattern = PATTERN.get_or_init(|| {
+        regex::Regex::new(r"^P(?:(?:[0-9]+Y)?(?:[0-9]+M)?(?:[0-9]+D)?(?:T(?:[0-9]+H)?(?:[0-9]+M)?(?:[0-9]+S)?)?|[0-9]+W)$")
+            .expect("constant duration grammar")
+    });
+    value != "P" && !value.ends_with('T') && pattern.is_match(value)
+}
+
+fn date(value: &str) -> bool {
+    if value.len() != 10
+        || !value.bytes().enumerate().all(|(i, byte)| {
+            if i == 4 || i == 7 {
+                byte == b'-'
+            } else {
+                byte.is_ascii_digit()
+            }
+        })
+    {
+        return false;
+    }
+    let Ok(year) = value[..4].parse::<i32>() else {
+        return false;
+    };
+    let Ok(month) = value[5..7].parse::<u8>() else {
+        return false;
+    };
+    let Ok(day) = value[8..].parse::<u8>() else {
+        return false;
+    };
+    let Ok(month) = time::Month::try_from(month) else {
+        return false;
+    };
+    time::Date::from_calendar_date(year, month, day).is_ok()
+}
+
+fn rfc3339(value: &str) -> bool {
+    static PATTERN: OnceLock<regex::Regex> = OnceLock::new();
+    let pattern = PATTERN.get_or_init(|| {
+        regex::Regex::new(r"^([0-9]{4}-[0-9]{2}-[0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?([Zz]|([+-])([0-9]{2}):([0-9]{2}))$")
+            .expect("constant RFC 3339 grammar")
+    });
+    let Some(captures) = pattern.captures(value) else {
+        return false;
+    };
+    if !date(&captures[1]) {
+        return false;
+    }
+    let number = |index| {
+        captures
+            .get(index)
+            .and_then(|v| v.as_str().parse::<i16>().ok())
+    };
+    let (Some(hour), Some(minute), Some(second)) = (number(2), number(3), number(4)) else {
+        return false;
+    };
+    if hour > 23 || minute > 59 || second > 60 {
+        return false;
+    }
+    let offset = if captures.get(6).is_some() {
+        let (Some(hours), Some(minutes)) = (number(7), number(8)) else {
+            return false;
+        };
+        if hours > 23 || minutes > 59 {
+            return false;
+        }
+        (hours * 60 + minutes) * if &captures[6] == "-" { -1 } else { 1 }
+    } else {
+        0
+    };
+    second < 60 || (hour * 60 + minute - offset).rem_euclid(1440) == 1439
+}
+
 fn check_number(value: f64, checks: &[Value]) -> Result<()> {
     if !value.is_finite() {
         return Err(invalid());

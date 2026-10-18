@@ -69,9 +69,9 @@ impl RedTeamReportsClient {
                 RawRequest::read("/v1/report/static")
                     .segment(job_id)?
                     .segment("list-attacks")?
-                    .query(query)
+                    .query(common::current_query("list_attacks_v1_report_static__job_id__list_attacks_get", query)?)
                     .named("airs.red_team.reports.list_attacks"),
-                "AttackListResponseSchema",
+                "vendor:red-team-dp:0.93.0:list_attacks_v1_report_static__job_id__list_attacks_get:response",
                 options,
             )
             .await
@@ -91,7 +91,7 @@ impl RedTeamReportsClient {
                     .segment("attack")?
                     .segment(attack_id)?
                     .named("airs.red_team.reports.get_attack_detail"),
-                "AttackDetailResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_attack_detail_v1_report_static__job_id__attack__attack_id__get:response",
                 options,
             )
             .await
@@ -111,7 +111,7 @@ impl RedTeamReportsClient {
                     .segment("attack-multi-turn")?
                     .segment(attack_id)?
                     .named("airs.red_team.reports.get_multi_turn_attack_detail"),
-                "AttackMultiTurnDetailResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_attack_multi_turn_detail_v1_report_static__job_id__attack_multi_turn__attack_id__get:response",
                 options,
             )
             .await
@@ -128,7 +128,7 @@ impl RedTeamReportsClient {
                     .segment(job_id)?
                     .segment("report")?
                     .named("airs.red_team.reports.get_static_report"),
-                "StaticJobReportSchema",
+                "vendor:red-team-dp:0.93.0:get_attack_report_v1_report_static__job_id__report_get:response",
                 options,
             )
             .await
@@ -145,7 +145,7 @@ impl RedTeamReportsClient {
                     .segment(job_id)?
                     .segment("runtime-policy-config")?
                     .named("airs.red_team.reports.get_static_runtime_policy"),
-                "RuntimeSecurityProfileResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_static_runtime_security_policy_config_v1_report_static__job_id__runtime_policy_config_get:response",
                 options,
             )
             .await
@@ -162,7 +162,7 @@ impl RedTeamReportsClient {
                     .segment(job_id)?
                     .segment("remediation")?
                     .named("airs.red_team.reports.get_static_remediation"),
-                "RemediationResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_static_remediations_v1_report_static__job_id__remediation_get:response",
                 options,
             )
             .await
@@ -179,7 +179,7 @@ impl RedTeamReportsClient {
                     .segment(job_id)?
                     .segment("report")?
                     .named("airs.red_team.reports.get_dynamic_report"),
-                "DynamicJobReportSchema",
+                "vendor:red-team-dp:0.93.0:get_dynamic_job_report_v1_report_dynamic__job_id__report_get:response",
                 options,
             )
             .await
@@ -196,7 +196,7 @@ impl RedTeamReportsClient {
                     .segment(job_id)?
                     .segment("runtime-policy-config")?
                     .named("airs.red_team.reports.get_dynamic_runtime_policy"),
-                "RuntimeSecurityProfileResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_dynamic_runtime_security_policy_config_v1_report_dynamic__job_id__runtime_policy_config_get:response",
                 options,
             )
             .await
@@ -213,7 +213,7 @@ impl RedTeamReportsClient {
                     .segment(job_id)?
                     .segment("remediation")?
                     .named("airs.red_team.reports.get_dynamic_remediation"),
-                "RemediationResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_dynamic_remediations_v1_report_dynamic__job_id__remediation_get:response",
                 options,
             )
             .await
@@ -241,9 +241,9 @@ impl RedTeamReportsClient {
                 RawRequest::read("/v1/report/dynamic")
                     .segment(job_id)?
                     .segment("list-goals")?
-                    .query(query)
+                    .query(common::current_query("list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get", query)?)
                     .named("airs.red_team.reports.list_goals"),
-                "GoalListResponseSchema",
+                "vendor:red-team-dp:0.93.0:list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get:response",
                 options,
             )
             .await
@@ -264,9 +264,9 @@ impl RedTeamReportsClient {
                     .segment("goal")?
                     .segment(goal_id)?
                     .segment("list-streams")?
-                    .query(params.query()?)
+                    .query(common::current_query("list_dynamic_job_streams_v1_report_dynamic__job_id__goal__goal_id__list_streams_get", params.query()?)?)
                     .named("airs.red_team.reports.list_goal_streams"),
-                "StreamListResponseSchema",
+                "vendor:red-team-dp:0.93.0:list_dynamic_job_streams_v1_report_dynamic__job_id__goal__goal_id__list_streams_get:response",
                 options,
             )
             .await
@@ -282,7 +282,7 @@ impl RedTeamReportsClient {
                 RawRequest::read("/v1/report/dynamic/stream")
                     .segment(stream_id)?
                     .named("airs.red_team.reports.get_stream_detail"),
-                "StreamDetailResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_stream_detail_v1_report_dynamic_stream__stream_id__get:response",
                 options,
             )
             .await
@@ -302,7 +302,10 @@ impl RedTeamReportsClient {
                 RawRequest::read("/v1/report")
                     .segment(job_id)?
                     .segment("download")?
-                    .query([("file_format".into(), format.into())])
+                    .query(common::current_query(
+                        "download_report_v1_report__job_id__download_get",
+                        vec![("file_format".into(), format.into())],
+                    )?)
                     .named("airs.red_team.reports.download_report"),
                 options,
             )

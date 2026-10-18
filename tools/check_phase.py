@@ -52,6 +52,26 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 10:
+        return [
+            ["git", "diff", "--check"],
+            ["git", "diff", "--cached", "--check"],
+            ["node", "tools/red-team-dataplane.mjs", "--check"],
+            ["node", "tools/make-red-team-fixtures.mjs", "--check"],
+            ["python", "tools/red_team_dataplane.py", "--check"],
+            *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+              for name in ("test_vendor_red_team_plan.py", "test_red_team_dataplane.py", "test_model_generation.py", "test_review_phase.py")],
+            ["python", "tools/verify-contracts.py"],
+            ["python", "tools/generate_validation.py", "--check"],
+            ["python", "tools/generate_models.py", "--check"],
+            *[["python", "scripts/check-rust.py", "--toolchain", toolchain, "--feature-set", "red-team",
+               "--output", f"docs/checks/phase-10-rust-{toolchain}-red-team.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            ["python", "tools/generate_models.py", "--verify-fixtures"],
+            ["python", "scripts/check-native-exports.py", "--toolchain", "1.99.0",
+             "--output", "docs/checks/phase-10-native-exports-1.99.0.json"],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-10-private-material.json"],
+        ]
     if phase == 9:
         # Planning/governance only: no SDK implementation before plan review.
         return [["git", "diff", "--check"], ["python", "tools/verify-contracts.py"],

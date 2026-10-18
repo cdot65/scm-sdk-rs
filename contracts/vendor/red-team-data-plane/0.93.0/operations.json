@@ -1,0 +1,3134 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": "77f015de78f2dfe9eee944601b94b541c8f111da35f847e40a36084829451ca1",
+  "sourcePin": "contracts/vendor/red-team-data-plane/0.93.0/source.json",
+  "generator": {
+    "path": "tools/red_team_dataplane.py",
+    "sha256": "99bfac691f6de18ebd114780b337bb3e19c2db6ca9f810139ec67a69f55c6dda"
+  },
+  "operationCount": 47,
+  "implementedCount": 36,
+  "operations": [
+    {
+      "operationId": "create_job_v1_scan_post",
+      "method": "POST",
+      "path": "/v1/scan",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamScansClient",
+      "nativeMethod": "create",
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "implemented": true,
+      "parameters": [],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/JobCreateRequestSchema"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "list_jobs_v1_scan_get",
+      "method": "GET",
+      "path": "/v1/scan",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamScansClient",
+      "nativeMethod": "list",
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "description": "Number of jobs to return (1-100)",
+            "default": 50,
+            "title": "Limit"
+          },
+          "description": "Number of jobs to return (1-100)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of jobs to skip for pagination",
+            "default": 0,
+            "title": "Skip"
+          },
+          "description": "Number of jobs to skip for pagination"
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JobStatusFilter"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by job status",
+            "title": "Status"
+          },
+          "description": "Filter by job status"
+        },
+        {
+          "name": "job_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JobType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by job type",
+            "title": "Job Type"
+          },
+          "description": "Filter by job type"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Search jobs by name",
+            "title": "Search"
+          },
+          "description": "Search jobs by name"
+        },
+        {
+          "name": "target_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by target UUID",
+            "title": "Target Id"
+          },
+          "description": "Filter by target UUID"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobListResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_job_v1_scan__job_id__get",
+      "method": "GET",
+      "path": "/v1/scan/{job_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamScansClient",
+      "nativeMethod": "get",
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "abort_job_v1_scan__job_id__abort_post",
+      "method": "POST",
+      "path": "/v1/scan/{job_id}/abort",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamScansClient",
+      "nativeMethod": "abort",
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobAbortResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "set_runtime_profile_v1_scan__job_id__runtime_profile_put",
+      "method": "PUT",
+      "path": "/v1/scan/{job_id}/runtime-profile",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamScansClient",
+      "nativeMethod": "set_runtime_profile",
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RuntimeProfileUpdateRequestSchema"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_all_categories_v1_categories_get",
+      "method": "GET",
+      "path": "/v1/categories",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamScansClient",
+      "nativeMethod": "get_categories",
+      "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
+      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "implemented": true,
+      "parameters": [],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/CategoryModel"
+                },
+                "type": "array",
+                "title": "Response Get All Categories V1 Categories Get"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_scan_metadata_v1_scan_scan_metadata_get",
+      "method": "GET",
+      "path": "/v1/scan/scan-metadata",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_scan_metadata",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Response Get Scan Metadata V1 Scan Scan Metadata Get"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "list_attacks_v1_report_static__job_id__list_attacks_get",
+      "method": "GET",
+      "path": "/v1/report/static/{job_id}/list-attacks",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "list_attacks",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "description": "Number of attacks to return (1-100)",
+            "default": 50,
+            "title": "Limit"
+          },
+          "description": "Number of attacks to return (1-100)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of attacks to skip for pagination",
+            "default": 0,
+            "title": "Skip"
+          },
+          "description": "Number of attacks to skip for pagination"
+        },
+        {
+          "name": "attack_status",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AttackStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by attack processing status",
+            "title": "Attack Status"
+          },
+          "description": "Filter by attack processing status"
+        },
+        {
+          "name": "attack_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AttackType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by attack type",
+            "title": "Attack Type"
+          },
+          "description": "Filter by attack type"
+        },
+        {
+          "name": "category",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Category"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by attack category",
+            "title": "Category"
+          },
+          "description": "Filter by attack category"
+        },
+        {
+          "name": "sub_category",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SecuritySubCategory"
+              },
+              {
+                "$ref": "#/components/schemas/SafetySubCategory"
+              },
+              {
+                "$ref": "#/components/schemas/BrandSubCategory"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by attack subcategory",
+            "title": "Sub Category"
+          },
+          "description": "Filter by attack subcategory"
+        },
+        {
+          "name": "compliance",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ComplianceSubCategory"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by compliance framework",
+            "title": "Compliance"
+          },
+          "description": "Filter by compliance framework"
+        },
+        {
+          "name": "threat",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "[Deprecated: use status] Filter by threat status",
+            "title": "Threat"
+          },
+          "description": "[Deprecated: use status] Filter by threat status"
+        },
+        {
+          "name": "severity",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SeverityFilter"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by severity level",
+            "title": "Severity"
+          },
+          "description": "Filter by severity level"
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StatusQueryParam"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by status: SUCCESSFUL, FAILED, ERROR",
+            "title": "Status"
+          },
+          "description": "Filter by status: SUCCESSFUL, FAILED, ERROR"
+        },
+        {
+          "name": "attack_modality",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Modality"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by attack modality: FILE (document attacks) or TEXT (text-only)",
+            "title": "Attack Modality"
+          },
+          "description": "Filter by attack modality: FILE (document attacks) or TEXT (text-only)"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttackListResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "search",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "get_attack_detail_v1_report_static__job_id__attack__attack_id__get",
+      "method": "GET",
+      "path": "/v1/report/static/{job_id}/attack/{attack_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_attack_detail",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "attack_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Attack Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttackDetailResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_attack_report_v1_report_static__job_id__report_get",
+      "method": "GET",
+      "path": "/v1/report/static/{job_id}/report",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_static_report",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaticJobReportSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_static_runtime_security_policy_config_v1_report_static__job_id__runtime_policy_config_get",
+      "method": "GET",
+      "path": "/v1/report/static/{job_id}/runtime-policy-config",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_static_runtime_policy",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RuntimeSecurityProfileResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_static_asr_breakdown_v1_report_static__job_id__asr_get",
+      "method": "GET",
+      "path": "/v1/report/static/{job_id}/asr",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_static_asr",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsrResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_static_remediations_v1_report_static__job_id__remediation_get",
+      "method": "GET",
+      "path": "/v1/report/static/{job_id}/remediation",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_static_remediation",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemediationResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_dynamic_job_report_v1_report_dynamic__job_id__report_get",
+      "method": "GET",
+      "path": "/v1/report/dynamic/{job_id}/report",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_dynamic_report",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DynamicJobReportSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_dynamic_runtime_security_policy_config_v1_report_dynamic__job_id__runtime_policy_config_get",
+      "method": "GET",
+      "path": "/v1/report/dynamic/{job_id}/runtime-policy-config",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_dynamic_runtime_policy",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RuntimeSecurityProfileResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_dynamic_asr_breakdown_v1_report_dynamic__job_id__asr_get",
+      "method": "GET",
+      "path": "/v1/report/dynamic/{job_id}/asr",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_dynamic_asr",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsrResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_dynamic_remediations_v1_report_dynamic__job_id__remediation_get",
+      "method": "GET",
+      "path": "/v1/report/dynamic/{job_id}/remediation",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_dynamic_remediation",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DynamicRemediationResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get",
+      "method": "GET",
+      "path": "/v1/report/dynamic/{job_id}/list-goals",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "list_goals",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of goals to skip for pagination",
+            "default": 0,
+            "title": "Skip"
+          },
+          "description": "Number of goals to skip for pagination"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "description": "Number of goals to return (1-100)",
+            "default": 20,
+            "title": "Limit"
+          },
+          "description": "Number of goals to return (1-100)"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "boolean",
+            "description": "Include total count of goals",
+            "default": true,
+            "title": "Count"
+          },
+          "description": "Include total count of goals"
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StatusQueryParam"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by status",
+            "title": "Status"
+          },
+          "description": "Filter by status"
+        },
+        {
+          "name": "goal_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GoalTypeQueryParam"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by goal type",
+            "title": "Goal Type"
+          },
+          "description": "Filter by goal type"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Search string to filter goals",
+            "title": "Search"
+          },
+          "description": "Search string to filter goals"
+        },
+        {
+          "name": "goal_category",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GoalCategory"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by goal category",
+            "title": "Goal Category"
+          },
+          "description": "Filter by goal category"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalListResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "list_dynamic_job_streams_v1_report_dynamic__job_id__goal__goal_id__list_streams_get",
+      "method": "GET",
+      "path": "/v1/report/dynamic/{job_id}/goal/{goal_id}/list-streams",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "list_goal_streams",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "goal_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Goal Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StreamListResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "skip",
+          "disposition": "validation_error_before_auth"
+        },
+        {
+          "name": "limit",
+          "disposition": "validation_error_before_auth"
+        },
+        {
+          "name": "search",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "get_stream_detail_v1_report_dynamic_stream__stream_id__get",
+      "method": "GET",
+      "path": "/v1/report/dynamic/stream/{stream_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_stream_detail",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "stream_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Stream Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StreamDetailResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "download_report_v1_report__job_id__download_get",
+      "method": "GET",
+      "path": "/v1/report/{job_id}/download",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "download_report",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "file_format",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/FileFormat",
+            "description": "Format of the report file (CSV, JSON, or ALL)"
+          },
+          "description": "Format of the report file (CSV, JSON, or ALL)"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "generate_partial_job_report_v1_report__job_id__generate_partial_report_post",
+      "method": "POST",
+      "path": "/v1/report/{job_id}/generate-partial-report",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "generate_partial_report",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "regenerate_report_v1_report__job_id__regenerate_post",
+      "method": "POST",
+      "path": "/v1/report/{job_id}/regenerate",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "regenerate",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "202": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegenerateResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_report_status_v1_report__job_id__status_get",
+      "method": "GET",
+      "path": "/v1/report/{job_id}/status",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_status",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportStatusResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_attack_multi_turn_detail_v1_report_static__job_id__attack_multi_turn__attack_id__get",
+      "method": "GET",
+      "path": "/v1/report/static/{job_id}/attack-multi-turn/{attack_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_multi_turn_attack_detail",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "attack_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Attack Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttackMultiTurnDetailResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post",
+      "method": "POST",
+      "path": "/v1/report/static/{job_id}/attack/{attack_id}/override",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "override_attack",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "attack_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Attack Id"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ThreatOverrideRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreatOverrideResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post",
+      "method": "POST",
+      "path": "/v1/report/static/{job_id}/attack-multi-turn/{attack_id}/override",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "override_multi_turn_attack",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "attack_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Attack Id"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ThreatOverrideRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreatOverrideResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post",
+      "method": "POST",
+      "path": "/v1/report/dynamic/{job_id}/stream/{stream_id}/override",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "override_stream",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "stream_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Stream Id"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ThreatOverrideRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreatOverrideResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "post_quota_summary_v1_metering_quota_post",
+      "method": "POST",
+      "path": "/v1/metering/quota",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_quota",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuotaSummarySchema"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_custom_attack_report_v1_custom_attacks_report__job_id__get",
+      "method": "GET",
+      "path": "/v1/custom-attacks/report/{job_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "get_report",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomAttackReportResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get",
+      "method": "GET",
+      "path": "/v1/custom-attacks/report/{job_id}/prompt-sets",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "get_prompt_sets",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "property_filters",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "JSON string of property filters",
+            "title": "Property Filters"
+          },
+          "description": "JSON string of property filters"
+        },
+        {
+          "name": "is_threat",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by threat status",
+            "title": "Is Threat"
+          },
+          "description": "Filter by threat status"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of records to skip",
+            "default": 0,
+            "title": "Skip"
+          },
+          "description": "Number of records to skip"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "description": "Maximum number of records to return",
+            "default": 20,
+            "title": "Limit"
+          },
+          "description": "Maximum number of records to return"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptSetsReportResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "search",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get",
+      "method": "GET",
+      "path": "/v1/custom-attacks/report/{job_id}/prompt-set/{prompt_set_id}/prompts",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "get_prompts_by_set",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "prompt_set_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Prompt Set Id"
+          }
+        },
+        {
+          "name": "is_threat",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by threat status",
+            "title": "Is Threat"
+          },
+          "description": "Filter by threat status"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of records to skip",
+            "default": 0,
+            "title": "Skip"
+          },
+          "description": "Number of records to skip"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "description": "Maximum number of records to return",
+            "default": 20,
+            "title": "Limit"
+          },
+          "description": "Maximum number of records to return"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PromptDetailResponse"
+                },
+                "title": "Response Get Prompts By Set V1 Custom Attacks Report  Job Id  Prompt Set  Prompt Set Id  Prompts Get"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "search",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "get_prompt_detail_v1_custom_attacks_report__job_id__prompt__prompt_id__get",
+      "method": "GET",
+      "path": "/v1/custom-attacks/report/{job_id}/prompt/{prompt_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "get_prompt_detail",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "prompt_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Prompt Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptDetailResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get",
+      "method": "GET",
+      "path": "/v1/custom-attacks/job/{job_id}/list-custom-attacks",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "list_custom_attacks",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of records to skip",
+            "default": 0,
+            "title": "Skip"
+          },
+          "description": "Number of records to skip"
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 1000,
+            "minimum": 1,
+            "description": "Maximum number of records to return",
+            "default": 100,
+            "title": "Limit"
+          },
+          "description": "Maximum number of records to return"
+        },
+        {
+          "name": "threat",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "[Deprecated: use status] Filter by threat status",
+            "title": "Threat"
+          },
+          "description": "[Deprecated: use status] Filter by threat status"
+        },
+        {
+          "name": "prompt_set_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by prompt set ID",
+            "title": "Prompt Set Id"
+          },
+          "description": "Filter by prompt set ID"
+        },
+        {
+          "name": "property_value",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "JSON string of property filters",
+            "title": "Property Value"
+          },
+          "description": "JSON string of property filters"
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StatusQueryParam"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by status: SUCCESSFUL, FAILED, ERROR",
+            "title": "Status"
+          },
+          "description": "Filter by status: SUCCESSFUL, FAILED, ERROR"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomAttacksListResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "search",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "get_attack_outputs_v1_custom_attacks_job__job_id__attack__attack_id__list_outputs_get",
+      "method": "GET",
+      "path": "/v1/custom-attacks/job/{job_id}/attack/{attack_id}/list-outputs",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "get_attack_outputs",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "attack_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Attack Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CustomAttackOutputResponseSchema"
+                },
+                "title": "Response Get Attack Outputs V1 Custom Attacks Job  Job Id  Attack  Attack Id  List Outputs Get"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_property_stats_v1_custom_attacks_job__job_id__property_stats_get",
+      "method": "GET",
+      "path": "/v1/custom-attacks/job/{job_id}/property-stats",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "get_property_stats",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "title": "Response Get Property Stats V1 Custom Attacks Job  Job Id  Property Stats Get"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post",
+      "method": "POST",
+      "path": "/v1/custom-attacks/job/{job_id}/attack/{attack_id}/override",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamCustomAttackReportsClient",
+      "nativeMethod": "override_attack",
+      "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
+      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "attack_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Attack Id"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ThreatOverrideRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreatOverrideResponse"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "list_error_logs_for_job_v1_error_log_job__job_id__get",
+      "method": "GET",
+      "path": "/v1/error-log/job/{job_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_error_logs",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "description": "Number of error logs to return (1-100)",
+            "default": 100,
+            "title": "Limit"
+          },
+          "description": "Number of error logs to return (1-100)"
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of error logs to skip for pagination",
+            "default": 0,
+            "title": "Skip"
+          },
+          "description": "Number of error logs to skip for pagination"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorLogListResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "search",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "download_error_logs_for_job_v1_error_log_job__job_id__download_get",
+      "method": "GET",
+      "path": "/v1/error-log/job/{job_id}/download",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "download_error_logs",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response"
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get",
+      "method": "GET",
+      "path": "/v1/error-log/target-profile/{target_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_target_profile_error_logs",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "target_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Id"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "description": "Number of errors to return (1-100)",
+            "default": 5,
+            "title": "Limit"
+          },
+          "description": "Number of errors to return (1-100)"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ErrorLogListResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "skip",
+          "disposition": "validation_error_before_auth"
+        },
+        {
+          "name": "search",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "get_goal_categories_v1_goal_categories__target_type__get",
+      "method": "GET",
+      "path": "/v1/goal-categories/{target_type}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_goal_categories",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "target_type",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Target Type"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoalCategoryListResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_languages_v1_languages_get",
+      "method": "GET",
+      "path": "/v1/languages",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_languages",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantLanguagesResponseSchema"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "download_report_v2_report__job_id__download_get",
+      "method": "GET",
+      "path": "/v2/report/{job_id}/download",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamReportsClient",
+      "nativeMethod": "get_download_url",
+      "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
+      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "implemented": false,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        },
+        {
+          "name": "file_format",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/FileFormat",
+            "description": "Format of the report file (CSV, JSON, or ALL)"
+          },
+          "description": "Format of the report file (CSV, JSON, or ALL)"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportDownloadSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_scan_statistics_v1_dashboard_scan_statistics_get",
+      "method": "GET",
+      "path": "/v1/dashboard/scan-statistics",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_scan_statistics",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanStatisticsResponseSchema"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": [
+        {
+          "name": "date_range",
+          "disposition": "validation_error_before_auth"
+        },
+        {
+          "name": "target_id",
+          "disposition": "validation_error_before_auth"
+        }
+      ]
+    },
+    {
+      "operationId": "get_score_trend_v1_dashboard_score_trend_get",
+      "method": "GET",
+      "path": "/v1/dashboard/score-trend",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_score_trend",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "target_id",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Target UUID to fetch scores for",
+            "title": "Target Id"
+          },
+          "description": "Target UUID to fetch scores for"
+        },
+        {
+          "name": "date_range",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/DateRangeFilter",
+            "description": "Predefined date range filter",
+            "default": "LAST_7_DAYS"
+          },
+          "description": "Predefined date range filter"
+        },
+        {
+          "name": "start_date",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Custom start date (overrides date_range if both provided)",
+            "title": "Start Date"
+          },
+          "description": "Custom start date (overrides date_range if both provided)"
+        },
+        {
+          "name": "end_date",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Custom end date (overrides date_range if both provided)",
+            "title": "End Date"
+          },
+          "description": "Custom end date (overrides date_range if both provided)"
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreTrendResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "create_or_update_sentiment_v1_sentiment_post",
+      "method": "POST",
+      "path": "/v1/sentiment",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "update_sentiment",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SentimentRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SentimentResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    },
+    {
+      "operationId": "get_job_sentiment_v1_sentiment__job_id__get",
+      "method": "GET",
+      "path": "/v1/sentiment/{job_id}",
+      "plane": "red_team_data",
+      "nativeClass": "RedTeamClient",
+      "nativeMethod": "get_sentiment",
+      "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
+      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "implemented": true,
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Job Id"
+          }
+        }
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SentimentResponseSchema"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        }
+      },
+      "liveAcceptance": "unverified",
+      "rejectedLegacyParameters": []
+    }
+  ]
+}

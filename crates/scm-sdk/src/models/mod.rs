@@ -9,6 +9,8 @@ pub mod iam;
 pub mod management;
 pub mod model_security;
 pub mod red_team;
+/// Current vendor dataplane model contracts.
+pub mod red_team_data_plane;
 pub mod scan;
 pub mod shared;
 #[cfg(test)]

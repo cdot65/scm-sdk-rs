@@ -215,6 +215,14 @@ files or anything outside this repository. .local/typescript is a frozen nonsecr
 reference and may be inspected. Do not modify files or perform network calls.
 Reviewed source SHA256: {before}.
 Passing check evidence: {checks.relative_to(root)}, SHA256 {sha256(checks)}.
+Active follow-up plan: {phases[args.phase].get('plan', 'docs/implementation-plan.md')}.
+Scope evidence: {json.dumps(phases[args.phase].get('scope_evidence', []))}.
+For a vendor follow-up phase, focus on the active milestones and relevant cumulative
+regressions. Generated model correctness is assessed through the compiler, selected
+generated declarations and independent fixture/check evidence. Later-phase operations
+marked planned are not a missing deliverable of the contracts/models phase. Historical
+release evidence does not establish new-source acceptance; avoid re-auditing unrelated
+historical infrastructure when evaluating this scoped change.
 Return the requested structured review with score, summary, findings, evidence, limitations.
 """
     destination.parent.mkdir(parents=True, exist_ok=True)

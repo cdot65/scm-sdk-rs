@@ -147,7 +147,7 @@ impl RedTeamClient {
                 RawRequest::read("/v1/goal-categories")
                     .segment(target_type)?
                     .named("airs.red_team.get_goal_categories"),
-                "GoalCategoryListResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_goal_categories_v1_goal_categories__target_type__get:response",
                 options,
             )
             .await
@@ -163,9 +163,9 @@ impl RedTeamClient {
         self.data
             .send_contract(
                 RawRequest::read("/v1/dashboard/scan-statistics")
-                    .query(query)
+                    .query(common::current_query("get_scan_statistics_v1_dashboard_scan_statistics_get", query)?)
                     .named("airs.red_team.get_scan_statistics"),
-                "ScanStatisticsResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_scan_statistics_v1_dashboard_scan_statistics_get:response",
                 options,
             )
             .await
@@ -188,9 +188,12 @@ impl RedTeamClient {
         self.data
             .send_contract(
                 RawRequest::read("/v1/dashboard/score-trend")
-                    .query(query)
+                    .query(common::current_query(
+                        "get_score_trend_v1_dashboard_score_trend_get",
+                        query,
+                    )?)
                     .named("airs.red_team.get_score_trend"),
-                "ScoreTrendResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_score_trend_v1_dashboard_score_trend_get:response",
                 options,
             )
             .await
@@ -201,7 +204,7 @@ impl RedTeamClient {
             .send_contract(
                 RawRequest::new(Method::POST, "/v1/metering/quota")
                     .named("airs.red_team.get_quota"),
-                "QuotaSummarySchema",
+                "vendor:red-team-dp:0.93.0:post_quota_summary_v1_metering_quota_post:response",
                 options,
             )
             .await
@@ -229,9 +232,9 @@ impl RedTeamClient {
             .send_contract(
                 RawRequest::read("/v1/error-log/job")
                     .segment(job_id)?
-                    .query(params.query()?)
+                    .query(common::current_query("list_error_logs_for_job_v1_error_log_job__job_id__get", params.query()?)?)
                     .named("airs.red_team.get_error_logs"),
-                "ErrorLogListResponseSchema",
+                "vendor:red-team-dp:0.93.0:list_error_logs_for_job_v1_error_log_job__job_id__get:response",
                 options,
             )
             .await
@@ -247,9 +250,9 @@ impl RedTeamClient {
             .send_contract(
                 RawRequest::read("/v1/error-log/target-profile")
                     .segment(target_id)?
-                    .query(params.query()?)
+                    .query(common::current_query("list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get", params.query()?)?)
                     .named("airs.red_team.get_target_profile_error_logs"),
-                "ErrorLogListResponseSchema",
+                "vendor:red-team-dp:0.93.0:list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get:response",
                 options,
             )
             .await
@@ -261,7 +264,7 @@ impl RedTeamClient {
         self.data
             .send_contract(
                 RawRequest::read("/v1/languages").named("airs.red_team.get_languages"),
-                "TenantLanguagesResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_languages_v1_languages_get:response",
                 options,
             )
             .await
@@ -288,8 +291,8 @@ impl RedTeamClient {
                 RawRequest::new(Method::POST, "/v1/sentiment")
                     .named("airs.red_team.update_sentiment"),
                 body,
-                "SentimentRequestSchema",
-                "SentimentResponseSchema",
+                "vendor:red-team-dp:0.93.0:create_or_update_sentiment_v1_sentiment_post:body",
+                "vendor:red-team-dp:0.93.0:create_or_update_sentiment_v1_sentiment_post:response",
                 options,
             )
             .await
@@ -305,7 +308,7 @@ impl RedTeamClient {
                 RawRequest::read("/v1/sentiment")
                     .segment(job_id)?
                     .named("airs.red_team.get_sentiment"),
-                "SentimentResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_job_sentiment_v1_sentiment__job_id__get:response",
                 options,
             )
             .await

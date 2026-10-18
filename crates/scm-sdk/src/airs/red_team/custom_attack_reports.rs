@@ -55,7 +55,7 @@ impl RedTeamCustomAttackReportsClient {
                 RawRequest::read("/v1/custom-attacks/report")
                     .segment(job_id)?
                     .named("airs.red_team.custom_attack_reports.get_report"),
-                "CustomAttackReportResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_custom_attack_report_v1_custom_attacks_report__job_id__get:response",
                 options,
             )
             .await
@@ -81,9 +81,9 @@ impl RedTeamCustomAttackReportsClient {
                 RawRequest::read("/v1/custom-attacks/report")
                     .segment(job_id)?
                     .segment("prompt-sets")?
-                    .query(query)
+                    .query(common::current_query("get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get", query)?)
                     .named("airs.red_team.custom_attack_reports.get_prompt_sets"),
-                "PromptSetsReportResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get:response",
                 options,
             )
             .await
@@ -108,7 +108,7 @@ impl RedTeamCustomAttackReportsClient {
                     .segment("prompt-set")?
                     .segment(prompt_set_id)?
                     .segment("prompts")?
-                    .query(query)
+                    .query(common::current_query("get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get", query)?)
                     .named("airs.red_team.custom_attack_reports.get_prompts_by_set"),
                 "PromptDetailResponseSchema[]",
                 options,
@@ -130,7 +130,7 @@ impl RedTeamCustomAttackReportsClient {
                     .segment("prompt")?
                     .segment(prompt_id)?
                     .named("airs.red_team.custom_attack_reports.get_prompt_detail"),
-                "PromptDetailResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_prompt_detail_v1_custom_attacks_report__job_id__prompt__prompt_id__get:response",
                 options,
             )
             .await
@@ -158,9 +158,9 @@ impl RedTeamCustomAttackReportsClient {
                 RawRequest::read("/v1/custom-attacks/job")
                     .segment(job_id)?
                     .segment("list-custom-attacks")?
-                    .query(query)
+                    .query(common::current_query("list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get", query)?)
                     .named("airs.red_team.custom_attack_reports.list_custom_attacks"),
-                "CustomAttacksListResponseSchema",
+                "vendor:red-team-dp:0.93.0:list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get:response",
                 options,
             )
             .await

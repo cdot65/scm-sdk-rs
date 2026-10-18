@@ -1,7 +1,8 @@
 # Red Team dataplane 0.93.0 implementation plan
 
-Status: proposed; SDK implementation is blocked until Phase 9 receives an actual
-Claude Code score of at least 9/10, with no blocker or high findings. The same
+Status: accepted by actual Claude Code at 9/10 in Phase 9 attempt 2
+(`docs/reviews/phase-09-attempt-02.json`), after the 8.5/10 attempt was revised.
+SDK implementation began only after this plan gate passed. The same
 threshold applies to each implementation phase. Historical phases 1–8 and their
 reviews remain historical evidence for the frozen TypeScript baseline.
 
@@ -124,7 +125,9 @@ AttackMultiTurnDetailResponseSchema; `judge_reasoning` in AttackOutputResponseSc
 and AttackMultiTurnOutputResponseSchema. These four fields may be omitted by an
 older deployment; absence stays explicit, and no verdict or required baseline
 field is waived. Preserve the unmodified strict vendor roots alongside these
-response-only compatibility roots. Test strict rejection and compatibility
+response-only compatibility roots. The schema diff is authoritative: any fifth
+newly required field stops generation and requires a recorded classification,
+plan amendment and fresh Claude plan review; no automatic waiver extension. Test strict rejection and compatibility
 acceptance of each omission. New endpoint response schemas have no such waivers.
 Legacy standalone schema names continue to mean the frozen contract and are
 documented as such.
@@ -211,9 +214,11 @@ Update API docs, an async example, changelog and endpoint coverage report. Prese
 the existing 448-method TypeScript parity denominator; vendor additions have their
 own ledger and totals. Do not relabel baseline parity as live acceptance.
 
-Push reviewed ordinary commits to the already authorized remote. Prepare the
-additive update as 0.1.1 if compatibility probes support it; if a public breaking
-change proves necessary, document it and use 0.2.0 instead. Existing field types,
+Push reviewed ordinary commits to the already authorized remote. Prepare version **0.2.0**: the per-parameter disposition ledger identifies twelve
+previously accepted options which now fail before transport. These are deliberate
+runtime behavior breaks even though Rust signatures remain compatible. Record
+each affected method/parameter and the migration in CHANGELOG; type-level probes
+alone cannot justify a patch release. Existing field types,
 method signatures and union variant indices are compatibility acceptance criteria.
 This request authorizes implementing and delivering the repository update;
 registry publication is a separate release action and is not a completion gate.

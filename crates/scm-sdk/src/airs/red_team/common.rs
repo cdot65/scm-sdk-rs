@@ -2,6 +2,56 @@ use super::models::RedTeamPagination;
 use crate::{Error, ErrorKind, Result, data::Patch, pagination::Page};
 pub(super) const MAX_SAFE_INTEGER: u64 = 9_007_199_254_740_991;
 
+/// Validate declared query values and reject unsupported filters before auth.
+pub(super) fn current_query(
+    operation: &str,
+    query: Vec<(String, String)>,
+) -> Result<Vec<(String, String)>> {
+    use serde::Deserialize;
+    use serde_json::{Map, Value};
+    use std::{collections::BTreeMap, sync::OnceLock};
+    #[derive(Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    struct Contract {
+        query_kinds: BTreeMap<String, String>,
+        query_schema: String,
+    }
+    static CONTRACTS: OnceLock<std::result::Result<BTreeMap<String, Contract>, ()>> =
+        OnceLock::new();
+    let contracts = CONTRACTS
+        .get_or_init(|| serde_json::from_str(include_str!("contract.json")).map_err(|_| ()))
+        .as_ref()
+        .map_err(|_| Error::new(ErrorKind::Configuration))?;
+    let contract = contracts
+        .get(operation)
+        .ok_or_else(|| Error::new(ErrorKind::Configuration))?;
+    let mut values = Map::new();
+    for (key, value) in &query {
+        let value = match contract.query_kinds.get(key).map(String::as_str) {
+            Some("integer") => Value::from(
+                value
+                    .parse::<u64>()
+                    .map_err(|_| Error::new(ErrorKind::Validation))?,
+            ),
+            Some("boolean") => match value.as_str() {
+                "true" => Value::Bool(true),
+                "false" => Value::Bool(false),
+                _ => return Err(Error::new(ErrorKind::Validation)),
+            },
+            _ => Value::String(value.clone()),
+        };
+        if values.insert(key.clone(), value).is_some() {
+            return Err(Error::new(ErrorKind::Validation));
+        }
+    }
+    crate::validation::parse(
+        &contract.query_schema,
+        Value::Object(values),
+        crate::validation::Mode::Request,
+    )?;
+    Ok(query)
+}
+
 /// Skip/limit/search values are omitted on direct reads unless explicitly supplied.
 #[derive(Clone, Default)]
 #[non_exhaustive]

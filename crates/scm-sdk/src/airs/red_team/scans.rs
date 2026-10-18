@@ -56,8 +56,8 @@ impl RedTeamScansClient {
             .send_model(
                 RawRequest::new(Method::POST, "/v1/scan").named("airs.red_team.scans.create"),
                 body,
-                "JobCreateRequestSchema",
-                "JobResponseSchema",
+                "vendor:red-team-dp:0.93.0:create_job_v1_scan_post:body",
+                "vendor:red-team-dp:0.93.0:create_job_v1_scan_post:response",
                 options,
             )
             .await
@@ -70,9 +70,12 @@ impl RedTeamScansClient {
         self.client
             .send_contract(
                 RawRequest::read("/v1/scan")
-                    .query(params.query()?)
+                    .query(common::current_query(
+                        "list_jobs_v1_scan_get",
+                        params.query()?,
+                    )?)
                     .named("airs.red_team.scans.list"),
-                "JobListResponseSchema",
+                "vendor:red-team-dp:0.93.0:list_jobs_v1_scan_get:response",
                 options,
             )
             .await
@@ -84,7 +87,7 @@ impl RedTeamScansClient {
                 RawRequest::read("/v1/scan")
                     .segment(job_id)?
                     .named("airs.red_team.scans.get"),
-                "JobResponseSchema",
+                "vendor:red-team-dp:0.93.0:get_job_v1_scan__job_id__get:response",
                 options,
             )
             .await
@@ -101,7 +104,7 @@ impl RedTeamScansClient {
                     .segment(job_id)?
                     .segment("abort")?
                     .named("airs.red_team.scans.abort"),
-                "JobAbortResponseSchema",
+                "vendor:red-team-dp:0.93.0:abort_job_v1_scan__job_id__abort_post:response",
                 options,
             )
             .await
@@ -124,7 +127,7 @@ impl RedTeamScansClient {
         max_pages: usize,
         options: Option<&RequestOptions>,
     ) -> Result<Pages<'static, JobResponse, u64>> {
-        params.query()?;
+        common::current_query("list_jobs_v1_scan_get", params.query()?)?;
         let client = self.clone();
         let mut params = params.clone();
         let initial = params.skip.unwrap_or(0);

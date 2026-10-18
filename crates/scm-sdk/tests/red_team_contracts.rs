@@ -223,8 +223,26 @@ fn clients(cancel_second: bool) -> (RedTeamClient, Arc<Wire>, Arc<Provider>) {
         provider,
     )
 }
+// Keep the frozen corpus immutable; record each vendor-wire correction explicitly.
+fn current_case(case: &Value) -> Value {
+    let changes: Value = serde_json::from_str(include_str!(
+        "../../../contracts/vendor/red-team-data-plane/0.93.0/legacy-fixture-corrections.json"
+    ))
+    .unwrap();
+    let mut result = case.clone();
+    for change in changes["corrections"].as_array().unwrap() {
+        if case["call"]["className"] == change["class"]
+            && case["call"]["member"] == change["method"]
+        {
+            let pointer = change["pointer"].as_str().unwrap();
+            assert_eq!(result.pointer(pointer).unwrap(), &change["from"]);
+            *result.pointer_mut(pointer).unwrap() = change["to"].clone();
+        }
+    }
+    result
+}
 fn fixture(class: &str, method: &str) -> Value {
-    serde_json::from_str::<Value>(FIXTURES).unwrap()["cases"]
+    let case = serde_json::from_str::<Value>(FIXTURES).unwrap()["cases"]
         .as_array()
         .unwrap()
         .iter()
@@ -232,7 +250,8 @@ fn fixture(class: &str, method: &str) -> Value {
             row["case"]["call"]["className"] == class && row["case"]["call"]["member"] == method
         })
         .unwrap()["case"]
-        .clone()
+        .clone();
+    current_case(&case)
 }
 fn path(case: &Value) -> String {
     let mut path = case["path"].as_str().unwrap().to_owned();
@@ -311,7 +330,8 @@ async fn all_thirty_eight_frozen_direct_fixtures_match_routes_queries_headers_bo
         };
     }
     for row in rows {
-        let case = &row["case"];
+        let updated = current_case(&row["case"]);
+        let case = &updated;
         arm(&wire, case);
         let query = &case["query"];
         let body = &case["body"];
@@ -1332,23 +1352,16 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
     let listing = BTreeMap::from([
         ("skip".into(), vec!["3".into()]),
         ("limit".into(), vec!["7".into()]),
-        ("search".into(), vec![search.into()]),
     ]);
     let mut common = RedTeamListOptions::default();
     common.skip = Some(3);
     common.limit = Some(7);
-    common.search = Some(search.into());
-    let mut stats = ScanStatisticsOptions::default();
-    stats.date_range = Some("LAST_30_DAYS".into());
-    stats.target_id = Some(ID.into());
+    let stats = ScanStatisticsOptions::default();
     wire.push(
         Method::GET,
         DATA,
         "/v1/dashboard/scan-statistics",
-        BTreeMap::from([
-            ("date_range".into(), vec!["LAST_30_DAYS".into()]),
-            ("target_id".into(), vec![ID.into()]),
-        ]),
+        BTreeMap::new(),
         None,
         fixture("RedTeamClient", "getScanStatistics")["responseBody"].clone(),
     );
@@ -1357,13 +1370,13 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
         Method::GET,
         DATA,
         &format!("/v1/report/dynamic/{ID}/goal/{ID}/list-streams"),
-        listing.clone(),
+        BTreeMap::new(),
         None,
         fixture("RedTeamReportsClient", "listGoalStreams")["responseBody"].clone(),
     );
     client
         .reports()
-        .list_goal_streams(ID, ID, &common, None)
+        .list_goal_streams(ID, ID, &RedTeamListOptions::default(), None)
         .await
         .unwrap();
     for target in [false, true] {
@@ -1381,13 +1394,25 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
             Method::GET,
             DATA,
             &path,
-            listing.clone(),
+            if target {
+                BTreeMap::from([("limit".into(), vec!["7".into()])])
+            } else {
+                listing.clone()
+            },
             None,
             fixture("RedTeamClient", method)["responseBody"].clone(),
         );
         if target {
             client
-                .get_target_profile_error_logs(ID, &common, None)
+                .get_target_profile_error_logs(
+                    ID,
+                    &{
+                        let mut p = RedTeamListOptions::default();
+                        p.limit = Some(7);
+                        p
+                    },
+                    None,
+                )
                 .await
                 .unwrap();
         } else {
@@ -1395,16 +1420,12 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
         }
     }
     let mut attacks = AttackListOptions::default();
-    attacks.search = Some(search.into());
     attacks.threat = Some(false);
     wire.push(
         Method::GET,
         DATA,
         &format!("/v1/report/static/{ID}/list-attacks"),
-        BTreeMap::from([
-            ("search".into(), vec![search.into()]),
-            ("threat".into(), vec!["false".into()]),
-        ]),
+        BTreeMap::from([("threat".into(), vec!["false".into()])]),
         None,
         fixture("RedTeamReportsClient", "listAttacks")["responseBody"].clone(),
     );
@@ -1414,7 +1435,6 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
         .await
         .unwrap();
     let mut sets = PromptSetsReportOptions::default();
-    sets.search = Some(search.into());
     sets.is_threat = Some(false);
     sets.property_filters = Some("category=fixture&severity=low".into());
     wire.push(
@@ -1422,7 +1442,6 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
         DATA,
         &format!("/v1/custom-attacks/report/{ID}/prompt-sets"),
         BTreeMap::from([
-            ("search".into(), vec![search.into()]),
             ("is_threat".into(), vec!["false".into()]),
             (
                 "property_filters".into(),
@@ -1438,16 +1457,12 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
         .await
         .unwrap();
     let mut prompts = PromptsBySetListOptions::default();
-    prompts.search = Some(search.into());
     prompts.is_threat = Some(false);
     wire.push(
         Method::GET,
         DATA,
         &format!("/v1/custom-attacks/report/{ID}/prompt-set/{ID}/prompts"),
-        BTreeMap::from([
-            ("search".into(), vec![search.into()]),
-            ("is_threat".into(), vec!["false".into()]),
-        ]),
+        BTreeMap::from([("is_threat".into(), vec!["false".into()])]),
         None,
         fixture("RedTeamCustomAttackReportsClient", "getPromptsBySet")["responseBody"].clone(),
     );
@@ -1457,16 +1472,12 @@ async fn optional_query_fields_missing_from_frozen_samples_are_transmitted_witho
         .await
         .unwrap();
     let mut custom = CustomAttacksReportListOptions::default();
-    custom.search = Some(search.into());
     custom.threat = Some(false);
     wire.push(
         Method::GET,
         DATA,
         &format!("/v1/custom-attacks/job/{ID}/list-custom-attacks"),
-        BTreeMap::from([
-            ("search".into(), vec![search.into()]),
-            ("threat".into(), vec!["false".into()]),
-        ]),
+        BTreeMap::from([("threat".into(), vec!["false".into()])]),
         None,
         fixture("RedTeamCustomAttackReportsClient", "listCustomAttacks")["responseBody"].clone(),
     );
@@ -1500,7 +1511,7 @@ async fn scan_walk_preserves_every_filter_on_successive_pages() {
     let mut params = RedTeamScanListOptions::default();
     params.limit = Some(1);
     params.search = Some("fixture search".into());
-    params.status = Some("FUTURE_STATE".into());
+    params.status = Some("COMPLETED".into());
     params.job_type = Some("STATIC".into());
     params.target_id = Some(ID.into());
     for skip in [0, 1] {
@@ -1512,7 +1523,7 @@ async fn scan_walk_preserves_every_filter_on_successive_pages() {
                 ("skip".into(), vec![skip.to_string()]),
                 ("limit".into(), vec!["1".into()]),
                 ("search".into(), vec!["fixture search".into()]),
-                ("status".into(), vec!["FUTURE_STATE".into()]),
+                ("status".into(), vec!["COMPLETED".into()]),
                 ("job_type".into(), vec!["STATIC".into()]),
                 ("target_id".into(), vec![ID.into()]),
             ]),
@@ -1528,4 +1539,175 @@ async fn scan_walk_preserves_every_filter_on_successive_pages() {
     assert!(result.is_complete());
     assert_eq!(result.items.len(), 2);
     wire.done();
+}
+
+#[tokio::test]
+async fn every_unsupported_legacy_dataplane_parameter_fails_before_authentication() {
+    let (client, wire, provider) = clients(false);
+    macro_rules! rejected {
+        ($call:expr) => {{
+            let error = $call.await.unwrap_err();
+            assert_eq!(error.kind(), ErrorKind::Validation);
+            assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
+            assert_eq!(wire.count(), 0);
+            assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+        }};
+    }
+    let mut attacks = AttackListOptions::default();
+    attacks.search = Some("caller-filter".into());
+    rejected!(client.reports().list_attacks(ID, &attacks, None));
+    for field in ["skip", "limit", "search"] {
+        let mut options = RedTeamListOptions::default();
+        match field {
+            "skip" => options.skip = Some(0),
+            "limit" => options.limit = Some(1),
+            _ => options.search = Some("caller-filter".into()),
+        }
+        rejected!(client.reports().list_goal_streams(ID, ID, &options, None));
+    }
+    let mut sets = PromptSetsReportOptions::default();
+    sets.search = Some("caller-filter".into());
+    rejected!(
+        client
+            .custom_attack_reports()
+            .get_prompt_sets(ID, &sets, None)
+    );
+    let mut prompts = PromptsBySetListOptions::default();
+    prompts.search = Some("caller-filter".into());
+    rejected!(
+        client
+            .custom_attack_reports()
+            .get_prompts_by_set(ID, ID, &prompts, None)
+    );
+    let mut custom = CustomAttacksReportListOptions::default();
+    custom.search = Some("caller-filter".into());
+    rejected!(
+        client
+            .custom_attack_reports()
+            .list_custom_attacks(ID, &custom, None)
+    );
+    let mut errors = RedTeamListOptions::default();
+    errors.search = Some("caller-filter".into());
+    rejected!(client.get_error_logs(ID, &errors, None));
+    rejected!(client.get_target_profile_error_logs(ID, &errors, None));
+    errors.search = None;
+    errors.skip = Some(0);
+    rejected!(client.get_target_profile_error_logs(ID, &errors, None));
+    let mut stats = ScanStatisticsOptions::default();
+    stats.date_range = Some("LAST_30_DAYS".into());
+    rejected!(client.get_scan_statistics(&stats, None));
+    stats.date_range = None;
+    stats.target_id = Some(ID.into());
+    rejected!(client.get_scan_statistics(&stats, None));
+    let mut scans = RedTeamScanListOptions::default();
+    scans.status = Some("FUTURE_STATE".into());
+    rejected!(client.scans().list(&scans, None));
+    scans.status = None;
+    scans.limit = Some(101);
+    rejected!(client.scans().list(&scans, None));
+    scans.limit = None;
+    scans.target_id = Some("not-a-uuid".into());
+    rejected!(client.scans().list(&scans, None));
+    let mut trend = ScoreTrendOptions::default();
+    trend.start_date = Some("2026-02-30".into());
+    rejected!(client.get_score_trend(ID, &trend, None));
+}
+
+fn vendor_specimen(schema: &str) -> Value {
+    let corpus: Value = serde_json::from_str(include_str!(
+        "../../../contracts/vendor/red-team-data-plane/0.93.0/model-fixtures.json"
+    ))
+    .unwrap();
+    corpus["cases"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|row| row["name"] == format!("valid_{schema}"))
+        .unwrap()["value"]
+        .clone()
+}
+
+#[test]
+fn exactly_four_new_presence_waivers_apply_only_to_response_validation() {
+    use scm_sdk::validation::{self, Mode};
+    for (schema, field) in [
+        ("AttackDetailResponseSchema", "audio_technique"),
+        ("AttackMultiTurnDetailResponseSchema", "audio_technique"),
+        ("AttackOutputResponseSchema", "judge_reasoning"),
+        ("AttackMultiTurnOutputResponseSchema", "judge_reasoning"),
+    ] {
+        let mut value = vendor_specimen(schema);
+        value.as_object_mut().unwrap().remove(field);
+        let strict = format!("vendor:red-team-dp:0.93.0:{schema}");
+        let compatible = format!("{strict}:compatible");
+        assert!(validation::parse(&strict, value.clone(), Mode::Response).is_err());
+        assert!(validation::parse(&compatible, value.clone(), Mode::Request).is_err());
+        assert!(validation::parse(&compatible, value, Mode::Response).is_ok());
+    }
+    let mut value = vendor_specimen("JobResponseSchema");
+    value.as_object_mut().unwrap().remove("uuid");
+    assert!(
+        validation::parse(
+            "vendor:red-team-dp:0.93.0:JobResponseSchema:compatible",
+            value,
+            Mode::Response
+        )
+        .is_err()
+    );
+}
+
+#[test]
+fn current_fields_are_typed_and_future_progress_and_verdicts_remain_explicit() {
+    use scm_sdk::validation::{self, Mode};
+    let mut value = vendor_specimen("JobResponseSchema");
+    let model: JobResponse = serde_json::from_value(value.clone()).unwrap();
+    assert!(matches!(model.runtime_metrics, Patch::Value(_)));
+    assert!(matches!(model.progress, Patch::Value(_)));
+    assert_eq!(serde_json::to_value(model).unwrap(), value);
+    value["progress"] = json!({"kind":"FUTURE_PROGRESS", "opaque":{"preserved":true}});
+    let parsed = validation::parse(
+        "vendor:red-team-dp:0.93.0:JobResponseSchema:compatible",
+        value.clone(),
+        Mode::Response,
+    )
+    .unwrap();
+    let model: JobResponse = serde_json::from_value(parsed).unwrap();
+    assert!(matches!(
+        model.progress,
+        Patch::Value(data_plane::JobResponseProgress::Unknown(_))
+    ));
+    assert_eq!(serde_json::to_value(model).unwrap(), value);
+    value["progress"] = json!({"kind":false});
+    assert!(
+        validation::parse(
+            "vendor:red-team-dp:0.93.0:JobResponseSchema:compatible",
+            value,
+            Mode::Response
+        )
+        .is_err()
+    );
+    let mut detail = vendor_specimen("AttackDetailResponseSchema");
+    detail["threat_details"] = json!({"raw_threat":null,"threat_override":null});
+    let model: AttackDetailResponse = serde_json::from_value(detail).unwrap();
+    let Optional::Value(provenance) = model.threat_details else {
+        panic!("typed provenance")
+    };
+    assert!(matches!(provenance.raw_threat, Patch::Null));
+    assert!(matches!(provenance.threat_override, Patch::Null));
+    assert!(!format!("{provenance:?}").contains("raw_threat"));
+}
+
+#[tokio::test]
+async fn current_scan_body_preserves_reserved_json_keys_without_javascript_normalization() {
+    let (client, wire, _) = clients(false);
+    let mut case = fixture("RedTeamScansClient", "create");
+    case["body"]["extra_info"] = serde_json::from_str(
+        r#"{"__proto__":{"preserved":true},"constructor":{"__proto__":"also data"}}"#,
+    )
+    .unwrap();
+    let request: JobCreateRequest = serde_json::from_value(case["body"].clone()).unwrap();
+    arm(&wire, &case);
+    client.scans().create(&request, None).await.unwrap();
+    wire.done();
+    assert_eq!(wire.count(), 1);
 }

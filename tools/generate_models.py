@@ -269,6 +269,7 @@ class Generator:
         self.schema_models = []
         self.model_rows = []
         self.union_rows = []
+        self.external_types = {}
         # Root schemas receive stable public names before nested names are allocated.
         for name, entry in self.schemas.items():
             native = pascal(name.removesuffix("Schema"))
@@ -371,6 +372,8 @@ class Generator:
         return sid
 
     def rust_type(self, sid, hint, root=False):
+        if sid in self.external_types:
+            return self.external_types[sid]
         original = sid
         node, normalized = self.normalize(sid)
         kind = node["kind"]
@@ -860,7 +863,7 @@ def validate_graph_contract(inventory, validator_source=None):
     def implemented(function,next_function):
         body=source.split("fn "+function+"(",1)[1].split("fn "+next_function+"(",1)[0]
         return set(re.findall(r'^\s*"([^"\n]+)"\s*=>',body,re.M))
-    if implemented("check_string","check_number")!=STRING_CHECKS or implemented("check_number","multiple_of")!=NUMBER_CHECKS:
+    if implemented("check_string","check_number")!=STRING_CHECKS | {"duration", "date", "rfc3339"} or implemented("check_number","multiple_of")!=NUMBER_CHECKS:
         raise ValueError("Native validator check dispatch differs from the reviewed inventory")
     pattern_body=source.split("fn patterns(",1)[1].split("fn email(",1)[0]
     native_regexes={value for value in re.findall(r'r"([^"\n]+)"',pattern_body) if value.startswith("^")}
@@ -1013,10 +1016,24 @@ def main():
     inventory = json.loads(SOURCE.read_text())
     if inventory["baseline"]["commit"] != "4a80dbdb3dc14365e1c25d838ac0bd139485d48c":
         raise ValueError("Unexpected model generation baseline")
-    outputs = {ROOT / "crates/scm-sdk/src/validation/schema_graph.json": json.dumps(compact_graph(inventory), separators=(",", ":"), ensure_ascii=False) + "\n"}
+    import red_team_dataplane as vendor
+    _, _, _, current, vendor_graph, _ = vendor.contract()
+    merged = vendor.extend_graph(compact_graph(inventory), vendor_graph)
+    outputs = {ROOT / "crates/scm-sdk/src/validation/schema_graph.json": json.dumps(merged, separators=(",", ":"), ensure_ascii=False) + "\n"}
     if not args.graph_only:
         generator = Generator(inventory)
+        vendor_source, vendor_generator = vendor.model_outputs(Generator, current)
+        additions = vendor.augment_models(generator, current, vendor_generator)
         rust = generator.generate(args.only)
+        rust[OUT / "red_team_data_plane.rs"] = vendor_source
+        rust[OUT / "mod.rs"] += "/// Current vendor dataplane model contracts.\npub mod red_team_data_plane;\n"
+        primary = re.search(r"pub use super::generated::\{([^}]+)\}", rust[OUT / "red_team.rs"])
+        existing = set(primary.group(1).split(",")) if primary else set()
+        available = set(vendor_generator.declarations) | set(vendor_generator.aliases)
+        for declaration in vendor_generator.declarations.values():
+            available.update(re.findall(r"pub struct (\w+Builder)\b", declaration))
+        rust[OUT / "red_team.rs"] += "/// Additional current vendor models.\npub use super::red_team_data_plane::{" + ",".join(sorted(available - existing)) + "};\n"
+        outputs[ROOT / "contracts/vendor/red-team-data-plane/0.93.0/model-additions.json"] = json.dumps(additions, indent=2) + "\n"
         if not args.only:
             pins=union_contract(generator)
             if args.initialize_union_pins:
