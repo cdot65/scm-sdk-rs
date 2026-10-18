@@ -15,7 +15,8 @@ The baseline implementation phases and maintenance releases require actual Claud
 Code review of at least 9/10. [Phase status](docs/phase-status.json) records the
 accepted reviews and exact source evidence.
 
-Crate version: **0.2.0**. This release adds full
+Crate version: **0.2.1**. It adds five experimental
+[Portkey access-policy APIs](docs/ACCESS_POLICIES.md) and retains full
 [Red Team dataplane 0.93.0 coverage](docs/RED_TEAM.md): **47 operations**, including
 11 new calls, with a separately pinned vendor ledger. See the
 [migration notes](CHANGELOG.md) before adopting the stricter query contract.
@@ -33,13 +34,19 @@ See [CI](docs/CI.md) and the [release procedure](docs/RELEASE.md).
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
 
+The 0.2.1 [registry receipt](docs/checks/release-registry-0.2.1.json) and
+[tag receipt](docs/checks/release-tag-v0.2.1.json) establish publication only when
+present and verified; missing receipts mean that publication is not yet verified.
+The access-policy client requires explicit compatible control-plane key credentials
+and remains live-unverified. Existing 0.2.0 APIs and G10 behavior are retained.
+
 ## Start here
 
 Add the published crate, optionally using the shorter dependency alias:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.0" }
+scm = { package = "scm-sdk", version = "=0.2.1" }
 ```
 
 The alias exposes `scm::airs::scan`, `scm::airs::management`, and the other product

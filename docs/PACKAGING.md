@@ -71,3 +71,10 @@ Phase 14 adds clean release-commit proofs on both compilers. The candidate guard
 compares every protected runtime input against the accepted source, rejects extra
 or symlink inputs, and binds the reviewed README and all archive files to those
 executed proofs. Registry verification compares the downloaded archive to them.
+
+## Access-policy release 0.2.1
+
+Phase17 requires clean archive qualification on both compilers. In addition to
+the G10 and Red Team examples, execute `access_policies` inside the extracted
+package and from a separate consumer crate with exact already-locked dependency
+versions. Both consumers run offline. The new constructor rustdoc also compiles.

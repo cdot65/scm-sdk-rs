@@ -31,6 +31,9 @@ class PortkeyPlanTests(unittest.TestCase):
         self.assertEqual(set(params),set('workspace_id effect enabled user_id agent_id server_id search created_by start_time end_time page_size current_page'.split()))
         for name,maximum in [('user_id',36),('agent_id',36),('server_id',100),('search',64),('created_by',255)]:self.assertEqual(params[name]['maxLength'],maximum)
         for name in ('page_size','current_page'):self.assertEqual(params[name],{'type':'integer','minimum':0})
+        description=c['paths']['/policies/access']['post']['description']
+        self.assertIn('`allow` policies must name at least one specific user, group, or agent.',description)
+        self.assertIn('`deny` if `subjects` contains both a user `ANY` and an agent `ANY` entry',description)
         schemas=c['components']['schemas']
         self.assertEqual(set(schemas['CreateAccessPolicyRequest']['required']),{'name','subjects','targets'})
         self.assertEqual(set(schemas['UpdateAccessPolicyRequest']['required']),{'version','subjects','targets'})
@@ -66,7 +69,7 @@ class PortkeyPlanTests(unittest.TestCase):
         self.assertEqual(rows,expected)
 
     def test_authored_whitespace_is_not_dependent_on_staging(self):
-        for name in ('docs/portkey-access-policies-plan.md','docs/portkey-access-policies-research.md','tools/portkey-access.mjs','tools/test_portkey_access.py','contracts/vendor/portkey-access/a27feb9/source.json','contracts/vendor/portkey-access/a27feb9/contract.json'):
+        for name in ('docs/portkey-access-policies-plan.md','docs/portkey-access-policies-research.md','tools/portkey-access.mjs','tools/test_portkey_access.py','contracts/vendor/portkey-access/a27feb9/source.json','contracts/vendor/portkey-access/a27feb9/contract.json','contracts/vendor/portkey-access/a27feb9/model-fixtures.json','contracts/vendor/portkey-access/a27feb9/operations.json'):
             text=(ROOT/name).read_text()
             self.assertTrue(text.endswith('\n'),name)
             self.assertFalse(any(line.rstrip()!=line for line in text.splitlines()),name)
@@ -96,6 +99,24 @@ class PortkeyPlanTests(unittest.TestCase):
                 (dest/'source.json').write_text(json.dumps(pin))
                 r=subprocess.run(['node',str(root/'tools/portkey-access.mjs'),'--check'],capture_output=True,text=True)
                 self.assertNotEqual(r.returncode,0,mode)
+
+    def test_release_documentation_and_receipt_are_version_bound(self):
+        import tomllib
+        version=tomllib.loads((ROOT/'crates/scm-sdk/Cargo.toml').read_text())['package']['version']
+        if version != '0.2.1':return  # Historical planning/implementation phases retain 0.2.0.
+        for name in ('README.md','CHANGELOG.md','docs/STABILITY.md','docs/RELEASE.md'):
+            text=(ROOT/name).read_text()
+            self.assertIn('release-registry-'+version+'.json',text)
+            self.assertIn('publication is not yet verified',text)
+        path=ROOT/f'docs/checks/release-registry-{version}.json'
+        if path.exists():
+            receipt=json.loads(path.read_text())
+            self.assertEqual(receipt['version'],version)
+            self.assertIn('cdot65',receipt['ownerLogins'])
+            self.assertFalse(receipt['yanked'])
+            proof=json.loads((ROOT/'docs/checks/phase-17-release-package-1.99.0.json').read_text())
+            self.assertEqual(receipt['archiveSha256'],proof['archive_sha256'])
+            self.assertEqual(receipt['sourceCommit'],proof['releaseCommit'])
 
     def test_plan_contains_release_and_security_requirements(self):
         p=(ROOT/'docs/portkey-access-policies-plan.md').read_text()

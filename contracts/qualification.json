@@ -34,18 +34,18 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "6a06cd0d5ab39f46310fc734b822a2dd14eb991e2d810c16aa7501a0f1a0aa43"
+      "sha256": "b3a26c81b8c63b44ff054f9a5370a7abaa10fc9278880ee88822484128e7946e"
     },
     "report": {
-      "path": "docs/checks/phase-08-live-attempt-12.json",
-      "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21"
+      "path": "docs/checks/phase-08-live-attempt-13.json",
+      "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
       "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
     },
-    "executedAt": "2026-10-18T18:24:12.011706+00:00",
-    "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+    "executedAt": "2026-10-18T22:33:39.516061+00:00",
+    "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
     "toolchain": "1.99.0",
     "hostTarget": "x86_64-unknown-linux-musl",
     "cleanupState": "not_needed"
@@ -55,14 +55,15 @@
     "implemented": 448,
     "contractVerified": 448,
     "completeMethodOptionParity": 448,
-    "liveVerified": 17,
+    "liveVerified": 16,
     "liveRecorded": 22,
-    "liveNotVerified": 431,
+    "liveNotVerified": 432,
     "liveByStatus": {
+      "incomplete_or_uncorrelated_receipt": 1,
       "permission_prerequisite": 3,
       "service_contract_rejection": 2,
       "unverified": 426,
-      "verified": 17
+      "verified": 16
     },
     "unexplainedGaps": 0
   },
@@ -158,11 +159,12 @@
       "implemented": 4,
       "contractVerified": 4,
       "completeMethodOptionParity": 4,
-      "liveVerified": 4,
+      "liveVerified": 3,
       "liveRecorded": 4,
-      "liveNotVerified": 0,
+      "liveNotVerified": 1,
       "liveByStatus": {
-        "verified": 4
+        "incomplete_or_uncorrelated_receipt": 1,
+        "verified": 3
       },
       "unexplainedGaps": 0
     }
@@ -221,10 +223,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "agentguard.get_scan_stats",
         "observations": [
           {
@@ -294,10 +296,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "agentguard.list_rules",
         "observations": [
           {
@@ -420,10 +422,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "agentguard.list_scans",
         "observations": [
           {
@@ -10640,10 +10642,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "gateway.workspaces.list",
         "observations": [
           {
@@ -10747,10 +10749,10 @@
       "liveAcceptance": "service_contract_rejection",
       "liveReason": "The submitted request was rejected; its cause is unestablished and a native request-shape defect is not excluded.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "gateway.workspaces.provision",
         "observations": [
           {
@@ -10909,10 +10911,10 @@
       "liveAcceptance": "service_contract_rejection",
       "liveReason": "The submitted request was rejected; its cause is unestablished and a native request-shape defect is not excluded.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "iam.scopes.create",
         "observations": [
           {
@@ -11057,10 +11059,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "iam.scopes.list",
         "observations": [
           {
@@ -11314,10 +11316,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "management.api_keys.list_for_token",
         "observations": [
           {
@@ -13206,10 +13208,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "dlp.data_profiles.list",
         "observations": [
           {
@@ -13832,10 +13834,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -14352,10 +14354,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "management.profiles.list",
         "observations": [
           {
@@ -14456,10 +14458,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "management.profiles.list_for_token",
         "observations": [
           {
@@ -16027,10 +16029,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "model_security.models.list_models",
         "observations": [
           {
@@ -16607,10 +16609,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "model_security.scans.list",
         "observations": [
           {
@@ -17346,10 +17348,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "model_security.rules.list",
         "observations": [
           {
@@ -18059,10 +18061,10 @@
       "liveAcceptance": "permission_prerequisite",
       "liveReason": "The recorded identity lacked the required service permission.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "red_team.get_management_languages",
         "observations": [
           {
@@ -18230,10 +18232,10 @@
       "liveAcceptance": "permission_prerequisite",
       "liveReason": "The recorded identity lacked the required service permission.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "red_team.get_scan_metadata",
         "observations": [
           {
@@ -19921,10 +19923,10 @@
       "liveAcceptance": "permission_prerequisite",
       "liveReason": "The recorded identity lacked the required service permission.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "red_team.eula.get_status",
         "observations": [
           {
@@ -22201,10 +22203,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "scan.async_scan",
         "observations": [
           {
@@ -22259,10 +22261,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "scan.query_report",
         "observations": [
           {
@@ -22314,24 +22316,24 @@
       "nativeExportCapabilities": [
         "Scanner.queryByScanIds"
       ],
-      "liveAcceptance": "verified",
-      "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
+      "liveAcceptance": "incomplete_or_uncorrelated_receipt",
+      "liveReason": "The HTTP response did not prove completion of the requested, correctly correlated workflow. Mixed or conflicting observations require a new reviewed reconciliation receipt; earlier successes do not certify this method.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "scan.query_scan_results",
         "observations": [
           {
             "section": "probes",
             "index": 17,
             "operation": "scan.query_scan_results",
-            "classification": "verified",
+            "classification": "incomplete_or_uncorrelated_receipt",
             "status": 200,
             "errorKind": null,
             "remoteOutcome": null,
-            "workflowAccepted": true
+            "workflowAccepted": false
           },
           {
             "section": "probes",
@@ -22344,7 +22346,7 @@
             "workflowAccepted": true
           }
         ],
-        "reconciliationRequired": false
+        "reconciliationRequired": true
       }
     },
     {
@@ -22388,10 +22390,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-12.json",
-        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
+        "path": "docs/checks/phase-08-live-attempt-13.json",
+        "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
+        "runtimeInputsSha256": "4c09c8af7fbb29a8b4b858eaa0503136e446b88a60a0f851cae5e957632c6595",
         "probe": "scan.sync_scan",
         "observations": [
           {
@@ -22413,15 +22415,15 @@
   "sourceBindings": [
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "6a06cd0d5ab39f46310fc734b822a2dd14eb991e2d810c16aa7501a0f1a0aa43"
+      "sha256": "b3a26c81b8c63b44ff054f9a5370a7abaa10fc9278880ee88822484128e7946e"
     },
     {
       "path": "contracts/native-exports.json",
-      "sha256": "d60a929b0440b39c400dd081665eee6bb720e2b0543078dc7a42a0c1a6ff44ae"
+      "sha256": "c7dd22fac101bde05650c692fb786e74876160355c769cf3a4a1cae624314ef9"
     },
     {
       "path": "contracts/native-operations.json",
-      "sha256": "4a2dc13b604f9d474807de01077ed1e1da28348c28fb338d972d149ef2eaca1b"
+      "sha256": "1f9f8563bd5f21d5d424d2390995c2b209b5783298e0f8bb4a1fc7eb92b0ae27"
     },
     {
       "path": "contracts/operations.json",
@@ -22436,8 +22438,8 @@
       "sha256": "7313b68701b71af4d0450bea423832a307789990736c6929ba3fc3b895d5611d"
     },
     {
-      "path": "docs/checks/phase-08-live-attempt-12.json",
-      "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21"
+      "path": "docs/checks/phase-08-live-attempt-13.json",
+      "sha256": "76870c10c8bce92f466531f477c2ab3396f3601e6441cb966080958d54a921d2"
     },
     {
       "path": "tools/live_evidence.py",

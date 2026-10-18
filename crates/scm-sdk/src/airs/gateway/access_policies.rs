@@ -132,10 +132,24 @@ pub struct AccessPoliciesClient {
     client: Client,
 }
 impl AccessPoliciesClient {
+    /// Enable `gateway` and supply a Runtime-key authenticated core client whose
+    /// caller-selected control-plane origin is admitted by its destination policy.
+    /// SCM OAuth is rejected. Writes never replay; 409 conflicts return unchanged.
+    ///
+    /// ```no_run
+    /// use scm_sdk::{Client, Result, airs::gateway::access_policies::{
+    ///     AccessPoliciesClient, AccessPolicyListOptions}};
+    /// async fn policies(explicit_control_plane_key_client: Client) -> Result<()> {
+    ///     let policies = AccessPoliciesClient::new(explicit_control_plane_key_client)?;
+    ///     let _page = policies.list(&AccessPolicyListOptions::default(), None).await?;
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn new(client: Client) -> Result<Self> {
         client.require_auth(AuthKind::Runtime)?;
         Ok(Self { client })
     }
+    /// Borrow the explicitly configured control-plane client and shared session.
     pub fn client(&self) -> &Client {
         &self.client
     }
@@ -270,6 +284,7 @@ impl AccessPoliciesClient {
         .await
         .map_err(|e: Error| e.with_operation(OP))
     }
+    /// Read a policy by UUID, preserving absent, null and unknown response data.
     pub async fn get(&self, id: &str, options: Option<&RequestOptions>) -> Result<AccessPolicy> {
         const OP: &str = "airs.gateway.access_policies.get";
         async {
@@ -325,6 +340,7 @@ impl AccessPoliciesClient {
         .await
         .map_err(|e: Error| e.with_operation(OP))
     }
+    /// Delete a policy by UUID without automatic replay; preserve the response object.
     pub async fn delete(&self, id: &str, options: Option<&RequestOptions>) -> Result<JsonObject> {
         const OP: &str = "airs.gateway.access_policies.delete";
         async {

@@ -146,6 +146,19 @@ async fn all_five_methods_have_literal_wire_contracts_and_faithful_json() {
         for key in ["authorization", "x-tsg-id", "x-portkey-provider"] {
             assert!(!r.headers().contains_key(key));
         }
+        let mut actual = r.headers().keys().map(|h| h.as_str()).collect::<Vec<_>>();
+        actual.sort_unstable();
+        let expected = if verb == "POST" || verb == "PUT" {
+            vec![
+                "content-type",
+                "service-name",
+                "user-agent",
+                "x-portkey-api-key",
+            ]
+        } else {
+            vec!["service-name", "user-agent", "x-portkey-api-key"]
+        };
+        assert_eq!(actual, expected);
         assert!(!format!("{r:?}").contains(KEY));
     }
     assert_eq!(
@@ -234,6 +247,14 @@ async fn invalid_requests_never_dispatch_and_errors_have_static_names() {
     ] {
         assert_eq!(
             client.get(id, None).await.unwrap_err().kind(),
+            ErrorKind::Validation
+        );
+        assert_eq!(
+            client.update(id, &update(), None).await.unwrap_err().kind(),
+            ErrorKind::Validation
+        );
+        assert_eq!(
+            client.delete(id, None).await.unwrap_err().kind(),
             ErrorKind::Validation
         );
     }

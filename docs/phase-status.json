@@ -2432,7 +2432,7 @@
       "qualified_score": 9,
       "registry_publication": {
         "version": "0.2.0",
-        "status": "verified",
+        "status": "published_and_verified",
         "source_commit": "b0d7833cdc2d68111f084482e3592a6e64cc26fb",
         "evidence": "docs/checks/release-registry-0.2.0.json"
       },
@@ -3364,10 +3364,6 @@
         "contracts/vendor/portkey-access/a27feb9/contract.json",
         "docs/portkey-access-policies-plan.md",
         "tools/portkey-access.mjs",
-        "contracts/vendor/portkey-access/a27feb9/source.json",
-        "contracts/vendor/portkey-access/a27feb9/contract.json",
-        "docs/portkey-access-policies-plan.md",
-        "tools/portkey-access.mjs",
         "contracts/vendor/portkey-access/a27feb9/openapi.yaml",
         "contracts/vendor/portkey-access/a27feb9/parent.yaml",
         "contracts/vendor/portkey-access/a27feb9/LICENSE",
@@ -3382,7 +3378,10 @@
         "crates/scm-sdk/tests/portkey_access_contracts.rs",
         "crates/scm-sdk/examples/access_policies.rs",
         "contracts/vendor/portkey-access/a27feb9/model-fixtures.json",
-        "contracts/vendor/portkey-access/a27feb9/operations.json"
+        "contracts/vendor/portkey-access/a27feb9/operations.json",
+        "docs/checks/phase-16.json",
+        "docs/checks/phase-16-rust-1.89.0-gateway.json",
+        "docs/checks/phase-16-rust-1.99.0-gateway.json"
       ],
       "accepted_source_sha256": "cf54f553d3a66015f04b45e72621aedd57f66dd0a558199a40b2994b16cc6c1d",
       "accepted_score": 9,
@@ -3407,7 +3406,57 @@
             "docs/reviews/phase-16-attempt-01.json"
           ]
         }
-      }
+      },
+      "review_advisories": [
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 0,
+          "status": "implemented_in_phase17_pending_qualification",
+          "resolution": "Constructor rustdoc/shared redaction/fixture rationale/identifier/header tests/whitespace/evidence corrections applied in cumulative release source."
+        },
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 1,
+          "status": "implemented_in_phase17_pending_qualification",
+          "resolution": "Constructor rustdoc/shared redaction/fixture rationale/identifier/header tests/whitespace/evidence corrections applied in cumulative release source."
+        },
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 2,
+          "status": "implemented_in_phase17_pending_qualification",
+          "resolution": "Constructor rustdoc/shared redaction/fixture rationale/identifier/header tests/whitespace/evidence corrections applied in cumulative release source."
+        },
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 3,
+          "status": "implemented_in_phase17_pending_qualification",
+          "resolution": "Constructor rustdoc/shared redaction/fixture rationale/identifier/header tests/whitespace/evidence corrections applied in cumulative release source."
+        },
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 4,
+          "status": "implemented_in_phase17_pending_qualification",
+          "resolution": "Constructor rustdoc/shared redaction/fixture rationale/identifier/header tests/whitespace/evidence corrections applied in cumulative release source."
+        },
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 5,
+          "status": "implemented_in_phase17_pending_qualification",
+          "resolution": "Constructor rustdoc/shared redaction/fixture rationale/identifier/header tests/whitespace/evidence corrections applied in cumulative release source."
+        },
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 6,
+          "status": "implemented_in_phase17_pending_qualification",
+          "resolution": "Constructor rustdoc/shared redaction/fixture rationale/identifier/header tests/whitespace/evidence corrections applied in cumulative release source."
+        },
+        {
+          "review": "docs/reviews/phase-16-attempt-01.json",
+          "finding": 7,
+          "status": "post_release_style_maintenance",
+          "resolution": "Long literal test vectors remain readable and rustfmt-clean; broad style-only rewriting deferred."
+        }
+      ]
     },
     {
       "id": 17,
@@ -3420,10 +3469,6 @@
         "contracts/vendor/portkey-access/a27feb9/contract.json",
         "docs/portkey-access-policies-plan.md",
         "tools/portkey-access.mjs",
-        "contracts/vendor/portkey-access/a27feb9/source.json",
-        "contracts/vendor/portkey-access/a27feb9/contract.json",
-        "docs/portkey-access-policies-plan.md",
-        "tools/portkey-access.mjs",
         "contracts/vendor/portkey-access/a27feb9/openapi.yaml",
         "contracts/vendor/portkey-access/a27feb9/parent.yaml",
         "contracts/vendor/portkey-access/a27feb9/LICENSE",
@@ -3432,9 +3477,46 @@
         "tools/check_phase.py",
         "docs/PHASES.md",
         "docs/implementation-plan.md",
-        "docs/checks/phase-15.json"
+        "docs/checks/phase-15.json",
+        "crates/scm-sdk/src/airs/gateway/access_policies.rs",
+        "crates/scm-sdk/src/airs/gateway/access_policy_models.rs",
+        "crates/scm-sdk/tests/portkey_access_contracts.rs",
+        "crates/scm-sdk/examples/access_policies.rs",
+        "contracts/vendor/portkey-access/a27feb9/model-fixtures.json",
+        "contracts/vendor/portkey-access/a27feb9/operations.json",
+        "docs/checks/phase-16.json",
+        "docs/checks/phase-16-rust-1.89.0-gateway.json",
+        "docs/checks/phase-16-rust-1.99.0-gateway.json",
+        "docs/ACCESS_POLICIES.md",
+        "CHANGELOG.md",
+        "README.md",
+        "NOTICE",
+        "scripts/check-access-release.py",
+        "scripts/check-package.py",
+        ".forgejo/workflows/ci.yml",
+        "docs/checks/phase-17-release-package-1.89.0.json",
+        "docs/checks/phase-17-release-package-1.99.0.json"
       ],
-      "final_in_sequence": true
+      "final_in_sequence": true,
+      "delivery": {
+        "status": "preparing_candidate",
+        "advance_requires": [
+          "actual Claude >=9/10",
+          "verified registry 0.2.1",
+          "verified immutable v0.2.1 source tag",
+          "terminal exact 47-job CI run"
+        ]
+      },
+      "live_evidence": {
+        "current": "docs/checks/phase-08-live-attempt-13.json",
+        "access_policies": "docs/checks/phase-17-access-live.json",
+        "native_methods_verified": 16,
+        "native_methods_recorded": 22,
+        "service_requests": 24,
+        "token_exchanges": 1,
+        "cleanup": "not_needed",
+        "limitation": "One scan query HTTP200 lacked complete correlated evidence; three Red Team reads403 and two owned provisioning attempts400 remain explicit. New access policies not attempted."
+      }
     }
   ],
   "active_followup_plan": "docs/portkey-access-policies-plan.md"

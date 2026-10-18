@@ -1,19 +1,23 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.0**. The completed vendor phases 9–12 qualify
-all 47 Red Team dataplane operations. [Release phases 13–14](release-0.2.0-plan.md)
-add clean archive execution on Rust 1.89.0 and 1.99.0, exact payload comparison,
-actual Claude release review, registry verification and immutable tag delivery.
-The [registry receipt](checks/release-registry-0.2.0.json) and
-[tag receipt](checks/release-tag-v0.2.0.json) establish the actual publication and
+The workspace version is **0.2.1**. [Phases15–17](portkey-access-policies-plan.md)
+qualify the additive Portkey access-policy delta after completed 0.2.0 delivery.
+The [registry receipt](checks/release-registry-0.2.1.json) and
+[tag receipt](checks/release-tag-v0.2.1.json) establish actual publication and
 remote source identity. A missing receipt means publication is not yet verified.
-The SDK runtime is unchanged from accepted source `167a359`; the packaged README
-contains reviewed release guidance and is covered by both new archive proofs.
 
-CI continues `--phase 12 --verification-only --contracts-only` and its full Rust
-matrix. Phase 14 uses the
-same current contract checks plus publication-specific evidence, without changing
-historical gates. The supplied Portkey update is deferred until this delivery.
+CI runs `--phase 17 --verification-only --contracts-only` with the unchanged
+46-job Rust feature/compiler matrix. The complete local phase17 gate additionally
+requires both clean archive proofs, the new offline example and external consumer,
+all relevant compiler checks, current live-ledger freshness, dependency/privacy
+checks and actual Claude review >=9/10 before publication. Historical gates retain
+their accepted command sets. Publication uses the owner-controlled external
+Cargo credential; CI receives no publishing credential. Repackage at the exact
+qualified clean source, compare archive digest, publish, download and verify every
+file, create/push the immutable source tag, then wait for terminal 47-job CI.
+
+The prior [0.2.0 receipt](checks/release-registry-0.2.0.json) and
+[release plan](release-0.2.0-plan.md) remain historical.
 
 [The 0.1.1 publication receipt](checks/release-registry-0.1.1.json) records the
 published G10 patch, with unchanged default behavior, MSRV and dependencies.

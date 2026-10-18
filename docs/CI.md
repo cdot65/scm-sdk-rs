@@ -102,7 +102,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 12 --verification-only --contracts-only. This credential-free subset checks the 47 exact vendor bindings, independent model/wire specimens, frozen contracts/oracles, all Python guard suites, generated ledgers, fresh dependency policy and source privacy. It checks live-receipt freshness without executing service calls. Its separate phase-12-contracts.json cannot qualify or advance a phase review. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 17 --verification-only --contracts-only. This credential-free subset checks the five Portkey additions, 47 exact Red Team vendor bindings, independent model/wire specimens, frozen contracts/oracles, all Python guard suites, generated ledgers, fresh dependency policy and source privacy. It checks live-receipt freshness without executing service calls. Its separate phase-17-contracts.json cannot qualify or advance a phase review. |
 | rust | Rust 1.89.0 and 1.99.0 each run the complete feature-selection matrix through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -133,8 +133,9 @@ export probe feature set plus its historical gate regression.
 action pinning, setup ordering, this document's action inventory and setup effects,
 credential configuration, and additional target admission.
 
-The committed-range whitespace check excludes only the byte-pinned upstream
-`dp-openapi.yaml`, whose original trailing spaces are part of its reviewed digest.
+The current release range excludes the two byte-pinned upstream Portkey YAML
+files; the historical phase12 range excludes its original `dp-openapi.yaml`.
+Original upstream whitespace remains part of each reviewed digest.
 Every owned source file retains the whitespace check; source-pin verification
 still rejects any byte change to that vendor input.
 
@@ -144,11 +145,11 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 12 gate separately runs both compilers' default/minimal/all
-configurations plus isolated MSRV Red Team, 27,216 typed model specimens, and the
-3,820-probe consumers and extracted packages on both compilers. It writes
-`phase-12.json`, which the actual Claude review requires. CI's smaller scope writes
-`phase-12-contracts.json` and cannot replace that evidence. The independent 46-job
+The complete local Phase 17 gate runs both compilers' default/minimal/all
+configurations plus Gateway/JSON-unification/tracing checks. Its candidate guard
+requires clean archives and both external consumers on each compiler. It writes
+`phase-17.json`, which the actual Claude review requires. CI's smaller scope writes
+`phase-17-contracts.json` and cannot replace that evidence. The independent 46-job
 Rust matrix continues to test every supported feature selection on both compilers.
 The immutable 0.1.1 payload comparison stays in historical gate 92.
 

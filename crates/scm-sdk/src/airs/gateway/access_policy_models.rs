@@ -5,13 +5,6 @@ use std::collections::BTreeMap;
 
 /// Optional upstream extension fields; known field names cannot be overridden.
 pub type AccessPolicyExtensions = BTreeMap<String, JsonValue>;
-macro_rules! redacted {
-    ($($t:ty),+ $(,)?) => {$(impl std::fmt::Debug for $t {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            f.write_str(concat!(stringify!($t), "([REDACTED])"))
-        }
-    })+};
-}
 #[derive(Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Debug)]
 #[serde(rename_all = "lowercase")]
 #[non_exhaustive]
@@ -228,7 +221,7 @@ pub struct AccessPolicySubjectDetails {
     #[serde(flatten)]
     pub extra: AccessPolicyExtensions,
 }
-redacted!(AccessPolicySubjectDetails);
+crate::redaction::redacted_debug!(AccessPolicySubjectDetails);
 // Subject kinds remain open response strings, never authorization decisions.
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[non_exhaustive]
@@ -240,7 +233,7 @@ pub struct AccessPolicyCreated {
     #[serde(flatten)]
     pub extra: AccessPolicyExtensions,
 }
-redacted!(AccessPolicyCreated);
+crate::redaction::redacted_debug!(AccessPolicyCreated);
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct AccessPolicy {
@@ -277,7 +270,7 @@ pub struct AccessPolicy {
     #[serde(flatten)]
     pub extra: AccessPolicyExtensions,
 }
-redacted!(AccessPolicy);
+crate::redaction::redacted_debug!(AccessPolicy);
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct AccessPolicyListItem {
@@ -318,7 +311,7 @@ pub struct AccessPolicyListItem {
     #[serde(flatten)]
     pub extra: AccessPolicyExtensions,
 }
-redacted!(AccessPolicyListItem);
+crate::redaction::redacted_debug!(AccessPolicyListItem);
 #[derive(Clone, Default, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct AccessPolicyPage {
@@ -331,7 +324,7 @@ pub struct AccessPolicyPage {
     #[serde(flatten)]
     pub extra: AccessPolicyExtensions,
 }
-redacted!(AccessPolicyPage);
+crate::redaction::redacted_debug!(AccessPolicyPage);
 /// Open selector vocabulary returned by future service versions; no implicit ALL.
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -385,7 +378,7 @@ impl<'de> Deserialize<'de> for AccessPolicyTargetDetails {
         .map_err(|_| serde::de::Error::custom("invalid target"))
     }
 }
-redacted!(
+crate::redaction::redacted_debug!(
     AccessPolicySubject,
     AccessPolicySelection,
     AccessPolicyTarget,

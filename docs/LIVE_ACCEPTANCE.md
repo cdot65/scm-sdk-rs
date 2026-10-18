@@ -10,9 +10,10 @@ Each unqualified method has a reason. The [current receipt reference](../contrac
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
-The current vendor-development run (attempt 12) verified 17 exact native methods
-from 24 service requests and one token exchange. Its scan-ID lookups completed
-with correlated results. Three Red Team reads returned 403 permission rejections;
+The current 0.2.1 run (attempt 13) verified 16 exact native methods
+from 24 service requests and one token exchange. Its synchronous scan-ID query
+returned HTTP 200 without a complete correlated receipt and remains unqualified.
+The async lookup completed with correlated results. Three Red Team reads returned 403 permission rejections;
 IAM scope creation and Gateway provisioning returned 400 rejecting the submitted
 requests. The cause of these two 400s remains unestablished, including whether a
 native request-shape defect contributed. Both creations were rejected before
@@ -23,7 +24,7 @@ current vendor validators and typed model additions.
 The published 0.1.1 source had a separate run (attempt 08) verifying 16 methods.
 Its synchronous scan-ID lookup was incomplete or uncorrelated while the async
 lookup succeeded, leaving that canonical method unqualified in that receipt.
-Attempts 09–12 are new executions; their results do not rewrite the publication's
+Attempts 09–13 are new executions; their results do not rewrite the publication's
 historical observations. Earlier 0.1.0 receipts also verified 17 methods.
 
 The first 0.1.1 execution (attempt 07) completed 24 service requests with cleanup
@@ -141,3 +142,8 @@ for the separately labeled compile checks and [phase status](phase-status.json)
 for retained remote Forgejo qualification. The [registry publication receipt](checks/release-registry-0.1.0.json)
 separately records the published artifact and its exact source; publication does
 not expand live or native platform acceptance.
+
+The new Portkey access-policy methods were not called: the selected registration
+contains SCM OAuth credentials only. Their separate prerequisite/status is in
+[the access-policy live record](checks/phase-17-access-live.json). No access-policy
+authorization mutation was performed.

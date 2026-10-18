@@ -71,6 +71,7 @@ if(fs.existsSync(fixturePath)) {
   ajv.addSchema({...contract,$id:id});
   const cases=JSON.parse(fs.readFileSync(fixturePath)).cases;
   for(const row of cases) {
+    if (row.schemaValid !== row.sdkValid && !row.reason?.trim()) throw Error("Missing semantic fixture rationale");
     const validate=ajv.getSchema(id+'#/components/schemas/'+row.schema);
     if(!validate || validate(row.value)!==row.schemaValid) throw Error(row.name+': independent schema mismatch '+JSON.stringify(validate?.errors));
   }

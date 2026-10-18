@@ -80,7 +80,7 @@ Current required item documentation covers all public items in the handwritten
 scanner entry module (`Region`, `SyncScanOptions`, `Scanner` and their members),
 plus the primary constructor of each product facade: `ManagementClient`,
 `DlpClient`, `IamScopesClient`, `ModelSecurityClient`, `RedTeamClient`,
-`AIGatewayClient`, `RuntimeClient` and `AgentGuardClient`. Each product constructor
+`AIGatewayClient`, `RuntimeClient`, `AccessPoliciesClient` and `AgentGuardClient`. Each product constructor
 has a short compiled `no_run` example with its Cargo feature, credential plane
 and endpoint requirements explained. Examples accept caller-configured clients
 and use async functions polled by the application; documentation checks perform

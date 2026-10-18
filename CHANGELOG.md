@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.1 — 2026-10-18
+
+Additive Portkey access-policy update at `a27feb9efaac3653d2d94eca5d7d210944b6e160`.
+The [crates.io release](https://crates.io/crates/scm-sdk/0.2.1) is verified only by
+the [registry receipt](docs/checks/release-registry-0.2.1.json); a missing receipt
+means publication is not yet verified.
+
+- Add create/list/get/update/delete with typed inputs and faithful open responses.
+- Keep the explicit key-authenticated control plane separate from SCM OAuth.
+- Preserve omission/null, optimistic concurrency and non-replayable writes.
+- Add an executed offline example, independent schema fixtures and wire/security tests.
+- Retain all existing SDK interfaces, G10 defaults, Red Team coverage, dependencies
+  and Rust 1.89 minimum. No existing method contract changes.
+- New calls remain experimental/live-unverified; no live policy writes were made.
+
+See [access-policy documentation](docs/ACCESS_POLICIES.md) for scope and usage.
+
 ## 0.2.0 — 2026-10-18
 
 Release of the pinned Prisma AIRS Red Team dataplane OpenAPI 0.93.0 at

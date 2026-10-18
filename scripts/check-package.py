@@ -149,6 +149,8 @@ def main():
             commands.append(['run', '--example', 'response_defaults', '--all-features'])
         if 'examples/red_team_dataplane.rs' in files:
             commands.append(['run', '--example', 'red_team_dataplane', '--all-features'])
+        if 'examples/access_policies.rs' in files:
+            commands.append(['run', '--example', 'access_policies', '--all-features'])
         passed = True
         for command in commands:
             if not run(command + ['--locked', '--offline', '--target', host], extracted):
@@ -166,6 +168,22 @@ def main():
         shutil.copyfile(original / 'src/main.rs', consumer / 'src/main.rs')
         if passed:
             passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+        if passed and 'examples/access_policies.rs' in files:
+            # Execute all five new public methods from a separate crate against
+            # the extracted package, using the packaged offline transport example.
+            locked = tomllib.loads((consumer / 'Cargo.lock').read_text())['package']
+            versions = {row['name']: row['version'] for row in locked if row['name'] in {'bytes', 'http', 'tokio'}}
+            extra = ''.join(f'{name} = "={versions[name]}"\n' for name in ('bytes', 'http'))
+            extra += f'tokio = {{ version = "={versions["tokio"]}", features = ["macros", "rt"] }}\n'
+            (consumer / 'Cargo.toml').write_text((consumer / 'Cargo.toml').read_text() + extra)
+            lock = (consumer / 'Cargo.lock').read_text()
+            marker = 'name = "scm-sdk-export-probes"\nversion = "0.0.0"\ndependencies = [\n'
+            if lock.count(marker) != 1:
+                raise ValueError('Consumer lock identity is ambiguous')
+            lock = lock.replace(marker, marker + ' "bytes",\n "http",\n "tokio",\n')
+            (consumer / 'Cargo.lock').write_text(lock)
+            (consumer / 'src/main.rs').write_bytes(files['examples/access_policies.rs'])
+            passed = run(['run', '--locked', '--offline', '--target', host], consumer)
     if args.require_clean:
         current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         current_status = subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT, text=True)
@@ -178,6 +196,7 @@ def main():
               'archive_sha256': digest(content), 'archive_bytes': len(content), 'retainedArchive': str(retained),
               'files': [{'path': name, 'sha256': digest(data), 'bytes': len(data)} for name, data in sorted(files.items())],
               'publicConsumerSourceSha256': digest((ROOT / 'contracts/native-probes/src/main.rs').read_bytes()),
+              'accessPolicyConsumerSourceSha256': digest(files['examples/access_policies.rs']) if 'examples/access_policies.rs' in files else None,
               'checks': checks, 'limitations': ['Only the recorded host executes code; examples compile without contacting services. The response_defaults example, when present, also executes offline.',
                   'The full development integration corpus remains repository-only; the archive runs its packaged unit/doctests and external public capability consumer.']}
     output = args.output or ROOT / f'.local/checks/package-{args.toolchain}.json'

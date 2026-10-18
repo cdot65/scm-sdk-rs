@@ -21,7 +21,7 @@ class ReleasePlanTests(unittest.TestCase):
             self.assertIn(value, plan)
 
     def test_previously_accepted_command_sets_remain_identical(self):
-        for phase in (9, 10, 11, 12, 90, 91, 92):
+        for phase in (9, 10, 11, 12, 13, 14, 15, 16, 90, 91, 92):
             report = json.loads((ROOT / f"docs/checks/phase-{phase:02d}.json").read_text())
             self.assertEqual(commands_for(phase), [x["command"] for x in report["checks"]])
 
@@ -29,7 +29,7 @@ class ReleasePlanTests(unittest.TestCase):
         paths = ["Cargo.toml", "Cargo.lock", "LICENSE", "NOTICE",
                  "crates/scm-sdk/Cargo.toml", "crates/scm-sdk/src", "crates/scm-sdk/examples"]
         self.assertEqual(subprocess.check_output(
-            ["git", "diff", "--name-only", BASELINE, "--", *paths], cwd=ROOT, text=True), "")
+            ["git", "diff", "--name-only", BASELINE, "b0d7833cdc2d68111f084482e3592a6e64cc26fb", "--", *paths], cwd=ROOT, text=True), "")
 
     def test_completed_delivery_does_not_reopen_maintenance_track(self):
         from review_phase import next_phase

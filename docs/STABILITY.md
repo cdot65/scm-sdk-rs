@@ -1,7 +1,11 @@
 # Compatibility and support status
 
-The current Rust crate version is **0.2.0**, a vendor-contract update. Its
-[registry receipt](checks/release-registry-0.2.0.json) records release provenance.
+The current Rust crate version is **0.2.1**, an additive access-policy update.
+The [registry receipt](checks/release-registry-0.2.1.json) establishes publication
+only when present and verified. A missing receipt means publication is not yet verified.
+The [access-policy family](ACCESS_POLICIES.md) remains experimental/live-unverified;
+its Portkey key/control-plane contract is separate from SCM OAuth.
+
 The [0.1.1 publication receipt](checks/release-registry-0.1.1.json) establishes the
 available G10 patch and its immutable source/archive identity. The opt-in response
 policy and default behavior are retained. The 0.2.0 minor increment

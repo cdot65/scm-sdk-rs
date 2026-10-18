@@ -317,7 +317,8 @@
         ]
       },
       "schemaValid": true,
-      "sdkValid": false
+      "sdkValid": false,
+      "reason": "Upstream subject/endpoint prose adds semantic constraints: group ANY is not supported; allow requires a specific subject; omitted create effect is deny only for both user ANY and agent ANY. Update omission keeps stored effect."
     },
     {
       "name": "group ANY invalid",
@@ -339,7 +340,8 @@
         "effect": "deny"
       },
       "schemaValid": true,
-      "sdkValid": false
+      "sdkValid": false,
+      "reason": "Upstream subject/endpoint prose adds semantic constraints: group ANY is not supported; allow requires a specific subject; omitted create effect is deny only for both user ANY and agent ANY. Update omission keeps stored effect."
     },
     {
       "name": "explicit allow both ANY",
@@ -365,7 +367,8 @@
         "effect": "allow"
       },
       "schemaValid": true,
-      "sdkValid": false
+      "sdkValid": false,
+      "reason": "Upstream subject/endpoint prose adds semantic constraints: group ANY is not supported; allow requires a specific subject; omitted create effect is deny only for both user ANY and agent ANY. Update omission keeps stored effect."
     },
     {
       "name": "explicit deny one ANY",
@@ -676,7 +679,8 @@
         "effect": "allow"
       },
       "schemaValid": true,
-      "sdkValid": false
+      "sdkValid": false,
+      "reason": "Upstream subject/endpoint prose adds semantic constraints: group ANY is not supported; allow requires a specific subject; omitted create effect is deny only for both user ANY and agent ANY. Update omission keeps stored effect."
     },
     {
       "name": "empty response",
@@ -701,7 +705,8 @@
         "effect": "future"
       },
       "schemaValid": false,
-      "sdkValid": true
+      "sdkValid": true,
+      "reason": "Response vocabulary remains open; unknown effects/target kinds are retained as data, never authorization decisions."
     },
     {
       "name": "unknown target",
@@ -715,7 +720,8 @@
         ]
       },
       "schemaValid": false,
-      "sdkValid": true
+      "sdkValid": true,
+      "reason": "Response vocabulary remains open; unknown effects/target kinds are retained as data, never authorization decisions."
     },
     {
       "name": "missing known target",
