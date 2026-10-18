@@ -68,6 +68,10 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 13:
+        return [["git", "diff", "--check"], ["python", "tools/verify-contracts.py"],
+                *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+                  for name in ("test_release_020.py", "test_review_phase.py", "test_ci.py")]]
     if phase == 12:
         return [
             ["git", "diff", "--check", "840c090..HEAD", "--", ".",

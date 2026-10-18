@@ -1,0 +1,112 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 13,
+  "attempt": 1,
+  "reviewed_at": "2026-10-18T20:14:20.206627+00:00",
+  "source_sha256": "07c089e54e50e6c9e7c9ea01ed5e110cee6c47b8fa558250d9183c932b3ffe73",
+  "source_unchanged": true,
+  "checks_sha256": "928b75bab3927f9426ea84355d5d9c7ebcd1c40359a51ec0df2a19eebc170724",
+  "prompt_sha256": "d26112e0d1a36c1c216273c0d2f7ff114e03e1cb3e134926d50b3fbdc49e02d6",
+  "cli_output_sha256": "67bcad2ffbfdaa415d94ae442749f8fbf36d99932157fc3c133e41613da91265",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Phase 13 is a planning/governance phase and its acceptance criteria are met with real, executed evidence. docs/release-0.2.0-plan.md pins an unambiguous release scope (accepted source 167a359, version 0.2.0, owner cdot65, tag v0.2.0, MSRV 1.89, both compilers, deferred Portkey/Gateway commit) and every factual claim I sampled verifies against repository artifacts: phase-12.json contains exactly 39 passing checks at source de311207\u2026, docs/checks/phase-12-remote-ci-run-19.json records run 19 success with 47/47 jobs at commit 167a359, CHANGELOG.md:34-48 lists exactly twelve option rejections, CHANGELOG.md:56-59 records exactly four response-presence waivers, contracts/response-defaults.json:18 records 23 default bindings, and crates/scm-sdk/Cargo.toml:3 is already 0.2.0 (so the \"no manifest change\" guard and the publish target do not contradict). docs/checks/phase-13.json is a genuinely executed report: five checks, all exit_code 0, source_unchanged true, source_sha256 07c089e5\u2026 matching the reviewed source, and its command list is byte-identical to check_phase.commands_for(13) (tools/check_phase.py:71-74), so review_phase.check_evidence would accept it. tools/test_release_020.py adds a real (not prose) guard that the runtime/packaged paths are unchanged versus the accepted commit, that the seven previously accepted command sets still equal their recorded reports, and that phase sequencing goes 13\u219214 without reopening the completed 90\u201392 maintenance track; predecessor gates stay enforced by review_phase.validate_predecessors. Publication controls in the plan are strong: verify-before-act on an existing version, no overwrite/yank, registry read on ambiguous results, repackage-and-SHA-match before `--no-verify` publish backed by scripts/check-package.py --require-clean (which genuinely extracts the archive and runs minimal/all-feature unit tests, example checks, doctests and the external consumer), and post-publish verification of the downloaded artifact against both compiler proofs. No blocker or high finding. The residual gaps are scope/documentation completeness rather than correctness: the packaged README.md is omitted from the byte-for-byte guard while documentation is explicitly allowed to change; the four retained phase-12 review advisories (including a user-facing docs/RED_TEAM.md defect that 0.2.0 ships) have no disposition in the release plan; and the release plan itself is not reachable from docs/PHASES.md or docs/implementation-plan.md, which AGENTS.md makes mandatory reading.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "docs/release-0.2.0-plan.md",
+        "line": 45,
+        "description": "README.md is a packaged payload file (crates/scm-sdk/Cargo.toml:10-11 sets readme and include = [\"src/**\", \"examples/**\", \"LICENSE\", \"NOTICE\", \"README.md\"]; docs/checks/phase-12-package-1.99.0.json:54-56 shows README.md at 5,581 bytes inside the archive). The fixed scope at line 16 promises to \"Compare all runtime inputs byte-for-byte to the accepted source and fail on drift\", and the phase-14 candidate guard at lines 45-47 enumerates only source/example bytes, legal notice, crate/workspace manifests and the lockfile, while line 47 and step 1 explicitly permit documentation (including \"public install guidance\") to change. The executed guard has the same hole: tools/test_release_020.py:27-28 compares Cargo.toml, Cargo.lock, LICENSE, NOTICE, crates/scm-sdk/Cargo.toml, crates/scm-sdk/src and crates/scm-sdk/examples and omits README.md. A README edit therefore changes the published archive bytes while the plan's \"unchanged SDK proof\" guard still reports no drift.",
+        "required_fix": "Add README.md to the compared path set in tools/test_release_020.py:27-28 and to the enumerated phase-14 candidate guard in docs/release-0.2.0-plan.md:45-47, or state explicitly in the plan that README.md is a packaged file whose permitted documentation changes alter the archive and that both clean-archive proofs must be regenerated after any README edit."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/release-0.2.0-plan.md",
+        "line": 42,
+        "description": "The plan does not dispose of the four nonblocking advisories retained from the accepted phase-12 review (docs/phase-status.json:2217-2253), even though all four are documentation/tooling items that line 47 permits to change. The medium one is user-facing and ships with 0.2.0: docs/RED_TEAM.md:94-111 still states \"Direct list calls omit unspecified `skip`, `limit`, and `search` fields\" and never says that the twelve bindings in CHANGELOG.md:34-48 now fail validation before authentication on their specific methods, nor links the migration table from that section. 0.2.0 is exactly the release in which that behavior becomes consumer-visible, so the release plan should decide whether the reconciliation lands before publication or is deferred.",
+        "required_fix": "Add an explicit disposition in docs/release-0.2.0-plan.md for each of the four retained phase-12 advisories (docs/phase-status.json:2217-2253) \u2014 either scheduled in the phase-14 release-documentation step or recorded as post-0.2.0 maintenance \u2014 and in particular state whether the docs/RED_TEAM.md:94-111 pagination/request-constraints reconciliation and CHANGELOG migration link are required before publishing 0.2.0."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/PHASES.md",
+        "line": 24,
+        "description": "The authorized 0.2.0 release procedure is not reachable from the two documents AGENTS.md:3 makes mandatory reading. docs/PHASES.md adds rows 13 and 14 (lines 23-24) but never references docs/release-0.2.0-plan.md, unlike the vendor track (lines 63-71 point at docs/red-team-data-plane-0.93.0-plan.md) and the maintenance track (lines 29-30 point at docs/g10-0.1.1-plan.md); the \"Milestone records\" checklist (lines 39-50) also stops at item 12. docs/implementation-plan.md:127 still authorizes only \"the authorized 0.1.1 maintenance procedure ... in docs/g10-0.1.1-plan.md\", so the publication contract there records no 0.2.0 authorization. The plan is currently referenced only from docs/phase-status.json:2275 and 2993.",
+        "required_fix": "Add a short \"SDK 0.2.0 release\" section (or an inline link on docs/PHASES.md:23-24) pointing at docs/release-0.2.0-plan.md with milestone entries 13 and 14, and record the authorized 0.2.0 publication procedure and its plan path in docs/implementation-plan.md:127 alongside the existing 0.1.1 sentence."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 2270,
+        "description": "The phase 13 entry (and phase 14 at line 2282) has no \"plan\" key, so review_phase.py:229 falls back to 'docs/implementation-plan.md' and the generated prompt names two different documents as the \"Active follow-up plan\": docs/release-0.2.0-plan.md from active_followup_plan (line 2993) and docs/implementation-plan.md from the per-phase default. docs/reviews/phase-13-attempt-01.prompt.md shows both lines. Phase 12 avoided this by setting \"plan\" (line 2082).",
+        "required_fix": "Add \"plan\": \"docs/release-0.2.0-plan.md\" to the phase 13 and phase 14 entries in docs/phase-status.json so the review prompt names a single follow-up plan."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_release_020.py",
+        "line": 29,
+        "description": "The no-change guard uses `git diff --name-only <baseline> -- <paths>`, which reports only tracked differences. A newly added, still-untracked file under crates/scm-sdk/src or crates/scm-sdk/examples would be packaged by cargo (Cargo.toml include globs) yet pass this assertion, and the phase-13 command set (tools/check_phase.py:72) runs only `git diff --check`, which likewise ignores untracked files. The window closes only at phase-14 step 3, where scripts/check-package.py:108-110 requires a clean tree including untracked files.",
+        "required_fix": "Make the guard fail closed on untracked additions as well, e.g. also assert `git status --porcelain --untracked-files=all -- <paths>` is empty (or `git ls-files --others --exclude-standard -- <paths>`), and note in docs/release-0.2.0-plan.md that untracked drift is only excluded once the candidate commit is clean."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_release_020.py",
+        "line": 10,
+        "description": "The accepted source commit is duplicated across docs/release-0.2.0-plan.md:10, this BASELINE constant and docs/phase-status.json:2122 (release.pushed_source_commit) / docs/checks/phase-12-remote-ci-run-19.json:4, but only plan-text containment is asserted (line 16-19). If the recorded phase-12 delivery commit or the CI receipt commit drifted from BASELINE, no check would fail.",
+        "required_fix": "Assert in tools/test_release_020.py that BASELINE equals the phase-12 record's release.pushed_source_commit in docs/phase-status.json and the sourceCommit/run.commit_sha in docs/checks/phase-12-remote-ci-run-19.json."
+      },
+      {
+        "severity": "low",
+        "path": "tools/check_phase.py",
+        "line": 72,
+        "description": "The phase-13 command set omits `git diff --cached --check` (present for phases 10, 11, 12, 90, 91, 92) and scripts/check-private-material.py (present for phases 10, 11, 12, 90, 91, 92). The phase-9 planning gate had the same shape, so this is precedent-consistent, but it means staged whitespace and the exact-value privacy scan are unexecuted for the source state that this review accepts, even though the phase adds two new files to the published repository.",
+        "required_fix": "Either add `[\"git\", \"diff\", \"--cached\", \"--check\"]` and `[\"python\", \"scripts/check-private-material.py\", \"--check\", \"docs/checks/phase-13-private-material.json\"]` to commands_for(13), or record in docs/release-0.2.0-plan.md that the planning gate deliberately defers the privacy scan to the phase-14 candidate gate."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_ci.py",
+        "line": 302,
+        "description": "The release-document staleness guard pins the obsolete-phrase regex to the previous line (\"0\\.1\\.0\\s*[\u2014-]\\s*Unreleased\"), so it cannot catch the 0.2.0 equivalents that publication must retire: CHANGELOG.md:3 \"## 0.2.0 \u2014 Unreleased\", docs/RELEASE.md:3 \"(unpublished development)\" and docs/RED_TEAM.md:25 \"These additions target unpublished 0.2.0\". docs/release-0.2.0-plan.md:42 assigns \"release documentation\" to phase 14 without naming these documents or generalizing the guard.",
+        "required_fix": "Generalize the obsolete-phrase pattern in tools/test_ci.py:299-302 to the current development version read from crates/scm-sdk/Cargo.toml, and list the documents that must change at publication (CHANGELOG.md:3, docs/RELEASE.md:3-10, docs/RED_TEAM.md:25, README install guidance) in the phase-14 step of docs/release-0.2.0-plan.md."
+      },
+      {
+        "severity": "low",
+        "path": "docs/release-0.2.0-plan.md",
+        "line": 60,
+        "description": "The credential clause (\"Cargo reads the owner's external mode-0600 credentials; never copy or print them\") is weaker than the precedent it supersedes: docs/g10-0.1.1-plan.md:183-188 names the exact external path, forbids passing the token in the environment or on the command line, forbids recording it in receipts, and states that CI jobs receive no publishing credentials (as required by docs/implementation-plan.md:127).",
+        "required_fix": "State the explicit external credential path, prohibit environment/command-line token passing and any receipt capture, and reaffirm that CI receives no publishing credential, matching docs/g10-0.1.1-plan.md:183-188."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 2078,
+        "description": "The phase-12 reviews array lists the same artifact twice (\"docs/reviews/phase-12-attempt-01.json\" at lines 2079 and 2080) while review_attempts (line 2215) lists it once. verify_record uses reviews[-1] so predecessor validation still passes, but the duplicate is misleading bookkeeping in the progress source of truth that this change edits.",
+        "required_fix": "Remove the duplicated review path from the phase-12 reviews array in docs/phase-status.json so reviews lists each accepted artifact once."
+      }
+    ],
+    "evidence": [
+      "docs/checks/phase-13.json:1-128 \u2014 executed report: phase 13, source_sha256 07c089e54e50e6c9e7c9ea01ed5e110cee6c47b8fa558250d9183c932b3ffe73 (matches the reviewed source), source_unchanged true, passed true, five checks each exit_code 0 with retained stdout/stderr (git diff --check; tools/verify-contracts.py verified at baseline 0.34.0 / 4a80dbdb; 4 release-plan tests OK; 30 review-gate tests OK; 31 CI-contract tests OK).",
+      "tools/check_phase.py:71-74 \u2014 commands_for(13) equals the recorded command list exactly, so review_phase.check_evidence (tools/review_phase.py:99-113) would accept docs/checks/phase-13.json for this source hash.",
+      "tools/test_release_020.py:21-24 \u2014 asserts commands_for(phase) equals the recorded commands in docs/checks/phase-{9,10,11,12,90,91,92}.json; tools/test_review_phase.py:20-24 pins phases 1-8 by SHA256. Both suites ran green in the phase-13 report.",
+      "tools/test_release_020.py:26-30 \u2014 executed proof that Cargo.toml, Cargo.lock, LICENSE, NOTICE, crates/scm-sdk/Cargo.toml, crates/scm-sdk/src and crates/scm-sdk/examples are identical to accepted commit 167a359fb3d51aad37c4dff311060b069c620bdd.",
+      "tools/test_release_020.py:32-38 \u2014 executed proof that next_phase advances 13\u219214 and returns None after 14 (final_in_sequence), without reopening the complete 90-92 maintenance phases; docs/phase-status.json:2270-2290 matches (active_phase 13, 14 pending).",
+      "docs/checks/phase-12.json:1-6 plus 39 recorded \"command\" entries \u2014 confirms the plan's \"Phase 12 passed 39 checks\" claim at source de311207659ad73a8a158b79e262714b24e5c158441ee3d40adbe5b4e5e98bce; docs/reviews/phase-12-attempt-01.json:6-13 confirms score 9, gate_passed true, same source hash, checks_sha256 binding.",
+      "docs/checks/phase-12-remote-ci-run-19.json:4-18 \u2014 confirms the plan's \"Forgejo run 19 passed all 47 jobs\": run 19 status success, expectedJobCount 47, counts.success 47, commit 167a359fb3d51aad37c4dff311060b069c620bdd, contextsMatchConfiguredMatrix true.",
+      "CHANGELOG.md:34-48 (exactly twelve rejected option bindings), CHANGELOG.md:56-59 (exactly four response-only presence waivers), CHANGELOG.md:66-70 (MSRV 1.89 retained, 448-method/3,820-capability denominator), contracts/response-defaults.json:17-21 (defaultBindings 23) \u2014 every retention claim in docs/release-0.2.0-plan.md:17-19 verifies.",
+      "crates/scm-sdk/Cargo.toml:2-3 \u2014 version is already 0.2.0, so publishing 0.2.0 does not require the manifest change that docs/release-0.2.0-plan.md:14-16 forbids.",
+      "scripts/check-package.py:91,108-110,120-173 \u2014 --require-clean exists and refuses a dirty tree including untracked files, packages --locked --offline, verifies packaged LICENSE/NOTICE bytes against the repository, extracts the archive and runs no-default-features and all-features lib tests, --examples check, doctests, the offline examples and the external consumer, records archive_sha256/files, and re-checks HEAD and cleanliness afterwards. This substantiates the plan's reliance on clean archive checks instead of cargo publish's own verification.",
+      "docs/release-0.2.0-plan.md:57-79 \u2014 publication safety controls: detached clean worktree at the qualified commit, repackage and require archive SHA256 match before publish, verify an existing version before any other action, never overwrite or yank, verify registry version/ownership/non-yanked state/downloaded checksum/embedded VCS commit against both compiler proofs, read the registry before retrying an ambiguous publish, and stop on registry/artifact mismatch.",
+      "docs/checks/phase-12-package-1.99.0.json:54-56 \u2014 README.md (5,581 bytes) is part of the published archive, which the enumerated byte guard omits (basis for finding 1).",
+      "docs/RED_TEAM.md:94-111 versus CHANGELOG.md:28-48 \u2014 the retained phase-12 medium advisory (docs/phase-status.json:2217-2226) is still unaddressed in the documentation that 0.2.0 publishes.",
+      "docs/PHASES.md:23-24, 29-30, 63-71 and docs/implementation-plan.md:127 \u2014 rows 13/14 exist but neither document references docs/release-0.2.0-plan.md, while the vendor and 0.1.1 tracks are both linked and the 0.1.1 publication procedure is explicitly authorized."
+    ],
+    "limitations": [
+      "Read-only tools only: I could not recompute the reviewed source fingerprint or the SHA256 of docs/checks/phase-13.json, so I verified internal consistency (report source_sha256 equals the prompt's reviewed hash, recorded command list equals commands_for(13), all exit codes 0) rather than the hashes themselves.",
+      "I could not re-execute any check or run git. Claims about the working tree being unchanged versus commit 167a359 rest on the recorded exit 0 of tools/test_release_020.py at check time (2026-10-18T20:07:18Z) plus source_unchanged true; I cannot detect edits made after that timestamp.",
+      "The phase-13 gate deliberately does not re-run contract generation, compiler, feature, package, dependency or privacy checks; those remain phase-12 source-bound evidence (docs/checks/phase-12*.json) carried forward under the unchanged-runtime guard. The phase-13 run of tools/verify-contracts.py reports extractedBaselineVerified false and excludedRemoteBytesVerified false (the --baseline .local/typescript and --fetch-excluded variants were not executed), which matches the phase-9 planning precedent (docs/checks/phase-09.json:36) but means the strongest baseline-extraction check is unexecuted for this source.",
+      "All phase-14 obligations (release documentation, candidate guard implementation, clean archives on both compilers, publication, registry/tag verification, remote CI) are unexecuted by construction; I judged only whether the plan specifies them adequately, not whether they will pass.",
+      "The eleven new Red Team dataplane operations remain live-unverified (selected-tenant reads return 403, docs/release-0.2.0-plan.md:20-21, docs/phase-status.json:2124-2129). I did not read any credential or tenant-registration material and performed no network calls, so no live claim is independently confirmed here.",
+      "I did not re-audit historical phases 1-8 or the 90-92 maintenance track beyond confirming the bookkeeping that phase-13 sequencing and predecessor validation depend on."
+    ]
+  }
+}

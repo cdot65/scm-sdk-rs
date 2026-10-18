@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": null,
+  "active_phase": 14,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -2080,7 +2080,6 @@
         "docs/reviews/phase-12-attempt-01.json"
       ],
       "plan": "docs/red-team-data-plane-0.93.0-plan.md",
-      "final_in_sequence": true,
       "scope_evidence": [
         "docs/red-team-data-plane-0.93.0-plan.md",
         "CHANGELOG.md",
@@ -2266,6 +2265,54 @@
       },
       "accepted_source_sha256": "de311207659ad73a8a158b79e262714b24e5c158441ee3d40adbe5b4e5e98bce",
       "accepted_score": 9
+    },
+    {
+      "id": 13,
+      "name": "SDK 0.2.0 release plan",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-13-attempt-01.json"
+      ],
+      "scope_evidence": [
+        "docs/release-0.2.0-plan.md",
+        "tools/test_release_020.py",
+        "tools/check_phase.py",
+        "docs/PHASES.md"
+      ],
+      "accepted_source_sha256": "07c089e54e50e6c9e7c9ea01ed5e110cee6c47b8fa558250d9183c932b3ffe73",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-13-attempt-01.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-13.json"
+          ],
+          "source_sha256": "07c089e54e50e6c9e7c9ea01ed5e110cee6c47b8fa558250d9183c932b3ffe73"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-13-attempt-01.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": 14,
+      "name": "SDK 0.2.0 publication and delivery",
+      "status": "in_progress",
+      "reviews": [],
+      "final_in_sequence": true,
+      "scope_evidence": [
+        "docs/release-0.2.0-plan.md"
+      ]
     },
     {
       "id": 90,
@@ -2969,5 +3016,5 @@
       }
     }
   ],
-  "active_followup_plan": "docs/red-team-data-plane-0.93.0-plan.md"
+  "active_followup_plan": "docs/release-0.2.0-plan.md"
 }
