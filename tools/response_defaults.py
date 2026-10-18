@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -18,10 +19,33 @@ DASHBOARD_TYPES = {
     "sessionTransactionQuerySchema": "DashboardSessionTransactionQuery",
     "sessionWindowSchema": None,
 }
+RUST_ADDITIONS = (
+    ("scm_sdk::RequestOptions::without_response_defaults", "crates/scm-sdk/src/config.rs",
+     r"(?m)^\s+pub fn without_response_defaults\s*\(", ".without_response_defaults()"),
+    ("scm_sdk::RequestOptions::response_defaults", "crates/scm-sdk/src/config.rs",
+     r"(?m)^\s+pub fn response_defaults\s*\(", ".response_defaults()"),
+    ("scm_sdk::validation::Mode::ResponseWithoutDefaults", "crates/scm-sdk/src/validation.rs",
+     r"(?ms)^pub enum Mode\s*\{.*?^    ResponseWithoutDefaults,.*?^\}",
+     "Mode::ResponseWithoutDefaults"),
+)
 
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def verify_rust_additions(root=ROOT):
+    example_path = root / "crates/scm-sdk/examples/response_defaults.rs"
+    if example_path.is_symlink():
+        raise ValueError("The API example must be a regular source file")
+    example = example_path.read_text()
+    for name, source, declaration, invocation in RUST_ADDITIONS:
+        path = root / source
+        if path.is_symlink() or not re.search(declaration, path.read_text()):
+            raise ValueError("Rust API declaration is absent: " + name)
+        if invocation not in example:
+            raise ValueError("Rust API is not exercised by the packaged example: " + name)
+    return [row[0] for row in RUST_ADDITIONS]
 
 
 def build(root=ROOT):
@@ -82,11 +106,7 @@ def build(root=ROOT):
         "schemaVersion": 1, "introducedIn": "0.1.1", "baselineCommit": PIN,
         "generatorSha256": sha(pathlib.Path(__file__).read_bytes()),
         "sources": {p: sha((root / p).read_bytes()) for p in inputs},
-        "rustOnlyAdditions": [
-            "scm_sdk::RequestOptions::without_response_defaults",
-            "scm_sdk::RequestOptions::response_defaults",
-            "scm_sdk::validation::Mode::ResponseWithoutDefaults",
-        ],
+        "rustOnlyAdditions": verify_rust_additions(root),
         "counts": {"defaultBindings": 23,
                    "redTeamBindings": sum(not b["outsideRedTeam"] for b in bindings),
                    "outsideRedTeamBindings": sum(b["outsideRedTeam"] for b in bindings)},

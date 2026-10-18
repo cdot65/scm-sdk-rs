@@ -2,8 +2,17 @@
 
 ## 0.1.1 — 2026-10-18
 
+Published on [crates.io](https://crates.io/crates/scm-sdk/0.1.1) from reviewed source
+`7efd1372806bd1969663993de3083d393b20cc62`; archive SHA-256:
+`8339891e9a43582e26573355e65d95605f6865ea434365a649b215c69b01d154`.
+The [registry receipt](docs/checks/release-registry-0.1.1.json) records the downloaded
+artifact and both clean compiler qualifications. Post-publication documentation
+and development guardrails preserve the source tag and published crate contents.
+
 ### Added
 
+- Packaged offline example `examples/response_defaults.rs`, exercising both
+  response policies and the new public methods without credentials or network IO.
 - `RequestOptions::without_response_defaults()` and
   `RequestOptions::response_defaults()`: per-operation opt-in that validates typed
   JSON responses (buffered contracts and Gateway SSE contract events) without

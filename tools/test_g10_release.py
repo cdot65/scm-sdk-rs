@@ -6,15 +6,20 @@ import io
 import json
 import pathlib
 import tarfile
+import tempfile
 import tomllib
 import unittest
 
 import response_defaults
+from check_phase import commands_for
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("g10_publication", ROOT / "scripts/verify-publication.py")
 publication = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(publication)
+payload_spec = importlib.util.spec_from_file_location("g10_published_payload", ROOT / "scripts/check-published-payload.py")
+payload = importlib.util.module_from_spec(payload_spec)
+payload_spec.loader.exec_module(payload)
 
 
 def canonical_sha(value):
@@ -22,6 +27,103 @@ def canonical_sha(value):
 
 
 class G10ContractTests(unittest.TestCase):
+    def test_published_registry_inventory_matches_both_clean_proofs_and_remote_tag(self):
+        commit = "7efd1372806bd1969663993de3083d393b20cc62"
+        digest = "8339891e9a43582e26573355e65d95605f6865ea434365a649b215c69b01d154"
+        receipt = json.loads((ROOT / "docs/checks/release-registry-0.1.1.json").read_text())
+        tag = json.loads((ROOT / "docs/checks/release-tag-v0.1.1.json").read_text())
+        self.assertEqual(receipt["version"], "0.1.1")
+        self.assertEqual(receipt["sourceCommit"], commit)
+        self.assertEqual(receipt["archiveSha256"], digest)
+        self.assertEqual(tag["sourceCommit"], commit)
+        self.assertEqual(tag["remoteRefs"]["refs/tags/v0.1.1^{}"], commit)
+        for compiler in ["1.89.0", "1.99.0"]:
+            proof = json.loads((ROOT / f"docs/checks/release-source-{commit}/release-package-{compiler}.json").read_text())
+            self.assertTrue(proof["passed"])
+            self.assertTrue(proof["requireClean"])
+            self.assertFalse(proof["effectiveDirty"])
+            self.assertEqual(proof["releaseCommit"], commit)
+            self.assertEqual(proof["files"], receipt["files"])
+            self.assertEqual(proof["vcs"], receipt["vcs"])
+            if compiler == "1.99.0":
+                self.assertEqual(proof["archive_sha256"], digest)
+
+    def test_accepted_maintenance_command_sets_keep_their_historical_meaning(self):
+        for phase, expected in (
+            (90, "f7c51a81c3ad5cef4b190ebaebe3e54e4553e0876fc6adbd3ad04770078265b3"),
+            (91, "2642061af0f1e9f13a875dddb6a3ea6d79f86e5ceb76614b0cb99e47c051cfcf"),
+        ):
+            with self.subTest(phase=phase):
+                self.assertEqual(canonical_sha(commands_for(phase)), expected)
+    def test_published_payload_check_rejects_source_drift_additions_and_unsafe_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            files = {"Cargo.toml.orig": b"fixture manifest", "README.md": b"fixture readme",
+                     "LICENSE": b"fixture license", "NOTICE": b"fixture notice",
+                     "src/lib.rs": b"// fixture source", "examples/example.rs": b"// fixture example"}
+            for name, data in files.items():
+                target = (root / "crates/scm-sdk/Cargo.toml" if name == "Cargo.toml.orig" else
+                          root / "crates/scm-sdk" / name if name.startswith(("src/", "examples/")) else root / name)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(data)
+            receipt = {"schemaVersion": 1, "registry": "crates.io", "package": "scm-sdk",
+                       "ownerLogins": ["cdot65"], "version": "0.1.1", "sourceCommit": "a" * 40,
+                       "archiveSha256": "b" * 64, "files": publication.file_rows(files)}
+            self.assertTrue(payload.verify(root, receipt)["passed"])
+            source = root / "crates/scm-sdk/src/lib.rs"
+            source.write_bytes(b"// changed fixture")
+            with self.assertRaises(ValueError):
+                payload.verify(root, receipt)
+            source.write_bytes(files["src/lib.rs"])
+            source.unlink()
+            with self.assertRaisesRegex(ValueError, "missing or unreadable"):
+                payload.verify(root, receipt)
+            source.write_bytes(files["src/lib.rs"])
+            added = root / "crates/scm-sdk/src/added.rs"
+            added.write_bytes(b"// added fixture")
+            with self.assertRaises(ValueError):
+                payload.verify(root, receipt)
+            added.unlink()
+            added.symlink_to(source)
+            with self.assertRaises(ValueError):
+                payload.verify(root, receipt)
+            added.unlink()
+            for bad in [None, [], {}, dict(receipt, version=[]), dict(receipt, files=[{}])]:
+                with self.subTest(malformed=type(bad).__name__), self.assertRaises(ValueError):
+                    payload.verify(root, bad)
+            for name in ["../outside", "/outside", "src\\outside", "src//lib.rs", "src/lib.rs"]:
+                changed = copy.deepcopy(receipt)
+                changed["files"].append({"path": name, "sha256": "a" * 64, "bytes": 0})
+                with self.subTest(path=name), self.assertRaises(ValueError):
+                    payload.verify(root, changed)
+
+    def test_rust_additions_resolve_to_declarations_and_the_packaged_example(self):
+        self.assertEqual(response_defaults.verify_rust_additions(),
+                         json.loads((ROOT / response_defaults.OUTPUT).read_text())["rustOnlyAdditions"])
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            sources = {row[1] for row in response_defaults.RUST_ADDITIONS}
+            sources.add("crates/scm-sdk/examples/response_defaults.rs")
+            for source in sources:
+                path = root / source
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text((ROOT / source).read_text())
+            for source, old, new in (
+                ("crates/scm-sdk/src/config.rs", "pub fn without_response_defaults", "pub fn renamed_policy"),
+                ("crates/scm-sdk/src/config.rs", "pub fn response_defaults", "pub fn renamed_getter"),
+                ("crates/scm-sdk/src/validation.rs", "    ResponseWithoutDefaults,", "    RenamedVariant,"),
+                ("crates/scm-sdk/examples/response_defaults.rs", ".without_response_defaults()", ".renamed_policy()"),
+                ("crates/scm-sdk/examples/response_defaults.rs", ".response_defaults()", ".renamed_getter()"),
+                ("crates/scm-sdk/examples/response_defaults.rs", "Mode::ResponseWithoutDefaults", "Mode::RenamedVariant"),
+            ):
+                path = root / source
+                original = path.read_text()
+                self.assertIn(old, original)
+                path.write_text(original.replace(old, new))
+                with self.subTest(source=source, declaration=old), self.assertRaises(ValueError):
+                    response_defaults.verify_rust_additions(root)
+                path.write_text(original)
+
     def test_supplied_branch_pin_matches_the_retained_plan_scan(self):
         status = json.loads((ROOT / "docs/phase-status.json").read_text())
         phase = next(p for p in status["phases"] if p["id"] == 90)

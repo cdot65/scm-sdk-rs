@@ -68,6 +68,38 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 92:
+        return [
+            ["git", "diff", "--check", "840c090..HEAD"],
+            ["git", "diff", "--check"],
+            ["git", "diff", "--cached", "--check"],
+            *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", pattern, "-v"]
+              for pattern in ("test_review_phase.py", "test_g10_release.py", "test_ci.py",
+                              "test_native_operations.py", "test_native_exports.py",
+                              "test_live_evidence.py", "test_qualification.py",
+                              "test_auxiliary_evidence.py", "test_package_policy.py",
+                              "test_dependency_policy.py", "test_model_fixtures.py",
+                              "test_model_generation.py", "test_native_fixtures.py",
+                              "test_verify_gateway_bindings.py")],
+            ["python", "tools/verify-contracts.py"],
+            ["python", "tools/verify-contracts.py", "--baseline", ".local/typescript"],
+            ["python", "tools/verify-contracts.py", "--self-test"],
+            ["python", "tools/response_defaults.py", "--check"],
+            ["python", "tools/generate_validation.py", "--check"],
+            ["python", "tools/generate_models.py", "--check"],
+            ["python", "tools/generate_constants.py", "--check"],
+            ["python", "tools/verify_gateway_bindings.py", "--check"],
+            ["python", "tools/model_fixtures.py", "--check"],
+            ["python", "tools/verify_native_fixtures.py", "--require-test-bindings"],
+            ["python", "tools/native_operations.py", "--check", "--require-through-phase", "8"],
+            ["python", "tools/native_exports.py", "--check"],
+            ["python", "tools/live_evidence.py", "--check"],
+            ["python", "tools/qualification.py", "--check"],
+            ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-92-dependencies.json"],
+            ["python", "scripts/check-published-payload.py", "--receipt", "docs/checks/release-registry-0.1.1.json",
+             "--output", "docs/checks/phase-92-published-payload.json"],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-92-private-material.json"],
+        ]
     if phase == 90:
         return [
             ["git", "diff", "--check", "840c090..HEAD"],

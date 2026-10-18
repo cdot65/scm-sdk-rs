@@ -7,9 +7,10 @@ runs only when explicitly dispatched after its three native runner labels are
 registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
-The G10 0.1.1 maintenance release uses the source-bound Phase 91 gate;
-the workflow assertions in `tools/test_ci.py` track that invocation. The initial
-Phase 8 gate remains historical. See [the release plan](g10-0.1.1-plan.md).
+The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
+CI now executes the post-publication Phase 92 gate, whose invocation and current
+script inventory are enforced by `tools/test_ci.py`. The initial Phase 8 gate
+remains historical. See [the release plan](g10-0.1.1-plan.md).
 
 ## Required runner tools
 
@@ -101,9 +102,16 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Installs pinned development tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 91 --verification-only. This verifies completed-phase contracts without advancing phase state or invoking live services. It includes current generation/oracles, native exports, dependency policy, packaged consumers, cross compilation and tracing/fixture regression guards; the maintenance plan records the unchanged TypeScript-only checks not repeated. |
+| contracts-and-package | Fetches full Git history for the committed-range whitespace check, installs pinned development tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 92 --verification-only. This gate verifies documentation, all generated contract/fixture ledgers, fresh dependency policy, source privacy and unchanged published SDK inputs. It fails if SDK source, examples, crate manifest, README or legal files differ from the verified 0.1.1 archive, or if root runtime inputs differ from the live receipt. Source-release compiler/package/oracle/platform executions remain in Phase 91; this focused gate does not claim to repeat them. |
 | rust | Rust 1.89.0 and 1.99.0 each run the complete feature-selection matrix through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
+
+The published 0.1.1 source is `7efd1372806bd1969663993de3083d393b20cc62`.
+Its [actual remote observation](checks/release-ci-0.1.1-observation-01.json)
+recorded main run 16 as running and tag run 17 as waiting. Phase 91's `remote_ci`
+entry in [phase status](phase-status.json) points to those nonterminal facts;
+Phase 92's updated gate must also execute remotely before its advancement.
+The older bootstrap/run records below retain their historical meaning.
 
 [Run 12](https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/12) completed all 77
 qualification commands and all 47 required jobs successfully, with the reviewed
@@ -121,6 +129,17 @@ export probe feature set plus its historical gate regression.
 action pinning, setup ordering, this document's action inventory and setup effects,
 credential configuration, and additional target admission.
 
+## Scripts run by the current contracts gate
+
+- `scripts/check-dependencies.py`
+- `scripts/check-published-payload.py`
+- `scripts/check-private-material.py`
+
+The workflow-derived test requires this inventory to equal the executed phase
+commands.
+
+## Dependency and target evidence
+
 Dependency tools are installed with their own lockfiles at exact versions:
 cargo-audit 0.22.2 and cargo-deny 0.20.2. The phase gate invokes
 scripts/check-dependencies.py; it refreshes and records official RustSec
@@ -132,13 +151,14 @@ partial receipt and in the job log, including early version/provenance errors an
 timeouts. URL credentials, known token query fields, and authorization headers are
 redacted. A failed receipt replaces any earlier result at its output path.
 
-The qualification job installs standard libraries for Linux GNU x86_64/ARM64,
-Apple Silicon, and Windows MSVC x86_64. It fetches the complete locked dependency
-graph without a target filter, then resolves all-feature metadata offline before
-starting the full phase gate. The security audit inventories dependencies across
-all targets, including packages that supported native builds do not use. The cross checks
-compile the transport-independent feature set. They do not link or execute target
-binaries or qualify native HTTP/TLS/WebSocket dependencies.
+The qualification job fetches the complete locked dependency graph without a
+target filter, then resolves all-feature metadata offline before the phase gate.
+The current dependency audit inventories all targets, including packages that
+supported native builds do not use. Gate 92 performs no cross-target compilation
+and installs no cross-target standard libraries. The retained Phase 8/91 cross
+checks compiled the transport-independent feature set for Linux GNU x86_64/ARM64,
+Apple Silicon and Windows MSVC x86_64. Those historical checks did not link or
+execute target binaries or qualify native HTTP/TLS/WebSocket dependencies.
 
 [Run 11](https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/11) passed the repaired
 private receipt check and retained an unchanged source fingerprint, then failed

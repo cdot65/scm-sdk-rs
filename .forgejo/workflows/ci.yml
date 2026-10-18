@@ -21,6 +21,7 @@ jobs:
       - name: Check out the reviewed source
         uses: https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1, Node 20
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Install pinned development-only Node
         uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -61,20 +62,19 @@ jobs:
         run: |
           cargo +1.99.0 install cargo-audit --locked --version 0.22.2
           cargo +1.99.0 install cargo-deny --locked --version 0.20.2
-      - name: Prepare compile-only standard libraries and locked dependency inputs
+      - name: Prepare locked dependency inputs for the policy audit
         run: |
-          rustup target add --toolchain 1.99.0 x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu aarch64-apple-darwin x86_64-pc-windows-msvc
           cargo +1.99.0 fetch --locked
           cargo +1.99.0 metadata --all-features --locked --offline --format-version 1 > /dev/null
       - name: Restore verified frozen development sources and locked npm tooling
         run: python3 tools/bootstrap_reference.py
-      - name: Qualify contracts, generation, security, native probes, and packaged consumers
-        run: python3 tools/check_phase.py --phase 91 --verification-only
+      - name: Verify publication records, published SDK inputs, and current contracts
+        run: python3 tools/check_phase.py --phase 92 --verification-only
       - name: Record the source-bound qualification receipt in the job log
         run: |
           python3 - <<'PY'
           import hashlib, json, pathlib
-          path = pathlib.Path("docs/checks/phase-91.json")
+          path = pathlib.Path("docs/checks/phase-92.json")
           report = json.loads(path.read_text())
           print(json.dumps({key: report[key] for key in ("phase", "source_sha256", "source_unchanged", "passed")}))
           print(json.dumps({"report_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "commands": len(report["checks"])}))

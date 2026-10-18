@@ -35,6 +35,12 @@ a Red Team target read keeps a WebSocket `connection_params` without
 `ws_response_timeout: 110` and a basic-auth `auth_config` without
 `basic_auth_location: "HEADER"` unless the service sent them.
 
+The 60,271-case differential corpus measures JSON validation and omission. Typed
+target calls and both contract adapters have additional roundtrip regressions.
+The 27,216-case typed model corpus ran with the default response policy; it was
+not additionally replayed under `ResponseWithoutDefaults`. No typed union variant
+selection defect was found, but that additional corpus remains unmeasured.
+
 ## Presence and numbers
 
 | Native wrapper | Wire states | Containing field behavior |
