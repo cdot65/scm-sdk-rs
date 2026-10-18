@@ -640,7 +640,7 @@ impl Client {
                 let value = crate::validation::parse_one_of_with_limits(
                     schemas,
                     value,
-                    crate::validation::Mode::Response,
+                    options.response_mode(),
                     &self.contract_limits(self.inner.limits.max_response_bytes)?,
                 )
                 .map_err(|error| {
@@ -718,7 +718,7 @@ impl Client {
                 let value = normalize_contract(
                     schema,
                     value,
-                    crate::validation::Mode::Response,
+                    options.response_mode(),
                     &self.contract_limits(self.inner.limits.max_response_bytes)?,
                 )
                 .map_err(|e| {

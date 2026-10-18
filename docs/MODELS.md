@@ -10,7 +10,7 @@ The generation ledger, `contracts/native-models.json`, lists all 1,086 public sc
 
 ## Construction and validation
 
-Non-exhaustive object models expose `builder()` with typed setters. `build()` checks required field presence. It does not enforce every string constraint, cross-field rule, or remote operation policy. Schema-backed builders also provide `build_validated(Mode::Request)` and `build_validated(Mode::Response)`, which run native validation, apply defaults/transforms, and decode the resulting model. Source-only interfaces have no invented schema identifier and are validated by their owning operation.
+Non-exhaustive object models expose `builder()` with typed setters. `build()` checks required field presence. It does not enforce every string constraint, cross-field rule, or remote operation policy. Schema-backed builders also provide `build_validated(Mode::Request)` and `build_validated(Mode::Response)`, which run native validation, apply defaults/transforms, and decode the resulting model. `Mode::ResponseWithoutDefaults` validates identically but leaves omitted defaulted fields unset. Source-only interfaces have no invented schema identifier and are validated by their owning operation.
 
 ```rust
 use scm_sdk::airs::scan::models::{AiProfile, Optional, ScanRequest, ScanRequestContentsInner};

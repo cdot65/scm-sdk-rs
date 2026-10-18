@@ -147,6 +147,9 @@ Setting `max_retries` to zero disables that replay too; the rejected token gener
 is still invalidated for later independent operations.
 `RequestOptions::with_retries` overrides the per-call safe-read replay budget
 within 0–5; it never makes a mutation or inference replayable.
+`RequestOptions::without_response_defaults` validates that operation's typed
+responses with the same acceptance but without inserting frozen schema defaults;
+see [VALIDATION.md](VALIDATION.md#responses-without-inserted-defaults).
 
 ## Data and error handling
 

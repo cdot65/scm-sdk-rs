@@ -127,6 +127,152 @@ fn responses_match_independently_executed_documented_zod_policy() {
     compare(Mode::Response, "response");
 }
 
+// Every key the default response policy adds beyond `without` must be a key the
+// input omitted; everything else is identical.
+fn only_defaults_differ(full: &Value, without: &Value, input: Option<&Value>, path: &str) {
+    match (full, without) {
+        (Value::Object(full), Value::Object(without)) => {
+            for (key, value) in without {
+                let expected = full
+                    .get(key)
+                    .unwrap_or_else(|| panic!("{path}.{key} invented without defaults"));
+                let input = input.and_then(|input| input.get(key));
+                only_defaults_differ(expected, value, input, &format!("{path}.{key}"));
+            }
+            for key in full.keys().filter(|key| !without.contains_key(*key)) {
+                assert!(
+                    input.is_some_and(|input| input.is_object() && input.get(key).is_none()),
+                    "{path}.{key} was present in the input but dropped"
+                );
+            }
+        }
+        (Value::Array(full), Value::Array(without)) => {
+            assert_eq!(full.len(), without.len(), "{path} array length differs");
+            for (index, (full, without)) in full.iter().zip(without).enumerate() {
+                let input = input.and_then(|input| input.get(index));
+                only_defaults_differ(full, without, input, &format!("{path}[{index}]"));
+            }
+        }
+        (full, without) => assert_eq!(full, without, "{path} differs"),
+    }
+}
+
+#[test]
+fn responses_without_defaults_keep_oracle_acceptance_and_omit_only_defaults() {
+    let mut checked = 0;
+    let mut omitted = 0;
+    for root in fixtures()["roots"].as_array().unwrap() {
+        let sid = root["sid"].as_str().unwrap();
+        for (index, case) in root["jsonCases"].as_array().unwrap().iter().enumerate() {
+            checked += 1;
+            let expected = &case["response"];
+            let actual = parse(sid, case["input"].clone(), Mode::ResponseWithoutDefaults);
+            match actual {
+                Ok(output) => {
+                    assert_eq!(expected["success"], true, "{sid} case {index} accepted");
+                    if output != expected["output"] {
+                        omitted += 1;
+                    }
+                    only_defaults_differ(
+                        &expected["output"],
+                        &output,
+                        Some(&case["input"]),
+                        &format!("{sid} case {index}"),
+                    );
+                }
+                Err(_) => assert_eq!(expected["success"], false, "{sid} case {index} rejected"),
+            }
+        }
+    }
+    assert_eq!(
+        checked as u64,
+        fixtures()["counts"]["jsonCases"].as_u64().unwrap()
+    );
+    // The corpus exercises actual defaulted omissions, not only identical outputs.
+    assert!(omitted > 0);
+}
+
+#[test]
+fn red_team_target_defaults_are_validated_but_not_inserted_without_defaults() {
+    use serde_json::json;
+    let ws = json!({"api_endpoint":"wss://target.example.test/ws","future":"kept"});
+    let mut defaulted = ws.clone();
+    defaulted["ws_response_timeout"] = json!(110);
+    assert_eq!(
+        parse("ConnectionParamsSchema", ws.clone(), Mode::Response).unwrap(),
+        defaulted
+    );
+    assert_eq!(
+        parse(
+            "ConnectionParamsSchema",
+            ws.clone(),
+            Mode::ResponseWithoutDefaults
+        )
+        .unwrap(),
+        ws
+    );
+    let sent = json!({"api_endpoint":"wss://target.example.test/ws","ws_response_timeout":5});
+    for mode in [Mode::Response, Mode::ResponseWithoutDefaults] {
+        assert_eq!(
+            parse("ConnectionParamsSchema", sent.clone(), mode).unwrap(),
+            sent
+        );
+    }
+    let basic = json!({"basic_auth_header":{"Authorization":"synthetic-header"}});
+    let mut defaulted = basic.clone();
+    defaulted["basic_auth_location"] = json!("HEADER");
+    assert_eq!(
+        parse("AuthConfigSchema", basic.clone(), Mode::Response).unwrap(),
+        defaulted
+    );
+    assert_eq!(
+        parse(
+            "AuthConfigSchema",
+            basic.clone(),
+            Mode::ResponseWithoutDefaults
+        )
+        .unwrap(),
+        basic
+    );
+    let oauth = json!({"oauth2_token_url":"https://issuer.example.test/token","oauth2_inject_header":{"Authorization":"Bearer {token}"}});
+    let full = parse("OAuth2AuthConfigSchema", oauth.clone(), Mode::Response).unwrap();
+    assert_eq!(full["oauth2_expiry_minutes"], 60);
+    assert_eq!(full["oauth2_token_response_key"], "access_token");
+    assert_eq!(
+        parse(
+            "OAuth2AuthConfigSchema",
+            oauth.clone(),
+            Mode::ResponseWithoutDefaults
+        )
+        .unwrap(),
+        oauth
+    );
+    // A defaulted field that is present is still checked against its schema, and
+    // a document that is invalid for every union variant is still rejected.
+    for (schema, invalid) in [
+        (
+            "WebSocketConnectionParamsSchema",
+            json!({"ws_response_timeout":"110"}),
+        ),
+        (
+            "BasicAuthAuthConfigSchema",
+            json!({"basic_auth_location":5}),
+        ),
+        (
+            "OAuth2AuthConfigSchema",
+            json!({"oauth2_inject_header":{"Authorization":"Bearer {token}"}}),
+        ),
+        ("AuthConfigSchema", json!({"basic_auth_location":5})),
+    ] {
+        for mode in [Mode::Response, Mode::ResponseWithoutDefaults] {
+            assert!(
+                parse(schema, invalid.clone(), mode).is_err(),
+                "{schema} accepted an invalid document in {mode:?}"
+            );
+        }
+    }
+}
+
 #[test]
 fn omitted_roots_match_actual_zod_undefined_and_default_results() {
     let mut checked = 0;
@@ -139,6 +285,13 @@ fn omitted_roots_match_actual_zod_undefined_and_default_results() {
             .find(|case| case["input"]["nativeType"] == "undefined")
             .expect("every root requires an actual undefined probe");
         checked += 1;
+        // Without defaults an accepted omission stays omitted.
+        let actual = parse_optional(sid, None, Mode::ResponseWithoutDefaults);
+        if expected["zod"]["success"] == false {
+            assert!(actual.is_err(), "{sid} accepted an omitted required value");
+        } else {
+            assert_eq!(actual.unwrap(), None, "{sid} materialized a default");
+        }
         for mode in [Mode::Request, Mode::Response] {
             let actual = parse_optional(sid, None, mode);
             if expected["zod"]["success"] == false {

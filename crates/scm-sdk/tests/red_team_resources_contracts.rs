@@ -2013,3 +2013,108 @@ async fn expired_csv_budget_precedes_encoding_validation_and_credentials() {
     assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
     assert!(wire.requests.lock().unwrap().is_empty());
 }
+
+fn configured_target() -> Value {
+    let mut target = target();
+    target["connection_params"] =
+        json!({"api_endpoint":"wss://target.example.test/ws","future":"kept"});
+    target["auth_config"] = json!({"basic_auth_header":{"Authorization":"target-secret"}});
+    target
+}
+
+#[tokio::test]
+async fn target_documents_without_response_defaults_contain_only_server_sent_fields() {
+    let sent = configured_target();
+    let mut oauth = target();
+    oauth["auth_config"] = json!({"oauth2_token_url":"https://issuer.example.test/token","oauth2_inject_header":{"Authorization":"Bearer {token}"}});
+    let page = list(vec![sent.clone(), sent.clone()], Some(json!(2)));
+    let mut invalid = target();
+    invalid["auth_config"] = json!({"basic_auth_location":5});
+    let (r, wire, _) = setup(vec![
+        Reply::Json(sent.clone()),
+        Reply::Json(sent.clone()),
+        Reply::Json(page.clone()),
+        Reply::Json(oauth.clone()),
+        Reply::Json(sent.clone()),
+        Reply::Json(sent.clone()),
+        Reply::Json(sent.clone()),
+        Reply::Json(page.clone()),
+        Reply::Json(invalid.clone()),
+        Reply::Json(invalid),
+    ]);
+    // Source parity remains the default: frozen schema defaults are inserted.
+    let parity = serde_json::to_value(r.targets.get(ID, None).await.unwrap()).unwrap();
+    assert_eq!(parity["connection_params"]["ws_response_timeout"], 110);
+    assert_eq!(parity["auth_config"]["basic_auth_location"], "HEADER");
+    assert_ne!(parity, sent);
+
+    let options = RequestOptions::with_timeout(Duration::from_secs(5))
+        .unwrap()
+        .without_response_defaults();
+    assert!(!options.response_defaults());
+    assert!(
+        RequestOptions::with_timeout(Duration::from_secs(5))
+            .unwrap()
+            .response_defaults()
+    );
+    let options = Some(&options);
+    same(r.targets.get(ID, options).await.unwrap(), &sent);
+    same(
+        r.targets
+            .list(&TargetListOptions::default(), options)
+            .await
+            .unwrap(),
+        &page,
+    );
+    let body = json!({"name":"synthetic-target","target_type":"APPLICATION"});
+    same(
+        r.targets
+            .create(&model(body.clone()), None, options)
+            .await
+            .unwrap(),
+        &oauth,
+    );
+    same(
+        r.targets
+            .update(ID, &model(body.clone()), None, options)
+            .await
+            .unwrap(),
+        &sent,
+    );
+    let probe = json!({"name":"synthetic-target","uuid":ID,"probe_fields":["multi_turn"]});
+    same(
+        r.targets.probe(&model(probe), options).await.unwrap(),
+        &sent,
+    );
+    let update = json!({"target_background":{"industry":"synthetic"}});
+    same(
+        r.targets
+            .update_profile(ID, &model(update), options)
+            .await
+            .unwrap(),
+        &sent,
+    );
+    // Paginated walks carry the per-operation choice to every page.
+    let collected = r
+        .targets
+        .list_all(
+            &TargetListOptions::default(),
+            CollectOptions::default(),
+            options,
+        )
+        .await
+        .unwrap();
+    assert_eq!(collected.items.len(), 2);
+    for item in collected.items {
+        same(item, &sent);
+    }
+
+    // Schema-invalid documents are still rejected under both policies, with the
+    // typed operation's own name.
+    for options in [None, options] {
+        let error = r.targets.get(ID, options).await.unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Decode);
+        assert_eq!(error.operation(), Some("red_team.targets.get"));
+    }
+    assert_eq!(wire.requests.lock().unwrap().len(), 10);
+}

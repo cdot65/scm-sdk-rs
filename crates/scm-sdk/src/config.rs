@@ -362,6 +362,7 @@ pub struct RequestOptions {
     deadline: Instant,
     cancellation: CancellationToken,
     retry_limit: Option<u32>,
+    response_defaults: bool,
 }
 impl RequestOptions {
     pub fn with_timeout(timeout: Duration) -> Result<Self> {
@@ -375,6 +376,7 @@ impl RequestOptions {
             deadline,
             cancellation: CancellationToken::new(),
             retry_limit: None,
+            response_defaults: true,
         })
     }
     pub fn deadline(&self) -> Instant {
@@ -391,6 +393,40 @@ impl RequestOptions {
     }
     pub fn retry_limit(&self) -> Option<u32> {
         self.retry_limit
+    }
+    /// Validate this operation's typed JSON responses without inserting frozen
+    /// schema defaults (for example a Red Team WebSocket target's
+    /// `ws_response_timeout: 110`). Validation accepts and rejects exactly the
+    /// documents the default policy does; defaulted fields that the service omitted
+    /// stay unset, so the typed value reflects only the fields actually sent.
+    ///
+    /// The default keeps source-SDK parity and inserts defaults. This affects
+    /// buffered contract responses and Gateway SSE contract events; it never
+    /// changes request validation. See [`Mode::ResponseWithoutDefaults`](crate::validation::Mode::ResponseWithoutDefaults).
+    pub fn without_response_defaults(mut self) -> Self {
+        self.response_defaults = false;
+        self
+    }
+    /// Whether typed responses for this operation receive schema defaults.
+    pub fn response_defaults(&self) -> bool {
+        self.response_defaults
+    }
+    #[cfg(any(
+        feature = "scan",
+        feature = "management",
+        feature = "gateway",
+        feature = "dlp",
+        feature = "iam",
+        feature = "model-security",
+        feature = "red-team",
+        feature = "agentguard"
+    ))]
+    pub(crate) fn response_mode(&self) -> crate::validation::Mode {
+        if self.response_defaults {
+            crate::validation::Mode::Response
+        } else {
+            crate::validation::Mode::ResponseWithoutDefaults
+        }
     }
     pub fn cancel(&self) {
         self.cancellation.cancel();

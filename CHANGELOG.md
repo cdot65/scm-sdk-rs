@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `RequestOptions::without_response_defaults()` and
+  `RequestOptions::response_defaults()`: per-operation opt-in that validates typed
+  JSON responses (buffered contracts and Gateway SSE contract events) without
+  inserting frozen schema defaults, so consumers can distinguish a server value
+  from a default such as a Red Team target's `ws_response_timeout: 110` or
+  `basic_auth_location: "HEADER"`. Acceptance is identical to the default policy;
+  operation names, retries and pagination are unchanged.
+- `validation::Mode::ResponseWithoutDefaults` (on the non-exhaustive `Mode`) for
+  direct validation and generated `parse`/`build_validated` calls.
+
+Default behaviour is unchanged: responses still receive the source SDK defaults.
+See [VALIDATION.md](docs/VALIDATION.md#responses-without-inserted-defaults).
+
 ## 0.1.0 — 2026-10-17
 
 Initial native Rust implementation of the frozen Prisma AIRS TypeScript SDK
