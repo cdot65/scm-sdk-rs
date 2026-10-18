@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-18T17:09:53.369240+00:00",
+  "sourceSha256": "854a7f53798a8c8808889b3301a770e714b6d113218dd0826b2bfb59b414fd3a",
+  "runtimeInputsSha256": "7e263af5e7496d51c6221d7fce1a9251965230a195bd8fb6cc3a95b11924931b",
+  "symptom": "The explicit-host all-target check resolved the older 0.1.1 model API despite unchanged vendor source.",
+  "command": [
+    "cargo",
+    "+1.89.0",
+    "check",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "--target",
+    "x86_64-unknown-linux-musl",
+    "--no-default-features",
+    "--features",
+    "red-team"
+  ],
+  "observations": [
+    {
+      "cargoTargetDir": "/build/rust/target",
+      "rustcWrapper": "/usr/bin/sccache",
+      "exitCode": 101,
+      "symptom": "E0432 data_plane missing; E0609 new JobResponse fields missing",
+      "evidence": "docs/checks/phase-10-attempt-03-shared-cache.json"
+    },
+    {
+      "cargoTargetDir": "/build/rust/target",
+      "rustcWrapper": "disabled",
+      "exitCode": 101,
+      "symptom": "Same missing current vendor API"
+    },
+    {
+      "cargoTargetDir": "/build/rust/scm-sdk-vendor-target",
+      "rustcWrapper": "/usr/bin/sccache",
+      "exitCode": 0,
+      "firstObservedDurationSeconds": 56.43,
+      "cachedRepeatDurationSeconds": 0.13
+    }
+  ],
+  "resolution": "Use a worktree-specific Cargo target directory for candidate qualification. No SDK source or dependency changed.",
+  "limitations": [
+    "The observations isolate build-directory metadata as the relevant difference; they do not characterize Cargo internal cache-key implementation."
+  ]
+}

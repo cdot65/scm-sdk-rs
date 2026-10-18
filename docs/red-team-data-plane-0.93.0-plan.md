@@ -224,3 +224,25 @@ This request authorizes implementing and delivering the repository update;
 registry publication is a separate release action and is not a completion gate.
 Do not modify historical tags, publish an unreviewed archive, or expand to other
 SCM product APIs during this update.
+
+## Integration checkpoint after 0.1.1 publication
+
+The isolated G10 release is published as `scm-sdk 0.1.1`, tag `v0.1.1`, from
+source `7efd137`. Maintenance phases 90–92 and their completed actual review
+records are retained alongside this vendor sequence; Phase 10 remains active.
+Vendor source changes are unpublished development for 0.2.0. The maintenance
+contracts job passed remotely. The published source has a Red Team only unit
+test that calls a Gateway only helper; this branch gates that test by Gateway.
+The published client library itself built with only Red Team enabled on 1.89.
+
+Phase 10 additionally verifies that both response policies share the four
+response presence waivers and preserve future progress values. Every valid
+independent vendor model specimen runs under Request, Response and
+ResponseWithoutDefaults and preserves typed JSON. Targeted 1.89 checks passed
+164 library tests, 16 dataplane contracts, 21 resource contracts, 10 schema tests
+and one vendor model test containing 1,636 independent cases.
+
+The cumulative Phase 10 gate also checks G10/CI governance, the default
+inventory, Gateway bindings, native/live/qualification freshness and Gateway
+with only its own features enabled on 1.99. The last vendor phase ends this
+sequence without reopening completed maintenance phases.

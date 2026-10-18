@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 10,
+  "active_phase": 11,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -1860,8 +1860,10 @@
     {
       "id": 10,
       "name": "Red Team vendor contracts and model evolution",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-10-attempt-01.json"
+      ],
       "plan": "docs/red-team-data-plane-0.93.0-plan.md",
       "scope_evidence": [
         "tools/red_team_dataplane.py",
@@ -1897,12 +1899,89 @@
           ],
           "status": "passed; cumulative phase gate pending"
         }
+      },
+      "live_acceptance": {
+        "status": "fresh_execution_with_explicit_unqualified_methods",
+        "receipt": "docs/checks/phase-08-live-attempt-09.json",
+        "native_methods_verified": 17,
+        "observed_methods": 22,
+        "service_requests": 24,
+        "token_exchanges": 1,
+        "cleanup_state": "not_needed",
+        "limitations": [
+          "Three Red Team reads returned 403.",
+          "IAM scope creation and Gateway provisioning returned 400; cause remains unestablished.",
+          "No paid Red Team, model or agent job, or EULA acceptance, was attempted."
+        ]
+      },
+      "scope_evidence_integration": {
+        "g10": "Published 0.1.1 and completed maintenance phases 90\u201392 source/history retained.",
+        "vendor_fixture_modes": [
+          "Request",
+          "Response",
+          "ResponseWithoutDefaults"
+        ],
+        "gateway_test_cfg_fix": "buffered_alternative_contracts test now follows Gateway helper availability",
+        "targeted_checks": "212 Rust 1.89 tests passed; cumulative 25-command gate pending."
+      },
+      "qualification_attempts": [
+        {
+          "evidence": "docs/checks/phase-10-attempt-01-before-g10.json",
+          "status": "superseded",
+          "resolution": "Preserved pre-G10 integration check state; passing cumulative phase-10.json qualifies the reviewed source."
+        },
+        {
+          "report": "docs/checks/phase-10-attempt-02-gateway-binding.json",
+          "status": "failed_before_native_checks",
+          "failure": "Gateway proof still contained the pre-correction engine unit-test source hash.",
+          "resolution": "Regenerate Gateway bindings and dependent native/export/qualification ledgers after the final feature-gate correction. Runtime source and the fresh live attempt09 are unchanged."
+        },
+        {
+          "report": "docs/checks/phase-10-attempt-03-shared-cache.json",
+          "status": "failed_native_all_target_check",
+          "failure": "Shared target directory resolved the older published model API.",
+          "resolution": "Identical source passes in a dedicated target directory; disabling sccache alone in the shared directory remains failing."
+        }
+      ],
+      "build_isolation": {
+        "target_directory": "/build/rust/scm-sdk-vendor-target",
+        "diagnosis": "docs/checks/phase-10-build-isolation-diagnosis.json",
+        "reason": "Published and candidate SDK worktrees have the same package version but different model APIs; shared artifacts produced stale metadata."
+      },
+      "milestones": {
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-10.json"
+          ],
+          "source_sha256": "854a7f53798a8c8808889b3301a770e714b6d113218dd0826b2bfb59b414fd3a"
+        },
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-10-attempt-01.json"
+          ]
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-10-attempt-01.json"
+          ]
+        }
+      },
+      "accepted_source_sha256": "854a7f53798a8c8808889b3301a770e714b6d113218dd0826b2bfb59b414fd3a",
+      "accepted_score": 9,
+      "review_followups": {
+        "scope": "Phase 11/12 relevant compiler and coverage hardening; none blocker/high in accepted 9/10 review.",
+        "evidence": "docs/reviews/phase-10-attempt-01.json",
+        "prompt_bookkeeping": "Attempt 01 completed normally with its CLI output, structured review, prompt and passing score retained together."
       }
     },
     {
       "id": 11,
       "name": "Red Team dataplane operation completion",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": [],
       "plan": "docs/red-team-data-plane-0.93.0-plan.md"
     },
