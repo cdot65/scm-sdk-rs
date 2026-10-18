@@ -1881,7 +1881,7 @@
         "source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
         "version": "0.1.1",
         "without_defaults_uses_response_compatibility": true,
-        "maintenance_followup_92": "Qualified source review 9/10 at afd4cce; independent remote gate remains pending in the patch worktree."
+        "maintenance_followup_92": "Completed actual source review9/10 and remotely passing contracts job18/0; sourceSDK unchanged by that follow-up. Standalone red-team unit-test cfg fixed in this vendor integration."
       }
     },
     {
@@ -2415,8 +2415,10 @@
     {
       "id": 92,
       "name": "G10 publication records and reviewed guard closure",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-92-attempt-03.json"
+      ],
       "activation": {
         "predecessor": 91,
         "reason": "Record actual verified publication and implement nonblocking guard/documentation findings from the accepted 9/10 source review; published SDK inputs stay unchanged."
@@ -2437,7 +2439,7 @@
       },
       "milestones": {
         "implemented_scope": {
-          "status": "accepted_source_pending_remote_gate",
+          "status": "accepted_by_review",
           "evidence": [
             "docs/reviews/phase-92-attempt-03.json"
           ]
@@ -2450,7 +2452,7 @@
           "source_sha256": "e2fe27f0557c0390315dee14053623be67a8b252f3b3cf6076d04e5b1475b35f"
         },
         "claude_review": {
-          "status": "accepted_source_pending_remote_gate",
+          "status": "accepted",
           "score": 9,
           "evidence": [
             "docs/reviews/phase-92-attempt-03.json"
@@ -2562,9 +2564,11 @@
         }
       ],
       "delivery": {
-        "status": "source_qualified_pending_push_and_remote_gate",
+        "status": "complete_remote_contract_gate_verified",
         "source_review_before_push": true,
-        "advance_only_after_remote_gate_passes": true
+        "advance_only_after_remote_gate_passes": true,
+        "source_commit": "afd4cce0830fcb5875f86af0c1faca701c932c27",
+        "remote_gate_evidence": "docs/checks/phase-92-remote-contracts-run-18.json"
       },
       "review_attempts": [
         "docs/reviews/phase-92-attempt-01.json",
@@ -2576,7 +2580,25 @@
       ],
       "qualified_source_sha256": "e2fe27f0557c0390315dee14053623be67a8b252f3b3cf6076d04e5b1475b35f",
       "qualified_score": 9,
-      "qualified_review": "docs/reviews/phase-92-attempt-03.json"
+      "qualified_review": "docs/reviews/phase-92-attempt-03.json",
+      "remote_ci": {
+        "status": "contracts_gate_passed",
+        "source_commit": "afd4cce0830fcb5875f86af0c1faca701c932c27",
+        "run": 18,
+        "gate_job": 0,
+        "evidence": "docs/checks/phase-92-remote-contracts-run-18.json",
+        "overall_feature_matrix": "Separate feature jobs remain independently classified; no full-run success is inferred from the contracts job."
+      },
+      "accepted_source_sha256": "e2fe27f0557c0390315dee14053623be67a8b252f3b3cf6076d04e5b1475b35f",
+      "accepted_score": 9,
+      "known_ci_test_issue": {
+        "scope": "Published 0.1.1 library test under red-team-only features",
+        "cause": "buffered_alternative_contracts test is gated by red-team but calls a helper gated by gateway",
+        "published_client_library": "The red-team library itself builds; the failure is compilation of the SDK unit test target.",
+        "resolution": "Correct the test gate in the independently reviewed vendor integration branch; keep the immutable 0.1.1 tag/archive intact.",
+        "library_check_evidence": "docs/checks/release-0.1.1-red-team-library-check.json",
+        "unit_target_failure_evidence": "docs/checks/release-0.1.1-red-team-unit-target-limitation.json"
+      }
     }
   ],
   "active_followup_plan": "docs/red-team-data-plane-0.93.0-plan.md"

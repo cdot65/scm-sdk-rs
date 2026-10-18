@@ -2501,7 +2501,7 @@ async fn contract_sse_events_use_the_operation_response_default_policy() {
     }
 }
 
-#[cfg(feature = "red-team")]
+#[cfg(feature = "gateway")]
 #[tokio::test]
 async fn buffered_alternative_contracts_use_the_operation_response_default_policy() {
     for omit in [false, true] {

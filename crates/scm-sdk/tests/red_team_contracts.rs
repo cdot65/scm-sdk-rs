@@ -1643,7 +1643,10 @@ fn exactly_four_new_presence_waivers_apply_only_to_response_validation() {
         assert!(validation::parse(&compatible, value.clone(), Mode::Request).is_err());
         for mode in [Mode::Response, Mode::ResponseWithoutDefaults] {
             assert!(validation::parse(&strict, value.clone(), mode).is_err());
-            assert_eq!(validation::parse(&compatible, value.clone(), mode).unwrap(), value);
+            assert_eq!(
+                validation::parse(&compatible, value.clone(), mode).unwrap(),
+                value
+            );
         }
     }
     let mut value = vendor_specimen("JobResponseSchema");
