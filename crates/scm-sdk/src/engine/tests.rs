@@ -2115,13 +2115,13 @@ mod default_adapter {
                 .unwrap();
             ready_tx.send(()).unwrap();
             let mut byte = [0u8; 1];
-            let count = tokio::time::timeout(Duration::from_secs(1), stream.read(&mut byte))
+            let closed = tokio::time::timeout(Duration::from_secs(1), stream.read(&mut byte))
                 .await
-                .unwrap()
                 .unwrap();
-            assert_eq!(
-                count, 0,
-                "dropped response must release its HTTP connection"
+            assert!(
+                matches!(closed, Ok(0))
+                    || matches!(closed, Err(ref error) if error.kind() == std::io::ErrorKind::ConnectionReset),
+                "dropped response must close its HTTP connection: {closed:?}"
             );
         });
         let client = Client::builder(endpoint)
@@ -2453,5 +2453,81 @@ async fn typed_stream_and_sse_parser_errors_keep_allowlisted_correlation_without
             Some("safe-event-id")
         );
         assert_eq!(transport.count(), 1);
+    }
+}
+
+#[cfg(feature = "gateway")]
+#[tokio::test]
+async fn contract_sse_events_use_the_operation_response_default_policy() {
+    for omit in [false, true] {
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            http::header::CONTENT_TYPE,
+            HeaderValue::from_static("text/event-stream"),
+        );
+        let transport = Scripted::new(vec![Reply::Http(
+            StatusCode::OK,
+            headers,
+            Bytes::from_static(
+                b"data: {\"basic_auth_header\":null,\"future\":null}\n\ndata: [DONE]\n\n",
+            ),
+        )]);
+        let client = client(transport);
+        let mut options = RequestOptions::with_timeout(Duration::from_secs(10)).unwrap();
+        if omit {
+            options = options.without_response_defaults();
+        }
+        // Gateway's current event schemas have no defaults. Use the same stream
+        // adapter with a frozen default-bearing contract to prove propagation.
+        let mut events = client
+            .send_contract_stream::<serde_json::Value>(
+                RawRequest::read("/events").named("gateway.events.response_defaults"),
+                "BasicAuthAuthConfigSchema",
+                crate::streaming::TerminalPolicy::DoneMarker,
+                Some(&options),
+            )
+            .await
+            .unwrap();
+        let mut expected = serde_json::json!({"basic_auth_header":null,"future":null});
+        if !omit {
+            expected["basic_auth_location"] = serde_json::json!("HEADER");
+        }
+        assert_eq!(events.next().await.unwrap().unwrap(), expected);
+        assert!(events.next().await.unwrap().is_none());
+        assert_eq!(
+            client.inner.permits.available_permits(),
+            client.limits().max_concurrency
+        );
+    }
+}
+
+#[cfg(feature = "red-team")]
+#[tokio::test]
+async fn buffered_alternative_contracts_use_the_operation_response_default_policy() {
+    for omit in [false, true] {
+        let input = serde_json::json!({"basic_auth_header":null,"future":null});
+        let transport = Scripted::new(vec![Reply::Http(
+            StatusCode::OK,
+            HeaderMap::new(),
+            Bytes::from(serde_json::to_vec(&input).unwrap()),
+        )]);
+        let client = client(transport);
+        let mut options = RequestOptions::with_timeout(Duration::from_secs(10)).unwrap();
+        if omit {
+            options = options.without_response_defaults();
+        }
+        let actual: serde_json::Value = client
+            .send_contract_one_of(
+                RawRequest::read("/target").named("red_team.targets.get"),
+                &["HeadersAuthConfigSchema", "BasicAuthAuthConfigSchema"],
+                Some(&options),
+            )
+            .await
+            .unwrap();
+        let mut expected = input;
+        if !omit {
+            expected["basic_auth_location"] = serde_json::json!("HEADER");
+        }
+        assert_eq!(actual, expected);
     }
 }

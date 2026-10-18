@@ -79,7 +79,7 @@ class CiContractTests(unittest.TestCase):
         lines = [line.strip() for line in qualification.splitlines()]
         fetch = "cargo +1.99.0 fetch --locked"
         ready = "cargo +1.99.0 metadata --all-features --locked --offline --format-version 1 > /dev/null"
-        phase = "run: python3 tools/check_phase.py --phase 8 --verification-only"
+        phase = "run: python3 tools/check_phase.py --phase 91 --verification-only"
         self.assertIn(fetch, lines)
         self.assertIn(ready, lines)
         self.assertLess(lines.index(fetch), lines.index(ready))
@@ -213,7 +213,7 @@ class CiContractTests(unittest.TestCase):
         publications = [phase["registry_publication"] for phase in status["phases"]
                         if "registry_publication" in phase]
         publication = publications[-1] if publications else {}
-        self.assertEqual(publication.get("status"), "verified_existing_publication")
+        self.assertIn(publication.get("status"), {"verified_existing_publication", "published_and_verified"})
         workspace_version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
         if workspace_version != publication["version"]:
             self.skipTest("The development version differs from the recorded publication")
@@ -307,7 +307,7 @@ class CiContractTests(unittest.TestCase):
         node = (ROOT / ".node-version").read_text().strip()
         self.assertIn(f'node-version: "{node}"', WORKFLOW)
         self.assertIn("tools/bootstrap_reference.py", WORKFLOW)
-        self.assertIn("tools/check_phase.py --phase 8 --verification-only", WORKFLOW)
+        self.assertIn("tools/check_phase.py --phase 91 --verification-only", WORKFLOW)
 
     def test_actions_and_credentials_are_bounded(self):
         actions = re.findall(r"^\s+uses: (\S+)", ALL_WORKFLOW_TEXT, re.MULTILINE)

@@ -1,6 +1,15 @@
 # Release and delivery procedure
 
-The workspace version is **0.1.0**, published on
+The workspace version is **0.1.1**. The G10 patch keeps default behavior, Rust
+1.89 and dependencies unchanged, and adds opt-in response-default omission.
+[The release plan](g10-0.1.1-plan.md) defines the accepted plan gate 90 and current
+qualification gate 91. [The 0.1.1 publication receipt](checks/release-registry-0.1.1.json),
+retained after actual upload, is the authority for registry availability and exact
+source/archive identity. Source delivery and a dry run do not establish publication.
+
+## Initial 0.1.0 publication
+
+The initial **0.1.0** release was published on
 [crates.io](https://crates.io/crates/scm-sdk/0.1.0) on 2026-10-17 at 01:14:40 UTC.
 The owner is `cdot65`. The
 [publication receipt](checks/release-registry-0.1.0.json) verifies the downloaded
@@ -31,7 +40,8 @@ receipts do not qualify changed 0.1.1 runtime inputs. The patch updates CI to ga
    operation mappings and 3,820 public capability mappings, independent fixtures,
    deterministic generation and external public probes. Record Rust language
    adaptations and real per-method live status.
-2. Run the complete Phase 8 gate with `python3 tools/check_phase.py --phase 8`.
+2. For 0.1.1, run the maintenance gate with `python3 tools/check_phase.py --phase 91`.
+   The complete Phase 8 command set retains its initial-delivery meaning.
    Retain exact source fingerprints and commands, feature/compiler results,
    packaged consumers, dependency policy, platform scope and live receipts.
    Request a fresh actual Claude Code review, address findings and repeat until
@@ -84,8 +94,9 @@ Until that configuration exists, the explicitly authorized 0.1.1 release uses
 Cargo's token provider with the owner's external mode-0600 credentials file.
 CI remains credential-free and never performs registry publication.
 
-New registry publication requires explicit maintainer authorization. No publishing job or
-registry credentials are currently installed by this delivery workflow. After an
+New registry publication requires explicit maintainer authorization, provided for
+0.1.1. CI has no publishing job or registry credentials; Cargo reads the maintainer
+credential from the external owner-controlled file. After an
 actual publication, record the registry version/checksum, source commit and
 corresponding archive proof. Do not advertise an unpublished dependency as
 installable from crates.io.

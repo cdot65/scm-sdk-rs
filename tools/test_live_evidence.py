@@ -11,7 +11,7 @@ import live_evidence as live
 
 def specimen():
     return {"schemaVersion": 1, "tenantScopeMatched": True, "client": "native_scm_sdk",
-        "crateVersion": "0.1.0", "automaticRetries": 0, "maximumTransportAttempts": 80,
+        "crateVersion": live.crate_version(), "automaticRetries": 0, "maximumTransportAttempts": 80,
         "perOperationTimeoutSeconds": 15, "scanAuthentication": None, "mutationsEnabled": True,
         "cleanupState": "not_needed", "serviceRequests": 1, "tokenExchanges": 1,
         "probes": [{"operation": "iam.scopes.list", "classification": "verified", "status": 200,
@@ -20,8 +20,20 @@ def specimen():
 
 
 class LiveEvidenceTests(unittest.TestCase):
-    def annotations(self, report):
+    def test_report_version_is_bound_to_the_selected_crate_manifest(self):
+        report = specimen()
         live.validate_report(report)
+        for wrong in ["0.0.0", "0.1.0" if live.crate_version() != "0.1.0" else "0.1.1", None, True]:
+            value = copy.deepcopy(report)
+            value["crateVersion"] = wrong
+            with self.subTest(version=wrong), self.assertRaises(ValueError):
+                live.validate_report(value)
+        historical = copy.deepcopy(report)
+        historical["crateVersion"] = "0.1.0"
+        live.validate_report(historical, expected_version="0.1.0")
+
+    def annotations(self, report, expected_version=None):
+        live.validate_report(report, expected_version=expected_version)
         return live.method_annotations(report, {"path": "synthetic-receipt", "sha256": "a" * 64,
             "scope": "controlled_nonproduction", "runtimeInputsSha256": "b" * 64})
 
@@ -139,7 +151,7 @@ class LiveEvidenceTests(unittest.TestCase):
         for attempt in range(1, 6):
             path = live.ROOT / f"docs/checks/phase-08-live-attempt-{attempt:02d}.json"
             report = json.loads(path.read_text())["report"]
-            annotations = self.annotations(report)
+            annotations = self.annotations(report, expected_version="0.1.0")
             self.assertTrue(annotations)
             self.assertFalse(any(row["liveEvidence"]["reconciliationRequired"] for row in annotations.values()))
             scan = annotations[live.PROBE_BINDINGS["scan.query_scan_results"]]
@@ -212,6 +224,9 @@ class LiveEvidenceTests(unittest.TestCase):
     def test_stale_source_digest_and_path_tampering_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
+            (root / "crates/scm-sdk").mkdir(parents=True)
+            (root / "crates/scm-sdk/Cargo.toml").write_text(
+                '[package]\nversion="' + live.crate_version() + '"\n')
             (root / "contracts").mkdir()
             (root / "docs/checks").mkdir(parents=True)
             (root / "contracts/operations.json").write_text(json.dumps({"operations": [

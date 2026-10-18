@@ -764,10 +764,15 @@ impl Context<'_> {
             // An absent property is still validated (including any default), so
             // acceptance never depends on whether defaults are materialized.
             if let Some(value) = self.walk(schema, present, depth + 1)?
-                && (present.is_some() || self.mode.inserts_defaults())
                 && (self.mode.is_response() || key != "__proto__")
             {
-                result.insert(self.copy_text(key)?, value);
+                // Charge the same key-copy budget even when an omitted default
+                // will not appear in the output. The response policies must
+                // agree on acceptance at resource boundaries too.
+                let key = self.copy_text(key)?;
+                if present.is_some() || self.mode.inserts_defaults() {
+                    result.insert(key, value);
+                }
             }
         }
         let catchall = child(node, "catchall")?;

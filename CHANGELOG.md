@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.1 — 2026-10-18
 
 ### Added
 
@@ -13,6 +13,21 @@
   operation names, retries and pagination are unchanged.
 - `validation::Mode::ResponseWithoutDefaults` (on the non-exhaustive `Mode`) for
   direct validation and generated `parse`/`build_validated` calls.
+
+### Fixed
+
+- Bind live-qualification receipt versions to the crate manifest so new patch
+  versions are verified without accepting stale SDK receipts.
+- Preserve identical validator copy-budget accounting when omitted response
+  defaults are suppressed, including rejection at the same resource limits.
+- Accept EOF or a connection reset as transport closure in the cancellation
+  regression test; unexpected bytes, other errors and timeouts still fail.
+
+### Documentation
+
+- Update the packaged README from the published 0.1.0 snapshot and document the
+  23 schema-default bindings, response policy, current release and provenance.
+  Production dependencies, feature defaults and Rust 1.89 support are unchanged.
 
 Default behaviour is unchanged: responses still receive the source SDK defaults.
 See [VALIDATION.md](docs/VALIDATION.md#responses-without-inserted-defaults).

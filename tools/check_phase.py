@@ -88,6 +88,7 @@ def commands_for(phase):
                               "test_ci.py", "test_package_policy.py", "test_dependency_policy.py",
                               "test_auxiliary_evidence.py", "test_model_fixtures.py", "test_model_generation.py",
                               "test_native_fixtures.py", "test_verify_gateway_bindings.py")],
+            ["python", "tools/response_defaults.py", "--check"],
             ["python", "tools/verify-contracts.py"],
             ["python", "tools/verify-contracts.py", "--baseline", ".local/typescript"],
             ["python", "tools/verify-contracts.py", "--self-test"],
@@ -114,12 +115,15 @@ def commands_for(phase):
             *[["python", "scripts/check-package.py", "--toolchain", toolchain,
                "--output", f"docs/checks/phase-91-package-{toolchain}.json"]
               for toolchain in ("1.89.0", "1.99.0")],
+            ["python", "scripts/verify-publication.py", "--delta", "--version", "0.1.1",
+             "--proof", "docs/checks/phase-91-package-1.99.0.json",
+             "--output", "docs/checks/phase-91-package-delta.json"],
             ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-91-dependencies.json"],
             *[["python", "scripts/check-cross.py", "--target", target,
                "--output", f"docs/checks/phase-91-cross-{target}.json"]
               for target in ("x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-pc-windows-msvc")],
             ["python", "scripts/check-tracing-stress.py", "--toolchain", "1.99.0",
-             "--processes", "100", "--test-threads", "16", "--expected-tests", "201",
+             "--processes", "100", "--test-threads", "16", "--expected-tests", "203",
              "--output", "docs/checks/phase-91-tracing-stress-1.99.0.json", "--replace-report"],
             ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-91-private-material.json"],
         ]

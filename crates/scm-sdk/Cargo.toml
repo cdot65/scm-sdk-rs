@@ -1,6 +1,6 @@
 [package]
 name = "scm-sdk"
-version = "0.1.0"
+version = "0.1.1"
 description = "Native async Strata Cloud Manager SDK, beginning with Prisma AIRS"
 edition.workspace = true
 rust-version.workspace = true
@@ -62,4 +62,8 @@ tokio = { version = "1.50", features = ["sync", "time", "macros", "rt-multi-thre
 
 [lints]
 workspace = true
+
+[[example]]
+name = "response_defaults"
+required-features = ["red-team"]
 

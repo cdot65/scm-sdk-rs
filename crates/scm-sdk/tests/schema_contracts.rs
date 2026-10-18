@@ -5,6 +5,98 @@ use std::{collections::BTreeSet, sync::OnceLock};
 use scm_sdk::validation::{Mode, parse, parse_optional};
 use serde_json::Value;
 
+#[test]
+fn all_23_frozen_defaults_validate_under_both_response_policies() {
+    let semantics: Value =
+        serde_json::from_str(include_str!("../src/validation/semantics.json")).unwrap();
+    let mut count = 0;
+    for (schema, binding) in semantics.as_object().unwrap() {
+        if binding["binding"] != "default" {
+            continue;
+        }
+        count += 1;
+        let default = &binding["default"];
+        for mode in [Mode::Request, Mode::Response] {
+            assert_eq!(
+                parse_optional(schema, None, mode).unwrap(),
+                Some(default.clone()),
+                "{schema} changed its original default"
+            );
+        }
+        assert_eq!(
+            parse_optional(schema, None, Mode::ResponseWithoutDefaults).unwrap(),
+            None,
+            "{schema} materialized an omitted default"
+        );
+        for sent in [default.clone(), Value::Null] {
+            let full = parse(schema, sent.clone(), Mode::Response);
+            let without = parse(schema, sent.clone(), Mode::ResponseWithoutDefaults);
+            assert_eq!(full.is_ok(), without.is_ok(), "{schema} changed acceptance");
+            if let (Ok(full), Ok(without)) = (full, without) {
+                assert_eq!(full, without, "{schema} changed a supplied value");
+                assert_eq!(without, sent, "{schema} changed a supplied value");
+            }
+        }
+    }
+    assert_eq!(count, 23);
+}
+
+#[test]
+fn response_default_omission_charges_identical_copy_work_and_node_budgets() {
+    use scm_sdk::validation::{ValidationLimits, parse_with_limits};
+    let input = serde_json::json!({"basic_auth_header":null});
+    let compare = |limits: &ValidationLimits| {
+        let full = parse_with_limits(
+            "BasicAuthAuthConfigSchema",
+            input.clone(),
+            Mode::Response,
+            limits,
+        );
+        let without = parse_with_limits(
+            "BasicAuthAuthConfigSchema",
+            input.clone(),
+            Mode::ResponseWithoutDefaults,
+            limits,
+        );
+        assert_eq!(full.is_ok(), without.is_ok(), "{limits:?}");
+        assert_eq!(
+            full.as_ref().err().map(|e| e.kind()),
+            without.as_ref().err().map(|e| e.kind()),
+            "{limits:?}"
+        );
+        if let Ok(without) = without {
+            assert_eq!(without, input);
+        }
+        full.is_ok()
+    };
+    for copied in 26..=70 {
+        let mut limits = ValidationLimits::default();
+        limits.max_input_bytes = 26;
+        limits.max_copied_bytes = copied;
+        // "HEADER" (6) + basic_auth_location (19) + basic_auth_header (17).
+        assert_eq!(compare(&limits), copied >= 42);
+    }
+    for bound in 1..=64 {
+        let mut limits = ValidationLimits::default();
+        limits.max_work = bound;
+        compare(&limits);
+        let mut limits = ValidationLimits::default();
+        limits.max_nodes = bound;
+        compare(&limits);
+    }
+}
+
+#[test]
+fn response_default_choice_is_local_to_the_request_options_clone() {
+    let original =
+        scm_sdk::RequestOptions::with_timeout(std::time::Duration::from_secs(10)).unwrap();
+    let without = original.clone().without_response_defaults();
+    assert!(original.response_defaults());
+    assert!(!without.response_defaults());
+    assert_eq!(original.deadline(), without.deadline());
+    assert_eq!(original.retry_limit(), without.retry_limit());
+}
+
 fn fixtures() -> &'static Value {
     static FIXTURES: OnceLock<Value> = OnceLock::new();
     FIXTURES.get_or_init(|| {

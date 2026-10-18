@@ -2016,9 +2016,10 @@ async fn expired_csv_budget_precedes_encoding_validation_and_credentials() {
 
 fn configured_target() -> Value {
     let mut target = target();
-    target["connection_params"] =
-        json!({"api_endpoint":"wss://target.example.test/ws","future":"kept"});
-    target["auth_config"] = json!({"basic_auth_header":{"Authorization":"target-secret"}});
+    target["description"] = Value::Null;
+    target["future_null"] = Value::Null;
+    target["connection_params"] = json!({"api_endpoint":"wss://target.example.test/ws","request_headers":null,"request_json":{"nested":null},"future":null});
+    target["auth_config"] = json!({"basic_auth_header":null,"future":null});
     target
 }
 
@@ -2027,7 +2028,15 @@ async fn target_documents_without_response_defaults_contain_only_server_sent_fie
     let sent = configured_target();
     let mut oauth = target();
     oauth["auth_config"] = json!({"oauth2_token_url":"https://issuer.example.test/token","oauth2_inject_header":{"Authorization":"Bearer {token}"}});
+    oauth["description"] = Value::Null;
     let page = list(vec![sent.clone(), sent.clone()], Some(json!(2)));
+    let mut second = configured_target();
+    second["uuid"] = json!(OTHER_ID);
+    second.as_object_mut().unwrap().remove("description");
+    second["connection_params"]["ws_response_timeout"] = json!(110);
+    second["auth_config"]["basic_auth_location"] = json!("HEADER");
+    let first_page = list(vec![sent.clone()], Some(json!(2)));
+    let second_page = list(vec![second.clone()], Some(json!(2)));
     let mut invalid = target();
     invalid["auth_config"] = json!({"basic_auth_location":5});
     let (r, wire, _) = setup(vec![
@@ -2038,7 +2047,8 @@ async fn target_documents_without_response_defaults_contain_only_server_sent_fie
         Reply::Json(sent.clone()),
         Reply::Json(sent.clone()),
         Reply::Json(sent.clone()),
-        Reply::Json(page.clone()),
+        Reply::Json(first_page),
+        Reply::Json(second_page),
         Reply::Json(invalid.clone()),
         Reply::Json(invalid),
     ]);
@@ -2098,15 +2108,15 @@ async fn target_documents_without_response_defaults_contain_only_server_sent_fie
     let collected = r
         .targets
         .list_all(
-            &TargetListOptions::default(),
+            &configured!(TargetListOptions { limit: Some(1) }),
             CollectOptions::default(),
             options,
         )
         .await
         .unwrap();
     assert_eq!(collected.items.len(), 2);
-    for item in collected.items {
-        same(item, &sent);
+    for (item, expected) in collected.items.into_iter().zip([&sent, &second]) {
+        same(item, expected);
     }
 
     // Schema-invalid documents are still rejected under both policies, with the
@@ -2116,5 +2126,29 @@ async fn target_documents_without_response_defaults_contain_only_server_sent_fie
         assert_eq!(error.kind(), ErrorKind::Decode);
         assert_eq!(error.operation(), Some("red_team.targets.get"));
     }
-    assert_eq!(wire.requests.lock().unwrap().len(), 10);
+    let requests = wire.requests.lock().unwrap();
+    assert_eq!(requests.len(), 11);
+    let names: Vec<_> = requests.iter().map(TransportRequest::operation).collect();
+    assert_eq!(
+        names,
+        [
+            "red_team.targets.get",
+            "red_team.targets.get",
+            "red_team.targets.list",
+            "red_team.targets.create",
+            "red_team.targets.update",
+            "red_team.targets.probe",
+            "red_team.targets.update_profile",
+            "red_team.targets.list",
+            "red_team.targets.list",
+            "red_team.targets.get",
+            "red_team.targets.get",
+        ]
+    );
+    for (index, skip) in [(7, "0"), (8, "1")] {
+        let query: std::collections::BTreeMap<_, _> = requests[index].url().query_pairs().collect();
+        assert_eq!(query.len(), 2);
+        assert_eq!(query.get("skip").unwrap(), skip);
+        assert_eq!(query.get("limit").unwrap(), "1");
+    }
 }

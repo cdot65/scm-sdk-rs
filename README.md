@@ -11,16 +11,18 @@ and 1,190 public members; methods are part of that inventory. Native adaptations
 and exact public paths are recorded in the [operation matrix](contracts/native-operations.json)
 and [export ledger](contracts/native-exports.json).
 
-The eight implementation phases require actual Claude Code review of at least
-9/10 each. [Phase status](docs/phase-status.json) records their accepted reviews
-and exact source evidence. **Version 0.1.0 is published on
-[crates.io](https://crates.io/crates/scm-sdk/0.1.0)**, with
-[API documentation](https://docs.rs/scm-sdk/0.1.0/scm_sdk/).
-The [publication receipt](docs/checks/release-registry-0.1.0.json) records the
-downloaded checksum and source commit. See [CI evidence](docs/CI.md) and
-[phase status](docs/phase-status.json) for retained remote qualification.
-The [release procedure](docs/RELEASE.md)
-explains the clean-commit archive proof and release provenance.
+The baseline implementation phases and maintenance releases require actual Claude
+Code review of at least 9/10. [Phase status](docs/phase-status.json) records the
+accepted reviews and exact source evidence.
+
+Crate version: **0.1.1**. The [registry release](https://crates.io/crates/scm-sdk/0.1.1)
+and [API documentation](https://docs.rs/scm-sdk/0.1.1/scm_sdk/) correspond to this
+version. The [publication receipt](docs/checks/release-registry-0.1.1.json), retained
+after upload, establishes actual availability, archive checksum and source commit.
+The [initial 0.1.0 receipt](docs/checks/release-registry-0.1.0.json) remains historical.
+See [response defaults](docs/RESPONSE_DEFAULTS.md), the
+[offline example](crates/scm-sdk/examples/response_defaults.rs),
+[CI evidence](docs/CI.md) and the [release procedure](docs/RELEASE.md).
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
 

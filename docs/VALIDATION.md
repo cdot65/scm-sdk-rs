@@ -94,3 +94,7 @@ adds part/header/envelope limits before authentication. Binary builders offer
 `build` for required-field presence; their owning operation performs complete
 native validation. A JSON-only `build_validated` is intentionally absent from
 these five builders because native files cannot be serialized as JSON.
+
+The full [23-binding inventory](RESPONSE_DEFAULTS.md) identifies shared schemas
+and defaults outside Red Team. The [offline example](../crates/scm-sdk/examples/response_defaults.rs)
+executes against the packaged crate on both qualified compilers.

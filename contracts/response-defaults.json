@@ -1,0 +1,498 @@
+{
+  "schemaVersion": 1,
+  "introducedIn": "0.1.1",
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "generatorSha256": "43ea6f883b51c49cc855ba9da4a23fd679d7c2c37469c075a97a03af2ba8efe0",
+  "sources": {
+    "contracts/typescript.json": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
+    "contracts/native-models.json": "c1ab758aa0157ab84345c60d67193370da22a235d4c04747c56724dc6228061c",
+    "crates/scm-sdk/src/validation/schema_graph.json": "6f5480d80fe3911518e07a7c4d89ddec3d05acb89ca149b835128171448fa8c2",
+    "crates/scm-sdk/src/validation/semantics.json": "ad7efd54b9f6bf5368acd78fe5f7030dc7b98d4733cb58593bdc58791b224844"
+  },
+  "rustOnlyAdditions": [
+    "scm_sdk::RequestOptions::without_response_defaults",
+    "scm_sdk::RequestOptions::response_defaults",
+    "scm_sdk::validation::Mode::ResponseWithoutDefaults"
+  ],
+  "counts": {
+    "defaultBindings": 23,
+    "redTeamBindings": 8,
+    "outsideRedTeamBindings": 15
+  },
+  "bindings": [
+    {
+      "binding": "s000075",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": 30,
+      "uses": [
+        {
+          "schema": "appQuerySchema",
+          "field": "timeInterval",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardAppQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 160
+    },
+    {
+      "binding": "s000080",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": "days",
+      "uses": [
+        {
+          "schema": "appQuerySchema",
+          "field": "timeUnit",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardAppQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 161
+    },
+    {
+      "binding": "s000084",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": 1,
+      "uses": [
+        {
+          "schema": "timeRangeSchema",
+          "field": "timeInterval",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardTimeRangeQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionsOverviewQuerySchema",
+          "field": "timeInterval",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionsOverviewQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 166
+    },
+    {
+      "binding": "s000086",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": "day",
+      "uses": [
+        {
+          "schema": "timeRangeSchema",
+          "field": "timeUnit",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardTimeRangeQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionsOverviewQuerySchema",
+          "field": "timeUnit",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionsOverviewQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 167
+    },
+    {
+      "binding": "s000088",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": 25,
+      "uses": [
+        {
+          "schema": "sessionsOverviewQuerySchema",
+          "field": "limit",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionsOverviewQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionQuerySchema",
+          "field": "limit",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 171
+    },
+    {
+      "binding": "s000090",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": 0,
+      "uses": [
+        {
+          "schema": "sessionsOverviewQuerySchema",
+          "field": "offset",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionsOverviewQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionQuerySchema",
+          "field": "offset",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 172
+    },
+    {
+      "binding": "s000093",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": 30,
+      "uses": [
+        {
+          "schema": "sessionWindowSchema",
+          "field": "timeInterval",
+          "rustTypes": [],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionQuerySchema",
+          "field": "timeInterval",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionTransactionQuerySchema",
+          "field": "timeInterval",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionTransactionQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 177
+    },
+    {
+      "binding": "s000095",
+      "product": "Management dashboard",
+      "outsideRedTeam": true,
+      "default": "days",
+      "uses": [
+        {
+          "schema": "sessionWindowSchema",
+          "field": "timeUnit",
+          "rustTypes": [],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionQuerySchema",
+          "field": "timeUnit",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        },
+        {
+          "schema": "sessionTransactionQuerySchema",
+          "field": "timeUnit",
+          "rustTypes": [
+            "scm_sdk::airs::management::DashboardSessionTransactionQuery"
+          ],
+          "sourceFile": "src/management/dashboard.ts"
+        }
+      ],
+      "sourceFile": "src/management/dashboard.ts",
+      "sourceLine": 178
+    },
+    {
+      "binding": "s008873",
+      "product": "Management",
+      "outsideRedTeam": true,
+      "default": [],
+      "uses": [
+        {
+          "schema": "CustomTopicSchema",
+          "field": "examples",
+          "rustTypes": [
+            "scm_sdk::airs::management::models::CustomTopic"
+          ],
+          "sourceFile": "src/models/mgmt-custom-topic.ts"
+        }
+      ],
+      "sourceFile": "src/models/mgmt-custom-topic.ts",
+      "sourceLine": 12
+    },
+    {
+      "binding": "s008908",
+      "product": "Management",
+      "outsideRedTeam": true,
+      "default": [],
+      "uses": [
+        {
+          "schema": "CustomTopicListResponseSchema",
+          "field": "custom_topics",
+          "rustTypes": [
+            "scm_sdk::airs::management::models::CustomTopicListResponse"
+          ],
+          "sourceFile": "src/models/mgmt-custom-topic.ts"
+        }
+      ],
+      "sourceFile": "src/models/mgmt-custom-topic.ts",
+      "sourceLine": 45
+    },
+    {
+      "binding": "s009653",
+      "product": "Management",
+      "outsideRedTeam": true,
+      "default": [],
+      "uses": [
+        {
+          "schema": "SecurityProfileListResponseSchema",
+          "field": "ai_profiles",
+          "rustTypes": [
+            "scm_sdk::airs::management::models::SecurityProfileListResponse"
+          ],
+          "sourceFile": "src/models/mgmt-security-profile.ts"
+        }
+      ],
+      "sourceFile": "src/models/mgmt-security-profile.ts",
+      "sourceLine": 355
+    },
+    {
+      "binding": "s009825",
+      "product": "Model Security",
+      "outsideRedTeam": true,
+      "default": 0,
+      "uses": [
+        {
+          "schema": "EvalSummarySchema",
+          "field": "rules_failed",
+          "rustTypes": [
+            "scm_sdk::airs::model_security::models::EvalSummary"
+          ],
+          "sourceFile": "src/models/model-security.ts"
+        }
+      ],
+      "sourceFile": "src/models/model-security.ts",
+      "sourceLine": 87
+    },
+    {
+      "binding": "s009828",
+      "product": "Model Security",
+      "outsideRedTeam": true,
+      "default": 0,
+      "uses": [
+        {
+          "schema": "EvalSummarySchema",
+          "field": "rules_passed",
+          "rustTypes": [
+            "scm_sdk::airs::model_security::models::EvalSummary"
+          ],
+          "sourceFile": "src/models/model-security.ts"
+        }
+      ],
+      "sourceFile": "src/models/model-security.ts",
+      "sourceLine": 88
+    },
+    {
+      "binding": "s009831",
+      "product": "Model Security",
+      "outsideRedTeam": true,
+      "default": 0,
+      "uses": [
+        {
+          "schema": "EvalSummarySchema",
+          "field": "total_rules",
+          "rustTypes": [
+            "scm_sdk::airs::model_security::models::EvalSummary"
+          ],
+          "sourceFile": "src/models/model-security.ts"
+        }
+      ],
+      "sourceFile": "src/models/model-security.ts",
+      "sourceLine": 89
+    },
+    {
+      "binding": "s010265",
+      "product": "Model Security",
+      "outsideRedTeam": true,
+      "default": "",
+      "uses": [
+        {
+          "schema": "ModelSecurityGroupCreateRequestSchema",
+          "field": "description",
+          "rustTypes": [
+            "scm_sdk::airs::model_security::models::ModelSecurityGroupCreateRequest"
+          ],
+          "sourceFile": "src/models/model-security.ts"
+        }
+      ],
+      "sourceFile": "src/models/model-security.ts",
+      "sourceLine": 588
+    },
+    {
+      "binding": "s010574",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": [],
+      "uses": [
+        {
+          "schema": "ChannelListResponseSchema",
+          "field": "data",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::ChannelListResponse"
+          ],
+          "sourceFile": "src/models/red-team-network-broker.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team-network-broker.ts",
+      "sourceLine": 71
+    },
+    {
+      "binding": "s010705",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": "stateful",
+      "uses": [
+        {
+          "schema": "MultiTurnStatefulConfigSchema",
+          "field": "type",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::MultiTurnStatefulConfig"
+          ],
+          "sourceFile": "src/models/red-team.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team.ts",
+      "sourceLine": 101
+    },
+    {
+      "binding": "s010711",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": "stateless",
+      "uses": [
+        {
+          "schema": "MultiTurnStatelessConfigSchema",
+          "field": "type",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::MultiTurnStatelessConfig"
+          ],
+          "sourceFile": "src/models/red-team.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team.ts",
+      "sourceLine": 110
+    },
+    {
+      "binding": "s010723",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": "HEADER",
+      "uses": [
+        {
+          "schema": "BasicAuthAuthConfigSchema",
+          "field": "basic_auth_location",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::BasicAuthAuthConfig"
+          ],
+          "sourceFile": "src/models/red-team.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team.ts",
+      "sourceLine": 127
+    },
+    {
+      "binding": "s010733",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": 60,
+      "uses": [
+        {
+          "schema": "OAuth2AuthConfigSchema",
+          "field": "oauth2_expiry_minutes",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::OAuth2AuthConfig"
+          ],
+          "sourceFile": "src/models/red-team.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team.ts",
+      "sourceLine": 136
+    },
+    {
+      "binding": "s010743",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": "access_token",
+      "uses": [
+        {
+          "schema": "OAuth2AuthConfigSchema",
+          "field": "oauth2_token_response_key",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::OAuth2AuthConfig"
+          ],
+          "sourceFile": "src/models/red-team.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team.ts",
+      "sourceLine": 139
+    },
+    {
+      "binding": "s010825",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": 110,
+      "uses": [
+        {
+          "schema": "WebSocketConnectionParamsSchema",
+          "field": "ws_response_timeout",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::WebSocketConnectionParams"
+          ],
+          "sourceFile": "src/models/red-team.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team.ts",
+      "sourceLine": 231
+    },
+    {
+      "binding": "s012814",
+      "product": "Red Team",
+      "outsideRedTeam": false,
+      "default": 0,
+      "uses": [
+        {
+          "schema": "DeploymentProfileRequestSchema",
+          "field": "aveTextRecord",
+          "rustTypes": [
+            "scm_sdk::airs::red_team::models::DeploymentProfileRequest"
+          ],
+          "sourceFile": "src/models/red-team.ts"
+        }
+      ],
+      "sourceFile": "src/models/red-team.ts",
+      "sourceLine": 2033
+    }
+  ]
+}

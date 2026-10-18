@@ -1,0 +1,587 @@
+{
+  "phase": 91,
+  "source_sha256": "1f53094c7ccfe99c5b3bceed74778e56b8d661363e52a51fc817a1927e45a409",
+  "source_unchanged": true,
+  "checked_at": "2026-10-18T14:08:52.851904+00:00",
+  "passed": false,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.005
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.045
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 29 tests in 0.120s\n\nOK\n",
+      "duration_seconds": 0.21
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_g10_release.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_g10_release.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_current_version_statements_are_bound_independently_of_publication (test_g10_release.G10ContractTests.test_current_version_statements_are_bound_independently_of_publication) ... ok\ntest_default_inventory_and_documentation_are_reproducible (test_g10_release.G10ContractTests.test_default_inventory_and_documentation_are_reproducible) ... ok\ntest_patch_keeps_the_published_dependency_and_feature_contract (test_g10_release.G10ContractTests.test_patch_keeps_the_published_dependency_and_feature_contract) ... ok\ntest_supplied_branch_pin_matches_the_retained_plan_scan (test_g10_release.G10ContractTests.test_supplied_branch_pin_matches_the_retained_plan_scan) ... ok\ntest_dirty_embedded_vcs_is_rejected_even_with_resigned_hashes (test_g10_release.PublicationProofTests.test_dirty_embedded_vcs_is_rejected_even_with_resigned_hashes) ... ok\ntest_dirty_failed_partial_and_unexecuted_proofs_are_rejected (test_g10_release.PublicationProofTests.test_dirty_failed_partial_and_unexecuted_proofs_are_rejected) ... ok\ntest_exact_archive_and_identical_msrv_payload_are_accepted (test_g10_release.PublicationProofTests.test_exact_archive_and_identical_msrv_payload_are_accepted) ... ok\ntest_package_delta_accounts_for_every_changed_file (test_g10_release.PublicationProofTests.test_package_delta_accounts_for_every_changed_file) ... ok\ntest_wrong_owner_version_checksum_and_files_are_rejected (test_g10_release.PublicationProofTests.test_wrong_owner_version_checksum_and_files_are_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.263s\n\nOK\n",
+      "duration_seconds": 0.343
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_operations.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_absent_verification_function_is_rejected (test_native_operations.NativeOperationLedgerTests.test_absent_verification_function_is_rejected) ... ok\ntest_completed_owning_phase_rejects_an_unimplemented_operation (test_native_operations.NativeOperationLedgerTests.test_completed_owning_phase_rejects_an_unimplemented_operation) ... ok\ntest_every_frozen_operation_is_accounted_for_without_baseline_mutation (test_native_operations.NativeOperationLedgerTests.test_every_frozen_operation_is_accounted_for_without_baseline_mutation) ... ok\ntest_forged_method_module_or_receiver_is_rejected (test_native_operations.NativeOperationLedgerTests.test_forged_method_module_or_receiver_is_rejected) ... ok\ntest_fragment_baseline_and_duplicate_mappings_are_rejected (test_native_operations.NativeOperationLedgerTests.test_fragment_baseline_and_duplicate_mappings_are_rejected) ... ok\ntest_invalid_or_stale_live_receipt_stops_generation (test_native_operations.NativeOperationLedgerTests.test_invalid_or_stale_live_receipt_stops_generation) ... ok\ntest_invented_frozen_operation_is_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_frozen_operation_is_rejected) ... ok\ntest_invented_or_unexplained_ownership_overrides_are_rejected (test_native_operations.NativeOperationLedgerTests.test_invented_or_unexplained_ownership_overrides_are_rejected) ... ok\ntest_live_annotation_cannot_certify_an_unimplemented_or_unknown_operation (test_native_operations.NativeOperationLedgerTests.test_live_annotation_cannot_certify_an_unimplemented_or_unknown_operation) ... ok\ntest_method_namespaces_are_crate_rooted_and_bound_to_their_source_module (test_native_operations.NativeOperationLedgerTests.test_method_namespaces_are_crate_rooted_and_bound_to_their_source_module) ... ok\ntest_missing_receipt_cannot_be_promoted_by_a_mapping_declaration (test_native_operations.NativeOperationLedgerTests.test_missing_receipt_cannot_be_promoted_by_a_mapping_declaration) ... ok\ntest_native_json_decoder_and_its_regressions_are_bound_core_inputs (test_native_operations.NativeOperationLedgerTests.test_native_json_decoder_and_its_regressions_are_bound_core_inputs) ... ok\ntest_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven (test_native_operations.NativeOperationLedgerTests.test_only_explicit_realtime_and_provision_workflows_are_owned_in_phase_seven) ... ok\ntest_only_the_exact_receipted_method_is_live_verified (test_native_operations.NativeOperationLedgerTests.test_only_the_exact_receipted_method_is_live_verified) ... ok\ntest_partial_parity_without_a_declared_reason_is_rejected (test_native_operations.NativeOperationLedgerTests.test_partial_parity_without_a_declared_reason_is_rejected) ... ok\ntest_realtime_header_contract_is_distinct_and_cannot_be_forged (test_native_operations.NativeOperationLedgerTests.test_realtime_header_contract_is_distinct_and_cannot_be_forged) ... ok\ntest_removed_native_method_is_rejected (test_native_operations.NativeOperationLedgerTests.test_removed_native_method_is_rejected) ... ok\ntest_representative_gateway_scope_retains_its_real_owner_and_partial_options (test_native_operations.NativeOperationLedgerTests.test_representative_gateway_scope_retains_its_real_owner_and_partial_options) ... ok\ntest_reserved_json_restriction_is_an_exact_global_intentional_difference (test_native_operations.NativeOperationLedgerTests.test_reserved_json_restriction_is_an_exact_global_intentional_difference) ... ok\ntest_stale_ledger_is_rejected_without_rewriting_it (test_native_operations.NativeOperationLedgerTests.test_stale_ledger_is_rejected_without_rewriting_it) ... ok\ntest_stricter_native_content_invariants_are_machine_recorded (test_native_operations.NativeOperationLedgerTests.test_stricter_native_content_invariants_are_machine_recorded) ... ok\n\n----------------------------------------------------------------------\nRan 21 tests in 18.606s\n\nOK\n",
+      "duration_seconds": 18.681
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_exports.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_exports.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_deferred_model_is_never_hidden_by_a_generic_type_fallback (test_native_exports.NativeExportTests.test_deferred_model_is_never_hidden_by_a_generic_type_fallback) ... ok\ntest_duplicate_manual_capability_is_rejected (test_native_exports.NativeExportTests.test_duplicate_manual_capability_is_rejected) ... ok\ntest_duplicate_public_member_is_rejected (test_native_exports.NativeExportTests.test_duplicate_public_member_is_rejected) ... ok\ntest_every_frozen_root_and_member_has_an_external_public_probe (test_native_exports.NativeExportTests.test_every_frozen_root_and_member_has_an_external_public_probe) ... ok\ntest_evidence_paths_reject_absolute_paths_traversal_and_symlinks (test_native_exports.NativeExportTests.test_evidence_paths_reject_absolute_paths_traversal_and_symlinks) ... ok\ntest_facades_and_content_bind_real_behavior_instead_of_only_compile_probes (test_native_exports.NativeExportTests.test_facades_and_content_bind_real_behavior_instead_of_only_compile_probes) ... ok\ntest_generated_standalone_consumer_forbids_unsafe_code (test_native_exports.NativeExportTests.test_generated_standalone_consumer_forbids_unsafe_code) ... ok\ntest_global_json_boundary_difference_is_retained_and_cannot_be_omitted (test_native_exports.NativeExportTests.test_global_json_boundary_difference_is_retained_and_cannot_be_omitted) ... ok\ntest_missing_test_function_is_rejected (test_native_exports.NativeExportTests.test_missing_test_function_is_rejected) ... ok\ntest_operation_live_evidence_never_promotes_its_constructor_or_sibling (test_native_exports.NativeExportTests.test_operation_live_evidence_never_promotes_its_constructor_or_sibling) ... ok\ntest_pending_operation_is_reported_as_a_gap (test_native_exports.NativeExportTests.test_pending_operation_is_reported_as_a_gap) ... ok\ntest_persisted_live_claim_without_a_receipt_is_rejected (test_native_exports.NativeExportTests.test_persisted_live_claim_without_a_receipt_is_rejected) ... ok\ntest_probe_cfg_is_the_exact_required_feature_union_including_agentguard (test_native_exports.NativeExportTests.test_probe_cfg_is_the_exact_required_feature_union_including_agentguard) ... ok\ntest_removed_concrete_method_is_rejected_before_rust_compilation (test_native_exports.NativeExportTests.test_removed_concrete_method_is_rejected_before_rust_compilation) ... ok\ntest_root_omission_cannot_shrink_the_frozen_denominator (test_native_exports.NativeExportTests.test_root_omission_cannot_shrink_the_frozen_denominator) ... ok\ntest_stale_model_inventory_input_hash_is_rejected (test_native_exports.NativeExportTests.test_stale_model_inventory_input_hash_is_rejected) ... ok\ntest_stale_receipt_aborts_export_generation (test_native_exports.NativeExportTests.test_stale_receipt_aborts_export_generation) ... ok\ntest_unknown_manual_capability_is_rejected (test_native_exports.NativeExportTests.test_unknown_manual_capability_is_rejected) ... ok\ntest_unrelated_probe_cannot_claim_an_api (test_native_exports.NativeExportTests.test_unrelated_probe_cannot_claim_an_api) ... ok\ntest_wrong_baseline_is_rejected (test_native_exports.NativeExportTests.test_wrong_baseline_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 41.252s\n\nOK\n",
+      "duration_seconds": 41.331
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_live_evidence.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_live_evidence.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_absence_proofs_only_certify_owned_cleanup_checks (test_live_evidence.LiveEvidenceTests.test_absence_proofs_only_certify_owned_cleanup_checks) ... ok\ntest_accepted_and_failed_classifications_are_consistent (test_live_evidence.LiveEvidenceTests.test_accepted_and_failed_classifications_are_consistent) ... ok\ntest_cleanup_failure_or_success_never_hides_its_conflicting_probe (test_live_evidence.LiveEvidenceTests.test_cleanup_failure_or_success_never_hides_its_conflicting_probe) ... ok\ntest_conflicting_failures_are_retained_and_summary_is_order_independent (test_live_evidence.LiveEvidenceTests.test_conflicting_failures_are_retained_and_summary_is_order_independent) ... ok\ntest_consistent_alias_observations_are_retained_without_family_promotion (test_live_evidence.LiveEvidenceTests.test_consistent_alias_observations_are_retained_without_family_promotion) ... ok\ntest_failed_workflows_cannot_be_promoted_by_a_flag (test_live_evidence.LiveEvidenceTests.test_failed_workflows_cannot_be_promoted_by_a_flag) ... ok\ntest_historical_attempts_one_through_five_remain_schema_valid (test_live_evidence.LiveEvidenceTests.test_historical_attempts_one_through_five_remain_schema_valid) ... ok\ntest_only_allowlisted_metadata_is_exported (test_live_evidence.LiveEvidenceTests.test_only_allowlisted_metadata_is_exported) ... ok\ntest_rejection_diagnostics_accept_only_finite_codes_and_known_field_names (test_live_evidence.LiveEvidenceTests.test_rejection_diagnostics_accept_only_finite_codes_and_known_field_names) ... ok\ntest_rejection_messages_values_unknown_codes_names_and_extra_keys_are_rejected (test_live_evidence.LiveEvidenceTests.test_rejection_messages_values_unknown_codes_names_and_extra_keys_are_rejected) ... ok\ntest_repeated_failures_never_gain_acceptance (test_live_evidence.LiveEvidenceTests.test_repeated_failures_never_gain_acceptance) ... ok\ntest_report_version_is_bound_to_the_selected_crate_manifest (test_live_evidence.LiveEvidenceTests.test_report_version_is_bound_to_the_selected_crate_manifest) ... ok\ntest_request_and_cleanup_consistency_cannot_be_forged (test_live_evidence.LiveEvidenceTests.test_request_and_cleanup_consistency_cannot_be_forged) ... ok\ntest_stale_source_digest_and_path_tampering_are_rejected (test_live_evidence.LiveEvidenceTests.test_stale_source_digest_and_path_tampering_are_rejected) ... ok\ntest_success_cannot_hide_a_failure_in_either_observation_order (test_live_evidence.LiveEvidenceTests.test_success_cannot_hide_a_failure_in_either_observation_order) ... ok\ntest_unrecognized_upstream_words_and_probe_names_are_rejected (test_live_evidence.LiveEvidenceTests.test_unrecognized_upstream_words_and_probe_names_are_rejected) ... ok\ntest_zero_requests_limits_scope_and_numeric_types_are_enforced (test_live_evidence.LiveEvidenceTests.test_zero_requests_limits_scope_and_numeric_types_are_enforced) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 0.055s\n\nOK\n",
+      "duration_seconds": 0.123
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_qualification.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_qualification.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_constructor_and_non_server_export_cannot_claim_operation_receipt (test_qualification.QualificationTests.test_constructor_and_non_server_export_cannot_claim_operation_receipt) ... ok\ntest_every_controlled_failure_class_has_an_explicit_explanation (test_qualification.QualificationTests.test_every_controlled_failure_class_has_an_explicit_explanation) ... ok\ntest_exhaustive_denominator_and_unexecuted_methods_stay_unqualified (test_qualification.QualificationTests.test_exhaustive_denominator_and_unexecuted_methods_stay_unqualified) ... ok\ntest_exports_must_bind_every_operation_and_match_its_live_result (test_qualification.QualificationTests.test_exports_must_bind_every_operation_and_match_its_live_result) ... ok\ntest_failed_receipted_probe_is_observed_but_never_verified (test_qualification.QualificationTests.test_failed_receipted_probe_is_observed_but_never_verified) ... ok\ntest_global_security_difference_is_required_even_without_qualification_gaps (test_qualification.QualificationTests.test_global_security_difference_is_required_even_without_qualification_gaps) ... ok\ntest_method_omission_duplicate_and_option_gap_are_rejected (test_qualification.QualificationTests.test_method_omission_duplicate_and_option_gap_are_rejected) ... ok\ntest_mixed_observations_require_reconciliation_and_cannot_be_verified (test_qualification.QualificationTests.test_mixed_observations_require_reconciliation_and_cannot_be_verified) ... ok\ntest_one_verified_operation_never_promotes_its_sibling_or_family (test_qualification.QualificationTests.test_one_verified_operation_never_promotes_its_sibling_or_family) ... ok\ntest_real_receipt_loader_binds_projection_and_rejects_stale_or_failed_execution (test_qualification.QualificationTests.test_real_receipt_loader_binds_projection_and_rejects_stale_or_failed_execution) ... ok\ntest_rejected_request_reason_does_not_rule_out_a_native_defect (test_qualification.QualificationTests.test_rejected_request_reason_does_not_rule_out_a_native_defect) ... ok\ntest_stale_or_failed_receipt_stops_projection_before_generation (test_qualification.QualificationTests.test_stale_or_failed_receipt_stops_projection_before_generation) ... ok\ntest_stale_projection_check_does_not_rewrite_the_artifact (test_qualification.QualificationTests.test_stale_projection_check_does_not_rewrite_the_artifact) ... ok\ntest_unknown_live_classification_never_becomes_an_unexplained_gap (test_qualification.QualificationTests.test_unknown_live_classification_never_becomes_an_unexplained_gap) ... ok\ntest_unsupported_live_claim_and_missing_receipt_are_rejected (test_qualification.QualificationTests.test_unsupported_live_claim_and_missing_receipt_are_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 1.446s\n\nOK\n",
+      "duration_seconds": 1.541
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_actions_and_credentials_are_bounded (test_ci.CiContractTests.test_actions_and_credentials_are_bounded) ... ok\ntest_additional_targets_are_manual_and_assert_actual_host (test_ci.CiContractTests.test_additional_targets_are_manual_and_assert_actual_host) ... ok\ntest_ci_documentation_matches_action_pins_and_setup_effects (test_ci.CiContractTests.test_ci_documentation_matches_action_pins_and_setup_effects) ... ok\ntest_compilers_match_supported_msrv_and_current_pin (test_ci.CiContractTests.test_compilers_match_supported_msrv_and_current_pin) ... ok\ntest_documentation_distinguishes_no_run_examples_and_native_gnu_evidence (test_ci.CiContractTests.test_documentation_distinguishes_no_run_examples_and_native_gnu_evidence) ... ok\ntest_every_job_bootstraps_rust_before_running_commands (test_ci.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... ok\ntest_every_job_installs_pinned_node_before_selecting_uv (test_ci.CiContractTests.test_every_job_installs_pinned_node_before_selecting_uv) ... ok\ntest_every_native_feature_has_an_isolated_job (test_ci.CiContractTests.test_every_native_feature_has_an_isolated_job) ... ok\ntest_export_checker_owns_default_build_directory_and_preserves_caller_choice (test_ci.CiContractTests.test_export_checker_owns_default_build_directory_and_preserves_caller_choice) ... ok\ntest_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report (test_ci.CiContractTests.test_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report) ... ok\ntest_live_policy_has_one_unambiguous_filename_and_current_inbound_link (test_ci.CiContractTests.test_live_policy_has_one_unambiguous_filename_and_current_inbound_link) ... ok\ntest_native_workflow_is_dispatch_only_without_a_job_admission_condition (test_ci.CiContractTests.test_native_workflow_is_dispatch_only_without_a_job_admission_condition) ... ok\ntest_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget (test_ci.CiContractTests.test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget) ... ok\ntest_node_matches_owned_pin_and_phase_gate_verifies_only (test_ci.CiContractTests.test_node_matches_owned_pin_and_phase_gate_verifies_only) ... ok\ntest_phase_timeout_preserves_partial_output_and_a_failing_report (test_ci.CiContractTests.test_phase_timeout_preserves_partial_output_and_a_failing_report) ... ok\ntest_phase_timeout_stops_a_child_in_the_checker_process_group (test_ci.CiContractTests.test_phase_timeout_stops_a_child_in_the_checker_process_group) ... ok\ntest_portable_python_bootstrap_uses_pinned_job_local_tools (test_ci.CiContractTests.test_portable_python_bootstrap_uses_pinned_job_local_tools) ... ok\ntest_push_workflow_contains_only_required_registered_runner_jobs (test_ci.CiContractTests.test_push_workflow_contains_only_required_registered_runner_jobs) ... ok\ntest_python_bootstrap_rejects_unverified_uv_before_executing_it (test_ci.CiContractTests.test_python_bootstrap_rejects_unverified_uv_before_executing_it) ... ok\ntest_python_pin_supports_tomllib_and_filtered_tar_extraction (test_ci.CiContractTests.test_python_pin_supports_tomllib_and_filtered_tar_extraction) ... ok\ntest_qualification_prepares_complete_locked_graph_before_offline_checks (test_ci.CiContractTests.test_qualification_prepares_complete_locked_graph_before_offline_checks) ... ok\ntest_uv_checksums_cover_every_configured_host_and_libc (test_ci.CiContractTests.test_uv_checksums_cover_every_configured_host_and_libc) ... ok\ntest_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes (test_ci.CiContractTests.test_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes) ... ok\ntest_uv_selection_creates_distinct_empty_tool_caches (test_ci.CiContractTests.test_uv_selection_creates_distinct_empty_tool_caches) ... ok\ntest_verified_publication_is_consistent_in_current_release_documents (test_ci.CiContractTests.test_verified_publication_is_consistent_in_current_release_documents) ... skipped 'The development version differs from the recorded publication'\ntest_workflows_share_reviewed_tool_versions_and_read_only_permissions (test_ci.CiContractTests.test_workflows_share_reviewed_tool_versions_and_read_only_permissions) ... ok\n\n----------------------------------------------------------------------\nRan 26 tests in 3.856s\n\nOK (skipped=1)\n",
+      "duration_seconds": 3.931
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_package_policy.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_package_policy.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_cargo_omitted_false_dirty_flag_is_valid_clean_metadata (test_package_policy.PackagePolicyTests.test_cargo_omitted_false_dirty_flag_is_valid_clean_metadata) ... ok\ntest_duplicate_members_rejected (test_package_policy.PackagePolicyTests.test_duplicate_members_rejected) ... ok\ntest_unsafe_members_are_rejected_before_extraction (test_package_policy.PackagePolicyTests.test_unsafe_members_are_rejected_before_extraction) ... ok\ntest_wrong_or_dirty_release_vcs_rejected (test_package_policy.PackagePolicyTests.test_wrong_or_dirty_release_vcs_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.008s\n\nOK\n",
+      "duration_seconds": 0.07
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_dependency_policy.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_dependency_policy.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_any_advisory_or_license_exception_is_rejected (test_dependency_policy.DependencyPolicyTests.test_any_advisory_or_license_exception_is_rejected) ... ok\ntest_dependency_diagnostics_redact_url_credentials_and_authorization (test_dependency_policy.DependencyPolicyTests.test_dependency_diagnostics_redact_url_credentials_and_authorization) ... ok\ntest_early_child_failures_preserve_bounded_diagnostics_and_a_failed_report (test_dependency_policy.DependencyPolicyTests.test_early_child_failures_preserve_bounded_diagnostics_and_a_failed_report) ... ok\ntest_graph_omissions_and_relaxed_sources_are_rejected (test_dependency_policy.DependencyPolicyTests.test_graph_omissions_and_relaxed_sources_are_rejected) ... ok\ntest_missing_checksum_and_git_or_path_sources_are_rejected (test_dependency_policy.DependencyPolicyTests.test_missing_checksum_and_git_or_path_sources_are_rejected) ... ok\ntest_precondition_failure_writes_a_partial_report_without_inventing_child_output (test_dependency_policy.DependencyPolicyTests.test_precondition_failure_writes_a_partial_report_without_inventing_child_output) ... ok\ntest_real_lock_and_policy_are_accepted (test_dependency_policy.DependencyPolicyTests.test_real_lock_and_policy_are_accepted) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.058s\n\nOK\n",
+      "duration_seconds": 0.14
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_auxiliary_evidence.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_auxiliary_evidence.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_cargo_json_selects_only_the_library_test_executable (test_auxiliary_evidence.BoundedEvidenceTests.test_cargo_json_selects_only_the_library_test_executable) ... ok\ntest_private_receipt_creation_does_not_overwrite_or_follow_links (test_auxiliary_evidence.BoundedEvidenceTests.test_private_receipt_creation_does_not_overwrite_or_follow_links) ... ok\ntest_repetition_is_exact_fail_fast_and_checks_every_summary (test_auxiliary_evidence.BoundedEvidenceTests.test_repetition_is_exact_fail_fast_and_checks_every_summary) ... ok\ntest_sensitive_environment_inputs_are_removed (test_auxiliary_evidence.BoundedEvidenceTests.test_sensitive_environment_inputs_are_removed) ... ok\ntest_stress_receipt_binds_one_build_exact_compiler_source_runtime_and_binary (test_auxiliary_evidence.BoundedEvidenceTests.test_stress_receipt_binds_one_build_exact_compiler_source_runtime_and_binary) ... ok\ntest_stress_report_replacement_is_restricted_atomic_and_private (test_auxiliary_evidence.BoundedEvidenceTests.test_stress_report_replacement_is_restricted_atomic_and_private) ... ok\ntest_stress_source_runtime_binary_drift_or_build_failure_cannot_pass (test_auxiliary_evidence.BoundedEvidenceTests.test_stress_source_runtime_binary_drift_or_build_failure_cannot_pass) ... ok\ntest_subprocess_timeout_and_output_bounds (test_auxiliary_evidence.BoundedEvidenceTests.test_subprocess_timeout_and_output_bounds) ... ok\ntest_total_repetition_deadline_is_fail_closed (test_auxiliary_evidence.BoundedEvidenceTests.test_total_repetition_deadline_is_fail_closed) ... ok\ntest_changed_source_cannot_produce_a_passing_scan (test_auxiliary_evidence.PrivateMaterialTests.test_changed_source_cannot_produce_a_passing_scan) ... ok\ntest_check_cli_emits_a_closed_category_without_echoing_invalid_receipt (test_auxiliary_evidence.PrivateMaterialTests.test_check_cli_emits_a_closed_category_without_echoing_invalid_receipt) ... ok\ntest_check_cli_never_reopens_selected_config (test_auxiliary_evidence.PrivateMaterialTests.test_check_cli_never_reopens_selected_config) ... ok\ntest_clean_scan_and_receipt_are_sanitized (test_auxiliary_evidence.PrivateMaterialTests.test_clean_scan_and_receipt_are_sanitized) ... ok\ntest_cli_sanitizes_malformed_input_errors_without_reading_real_credentials (test_auxiliary_evidence.PrivateMaterialTests.test_cli_sanitizes_malformed_input_errors_without_reading_real_credentials) ... ok\ntest_credentials_in_filenames_are_detected_without_exporting_paths (test_auxiliary_evidence.PrivateMaterialTests.test_credentials_in_filenames_are_detected_without_exporting_paths) ... ok\ntest_each_selected_credential_is_detected_in_git_visible_content (test_auxiliary_evidence.PrivateMaterialTests.test_each_selected_credential_is_detected_in_git_visible_content) ... ok\ntest_frozen_public_corpus_fits_the_standing_file_bound (test_auxiliary_evidence.PrivateMaterialTests.test_frozen_public_corpus_fits_the_standing_file_bound) ... ok\ntest_historical_lookup_handles_a_file_larger_than_git_metadata_output_bound (test_auxiliary_evidence.PrivateMaterialTests.test_historical_lookup_handles_a_file_larger_than_git_metadata_output_bound) ... ok\ntest_historical_tenant_in_published_source_is_not_exempted (test_auxiliary_evidence.PrivateMaterialTests.test_historical_tenant_in_published_source_is_not_exempted) ... ok\ntest_historical_tenant_only_is_distinguished_from_new_copies (test_auxiliary_evidence.PrivateMaterialTests.test_historical_tenant_only_is_distinguished_from_new_copies) ... ok\ntest_ignored_published_candidate_is_still_scanned (test_auxiliary_evidence.PrivateMaterialTests.test_ignored_published_candidate_is_still_scanned) ... ok\ntest_private_scan_still_detects_credentials_in_excluded_evidence (test_auxiliary_evidence.PrivateMaterialTests.test_private_scan_still_detects_credentials_in_excluded_evidence) ... ok\ntest_public_failure_categories_do_not_reflect_values_or_paths (test_auxiliary_evidence.PrivateMaterialTests.test_public_failure_categories_do_not_reflect_values_or_paths) ... ok\ntest_public_receipt_does_not_read_excluded_evidence_into_its_source_budget (test_auxiliary_evidence.PrivateMaterialTests.test_public_receipt_does_not_read_excluded_evidence_into_its_source_budget) ... ok\ntest_public_receipt_skips_excluded_symlinks_and_private_scan_rejects_them (test_auxiliary_evidence.PrivateMaterialTests.test_public_receipt_skips_excluded_symlinks_and_private_scan_rejects_them) ... ok\ntest_published_symlinks_file_bounds_and_include_drift_are_rejected (test_auxiliary_evidence.PrivateMaterialTests.test_published_symlinks_file_bounds_and_include_drift_are_rejected) ... ok\ntest_published_tree_byte_and_file_count_bounds_are_fail_closed (test_auxiliary_evidence.PrivateMaterialTests.test_published_tree_byte_and_file_count_bounds_are_fail_closed) ... ok\ntest_receipt_freshness_also_binds_ignored_package_candidate_contents (test_auxiliary_evidence.PrivateMaterialTests.test_receipt_freshness_also_binds_ignored_package_candidate_contents) ... ok\ntest_receipt_freshness_excludes_later_bookkeeping_but_detects_source_drift (test_auxiliary_evidence.PrivateMaterialTests.test_receipt_freshness_excludes_later_bookkeeping_but_detects_source_drift) ... ok\ntest_receipt_schema_success_counts_and_scope_are_enforced (test_auxiliary_evidence.PrivateMaterialTests.test_receipt_schema_success_counts_and_scope_are_enforced) ... ok\ntest_registration_rejects_malformed_duplicate_unknown_and_oversized_inputs (test_auxiliary_evidence.PrivateMaterialTests.test_registration_rejects_malformed_duplicate_unknown_and_oversized_inputs) ... ok\ntest_registration_rejects_relative_internal_missing_and_symlink_paths (test_auxiliary_evidence.PrivateMaterialTests.test_registration_rejects_relative_internal_missing_and_symlink_paths) ... ok\n\n----------------------------------------------------------------------\nRan 32 tests in 2.745s\n\nOK\n",
+      "duration_seconds": 2.822
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_fixtures.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_fixtures.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_all_eighteen_exact_zod_outputs_are_present (test_model_fixtures.ModelFixturesTests.test_all_eighteen_exact_zod_outputs_are_present) ... ok\ntest_missing_or_duplicate_root_rejected (test_model_fixtures.ModelFixturesTests.test_missing_or_duplicate_root_rejected) ... ok\ntest_modified_packaged_output_is_rejected (test_model_fixtures.ModelFixturesTests.test_modified_packaged_output_is_rejected) ... ok\ntest_stale_oracle_hash_rejected (test_model_fixtures.ModelFixturesTests.test_stale_oracle_hash_rejected) ... ok\ntest_unaccepted_specimen_rejected (test_model_fixtures.ModelFixturesTests.test_unaccepted_specimen_rejected) ... ok\ntest_wrong_baseline_rejected (test_model_fixtures.ModelFixturesTests.test_wrong_baseline_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 6.889s\n\nOK\n",
+      "duration_seconds": 6.969
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_generation.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_model_generation.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_all_forty_behavioral_adapters_close_and_problem_metadata_has_concrete_types (test_model_generation.GenerationGuards.test_all_forty_behavioral_adapters_close_and_problem_metadata_has_concrete_types) ... ok\ntest_committed_union_identity_matches_and_reorder_fails (test_model_generation.GenerationGuards.test_committed_union_identity_matches_and_reorder_fails) ... ok\ntest_current_nested_checks_and_record_keys_match_native_implementation (test_model_generation.GenerationGuards.test_current_nested_checks_and_record_keys_match_native_implementation) ... ok\ntest_effect_default_pipeline_and_coercion_in_record_keys_fail (test_model_generation.GenerationGuards.test_effect_default_pipeline_and_coercion_in_record_keys_fail) ... ok\ntest_exactly_five_native_binary_builders_omit_json_only_validation (test_model_generation.GenerationGuards.test_exactly_five_native_binary_builders_omit_json_only_validation) ... ok\ntest_native_dispatcher_and_pattern_drift_fail (test_model_generation.GenerationGuards.test_native_dispatcher_and_pattern_drift_fail) ... ok\ntest_phase_five_behavioral_adapters_resolve_to_implemented_public_types (test_model_generation.GenerationGuards.test_phase_five_behavioral_adapters_resolve_to_implemented_public_types) ... ok\ntest_phase_six_gateway_adapters_resolve_and_standalone_helper_closure_is_explicit (test_model_generation.GenerationGuards.test_phase_six_gateway_adapters_resolve_and_standalone_helper_closure_is_explicit) ... ok\ntest_union_pin_removal_and_header_tampering_fail (test_model_generation.GenerationGuards.test_union_pin_removal_and_header_tampering_fail) ... ok\ntest_unknown_nested_regex_or_flags_fail (test_model_generation.GenerationGuards.test_unknown_nested_regex_or_flags_fail) ... ok\ntest_unknown_nested_string_and_number_checks_fail (test_model_generation.GenerationGuards.test_unknown_nested_string_and_number_checks_fail) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 3.068s\n\nOK\n",
+      "duration_seconds": 3.185
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_fixtures.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_native_fixtures.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_case_edits_and_json_type_substitution_rejected (test_native_fixtures.NativeFixtureTests.test_case_edits_and_json_type_substitution_rejected) ... ok\ntest_commented_or_quoted_bindings_do_not_count (test_native_fixtures.NativeFixtureTests.test_commented_or_quoted_bindings_do_not_count) ... ok\ntest_duplicate_source_and_empty_cases_rejected (test_native_fixtures.NativeFixtureTests.test_duplicate_source_and_empty_cases_rejected) ... ok\ntest_exact_copy_passes (test_native_fixtures.NativeFixtureTests.test_exact_copy_passes) ... ok\ntest_invalid_duplicate_or_missing_coordinates_rejected (test_native_fixtures.NativeFixtureTests.test_invalid_duplicate_or_missing_coordinates_rejected) ... ok\ntest_literal_test_bindings_pass (test_native_fixtures.NativeFixtureTests.test_literal_test_bindings_pass) ... ok\ntest_missing_bundle_and_symlink_rejected (test_native_fixtures.NativeFixtureTests.test_missing_bundle_and_symlink_rejected) ... ok\ntest_nonfinite_json_rejected (test_native_fixtures.NativeFixtureTests.test_nonfinite_json_rejected) ... ok\ntest_orphaned_bundle_rejected (test_native_fixtures.NativeFixtureTests.test_orphaned_bundle_rejected) ... ok\ntest_source_changes_cannot_be_blessed_by_bundle_hash (test_native_fixtures.NativeFixtureTests.test_source_changes_cannot_be_blessed_by_bundle_hash) ... ok\ntest_symlinked_test_source_rejected (test_native_fixtures.NativeFixtureTests.test_symlinked_test_source_rejected) ... ok\ntest_unknown_bundle_binding_rejected (test_native_fixtures.NativeFixtureTests.test_unknown_bundle_binding_rejected) ... ok\ntest_unknown_sources_and_regressions_cannot_claim_independence (test_native_fixtures.NativeFixtureTests.test_unknown_sources_and_regressions_cannot_claim_independence) ... ok\ntest_wrong_baseline_and_missing_attribution_rejected (test_native_fixtures.NativeFixtureTests.test_wrong_baseline_and_missing_attribution_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.025s\n\nOK\n",
+      "duration_seconds": 0.069
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_verify_gateway_bindings.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_verify_gateway_bindings.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_all_194_frozen_methods_have_explicit_source_proofs (test_verify_gateway_bindings.GatewayBindingTests.test_all_194_frozen_methods_have_explicit_source_proofs) ... ok\ntest_chart_metric_cannot_silently_use_another_response (test_verify_gateway_bindings.GatewayBindingTests.test_chart_metric_cannot_silently_use_another_response) ... ok\ntest_comment_cannot_supply_a_missing_schema (test_verify_gateway_bindings.GatewayBindingTests.test_comment_cannot_supply_a_missing_schema) ... ok\ntest_composed_filter_field_identity_is_checked (test_verify_gateway_bindings.GatewayBindingTests.test_composed_filter_field_identity_is_checked) ... ok\ntest_extra_segment_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_extra_segment_is_rejected) ... ok\ntest_literal_in_unrelated_method_cannot_supply_route_evidence (test_verify_gateway_bindings.GatewayBindingTests.test_literal_in_unrelated_method_cannot_supply_route_evidence) ... ok\ntest_parameter_replaced_by_a_literal_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_parameter_replaced_by_a_literal_is_rejected) ... ok\ntest_runtime_literal_suffix_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_runtime_literal_suffix_is_rejected) ... ok\ntest_unreviewed_filter_refinement_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_unreviewed_filter_refinement_is_rejected) ... ok\ntest_wrong_http_method_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_http_method_is_rejected) ... ok\ntest_wrong_literal_route_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_literal_route_is_rejected) ... ok\ntest_wrong_request_schema_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_request_schema_is_rejected) ... ok\ntest_wrong_response_schema_is_rejected (test_verify_gateway_bindings.GatewayBindingTests.test_wrong_response_schema_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 0.783s\n\nOK\n",
+      "duration_seconds": 0.918
+    },
+    {
+      "command": [
+        "python",
+        "tools/response_defaults.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/response_defaults.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"defaultBindings\": 23, \"redTeamBindings\": 8, \"outsideRedTeamBindings\": 15}\n",
+      "stderr": "",
+      "duration_seconds": 0.311
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.245
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": true,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.263
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"rejectedTamperingCases\": [\n    \"fixture-change\",\n    \"fixture-removal\",\n    \"unmanifested-source\",\n    \"license-removal\",\n    \"fixture-inventory-omission\",\n    \"baseline-source-omission\",\n    \"tree-ledger-omission\",\n    \"excluded-source-generation\",\n    \"export-source-change\",\n    \"fixture-category-relabel\",\n    \"fixture-category-unknown\",\n    \"specification-pin-removal\",\n    \"observed-specification-pin\",\n    \"extraction-input-omission\",\n    \"extraction-input-origin-change\",\n    \"license-evidence-change\",\n    \"extracted-non-src-byte-change\"\n  ]\n}\n",
+      "stderr": "",
+      "duration_seconds": 2.042
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "Native semantic registry: 69 explicit bindings\n",
+      "stderr": "",
+      "duration_seconds": 0.203
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"outputs\": 14, \"graphNodes\": 13018, \"partialFamily\": null}\n",
+      "stderr": "",
+      "duration_seconds": 1.846
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_constants.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/generate_constants.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"staticConstants\": 162, \"globalConfiguration\": \"isolated ScanConfiguration adaptation\"}\n",
+      "stderr": "",
+      "duration_seconds": 0.223
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "exit_code": 1,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "Gateway source verification failed: Gateway source binding proof is stale\n",
+      "duration_seconds": 0.348
+    }
+  ]
+}

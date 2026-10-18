@@ -34,18 +34,18 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "2e8d0619d0f58e08714938452e6bcc82b2d739e7b0d52b516eb7d98c2d0fade3"
+      "sha256": "d2d43487b69b870a965bdf41f1aee58e5d7b5f758e3decb0a6f3e387358d0d3c"
     },
     "report": {
-      "path": "docs/checks/phase-08-live-attempt-06.json",
-      "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21"
+      "path": "docs/checks/phase-08-live-attempt-08.json",
+      "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
-      "sha256": "6563b654d15c150593d48b5087cd462504a05e42c254c34fa50e5fe6e2437e83"
+      "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
     },
-    "executedAt": "2026-10-16T23:17:00.857125+00:00",
-    "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+    "executedAt": "2026-10-18T13:57:34.435654+00:00",
+    "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
     "toolchain": "1.99.0",
     "hostTarget": "x86_64-unknown-linux-musl",
     "cleanupState": "not_needed"
@@ -55,14 +55,15 @@
     "implemented": 448,
     "contractVerified": 448,
     "completeMethodOptionParity": 448,
-    "liveVerified": 17,
+    "liveVerified": 16,
     "liveRecorded": 22,
-    "liveNotVerified": 431,
+    "liveNotVerified": 432,
     "liveByStatus": {
+      "incomplete_or_uncorrelated_receipt": 1,
       "permission_prerequisite": 3,
       "service_contract_rejection": 2,
       "unverified": 426,
-      "verified": 17
+      "verified": 16
     },
     "unexplainedGaps": 0
   },
@@ -158,11 +159,12 @@
       "implemented": 4,
       "contractVerified": 4,
       "completeMethodOptionParity": 4,
-      "liveVerified": 4,
+      "liveVerified": 3,
       "liveRecorded": 4,
-      "liveNotVerified": 0,
+      "liveNotVerified": 1,
       "liveByStatus": {
-        "verified": 4
+        "incomplete_or_uncorrelated_receipt": 1,
+        "verified": 3
       },
       "unexplainedGaps": 0
     }
@@ -221,10 +223,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "agentguard.get_scan_stats",
         "observations": [
           {
@@ -294,10 +296,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "agentguard.list_rules",
         "observations": [
           {
@@ -420,10 +422,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "agentguard.list_scans",
         "observations": [
           {
@@ -10640,10 +10642,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "gateway.workspaces.list",
         "observations": [
           {
@@ -10747,10 +10749,10 @@
       "liveAcceptance": "service_contract_rejection",
       "liveReason": "The submitted request was rejected; its cause is unestablished and a native request-shape defect is not excluded.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "gateway.workspaces.provision",
         "observations": [
           {
@@ -10909,10 +10911,10 @@
       "liveAcceptance": "service_contract_rejection",
       "liveReason": "The submitted request was rejected; its cause is unestablished and a native request-shape defect is not excluded.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "iam.scopes.create",
         "observations": [
           {
@@ -11057,10 +11059,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "iam.scopes.list",
         "observations": [
           {
@@ -11314,10 +11316,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "management.api_keys.list_for_token",
         "observations": [
           {
@@ -13206,10 +13208,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "dlp.data_profiles.list",
         "observations": [
           {
@@ -13832,10 +13834,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -14352,10 +14354,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "management.profiles.list",
         "observations": [
           {
@@ -14456,10 +14458,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "management.profiles.list_for_token",
         "observations": [
           {
@@ -16027,10 +16029,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "model_security.models.list_models",
         "observations": [
           {
@@ -16607,10 +16609,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "model_security.scans.list",
         "observations": [
           {
@@ -17346,10 +17348,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "model_security.rules.list",
         "observations": [
           {
@@ -17498,12 +17500,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -17545,12 +17547,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -17591,7 +17593,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -17631,7 +17633,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -17671,7 +17673,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -17718,27 +17720,27 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -17782,12 +17784,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -17829,12 +17831,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::adapter_methods_pin_validate_default_replacement_null_secrets_and_empty_delete",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -18059,10 +18061,10 @@
       "liveAcceptance": "permission_prerequisite",
       "liveReason": "The recorded identity lacked the required service permission.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "red_team.get_management_languages",
         "observations": [
           {
@@ -18230,10 +18232,10 @@
       "liveAcceptance": "permission_prerequisite",
       "liveReason": "The recorded identity lacked the required service permission.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "red_team.get_scan_metadata",
         "observations": [
           {
@@ -18787,12 +18789,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -18834,12 +18836,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -18881,12 +18883,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -18928,12 +18930,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -18975,12 +18977,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19022,12 +19024,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19069,12 +19071,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_upload_preserves_exact_bytes_mime_forced_filename_and_text_download",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_file_envelope_download_and_response_shape_limits_are_bounded",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19115,7 +19117,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19155,7 +19157,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19195,7 +19197,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19235,7 +19237,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19277,7 +19279,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19317,7 +19319,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19359,7 +19361,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19400,7 +19402,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19446,27 +19448,27 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19515,27 +19517,27 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19578,7 +19580,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19619,7 +19621,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19661,12 +19663,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_and_property_methods_preserve_path_encoding_repeated_queries_and_empty_success",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19709,17 +19711,17 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::prompt_set_methods_preserve_routes_queries_and_unknown_responses",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::nullable_request_fields_keep_omission_null_and_value_in_exact_json_bytes",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19763,22 +19765,22 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_upload_preserves_exact_bytes_mime_forced_filename_and_text_download",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_file_envelope_download_and_response_shape_limits_are_bounded",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::expired_csv_budget_precedes_encoding_validation_and_credentials",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19821,12 +19823,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::eula_methods_read_content_status_and_accept_only_when_called",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19867,7 +19869,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::eula_methods_read_content_status_and_accept_only_when_called",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19907,7 +19909,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::eula_methods_read_content_status_and_accept_only_when_called",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -19921,10 +19923,10 @@
       "liveAcceptance": "permission_prerequisite",
       "liveReason": "The recorded identity lacked the required service permission.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "red_team.eula.get_status",
         "observations": [
           {
@@ -20354,12 +20356,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -20400,7 +20402,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -20440,7 +20442,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -20480,7 +20482,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -20522,12 +20524,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::broker_methods_preserve_repeated_status_defaults_and_ordinary_json_patch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21441,12 +21443,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21488,12 +21490,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21535,12 +21537,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21582,12 +21584,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21628,7 +21630,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21669,12 +21671,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21715,7 +21717,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21756,12 +21758,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::csv_file_envelope_download_and_response_shape_limits_are_bounded",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21802,7 +21804,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21842,7 +21844,7 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21889,27 +21891,27 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_four_walks_default_to_skip_zero_limit_fifty_and_preserve_duplicates",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::direct_lists_omit_paging_defaults_and_filtered_walks_keep_all_options_and_budget",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_native_page_and_item_helpers_execute_with_no_extra_terminal_dispatch",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::page_item_helpers_caps_resume_and_partial_failures_are_explicit",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::skip_walks_use_actual_counts_null_totals_and_empty_terminal_pages",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -21953,12 +21955,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -22000,12 +22002,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::target_profiling_and_copilot_credentials_use_exact_bodies_and_safe_formatting",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -22047,12 +22049,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -22094,12 +22096,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -22141,12 +22143,12 @@
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::targets_crud_probe_profile_and_metadata_match_frozen_contracts",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         },
         {
           "reference": "crates/scm-sdk/tests/red_team_resources_contracts.rs::all_twenty_six_resource_mutations_keep_unknown_outcome_without_replay",
           "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-          "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+          "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
         }
       ],
       "contractExecutionAuthority": "Source-bound phase checks record execution separately; generation checks concrete mappings and evidence pointers.",
@@ -22201,10 +22203,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.async_scan",
         "observations": [
           {
@@ -22259,10 +22261,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.query_report",
         "observations": [
           {
@@ -22314,24 +22316,24 @@
       "nativeExportCapabilities": [
         "Scanner.queryByScanIds"
       ],
-      "liveAcceptance": "verified",
-      "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
+      "liveAcceptance": "incomplete_or_uncorrelated_receipt",
+      "liveReason": "The HTTP response did not prove completion of the requested, correctly correlated workflow. Mixed or conflicting observations require a new reviewed reconciliation receipt; earlier successes do not certify this method.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.query_scan_results",
         "observations": [
           {
             "section": "probes",
             "index": 17,
             "operation": "scan.query_scan_results",
-            "classification": "verified",
+            "classification": "incomplete_or_uncorrelated_receipt",
             "status": 200,
             "errorKind": null,
             "remoteOutcome": null,
-            "workflowAccepted": true
+            "workflowAccepted": false
           },
           {
             "section": "probes",
@@ -22344,7 +22346,7 @@
             "workflowAccepted": true
           }
         ],
-        "reconciliationRequired": false
+        "reconciliationRequired": true
       }
     },
     {
@@ -22388,10 +22390,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.sync_scan",
         "observations": [
           {
@@ -22413,15 +22415,15 @@
   "sourceBindings": [
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "2e8d0619d0f58e08714938452e6bcc82b2d739e7b0d52b516eb7d98c2d0fade3"
+      "sha256": "d2d43487b69b870a965bdf41f1aee58e5d7b5f758e3decb0a6f3e387358d0d3c"
     },
     {
       "path": "contracts/native-exports.json",
-      "sha256": "bb8b8ce6fa2976f3895f4770cc311202391a878da79f3ccab784a54624fa166f"
+      "sha256": "96c36203ad97605ce21712c66910496eebb094de34653f4d221886cd8e683fe2"
     },
     {
       "path": "contracts/native-operations.json",
-      "sha256": "c47f1b4da3a8a0b323640439509be429938942fde930ad74ce4cc75a2585bdb7"
+      "sha256": "5f2a49f0041c453ea6113dacdb49b79237a3a52c40057f5258d00dd36fb75a3b"
     },
     {
       "path": "contracts/operations.json",
@@ -22436,12 +22438,12 @@
       "sha256": "7313b68701b71af4d0450bea423832a307789990736c6929ba3fc3b895d5611d"
     },
     {
-      "path": "docs/checks/phase-08-live-attempt-06.json",
-      "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21"
+      "path": "docs/checks/phase-08-live-attempt-08.json",
+      "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c"
     },
     {
       "path": "tools/live_evidence.py",
-      "sha256": "6563b654d15c150593d48b5087cd462504a05e42c254c34fa50e5fe6e2437e83"
+      "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
     },
     {
       "path": "tools/native_exports.py",
@@ -22457,7 +22459,7 @@
     },
     {
       "path": "tools/test_qualification.py",
-      "sha256": "aa6378dccdcf87fe8a76e0a5b4877652438582562ab4e11ba53e44e877386c73"
+      "sha256": "f06dad94dc90694f272a74d3497023c34c7c364e8253e78e92803cb9e6e74cd1"
     }
   ]
 }
