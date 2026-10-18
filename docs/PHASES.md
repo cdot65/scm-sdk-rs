@@ -16,6 +16,12 @@ Run `python tools/check_phase.py --phase N` before requesting review. The gate b
 | 6. AI Gateway | SCM configuration/admin/telemetry, runtime resource families, chat/Responses/completions/embeddings, SSE, multipart/audio/binary and public pricing. | Complete Gateway method and transport contracts, distinct credential/plane policies, bounded cancellable streams, precise live status; Claude score at least 9. |
 | 7. Experimental and export closure | AgentGuard, bounded realtime, multi-step provisioning/recovery, exported helpers/constants/configuration/error equivalents, complete parity map. | Every frozen export has concrete native functionality and tests; experimental status explicit; no placeholder methods or unsupported aliases; Claude score at least 9. |
 | 8. Qualification and delivery | Full contract suite, adversarial/property/parser tests, API examples, native platform/compiler checks, package/license/dependency audit, controlled live acceptance and cleanup, final documentation. | Complete parity matrix, sanitized live evidence, no unexplained gaps, honest platform labels, actual package checks, Claude score at least 9; push reviewed commits to origin. |
+| 90. G10 maintenance plan | Review pinned G10 branch and plan compatibility fixes, source qualification and 0.1.1 publication. | Scoped plan checks and actual Claude plan score at least 9 before SDK fixes. |
+| 91. G10 maintenance release | Correct response-policy accounting, prove typed omission/null/multiple pages, refresh source-bound ledgers, qualify and publish 0.1.1. | Relevant compiler/package/security/live evidence, actual Claude score at least 9, clean source/tag and verified registry artifact. |
+
+Maintenance identifiers 90–91 belong to the isolated 0.1.1 patch track. Follow
+[the G10 release plan](g10-0.1.1-plan.md) in that order after baseline phases 1–8.
+Historical baseline gates and their command sets retain their original meaning.
 
 `docs/phase-status.json` is the progress source of truth. Live prerequisite failures are recorded separately from implementation gaps. Stable features require successful live acceptance; offline-only or upstream-blocked capabilities retain explicit experimental status. Rust dependency and generator versions, target triples, and resource defaults are recorded as foundation outputs.
 

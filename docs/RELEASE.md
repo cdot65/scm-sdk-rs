@@ -21,6 +21,12 @@ source-bound status and limitations.
 
 ## Qualify the reviewed source
 
+For the authorized G10 0.1.1 maintenance track, follow
+[the patch plan](g10-0.1.1-plan.md): plan gate 90, then current source gate 91.
+The Phase 8 procedure below describes the initial 0.1.0 delivery. Its historical
+receipts do not qualify changed 0.1.1 runtime inputs. The patch updates CI to gate
+91 and retains new clean-package, registry and tag proofs at the paths in its plan.
+
 1. Preserve the frozen TypeScript 0.34.0 baseline and provenance. Check all 448
    operation mappings and 3,820 public capability mappings, independent fixtures,
    deterministic generation and external public probes. Record Rust language
@@ -74,6 +80,9 @@ maintainer credentials, notices and the exact reviewed release commit/artifact.
 No registry token belongs in the repository, tenant files or knowledge workspace.
 The accepted design assigns releases to `cdot65` with minimal-permission,
 owner-controlled automation and supported trusted publishing after setup.
+Until that configuration exists, the explicitly authorized 0.1.1 release uses
+Cargo's token provider with the owner's external mode-0600 credentials file.
+CI remains credential-free and never performs registry publication.
 
 New registry publication requires explicit maintainer authorization. No publishing job or
 registry credentials are currently installed by this delivery workflow. After an

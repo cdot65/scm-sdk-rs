@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": null,
+  "active_phase": 91,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
   "review_threshold": 9,
   "phases": [
@@ -1795,6 +1795,284 @@
         "preceding_score": 9
       },
       "accepted_review": "docs/reviews/phase-08-attempt-09.json"
+    },
+    {
+      "id": 90,
+      "name": "G10 compatibility review and maintenance plan",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-90-attempt-04.json"
+      ],
+      "scope_evidence": {
+        "plan": "docs/g10-0.1.1-plan.md",
+        "source_branch": "g10-no-response-defaults",
+        "source_commit": "a6d63e58f067a98504e5b79987639d53e11fc931",
+        "acceptance": "Review the plan and pinned supplied implementation; confirmed runtime fixes and fresh qualification are phase 91 work. No new SDK fixes before plan review passes.",
+        "changed_artifacts": [
+          "docs/g10-0.1.1-plan.md",
+          "docs/PHASES.md",
+          "docs/RELEASE.md",
+          "docs/CI.md",
+          "docs/implementation-plan.md",
+          "tools/check_phase.py",
+          "tools/review_phase.py",
+          "tools/test_review_phase.py",
+          "tools/test_ci.py"
+        ],
+        "supplementary_review": "docs/reviews/g10-pinned-branch-independent-review.md"
+      },
+      "activation": {
+        "predecessor": 8,
+        "reason": "Maintainer-requested isolated 0.1.1 maintenance track appended after completed baseline. Active pointer initialized when extending the phase catalog; all eight predecessor proofs are verified by review_phase.py. Non-contiguous successors are now executable and unit-tested."
+      },
+      "review_attempts": [
+        "docs/reviews/phase-90-attempt-01.json",
+        "docs/reviews/phase-90-attempt-02.json",
+        "docs/reviews/phase-90-attempt-03.json"
+      ],
+      "review_fixes": [
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[0]",
+          "status": "resolved_in_phase_90",
+          "scope": "Phase 90's edit to docs/phase-status",
+          "resolution": "Select the latest actual publication record; the original phase-8 publication remains visible after maintenance phases are appended.",
+          "acceptance_evidence": [
+            "tools/test_ci.py:213"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[1]",
+          "status": "resolved_in_phase_90",
+          "scope": "The phase-91 acceptance command set that phase 90 is responsible for recording includes `python -m unittest discover -s tools -p test_g10_release",
+          "resolution": "Missing and empty discovery suites fail before a subprocess can report a vacuous pass; reject and populated-suite unit tests execute.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:23"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[2]",
+          "status": "resolved_in_phase_90",
+          "scope": "Advancement computes the next phase as `args",
+          "resolution": "Select the smallest greater phase id; the 8-to-90-to-91 sequence has unit coverage and the initial track activation is documented.",
+          "acceptance_evidence": [
+            "tools/review_phase.py:156"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[3]",
+          "status": "resolved_in_phase_90",
+          "scope": "Phase 90 milestone 2 promises to record \"the exact release procedure here\", but the plan records prose only: steps 7 and 8 (lines 92-102) name no commands, no receipt paths (there is no analogue of docs/checks/release-registry-0",
+          "resolution": "Exact clean-package, tag/push/publish/verify commands and receipt paths use authorized external token authentication.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:144"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[4]",
+          "status": "resolved_in_phase_90",
+          "scope": "Step 91",
+          "resolution": "Name generated ledgers and their sequential generator invocations rather than describing generator scripts as generated outputs.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:101"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[5]",
+          "status": "deferred_to_phase_91_blocks_publication",
+          "scope": "Supplied G10 copy-budget bug and unconditional acceptance assertions",
+          "resolution": "No SDK fixes are permitted before this plan gate. Phase 91 must charge suppressed keys and pass equal-bound public regressions before the unchanged acceptance claims may ship.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:Compatibility contract",
+            "docs/checks/g10-pre-fix-copy-limit-reproduction.json"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[6]",
+          "status": "resolved_in_phase_90",
+          "scope": "The two whitespace commands in the phase-90 gate (`git diff --check`, `git diff --cached --check`) only inspect uncommitted changes, so they cover phase 90's own working-tree edits but cannot see the pinned branch commit a6d63e5 that this phase exists to review",
+          "resolution": "Committed changes through actual HEAD, staged and working-tree whitespace are covered; the gate verifies a fresh private scan.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:73"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[7]",
+          "status": "resolved_in_phase_90",
+          "scope": "The new public surface is documented in prose (docs/VALIDATION",
+          "resolution": "Cite source-compatible patch policy and require the Rust-only API/default sidecar without changing frozen export denominators.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:12"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[0]",
+          "status": "resolved_in_phase_90",
+          "scope": "The phase-91 acceptance command set \u2014 the main artifact phase 90 is responsible for defining \u2014 is substantially narrower than the gate that qualified 0",
+          "resolution": "Retain four cross compiles, 100-process tracing stress, all contract verification forms, schema oracle/typed fixtures and generated-artifact checks; disclose unchanged TypeScript-only/bootstrap reductions.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:146"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[1]",
+          "status": "resolved_in_phase_90",
+          "scope": "The phase-90 review-disposition ledger is incomplete and structurally inconsistent with every other phase",
+          "resolution": "Use per-finding review_fixes records with specific evidence and reference all preserved phase-90 attempt check reports.",
+          "acceptance_evidence": [
+            "docs/phase-status.json:1800"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[2]",
+          "status": "deferred_to_phase_91_blocks_publication",
+          "scope": "Supplied G10 copy-budget bug and unconditional acceptance assertions",
+          "resolution": "No SDK fixes are permitted before this plan gate. Phase 91 must charge suppressed keys and pass equal-bound public regressions before the unchanged acceptance claims may ship.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:Compatibility contract",
+            "docs/checks/g10-pre-fix-copy-limit-reproduction.json"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[3]",
+          "status": "resolved_in_phase_90",
+          "scope": "Phase 90's `scope_evidence` names only the plan, the source branch and the pinned commit, but the phase actually changed eight tracked artifacts: tools/check_phase",
+          "resolution": "List every changed governance/documentation artifact and the supplementary report in phase-90 scope_evidence.",
+          "acceptance_evidence": [
+            "docs/phase-status.json:1800"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[4]",
+          "status": "resolved_in_phase_90",
+          "scope": "The new pinned-commit whitespace check hardcodes `git diff --check 840c090",
+          "resolution": "Replace the fixed a6d63e5 range end with actual HEAD, so later committed governance changes remain inside the whitespace check.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:73"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[5]",
+          "status": "resolved_in_phase_90",
+          "scope": "Phase 90 milestone 1 states \"Independent Standards and Spec reviews supplement the actual Claude gate\", but no such artifacts exist in the repository: docs/reviews/ contains only phase-90-attempt-01",
+          "resolution": "Retain both independent agent reports, reviewer identities, pinned inputs and the public Rust reproduction receipt.",
+          "acceptance_evidence": [
+            "docs/reviews/g10-pinned-branch-independent-review.md:1"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[6]",
+          "status": "resolved_in_phase_90",
+          "scope": "The scope section fixes the inputs but never states the basis for a patch release rather than 0",
+          "resolution": "Cite STABILITY.md patch compatibility and require review/changelog coverage of the complete package delta since published 0.1.0, including the preexisting README change.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:12"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[0]",
+          "status": "resolved_in_phase_90",
+          "scope": "The new phase-90 review_dispositions ledger records false resolution statuses",
+          "resolution": "Replace blanket closure assertions with this per-finding evidence list; preserve attempts 01/02/03 and mark the unfixed runtime parity claim release-blocked in phase 91.",
+          "acceptance_evidence": [
+            "docs/phase-status.json:1800"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[1]",
+          "status": "resolved_in_phase_90",
+          "scope": "The pinned-commit whitespace check hardcodes `840c090",
+          "resolution": "Use the actual HEAD range; no assumption that HEAD remains at a6d63e5 is needed.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:73"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[2]",
+          "status": "resolved_in_phase_90",
+          "scope": "The plan's version-bump step covers the crate/lock version, the dated changelog entry and the default inventory, but not the user-facing version statements that will become wrong at 0",
+          "resolution": "Require README/RELEASE/STABILITY current-version updates and independent G10 consistency checks, plus the full package delta and patch-policy basis.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:84"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[3]",
+          "status": "resolved_in_phase_90",
+          "scope": "The verification-scope matrix is a real improvement but is still incomplete as an enumeration of deliberate reductions",
+          "resolution": "Retain constants, Gateway binding, model-fixture checks and all five previously omitted governance suites in phase 91.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:96"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[4]",
+          "status": "deferred_to_phase_91_blocks_publication",
+          "scope": "Supplied G10 copy-budget bug and unconditional acceptance assertions",
+          "resolution": "No SDK fixes are permitted before this plan gate. Phase 91 must charge suppressed keys and pass equal-bound public regressions before the unchanged acceptance claims may ship.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:Compatibility contract",
+            "docs/checks/g10-pre-fix-copy-limit-reproduction.json"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[5]",
+          "status": "resolved_in_phase_90",
+          "scope": "The plan instructs phase 91 to \"Update the current 'Publication authorization and provenance' section in docs/RELEASE",
+          "resolution": "Mark token-authorization documentation as completed in phase 90, leaving release-time version/provenance edits in phase 91.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:220"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[6]",
+          "status": "resolved_in_phase_90",
+          "scope": "The retained supplementary report states \"The parent reproduced the copy-limit mismatch with an external public consumer on Rust 1",
+          "resolution": "Retain executed public Rust program, command, runtime/source hashes and actual failure/acceptance output in docs/checks/g10-pre-fix-copy-limit-reproduction.json.",
+          "acceptance_evidence": [
+            "docs/reviews/g10-pinned-branch-independent-review.md:12"
+          ]
+        }
+      ],
+      "preserved_checks": [
+        "docs/checks/phase-90-attempt-01.json",
+        "docs/checks/phase-90-attempt-02.json",
+        "docs/checks/phase-90-attempt-03.json"
+      ],
+      "accepted_source_sha256": "b04b72796126624d3c81d8f3e3e11380bffa44eb42a677fa3fe0e4e0a28c4dbe",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-90-attempt-04.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-90.json"
+          ],
+          "source_sha256": "b04b72796126624d3c81d8f3e3e11380bffa44eb42a677fa3fe0e4e0a28c4dbe"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-90-attempt-04.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": 91,
+      "name": "G10 0.1.1 qualification and publication",
+      "status": "in_progress",
+      "reviews": [],
+      "scope_evidence": {
+        "plan": "docs/g10-0.1.1-plan.md",
+        "acceptance": "Execute compatibility regressions, fresh source-bound live/native qualification, compiler/export/package/security checks and actual Claude review before tag and publication."
+      }
     }
-  ]
+  ],
+  "active_followup_plan": "docs/g10-0.1.1-plan.md"
 }

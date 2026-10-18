@@ -124,7 +124,7 @@ Initially target Linux x86_64 and ARM64, macOS Apple Silicon, and Windows x86_64
 
 Publish incremental public `0.x` releases. Keep patch releases source compatible, including experimental interfaces; breaking changes require a new `0.y` and migration notes. Public documentation includes quick starts, product and shared-module navigation, authentication and proxy/custom-CA setup, examples, experimental status, coverage, deliberate TypeScript differences, cancellation and partial outcomes, and vulnerability reporting.
 
-Verify the actual packaged crate contents, notices, version, and release commit before publication. Use owner-controlled release automation with minimal permissions and supported trusted publishing after initial crate setup. Initial crates.io publication currently requires a token before trusted-publisher configuration; keep that credential outside the repository and vault. Align any source mirror and publication workflow to the exact release commit.
+Verify the actual packaged crate contents, notices, version, and release commit before publication. Use owner-controlled release automation with minimal permissions and supported trusted publishing after setup. Until a trusted publisher is configured, explicitly authorized maintainer releases may use Cargo's owner-controlled crates.io token stored outside the repository and vault; CI must not receive that credential. The authorized 0.1.1 maintenance procedure is in docs/g10-0.1.1-plan.md. Align source tags and registry artifacts to the exact qualified release commit.
 
 ## Delivery milestones
 

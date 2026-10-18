@@ -7,6 +7,10 @@ runs only when explicitly dispatched after its three native runner labels are
 registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
+The G10 0.1.1 maintenance plan replaces the initial Phase 8 CI invocation with
+the source-bound Phase 91 gate during implementation; its two workflow assertions
+in `tools/test_ci.py` change together. See [the release plan](g10-0.1.1-plan.md).
+
 ## Required runner tools
 
 The normal ubuntu-latest label must supply a Linux x86_64 runner with Git,
