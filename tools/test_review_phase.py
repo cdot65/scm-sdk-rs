@@ -2,6 +2,7 @@
 
 import copy
 import contextlib
+import hashlib
 import io
 import json
 import pathlib
@@ -11,11 +12,41 @@ import unittest
 
 from unittest.mock import patch
 
-from check_phase import commands_for
-from review_phase import fingerprint, main, sha256, validate_predecessors, validate_review, verify_record
+from check_phase import commands_for, require_nonempty_tests
+from review_phase import fingerprint, main, next_phase, sha256, validate_predecessors, validate_review, verify_record
 
 
 class ReviewGateTests(unittest.TestCase):
+    def test_historical_phase_command_contracts_are_unchanged(self):
+        historical = {str(i): commands_for(i) for i in range(1, 9)}
+        encoded = json.dumps(historical, sort_keys=True, separators=(",", ":")).encode()
+        self.assertEqual(hashlib.sha256(encoded).hexdigest(),
+                         "54a4c010d73c17187300219a839700d09036b7849b5416f359d4c577d1ac8dfc")
+
+    def test_noncontiguous_maintenance_successors(self):
+        phases = {91: {}, 8: {}, 90: {}}
+        self.assertEqual(next_phase(phases, 8), 90)
+        self.assertEqual(next_phase(phases, 90), 91)
+        self.assertIsNone(next_phase(phases, 91))
+
+    def test_discovery_rejects_missing_and_empty_suites(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            with patch("check_phase.ROOT", root):
+                for name, content in [("test_missing_suite.py", None), ("test_empty_suite.py", "")]:
+                    if content is not None:
+                        (root / name).write_text(content)
+                    with self.assertRaisesRegex(ValueError, "empty unittest"):
+                        require_nonempty_tests(["python", "-m", "unittest", "discover", "-s", ".", "-p", name])
+
+    def test_discovery_accepts_an_executably_populated_suite(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            (root / "test_populated_suite.py").write_text(
+                "import unittest\nclass Sample(unittest.TestCase):\n    def test_present(self): pass\n")
+            with patch("check_phase.ROOT", root):
+                require_nonempty_tests(["python", "-m", "unittest", "discover", "-s", ".", "-p", "test_populated_suite.py"])
+
     def setUp(self):
         self.review = {"score": 9, "summary": "Verified phase", "findings": [],
                        "evidence": ["Independent contract checks passed"], "limitations": []}

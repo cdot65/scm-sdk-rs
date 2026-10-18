@@ -1,0 +1,93 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 90,
+  "attempt": 1,
+  "reviewed_at": "2026-10-18T12:55:00.641724+00:00",
+  "source_sha256": "94de2818c33af008bb5d6f231790d3d53131965e56cd331970666c6f5a9cf408",
+  "source_unchanged": true,
+  "checks_sha256": "3a124bca87dd1a6e0e22669cefa270ebece244f80916e08cf35faf6737bfff78",
+  "prompt_sha256": "d3b484a6f4182a2d44e863d082f07db4b7f1f23545245128196ba34b4b3f6be1",
+  "cli_output_sha256": "122fc64c5a3724af96f571e29ea80e186cd367fb6a87bb359e5cdd45e6cc4570",
+  "gate_passed": false,
+  "review": {
+    "score": 7,
+    "summary": "The G10 maintenance plan is a genuinely good artifact: it pins its inputs to verifiable commits (840c090, a6d63e5), states a compatibility contract that matches the pinned branch's actual code, and records its two known defects as planned phase-91 fixes rather than completed claims. I independently confirmed every checkable contract statement \u2014 Mode stays non-exhaustive with the additive ResponseWithoutDefaults variant (validation.rs:14-26), RequestOptions has exactly one constructor so response_defaults is always true initially (config.rs:368-380), request validation is untouched (engine.rs:538), the option propagates to both buffered contract decode paths and SSE (engine.rs:643,721; streaming.rs:113) while realtime deliberately keeps Mode::Response as documented, the frozen graph contains exactly 23 ZodDefault nodes, and both ZodPipeline inputs are ZodAny so no pipeline-induced acceptance drift exists. The recorded initial findings are accurate: suppressed default keys really do skip copy_text accounting (validation.rs:766-771), and the new target test really does collect one page with no explicit-null roundtrip (red_team_resources_contracts.rs:2026-2119). Check evidence is well bound: docs/checks/phase-90.json matches commands_for(90) exactly, all four commands exit 0 against the reviewed fingerprint, and the preserved prompt is byte-identical to the prompt I received. The phase nevertheless falls short of 9 for one high and three medium reasons. Phase 90's own edit to docs/phase-status.json (appending entries 90 and 91) breaks tools/test_ci.py:213, which indexes phases[-1] for registry_publication; that governance test now fails deterministically on the reviewed source, and the deliberately narrow phase-90 command set cannot see it, so the \"governance unit checks\" criterion is only partially met and a regression caused by this phase is unrecorded. The phase-91 command set that phase 90 is responsible for defining contains a silently vacuous slot (a discover pattern for a nonexistent test_g10_release.py, which exits 0 with zero tests), review_phase.py has no successor mapping for the maintenance track so entering phase 90 required an unverified manual edit of the declared source of truth, and the promised \"exact release procedure\" is recorded only as prose that conflicts with docs/RELEASE.md and docs/implementation-plan.md on the publication mechanism and the gate to run.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "tools/test_ci.py",
+        "line": 213,
+        "description": "Phase 90's edit to docs/phase-status.json appended phase entries 90 and 91, so status[\"phases\"][-1] is now the phase-91 stub, which has no registry_publication key. test_verified_publication_is_consistent_in_current_release_documents therefore evaluates {}.get(\"status\") == None against \"verified_existing_publication\" and fails deterministically on the reviewed source (the phase-8 record that carries registry_publication is now at docs/phase-status.json:1761, no longer last). The phase-90 command set (tools/check_phase.py:55-61) discovers only test_review_phase.py, so this regression is invisible to the recorded gate and docs/checks/phase-90.json:7-88 cannot evidence that repository governance invariants still hold for the source it accepts. tools/test_ci.py is part of the phase-91 command set (tools/check_phase.py:69), so the failure is deferred rather than avoided, and the same test also pins the CI gate to \"--phase 8 --verification-only\" at lines 82 and 308, which plan step 91.5 requires changing.",
+        "required_fix": "Select the publication record by phase id (or by the entry that carries registry_publication) instead of phases[-1] in tools/test_ci.py:212-213, and either add tools/test_ci.py to commands_for(90) in tools/check_phase.py:55-61 so phase-90 bookkeeping edits are regression-checked, or record in docs/phase-status.json that the phase-90 gate deliberately excludes it. Also name the test_ci.py phase-8 workflow assertions (lines 82 and 308) in docs/g10-0.1.1-plan.md step 91.5 as expectations that must change with the CI gate."
+      },
+      {
+        "severity": "medium",
+        "path": "tools/check_phase.py",
+        "line": 67,
+        "description": "The phase-91 acceptance command set that phase 90 is responsible for recording includes `python -m unittest discover -s tools -p test_g10_release.py -v`, but tools/test_g10_release.py does not exist (tools/test_*.py contains 13 files, none named that). unittest discovery with a non-matching pattern runs zero tests and exits 0, so the gate would record a passing check for the entire G10 regression suite demanded by docs/g10-0.1.1-plan.md:61-68 even if that suite were never written. The same silent-pass hazard applies to every other discover pattern in the list.",
+        "required_fix": "Make the gate fail closed on an empty suite: assert in tools/check_phase.py (or a governance unit test) that each `-p` pattern resolves to an existing tools/test_*.py file, and/or assert a minimum discovered test count for test_g10_release.py. Keep the file name in commands_for(91) only once that assertion exists."
+      },
+      {
+        "severity": "medium",
+        "path": "tools/review_phase.py",
+        "line": 194,
+        "description": "Advancement computes the next phase as `args.phase + 1 if args.phase + 1 in phases else None`. Phase 9 does not exist, so advancing phase 8 sets active_phase to None, and the transition into the maintenance track (8 -> 90) cannot be produced by the tooling. docs/phase-status.json:3 now reads active_phase 90, which check_phase.py:250 and review_phase.py:199 both require, so that value was set by hand in a file deliberately excluded from the source fingerprint (review_phase.py:14). docs/PHASES.md:26 calls this file the progress source of truth, and tools/test_review_phase.py:173-182 only covers the contiguous 1 -> 2 case, so neither the 8 -> 90 hop nor the 90 -> 91 hop has any automated verification.",
+        "required_fix": "Compute the successor as the smallest phase id greater than the current one in tools/review_phase.py:194, add a tools/test_review_phase.py case covering a non-contiguous maintenance-track transition (8 -> 90 -> 91), and record in docs/phase-status.json how the current active_phase 90 value was established."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/g10-0.1.1-plan.md",
+        "line": 50,
+        "description": "Phase 90 milestone 2 promises to record \"the exact release procedure here\", but the plan records prose only: steps 7 and 8 (lines 92-102) name no commands, no receipt paths (there is no analogue of docs/checks/release-registry-0.1.0.json, release-source-<sha>/release-package-<toolchain>.json or release-tag-v0.1.0.json for 0.1.1), and no publication mechanism. It also leaves two live conflicts unreconciled: docs/RELEASE.md:28 still directs releases through `python3 tools/check_phase.py --phase 8`, and docs/implementation-plan.md:127 specifies \"owner-controlled release automation with minimal permissions and supported trusted publishing after initial crate setup\", whereas the plan describes a local publication of a retained archive without stating whether trusted publishing or a token is used or how the token stays outside the repository.",
+        "required_fix": "In docs/g10-0.1.1-plan.md, record the exact 0.1.1 command sequence (clean-archive invocations with --require-clean, tag creation/push, publish, registry checksum comparison), the exact receipt paths to be retained, the publication mechanism with its authorization and credential-handling rule, and the specific sections of docs/RELEASE.md and docs/CI.md that step 91.3/91.5 must update."
+      },
+      {
+        "severity": "low",
+        "path": "docs/g10-0.1.1-plan.md",
+        "line": 80,
+        "description": "Step 91.4 says to \"regenerate `tools/native_operations.py`, `tools/native_exports.py` and `tools/qualification.py`\". Those are the generators, not generated artifacts; the outputs that must be regenerated and rechecked are contracts/native-operations.json, contracts/native-exports.json and contracts/qualification.json, which is what the corresponding --check commands in tools/check_phase.py:73-76 actually validate. As written the step is ambiguous about what has to change and could be read as editing the tooling.",
+        "required_fix": "Reword step 91.4 to name the regenerated contract artifacts (contracts/native-operations.json, contracts/native-exports.json, contracts/qualification.json) and the generator invocations that produce them."
+      },
+      {
+        "severity": "low",
+        "path": "CHANGELOG.md",
+        "line": 12,
+        "description": "The reviewed source asserts unconditional acceptance parity in user-facing text while the plan itself records a known counterexample. CHANGELOG.md:12 states \"Acceptance is identical to the default policy\", crates/scm-sdk/src/validation.rs:764-765 comments \"acceptance never depends on whether defaults are materialized\", and docs/VALIDATION.md:20-22 says \"the same documents are accepted and rejected\" \u2014 but suppressed default keys skip copy_text accounting at validation.rs:766-771, so a document near max_copied_bytes can be accepted under ResponseWithoutDefaults and rejected under Response. docs/g10-0.1.1-plan.md:55-57 correctly books this as an unfixed phase-91 item, so the shipped prose is currently stronger than the code. Nothing is published yet, which limits the impact.",
+        "required_fix": "Either land the phase-91 copy/work accounting fix before these claims ship, or qualify CHANGELOG.md:12, validation.rs:764-765 and docs/VALIDATION.md:20-22 to state the current limit-accounting exception; add the claim-correction step explicitly to docs/g10-0.1.1-plan.md step 91.1."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/phase-90.json",
+        "line": 9,
+        "description": "The two whitespace commands in the phase-90 gate (`git diff --check`, `git diff --cached --check`) only inspect uncommitted changes, so they cover phase 90's own working-tree edits but cannot see the pinned branch commit a6d63e5 that this phase exists to review. The gate also runs no private-material scan, so the new docs/g10-0.1.1-plan.md and docs/reviews/phase-90-attempt-01.prompt.md were not checked by scripts/check-private-material.py even though the plan discusses tenant registrations (docs/g10-0.1.1-plan.md:75-82); I read both files and found no identifiers or paths, but that is manual rather than recorded evidence.",
+        "required_fix": "Extend commands_for(90) to check the pinned commit's content (for example `git log -p --check 840c090..HEAD` or `git diff --check 840c090..HEAD`) and add `python scripts/check-private-material.py --check docs/checks/phase-90-private-material.json`, or record the exclusion of both as an explicit phase-90 limitation in docs/phase-status.json."
+      },
+      {
+        "severity": "low",
+        "path": "docs/g10-0.1.1-plan.md",
+        "line": 18,
+        "description": "The new public surface is documented in prose (docs/VALIDATION.md:19, docs/FOUNDATION.md:150-152) but is absent from every machine-readable ledger: searching contracts/ for without_response_defaults, response_defaults or ResponseWithoutDefaults returns zero matches, and the plan does not require recording this additive Rust-only extension in the deliberate-difference/parity bookkeeping that AGENTS.md:7 and tools/native_operations.py:41-49,199-228 maintain. The plan also never cites the basis for choosing a patch version, which docs/STABILITY.md:32-34 supplies (patch releases must stay source compatible; a variant added to a non_exhaustive enum plus two additive methods qualifies).",
+        "required_fix": "Add a plan step requiring the additive API to be recorded in the machine-readable deliberate-difference/export bookkeeping regenerated in step 91.4, and cite docs/STABILITY.md:32-34 in the plan's scope section as the stated basis for releasing this as 0.1.1 rather than 0.2.0."
+      }
+    ],
+    "evidence": [
+      "docs/checks/phase-90.json:1-88 records exactly the four commands returned by tools/check_phase.py:55-61, all with integer exit_code 0, timeout false, source_sha256 94de2818\u2026 and source_unchanged true; the unittest stderr shows 25 governance tests OK and verify-contracts.py reports status verified for baseline 0.34.0 at commit 4a80dbdb.",
+      "docs/reviews/phase-90-attempt-01.prompt.md:1-17 is byte-identical to the prompt I received, including the active-followup line produced by tools/review_phase.py:205-206, confirming the prompt-preservation path executed; no phase-90 attempt JSON or CLI envelope exists yet.",
+      "Pin verification: docs/g10-0.1.1-plan.md:5-8 names 840c0906\u2026 and a6d63e58\u2026, which match the two most recent commits on the reviewed branch (840c090 \"docs: record verified SDK delivery\u2026\", a6d63e5 \"feat(validation): opt-in response validation without inserted defaults\").",
+      "Contract claims verified in code: Mode is #[non_exhaustive] with ResponseWithoutDefaults (crates/scm-sdk/src/validation.rs:13-37); RequestOptions::with_timeout is the only constructor and sets response_defaults: true (crates/scm-sdk/src/config.rs:361-380); without_response_defaults/response_defaults/response_mode at config.rs:406-430; propagation at engine.rs:643, engine.rs:721 and streaming.rs:113; request path pinned to Mode::Request at engine.rs:538; realtime deliberately unchanged at realtime/mod.rs:327-330,362.",
+      "Recorded defect 1 confirmed: validation.rs:766-771 inserts with self.copy_text(key) only when the property is present or the mode inserts defaults, so a suppressed default's key bytes are never charged against max_copied_bytes, matching docs/g10-0.1.1-plan.md:55-57.",
+      "Recorded defect 2 confirmed: crates/scm-sdk/tests/red_team_resources_contracts.rs:2026-2119 exercises get/list/create/update/probe/update_profile/list_all plus both-mode rejection with operation name red_team.targets.get, but list_all consumes a single reply (10 queued replies, 10 asserted requests) and no explicit JSON null appears in the fixtures.",
+      "Scope of acceptance-difference risk bounded by inspection: the frozen graph contains exactly 23 ZodDefault nodes; the effect-wrapped objects I sampled do not contain them (usage_reset_exclusive s006129 wraps s006131 whose periodic_reset/periodic_reset_days are s006139/s006142; chart_bounds s000063/s000065 wrap s000064/s000066 using s000021-s000030), and both ZodPipeline nodes (s000040, s006113) take ZodAny input s000042, so no pipeline or sampled refinement can observe suppression today.",
+      "Corpus-level equivalence is implemented (though unexecuted in this gate): crates/scm-sdk/tests/schema_contracts.rs:160-193 replays every fixture jsonCase under Mode::ResponseWithoutDefaults against the oracle's accept/reject expectation and asserts only defaults differ, and lines 277-314 probe every root's omitted-root behavior; this substantiates docs/VALIDATION.md:25-26.",
+      "Governance regression: tools/test_ci.py:211-219 reads docs/phase-status.json and asserts status[\"phases\"][-1].get(\"registry_publication\", {}).get(\"status\") == \"verified_existing_publication\"; the file now ends with the phase-90 entry at line 1800 and the phase-91 entry at line 1812, while registry_publication remains on the phase-8 record at line 1761.",
+      "Gate-definition gaps: tools/check_phase.py:67 lists a discover pattern for tools/test_g10_release.py, which is absent from the 13 tools/test_*.py files present; tools/review_phase.py:194 computes the successor as args.phase + 1, which yields None for phase 8 because id 9 is not in docs/phase-status.json."
+    ],
+    "limitations": [
+      "Read-only Read/Glob/Grep only: I could not execute any command, so I could not recompute the reviewed source SHA-256 (94de2818\u2026) or the docs/checks/phase-90.json digest (3a124bca\u2026), and I could not run tools/test_ci.py to observe the phases[-1] failure \u2014 that finding is derived from reading tools/test_ci.py:211-219 against the current docs/phase-status.json ordering, where the failure path is unconditional.",
+      "The phase-90 gate executes no Rust, generator, export, package, dependency or private-material checks, so every runtime claim about the pinned branch (compilation, clippy/fmt, the schema_contracts.rs corpus equivalence test, the red_team target test) is unexecuted evidence in this phase; I verified the code and tests by inspection only.",
+      "I sampled rather than exhaustively traced all 23 ZodDefault containers. I confirmed the two pipelines and two effect families (usage_reset_exclusive, chart_bounds) cannot observe default suppression, but I did not resolve the owning object and wrapper chain for every default, so an effect-based acceptance difference elsewhere in the graph is not fully excluded; the plan's own requirement to inspect effects and pipeline combinations and to publish the 23-binding inventory remains the right control.",
+      "I did not read any credential or tenant-registration material, .local/ review diagnostics, or anything outside this repository, and I made no network calls. The plan's live-qualification and registry steps are therefore judged as written text only.",
+      "git history beyond the commit subjects supplied in the session context was not inspectable with the available tools, so the pin verification rests on those subjects plus the in-repo records; I also could not diff the modified tools/check_phase.py and tools/review_phase.py against their pre-phase state, so I assessed them as current source rather than as a delta."
+    ]
+  }
+}

@@ -20,6 +20,12 @@ Run `python tools/check_phase.py --phase N` before requesting review. The gate b
 | 10. Vendor dataplane contracts/models | Namespaced vendor validators, compatible typed model additions, schema diff and complete operation ledger. | Source and generation checks, independent model fixtures, frozen regressions; Claude score at least 9. |
 | 11. Vendor dataplane operations | Implement eleven new methods and current-spec fixtures for all 47 operations. | Executable operation bindings, negative input and security/failure checks; Claude score at least 9. |
 | 12. Vendor dataplane qualification | Docs/examples/changelog, CI coverage check, compiler/feature/package qualification and remote delivery. | Cumulative relevant checks, explicit live limitations, final Claude score at least 9 and ordinary remote push. |
+| 90. G10 maintenance plan | Review pinned G10 branch and plan compatibility fixes, source qualification and 0.1.1 publication. | Scoped plan checks and actual Claude plan score at least 9 before SDK fixes. |
+| 91. G10 maintenance release | Correct response-policy accounting, prove typed omission/null/multiple pages, refresh source-bound ledgers, qualify and publish 0.1.1. | Relevant compiler/package/security/live evidence, actual Claude score at least 9, clean source/tag and verified registry artifact. |
+
+Maintenance identifiers 90–91 belong to the isolated 0.1.1 patch track. Follow
+[the G10 release plan](g10-0.1.1-plan.md) in that order after baseline phases 1–8.
+Historical baseline gates and their command sets retain their original meaning.
 
 `docs/phase-status.json` is the progress source of truth. Live prerequisite failures are recorded separately from implementation gaps. Stable features require successful live acceptance; offline-only or upstream-blocked capabilities retain explicit experimental status. Rust dependency and generator versions, target triples, and resource defaults are recorded as foundation outputs.
 

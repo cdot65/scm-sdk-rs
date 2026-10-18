@@ -45,18 +45,18 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "2e8d0619d0f58e08714938452e6bcc82b2d739e7b0d52b516eb7d98c2d0fade3"
+      "sha256": "d2d43487b69b870a965bdf41f1aee58e5d7b5f758e3decb0a6f3e387358d0d3c"
     },
     "report": {
-      "path": "docs/checks/phase-08-live-attempt-06.json",
-      "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21"
+      "path": "docs/checks/phase-08-live-attempt-08.json",
+      "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
-      "sha256": "6563b654d15c150593d48b5087cd462504a05e42c254c34fa50e5fe6e2437e83"
+      "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
     },
-    "executedAt": "2026-10-16T23:17:00.857125+00:00",
-    "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+    "executedAt": "2026-10-18T13:57:34.435654+00:00",
+    "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
     "toolchain": "1.99.0",
     "hostTarget": "x86_64-unknown-linux-musl",
     "cleanupState": "not_needed"
@@ -84,7 +84,7 @@
     },
     "airs_api_defaults": {
       "service-name": "api",
-      "user-agent": "PAN-AIRS/0.1.0-rust-sdk",
+      "user-agent": "PAN-AIRS/0.1.1-rust-sdk",
       "scope": "API requests assembled by Client, including injected transports and streams; OAuth issuer exchange has its own headers.",
       "frozenUserAgent": "PAN-AIRS/0.34.0-typescript-sdk",
       "deliberateDifference": "Native crate version and rust-sdk suffix retain the PAN-AIRS vendor prefix.",
@@ -96,7 +96,7 @@
   "sourceBindings": [
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "2e8d0619d0f58e08714938452e6bcc82b2d739e7b0d52b516eb7d98c2d0fade3"
+      "sha256": "d2d43487b69b870a965bdf41f1aee58e5d7b5f758e3decb0a6f3e387358d0d3c"
     },
     {
       "path": "contracts/native-operation-mappings/agentguard-oauth.json",
@@ -348,7 +348,7 @@
     },
     {
       "path": "crates/scm-sdk/src/config.rs",
-      "sha256": "84868f2f0013b545d45fa3e6d51d56df54edd4c186abd60989b471197babeb6d"
+      "sha256": "b4c455b9476d6fe5b42ab643c489d38db57b815751c4e278fecb5869cbb88dc3"
     },
     {
       "path": "crates/scm-sdk/src/dlp/data_patterns.rs",
@@ -368,7 +368,7 @@
     },
     {
       "path": "crates/scm-sdk/src/engine.rs",
-      "sha256": "ac4250d5a89c7068dbc89a74931549d4ab974afaeb2040bee99622eec00b0510"
+      "sha256": "55dda4a249bd0269d25397287eee641e5bbd8dafe66a90417064345099ea661d"
     },
     {
       "path": "crates/scm-sdk/src/json_decode.rs",
@@ -396,7 +396,7 @@
     },
     {
       "path": "crates/scm-sdk/src/streaming.rs",
-      "sha256": "3217627788cbad227832eb9ba3ffd5bf394e4cc799c6cbf1cb676083ff90594d"
+      "sha256": "27aae97e2fedcefdcfcbd91e842509f0b12e5fe277c0b78a195d0ca56fe9db08"
     },
     {
       "path": "crates/scm-sdk/src/streaming/sse/tests.rs",
@@ -460,7 +460,7 @@
     },
     {
       "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
-      "sha256": "990d2e542232e9014dbe88b33f8e4b5e9725f348b7bc07d861d7424c5e73047f"
+      "sha256": "b87ed4faf282b13c8b810460d7221239f94caa0442924d0167de63e10313d0d6"
     },
     {
       "path": "crates/scm-sdk/tests/representative_clients.rs",
@@ -476,22 +476,22 @@
     },
     {
       "path": "docs/MODELS.md",
-      "sha256": "1c57a555f2c9fa4f2b0e8eb311a4a386b2fe4b52fc668f2158ab48d70af57068"
+      "sha256": "0888a724815100e771cf088e55af5a7c6ab0a33407aab2e4db9e0859b5dca407"
     },
     {
-      "path": "docs/checks/phase-08-live-attempt-06.json",
-      "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21"
+      "path": "docs/checks/phase-08-live-attempt-08.json",
+      "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c"
     },
     {
       "path": "tools/live_evidence.py",
-      "sha256": "6563b654d15c150593d48b5087cd462504a05e42c254c34fa50e5fe6e2437e83"
+      "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
     }
   ],
   "summary": {
     "baselineConcreteMethods": 448,
     "implemented": 448,
     "pending": 0,
-    "liveVerified": 17,
+    "liveVerified": 16,
     "liveRecorded": 22,
     "completeMethodOptionParity": 448,
     "partialMethodOptionParity": 0
@@ -523,10 +523,10 @@
       "deliveredInPhase": 7,
       "lastContractPhase": 7,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "agentguard.get_scan_stats",
         "observations": [
           {
@@ -569,10 +569,10 @@
       "deliveredInPhase": 7,
       "lastContractPhase": 7,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "agentguard.list_rules",
         "observations": [
           {
@@ -641,10 +641,10 @@
       "deliveredInPhase": 7,
       "lastContractPhase": 7,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "agentguard.list_scans",
         "observations": [
           {
@@ -5703,10 +5703,10 @@
       "deliveredInPhase": 6,
       "lastContractPhase": 6,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "gateway.workspaces.list",
         "observations": [
           {
@@ -5758,10 +5758,10 @@
       "deliveredInPhase": 7,
       "lastContractPhase": 7,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "gateway.workspaces.provision",
         "observations": [
           {
@@ -5859,10 +5859,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "iam.scopes.create",
         "observations": [
           {
@@ -5956,10 +5956,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "iam.scopes.list",
         "observations": [
           {
@@ -6111,10 +6111,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "management.api_keys.list_for_token",
         "observations": [
           {
@@ -7183,10 +7183,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "dlp.data_profiles.list",
         "observations": [
           {
@@ -7530,10 +7530,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -7818,10 +7818,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "management.profiles.list",
         "observations": [
           {
@@ -7883,10 +7883,10 @@
       "deliveredInPhase": 3,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "management.profiles.list_for_token",
         "observations": [
           {
@@ -8698,10 +8698,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "model_security.models.list_models",
         "observations": [
           {
@@ -8994,10 +8994,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "model_security.scans.list",
         "observations": [
           {
@@ -9360,10 +9360,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "model_security.rules.list",
         "observations": [
           {
@@ -9758,10 +9758,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "red_team.get_management_languages",
         "observations": [
           {
@@ -9858,10 +9858,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "red_team.get_scan_metadata",
         "observations": [
           {
@@ -10805,10 +10805,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "red_team.eula.get_status",
         "observations": [
           {
@@ -12090,10 +12090,10 @@
       "deliveredInPhase": 3,
       "lastContractPhase": 3,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.async_scan",
         "observations": [
           {
@@ -12131,10 +12131,10 @@
       "deliveredInPhase": 3,
       "lastContractPhase": 3,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.query_report",
         "observations": [
           {
@@ -12157,7 +12157,7 @@
       "owningPhase": 3,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "verified",
+      "liveAcceptance": "incomplete_or_uncorrelated_receipt",
       "rustMethods": [
         "scm_sdk::airs::scan::Scanner::query_by_scan_ids"
       ],
@@ -12172,21 +12172,21 @@
       "deliveredInPhase": 3,
       "lastContractPhase": 3,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.query_scan_results",
         "observations": [
           {
             "section": "probes",
             "index": 17,
             "operation": "scan.query_scan_results",
-            "classification": "verified",
+            "classification": "incomplete_or_uncorrelated_receipt",
             "status": 200,
             "errorKind": null,
             "remoteOutcome": null,
-            "workflowAccepted": true
+            "workflowAccepted": false
           },
           {
             "section": "probes",
@@ -12199,7 +12199,7 @@
             "workflowAccepted": true
           }
         ],
-        "reconciliationRequired": false
+        "reconciliationRequired": true
       }
     },
     {
@@ -12226,10 +12226,10 @@
       "deliveredInPhase": 3,
       "lastContractPhase": 3,
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-06.json",
-        "sha256": "8f22695ba3243d2583dd3d8e45909b9eae747c6b6f86c1e669d24aa2ab859d21",
+        "path": "docs/checks/phase-08-live-attempt-08.json",
+        "sha256": "6a28a2c88c3d65f4efe18a9a8539f19864d3fb217cb94a540c2267d667fdfc2c",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "c4dad30a83748fc221fce26cfd6db0fbf16b0a7df3e7306dadd835b51e586934",
+        "runtimeInputsSha256": "9ec0b34333dde1144a4f5c1b88538419f334a09a153256e6f1238222cab39ba1",
         "probe": "scan.sync_scan",
         "observations": [
           {

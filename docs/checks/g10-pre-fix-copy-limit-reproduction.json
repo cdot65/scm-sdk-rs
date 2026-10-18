@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Executed reproduction of known supplied-branch bug; not release qualification",
+  "checkedAt": "2026-10-18T13:22:50.695992+00:00",
+  "sourceCommit": "a6d63e58f067a98504e5b79987639d53e11fc931",
+  "sourceSha256": "b04b72796126624d3c81d8f3e3e11380bffa44eb42a677fa3fe0e4e0a28c4dbe",
+  "runtimeInputsSha256": "f86e5141ce851f32343ea7bdf4a5b05f0724929a90a5b2d6814d0a3cce807d95",
+  "sourceUnchanged": true,
+  "command": [
+    "/home/cdot/.cargo/bin/cargo",
+    "+1.89.0",
+    "run",
+    "--quiet",
+    "--locked",
+    "--offline",
+    "--manifest-path",
+    ".local/g10-limit-probe/Cargo.toml"
+  ],
+  "rustcVersion": "rustc 1.89.0 (29483883e 2025-08-04)\nbinary: rustc\ncommit-hash: 29483883eed69d5fb4db01964cdf2af4d86e9cb2\ncommit-date: 2025-08-04\nhost: x86_64-unknown-linux-musl\nrelease: 1.89.0\nLLVM version: 20.1.7\n",
+  "manifestSource": "[package]\nname=\"g10-limit-probe\"\nversion=\"0.0.0\"\nedition=\"2024\"\n[workspace]\n[dependencies]\nscm-sdk={path=\"../../crates/scm-sdk\",default-features=false,features=[\"models\"]}\nserde_json=\"1.0\"\n",
+  "programSource": "use scm_sdk::validation::{Mode, ValidationLimits,parse_with_limits};\nfn main(){ let mut l=ValidationLimits::default();l.max_input_bytes=26;l.max_copied_bytes=30;let input=serde_json::json!({\"basic_auth_header\":null}); for mode in [Mode::Response,Mode::ResponseWithoutDefaults] { let r=parse_with_limits(\"BasicAuthAuthConfigSchema\",input.clone(),mode,&l); println!(\"{mode:?}: {:?}\",r.as_ref().map(|_|\"accepted\").map_err(|e|e.kind()));}}\n",
+  "exitCode": 0,
+  "stdout": "Response: Err(Limit)\nResponseWithoutDefaults: Ok(\"accepted\")\n",
+  "stderr": "",
+  "reproduced": true
+}

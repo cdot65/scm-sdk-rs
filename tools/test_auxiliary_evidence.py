@@ -333,6 +333,24 @@ class PrivateMaterialTests(unittest.TestCase):
 class BoundedEvidenceTests(unittest.TestCase):
     @unittest.skipUnless(os.open in os.supports_dir_fd and hasattr(os, "O_DIRECTORY"),
                          "Atomic replacement requires directory-relative OS primitives")
+    def test_maintenance_stress_receipt_preserves_the_exact_path_boundary(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            reports = root / "docs/checks"
+            reports.mkdir(parents=True)
+            path = reports / "phase-91-tracing-stress-1.99.0.json"
+            report = {"compiler": "1.99.0", "passed": True}
+            stress.write_receipt(root, path, report, replace=True)
+            self.assertEqual(json.loads(path.read_text()), report)
+            self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+            for unsafe in (reports / "phase-90-tracing-stress-1.99.0.json",
+                           reports / "phase-91-tracing-stress-1.89.0.json",
+                           root / "Cargo.toml"):
+                with self.assertRaises(ValueError):
+                    stress.write_receipt(root, unsafe, report, replace=True)
+
+    @unittest.skipUnless(os.open in os.supports_dir_fd and hasattr(os, "O_DIRECTORY"),
+                         "Atomic replacement requires directory-relative OS primitives")
     def test_stress_report_replacement_is_restricted_atomic_and_private(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)

@@ -110,7 +110,7 @@ impl<T: serde::de::DeserializeOwned> ContractStream<T> {
                 let value = crate::validation::parse_with_limits(
                     self.contract.schema,
                     value,
-                    crate::validation::Mode::Response,
+                    self.options.response_mode(),
                     &self.contract.limits,
                 )
                 .map_err(|error| {

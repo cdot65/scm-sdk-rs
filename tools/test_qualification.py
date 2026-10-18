@@ -189,6 +189,9 @@ class QualificationTests(unittest.TestCase):
             (root / "docs/checks").mkdir(parents=True)
             (root / "tools").mkdir()
             (root / "tools/live_evidence.py").write_text("synthetic-verifier-input")
+            (root / "crates/scm-sdk").mkdir(parents=True)
+            (root / "crates/scm-sdk/Cargo.toml").write_text(
+                '[package]\nversion="' + live_evidence.crate_version() + '"\n')
             (root / "contracts/operations.json").write_text(json.dumps({"operations": [
                 {"id": name} for name in sorted(set(live_evidence.PROBE_BINDINGS.values()))]}))
             path = root / "docs/checks/phase-08-live-attempt-01.json"

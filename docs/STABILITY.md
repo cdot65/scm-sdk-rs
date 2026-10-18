@@ -1,6 +1,11 @@
 # Compatibility and support status
 
-The initial Rust version is **0.1.0**, published on
+The current Rust crate version is **0.1.1**. Its
+[publication receipt](checks/release-registry-0.1.1.json), retained after upload,
+establishes actual release availability and artifact identity. The response-policy
+addition follows the patch-compatibility rule below; default behavior is unchanged.
+
+The initial Rust version **0.1.0** was published on
 [crates.io](https://crates.io/crates/scm-sdk/0.1.0). The
 [publication receipt](checks/release-registry-0.1.0.json) records its exact source
 and archive checksum. The frozen parity

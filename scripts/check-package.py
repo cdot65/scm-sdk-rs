@@ -145,6 +145,8 @@ def main():
             ['check', '--examples', '--all-features'],
             ['test', '--doc', '--all-features'],
         ]
+        if 'examples/response_defaults.rs' in files:
+            commands.append(['run', '--example', 'response_defaults', '--all-features'])
         passed = True
         for command in commands:
             if not run(command + ['--locked', '--offline', '--target', host], extracted):
@@ -174,7 +176,7 @@ def main():
               'archive_sha256': digest(content), 'archive_bytes': len(content), 'retainedArchive': str(retained),
               'files': [{'path': name, 'sha256': digest(data), 'bytes': len(data)} for name, data in sorted(files.items())],
               'publicConsumerSourceSha256': digest((ROOT / 'contracts/native-probes/src/main.rs').read_bytes()),
-              'checks': checks, 'limitations': ['Only the recorded host executes code; examples are compiled without contacting services.',
+              'checks': checks, 'limitations': ['Only the recorded host executes code; examples compile without contacting services. The response_defaults example, when present, also executes offline.',
                   'The full development integration corpus remains repository-only; the archive runs its packaged unit/doctests and external public capability consumer.']}
     output = args.output or ROOT / f'.local/checks/package-{args.toolchain}.json'
     output.parent.mkdir(parents=True, exist_ok=True)

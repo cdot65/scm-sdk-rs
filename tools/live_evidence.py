@@ -13,6 +13,7 @@ import pathlib
 import re
 import subprocess
 import tempfile
+import tomllib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 INPUT = pathlib.Path("contracts/live-evidence.json")
@@ -124,12 +125,23 @@ def require_keys(value, keys, optional=()):
         raise ValueError("Unexpected receipt fields; unreviewed data must not be exported")
 
 
-def validate_report(report):
+def crate_version(root=ROOT):
+    manifest = tomllib.loads(regular(root, "crates/scm-sdk/Cargo.toml").read_text())
+    version = manifest["package"]["version"]
+    if not isinstance(version, str) or not re.fullmatch(
+        r"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?", version
+    ):
+        raise ValueError("Qualification requires an explicit SDK package version")
+    return version
+
+
+def validate_report(report, *, expected_version=None):
+    expected_version = crate_version() if expected_version is None else expected_version
     require_keys(report, {"schemaVersion", "tenantScopeMatched", "client", "crateVersion",
         "automaticRetries", "maximumTransportAttempts", "perOperationTimeoutSeconds", "scanAuthentication",
         "mutationsEnabled", "cleanupState", "probes", "cleanup", "serviceRequests", "tokenExchanges", "limitations"})
     if not (type(report["schemaVersion"]) is int and report["schemaVersion"] == 1 and report["tenantScopeMatched"] is True
-            and report["client"] == "native_scm_sdk" and report["crateVersion"] == "0.1.0"
+            and report["client"] == "native_scm_sdk" and report["crateVersion"] == expected_version
             and type(report["automaticRetries"]) is int and report["automaticRetries"] == 0
             and type(report["maximumTransportAttempts"]) is int and report["maximumTransportAttempts"] == 80
             and type(report["perOperationTimeoutSeconds"]) is int and report["perOperationTimeoutSeconds"] == 15
@@ -261,7 +273,7 @@ def load(root=ROOT, required=False):
             "--expect-tsg", "[verified-external-scope]", "--output", "[private-report]",
             "--recovery-output", "[private-recovery]", "--mutations"]:
         raise ValueError("Unreviewed or credential-bearing invocation metadata")
-    report = validate_report(envelope["report"])
+    report = validate_report(envelope["report"], expected_version=crate_version(root))
     frozen_ids = {v["id"] for v in json.loads((root / "contracts/operations.json").read_text())["operations"]}
     if set(PROBE_BINDINGS.values()) - frozen_ids:
         raise ValueError("Controlled probe binding is absent from the frozen inventory")
@@ -311,7 +323,7 @@ def run(args):
         path.chmod(0o600)
     if execution.returncode or not raw_path.is_file():
         raise ValueError(f"Native qualification interrupted; private recovery retained at {private}")
-    report = validate_report(json.loads(raw_path.read_text()))
+    report = validate_report(json.loads(raw_path.read_text()), expected_version=crate_version())
     envelope = {"schemaVersion": 1, "baselineCommit": BASELINE,
         "executedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "runtimeInputsSha256": before, "binarySha256": digest(binary), "toolchain": toolchain,

@@ -14,6 +14,27 @@ Responses preserve additional object fields and unfamiliar enum values while che
 
 Rust object maps faithfully preserve response extension data, including keys that are ordinary data in Rust. Request object/record normalization retains Zod's omission of the `__proto__` merge key. The explicit Gateway finite-JSON schemas reject `__proto__`, `constructor`, and `prototype` recursively in both modes. These schemas also reject nonfinite and non-JSON runtime values; Rust JSON arrays are inherently dense and cannot contain JavaScript accessors, symbols, cycles, or inherited prototypes.
 
+### Responses without inserted defaults
+
+`Mode::ResponseWithoutDefaults` is an opt-in native extension (TypeScript has no
+equivalent). It applies exactly the `Mode::Response` policy, so the same documents
+are accepted and rejected, and an absent defaulted value is still validated through
+its default. The output then omits every value absent from the input: an object
+property the document did not contain, or an omitted root passed to
+`parse_optional`, is never materialized. Present values, including present
+defaulted fields, are normalized exactly as in `Mode::Response`. The fixture corpus
+checks this against the independent response oracle for every JSON case.
+
+Typed operations select it per call with
+`RequestOptions::without_response_defaults()`. It affects buffered JSON contract
+responses and Gateway SSE contract events. Realtime events, request validation and
+`Mode::Response` itself are unchanged, and source parity (defaults inserted)
+remains the default. The generated typed models represent every defaulted field
+as `Optional`, so a value the service omitted stays `Optional::Unset`. For example,
+a Red Team target read keeps a WebSocket `connection_params` without
+`ws_response_timeout: 110` and a basic-auth `auth_config` without
+`basic_auth_location: "HEADER"` unless the service sent them.
+
 ## Presence and numbers
 
 | Native wrapper | Wire states | Containing field behavior |
@@ -73,3 +94,7 @@ adds part/header/envelope limits before authentication. Binary builders offer
 `build` for required-field presence; their owning operation performs complete
 native validation. A JSON-only `build_validated` is intentionally absent from
 these five builders because native files cannot be serialized as JSON.
+
+The full [23-binding inventory](RESPONSE_DEFAULTS.md) identifies shared schemas
+and defaults outside Red Team. The [offline example](../crates/scm-sdk/examples/response_defaults.rs)
+executes against the packaged crate on both qualified compilers.

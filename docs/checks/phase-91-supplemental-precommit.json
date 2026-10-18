@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-18T15:25:41.296096+00:00",
+  "review": "docs/reviews/phase-91-attempt-01.json",
+  "sourceSha256": "6f0c3cfb3690c6b948dbb0544623baf340ecd9205c8d4de67b73175aeb0e02e2",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "840c090..HEAD"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "kind": "publicApiSourceAndExampleBinding",
+      "source": "crates/scm-sdk/src/config.rs",
+      "token": "pub fn without_response_defaults",
+      "passed": true
+    },
+    {
+      "kind": "publicApiSourceAndExampleBinding",
+      "source": "crates/scm-sdk/src/config.rs",
+      "token": "pub fn response_defaults",
+      "passed": true
+    },
+    {
+      "kind": "publicApiSourceAndExampleBinding",
+      "source": "crates/scm-sdk/src/validation.rs",
+      "token": "ResponseWithoutDefaults",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

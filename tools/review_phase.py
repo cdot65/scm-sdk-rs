@@ -153,6 +153,11 @@ def validate_predecessors(root, status, phase):
             raise ValueError("An earlier phase's accepted review evidence is invalid")
 
 
+def next_phase(phases, current):
+    """Support separately numbered maintenance phases without bypassing a gate."""
+    return min((number for number in phases if number > current), default=None)
+
+
 def main(argv=None, root=None):
     root = ROOT if root is None else root.resolve()
     parser = argparse.ArgumentParser(description=__doc__)
@@ -191,7 +196,7 @@ def main(argv=None, root=None):
             milestones["claude_review"] = {
                 "status": "accepted", "score": record["review"]["score"],
                 "evidence": [str(review_path.relative_to(root))]}
-            status["active_phase"] = args.phase + 1 if args.phase + 1 in phases else None
+            status["active_phase"] = next_phase(phases, args.phase)
             if status["active_phase"] is not None:
                 phases[status["active_phase"]]["status"] = "in_progress"
             (root / "docs/phase-status.json").write_text(json.dumps(status, indent=2) + "\n")
@@ -202,6 +207,8 @@ def main(argv=None, root=None):
     destination = root / f"docs/reviews/phase-{args.phase:02d}-attempt-{args.attempt:02d}.json"
     if destination.exists() or destination.with_suffix(".prompt.md").exists():
         raise ValueError("Review attempt already exists; preserve it and use a new attempt")
+    followup = status.get("active_followup_plan")
+    focus = f"\nActive follow-up plan: {followup}. Read it and this phase's scope_evidence.\n" if followup else ""
     prompt = f"""Independently review phase {args.phase}: {phases[args.phase]['name']}.
 Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md and
 docs/phase-status.json, then inspect all actual artifacts relevant to this phase.
@@ -213,6 +220,7 @@ trusting completion prose. You have read-only Read/Glob/Grep tools: inspect reco
 checks and distinguish unexecuted checks. Do not read any credential/tenant-registration
 files or anything outside this repository. .local/typescript is a frozen nonsecret source
 reference and may be inspected. Do not modify files or perform network calls.
+{focus}
 Reviewed source SHA256: {before}.
 Passing check evidence: {checks.relative_to(root)}, SHA256 {sha256(checks)}.
 Active follow-up plan: {phases[args.phase].get('plan', 'docs/implementation-plan.md')}.

@@ -10,6 +10,7 @@ import signal
 import subprocess
 import sys
 import time
+import unittest
 
 from review_phase import fingerprint
 
@@ -19,8 +20,23 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 COMMAND_TIMEOUT_SECONDS = 6 * 900 + 60
 
 
+def require_nonempty_tests(command):
+    """unittest discovery otherwise reports success for missing or empty suites."""
+    if command[1:4] != ["-m", "unittest", "discover"]:
+        return
+    start = command[command.index("-s") + 1] if "-s" in command else "."
+    pattern = command[command.index("-p") + 1] if "-p" in command else "test*.py"
+    suite = unittest.TestLoader().discover(str(ROOT / start), pattern=pattern)
+    if suite.countTestCases() == 0:
+        raise ValueError("Refusing an empty unittest discovery suite: " + pattern)
+
+
 def run_check(command):
     """Retain output and terminate the checker's process group on timeout."""
+    try:
+        require_nonempty_tests(command)
+    except (ValueError, ImportError) as error:
+        return {"exit_code": 1, "timeout": False, "stdout": "", "stderr": str(error)}
     process = subprocess.Popen(command, cwd=ROOT, text=True, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE, start_new_session=os.name == "posix")
     timed_out = False
@@ -78,6 +94,65 @@ def commands_for(phase):
                 *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
                   for name in ("test_vendor_red_team_plan.py", "test_review_phase.py",
                                "test_ci.py", "test_auxiliary_evidence.py")]]
+    if phase == 90:
+        return [
+            ["git", "diff", "--check", "840c090..HEAD"],
+            ["git", "diff", "--check"],
+            ["git", "diff", "--cached", "--check"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_ci.py", "-v"],
+            ["python", "tools/verify-contracts.py"],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-90-private-material.json"],
+        ]
+    if phase == 91:
+        return [
+            ["git", "diff", "--check"],
+            ["git", "diff", "--cached", "--check"],
+            *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", pattern, "-v"]
+              for pattern in ("test_review_phase.py", "test_g10_release.py", "test_native_operations.py",
+                              "test_native_exports.py", "test_live_evidence.py", "test_qualification.py",
+                              "test_ci.py", "test_package_policy.py", "test_dependency_policy.py",
+                              "test_auxiliary_evidence.py", "test_model_fixtures.py", "test_model_generation.py",
+                              "test_native_fixtures.py", "test_verify_gateway_bindings.py")],
+            ["python", "tools/response_defaults.py", "--check"],
+            ["python", "tools/verify-contracts.py"],
+            ["python", "tools/verify-contracts.py", "--baseline", ".local/typescript"],
+            ["python", "tools/verify-contracts.py", "--self-test"],
+            ["python", "tools/generate_validation.py", "--check"],
+            ["python", "tools/generate_models.py", "--check"],
+            ["python", "tools/generate_constants.py", "--check"],
+            ["python", "tools/verify_gateway_bindings.py", "--check"],
+            ["python", "tools/model_fixtures.py", "--check"],
+            [".local/typescript/node_modules/.bin/tsx", "tools/schema-oracle.mts", "--check"],
+            ["python", "tools/generate_models.py", "--verify-fixtures"],
+            ["python", "tools/verify_native_fixtures.py", "--require-test-bindings"],
+            ["python", "tools/native_operations.py", "--check", "--require-through-phase", "8"],
+            ["python", "tools/native_exports.py", "--check"],
+            ["python", "tools/live_evidence.py", "--check"],
+            ["python", "tools/qualification.py", "--check"],
+            *[["python", "scripts/check-rust.py", "--toolchain", toolchain, "--feature-set", feature,
+               "--output", f"docs/checks/phase-91-rust-{toolchain}-{feature}.json"]
+              for toolchain, feature in (("1.89.0", "all"), ("1.99.0", "all"),
+                                         ("1.99.0", "minimal"), ("1.99.0", "gateway-json-unification"),
+                                         ("1.99.0", "default-tracing"))],
+            *[["python", "scripts/check-native-exports.py", "--toolchain", toolchain,
+               "--output", f"docs/checks/phase-91-native-exports-{toolchain}.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            *[["python", "scripts/check-package.py", "--toolchain", toolchain,
+               "--output", f"docs/checks/phase-91-package-{toolchain}.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            ["python", "scripts/verify-publication.py", "--delta", "--version", "0.1.1",
+             "--proof", "docs/checks/phase-91-package-1.99.0.json",
+             "--output", "docs/checks/phase-91-package-delta.json"],
+            ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-91-dependencies.json"],
+            *[["python", "scripts/check-cross.py", "--target", target,
+               "--output", f"docs/checks/phase-91-cross-{target}.json"]
+              for target in ("x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-pc-windows-msvc")],
+            ["python", "scripts/check-tracing-stress.py", "--toolchain", "1.99.0",
+             "--processes", "100", "--test-threads", "16", "--expected-tests", "203",
+             "--output", "docs/checks/phase-91-tracing-stress-1.99.0.json", "--replace-report"],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-91-private-material.json"],
+        ]
     if phase == 1:
         return [
             ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"],

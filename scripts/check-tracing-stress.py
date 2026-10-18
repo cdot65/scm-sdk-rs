@@ -22,8 +22,11 @@ SUMMARY = re.compile(rb"^test result: ok\. (\d+) passed; (\d+) failed; (\d+) ign
 def write_receipt(root, output, report, replace=False):
     content = (json.dumps(report, indent=2) + "\n").encode()
     if replace:
-        expected = root / "docs/checks" / ("phase-08-tracing-stress-" + report["compiler"] + ".json")
-        if output != expected or ".." in output.parts:
+        expected = {
+            root / "docs/checks" / (phase + "-tracing-stress-" + report["compiler"] + ".json")
+            for phase in ("phase-08", "phase-91")
+        }
+        if output not in expected or ".." in output.parts:
             raise ValueError("Replacement is restricted to the exact versioned tracing stress report")
         atomic_replace_private(output, content)
     else:
@@ -79,7 +82,7 @@ def main():
     parser.add_argument("--cargo", type=pathlib.Path, help="Explicit rustup Cargo proxy")
     parser.add_argument("--output", type=pathlib.Path, required=True, help="New receipt path")
     parser.add_argument("--replace-report", action="store_true",
-                        help="Atomically replace only docs/checks/phase-08-tracing-stress-TOOLCHAIN.json")
+                        help="Atomically replace only the exact phase-08 or phase-91 tracing stress receipt")
     args = parser.parse_args()
     if (not re.fullmatch(r"\d+\.\d+\.\d+", args.toolchain)
             or not 1 <= args.processes <= 1000 or not 1 <= args.test_threads <= 64

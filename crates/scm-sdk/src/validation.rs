@@ -14,7 +14,26 @@ use std::{collections::BTreeMap, sync::OnceLock};
 #[non_exhaustive]
 pub enum Mode {
     Request,
+    /// Tolerant response decoding with the frozen schema defaults applied, exactly
+    /// as the source SDK does. This is the default for every typed response.
     Response,
+    /// The same tolerant response validation as [`Mode::Response`], accepting and
+    /// rejecting exactly the same documents, but a value absent from the input is
+    /// never materialized: schema defaults are still checked and then discarded, so
+    /// the normalized output contains only the object properties actually present.
+    /// Typed operations select it with
+    /// [`RequestOptions::without_response_defaults`](crate::RequestOptions::without_response_defaults).
+    ResponseWithoutDefaults,
+}
+impl Mode {
+    /// Response modes preserve unknown fields and widen open vocabularies.
+    fn is_response(self) -> bool {
+        matches!(self, Self::Response | Self::ResponseWithoutDefaults)
+    }
+    /// Whether an omitted value may be replaced by its schema default in the output.
+    fn inserts_defaults(self) -> bool {
+        !matches!(self, Self::ResponseWithoutDefaults)
+    }
 }
 
 const MAX_DEPTH: usize = 64;
@@ -349,7 +368,12 @@ pub fn parse_optional_with_limits(
         copied: 0,
         limits,
     };
-    context.walk(schema, input.as_ref(), 0)
+    let output = context.walk(schema, input.as_ref(), 0)?;
+    Ok(if input.is_none() && !mode.inserts_defaults() {
+        None
+    } else {
+        output
+    })
 }
 
 fn preflight(value: &Value, limits: &ValidationLimits) -> Result<()> {
@@ -581,7 +605,7 @@ impl Context<'_> {
                             let normalized = self
                                 .walk(child(node, "value")?, Some(value), depth + 1)?
                                 .ok_or_else(invalid)?;
-                            if self.mode == Mode::Response
+                            if self.mode.is_response()
                                 || node.get("preserveReservedKeys") == Some(&Value::Bool(true))
                                 || key != "__proto__"
                             {
@@ -595,7 +619,7 @@ impl Context<'_> {
                             .get("variants")
                             .and_then(Value::as_array)
                             .ok_or_else(invalid)?;
-                        if self.mode == Mode::Response
+                        if self.mode.is_response()
                             && input.is_some_and(Value::is_string)
                             && variants.iter().all(|variant| {
                                 variant
@@ -670,7 +694,7 @@ impl Context<'_> {
                             .iter()
                             .find(|mapping| mapping.get("value") == Some(value));
                         if selected.is_none()
-                            && self.mode == Mode::Response
+                            && self.mode.is_response()
                             && value.is_string()
                             && node.get("preserveUnknownResponse") == Some(&Value::Bool(true))
                         {
@@ -697,7 +721,7 @@ impl Context<'_> {
                             .and_then(Value::as_array)
                             .ok_or_else(invalid)?;
                         if values.contains(value)
-                            || (self.mode == Mode::Response
+                            || (self.mode.is_response()
                                 && ((value.is_string() && values.iter().any(Value::is_string))
                                     || (value.is_number() && values.iter().any(Value::is_number))))
                         {
@@ -782,12 +806,21 @@ impl Context<'_> {
         let mut result = Map::new();
         for (key, property) in properties {
             let schema = child(property, "schema")?;
-            if let Some(value) = self.walk(schema, values.get(key), depth + 1)?
-                && (self.mode == Mode::Response
+            let present = values.get(key);
+            // An absent property is still validated (including any default), so
+            // acceptance never depends on whether defaults are materialized.
+            if let Some(value) = self.walk(schema, present, depth + 1)?
+                && (self.mode.is_response()
                     || node.get("preserveReservedKeys") == Some(&Value::Bool(true))
                     || key != "__proto__")
             {
-                result.insert(self.copy_text(key)?, value);
+                // Charge the same key-copy budget even when an omitted default
+                // will not appear in the output. The response policies must
+                // agree on acceptance at resource boundaries too.
+                let key = self.copy_text(key)?;
+                if present.is_some() || self.mode.inserts_defaults() {
+                    result.insert(key, value);
+                }
             }
         }
         let catchall = child(node, "catchall")?;
@@ -804,14 +837,14 @@ impl Context<'_> {
             let value = if !catchall_never {
                 self.walk(catchall, Some(value), depth + 1)?
                     .ok_or_else(invalid)?
-            } else if self.mode == Mode::Response || node["unknownFields"] == "passthrough" {
+            } else if self.mode.is_response() || node["unknownFields"] == "passthrough" {
                 self.clone_value(value, depth + 1)?
             } else if node["unknownFields"] == "strict" {
                 return Err(invalid());
             } else {
                 continue;
             };
-            if self.mode == Mode::Response
+            if self.mode.is_response()
                 || node.get("preserveReservedKeys") == Some(&Value::Bool(true))
                 || key != "__proto__"
             {

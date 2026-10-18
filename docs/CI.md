@@ -7,6 +7,10 @@ runs only when explicitly dispatched after its three native runner labels are
 registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
+The G10 0.1.1 maintenance release uses the source-bound Phase 91 gate;
+the workflow assertions in `tools/test_ci.py` track that invocation. The initial
+Phase 8 gate remains historical. See [the release plan](g10-0.1.1-plan.md).
+
 ## Required runner tools
 
 The normal ubuntu-latest label must supply a Linux x86_64 runner with Git,
@@ -97,7 +101,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Installs pinned development tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 8 --verification-only. This verifies completed-phase contracts without advancing phase state or invoking live services. It includes generation/oracles, native exports, dependency policy, packaged consumers, cross compilation, and regression guards. |
+| contracts-and-package | Installs pinned development tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 91 --verification-only. This verifies completed-phase contracts without advancing phase state or invoking live services. It includes current generation/oracles, native exports, dependency policy, packaged consumers, cross compilation and tracing/fixture regression guards; the maintenance plan records the unchanged TypeScript-only checks not repeated. |
 | rust | Rust 1.89.0 and 1.99.0 each run the complete feature-selection matrix through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 

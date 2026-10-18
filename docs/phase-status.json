@@ -1876,7 +1876,13 @@
         "crates/scm-sdk/tests/red_team_vendor_models_generated.rs",
         "crates/scm-sdk/tests/red_team_contracts.rs"
       ],
-      "check_scope_rationale": "Vendor compilation, complete schema/operation accounting, additive models, existing dataplane preflight/decoding and affected frozen-model/export regressions. Eleven new methods remain Phase 11 obligations."
+      "check_scope_rationale": "Vendor compilation, complete schema/operation accounting, additive models, existing dataplane preflight/decoding and affected frozen-model/export regressions. Eleven new methods remain Phase 11 obligations.",
+      "maintenance_integration": {
+        "source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
+        "version": "0.1.1",
+        "without_defaults_uses_response_compatibility": true,
+        "maintenance_followup_92": "Independent documentation/tooling review remains in the patch worktree; not imported yet."
+      }
     },
     {
       "id": 11,
@@ -1891,6 +1897,520 @@
       "status": "pending",
       "reviews": [],
       "plan": "docs/red-team-data-plane-0.93.0-plan.md"
+    },
+    {
+      "id": 90,
+      "name": "G10 compatibility review and maintenance plan",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-90-attempt-04.json"
+      ],
+      "scope_evidence": {
+        "plan": "docs/g10-0.1.1-plan.md",
+        "source_branch": "g10-no-response-defaults",
+        "source_commit": "a6d63e58f067a98504e5b79987639d53e11fc931",
+        "acceptance": "Review the plan and pinned supplied implementation; confirmed runtime fixes and fresh qualification are phase 91 work. No new SDK fixes before plan review passes.",
+        "changed_artifacts": [
+          "docs/g10-0.1.1-plan.md",
+          "docs/PHASES.md",
+          "docs/RELEASE.md",
+          "docs/CI.md",
+          "docs/implementation-plan.md",
+          "tools/check_phase.py",
+          "tools/review_phase.py",
+          "tools/test_review_phase.py",
+          "tools/test_ci.py"
+        ],
+        "supplementary_review": "docs/reviews/g10-pinned-branch-independent-review.md",
+        "working_branch_at_plan_review": "release/0.1.1"
+      },
+      "activation": {
+        "predecessor": 8,
+        "reason": "Maintainer-requested isolated 0.1.1 maintenance track appended after completed baseline. Active pointer initialized when extending the phase catalog; all eight predecessor proofs are verified by review_phase.py. Non-contiguous successors are now executable and unit-tested."
+      },
+      "review_attempts": [
+        "docs/reviews/phase-90-attempt-01.json",
+        "docs/reviews/phase-90-attempt-02.json",
+        "docs/reviews/phase-90-attempt-03.json"
+      ],
+      "review_fixes": [
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[0]",
+          "status": "resolved_in_phase_90",
+          "scope": "Select the latest actual publication record; the original phase-8 publication remains visible after maintenance phases are appended.",
+          "resolution": "Select the latest actual publication record; the original phase-8 publication remains visible after maintenance phases are appended.",
+          "acceptance_evidence": [
+            "tools/test_ci.py:213"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[1]",
+          "status": "resolved_in_phase_90",
+          "scope": "Missing and empty discovery suites fail before a subprocess can report a vacuous pass; reject and populated-suite unit tests execute.",
+          "resolution": "Missing and empty discovery suites fail before a subprocess can report a vacuous pass; reject and populated-suite unit tests execute.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:23"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[2]",
+          "status": "resolved_in_phase_90",
+          "scope": "Select the smallest greater phase id; the 8-to-90-to-91 sequence has unit coverage and the initial track activation is documented.",
+          "resolution": "Select the smallest greater phase id; the 8-to-90-to-91 sequence has unit coverage and the initial track activation is documented.",
+          "acceptance_evidence": [
+            "tools/review_phase.py:156"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[3]",
+          "status": "resolved_in_phase_90",
+          "scope": "Exact clean-package, tag/push/publish/verify commands and receipt paths use authorized external token authentication.",
+          "resolution": "Exact clean-package, tag/push/publish/verify commands and receipt paths use authorized external token authentication.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:144"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[4]",
+          "status": "resolved_in_phase_90",
+          "scope": "Name generated ledgers and their sequential generator invocations rather than describing generator scripts as generated outputs.",
+          "resolution": "Name generated ledgers and their sequential generator invocations rather than describing generator scripts as generated outputs.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:101"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[5]",
+          "status": "deferred_to_phase_91_blocks_publication",
+          "scope": "Resolve the finding by the specific correction recorded below.",
+          "resolution": "No SDK fixes are permitted before this plan gate. Phase 91 must charge suppressed keys and pass equal-bound public regressions before the unchanged acceptance claims may ship.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:Compatibility contract",
+            "docs/checks/g10-pre-fix-copy-limit-reproduction.json"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[6]",
+          "status": "resolved_in_phase_90",
+          "scope": "Committed changes through actual HEAD, staged and working-tree whitespace are covered; the gate verifies a fresh private scan.",
+          "resolution": "Committed changes through actual HEAD, staged and working-tree whitespace are covered; the gate verifies a fresh private scan.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:73"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-01.json:review.findings[7]",
+          "status": "resolved_in_phase_90",
+          "scope": "Cite source-compatible patch policy and require the Rust-only API/default sidecar without changing frozen export denominators.",
+          "resolution": "Cite source-compatible patch policy and require the Rust-only API/default sidecar without changing frozen export denominators.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:12"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[0]",
+          "status": "resolved_in_phase_90",
+          "scope": "Retain four cross compiles, 100-process tracing stress, all contract verification forms, schema oracle/typed fixtures and generated-artifact checks; disclose unchanged TypeScript-only/bootstrap reductions.",
+          "resolution": "Retain four cross compiles, 100-process tracing stress, all contract verification forms, schema oracle/typed fixtures and generated-artifact checks; disclose unchanged TypeScript-only/bootstrap reductions.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:146"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[1]",
+          "status": "resolved_in_phase_90",
+          "scope": "Use per-finding review_fixes records with specific evidence and reference all preserved phase-90 attempt check reports.",
+          "resolution": "Use per-finding review_fixes records with specific evidence and reference all preserved phase-90 attempt check reports.",
+          "acceptance_evidence": [
+            "docs/phase-status.json:1800"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[2]",
+          "status": "deferred_to_phase_91_blocks_publication",
+          "scope": "Resolve the finding by the specific correction recorded below.",
+          "resolution": "No SDK fixes are permitted before this plan gate. Phase 91 must charge suppressed keys and pass equal-bound public regressions before the unchanged acceptance claims may ship.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:Compatibility contract",
+            "docs/checks/g10-pre-fix-copy-limit-reproduction.json"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[3]",
+          "status": "resolved_in_phase_90",
+          "scope": "List every changed governance/documentation artifact and the supplementary report in phase-90 scope_evidence.",
+          "resolution": "List every changed governance/documentation artifact and the supplementary report in phase-90 scope_evidence.",
+          "acceptance_evidence": [
+            "docs/phase-status.json:1800"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[4]",
+          "status": "resolved_in_phase_90",
+          "scope": "Replace the fixed a6d63e5 range end with actual HEAD, so later committed governance changes remain inside the whitespace check.",
+          "resolution": "Replace the fixed a6d63e5 range end with actual HEAD, so later committed governance changes remain inside the whitespace check.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:73"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[5]",
+          "status": "resolved_in_phase_90",
+          "scope": "Retain both independent agent reports, reviewer identities, pinned inputs and the public Rust reproduction receipt.",
+          "resolution": "Retain both independent agent reports, reviewer identities, pinned inputs and the public Rust reproduction receipt.",
+          "acceptance_evidence": [
+            "docs/reviews/g10-pinned-branch-independent-review.md:1"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-02.json:review.findings[6]",
+          "status": "resolved_in_phase_90",
+          "scope": "Cite STABILITY.md patch compatibility and require review/changelog coverage of the complete package delta since published 0.1.0, including the preexisting README change.",
+          "resolution": "Cite STABILITY.md patch compatibility and require review/changelog coverage of the complete package delta since published 0.1.0, including the preexisting README change.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:12"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[0]",
+          "status": "resolved_in_phase_90",
+          "scope": "Replace blanket closure assertions with this per-finding evidence list; preserve attempts 01/02/03 and mark the unfixed runtime parity claim release-blocked in phase 91.",
+          "resolution": "Replace blanket closure assertions with this per-finding evidence list; preserve attempts 01/02/03 and mark the unfixed runtime parity claim release-blocked in phase 91.",
+          "acceptance_evidence": [
+            "docs/phase-status.json:1800"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[1]",
+          "status": "resolved_in_phase_90",
+          "scope": "Use the actual HEAD range; no assumption that HEAD remains at a6d63e5 is needed.",
+          "resolution": "Use the actual HEAD range; no assumption that HEAD remains at a6d63e5 is needed.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:73"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[2]",
+          "status": "resolved_in_phase_90",
+          "scope": "Require README/RELEASE/STABILITY current-version updates and independent G10 consistency checks, plus the full package delta and patch-policy basis.",
+          "resolution": "Require README/RELEASE/STABILITY current-version updates and independent G10 consistency checks, plus the full package delta and patch-policy basis.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:84"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[3]",
+          "status": "resolved_in_phase_90",
+          "scope": "Retain constants, Gateway binding, model-fixture checks and all five previously omitted governance suites in phase 91.",
+          "resolution": "Retain constants, Gateway binding, model-fixture checks and all five previously omitted governance suites in phase 91.",
+          "acceptance_evidence": [
+            "tools/check_phase.py:96"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[4]",
+          "status": "deferred_to_phase_91_blocks_publication",
+          "scope": "Resolve the finding by the specific correction recorded below.",
+          "resolution": "No SDK fixes are permitted before this plan gate. Phase 91 must charge suppressed keys and pass equal-bound public regressions before the unchanged acceptance claims may ship.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:Compatibility contract",
+            "docs/checks/g10-pre-fix-copy-limit-reproduction.json"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[5]",
+          "status": "resolved_in_phase_90",
+          "scope": "Mark token-authorization documentation as completed in phase 90, leaving release-time version/provenance edits in phase 91.",
+          "resolution": "Mark token-authorization documentation as completed in phase 90, leaving release-time version/provenance edits in phase 91.",
+          "acceptance_evidence": [
+            "docs/g10-0.1.1-plan.md:220"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-03.json:review.findings[6]",
+          "status": "resolved_in_phase_90",
+          "scope": "Retain executed public Rust program, command, runtime/source hashes and actual failure/acceptance output in docs/checks/g10-pre-fix-copy-limit-reproduction.json.",
+          "resolution": "Retain executed public Rust program, command, runtime/source hashes and actual failure/acceptance output in docs/checks/g10-pre-fix-copy-limit-reproduction.json.",
+          "acceptance_evidence": [
+            "docs/reviews/g10-pinned-branch-independent-review.md:12"
+          ]
+        }
+      ],
+      "preserved_checks": [
+        "docs/checks/phase-90-attempt-01.json",
+        "docs/checks/phase-90-attempt-02.json",
+        "docs/checks/phase-90-attempt-03.json"
+      ],
+      "accepted_source_sha256": "b04b72796126624d3c81d8f3e3e11380bffa44eb42a677fa3fe0e4e0a28c4dbe",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-90-attempt-04.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-90.json"
+          ],
+          "source_sha256": "b04b72796126624d3c81d8f3e3e11380bffa44eb42a677fa3fe0e4e0a28c4dbe"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-90-attempt-04.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": 91,
+      "name": "G10 0.1.1 qualification and publication",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-91-attempt-01.json"
+      ],
+      "scope_evidence": {
+        "plan": "docs/g10-0.1.1-plan.md",
+        "acceptance": "Execute compatibility regressions, fresh source-bound live/native qualification, compiler/export/package/security checks and actual Claude review before tag and publication.",
+        "runtime": [
+          "crates/scm-sdk/src/config.rs",
+          "crates/scm-sdk/src/validation.rs",
+          "crates/scm-sdk/src/engine.rs",
+          "crates/scm-sdk/src/streaming.rs"
+        ],
+        "regression_tests": [
+          "crates/scm-sdk/tests/schema_contracts.rs",
+          "crates/scm-sdk/tests/red_team_resources_contracts.rs",
+          "crates/scm-sdk/src/engine/tests.rs"
+        ],
+        "public_example": "crates/scm-sdk/examples/response_defaults.rs",
+        "rust_extension_inventory": "contracts/response-defaults.json",
+        "inventory_verification": "python3 tools/response_defaults.py --check",
+        "preliminary_tests": {
+          "rust_toolchain": "1.89.0",
+          "resource_tests": 21,
+          "schema_tests": 10,
+          "status": "Passed; cumulative 49-command gate also passed in docs/checks/phase-91.json."
+        },
+        "tracing_stress_count_change": {
+          "historical_phase_8": 201,
+          "maintenance_phase_91": 203,
+          "reason": "Two new unit tests prove buffered alternative-contract and SSE response-default policy propagation. The native all-feature filtered invocation executed both and reported 201 other tests; the stress script compiles all features. Historical command sets are unchanged.",
+          "tests": [
+            "engine::tests::buffered_alternative_contracts_use_the_operation_response_default_policy",
+            "engine::tests::contract_sse_events_use_the_operation_response_default_policy"
+          ]
+        },
+        "release_tooling": [
+          "scripts/check-package.py",
+          "scripts/verify-publication.py",
+          "tools/response_defaults.py",
+          "tools/test_g10_release.py",
+          "tools/live_evidence.py",
+          "tools/test_live_evidence.py",
+          "scripts/check-tracing-stress.py",
+          "tools/test_auxiliary_evidence.py"
+        ],
+        "live_version_guard_regression": "tools/test_qualification.py::test_real_receipt_loader_binds_projection_and_rejects_stale_or_failed_execution",
+        "source_ready_for_cumulative_gate": true
+      },
+      "review_fixes": [
+        {
+          "source": "docs/reviews/phase-90-attempt-04.json:review.findings[0]",
+          "status": "implemented_and_preliminary_regressions_passed",
+          "scope": "Equal validation acceptance including public resource limits.",
+          "resolution": "Charge every normalized property key before output suppression; identical copied-byte/work/node boundary tests pass on Rust 1.89.",
+          "acceptance_evidence": [
+            "crates/scm-sdk/src/validation.rs",
+            "crates/scm-sdk/tests/schema_contracts.rs::response_default_omission_charges_identical_copy_work_and_node_budgets"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-04.json:review.findings[1]",
+          "status": "corrected",
+          "scope": "Readable historical review dispositions.",
+          "resolution": "Use complete resolution sentences for each historical scope field; retain original source/evidence pointers.",
+          "acceptance_evidence": [
+            "docs/phase-status.json:phase90.review_fixes"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-04.json:review.findings[2]",
+          "status": "implemented",
+          "scope": "Executable default inventory binding.",
+          "resolution": "Phase 91 runs tools/response_defaults.py --check and nine G10 governance/provenance tests, including reproducible inventory and API/compatibility checks.",
+          "acceptance_evidence": [
+            "tools/check_phase.py",
+            "tools/response_defaults.py",
+            "tools/test_g10_release.py"
+          ]
+        },
+        {
+          "source": "docs/reviews/phase-90-attempt-04.json:review.findings[3]",
+          "status": "implemented",
+          "scope": "Pinned branch and actual review checkout.",
+          "resolution": "Record the actual release/0.1.1 branch at plan review and assert the supplied commit equals the retained scan headCommit.",
+          "acceptance_evidence": [
+            "tools/test_g10_release.py::test_supplied_branch_pin_matches_the_retained_plan_scan",
+            "docs/checks/phase-90-private-material.json"
+          ]
+        }
+      ],
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-91-attempt-01.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-91.json"
+          ],
+          "source_sha256": "6f0c3cfb3690c6b948dbb0544623baf340ecd9205c8d4de67b73175aeb0e02e2"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-91-attempt-01.json"
+          ]
+        }
+      },
+      "delivery": {
+        "status": "published_and_verified",
+        "requested_version": "0.1.1",
+        "tag": "v0.1.1",
+        "review_before_publication": true,
+        "source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
+        "registry_receipt": "docs/checks/release-registry-0.1.1.json",
+        "tag_receipt": "docs/checks/release-tag-v0.1.1.json",
+        "clean_package_proofs": [
+          "docs/checks/release-source-7efd1372806bd1969663993de3083d393b20cc62/release-package-1.89.0.json",
+          "docs/checks/release-source-7efd1372806bd1969663993de3083d393b20cc62/release-package-1.99.0.json"
+        ],
+        "package_delta": "docs/checks/release-package-delta-0.1.1.json"
+      },
+      "live_acceptance": {
+        "status": "executed_with_explicit_unqualified_observations",
+        "receipt": "docs/checks/phase-08-live-attempt-08.json",
+        "native_methods_verified": 16,
+        "canonical_methods_observed": 22,
+        "service_requests": 24,
+        "token_exchanges": 1,
+        "cleanup_state": "not_needed",
+        "limitations": [
+          "Three Red Team reads returned 403.",
+          "IAM scope and Gateway provisioning requests returned 400; cause remains unestablished.",
+          "Scan-ID queries have a successful async lookup and an incomplete/uncorrelated sync lookup; the canonical method remains unqualified with reconciliation required."
+        ],
+        "prior_parser_failure": "docs/checks/phase-91-live-refresh-attempt-07.json",
+        "version_guard_fix": [
+          "tools/live_evidence.py::crate_version",
+          "tools/test_live_evidence.py::test_report_version_is_bound_to_the_selected_crate_manifest"
+        ]
+      },
+      "qualification_attempts": [
+        {
+          "report": "docs/checks/phase-91-attempt-01.json",
+          "status": "failed_before_rust_checks",
+          "failure": "Gateway source binding proof still reflected pre-G10 engine/config source hashes.",
+          "fix": "Regenerated contracts/native-gateway-bindings.json using the existing verified generator, then regenerated dependent native operations/exports/qualification ledgers."
+        },
+        {
+          "report": "docs/checks/phase-91-attempt-02.json",
+          "status": "failed_before_rust_checks",
+          "failure": "Copied frozen TypeScript reference retained a symlink to the original worktree dependency installation, producing two Zod constructor identities in the isolated worktree.",
+          "fix": "Point the ignored .local/typescript/node_modules symlink to this worktree tools/node_modules. Source fingerprints and the frozen reference bytes are unchanged."
+        },
+        {
+          "report": "docs/checks/phase-91-attempt-03.json",
+          "status": "47_of_49_checks_passed_before_receipt_writer_failure",
+          "failure": "Tracing stress writer restricted atomic replacement to the historical phase-08 path, so it could not retain the phase-91 result.",
+          "fix": "Permit only the exact phase-08 and phase-91 toolchain-specific receipt paths; retain atomic replacement and add maintenance-path boundary tests. SDK runtime inputs are unchanged."
+        }
+      ],
+      "qualified_source_sha256": "6f0c3cfb3690c6b948dbb0544623baf340ecd9205c8d4de67b73175aeb0e02e2",
+      "qualified_score": 9,
+      "review_dispositions": [
+        {
+          "finding": 0,
+          "status": "resolved_by_verified_delivery",
+          "resolution": "The actual registry artifact was uploaded, downloaded and verified against both clean archive proofs. The README version links now refer to the published release; the real publication receipt is retained.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 1,
+          "status": "accepted_nonblocking_followup",
+          "resolution": "Run the version-independent documentation assertions manually before delivery and retain their result. Split the automated test guard during the separately reviewed vendor integration.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 2,
+          "status": "supplemental_check_before_commit",
+          "resolution": "Execute git diff --check 840c090..HEAD before the release commit and preserve the result. Keep the accepted 49-command gate unchanged; add the range to the next reviewed gate.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 3,
+          "status": "accepted_nonblocking_followup",
+          "resolution": "All three APIs execute in both extracted-archive examples and regression tests. Retain a direct source/example binding check for this release; add generator fail-closed path resolution in the next reviewed source change.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 4,
+          "status": "accepted_nonblocking_documentation_followup",
+          "resolution": "The package delta and README explicitly identify the new executable example; the changelog covers its policy APIs and documentation. Add a dedicated example bullet in the next reviewed documentation update without changing the accepted patch source.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 5,
+          "status": "resolved_in_excluded_bookkeeping",
+          "resolution": "Set independent_verification to the actual passing 49-command receipt and reviewed fingerprint, and mark the implementation review accepted pending delivery.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 6,
+          "status": "accepted_optional_scope_limitation",
+          "resolution": "Full 60271-case JSON validation differential evidence and typed target/adapter regressions passed. The 27216 typed-fixture corpus was not additionally rerun under WithoutDefaults; no variant-selection defect was found. Retain this explicit scope limitation and consider a typed-corpus extension in a future reviewed change.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        }
+      ],
+      "accepted_source_sha256": "6f0c3cfb3690c6b948dbb0544623baf340ecd9205c8d4de67b73175aeb0e02e2",
+      "accepted_score": 9,
+      "registry_publication": {
+        "status": "published_and_verified",
+        "registry": "crates.io",
+        "version": "0.1.1",
+        "owner": "cdot65",
+        "source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
+        "archive_sha256": "8339891e9a43582e26573355e65d95605f6865ea434365a649b215c69b01d154",
+        "published_at": "2026-10-18T15:36:23.599764Z",
+        "evidence": "docs/checks/release-registry-0.1.1.json"
+      },
+      "remote_ci": {
+        "status": "observed_nonterminal",
+        "source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
+        "observed_at": "2026-10-18T15:48:56.908131+00:00",
+        "main_run": {
+          "number": 16,
+          "status": "running",
+          "url": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/16"
+        },
+        "tag_run": {
+          "number": 17,
+          "status": "waiting",
+          "url": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/17"
+        },
+        "evidence": "docs/checks/release-ci-0.1.1-observation-01.json",
+        "limitation": "These observations do not establish a terminal passing remote result."
+      }
     }
-  ]
+  ],
+  "active_followup_plan": "docs/red-team-data-plane-0.93.0-plan.md"
 }

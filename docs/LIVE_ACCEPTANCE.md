@@ -10,14 +10,25 @@ Each unqualified method has a reason. The [current receipt reference](../contrac
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
-The retained current run verified 17 exact native methods. It recorded 403
+The retained 0.1.1 run (attempt 08) verified 16 exact native methods. It recorded 403
 permission rejections for three Red Team reads and 400 responses rejecting the
 submitted IAM scope creation and Gateway provisioning requests. The cause of
 these two 400s is unestablished: a native request-shape defect is not excluded.
 The traffic-derived frozen IAM contract has no published vendor specification
 establishing the cause. Both attempted creations were rejected before ownership;
 no disposable resources required deletion. These operations remain explicitly
-live-unqualified. The accepted scan queries passed the correlated-result checks.
+live-unqualified. One synchronous-result lookup returned an incomplete or
+uncorrelated receipt despite HTTP 200; the asynchronous lookup succeeded. Since
+both observations bind the same canonical scan-ID query method, that method stays
+live-unqualified with reconciliation required. Earlier 0.1.0 receipts verified
+17 methods; their historical success does not replace this current observation.
+
+The first 0.1.1 execution (attempt 07) completed 24 service requests with cleanup
+not needed, but the wrapper rejected its version because it was hardcoded to
+0.1.0. Its failure/recovery summary is preserved in
+[the parser-attempt record](checks/phase-91-live-refresh-attempt-07.json). The
+manifest-bound parser rejects a receipt for a different SDK version; the fresh
+attempt 08 is the current source-bound receipt. No earlier failure was promoted.
 
 ## What the controlled run covers
 
