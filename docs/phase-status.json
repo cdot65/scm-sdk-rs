@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 12,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -2074,8 +2074,9 @@
     {
       "id": 12,
       "name": "Red Team dataplane qualification and delivery",
-      "status": "in_progress",
+      "status": "complete",
       "reviews": [
+        "docs/reviews/phase-12-attempt-01.json",
         "docs/reviews/phase-12-attempt-01.json"
       ],
       "plan": "docs/red-team-data-plane-0.93.0-plan.md",
@@ -2118,7 +2119,8 @@
         "registry_publication": "not_requested_unpublished",
         "published_maintenance": "0.1.1",
         "published_receipt": "docs/checks/release-registry-0.1.1.json",
-        "ordinary_remote_push": "pending_after_accepted_source_review"
+        "ordinary_remote_push": "completed",
+        "pushed_source_commit": "167a359fb3d51aad37c4dff311060b069c620bdd"
       },
       "limitations": [
         {
@@ -2185,6 +2187,14 @@
           "evidence": [
             "docs/reviews/phase-12-attempt-01.json"
           ]
+        },
+        "remote_delivery": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-12-remote-ci-run-19.json"
+          ],
+          "source_commit": "167a359fb3d51aad37c4dff311060b069c620bdd",
+          "reviewed_source_sha256": "de311207659ad73a8a158b79e262714b24e5c158441ee3d40adbe5b4e5e98bce"
         }
       },
       "implemented_scope": {
@@ -2242,7 +2252,20 @@
           "scope": "The accepted 9/10 review reports no correctness blocker or high finding; current pinned contracts and all39 checks pass. Preserve the precise recommendation for future documentation/tooling maintenance.",
           "recommendation": "Bind the new per-route negative tests by name in the vendor ledger's fixtureBinding (or an adjacent reviewed list checked by tools/red_team_dataplane.py / tools/test_red_team_dataplane.py), so the documented client-boundary security coverage cannot regress without failing a check."
         }
-      ]
+      ],
+      "remote_ci": {
+        "status": "success",
+        "run": 19,
+        "expected_jobs": 47,
+        "passed_jobs": 47,
+        "source_commit": "167a359fb3d51aad37c4dff311060b069c620bdd",
+        "evidence": [
+          "docs/checks/phase-12-remote-ci-run-19-initial.json",
+          "docs/checks/phase-12-remote-ci-run-19.json"
+        ]
+      },
+      "accepted_source_sha256": "de311207659ad73a8a158b79e262714b24e5c158441ee3d40adbe5b4e5e98bce",
+      "accepted_score": 9
     },
     {
       "id": 90,
