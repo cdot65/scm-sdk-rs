@@ -1,0 +1,74 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 92,
+  "attempt": 1,
+  "reviewed_at": "2026-10-18T15:58:52.644606+00:00",
+  "source_sha256": "3e64b178c8f3f44fb75ff67259553626b60c9327eb994174abd577b45a849daa",
+  "source_unchanged": true,
+  "checks_sha256": "accbb9fb655ad13f4528007cdd7107b72dcccbffd0a9ded5c6434e200f69289e",
+  "prompt_sha256": "faafab1103669c1e1dec80c74cd5b240dad204a4f60ddb5cabd9e624e217cebf",
+  "cli_output_sha256": "979b8593e616b2c6dfcaf875eecdf7eb35dee4e63437bbc9e89842473c3a72ad",
+  "gate_passed": false,
+  "review": {
+    "score": 7,
+    "summary": "Phase 92 is a careful, well-evidenced documentation/tooling follow-up. The 23-command gate in docs/checks/phase-92.json actually executed, all commands exited 0, and its source_sha256 (3e64b178\u2026) equals the reviewed fingerprint, so this is executed evidence rather than prose. The central new control, scripts/check-published-payload.py, is genuinely fail-closed: it compared 129 published files (all of crates/scm-sdk/src and examples, Cargo.toml.orig, README, LICENSE, NOTICE) byte-for-byte against the retained crates.io receipt for 0.1.1, rejects added/changed/symlinked/duplicate/traversal paths, and has real negative tests (tools/test_g10_release.py:37). Its deliberate gap (normalized Cargo.toml/Cargo.lock/.cargo_vcs_info.json) is covered by tools/live_evidence.py runtime_fingerprint, which binds root Cargo.toml, Cargo.lock, LICENSE, NOTICE and the whole src/examples tree and is also in the gate. All seven phase-91 findings have concrete, checkable dispositions: CHANGELOG.md:3-15 now carries the real archive SHA-256, source commit and the packaged example bullet, and tools/test_ci.py:242 asserts those values against the receipt; the version-independent documentation assertions now run before the version guard with a working negative test (tools/test_ci.py:211); tools/response_defaults.py:37 binds each of the three additive Rust APIs to its declaration and to the packaged example with six drift mutations; docs/VALIDATION.md:38-42 records the unmeasured 27,216-case typed corpus explicitly; the committed-range whitespace check is in the gate. No SDK runtime input changed and the tag/registry artifact were not touched. Two things keep this below the threshold. First, the newly CI-gated command set starts with `git diff --check 840c090..HEAD`, but .forgejo/workflows/ci.yml checks out with actions/checkout defaults (no fetch-depth), so the base commit will not exist in the shallow clone and the contracts-and-package job should fail at its first gate command; the phase's own stated deliverable is that CI runs this focused gate, and no remote run of this workflow exists yet to disprove it. Second, \"actual CI observations\" are retained only in docs/checks/release-ci-0.1.1-observation-01.json, which shows the 0.1.1 runs as waiting/running (nonterminal) and is referenced by nothing \u2014 not docs/phase-status.json, the plan, docs/CI.md or docs/RELEASE.md \u2014 while docs/RELEASE.md:107 tells readers current remote qualification is recorded in phase status, where only the phase-8 run 13 appears.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": ".forgejo/workflows/ci.yml",
+        "line": 22,
+        "description": "The contracts-and-package job now runs `python3 tools/check_phase.py --phase 92 --verification-only` (ci.yml:72), and commands_for(92) begins with `git diff --check 840c090..HEAD` (tools/check_phase.py:73). The checkout step sets only `persist-credentials: false`; `fetch-depth` is not set anywhere in the repository, so actions/checkout v4 performs its default depth-1 clone and commit 840c090 is not present. `git diff --check 840c090..HEAD` then exits nonzero, check_phase.py breaks on the first failing command (tools/check_phase.py:327-334) and the whole focused gate fails remotely. Phase 91's CI-executed gate contained no commit-range command, so this is newly introduced here, and the only retained remote observation (docs/checks/release-ci-0.1.1-observation-01.json) is for commit 7efd137 under the previous workflow, so no run of this configuration exists. I could not execute git or trigger CI, so this is a static determination from the workflow and the default action behaviour.",
+        "required_fix": "Set `fetch-depth: 0` on the contracts-and-package checkout step (or make the committed-range whitespace check skip/deepen when the base commit is unreachable), and add a tools/test_ci.py assertion that whenever commands_for(the CI-executed phase) contains a commit-range git command the workflow checkout requests full history. Re-run the gate remotely and retain the result before advancing."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/phase-status.json",
+        "line": 2304,
+        "description": "Plan item 92.1 requires retaining \"actual CI observations\". docs/checks/release-ci-0.1.1-observation-01.json exists and is honest (runs 16/17 at 7efd137 are \"running\" and \"waiting\", with the limitation \"waiting/running is not a passing CI result\"), but nothing references it: the phase-92 scope_evidence block, the phase-91 delivery block, docs/g10-0.1.1-plan.md, docs/CI.md and CHANGELOG.md contain no pointer, and the phase-92 record states no remote CI status at all. Meanwhile docs/RELEASE.md:107 says \"Current remote qualification is recorded in phase status\", where the only remote_ci entries are phase 8's run 13 (docs/phase-status.json:574, 641-650), and docs/CI.md:108-115 still narrates run 12. A reader therefore cannot find the actual, nonterminal CI state of the published 0.1.1 source from the ledger that claims to hold it.",
+        "required_fix": "Add an explicit remote CI record for 0.1.1 to the phase-92 (or phase-91 delivery) entry in docs/phase-status.json citing docs/checks/release-ci-0.1.1-observation-01.json and stating plainly that the runs were nonterminal at observation time, and update the docs/CI.md run narrative and/or docs/RELEASE.md:107 pointer to reach it."
+      },
+      {
+        "severity": "low",
+        "path": "docs/RELEASE.md",
+        "line": 37,
+        "description": "\"The patch updates CI to gate 91 and retains new clean-package, registry and tag proofs at the paths in its plan.\" is now stale: .forgejo/workflows/ci.yml:72 and docs/CI.md:104 both use gate 92, and docs/RELEASE.md:5-7 already says current post-publication guards use gate 92, so the same document contradicts itself. Correcting current-gate documentation is this phase's core purpose, and tools/test_ci.py only pins the gate number in the workflow (lines 82 and 341), not in docs/RELEASE.md.",
+        "required_fix": "Reword docs/RELEASE.md:36-38 to say the patch qualified source with gate 91 and that CI now runs the post-publication gate 92, and extend the existing documentation guard in tools/test_ci.py so the gate phase asserted in the workflow must also appear in docs/CI.md and docs/RELEASE.md."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/check-published-payload.py",
+        "line": 55,
+        "description": "When a published file has been deleted from the working tree, `current.read_bytes()` raises FileNotFoundError (an OSError), not the ValueError that every other rejection path uses. The CLI wrapper at line 93 catches OSError so the command still fails closed, but tools/test_g10_release.py:37 only exercises change, addition, symlink, malformed-receipt and unsafe-path cases against `payload.verify`, so deletion of a published SDK input is untested at the function boundary and any future caller that catches only ValueError would silently miss it.",
+        "required_fix": "Raise ValueError (\"Published SDK input is missing: \" + name) when the file is absent or unreadable, and add a removal case to test_published_payload_check_rejects_source_drift_additions_and_unsafe_paths."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/check-published-payload.py",
+        "line": 27,
+        "description": "The guard's trust anchor is the retained receipt's `files` rows, but nothing in this check ties that inventory back to `archiveSha256`, and docs/checks/ is excluded from the review fingerprint (tools/review_phase.py:13), so the receipt is not itself hashed into source_sha256. A coordinated edit of a receipt row plus the matching working-tree file would pass this check. In practice it is caught elsewhere \u2014 tools/test_ci.py:264 pins archiveSha256/sourceCommit/date against CHANGELOG.md (which is hashed), and tools/live_evidence.py --check re-derives runtime_fingerprint for the whole src/examples tree via the digest pinned in contracts/live-evidence.json \u2014 but the new guard alone does not establish the receipt's integrity.",
+        "required_fix": "In tools/test_g10_release.py, assert that docs/checks/release-registry-0.1.1.json's version, sourceCommit and per-file hashes agree with the retained clean proofs under docs/checks/release-source-7efd1372.../ and with docs/checks/release-tag-v0.1.1.json, so the payload guard's input is cross-bound to independently retained receipts."
+      }
+    ],
+    "evidence": [
+      "docs/checks/phase-92.json: 23 executed commands, every exit_code 0, source_sha256 3e64b178c8f3f44fb75ff67259553626b60c9327eb994174abd577b45a849daa, source_unchanged true, passed true; command list matches tools/check_phase.py commands_for(92) exactly (lines 71-94), which tools/review_phase.py check_evidence enforces.",
+      "docs/checks/phase-92.json: scripts/check-published-payload.py printed {\"publishedPayloadUnchanged\": true, \"matchedFiles\": 129}; docs/checks/phase-92-published-payload.json records publishedSourceCommit 7efd1372806bd1969663993de3083d393b20cc62 and publishedArchiveSha256 8339891e\u2026d154, matching docs/checks/release-registry-0.1.1.json:12-14.",
+      "scripts/check-published-payload.py:30-65 compares src/, examples/, Cargo.toml.orig\u2192crates/scm-sdk/Cargo.toml, README/LICENSE/NOTICE byte-for-byte, rejects absolute/traversal/backslash/duplicate/non-normalized paths and symlinked inputs or parents, and requires the on-disk src+examples inventory to equal the published set.",
+      "tools/live_evidence.py:99-110 and 266: runtime_fingerprint binds root Cargo.toml, Cargo.lock, LICENSE, NOTICE, crates/scm-sdk/Cargo.toml and all src/examples files, and `--check` (executed in the gate, {\"checked\": true, \"nativeMethodsVerified\": 16}) requires the live receipt's runtimeInputsSha256 to equal it \u2014 covering the metadata the payload check deliberately skips.",
+      "tools/response_defaults.py:37-48 verify_rust_additions binds each of the three additive APIs to a declaration regex and to an invocation in crates/scm-sdk/examples/response_defaults.rs; tools/test_g10_release.py:75-100 asserts six independent drift mutations each raise; the executed `tools/response_defaults.py --check` printed {\"defaultBindings\": 23, \"redTeamBindings\": 8, \"outsideRedTeamBindings\": 15} and the inventory embeds generatorSha256, so the tool change forced regeneration of contracts/response-defaults.json.",
+      "tools/test_ci.py:211-241 drives the real guard against a temporary root at development version 0.2.0, asserts it passes without skipping, then asserts it fails for \"currently unpublished\" README prose and for a STABILITY.md missing its registry reference; tools/test_ci.py:242-265 runs the version-independent assertions first and only returns early from the receipt-specific block.",
+      "CHANGELOG.md:3-15 records the crates.io 0.1.1 link, source commit 7efd1372\u2026, archive SHA-256 8339891e\u2026, the registry-receipt link and the packaged examples/response_defaults.rs bullet; docs/VALIDATION.md:38-42 separates the 60,271-case JSON differential corpus from the 27,216-case typed corpus that was not replayed under ResponseWithoutDefaults.",
+      "docs/checks/phase-92-private-material.json: sourceSha256 equals the reviewed fingerprint, headCommit 7efd1372\u2026, passed true, 1404 git-visible files, 0 selected-value matches, 125 published source/example candidates; the gate's `--check` reported receiptFresh true with privateScanReexecuted false, i.e. the matching scan itself ran at 15:49:44 against this exact source.",
+      "docs/checks/release-tag-v0.1.1.json shows refs/tags/v0.1.1^{} = 7efd1372\u2026 on the authorized remote; docs/checks/release-source-7efd1372\u2026/release-package-1.89.0.json has requireClean true, effectiveDirty false and file hashes identical to the registry receipt, which records identicalFileContentsQualifiedOnMsrv true (line 684).",
+      "docs/checks/release-package-delta-0.1.1.json: candidateArchiveSha256 equals the published archive; 11 accounted changes (.cargo_vcs_info.json, Cargo.lock, Cargo.toml, Cargo.toml.orig, README.md, examples/response_defaults.rs added, src/config.rs, src/engine.rs, src/engine/tests.rs, src/streaming.rs, src/validation.rs), all reflected in the changelog sections.",
+      "Negative evidence for the CI finding: `grep -n fetch-depth` over the repository returns no workflow match, .forgejo/workflows/ci.yml:21-24 pins actions/checkout v4.3.1 with only persist-credentials, tools/bootstrap_reference.py fetches only the TypeScript baseline into .local/typescript, and commands_for(91) (tools/check_phase.py:106-108) contains no commit-range command."
+    ],
+    "limitations": [
+      "Read-only tools only: I could not run git, the phase gate, Rust/Cargo, or any check, so all pass/fail statements about commands rest on the recorded receipts plus static reading of the scripts.",
+      "I verified that docs/checks/phase-92.json's source_sha256 matches the fingerprint quoted in the review prompt, but I cannot independently recompute tools/review_phase.py fingerprint() over the worktree, so I cannot rule out post-check edits to non-excluded files beyond that binding.",
+      "The CI shallow-checkout finding is a static determination from .forgejo/workflows/ci.yml and actions/checkout v4 default behaviour; I could not trigger a Forgejo run to confirm the failure, and a runner-side clone configuration that provides full history would invalidate it.",
+      "I did not open credential or tenant-registration files, so the private-material scan's selected-value coverage is accepted from its sanitized receipt and from tools/test_auxiliary_evidence.py's recorded results rather than re-derived.",
+      "Registry, tag and remote CI facts come from retained receipts; no network call was made to crates.io or the Forgejo instance, so current registry/tag/CI state as of this review is unverified.",
+      "Compiler, package, dependency, oracle, platform and live-service behaviour were not re-executed in this phase by design; I assessed the stated scope reduction's justification (byte-identity with the published archive) rather than re-establishing that evidence."
+    ]
+  }
+}

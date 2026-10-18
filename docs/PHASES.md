@@ -22,8 +22,9 @@ Run `python tools/check_phase.py --phase N` before requesting review. The gate b
 | 12. Vendor dataplane qualification | Docs/examples/changelog, CI coverage check, compiler/feature/package qualification and remote delivery. | Cumulative relevant checks, explicit live limitations, final Claude score at least 9 and ordinary remote push. |
 | 90. G10 maintenance plan | Review pinned G10 branch and plan compatibility fixes, source qualification and 0.1.1 publication. | Scoped plan checks and actual Claude plan score at least 9 before SDK fixes. |
 | 91. G10 maintenance release | Correct response-policy accounting, prove typed omission/null/multiple pages, refresh source-bound ledgers, qualify and publish 0.1.1. | Relevant compiler/package/security/live evidence, actual Claude score at least 9, clean source/tag and verified registry artifact. |
+| 92. G10 publication records | Record actual publication provenance and close documentation/inventory guard findings from the accepted source review. | Unchanged published SDK input proof, focused tooling/contract checks, fresh privacy receipt and actual Claude score at least 9. |
 
-Maintenance identifiers 90–91 belong to the isolated 0.1.1 patch track. Follow
+Maintenance identifiers 90–92 belong to the isolated 0.1.1 patch track. Follow
 [the G10 release plan](g10-0.1.1-plan.md) in that order after baseline phases 1–8.
 Historical baseline gates and their command sets retain their original meaning.
 

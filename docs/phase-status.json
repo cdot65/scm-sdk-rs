@@ -1881,7 +1881,7 @@
         "source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
         "version": "0.1.1",
         "without_defaults_uses_response_compatibility": true,
-        "maintenance_followup_92": "Independent documentation/tooling review remains in the patch worktree; not imported yet."
+        "maintenance_followup_92": "Qualified source review 9/10 at afd4cce; independent remote gate remains pending in the patch worktree."
       }
     },
     {
@@ -1896,7 +1896,8 @@
       "name": "Red Team dataplane qualification and delivery",
       "status": "pending",
       "reviews": [],
-      "plan": "docs/red-team-data-plane-0.93.0-plan.md"
+      "plan": "docs/red-team-data-plane-0.93.0-plan.md",
+      "final_in_sequence": true
     },
     {
       "id": 90,
@@ -2410,6 +2411,172 @@
         "evidence": "docs/checks/release-ci-0.1.1-observation-01.json",
         "limitation": "These observations do not establish a terminal passing remote result."
       }
+    },
+    {
+      "id": 92,
+      "name": "G10 publication records and reviewed guard closure",
+      "status": "in_progress",
+      "reviews": [],
+      "activation": {
+        "predecessor": 91,
+        "reason": "Record actual verified publication and implement nonblocking guard/documentation findings from the accepted 9/10 source review; published SDK inputs stay unchanged."
+      },
+      "scope_evidence": {
+        "plan": "docs/g10-0.1.1-plan.md#phase-92--post-publication-documentation-and-guard-closure",
+        "reviewed_recommendations": "docs/reviews/phase-91-attempt-01.json",
+        "published_source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
+        "registry_receipt": "docs/checks/release-registry-0.1.1.json",
+        "sdk_runtime_changes": false,
+        "accepted_predecessor_command_sets_unchanged": true,
+        "focused_gate": "tools/check_phase.py::commands_for(92)",
+        "published_payload_guard": "scripts/check-published-payload.py",
+        "scope_reduction": "No compiler/package/oracle/platform/live reexecution in this documentation/tooling phase: require SDK source to match the verified registry payload and full runtime fingerprint. Fresh dependency advisory/license/source policy and every fast generated contract/fixture check remain active. The complete 46-job Rust feature/compiler CI matrix remains unchanged.",
+        "remote_ci_observation": "docs/checks/release-ci-0.1.1-observation-01.json",
+        "planned_qualification_check_count": 34,
+        "qualification_check_count": 34
+      },
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_source_pending_remote_gate",
+          "evidence": [
+            "docs/reviews/phase-92-attempt-03.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-92.json"
+          ],
+          "source_sha256": "e2fe27f0557c0390315dee14053623be67a8b252f3b3cf6076d04e5b1475b35f"
+        },
+        "claude_review": {
+          "status": "accepted_source_pending_remote_gate",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-92-attempt-03.json"
+          ]
+        }
+      },
+      "review_fixes": [
+        {
+          "finding": 0,
+          "status": "resolved_by_actual_publication",
+          "resolution": "Registry 0.1.1 and the actual matching receipt now exist; release links identify the verified published source.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 1,
+          "status": "implemented",
+          "resolution": "Run generic documentation assertions before the version guard. Negative tests exercise future-version stale prose and missing registry references.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 2,
+          "status": "implemented_in_successor_gate",
+          "resolution": "Phase 92 includes committed-range, index and worktree whitespace checks. Preserve historical Phase 91 commands exactly; the original source already passed the retained supplemental committed-range check.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 3,
+          "status": "implemented",
+          "resolution": "Bind each additive Rust API to its declaration and packaged example; six drift mutations fail in regression tests.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 4,
+          "status": "implemented",
+          "resolution": "Changelog now names the packaged executable example and actual archive/source provenance.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 5,
+          "status": "resolved",
+          "resolution": "Phase 91 records the passing gate, accepted source review and actual verified delivery.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "finding": 6,
+          "status": "documented_optional_limitation",
+          "resolution": "VALIDATION.md explicitly separates the full JSON differential evidence from the typed corpus that ran only under the default policy.",
+          "review": "docs/reviews/phase-91-attempt-01.json"
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-01.json",
+          "finding": 0,
+          "status": "implemented_pending_checks_and_remote_execution",
+          "resolution": "The contracts checkout requests full history. New tests bind every committed-range gate to fetch-depth:0 and reproduce failed shallow-range lookup followed by successful full fetch. Source review precedes push; advancement explicitly waits for the actual remote updated gate."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-01.json",
+          "finding": 1,
+          "status": "implemented",
+          "resolution": "Phase 91 remote_ci and Phase 92 scope_evidence link the actual 0.1.1 observation and label runs 16/17 nonterminal. CI and RELEASE documents link that ledger and receipt."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-01.json",
+          "finding": 2,
+          "status": "implemented",
+          "resolution": "RELEASE now identifies gate91 as the published source gate and gate92 as current CI; a test derives the CI gate and requires it in both CI/RELEASE docs."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-01.json",
+          "finding": 3,
+          "status": "implemented_pending_checks",
+          "resolution": "Missing/unreadable published inputs become ValueError with a stable public path; a new file-removal regression exercises it."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-01.json",
+          "finding": 4,
+          "status": "implemented_pending_checks",
+          "resolution": "A source-pinned historical publication test binds the registry version/source/archive digest and every file hash to both clean proofs and remote tag identity."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-02.json",
+          "finding": 0,
+          "status": "implemented_pending_checks",
+          "resolution": "Restore fresh dependency audit/license/source policy to gate92 on every push. Document current script inventory with an exact workflow-derived command-set assertion; scope cross compilation explicitly to historical Phase8/91."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-02.json",
+          "finding": 1,
+          "status": "implemented_pending_checks",
+          "resolution": "Audit/deny installs and full locked fetch/metadata now feed the restored real dependency policy command. Remove unused cross-target standard library installation and test that no cross setup remains when the current gate has no cross checker."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-02.json",
+          "finding": 2,
+          "status": "implemented",
+          "resolution": "The CI introduction now names source qualification91 and current CI92, aligned with the workflow-derived documentation checks."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-02.json",
+          "finding": 3,
+          "status": "implemented_pending_checks",
+          "resolution": "Restore constants, Gateway bindings, model fixtures, native fixture/test bindings and all six omitted fast governance suites; the focused gate now has34checks while source compiler/package/oracle/platform/live executions retain their documented historical scope."
+        },
+        {
+          "review": "docs/reviews/phase-92-attempt-02.json",
+          "finding": 4,
+          "status": "delivery_condition",
+          "resolution": "Before candidate push, stage every current gate/private/payload/dependency/check/review artifact and verify all command-referenced receipt paths exist in the committed Git tree. Keep phase92in_progress until its actual remote gate succeeds."
+        }
+      ],
+      "delivery": {
+        "status": "source_qualified_pending_push_and_remote_gate",
+        "source_review_before_push": true,
+        "advance_only_after_remote_gate_passes": true
+      },
+      "review_attempts": [
+        "docs/reviews/phase-92-attempt-01.json",
+        "docs/reviews/phase-92-attempt-02.json"
+      ],
+      "preserved_checks": [
+        "docs/checks/phase-92-attempt-01.json",
+        "docs/checks/phase-92-attempt-02.json"
+      ],
+      "qualified_source_sha256": "e2fe27f0557c0390315dee14053623be67a8b252f3b3cf6076d04e5b1475b35f",
+      "qualified_score": 9,
+      "qualified_review": "docs/reviews/phase-92-attempt-03.json"
     }
   ],
   "active_followup_plan": "docs/red-team-data-plane-0.93.0-plan.md"

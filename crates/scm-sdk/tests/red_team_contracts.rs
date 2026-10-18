@@ -1640,9 +1640,11 @@ fn exactly_four_new_presence_waivers_apply_only_to_response_validation() {
         value.as_object_mut().unwrap().remove(field);
         let strict = format!("vendor:red-team-dp:0.93.0:{schema}");
         let compatible = format!("{strict}:compatible");
-        assert!(validation::parse(&strict, value.clone(), Mode::Response).is_err());
         assert!(validation::parse(&compatible, value.clone(), Mode::Request).is_err());
-        assert!(validation::parse(&compatible, value, Mode::Response).is_ok());
+        for mode in [Mode::Response, Mode::ResponseWithoutDefaults] {
+            assert!(validation::parse(&strict, value.clone(), mode).is_err());
+            assert_eq!(validation::parse(&compatible, value.clone(), mode).unwrap(), value);
+        }
     }
     let mut value = vendor_specimen("JobResponseSchema");
     value.as_object_mut().unwrap().remove("uuid");
@@ -1665,18 +1667,20 @@ fn current_fields_are_typed_and_future_progress_and_verdicts_remain_explicit() {
     assert!(matches!(model.progress, Patch::Value(_)));
     assert_eq!(serde_json::to_value(model).unwrap(), value);
     value["progress"] = json!({"kind":"FUTURE_PROGRESS", "opaque":{"preserved":true}});
-    let parsed = validation::parse(
-        "vendor:red-team-dp:0.93.0:JobResponseSchema:compatible",
-        value.clone(),
-        Mode::Response,
-    )
-    .unwrap();
-    let model: JobResponse = serde_json::from_value(parsed).unwrap();
-    assert!(matches!(
-        model.progress,
-        Patch::Value(data_plane::JobResponseProgress::Unknown(_))
-    ));
-    assert_eq!(serde_json::to_value(model).unwrap(), value);
+    for mode in [Mode::Response, Mode::ResponseWithoutDefaults] {
+        let parsed = validation::parse(
+            "vendor:red-team-dp:0.93.0:JobResponseSchema:compatible",
+            value.clone(),
+            mode,
+        )
+        .unwrap();
+        let model: JobResponse = serde_json::from_value(parsed).unwrap();
+        assert!(matches!(
+            model.progress,
+            Patch::Value(data_plane::JobResponseProgress::Unknown(_))
+        ));
+        assert_eq!(serde_json::to_value(model).unwrap(), value);
+    }
     value["progress"] = json!({"kind":false});
     assert!(
         validation::parse(

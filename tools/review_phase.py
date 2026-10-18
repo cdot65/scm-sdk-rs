@@ -155,7 +155,10 @@ def validate_predecessors(root, status, phase):
 
 def next_phase(phases, current):
     """Support separately numbered maintenance phases without bypassing a gate."""
-    return min((number for number in phases if number > current), default=None)
+    if phases[current].get("final_in_sequence") is True:
+        return None
+    return min((number for number in phases if number > current
+                and phases[number].get("status") != "complete"), default=None)
 
 
 def main(argv=None, root=None):

@@ -480,8 +480,10 @@ let result=validation::parse(&format!("vendor:red-team-dp:0.93.0:{schema}"),valu
 assert_eq!(result.is_ok(),valid,"fixture {}",row["name"]);
 if !valid{continue;}
 assert_eq!(result.unwrap(),*value,"vendor normalization preserves caller JSON");
+for mode in [Mode::Request,Mode::Response,Mode::ResponseWithoutDefaults]{
+assert_eq!(validation::parse(&format!("vendor:red-team-dp:0.93.0:{schema}"),value.clone(),mode).unwrap(),*value,"all response policies preserve valid vendor specimens");
 match schema{''' + "\n".join(arms) + '''_=>panic!("unbound fixture schema")}
-}}
+}}}
 '''
 
 

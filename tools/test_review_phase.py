@@ -29,6 +29,15 @@ class ReviewGateTests(unittest.TestCase):
         self.assertEqual(next_phase(phases, 90), 91)
         self.assertIsNone(next_phase(phases, 91))
 
+    def test_successors_do_not_reopen_completed_independent_maintenance(self):
+        phases = {10: {}, 11: {}, 12: {"final_in_sequence": True},
+                  90: {"status": "complete"}, 91: {"status": "complete"},
+                  92: {"status": "in_progress"}}
+        self.assertEqual(next_phase(phases, 10), 11)
+        self.assertEqual(next_phase(phases, 11), 12)
+        self.assertIsNone(next_phase(phases, 12))
+        self.assertIsNone(next_phase({8: {}, 90: {"status": "complete"}}, 8))
+
     def test_discovery_rejects_missing_and_empty_suites(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)

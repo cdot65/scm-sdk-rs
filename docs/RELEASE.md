@@ -3,7 +3,8 @@
 The workspace version is **0.1.1**. The G10 patch keeps default behavior, Rust
 1.89 and dependencies unchanged, and adds opt-in response-default omission.
 [The release plan](g10-0.1.1-plan.md) defines the accepted plan gate 90 and current
-qualification gate 91. [The 0.1.1 publication receipt](checks/release-registry-0.1.1.json),
+qualification gate 91. Current post-publication documentation and development
+guards use gate 92, which proves that published SDK inputs remain unchanged. [The 0.1.1 publication receipt](checks/release-registry-0.1.1.json),
 retained after actual upload, is the authority for registry availability and exact
 source/archive identity. Source delivery and a dry run do not establish publication.
 
@@ -33,8 +34,16 @@ source-bound status and limitations.
 For the authorized G10 0.1.1 maintenance track, follow
 [the patch plan](g10-0.1.1-plan.md): plan gate 90, then current source gate 91.
 The Phase 8 procedure below describes the initial 0.1.0 delivery. Its historical
-receipts do not qualify changed 0.1.1 runtime inputs. The patch updates CI to gate
-91 and retains new clean-package, registry and tag proofs at the paths in its plan.
+receipts do not qualify changed 0.1.1 runtime inputs. The patch qualified its
+published source with gate 91. CI now runs the post-publication gate using
+`python3 tools/check_phase.py --phase 92 --verification-only`; clean-package,
+registry and tag proofs remain at the paths in the plan.
+
+The actual 0.1.1 remote CI observation is linked from Phase 91's `remote_ci` record
+in [phase status](phase-status.json) and the
+[retained observation](checks/release-ci-0.1.1-observation-01.json). Runs 16 and 17
+were running and waiting at that observation; a terminal success was not recorded.
+Phase 92 advancement additionally waits for its updated gate to execute remotely.
 
 1. Preserve the frozen TypeScript 0.34.0 baseline and provenance. Check all 448
    operation mappings and 3,820 public capability mappings, independent fixtures,

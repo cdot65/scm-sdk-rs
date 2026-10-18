@@ -41,6 +41,49 @@ def flow_list(name):
 
 
 class CiContractTests(unittest.TestCase):
+    def test_committed_range_gate_has_full_history_and_current_documentation(self):
+        from check_phase import commands_for
+        phase = int(re.search(r"tools/check_phase\.py --phase (\d+) --verification-only", WORKFLOW).group(1))
+        job = re.search(r"^  contracts-and-package:\n(.*?)(?=^  [a-z][a-z-]*:\n|\Z)", WORKFLOW,
+                        re.MULTILINE | re.DOTALL).group(1)
+        if any(command[:3] == ["git", "diff", "--check"] and any(".." in word for word in command[3:])
+               for command in commands_for(phase)):
+            checkout = re.search(r"- name: Check out the reviewed source\n(.*?)(?=      - name:)",
+                                 job, re.DOTALL).group(1)
+            self.assertRegex(checkout, r"fetch-depth:\s*0(?:\s|$)")
+        for name in ["docs/CI.md", "docs/RELEASE.md"]:
+            self.assertIn(f"--phase {phase}", (ROOT / name).read_text())
+        document = (ROOT / "docs/CI.md").read_text()
+        section = document.split("## Scripts run by the current contracts gate\n", 1)[1].split("\n## ", 1)[0]
+        documented = set(re.findall(r"`(scripts/check-[^`]+\.py)`", section))
+        executed = {argument for command in commands_for(phase) for argument in command
+                    if argument.startswith("scripts/check-") and argument.endswith(".py")}
+        self.assertEqual(documented, executed)
+        self.assertIn("scripts/check-dependencies.py", executed)
+
+    def test_committed_range_fails_on_shallow_history_and_passes_after_full_fetch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory).resolve()
+            source, shallow = root / "origin", root / "checkout"
+            source.mkdir()
+            def git(*args, cwd=source, check=True):
+                return subprocess.run(["git", *args], cwd=cwd, check=check, capture_output=True, text=True)
+            git("-c", "init.defaultBranch=main", "init")
+            def commit(message):
+                git("add", "file.txt")
+                git("-c", "user.name=SDK fixture", "-c", "user.email=fixture@example.invalid",
+                    "-c", "commit.gpgsign=false", "-c", "core.hooksPath=" + str(root / "no-hooks"),
+                    "commit", "-m", message)
+            (source / "file.txt").write_text("baseline\n")
+            commit("fixture baseline")
+            base = git("rev-parse", "HEAD").stdout.strip()
+            (source / "file.txt").write_text("changed\n")
+            commit("fixture current")
+            git("clone", "--depth", "1", source.as_uri(), str(shallow), cwd=root)
+            self.assertNotEqual(git("diff", "--check", base + "..HEAD", cwd=shallow, check=False).returncode, 0)
+            git("fetch", "--unshallow", cwd=shallow)
+            self.assertEqual(git("diff", "--check", base + "..HEAD", cwd=shallow).returncode, 0)
+
     def test_workflows_share_reviewed_tool_versions_and_read_only_permissions(self):
         pins = json.loads((ROOT / "scripts/uv-checksums.json").read_text())
         for name, workflow in WORKFLOW_SOURCES.items():
@@ -75,15 +118,20 @@ class CiContractTests(unittest.TestCase):
                             "Native runner admission must follow the dispatch trigger")
 
     def test_qualification_prepares_complete_locked_graph_before_offline_checks(self):
+        from check_phase import commands_for
         qualification = WORKFLOW.split("  contracts-and-package:", 1)[1].split("\n  rust:", 1)[0]
         lines = [line.strip() for line in qualification.splitlines()]
         fetch = "cargo +1.99.0 fetch --locked"
         ready = "cargo +1.99.0 metadata --all-features --locked --offline --format-version 1 > /dev/null"
-        phase = "run: python3 tools/check_phase.py --phase 91 --verification-only"
+        phase = "run: python3 tools/check_phase.py --phase 92 --verification-only"
         self.assertIn(fetch, lines)
         self.assertIn(ready, lines)
         self.assertLess(lines.index(fetch), lines.index(ready))
         self.assertLess(lines.index(ready), lines.index(phase))
+        current = int(re.search(r"--phase (\d+)", phase).group(1))
+        self.assertTrue(any("scripts/check-dependencies.py" in command for command in commands_for(current)))
+        if not any("scripts/check-cross.py" in command for command in commands_for(current)):
+            self.assertNotIn("rustup target add", qualification)
 
     def test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget(self):
         from review_phase import fingerprint
@@ -208,6 +256,37 @@ class CiContractTests(unittest.TestCase):
             time.sleep(1.6)
             self.assertFalse(marker.exists(), "Timed-out checker left its child running")
 
+    def test_release_document_guards_run_when_the_development_version_changes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            fixtures = {
+                "docs/phase-status.json": json.dumps({"phases": [{"registry_publication": {
+                    "status": "published_and_verified", "version": "0.1.1", "evidence": "not-needed.json",
+                }}]}),
+                "crates/scm-sdk/Cargo.toml": '[package]\nversion = "0.2.0"\n',
+                "README.md": "Development documentation",
+                "CHANGELOG.md": "See crates.io",
+                "docs/STABILITY.md": "See crates.io",
+                "docs/SECURITY.md": "See crates.io",
+            }
+            for name, content in fixtures.items():
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content)
+            def run_guard():
+                result = unittest.TestResult()
+                with mock.patch.object(sys.modules[__name__], "ROOT", root):
+                    CiContractTests("test_verified_publication_is_consistent_in_current_release_documents").run(result)
+                return result
+            good = run_guard()
+            self.assertTrue(good.wasSuccessful(), good.errors)
+            self.assertFalse(good.skipped)
+            (root / "README.md").write_text("The crate is currently unpublished")
+            self.assertFalse(run_guard().wasSuccessful())
+            (root / "README.md").write_text(fixtures["README.md"])
+            (root / "docs/STABILITY.md").write_text("Registry reference missing")
+            self.assertFalse(run_guard().wasSuccessful())
+
     def test_verified_publication_is_consistent_in_current_release_documents(self):
         status = json.loads((ROOT / "docs/phase-status.json").read_text())
         publications = [phase["registry_publication"] for phase in status["phases"]
@@ -215,11 +294,6 @@ class CiContractTests(unittest.TestCase):
         self.assertTrue(publications, "Preserve historical publication evidence")
         publication = publications[-1]
         self.assertIn(publication.get("status"), {"verified_existing_publication", "published_and_verified"})
-        workspace_version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
-        if workspace_version != publication["version"]:
-            self.skipTest("The development version differs from the recorded publication")
-        receipt = json.loads((ROOT / publication["evidence"]).read_text())
-        self.assertEqual(publication["version"], receipt["version"])
         files = [ROOT / "README.md", ROOT / "CHANGELOG.md", *sorted((ROOT / "docs").glob("*.md"))]
         obsolete = re.compile(r"currently unpublished|no registry publication has occurred|"
                               r"registry publication has not occurred|"
@@ -230,6 +304,11 @@ class CiContractTests(unittest.TestCase):
                 self.assertIsNone(obsolete.search(path.read_text().replace("**", "")))
         for relative in ("CHANGELOG.md", "docs/STABILITY.md", "docs/SECURITY.md"):
             self.assertIn("crates.io", (ROOT / relative).read_text())
+        workspace_version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
+        if workspace_version != publication["version"]:
+            return  # Only receipt-specific assertions depend on the development version.
+        receipt = json.loads((ROOT / publication["evidence"]).read_text())
+        self.assertEqual(publication["version"], receipt["version"])
         changelog = (ROOT / "CHANGELOG.md").read_text()
         for value in (receipt["archiveSha256"], receipt["sourceCommit"], receipt["publishedAt"].split("T")[0]):
             self.assertIn(value, changelog)
@@ -308,7 +387,7 @@ class CiContractTests(unittest.TestCase):
         node = (ROOT / ".node-version").read_text().strip()
         self.assertIn(f'node-version: "{node}"', WORKFLOW)
         self.assertIn("tools/bootstrap_reference.py", WORKFLOW)
-        self.assertIn("tools/check_phase.py --phase 91 --verification-only", WORKFLOW)
+        self.assertIn("tools/check_phase.py --phase 92 --verification-only", WORKFLOW)
 
     def test_actions_and_credentials_are_bounded(self):
         actions = re.findall(r"^\s+uses: (\S+)", ALL_WORKFLOW_TEXT, re.MULTILINE)
