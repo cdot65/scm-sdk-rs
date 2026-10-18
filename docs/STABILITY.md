@@ -1,9 +1,15 @@
 # Compatibility and support status
 
-The current Rust crate version is **0.1.1**. Its
-[publication receipt](checks/release-registry-0.1.1.json), retained after upload,
-establishes actual release availability and artifact identity. The response-policy
-addition follows the patch-compatibility rule below; default behavior is unchanged.
+The current Rust crate version is **0.2.0**, an unpublished vendor-contract update.
+The [0.1.1 publication receipt](checks/release-registry-0.1.1.json) establishes the
+available G10 patch and its immutable source/archive identity. The opt-in response
+policy and default behavior are retained in development. The 0.2.0 minor increment
+is required because twelve legacy query options now fail before credentials;
+[CHANGELOG](../CHANGELOG.md) lists every migration binding.
+
+The vendor dataplane has a separate 47-operation ledger and current contract
+fixtures. It does not change the frozen TypeScript denominator or imply successful
+live execution. New methods retain explicit live-unverified status.
 
 The initial Rust version **0.1.0** was published on
 [crates.io](https://crates.io/crates/scm-sdk/0.1.0). The

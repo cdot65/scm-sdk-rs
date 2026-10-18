@@ -27,6 +27,15 @@ execution remains bounded by the feature/compiler and loopback cases in their
 actual reports. Caller-provided
 `Transport` and `WebSocketConnector` implementations own their platform behavior.
 
+## Vendor update boundary
+
+The unpublished 0.2.0 update records fresh Phase 12 native checks on
+`x86_64-unknown-linux-musl` for Rust 1.89.0/1.99.0 default, minimal and all features,
+plus isolated MSRV Red Team. Its package/public consumer checks use the same host.
+Earlier GNU and cross-target receipts above retain their original source scope;
+they do not establish fresh native acceptance of this vendor update. The configured
+remote matrix records its actual host/compiler scope when it executes.
+
 ## Reproduce cross-target checks
 
 Install standard libraries for the exact compiler, then run the checker:

@@ -2075,9 +2075,174 @@
       "id": 12,
       "name": "Red Team dataplane qualification and delivery",
       "status": "in_progress",
-      "reviews": [],
+      "reviews": [
+        "docs/reviews/phase-12-attempt-01.json"
+      ],
       "plan": "docs/red-team-data-plane-0.93.0-plan.md",
-      "final_in_sequence": true
+      "final_in_sequence": true,
+      "scope_evidence": [
+        "docs/red-team-data-plane-0.93.0-plan.md",
+        "CHANGELOG.md",
+        "README.md",
+        "docs/RED_TEAM.md",
+        "docs/VALIDATION.md",
+        "docs/CI.md",
+        "docs/RELEASE.md",
+        "docs/PACKAGING.md",
+        "docs/PLATFORMS.md",
+        "docs/LIVE_ACCEPTANCE.md",
+        "crates/scm-sdk/examples/red_team_dataplane.rs",
+        "tools/red_team_dataplane.py",
+        "tools/test_red_team_dataplane.py",
+        "crates/scm-sdk/tests/red_team_contracts.rs",
+        "tools/check_phase.py",
+        ".forgejo/workflows/ci.yml",
+        "scripts/check-package.py",
+        "contracts/vendor/red-team-data-plane/0.93.0/operations.json",
+        "tools/test_ci.py",
+        "docs/checks/phase-08-live-attempt-11.json",
+        "tools/test_model_fixtures.py",
+        "docs/checks/phase-12-oracle-provenance-refresh.json",
+        "docs/checks/phase-08-live-attempt-12.json"
+      ],
+      "check_scope_rationale": "Final cumulative 39-command gate: all Python suites; pinned/current and frozen generators/oracles; every native operation/export/default/fixture/qualification ledger; default/minimal/all native checks on MSRV1.89.0 and dev1.99.0 plus isolated MSRV Red Team; 27,216 typed specimens; 3,820-capability external consumers and extracted packages on both compilers; fresh dependency/license/source audit and exact-value source privacy. The full 46-job remote feature matrix remains configured. Historical action-bootstrap/cross-platform/tracing-stress rehearsals are not repeated: no platform or engine changes were introduced. Every claim is limited to the actual retained child reports. CI uses a separately named contracts-only subset plus the46Rustjobs. The subset cannot be used for phase advancement: review_phase requires the full39-command list and phase-12.json; the CI subset writes phase-12-contracts.json.",
+      "review_followups": [
+        {
+          "review": "docs/reviews/phase-11-attempt-01.json",
+          "status": "implemented_pending_final_checks",
+          "resolution": "Phase11 scope and limitations recorded before advancement. Bind each method body to its exact schema roots with transposed-root regressions; client-boundary negative valid-JSON replies on every new typed route. Keep only consumed query fields embedded and retain method/path/schema/status metadata in the development ledger; common success handling remains 2xx. Remove unreachable frozen-only dispatch arms. Document continuing live-attempt naming convention."
+        }
+      ],
+      "release": {
+        "version": "0.2.0",
+        "registry_publication": "not_requested_unpublished",
+        "published_maintenance": "0.1.1",
+        "published_receipt": "docs/checks/release-registry-0.1.1.json",
+        "ordinary_remote_push": "pending_after_accepted_source_review"
+      },
+      "limitations": [
+        {
+          "id": "vendor-live-execution",
+          "status": "live_unverified",
+          "scope": "All eleven new vendor operations; existing selected-tenant Red Team read probes return403. No paid/new Red Team jobs, runtime association, verdict edits or report regeneration executed."
+        },
+        {
+          "id": "native-platform-scope",
+          "status": "explicit_scope",
+          "scope": "Fresh local execution uses x86_64-unknown-linux-musl. Earlier GNU/Apple/Windows/ARM evidence retains its original source scope. Current remote execution is recorded separately after push."
+        },
+        {
+          "id": "unpublished-development-package",
+          "status": "explicit_scope",
+          "scope": "Phase12 package checks allow dirty development input and retain source/file/archive identity; they do not satisfy a future clean-release/publication proof. No0.2.0 registry publication or tag is authorized in this vendor delivery."
+        }
+      ],
+      "live_evidence": {
+        "receipt": "docs/checks/phase-08-live-attempt-12.json",
+        "version": "0.2.0",
+        "verified_baseline_methods": 17,
+        "service_requests": 24,
+        "token_exchanges": 1,
+        "cleanup": "not_needed",
+        "new_vendor_operations_live_unverified": true,
+        "previous_candidate_receipt": "docs/checks/phase-08-live-attempt-11.json"
+      },
+      "qualification_attempts": [
+        {
+          "evidence": "docs/checks/phase-12-attempt-01-upstream-whitespace.json",
+          "status": "superseded",
+          "resolution": "The committed-range style check encountered original trailing spaces in exact-byte pinned vendor YAML. Exclude only that immutable input from this style check; independent SHA256/size/YAML equality checks remain strict. Every owned source path stays in scope."
+        },
+        {
+          "evidence": "docs/checks/phase-12-attempt-02-oracle-tooling.json",
+          "status": "superseded",
+          "resolution": "All prior checks passed. Independent Zod generation found stale package/lock provenance after Phase10 added pinned YAML/AJV tooling. Controlled regeneration of three oracle artifacts changed only those two input hashes; all observations and all other provenance remain identical. New regression went red before the metadata refresh and green after. Packaged model-regression specimen data remains identical; only its parent-corpus digest changed. Fresh live receipt will bind the resulting exact runtime bytes.",
+          "diagnosis": "docs/checks/phase-12-oracle-provenance-refresh.json"
+        },
+        {
+          "evidence": "docs/checks/phase-12-attempt-03-ledger-order.json",
+          "status": "superseded",
+          "resolution": "After the provenance/live refresh, Gateway proof was regenerated before its native-operations input. Only that input digest differed; all194 operation bindings were identical. Regenerate native operations, then Gateway bindings, exports and qualification; document that dependency order. No SDK runtime change or additional live run required."
+        }
+      ],
+      "milestones": {
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-12.json"
+          ],
+          "source_sha256": "de311207659ad73a8a158b79e262714b24e5c158441ee3d40adbe5b4e5e98bce"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-12-attempt-01.json"
+          ]
+        },
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-12-attempt-01.json"
+          ]
+        }
+      },
+      "implemented_scope": {
+        "current_vendor_operations": 47,
+        "independent_wire_cases": 56,
+        "vendor_model_specimens": 1636,
+        "frozen_methods": 448,
+        "frozen_public_capabilities": 3820,
+        "frozen_typed_specimens": 27216,
+        "full_phase_commands": 39,
+        "compiler_configurations": 7,
+        "package_compilers": [
+          "1.89.0",
+          "1.99.0"
+        ],
+        "registry_publication": "0.2.0_unpublished"
+      },
+      "review_attempts": [
+        "docs/reviews/phase-12-attempt-01.json"
+      ],
+      "review_advisories": [
+        {
+          "source": "docs/reviews/phase-12-attempt-01.json",
+          "finding": 0,
+          "severity": "medium",
+          "path": "docs/RED_TEAM.md",
+          "status": "nonblocking_recommendation_retained",
+          "scope": "The accepted 9/10 review reports no correctness blocker or high finding; current pinned contracts and all39 checks pass. Preserve the precise recommendation for future documentation/tooling maintenance.",
+          "recommendation": "Reconcile the RED_TEAM.md pagination/request-constraints section with the current contract: state explicitly that the twelve listed option bindings now fail validation before credentials on their specific methods, and link the CHANGELOG migration table from that section rather than only from the \"Current dataplane contract\" preamble."
+        },
+        {
+          "source": "docs/reviews/phase-12-attempt-01.json",
+          "finding": 1,
+          "severity": "low",
+          "path": "docs/PLATFORMS.md",
+          "status": "nonblocking_recommendation_retained",
+          "scope": "The accepted 9/10 review reports no correctness blocker or high finding; current pinned contracts and all39 checks pass. Preserve the precise recommendation for future documentation/tooling maintenance.",
+          "recommendation": "Point the GNU matrix receipt link at docs/checks/phase-08-ci-run-12/matrix-capture-receipt.json with its actual source commit, or record in docs/phase-status.json why run-11 is deliberately retained as the cited receipt for this delivery."
+        },
+        {
+          "source": "docs/reviews/phase-12-attempt-01.json",
+          "finding": 2,
+          "severity": "low",
+          "path": "tools/red_team_dataplane.py",
+          "status": "nonblocking_recommendation_retained",
+          "scope": "The accepted 9/10 review reports no correctness blocker or high finding; current pinned contracts and all39 checks pass. Preserve the precise recommendation for future documentation/tooling maintenance.",
+          "recommendation": "Assert in tools/red_team_dataplane.py that every derived queryKinds value is in the reviewed set {integer, boolean, string} and raise on anything else, so an unsupported query kind stops generation and requires a recorded classification instead of degrading to string coercion at runtime."
+        },
+        {
+          "source": "docs/reviews/phase-12-attempt-01.json",
+          "finding": 3,
+          "severity": "low",
+          "path": "tools/red_team_dataplane.py",
+          "status": "nonblocking_recommendation_retained",
+          "scope": "The accepted 9/10 review reports no correctness blocker or high finding; current pinned contracts and all39 checks pass. Preserve the precise recommendation for future documentation/tooling maintenance.",
+          "recommendation": "Bind the new per-route negative tests by name in the vendor ledger's fixtureBinding (or an adjacent reviewed list checked by tools/red_team_dataplane.py / tools/test_red_team_dataplane.py), so the documented client-boundary security coverage cannot regress without failing a check."
+        }
+      ]
     },
     {
       "id": 90,

@@ -22,6 +22,9 @@ No credentials or tenant registrations are loaded implicitly.
 
 ## Current dataplane contract
 
+These additions target unpublished 0.2.0. See [migration notes](../CHANGELOG.md) and
+the [compiled offline/async example](../crates/scm-sdk/examples/red_team_dataplane.rs).
+
 The separately pinned OpenAPI 0.93.0 contract has 47 operations. All 47 have
 native methods and independent wire fixtures, including eleven additions:
 

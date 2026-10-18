@@ -517,6 +517,30 @@ def option_fields(text, cls, member):
     return set(re.findall(r"(?m)^    pub (\w+):", definitions[0]))
 
 
+def native_method(text, cls, member):
+    match = re.search(r"(?ms)^    pub async fn " + re.escape(member) +
+                      r"\b.*?(?=^    (?:pub (?:async )?fn |///|#\[)|\Z)", client_impl(text, cls))
+    return match.group() if match else ""
+
+
+def verify_schema_binding(text, cls, member, metadata, op):
+    method = native_method(text, cls, member)
+    expected = {value for key, value in metadata.items() if key in {"requestSchema", "responseSchema"} and value}
+    # The two older JSON methods have intentionally unconstrained response schemas.
+    unconstrained = op["responses"][str(metadata["successStatus"])].get("content", {}).get("application/json", {}).get("schema") == {}
+    if unconstrained:
+        expected.discard(metadata["responseSchema"])
+        if ".send_json(" not in method:
+            raise ValueError("Opaque JSON operation must use bounded JSON decoding")
+    elif metadata["responseSchema"] is None and ".send_bytes(" not in method:
+        raise ValueError("Schemaless CSV operation must use bounded bytes")
+    actual = set(re.findall(r'"(vendor:red-team-dp:0\.93\.0:[^"\n]+)"', method))
+    if actual != expected:
+        raise ValueError("Native method schema roots differ from its exact operation: " + cls + "." + member)
+    return {"requestSchema": metadata["requestSchema"], "responseSchema": metadata["responseSchema"],
+            "successStatus": metadata["successStatus"], "responseHandling": "opaque_json" if unconstrained else "csv_bytes" if metadata["responseSchema"] is None else "typed_contract"}
+
+
 WIRE_FIXTURES = "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json"
 WIRE_TEST = "crates/scm-sdk/tests/red_team_contracts.rs"
 WIRE_TEST_NAME = "all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies"
@@ -567,6 +591,7 @@ def outputs():
         source = f"crates/scm-sdk/src/airs/red_team/{module}.rs"
         text = (ROOT / source).read_text()
         implemented = re.search(r"(?m)^    pub async fn " + re.escape(member) + r"\b", client_impl(text, cls)) is not None
+        schemas = verify_schema_binding(text, cls, member, meta[op["operationId"]], op) if implemented else None
         declared = {p["name"] for p in op.get("parameters", []) if p["in"] == "query"}
         unsupported = option_fields(text, cls, member) - declared
         if unsupported:
@@ -576,6 +601,7 @@ def outputs():
             "sourceSha256": sha((ROOT / source).read_bytes()), "implemented": implemented,
             "parameters": op.get("parameters", []), "requestBody": op.get("requestBody"),
             "responses": op["responses"], "liveAcceptance": "unverified",
+            "schemaBinding": schemas,
             "rejectedLegacyParameters": [{"name": name, "disposition": "validation_error_before_auth"} for name in sorted(unsupported)],
             "contractVerification": "executable_fixture" if op["operationId"] in wires and implemented else "planned",
             "fixtureBinding": {"path": WIRE_FIXTURES, "sha256": sha((ROOT / WIRE_FIXTURES).read_bytes()), "cases": wires[op["operationId"]],
@@ -587,7 +613,9 @@ def outputs():
               "operationCount": len(rows), "implementedCount": sum(row["implemented"] for row in rows), "operations": rows}
     return {ROOT / "contracts/vendor/red-team-data-plane/0.93.0/operations.json": ledger,
             ROOT / "contracts/vendor/red-team-data-plane/0.93.0/schema-diff.json": changed_contracts(spec),
-            ROOT / "crates/scm-sdk/src/airs/red_team/contract.json": meta}
+            ROOT / "crates/scm-sdk/src/airs/red_team/contract.json": {
+                name: {key: value for key, value in row.items() if key in {"queryKinds", "querySchema"}}
+                for name, row in meta.items()}}
 
 
 def model_probe():

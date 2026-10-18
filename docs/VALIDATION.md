@@ -104,3 +104,28 @@ these five builders because native files cannot be serialized as JSON.
 The full [23-binding inventory](RESPONSE_DEFAULTS.md) identifies shared schemas
 and defaults outside Red Team. The [offline example](../crates/scm-sdk/examples/response_defaults.rs)
 executes against the packaged crate on both qualified compilers.
+
+## Current vendor response checks
+
+The 0.93.0 model corpus checks all 1,636 independent specimens under both response
+policies, including negative cases. Its AJV evolution oracle deliberately allows
+unknown response fields and string enum values while retaining types, requiredness,
+formats and bounds. Those specimens use strict component roots; four older-service
+presence waivers are tested separately on operation response roots. Client-boundary
+negative tests exercise invalid ASR values and missing required response fields on
+every new typed route, returning a redacted Decode error and unknown remote outcome.
+
+The 47-row vendor ledger binds each native method's exact request/response schema
+literals; transposed override roots fail generation even when the schemas currently
+share a shape. The two legacy unconstrained JSON responses and raw CSV route retain
+explicit separate decoding policies. The embedded runtime contract contains only
+query kinds and query roots; method/path/schema/status metadata stays in the
+coverage ledger. HTTP success handling retains the shared engine's 2xx policy;
+the pinned declared status is exercised by each independent positive wire fixture.
+
+The vendor tooling adds YAML/AJV development dependencies. The frozen Zod oracle
+was re-executed with those locked tools; only package/lock provenance digests
+changed in its schema, helper and Gateway artifacts. Every recorded observation
+is identical, and a regression pins the full schema corpus outside those two
+metadata rows. [The comparison receipt](checks/phase-12-oracle-provenance-refresh.json)
+retains the exact before/after artifact identities and unchanged-observation proof.

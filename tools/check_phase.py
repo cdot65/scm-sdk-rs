@@ -68,6 +68,49 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 12:
+        return [
+            ["git", "diff", "--check", "840c090..HEAD", "--", ".",
+             ":(exclude)contracts/vendor/red-team-data-plane/0.93.0/dp-openapi.yaml"],
+            ["git", "diff", "--check"],
+            ["git", "diff", "--cached", "--check"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_*.py", "-v"],
+            ["node", "tools/red-team-dataplane.mjs", "--check"],
+            ["node", "tools/make-red-team-fixtures.mjs", "--check"],
+            ["node", "tools/make-red-team-wire-fixtures.mjs", "--check"],
+            ["python", "tools/red_team_dataplane.py", "--check", "--require-complete"],
+            ["python", "tools/verify-contracts.py"],
+            ["python", "tools/verify-contracts.py", "--baseline", ".local/typescript"],
+            ["python", "tools/verify-contracts.py", "--self-test"],
+            ["python", "tools/generate_validation.py", "--check"],
+            ["python", "tools/generate_models.py", "--check"],
+            ["python", "tools/generate_constants.py", "--check"],
+            ["python", "tools/response_defaults.py", "--check"],
+            ["python", "tools/verify_gateway_bindings.py", "--check"],
+            ["python", "tools/model_fixtures.py", "--check"],
+            ["python", "tools/verify_native_fixtures.py", "--require-test-bindings"],
+            ["python", "tools/native_operations.py", "--check", "--require-through-phase", "8"],
+            ["python", "tools/native_exports.py", "--check"],
+            ["python", "tools/live_evidence.py", "--check"],
+            ["python", "tools/qualification.py", "--check"],
+            [".local/typescript/node_modules/.bin/tsx", "tools/schema-oracle.mts", "--check"],
+            ["tools/node_modules/.bin/tsx", "tools/helper-oracle.mts", "--check"],
+            ["tools/node_modules/.bin/tsx", "tools/verify-gateway-specimens.mts", "--check"],
+            *[["python", "scripts/check-rust.py", "--toolchain", toolchain, "--feature-set", features,
+               "--output", f"docs/checks/phase-12-rust-{toolchain}-{features}.json"]
+              for toolchain in ("1.89.0", "1.99.0") for features in ("default", "minimal", "all")],
+            ["python", "scripts/check-rust.py", "--toolchain", "1.89.0", "--feature-set", "red-team",
+             "--output", "docs/checks/phase-12-rust-1.89.0-red-team.json"],
+            ["python", "tools/generate_models.py", "--verify-fixtures"],
+            *[["python", "scripts/check-native-exports.py", "--toolchain", toolchain,
+               "--output", f"docs/checks/phase-12-native-exports-{toolchain}.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            *[["python", "scripts/check-package.py", "--toolchain", toolchain,
+               "--output", f"docs/checks/phase-12-package-{toolchain}.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-12-dependencies.json"],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-12-private-material.json"],
+        ]
     if phase == 11:
         return [
             ["git", "diff", "--check"],
@@ -369,17 +412,35 @@ def commands_for(phase):
     raise ValueError("Check commands must be defined for the active implementation phase")
 
 
+def ci_commands_for(phase):
+    """Fast current contracts complement the independent 46-job Rust matrix.
+
+    This subset cannot qualify a phase review: it writes a separate report and
+    review_phase.check_evidence still requires the complete commands_for list.
+    """
+    if phase != 12:
+        raise ValueError("The contracts-only scope is defined only for phase 12")
+    native_scripts = {"scripts/check-rust.py", "scripts/check-native-exports.py", "scripts/check-package.py"}
+    return [command for command in commands_for(phase)
+            if not native_scripts.intersection(command)
+            and command != ["python", "tools/generate_models.py", "--verify-fixtures"]]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--phase", required=True, type=int)
     parser.add_argument("--verification-only", action="store_true",
                         help="Rerun qualification in CI without changing phase status or requesting review")
+    parser.add_argument("--contracts-only", action="store_true",
+                        help="Phase12 CI contract subset; separate report, never qualifies a phase review")
     args = parser.parse_args()
+    if args.contracts_only and (not args.verification_only or args.phase != 12):
+        parser.error("--contracts-only requires --phase 12 --verification-only")
     status = json.loads((ROOT / "docs/phase-status.json").read_text())
     if status["active_phase"] != args.phase and not args.verification_only:
         raise ValueError("Run the active phase's checks")
     before = fingerprint(ROOT)
-    commands = commands_for(args.phase)
+    commands = ci_commands_for(args.phase) if args.contracts_only else commands_for(args.phase)
     records = []
     for command in commands:
         started = time.monotonic()
@@ -402,7 +463,10 @@ def main():
               "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "passed": unchanged and len(records) == len(commands)
                         and all(record["exit_code"] == 0 for record in records), "checks": records}
-    path = ROOT / f"docs/checks/phase-{args.phase:02d}.json"
+    if args.contracts_only:
+        report["scope"] = "ci_contracts_only_not_full_phase_qualification"
+    suffix = "-contracts" if args.contracts_only else ""
+    path = ROOT / f"docs/checks/phase-{args.phase:02d}{suffix}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(report, indent=2) + "\n")
     return 0 if report["passed"] else 1

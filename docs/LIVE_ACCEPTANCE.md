@@ -10,7 +10,7 @@ Each unqualified method has a reason. The [current receipt reference](../contrac
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
-The current vendor-development run (attempt 10) verified 17 exact native methods
+The current vendor-development run (attempt 12) verified 17 exact native methods
 from 24 service requests and one token exchange. Its scan-ID lookups completed
 with correlated results. Three Red Team reads returned 403 permission rejections;
 IAM scope creation and Gateway provisioning returned 400 rejecting the submitted
@@ -23,7 +23,7 @@ current vendor validators and typed model additions.
 The published 0.1.1 source had a separate run (attempt 08) verifying 16 methods.
 Its synchronous scan-ID lookup was incomplete or uncorrelated while the async
 lookup succeeded, leaving that canonical method unqualified in that receipt.
-Attempts 09 and 10 are new executions; their results do not rewrite the publication's
+Attempts 09–12 are new executions; their results do not rewrite the publication's
 historical observations. Earlier 0.1.0 receipts also verified 17 methods.
 
 The first 0.1.1 execution (attempt 07) completed 24 service requests with cleanup
@@ -31,6 +31,11 @@ not needed, but the wrapper rejected its version because it was hardcoded to
 0.1.0. The [parser-attempt record](checks/phase-91-live-refresh-attempt-07.json)
 preserves that failure. The manifest-bound parser now rejects receipts for a
 different SDK version. No earlier failure was promoted.
+
+Live execution attempts keep the original `phase-08-live-attempt-NN.json` naming
+convention and a single increasing counter across maintenance/vendor phases.
+The owning phase records the exact receipt reference and current runtime fingerprint;
+the filename does not assert that a later execution happened during Phase 8.
 
 ## What the controlled run covers
 

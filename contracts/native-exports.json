@@ -34,18 +34,18 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "5806e045d9d8cd34d36d58c79ee54d36c605d73e3017cd6dcf698ca21dab5ab9"
+      "sha256": "6a06cd0d5ab39f46310fc734b822a2dd14eb991e2d810c16aa7501a0f1a0aa43"
     },
     "report": {
-      "path": "docs/checks/phase-08-live-attempt-10.json",
-      "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df"
+      "path": "docs/checks/phase-08-live-attempt-12.json",
+      "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
       "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
     },
-    "executedAt": "2026-10-18T17:49:01.785836+00:00",
-    "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+    "executedAt": "2026-10-18T18:24:12.011706+00:00",
+    "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
     "toolchain": "1.99.0",
     "hostTarget": "x86_64-unknown-linux-musl",
     "cleanupState": "not_needed"
@@ -63,7 +63,7 @@
   "sourceBindings": [
     {
       "path": "Cargo.lock",
-      "sha256": "6a27723394cef3f4b60219bf14e457fe6e154841e1bcb2a3aca6b6c6d05a6145"
+      "sha256": "126454a31daa468c13cf57d5ee203115032d61bbbaeff20f712db490a1aa8f7a"
     },
     {
       "path": "Cargo.toml",
@@ -75,7 +75,7 @@
     },
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "5806e045d9d8cd34d36d58c79ee54d36c605d73e3017cd6dcf698ca21dab5ab9"
+      "sha256": "6a06cd0d5ab39f46310fc734b822a2dd14eb991e2d810c16aa7501a0f1a0aa43"
     },
     {
       "path": "contracts/native-capability-mappings/client-members.json",
@@ -103,7 +103,7 @@
     },
     {
       "path": "contracts/native-operations.json",
-      "sha256": "d15ce3ea759eff9418f27b1d98fa3150319d12bbe868cbd6568a70de72a52e03"
+      "sha256": "4a2dc13b604f9d474807de01077ed1e1da28348c28fb338d972d149ef2eaca1b"
     },
     {
       "path": "contracts/typescript.json",
@@ -111,7 +111,7 @@
     },
     {
       "path": "crates/scm-sdk/Cargo.toml",
-      "sha256": "e79aa5056e316a10768108b5214deed7fd95fe3345614e7408658a4da18a862e"
+      "sha256": "2d28ba64a003a5816422fad25c5e4004a8325eef2549223405e8233675aad516"
     },
     {
       "path": "crates/scm-sdk/src/airs/agentguard/client.rs",
@@ -627,7 +627,7 @@
     },
     {
       "path": "crates/scm-sdk/tests/red_team_contracts.rs",
-      "sha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      "sha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
     },
     {
       "path": "crates/scm-sdk/tests/red_team_resources_contracts.rs",
@@ -646,8 +646,8 @@
       "sha256": "8d8fbadaa4c69150db67d739b609e9b5f01b7c9edd4642e69db6f6f5bb835db3"
     },
     {
-      "path": "docs/checks/phase-08-live-attempt-10.json",
-      "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df"
+      "path": "docs/checks/phase-08-live-attempt-12.json",
+      "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21"
     },
     {
       "path": "scripts/check-native-exports.py",
@@ -2560,10 +2560,10 @@
       "probeIndex": 48,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "agentguard.get_scan_stats",
         "observations": [
           {
@@ -2620,10 +2620,10 @@
       "probeIndex": 49,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "agentguard.list_rules",
         "observations": [
           {
@@ -2680,10 +2680,10 @@
       "probeIndex": 50,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "agentguard.list_scans",
         "observations": [
           {
@@ -19146,10 +19146,10 @@
       "probeIndex": 458,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "gateway.workspaces.list",
         "observations": [
           {
@@ -19215,10 +19215,10 @@
       "probeIndex": 459,
       "liveAcceptance": "service_contract_rejection",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "gateway.workspaces.provision",
         "observations": [
           {
@@ -21408,10 +21408,10 @@
       "probeIndex": 519,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "management.api_keys.list_for_token",
         "observations": [
           {
@@ -39147,10 +39147,10 @@
       "probeIndex": 996,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "dlp.data_profiles.list",
         "observations": [
           {
@@ -98334,10 +98334,10 @@
       "probeIndex": 2603,
       "liveAcceptance": "service_contract_rejection",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "iam.scopes.create",
         "observations": [
           {
@@ -98473,10 +98473,10 @@
       "probeIndex": 2606,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "iam.scopes.list",
         "observations": [
           {
@@ -111367,10 +111367,10 @@
       "probeIndex": 2955,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "model_security.models.list_models",
         "observations": [
           {
@@ -113420,10 +113420,10 @@
       "probeIndex": 3009,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "model_security.rules.list",
         "observations": [
           {
@@ -115375,10 +115375,10 @@
       "probeIndex": 3058,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "model_security.scans.list",
         "observations": [
           {
@@ -116738,10 +116738,10 @@
       "probeIndex": 3094,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -119279,10 +119279,10 @@
       "probeIndex": 3163,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "management.profiles.list",
         "observations": [
           {
@@ -119372,10 +119372,10 @@
       "probeIndex": 3165,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "management.profiles.list_for_token",
         "observations": [
           {
@@ -124857,10 +124857,10 @@
       "probeIndex": 3307,
       "liveAcceptance": "permission_prerequisite",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "red_team.get_management_languages",
         "observations": [
           {
@@ -124999,10 +124999,10 @@
       "probeIndex": 3310,
       "liveAcceptance": "permission_prerequisite",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "red_team.get_scan_metadata",
         "observations": [
           {
@@ -127518,10 +127518,10 @@
       "probeIndex": 3373,
       "liveAcceptance": "permission_prerequisite",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "red_team.eula.get_status",
         "observations": [
           {
@@ -134677,10 +134677,10 @@
       "probeIndex": 3561,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "scan.async_scan",
         "observations": [
           {
@@ -134732,10 +134732,10 @@
       "probeIndex": 3562,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "scan.query_report",
         "observations": [
           {
@@ -134787,10 +134787,10 @@
       "probeIndex": 3563,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "scan.query_scan_results",
         "observations": [
           {
@@ -134855,10 +134855,10 @@
       "probeIndex": 3564,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-08-live-attempt-10.json",
-        "sha256": "dce9000d13ec37d9b2b2f5bdd69d5b89d6919b3f894cf233be8e8686ef7299df",
+        "path": "docs/checks/phase-08-live-attempt-12.json",
+        "sha256": "a8e7d6b1eab179a1c7dc8098474fceb503ba5f1e87d6cc1134391b8b03ba9b21",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "0fd1a1e4139d8d8e92eb5ad1edd7ebdb5b5f8325ec684b461c1c711af0ea0ed2",
+        "runtimeInputsSha256": "912e058698a5aa7de891c1d8c33d7f758156af8388648868b1da4d0f0a9a0fe3",
         "probe": "scan.sync_scan",
         "observations": [
           {
@@ -144409,7 +144409,7 @@
       },
       {
         "path": "Cargo.lock",
-        "sha256": "bbc2553ed7a82ef392efa7cf9e9b4406c9e71218d346f80206194bfc7a945cce"
+        "sha256": "131e1937d2819a6dd2a69d3daa532e0d21bd502283e109bbfba5f7d690eb2429"
       },
       {
         "path": "src/main.rs",

@@ -1,5 +1,75 @@
 # Changelog
 
+## 0.2.0 — Unreleased
+
+Unpublished development for the pinned Prisma AIRS Red Team dataplane OpenAPI
+0.93.0 at `afef9d08030a56e18a04ea078f589313f1fa2b0c`. The published G10 patch
+remains [scm-sdk 0.1.1](https://crates.io/crates/scm-sdk/0.1.1).
+
+### Added
+
+- All 47 current dataplane operations now have native methods and independent
+  executable wire fixtures. Eleven additions cover runtime profile association,
+  static/dynamic ASR, report regeneration/status, four verdict override routes,
+  raw CSV error-log download and typed V2 report download locations.
+- Generate 152 vendor component DTOs under `airs::red_team::models::data_plane`,
+  with unique new names also available from `models`. Add 55 optional typed
+  fields to existing models, including audio, progress, verdict provenance and
+  rich dynamic remediation categories. Existing field types and union identities remain.
+- Required nullable override verdicts distinguish true, false and explicit null
+  clearing. All six new writes preserve uncertain outcomes and never auto-replay.
+- The packaged `red_team_dataplane` example validates an override offline and
+  demonstrates application-owned async report calls without automatically
+  following signed locations or polling a regeneration job.
+
+### Changed — migration from 0.1.x
+
+Current dataplane calls validate against the pinned vendor contract, while legacy
+standalone schema names retain their frozen meaning. The following twelve option
+bindings are absent from the current vendor specification. Supplying any now
+returns a validation error **before authentication or transport**; they are never
+silently discarded. Leave these fields unset and explicitly adapt any application
+filtering or presentation pagination to the results the service actually returns.
+
+| Native method | Option rejected when supplied |
+| --- | --- |
+| `reports().list_attacks` | `search` |
+| `reports().list_goal_streams` | `skip` |
+| `reports().list_goal_streams` | `limit` |
+| `reports().list_goal_streams` | `search` |
+| `custom_attack_reports().get_prompt_sets` | `search` |
+| `custom_attack_reports().get_prompts_by_set` | `search` |
+| `custom_attack_reports().list_custom_attacks` | `search` |
+| `get_error_logs` | `search` |
+| `get_target_profile_error_logs` | `skip` |
+| `get_target_profile_error_logs` | `search` |
+| `get_scan_statistics` | `date_range` |
+| `get_scan_statistics` | `target_id` |
+
+Other declared filters, including deprecated `threat`, remain supported; false
+and zero stay on wire when supplied. Existing V1 `download_report` still returns
+JSON. Typed `get_download_url` is a separate V2 call, requires a known `FileFormat`,
+and never fetches its returned URL. `download_error_logs` returns `Bytes`, without
+UTF-8 replacement or file writes. Regeneration returns its HTTP 202 background
+job directly and preserves HTTP 409 conflicts without polling.
+
+Strict vendor response roots are retained. Exactly four response-only presence
+waivers permit older deployments to omit `audio_technique` on attack/multi-turn
+attack details and `judge_reasoning` on attack/multi-turn outputs. No new endpoint
+gets a requiredness waiver. Unknown response states/fields remain explicit.
+
+### Fixed and retained
+
+- Gate the Gateway-only buffered-alternative unit test on `gateway`; the published
+  0.1.1 source's isolated Red Team unit-test compile issue does not affect ordinary
+  Red Team consumer library builds.
+- Rust MSRV remains 1.89; production dependencies and Cargo features are unchanged.
+- The G10 default response policy, opt-in omission policy, operation names and
+  complete [23-binding default inventory](docs/RESPONSE_DEFAULTS.md) are retained.
+- Vendor contract coverage is separate from the frozen 448-method/3,820-capability
+  TypeScript denominator and from live acceptance. New Red Team calls remain
+  live-unverified; the selected tenant's read probes return permission failures.
+
 ## 0.1.1 — 2026-10-18
 
 Published on [crates.io](https://crates.io/crates/scm-sdk/0.1.1) from reviewed source

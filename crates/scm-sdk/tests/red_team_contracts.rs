@@ -1972,9 +1972,6 @@ async fn call_vendor(
             value!(client.get_goal_categories("APPLICATION", options))
         }
         ("RedTeamClient", "get_languages") => value!(client.get_languages(options)),
-        ("RedTeamClient", "get_management_languages") => {
-            value!(client.get_management_languages(options))
-        }
         ("RedTeamClient", "get_scan_statistics") => {
             value!(client.get_scan_statistics(&ScanStatisticsOptions::default(), options))
         }
@@ -1989,9 +1986,6 @@ async fn call_vendor(
             value!(client.update_sentiment(&parsed!(body), options))
         }
         ("RedTeamClient", "get_sentiment") => value!(client.get_sentiment(job, options)),
-        ("RedTeamClient", "get_dashboard_overview") => {
-            value!(client.get_dashboard_overview(options))
-        }
 
         ("RedTeamScansClient", "set_runtime_profile") => value!(
             client
@@ -2439,5 +2433,44 @@ async fn every_new_vendor_route_rechecks_destination_policy_before_authenticatio
         assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
         assert_eq!(wire.count(), 0);
         assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+    }
+}
+
+#[tokio::test]
+async fn every_new_typed_vendor_route_rejects_contract_invalid_json_responses_after_dispatch() {
+    for &(class, method) in NEW_VENDOR_CALLS {
+        if method == "download_error_logs" {
+            continue;
+        }
+        let (client, wire, _) = clients(false);
+        let mut case = vendor_fixture(class, method);
+        if method.ends_with("_asr") {
+            case["responseBody"]["asr"] = json!(101);
+        } else {
+            let key = match method {
+                "set_runtime_profile" => "uuid",
+                "regenerate" => "background_job_id",
+                "get_status" => "report_state",
+                "get_download_url" => "download_url",
+                _ => "updated_count",
+            };
+            case["responseBody"].as_object_mut().unwrap().remove(key);
+        }
+        case["responseBody"]["synthetic-private-echo"] =
+            json!("synthetic-private-response-content");
+        arm_vendor(&wire, &case);
+        let options = RequestOptions::with_timeout(Duration::from_secs(5))
+            .unwrap()
+            .with_retries(5)
+            .unwrap();
+        let error = call_vendor(&client, &case, Some(&options))
+            .await
+            .unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Decode, "{class}.{method}");
+        assert_eq!(error.remote_outcome(), RemoteOutcome::Unknown);
+        assert_eq!(error.operation(), case["operation"].as_str());
+        assert!(!format!("{error:?} {error}").contains("synthetic-private"));
+        assert_eq!(wire.count(), 1);
+        wire.done();
     }
 }

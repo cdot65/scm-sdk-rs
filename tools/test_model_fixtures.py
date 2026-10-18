@@ -1,5 +1,6 @@
 """Guard the packaged regression subset without mutating source inputs."""
 import copy
+import hashlib
 import json
 import pathlib
 import unittest
@@ -8,6 +9,19 @@ import model_fixtures as fixture
 
 
 class ModelFixturesTests(unittest.TestCase):
+    def test_frozen_oracle_tooling_provenance_matches_current_locked_inputs(self):
+        corpus=json.loads((fixture.ROOT/fixture.SOURCE).read_text())
+        rows=corpus['provenance']['tooling']
+        self.assertEqual([r['file'] for r in rows],['tools/package.json','tools/package-lock.json'])
+        for row in rows:
+            self.assertEqual(row['sha256'],fixture.sha(fixture.ROOT/row['file']))
+
+    def test_frozen_observations_remain_identical_when_only_tooling_provenance_changes(self):
+        corpus=json.loads((fixture.ROOT/fixture.SOURCE).read_text())
+        corpus['provenance'].pop('tooling')
+        digest=hashlib.sha256(json.dumps(corpus,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+        self.assertEqual(digest,'257ab78f13d4db9f3b932d15e79865e683da6decbe06add8d280023778e7cfbb')
+
     def test_all_eighteen_exact_zod_outputs_are_present(self):
         result = fixture.generate()
         self.assertEqual(len(result['specimens']), 18)

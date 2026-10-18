@@ -147,6 +147,8 @@ def main():
         ]
         if 'examples/response_defaults.rs' in files:
             commands.append(['run', '--example', 'response_defaults', '--all-features'])
+        if 'examples/red_team_dataplane.rs' in files:
+            commands.append(['run', '--example', 'red_team_dataplane', '--all-features'])
         passed = True
         for command in commands:
             if not run(command + ['--locked', '--offline', '--target', host], extracted):

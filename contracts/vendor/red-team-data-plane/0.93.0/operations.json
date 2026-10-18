@@ -4,7 +4,7 @@
   "sourcePin": "contracts/vendor/red-team-data-plane/0.93.0/source.json",
   "generator": {
     "path": "tools/red_team_dataplane.py",
-    "sha256": "020444a859c258ad1d4a355e81b2ba1dbaa9eba5d88257ce1f6b4207e87a2c1f"
+    "sha256": "17a84d890d7d3cb071493e031757f3ad41178f912701e8c6a7d678ce8b076d3d"
   },
   "operationCount": 47,
   "implementedCount": 47,
@@ -53,6 +53,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": "vendor:red-team-dp:0.93.0:create_job_v1_scan_post:body",
+        "responseSchema": "vendor:red-team-dp:0.93.0:create_job_v1_scan_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -62,7 +68,7 @@
           "create_job_v1_scan_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -202,6 +208,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:list_jobs_v1_scan_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -212,7 +224,7 @@
           "list_jobs_v1_scan_get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -261,6 +273,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_job_v1_scan__job_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -270,7 +288,7 @@
           "get_job_v1_scan__job_id__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -319,6 +337,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:abort_job_v1_scan__job_id__abort_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -328,7 +352,7 @@
           "abort_job_v1_scan__job_id__abort_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -386,6 +410,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": "vendor:red-team-dp:0.93.0:set_runtime_profile_v1_scan__job_id__runtime_profile_put:body",
+        "responseSchema": "vendor:red-team-dp:0.93.0:set_runtime_profile_v1_scan__job_id__runtime_profile_put:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -395,7 +425,7 @@
           "set_runtime_profile_v1_scan__job_id__runtime_profile_put__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -437,6 +467,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_all_categories_v1_categories_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -446,7 +482,7 @@
           "get_all_categories_v1_categories_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -486,6 +522,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_scan_metadata_v1_scan_scan_metadata_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -495,7 +537,7 @@
           "get_scan_metadata_v1_scan_scan_metadata_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -739,6 +781,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:list_attacks_v1_report_static__job_id__list_attacks_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "search",
@@ -754,7 +802,7 @@
           "list_attacks_v1_report_static__job_id__list_attacks_get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -813,6 +861,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_attack_detail_v1_report_static__job_id__attack__attack_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -822,7 +876,7 @@
           "get_attack_detail_v1_report_static__job_id__attack__attack_id__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -871,6 +925,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_attack_report_v1_report_static__job_id__report_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -880,7 +940,7 @@
           "get_attack_report_v1_report_static__job_id__report_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -929,6 +989,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_static_runtime_security_policy_config_v1_report_static__job_id__runtime_policy_config_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -938,7 +1004,7 @@
           "get_static_runtime_security_policy_config_v1_report_static__job_id__runtime_policy_config_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -987,6 +1053,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_static_asr_breakdown_v1_report_static__job_id__asr_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -996,7 +1068,7 @@
           "get_static_asr_breakdown_v1_report_static__job_id__asr_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1045,6 +1117,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_static_remediations_v1_report_static__job_id__remediation_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1054,7 +1132,7 @@
           "get_static_remediations_v1_report_static__job_id__remediation_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1103,6 +1181,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_dynamic_job_report_v1_report_dynamic__job_id__report_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1112,7 +1196,7 @@
           "get_dynamic_job_report_v1_report_dynamic__job_id__report_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1161,6 +1245,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_dynamic_runtime_security_policy_config_v1_report_dynamic__job_id__runtime_policy_config_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1170,7 +1260,7 @@
           "get_dynamic_runtime_security_policy_config_v1_report_dynamic__job_id__runtime_policy_config_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1219,6 +1309,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_dynamic_asr_breakdown_v1_report_dynamic__job_id__asr_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1228,7 +1324,7 @@
           "get_dynamic_asr_breakdown_v1_report_dynamic__job_id__asr_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1277,6 +1373,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_dynamic_remediations_v1_report_dynamic__job_id__remediation_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1286,7 +1388,7 @@
           "get_dynamic_remediations_v1_report_dynamic__job_id__remediation_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1446,6 +1548,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1456,7 +1564,7 @@
           "list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1515,6 +1623,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:list_dynamic_job_streams_v1_report_dynamic__job_id__goal__goal_id__list_streams_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "limit",
@@ -1537,7 +1651,7 @@
           "list_dynamic_job_streams_v1_report_dynamic__job_id__goal__goal_id__list_streams_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1586,6 +1700,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_stream_detail_v1_report_dynamic_stream__stream_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1595,7 +1715,7 @@
           "get_stream_detail_v1_report_dynamic_stream__stream_id__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1652,6 +1772,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:download_report_v1_report__job_id__download_get:response",
+        "successStatus": 200,
+        "responseHandling": "opaque_json"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1661,7 +1787,7 @@
           "download_report_v1_report__job_id__download_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1708,6 +1834,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:generate_partial_job_report_v1_report__job_id__generate_partial_report_post:response",
+        "successStatus": 200,
+        "responseHandling": "opaque_json"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1717,7 +1849,7 @@
           "generate_partial_job_report_v1_report__job_id__generate_partial_report_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1766,6 +1898,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:regenerate_report_v1_report__job_id__regenerate_post:response",
+        "successStatus": 202,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1775,7 +1913,7 @@
           "regenerate_report_v1_report__job_id__regenerate_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1824,6 +1962,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_report_status_v1_report__job_id__status_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1833,7 +1977,7 @@
           "get_report_status_v1_report__job_id__status_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1892,6 +2036,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_attack_multi_turn_detail_v1_report_static__job_id__attack_multi_turn__attack_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1901,7 +2051,7 @@
           "get_attack_multi_turn_detail_v1_report_static__job_id__attack_multi_turn__attack_id__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -1969,6 +2119,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": "vendor:red-team-dp:0.93.0:threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post:body",
+        "responseSchema": "vendor:red-team-dp:0.93.0:threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -1978,7 +2134,7 @@
           "threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2046,6 +2202,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": "vendor:red-team-dp:0.93.0:threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post:body",
+        "responseSchema": "vendor:red-team-dp:0.93.0:threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2055,7 +2217,7 @@
           "threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2123,6 +2285,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": "vendor:red-team-dp:0.93.0:threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post:body",
+        "responseSchema": "vendor:red-team-dp:0.93.0:threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2132,7 +2300,7 @@
           "threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2170,6 +2338,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:post_quota_summary_v1_metering_quota_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2179,7 +2353,7 @@
           "post_quota_summary_v1_metering_quota_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2228,6 +2402,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_custom_attack_report_v1_custom_attacks_report__job_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2237,7 +2417,7 @@
           "get_custom_attack_report_v1_custom_attacks_report__job_id__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2349,6 +2529,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "search",
@@ -2364,7 +2550,7 @@
           "get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2472,6 +2658,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "search",
@@ -2487,7 +2679,7 @@
           "get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2546,6 +2738,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_prompt_detail_v1_custom_attacks_report__job_id__prompt__prompt_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2555,7 +2753,7 @@
           "get_prompt_detail_v1_custom_attacks_report__job_id__prompt__prompt_id__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2703,6 +2901,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "search",
@@ -2718,7 +2922,7 @@
           "list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2781,6 +2985,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_attack_outputs_v1_custom_attacks_job__job_id__attack__attack_id__list_outputs_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2790,7 +3000,7 @@
           "get_attack_outputs_v1_custom_attacks_job__job_id__attack__attack_id__list_outputs_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2844,6 +3054,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_property_stats_v1_custom_attacks_job__job_id__property_stats_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2853,7 +3069,7 @@
           "get_property_stats_v1_custom_attacks_job__job_id__property_stats_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -2921,6 +3137,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": "vendor:red-team-dp:0.93.0:threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post:body",
+        "responseSchema": "vendor:red-team-dp:0.93.0:threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -2930,7 +3152,7 @@
           "threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3006,6 +3228,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:list_error_logs_for_job_v1_error_log_job__job_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "search",
@@ -3021,7 +3249,7 @@
           "list_error_logs_for_job_v1_error_log_job__job_id__get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3063,6 +3291,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": null,
+        "successStatus": 200,
+        "responseHandling": "csv_bytes"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -3072,7 +3306,7 @@
           "download_error_logs_for_job_v1_error_log_job__job_id__download_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3135,6 +3369,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "search",
@@ -3154,7 +3394,7 @@
           "list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3202,6 +3442,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_goal_categories_v1_goal_categories__target_type__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -3211,7 +3457,7 @@
           "get_goal_categories_v1_goal_categories__target_type__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3249,6 +3495,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_languages_v1_languages_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -3258,7 +3510,7 @@
           "get_languages_v1_languages_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3317,6 +3569,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:download_report_v2_report__job_id__download_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -3326,7 +3584,7 @@
           "download_report_v2_report__job_id__download_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3364,6 +3622,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_scan_statistics_v1_dashboard_scan_statistics_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [
         {
           "name": "date_range",
@@ -3382,7 +3646,7 @@
           "get_scan_statistics_v1_dashboard_scan_statistics_get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3482,6 +3746,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_score_trend_v1_dashboard_score_trend_get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -3492,7 +3762,7 @@
           "get_score_trend_v1_dashboard_score_trend_get__omitted_optional_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3539,6 +3809,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": "vendor:red-team-dp:0.93.0:create_or_update_sentiment_v1_sentiment_post:body",
+        "responseSchema": "vendor:red-team-dp:0.93.0:create_or_update_sentiment_v1_sentiment_post:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -3548,7 +3824,7 @@
           "create_or_update_sentiment_v1_sentiment_post__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     },
     {
@@ -3597,6 +3873,12 @@
         }
       },
       "liveAcceptance": "unverified",
+      "schemaBinding": {
+        "requestSchema": null,
+        "responseSchema": "vendor:red-team-dp:0.93.0:get_job_sentiment_v1_sentiment__job_id__get:response",
+        "successStatus": 200,
+        "responseHandling": "typed_contract"
+      },
       "rejectedLegacyParameters": [],
       "contractVerification": "executable_fixture",
       "fixtureBinding": {
@@ -3606,7 +3888,7 @@
           "get_job_sentiment_v1_sentiment__job_id__get__all_parameters"
         ],
         "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
-        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+        "testSha256": "43862d0f3b389395c39f3b109f8e947220409b2080dcd97031cee2b1324f179b"
       }
     }
   ]

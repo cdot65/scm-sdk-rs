@@ -68,13 +68,13 @@ jobs:
           cargo +1.99.0 metadata --all-features --locked --offline --format-version 1 > /dev/null
       - name: Restore verified frozen development sources and locked npm tooling
         run: python3 tools/bootstrap_reference.py
-      - name: Verify publication records, published SDK inputs, and current contracts
-        run: python3 tools/check_phase.py --phase 92 --verification-only
+      - name: Verify current vendor and frozen contracts
+        run: python3 tools/check_phase.py --phase 12 --verification-only --contracts-only
       - name: Record the source-bound qualification receipt in the job log
         run: |
           python3 - <<'PY'
           import hashlib, json, pathlib
-          path = pathlib.Path("docs/checks/phase-92.json")
+          path = pathlib.Path("docs/checks/phase-12-contracts.json")
           report = json.loads(path.read_text())
           print(json.dumps({key: report[key] for key in ("phase", "source_sha256", "source_unchanged", "passed")}))
           print(json.dumps({"report_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "commands": len(report["checks"])}))

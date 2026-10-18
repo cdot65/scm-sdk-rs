@@ -57,3 +57,12 @@ fail until it is committed or ignored. The `.local/` example is ignored. Root
 release bookkeeping can retain the final proof in a later evidence-only commit.
 A package build proves the recorded archive on the recorded compiler and host;
 service availability and other platforms require their separate evidence.
+
+## Vendor development candidate
+
+The unpublished 0.2.0 vendor update uses Phase 12 package checks on both compilers.
+Its `red_team_dataplane` example executes offline request validation and compiles
+async helpers; no credential or service call is needed. Current development
+archive checks may allow dirty source and record that fact. They establish the
+recorded archive/consumer behavior, and do not replace the clean release proof or
+publication authorization required above for a future registry release.

@@ -2,6 +2,7 @@
 import copy
 import json
 import pathlib
+import tomllib
 import unittest
 
 import red_team_dataplane as vendor
@@ -30,6 +31,20 @@ class VendorAdapterTests(unittest.TestCase):
         self.assertEqual(vendor.sha(notice.read_bytes()), self.pin["licenseSha256"])
         for name in ["NOTICE", "crates/scm-sdk/NOTICE"]:
             self.assertIn(notice.read_text(), (vendor.ROOT/name).read_text())
+
+    def test_vendor_update_preserves_msrv_dependencies_features_and_migration_inventory(self):
+        manifest=tomllib.loads((vendor.ROOT/'crates/scm-sdk/Cargo.toml').read_text())
+        lock=tomllib.loads((vendor.ROOT/'Cargo.lock').read_text())
+        if manifest['package']['version'].startswith('0.2.'):
+            self.assertEqual(vendor.sha(vendor.canonical(manifest['dependencies']).encode()),'1de1e4a6ed28c4d49b71cd5585f63f098a42ce5f6d42c3d4317d8b072094f35b')
+            self.assertEqual(vendor.sha(vendor.canonical(manifest['features']).encode()),'ee22fe9d2878d5837c82502c9d716939a4d968fef87aa18a8590e752531300a3')
+            self.assertEqual(vendor.sha(vendor.canonical([p for p in lock['package'] if p.get('source')]).encode()),'b65607fe9e4c07fc3c6b5bc7fe7be964d9f789cd5665baeec37a41588fcc6d79')
+        workspace=tomllib.loads((vendor.ROOT/'Cargo.toml').read_text())
+        self.assertEqual(workspace['workspace']['package']['rust-version'],'1.89')
+        changelog=(vendor.ROOT/'CHANGELOG.md').read_text().split('## 0.1.1',1)[0]
+        for member,fields in vendor.REJECTED.items():
+            for field in fields:
+                self.assertTrue(any(member in row and '`'+field+'`' in row for row in changelog.splitlines()),(member,field))
 
     def test_no_frozen_graph_node_or_root_is_changed(self):
         import generate_models
@@ -125,6 +140,19 @@ class VendorAdapterTests(unittest.TestCase):
             else:test=source.replace('async fn call_vendor(', 'async fn missing_dispatch(')
             with self.subTest(mutation=mutation),self.assertRaises(ValueError):
                 vendor.wire_bindings(self.ops,mapping,changed,test)
+
+    def test_schema_roots_bind_to_the_exact_method_and_detect_transposed_overrides(self):
+        op=next(op for _,_,op in self.ops if op['operationId'].startswith('threat_override_static_attack_'))
+        cls,member='RedTeamReportsClient','override_attack'
+        source=(vendor.ROOT/'crates/scm-sdk/src/airs/red_team/reports.rs').read_text()
+        meta=self.metadata[op['operationId']]
+        vendor.verify_schema_binding(source,cls,member,meta,op)
+        for suffix in (':body',':response'):
+            changed=source.replace(op['operationId']+suffix,'threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post'+suffix)
+            with self.subTest(suffix=suffix),self.assertRaisesRegex(ValueError,'schema roots differ'):
+                vendor.verify_schema_binding(changed,cls,member,meta,op)
+        embedded=vendor.outputs()[vendor.ROOT/'crates/scm-sdk/src/airs/red_team/contract.json']
+        self.assertTrue(all(set(row)=={'queryKinds','querySchema'} for row in embedded.values()))
 
 
 if __name__ == "__main__":

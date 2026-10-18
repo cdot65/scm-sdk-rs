@@ -42,7 +42,7 @@ def flow_list(name):
 
 class CiContractTests(unittest.TestCase):
     def test_committed_range_gate_has_full_history_and_current_documentation(self):
-        from check_phase import commands_for
+        from check_phase import commands_for, ci_commands_for
         phase = int(re.search(r"tools/check_phase\.py --phase (\d+) --verification-only", WORKFLOW).group(1))
         job = re.search(r"^  contracts-and-package:\n(.*?)(?=^  [a-z][a-z-]*:\n|\Z)", WORKFLOW,
                         re.MULTILINE | re.DOTALL).group(1)
@@ -56,7 +56,8 @@ class CiContractTests(unittest.TestCase):
         document = (ROOT / "docs/CI.md").read_text()
         section = document.split("## Scripts run by the current contracts gate\n", 1)[1].split("\n## ", 1)[0]
         documented = set(re.findall(r"`(scripts/check-[^`]+\.py)`", section))
-        executed = {argument for command in commands_for(phase) for argument in command
+        selected = ci_commands_for(phase) if "--contracts-only" in job else commands_for(phase)
+        executed = {argument for command in selected for argument in command
                     if argument.startswith("scripts/check-") and argument.endswith(".py")}
         self.assertEqual(documented, executed)
         self.assertIn("scripts/check-dependencies.py", executed)
@@ -123,7 +124,7 @@ class CiContractTests(unittest.TestCase):
         lines = [line.strip() for line in qualification.splitlines()]
         fetch = "cargo +1.99.0 fetch --locked"
         ready = "cargo +1.99.0 metadata --all-features --locked --offline --format-version 1 > /dev/null"
-        phase = "run: python3 tools/check_phase.py --phase 92 --verification-only"
+        phase = next(line for line in lines if re.fullmatch(r"run: python3 tools/check_phase\.py --phase \d+ --verification-only(?: --contracts-only)?", line))
         self.assertIn(fetch, lines)
         self.assertIn(ready, lines)
         self.assertLess(lines.index(fetch), lines.index(ready))
@@ -387,7 +388,35 @@ class CiContractTests(unittest.TestCase):
         node = (ROOT / ".node-version").read_text().strip()
         self.assertIn(f'node-version: "{node}"', WORKFLOW)
         self.assertIn("tools/bootstrap_reference.py", WORKFLOW)
-        self.assertIn("tools/check_phase.py --phase 92 --verification-only", WORKFLOW)
+        match = re.search(r"tools/check_phase\.py --phase (\d+) --verification-only", WORKFLOW)
+        self.assertIsNotNone(match)
+        from check_phase import commands_for
+        self.assertTrue(commands_for(int(match.group(1))))
+
+    def test_ci_contract_subset_cannot_replace_complete_phase_qualification(self):
+        from check_phase import commands_for, ci_commands_for
+        full, fast = commands_for(12), ci_commands_for(12)
+        self.assertGreater(len(full),len(fast))
+        self.assertTrue(all(command in full for command in fast))
+        self.assertTrue(any('tools/red_team_dataplane.py' in command and '--require-complete' in command for command in fast))
+        for script in ('scripts/check-rust.py','scripts/check-native-exports.py','scripts/check-package.py'):
+            self.assertTrue(any(script in command for command in full))
+            self.assertFalse(any(script in command for command in fast))
+        self.assertIn('--phase 12 --verification-only --contracts-only',WORKFLOW)
+        self.assertIn('docs/checks/phase-12-contracts.json',WORKFLOW)
+        self.assertNotIn('docs/checks/phase-12.json',WORKFLOW)
+        invalid=subprocess.run([sys.executable,'tools/check_phase.py','--phase','12','--contracts-only'],cwd=ROOT,capture_output=True,text=True)
+        self.assertEqual(invalid.returncode,2)
+        self.assertIn('requires --phase 12 --verification-only',invalid.stderr)
+
+    def test_vendor_input_keeps_exact_upstream_bytes_outside_owned_whitespace_style(self):
+        from check_phase import commands_for
+        command=commands_for(12)[0]
+        self.assertEqual(command[:4],['git','diff','--check','840c090..HEAD'])
+        self.assertEqual(command[4:],['--','.',':(exclude)contracts/vendor/red-team-data-plane/0.93.0/dp-openapi.yaml'])
+        # The independent source-pin tests still require byte-for-byte equality.
+        self.assertIn('test_pin_matches_preserved_bytes_and_exact_revision',
+                      (ROOT/'tools/test_vendor_red_team_plan.py').read_text())
 
     def test_actions_and_credentials_are_bounded(self):
         actions = re.findall(r"^\s+uses: (\S+)", ALL_WORKFLOW_TEXT, re.MULTILINE)

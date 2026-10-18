@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "cause": "Phase10 intentionally added pinned YAML/AJV development dependencies; recorded independent oracle tooling hashes were stale. Actual frozen Zod3.25.76 observations and every other provenance field remain identical.",
+  "redLoop": {
+    "command": [
+      "tools/node_modules/.bin/tsx",
+      "tools/schema-oracle.mts",
+      "--check"
+    ],
+    "exitCode": 1,
+    "seconds": 5.99
+  },
+  "regressionBeforeFix": ".local/phase-12-oracle-red.log",
+  "artifacts": [
+    {
+      "path": "contracts/native-fixtures/schemas.json",
+      "beforeSha256": "0c546710f5a36070912fce5abcb3a5320adecd60b6ecb9c2e0105a44ddf33b4d",
+      "afterSha256": "614120650ac53b5c9b518983631c7f099b89695f0476d8ec7d3ca91178a357a2",
+      "onlyChangedInputs": [
+        "tools/package.json",
+        "tools/package-lock.json"
+      ],
+      "frozenObservationsUnchanged": true,
+      "observationAndNonToolingMetadataSha256": "257ab78f13d4db9f3b932d15e79865e683da6decbe06add8d280023778e7cfbb"
+    },
+    {
+      "path": "contracts/native-fixtures/helpers.json",
+      "beforeSha256": "cf34932729cc4b9d2bf998c19660b42f35ef3d831ac68cd291ffc2a594968a83",
+      "afterSha256": "d5dba24e2167aff048580522f825d3bfd368dd31e4ba6294875d2b3bd6eed2e7",
+      "onlyChangedInputs": [
+        "tools/package.json",
+        "tools/package-lock.json"
+      ],
+      "frozenObservationsUnchanged": true,
+      "observationAndNonToolingMetadataSha256": "5fdca2213574701877e02fc653325737541383640a634abec4326d2e369cfa65"
+    },
+    {
+      "path": "contracts/native-fixtures/gateway-specimens.json",
+      "beforeSha256": "35df2391ef75fb4740b3ca1b4c9cf695250c91f605fff055a180487928c23074",
+      "afterSha256": "0088be2e5d074bbfa0d1d830180e5929906ec1b89b3302984dba3602e915626c",
+      "onlyChangedInputs": [
+        "tools/package.json",
+        "tools/package-lock.json"
+      ],
+      "frozenObservationsUnchanged": true,
+      "observationAndNonToolingMetadataSha256": "88dfd6c959c9d5cfb295ee4f225444908af80b04b061f4b0fe35ae86de84b186"
+    }
+  ]
+}
