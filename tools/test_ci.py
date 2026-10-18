@@ -210,7 +210,10 @@ class CiContractTests(unittest.TestCase):
 
     def test_verified_publication_is_consistent_in_current_release_documents(self):
         status = json.loads((ROOT / "docs/phase-status.json").read_text())
-        publication = status["phases"][-1].get("registry_publication", {})
+        publications = [phase["registry_publication"] for phase in status["phases"]
+                        if "registry_publication" in phase]
+        self.assertTrue(publications, "Preserve historical publication evidence")
+        publication = publications[-1]
         self.assertEqual(publication.get("status"), "verified_existing_publication")
         workspace_version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
         if workspace_version != publication["version"]:

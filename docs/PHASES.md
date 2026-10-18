@@ -16,6 +16,10 @@ Run `python tools/check_phase.py --phase N` before requesting review. The gate b
 | 6. AI Gateway | SCM configuration/admin/telemetry, runtime resource families, chat/Responses/completions/embeddings, SSE, multipart/audio/binary and public pricing. | Complete Gateway method and transport contracts, distinct credential/plane policies, bounded cancellable streams, precise live status; Claude score at least 9. |
 | 7. Experimental and export closure | AgentGuard, bounded realtime, multi-step provisioning/recovery, exported helpers/constants/configuration/error equivalents, complete parity map. | Every frozen export has concrete native functionality and tests; experimental status explicit; no placeholder methods or unsupported aliases; Claude score at least 9. |
 | 8. Qualification and delivery | Full contract suite, adversarial/property/parser tests, API examples, native platform/compiler checks, package/license/dependency audit, controlled live acceptance and cleanup, final documentation. | Complete parity matrix, sanitized live evidence, no unexplained gaps, honest platform labels, actual package checks, Claude score at least 9; push reviewed commits to origin. |
+| 9. Vendor dataplane plan | Pin Red Team 0.93.0 source and settle all new/existing contracts and compatibility decisions. | Verifiable source identity, scoped governance checks, actual Claude plan score at least 9 before SDK implementation. |
+| 10. Vendor dataplane contracts/models | Namespaced vendor validators, compatible typed model additions, schema diff and complete operation ledger. | Source and generation checks, independent model fixtures, frozen regressions; Claude score at least 9. |
+| 11. Vendor dataplane operations | Implement eleven new methods and current-spec fixtures for all 47 operations. | Executable operation bindings, negative input and security/failure checks; Claude score at least 9. |
+| 12. Vendor dataplane qualification | Docs/examples/changelog, CI coverage check, compiler/feature/package qualification and remote delivery. | Cumulative relevant checks, explicit live limitations, final Claude score at least 9 and ordinary remote push. |
 
 `docs/phase-status.json` is the progress source of truth. Live prerequisite failures are recorded separately from implementation gaps. Stable features require successful live acceptance; offline-only or upstream-blocked capabilities retain explicit experimental status. Rust dependency and generator versions, target triples, and resource defaults are recorded as foundation outputs.
 
@@ -31,6 +35,10 @@ Each phase records three milestones: implemented scope, passing independent veri
 6. **Gateway:** data/admin namespace families; telemetry adaptation; runtime resource families; multimodal request/response formats; SSE lifecycle; public pricing and configuration helpers.
 7. **Closure:** AgentGuard; realtime lifecycle; provisioning and binding recovery; standalone helper equivalents; constants/config/errors; exhaustive exported capability reconciliation.
 8. **Delivery:** complete offline gates; controlled live workflows and cleanup; feature/platform/compiler evidence; packaged consumer checks; compatibility/dependency/license/security audit; documentation and reviewed remote push.
+9. **Vendor plan:** exact source bytes and machine-readable pin; eleven new routes and all existing contracts; settled validation/compatibility/security policy; accepted Claude review before implementation.
+10. **Vendor contracts/models:** exact pin and 47-operation recount; full schema diff/closure; namespaced validators and typed models; compatible shared additions; generation and frozen regressions.
+11. **Vendor operations:** all eleven methods; all 47 current-spec executable fixtures; pre-auth validation, safe downloads, override nulls, bounded lifecycle and mutation uncertainty.
+12. **Vendor delivery:** scoped CI coverage, native compiler/feature/package checks, examples/docs and explicit live status; final review and remote push. See `docs/red-team-data-plane-0.93.0-plan.md` for the detailed follow-up checklist.
 
 ## Gateway ownership
 
@@ -42,3 +50,13 @@ milestones. `tools/native_operations.py` records their IDs and reasons explicitl
 all other Gateway methods remain owned by Phase 6. The cumulative Phase 6 target
 is 442 implemented methods, with six Phase 7 methods pending (the two workflows
 and four AgentGuard methods). Method ownership does not establish live acceptance.
+
+## Vendor Red Team dataplane follow-up
+
+Phases 9–12 implement the separately pinned vendor dataplane 0.93.0 contract.
+Read `docs/red-team-data-plane-0.93.0-plan.md` for the complete active scope,
+operation inventory, model compatibility design and acceptance criteria. Phase 9
+is a plan review: no SDK implementation starts until its actual Claude Code
+review reaches at least 9/10 with no blocker/high findings. Phases 10–12 use
+scoped relevant checks and the same review gate. Preserve phases 1–8 as historical
+frozen-TypeScript parity evidence; they do not certify the newer vendor contract.

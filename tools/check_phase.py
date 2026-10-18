@@ -52,6 +52,12 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 9:
+        # Planning/governance only: no SDK implementation before plan review.
+        return [["git", "diff", "--check"], ["python", "tools/verify-contracts.py"],
+                *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+                  for name in ("test_vendor_red_team_plan.py", "test_review_phase.py",
+                               "test_ci.py", "test_auxiliary_evidence.py")]]
     if phase == 1:
         return [
             ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"],

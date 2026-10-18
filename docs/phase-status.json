@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "active_phase": null,
-  "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate",
+  "active_phase": 10,
+  "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
     {
@@ -1795,6 +1795,80 @@
         "preceding_score": 9
       },
       "accepted_review": "docs/reviews/phase-08-attempt-09.json"
+    },
+    {
+      "id": 9,
+      "name": "Red Team dataplane 0.93.0 plan",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-09-attempt-02.json"
+      ],
+      "plan": "docs/red-team-data-plane-0.93.0-plan.md",
+      "scope_evidence": [
+        "docs/red-team-data-plane-0.93.0-plan.md",
+        "docs/PHASES.md",
+        "tools/check_phase.py",
+        "tools/test_vendor_red_team_plan.py",
+        "contracts/vendor/red-team-data-plane/0.93.0/source.json",
+        "contracts/vendor/red-team-data-plane/0.93.0/dp-openapi.yaml",
+        "docs/checks/phase-09.json"
+      ],
+      "check_scope_rationale": "Docs/governance and pinned planning reference only; SDK implementation awaits accepted plan review. Exercise review/CI/evidence invariants and vendor pin; no unrelated runtime stress qualification.",
+      "limitations": [
+        "Current vendor live acceptance remains unverified; planning pin is a read-only reference, not SDK coverage."
+      ],
+      "accepted_source_sha256": "931c94d517bbd747988609fc265fb4d6cdabddb48025f1da08ea7f60f4bbe048",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-09-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-09.json"
+          ],
+          "source_sha256": "931c94d517bbd747988609fc265fb4d6cdabddb48025f1da08ea7f60f4bbe048"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-09-attempt-02.json"
+          ]
+        }
+      },
+      "review_attempts": [
+        "docs/reviews/phase-09-attempt-01.json",
+        "docs/reviews/phase-09-attempt-02.json"
+      ],
+      "accepted_limitations": [
+        "SDK implementation not yet present at plan acceptance; Phase 10 must complete vendor license notice/provenance, parser direct pin, exact added-route identities and fail closed on any newly discovered required-field change beyond the four named response waivers."
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Red Team vendor contracts and model evolution",
+      "status": "in_progress",
+      "reviews": [],
+      "plan": "docs/red-team-data-plane-0.93.0-plan.md"
+    },
+    {
+      "id": 11,
+      "name": "Red Team dataplane operation completion",
+      "status": "pending",
+      "reviews": [],
+      "plan": "docs/red-team-data-plane-0.93.0-plan.md"
+    },
+    {
+      "id": 12,
+      "name": "Red Team dataplane qualification and delivery",
+      "status": "pending",
+      "reviews": [],
+      "plan": "docs/red-team-data-plane-0.93.0-plan.md"
     }
   ]
 }

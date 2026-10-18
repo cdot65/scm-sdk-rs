@@ -1,0 +1,157 @@
+{
+  "phase": 9,
+  "source_sha256": "931c94d517bbd747988609fc265fb4d6cdabddb48025f1da08ea7f60f4bbe048",
+  "source_unchanged": true,
+  "checked_at": "2026-10-18T11:17:55.421770+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.006
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.27
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_vendor_red_team_plan.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_vendor_red_team_plan.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_pin_matches_preserved_bytes_and_exact_revision (test_vendor_red_team_plan.VendorPlanReference.test_pin_matches_preserved_bytes_and_exact_revision) ... ok\ntest_pinned_parser_recounts_operations_and_schema_version (test_vendor_red_team_plan.VendorPlanReference.test_pinned_parser_recounts_operations_and_schema_version) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.058s\n\nOK\n",
+      "duration_seconds": 0.103
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 25 tests in 0.119s\n\nOK\n",
+      "duration_seconds": 0.197
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_actions_and_credentials_are_bounded (test_ci.CiContractTests.test_actions_and_credentials_are_bounded) ... ok\ntest_additional_targets_are_manual_and_assert_actual_host (test_ci.CiContractTests.test_additional_targets_are_manual_and_assert_actual_host) ... ok\ntest_ci_documentation_matches_action_pins_and_setup_effects (test_ci.CiContractTests.test_ci_documentation_matches_action_pins_and_setup_effects) ... ok\ntest_compilers_match_supported_msrv_and_current_pin (test_ci.CiContractTests.test_compilers_match_supported_msrv_and_current_pin) ... ok\ntest_documentation_distinguishes_no_run_examples_and_native_gnu_evidence (test_ci.CiContractTests.test_documentation_distinguishes_no_run_examples_and_native_gnu_evidence) ... ok\ntest_every_job_bootstraps_rust_before_running_commands (test_ci.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... ok\ntest_every_job_installs_pinned_node_before_selecting_uv (test_ci.CiContractTests.test_every_job_installs_pinned_node_before_selecting_uv) ... ok\ntest_every_native_feature_has_an_isolated_job (test_ci.CiContractTests.test_every_native_feature_has_an_isolated_job) ... ok\ntest_export_checker_owns_default_build_directory_and_preserves_caller_choice (test_ci.CiContractTests.test_export_checker_owns_default_build_directory_and_preserves_caller_choice) ... ok\ntest_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report (test_ci.CiContractTests.test_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report) ... ok\ntest_live_policy_has_one_unambiguous_filename_and_current_inbound_link (test_ci.CiContractTests.test_live_policy_has_one_unambiguous_filename_and_current_inbound_link) ... ok\ntest_native_workflow_is_dispatch_only_without_a_job_admission_condition (test_ci.CiContractTests.test_native_workflow_is_dispatch_only_without_a_job_admission_condition) ... ok\ntest_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget (test_ci.CiContractTests.test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget) ... ok\ntest_node_matches_owned_pin_and_phase_gate_verifies_only (test_ci.CiContractTests.test_node_matches_owned_pin_and_phase_gate_verifies_only) ... ok\ntest_phase_timeout_preserves_partial_output_and_a_failing_report (test_ci.CiContractTests.test_phase_timeout_preserves_partial_output_and_a_failing_report) ... ok\ntest_phase_timeout_stops_a_child_in_the_checker_process_group (test_ci.CiContractTests.test_phase_timeout_stops_a_child_in_the_checker_process_group) ... ok\ntest_portable_python_bootstrap_uses_pinned_job_local_tools (test_ci.CiContractTests.test_portable_python_bootstrap_uses_pinned_job_local_tools) ... ok\ntest_push_workflow_contains_only_required_registered_runner_jobs (test_ci.CiContractTests.test_push_workflow_contains_only_required_registered_runner_jobs) ... ok\ntest_python_bootstrap_rejects_unverified_uv_before_executing_it (test_ci.CiContractTests.test_python_bootstrap_rejects_unverified_uv_before_executing_it) ... ok\ntest_python_pin_supports_tomllib_and_filtered_tar_extraction (test_ci.CiContractTests.test_python_pin_supports_tomllib_and_filtered_tar_extraction) ... ok\ntest_qualification_prepares_complete_locked_graph_before_offline_checks (test_ci.CiContractTests.test_qualification_prepares_complete_locked_graph_before_offline_checks) ... ok\ntest_uv_checksums_cover_every_configured_host_and_libc (test_ci.CiContractTests.test_uv_checksums_cover_every_configured_host_and_libc) ... ok\ntest_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes (test_ci.CiContractTests.test_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes) ... ok\ntest_uv_selection_creates_distinct_empty_tool_caches (test_ci.CiContractTests.test_uv_selection_creates_distinct_empty_tool_caches) ... ok\ntest_verified_publication_is_consistent_in_current_release_documents (test_ci.CiContractTests.test_verified_publication_is_consistent_in_current_release_documents) ... ok\ntest_workflows_share_reviewed_tool_versions_and_read_only_permissions (test_ci.CiContractTests.test_workflows_share_reviewed_tool_versions_and_read_only_permissions) ... ok\n\n----------------------------------------------------------------------\nRan 26 tests in 3.874s\n\nOK\n",
+      "duration_seconds": 3.951
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_auxiliary_evidence.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_auxiliary_evidence.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_cargo_json_selects_only_the_library_test_executable (test_auxiliary_evidence.BoundedEvidenceTests.test_cargo_json_selects_only_the_library_test_executable) ... ok\ntest_private_receipt_creation_does_not_overwrite_or_follow_links (test_auxiliary_evidence.BoundedEvidenceTests.test_private_receipt_creation_does_not_overwrite_or_follow_links) ... ok\ntest_repetition_is_exact_fail_fast_and_checks_every_summary (test_auxiliary_evidence.BoundedEvidenceTests.test_repetition_is_exact_fail_fast_and_checks_every_summary) ... ok\ntest_sensitive_environment_inputs_are_removed (test_auxiliary_evidence.BoundedEvidenceTests.test_sensitive_environment_inputs_are_removed) ... ok\ntest_stress_receipt_binds_one_build_exact_compiler_source_runtime_and_binary (test_auxiliary_evidence.BoundedEvidenceTests.test_stress_receipt_binds_one_build_exact_compiler_source_runtime_and_binary) ... ok\ntest_stress_report_replacement_is_restricted_atomic_and_private (test_auxiliary_evidence.BoundedEvidenceTests.test_stress_report_replacement_is_restricted_atomic_and_private) ... ok\ntest_stress_source_runtime_binary_drift_or_build_failure_cannot_pass (test_auxiliary_evidence.BoundedEvidenceTests.test_stress_source_runtime_binary_drift_or_build_failure_cannot_pass) ... ok\ntest_subprocess_timeout_and_output_bounds (test_auxiliary_evidence.BoundedEvidenceTests.test_subprocess_timeout_and_output_bounds) ... ok\ntest_total_repetition_deadline_is_fail_closed (test_auxiliary_evidence.BoundedEvidenceTests.test_total_repetition_deadline_is_fail_closed) ... ok\ntest_changed_source_cannot_produce_a_passing_scan (test_auxiliary_evidence.PrivateMaterialTests.test_changed_source_cannot_produce_a_passing_scan) ... ok\ntest_check_cli_emits_a_closed_category_without_echoing_invalid_receipt (test_auxiliary_evidence.PrivateMaterialTests.test_check_cli_emits_a_closed_category_without_echoing_invalid_receipt) ... ok\ntest_check_cli_never_reopens_selected_config (test_auxiliary_evidence.PrivateMaterialTests.test_check_cli_never_reopens_selected_config) ... ok\ntest_clean_scan_and_receipt_are_sanitized (test_auxiliary_evidence.PrivateMaterialTests.test_clean_scan_and_receipt_are_sanitized) ... ok\ntest_cli_sanitizes_malformed_input_errors_without_reading_real_credentials (test_auxiliary_evidence.PrivateMaterialTests.test_cli_sanitizes_malformed_input_errors_without_reading_real_credentials) ... ok\ntest_credentials_in_filenames_are_detected_without_exporting_paths (test_auxiliary_evidence.PrivateMaterialTests.test_credentials_in_filenames_are_detected_without_exporting_paths) ... ok\ntest_each_selected_credential_is_detected_in_git_visible_content (test_auxiliary_evidence.PrivateMaterialTests.test_each_selected_credential_is_detected_in_git_visible_content) ... ok\ntest_frozen_public_corpus_fits_the_standing_file_bound (test_auxiliary_evidence.PrivateMaterialTests.test_frozen_public_corpus_fits_the_standing_file_bound) ... ok\ntest_historical_lookup_handles_a_file_larger_than_git_metadata_output_bound (test_auxiliary_evidence.PrivateMaterialTests.test_historical_lookup_handles_a_file_larger_than_git_metadata_output_bound) ... ok\ntest_historical_tenant_in_published_source_is_not_exempted (test_auxiliary_evidence.PrivateMaterialTests.test_historical_tenant_in_published_source_is_not_exempted) ... ok\ntest_historical_tenant_only_is_distinguished_from_new_copies (test_auxiliary_evidence.PrivateMaterialTests.test_historical_tenant_only_is_distinguished_from_new_copies) ... ok\ntest_ignored_published_candidate_is_still_scanned (test_auxiliary_evidence.PrivateMaterialTests.test_ignored_published_candidate_is_still_scanned) ... ok\ntest_private_scan_still_detects_credentials_in_excluded_evidence (test_auxiliary_evidence.PrivateMaterialTests.test_private_scan_still_detects_credentials_in_excluded_evidence) ... ok\ntest_public_failure_categories_do_not_reflect_values_or_paths (test_auxiliary_evidence.PrivateMaterialTests.test_public_failure_categories_do_not_reflect_values_or_paths) ... ok\ntest_public_receipt_does_not_read_excluded_evidence_into_its_source_budget (test_auxiliary_evidence.PrivateMaterialTests.test_public_receipt_does_not_read_excluded_evidence_into_its_source_budget) ... ok\ntest_public_receipt_skips_excluded_symlinks_and_private_scan_rejects_them (test_auxiliary_evidence.PrivateMaterialTests.test_public_receipt_skips_excluded_symlinks_and_private_scan_rejects_them) ... ok\ntest_published_symlinks_file_bounds_and_include_drift_are_rejected (test_auxiliary_evidence.PrivateMaterialTests.test_published_symlinks_file_bounds_and_include_drift_are_rejected) ... ok\ntest_published_tree_byte_and_file_count_bounds_are_fail_closed (test_auxiliary_evidence.PrivateMaterialTests.test_published_tree_byte_and_file_count_bounds_are_fail_closed) ... ok\ntest_receipt_freshness_also_binds_ignored_package_candidate_contents (test_auxiliary_evidence.PrivateMaterialTests.test_receipt_freshness_also_binds_ignored_package_candidate_contents) ... ok\ntest_receipt_freshness_excludes_later_bookkeeping_but_detects_source_drift (test_auxiliary_evidence.PrivateMaterialTests.test_receipt_freshness_excludes_later_bookkeeping_but_detects_source_drift) ... ok\ntest_receipt_schema_success_counts_and_scope_are_enforced (test_auxiliary_evidence.PrivateMaterialTests.test_receipt_schema_success_counts_and_scope_are_enforced) ... ok\ntest_registration_rejects_malformed_duplicate_unknown_and_oversized_inputs (test_auxiliary_evidence.PrivateMaterialTests.test_registration_rejects_malformed_duplicate_unknown_and_oversized_inputs) ... ok\ntest_registration_rejects_relative_internal_missing_and_symlink_paths (test_auxiliary_evidence.PrivateMaterialTests.test_registration_rejects_relative_internal_missing_and_symlink_paths) ... ok\n\n----------------------------------------------------------------------\nRan 32 tests in 2.708s\n\nOK\n",
+      "duration_seconds": 2.808
+    }
+  ]
+}
