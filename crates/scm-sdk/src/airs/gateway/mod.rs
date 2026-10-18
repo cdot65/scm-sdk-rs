@@ -267,3 +267,9 @@ impl AIGatewayClient {
 }
 #[cfg(feature = "gateway")]
 pub type GatewayClient = AIGatewayClient;
+
+/// Experimental, explicitly configured Portkey control-plane access policies.
+#[cfg(feature = "gateway")]
+pub mod access_policies;
+#[cfg(feature = "gateway")]
+pub use access_policies::AccessPoliciesClient;

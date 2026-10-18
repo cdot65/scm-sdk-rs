@@ -1,0 +1,758 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "name": "minimal create",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "empty name",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "unicode 64",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "unicode 65",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "null description",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "description": null
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "description 256",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "description": "\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00"
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "description 257",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "false enabled",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "enabled": false
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "null enabled",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "enabled": null
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "unknown effect",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "effect": "unknown"
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "empty subjects",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "empty targets",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": []
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "unknown extras",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "future": {
+          "nested": null
+        }
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "both ANY inferred deny",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          },
+          {
+            "type": "agent",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "one ANY inferred allow",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": false
+    },
+    {
+      "name": "group ANY invalid",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "group",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "effect": "deny"
+      },
+      "schemaValid": true,
+      "sdkValid": false
+    },
+    {
+      "name": "explicit allow both ANY",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          },
+          {
+            "type": "agent",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "effect": "allow"
+      },
+      "schemaValid": true,
+      "sdkValid": false
+    },
+    {
+      "name": "explicit deny one ANY",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "effect": "deny"
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "mcp ALL",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "mcp_server",
+            "server_id": "s",
+            "tools": "ALL"
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "mcp names",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "mcp_server",
+            "server_id": "s",
+            "tools": [
+              "read"
+            ]
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "mcp missing tools",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "mcp_server",
+            "server_id": "s"
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "mcp empty tools",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "mcp_server",
+            "server_id": "s",
+            "tools": []
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "mcp empty name",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "mcp_server",
+            "server_id": "s",
+            "tools": [
+              ""
+            ]
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "provider ALL",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "p",
+            "models": "ALL"
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "provider names",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "p",
+            "models": [
+              "m"
+            ]
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "provider unknown selector",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "p",
+            "models": "ANY"
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "provider null models",
+      "schema": "CreateAccessPolicyRequest",
+      "value": {
+        "name": "policy",
+        "subjects": [
+          {
+            "type": "user",
+            "id": "alice"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "p",
+            "models": null
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "update omitted effect",
+      "schema": "UpdateAccessPolicyRequest",
+      "value": {
+        "version": 1,
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "update version zero",
+      "schema": "UpdateAccessPolicyRequest",
+      "value": {
+        "version": 0,
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "update nullable description",
+      "schema": "UpdateAccessPolicyRequest",
+      "value": {
+        "version": 1,
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "description": null
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "update explicit allow",
+      "schema": "UpdateAccessPolicyRequest",
+      "value": {
+        "version": 1,
+        "subjects": [
+          {
+            "type": "user",
+            "id": "ANY"
+          }
+        ],
+        "targets": [
+          {
+            "type": "provider",
+            "provider_id": "provider"
+          }
+        ],
+        "effect": "allow"
+      },
+      "schemaValid": true,
+      "sdkValid": false
+    },
+    {
+      "name": "empty response",
+      "schema": "AccessPolicy",
+      "value": {},
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "null response description",
+      "schema": "AccessPolicy",
+      "value": {
+        "description": null
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    },
+    {
+      "name": "unknown response effect",
+      "schema": "AccessPolicy",
+      "value": {
+        "effect": "future"
+      },
+      "schemaValid": false,
+      "sdkValid": true
+    },
+    {
+      "name": "unknown target",
+      "schema": "AccessPolicy",
+      "value": {
+        "targets": [
+          {
+            "type": "future",
+            "secret": null
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": true
+    },
+    {
+      "name": "missing known target",
+      "schema": "AccessPolicy",
+      "value": {
+        "targets": [
+          {
+            "type": "provider"
+          }
+        ]
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "null nonnullable",
+      "schema": "AccessPolicy",
+      "value": {
+        "enabled": null
+      },
+      "schemaValid": false,
+      "sdkValid": false
+    },
+    {
+      "name": "null subject name",
+      "schema": "AccessPolicy",
+      "value": {
+        "subjects": [
+          {
+            "type": "user",
+            "name": null,
+            "email": null
+          }
+        ]
+      },
+      "schemaValid": true,
+      "sdkValid": true
+    }
+  ]
+}

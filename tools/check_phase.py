@@ -68,6 +68,12 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 16:
+        return [*commands_for(15)[:4],
+                *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+                  for name in ("test_review_phase.py", "test_portkey_access.py", "test_ci.py")],
+                *[["python", "scripts/check-rust.py", "--toolchain", version, "--feature-set", "gateway",
+                   "--output", f"docs/checks/phase-16-rust-{version}-gateway.json"] for version in ("1.89.0", "1.99.0")]]
     if phase == 15:
         return [["git", "diff", "--check", "--", ".", ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"],
                 ["git", "diff", "--cached", "--check", "--", ".", ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"],

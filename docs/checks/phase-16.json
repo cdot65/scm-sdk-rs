@@ -1,0 +1,230 @@
+{
+  "phase": 16,
+  "source_sha256": "cf54f553d3a66015f04b45e72621aedd57f66dd0a558199a40b2994b16cc6c1d",
+  "source_unchanged": true,
+  "checked_at": "2026-10-18T22:15:04.027153+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.008
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.002
+    },
+    {
+      "command": [
+        "node",
+        "tools/portkey-access.mjs",
+        "--check"
+      ],
+      "invocation": [
+        "node",
+        "tools/portkey-access.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"passed\":true,\"operations\":[{\"method\":\"POST\",\"path\":\"/policies/access\",\"operationId\":\"createAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"GET\",\"path\":\"/policies/access\",\"operationId\":\"listAccessPolicies\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"GET\",\"path\":\"/policies/access/{accessPolicyId}\",\"operationId\":\"getAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"PUT\",\"path\":\"/policies/access/{accessPolicyId}\",\"operationId\":\"updateAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"DELETE\",\"path\":\"/policies/access/{accessPolicyId}\",\"operationId\":\"deleteAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]}],\"schemas\":9}\n{\"independentlyCheckedFixtures\":38}\n",
+      "stderr": "",
+      "duration_seconds": 0.249
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.244
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_successors_do_not_reopen_completed_independent_maintenance (test_review_phase.ReviewGateTests.test_successors_do_not_reopen_completed_independent_maintenance) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.128s\n\nOK\n",
+      "duration_seconds": 0.22
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_portkey_access.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_portkey_access.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_authored_whitespace_is_not_dependent_on_staging (test_portkey_access.PortkeyPlanTests.test_authored_whitespace_is_not_dependent_on_staging) ... ok\ntest_exact_additions_without_deletions (test_portkey_access.PortkeyPlanTests.test_exact_additions_without_deletions) ... ok\ntest_exact_operation_and_parameter_inventory (test_portkey_access.PortkeyPlanTests.test_exact_operation_and_parameter_inventory) ... ok\ntest_full_contract_bounds_and_auth (test_portkey_access.PortkeyPlanTests.test_full_contract_bounds_and_auth) ... ok\ntest_independent_pins_references_and_plan_routes (test_portkey_access.PortkeyPlanTests.test_independent_pins_references_and_plan_routes) ... ok\ntest_no_sdk_implementation_before_plan_acceptance (test_portkey_access.PortkeyPlanTests.test_no_sdk_implementation_before_plan_acceptance) ... ok\ntest_plan_contains_release_and_security_requirements (test_portkey_access.PortkeyPlanTests.test_plan_contains_release_and_security_requirements) ... ok\ntest_source_and_document_delta_tampering_fails (test_portkey_access.PortkeyPlanTests.test_source_and_document_delta_tampering_fails) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.861s\n\nOK\n",
+      "duration_seconds": 1.91
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_ci.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_actions_and_credentials_are_bounded (test_ci.CiContractTests.test_actions_and_credentials_are_bounded) ... ok\ntest_additional_targets_are_manual_and_assert_actual_host (test_ci.CiContractTests.test_additional_targets_are_manual_and_assert_actual_host) ... ok\ntest_ci_contract_subset_cannot_replace_complete_phase_qualification (test_ci.CiContractTests.test_ci_contract_subset_cannot_replace_complete_phase_qualification) ... ok\ntest_ci_documentation_matches_action_pins_and_setup_effects (test_ci.CiContractTests.test_ci_documentation_matches_action_pins_and_setup_effects) ... ok\ntest_committed_range_fails_on_shallow_history_and_passes_after_full_fetch (test_ci.CiContractTests.test_committed_range_fails_on_shallow_history_and_passes_after_full_fetch) ... ok\ntest_committed_range_gate_has_full_history_and_current_documentation (test_ci.CiContractTests.test_committed_range_gate_has_full_history_and_current_documentation) ... ok\ntest_compilers_match_supported_msrv_and_current_pin (test_ci.CiContractTests.test_compilers_match_supported_msrv_and_current_pin) ... ok\ntest_documentation_distinguishes_no_run_examples_and_native_gnu_evidence (test_ci.CiContractTests.test_documentation_distinguishes_no_run_examples_and_native_gnu_evidence) ... ok\ntest_every_job_bootstraps_rust_before_running_commands (test_ci.CiContractTests.test_every_job_bootstraps_rust_before_running_commands) ... ok\ntest_every_job_installs_pinned_node_before_selecting_uv (test_ci.CiContractTests.test_every_job_installs_pinned_node_before_selecting_uv) ... ok\ntest_every_native_feature_has_an_isolated_job (test_ci.CiContractTests.test_every_native_feature_has_an_isolated_job) ... ok\ntest_export_checker_owns_default_build_directory_and_preserves_caller_choice (test_ci.CiContractTests.test_export_checker_owns_default_build_directory_and_preserves_caller_choice) ... ok\ntest_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report (test_ci.CiContractTests.test_failed_phase_check_logs_bounded_diagnostics_and_preserves_full_report) ... ok\ntest_live_policy_has_one_unambiguous_filename_and_current_inbound_link (test_ci.CiContractTests.test_live_policy_has_one_unambiguous_filename_and_current_inbound_link) ... ok\ntest_native_workflow_is_dispatch_only_without_a_job_admission_condition (test_ci.CiContractTests.test_native_workflow_is_dispatch_only_without_a_job_admission_condition) ... ok\ntest_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget (test_ci.CiContractTests.test_nested_cargo_build_outputs_do_not_change_source_or_consume_its_budget) ... ok\ntest_node_matches_owned_pin_and_phase_gate_verifies_only (test_ci.CiContractTests.test_node_matches_owned_pin_and_phase_gate_verifies_only) ... ok\ntest_phase_timeout_preserves_partial_output_and_a_failing_report (test_ci.CiContractTests.test_phase_timeout_preserves_partial_output_and_a_failing_report) ... ok\ntest_phase_timeout_stops_a_child_in_the_checker_process_group (test_ci.CiContractTests.test_phase_timeout_stops_a_child_in_the_checker_process_group) ... ok\ntest_portable_python_bootstrap_uses_pinned_job_local_tools (test_ci.CiContractTests.test_portable_python_bootstrap_uses_pinned_job_local_tools) ... ok\ntest_push_workflow_contains_only_required_registered_runner_jobs (test_ci.CiContractTests.test_push_workflow_contains_only_required_registered_runner_jobs) ... ok\ntest_python_bootstrap_rejects_unverified_uv_before_executing_it (test_ci.CiContractTests.test_python_bootstrap_rejects_unverified_uv_before_executing_it) ... ok\ntest_python_pin_supports_tomllib_and_filtered_tar_extraction (test_ci.CiContractTests.test_python_pin_supports_tomllib_and_filtered_tar_extraction) ... ok\ntest_qualification_prepares_complete_locked_graph_before_offline_checks (test_ci.CiContractTests.test_qualification_prepares_complete_locked_graph_before_offline_checks) ... ok\ntest_release_document_guards_run_when_the_development_version_changes (test_ci.CiContractTests.test_release_document_guards_run_when_the_development_version_changes) ... ok\ntest_uv_checksums_cover_every_configured_host_and_libc (test_ci.CiContractTests.test_uv_checksums_cover_every_configured_host_and_libc) ... ok\ntest_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes (test_ci.CiContractTests.test_uv_integrity_checks_reject_unsupported_hosts_stale_pins_and_changed_bytes) ... ok\ntest_uv_selection_creates_distinct_empty_tool_caches (test_ci.CiContractTests.test_uv_selection_creates_distinct_empty_tool_caches) ... ok\ntest_vendor_input_keeps_exact_upstream_bytes_outside_owned_whitespace_style (test_ci.CiContractTests.test_vendor_input_keeps_exact_upstream_bytes_outside_owned_whitespace_style) ... ok\ntest_verified_publication_is_consistent_in_current_release_documents (test_ci.CiContractTests.test_verified_publication_is_consistent_in_current_release_documents) ... ok\ntest_workflows_share_reviewed_tool_versions_and_read_only_permissions (test_ci.CiContractTests.test_workflows_share_reviewed_tool_versions_and_read_only_permissions) ... ok\n\n----------------------------------------------------------------------\nRan 31 tests in 3.984s\n\nOK\n",
+      "duration_seconds": 4.057
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-16-rust-1.89.0-gateway.json"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-16-rust-1.89.0-gateway.json"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"gateway\", \"evidence\": \"docs/checks/phase-16-rust-1.89.0-gateway.json\"}\n",
+      "stderr": "",
+      "duration_seconds": 202.625
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-16-rust-1.99.0-gateway.json"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "gateway",
+        "--output",
+        "docs/checks/phase-16-rust-1.99.0-gateway.json"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"gateway\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"gateway\", \"evidence\": \"docs/checks/phase-16-rust-1.99.0-gateway.json\"}\n",
+      "stderr": "",
+      "duration_seconds": 225.251
+    }
+  ]
+}

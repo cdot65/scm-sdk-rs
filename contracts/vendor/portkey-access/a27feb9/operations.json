@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "a27feb9efaac3653d2d94eca5d7d210944b6e160",
+  "scope": "Five supplied-delta operations; independent from frozen baseline and PANW deployment support",
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/policies/access",
+      "operationId": "createAccessPolicy",
+      "rustMethod": "airs::gateway::AccessPoliciesClient::create",
+      "operationName": "airs.gateway.access_policies.create",
+      "source": "crates/scm-sdk/src/airs/gateway/access_policies.rs",
+      "test": "crates/scm-sdk/tests/portkey_access_contracts.rs::all_five_methods_have_literal_wire_contracts_and_faithful_json",
+      "implemented": true,
+      "liveAcceptance": "not_attempted",
+      "liveReason": "Selected external registration contains SCM OAuth credentials only; no compatible key/control-plane registration was selected. Mutations intentionally not run against real authorization policies."
+    },
+    {
+      "method": "GET",
+      "path": "/policies/access",
+      "operationId": "listAccessPolicies",
+      "rustMethod": "airs::gateway::AccessPoliciesClient::list",
+      "operationName": "airs.gateway.access_policies.list",
+      "source": "crates/scm-sdk/src/airs/gateway/access_policies.rs",
+      "test": "crates/scm-sdk/tests/portkey_access_contracts.rs::all_five_methods_have_literal_wire_contracts_and_faithful_json",
+      "implemented": true,
+      "liveAcceptance": "not_attempted",
+      "liveReason": "Selected external registration contains SCM OAuth credentials only; no compatible key/control-plane registration was selected. Mutations intentionally not run against real authorization policies."
+    },
+    {
+      "method": "GET",
+      "path": "/policies/access/{accessPolicyId}",
+      "operationId": "getAccessPolicy",
+      "rustMethod": "airs::gateway::AccessPoliciesClient::get",
+      "operationName": "airs.gateway.access_policies.get",
+      "source": "crates/scm-sdk/src/airs/gateway/access_policies.rs",
+      "test": "crates/scm-sdk/tests/portkey_access_contracts.rs::all_five_methods_have_literal_wire_contracts_and_faithful_json",
+      "implemented": true,
+      "liveAcceptance": "not_attempted",
+      "liveReason": "Selected external registration contains SCM OAuth credentials only; no compatible key/control-plane registration was selected. Mutations intentionally not run against real authorization policies."
+    },
+    {
+      "method": "PUT",
+      "path": "/policies/access/{accessPolicyId}",
+      "operationId": "updateAccessPolicy",
+      "rustMethod": "airs::gateway::AccessPoliciesClient::update",
+      "operationName": "airs.gateway.access_policies.update",
+      "source": "crates/scm-sdk/src/airs/gateway/access_policies.rs",
+      "test": "crates/scm-sdk/tests/portkey_access_contracts.rs::all_five_methods_have_literal_wire_contracts_and_faithful_json",
+      "implemented": true,
+      "liveAcceptance": "not_attempted",
+      "liveReason": "Selected external registration contains SCM OAuth credentials only; no compatible key/control-plane registration was selected. Mutations intentionally not run against real authorization policies."
+    },
+    {
+      "method": "DELETE",
+      "path": "/policies/access/{accessPolicyId}",
+      "operationId": "deleteAccessPolicy",
+      "rustMethod": "airs::gateway::AccessPoliciesClient::delete",
+      "operationName": "airs.gateway.access_policies.delete",
+      "source": "crates/scm-sdk/src/airs/gateway/access_policies.rs",
+      "test": "crates/scm-sdk/tests/portkey_access_contracts.rs::all_five_methods_have_literal_wire_contracts_and_faithful_json",
+      "implemented": true,
+      "liveAcceptance": "not_attempted",
+      "liveReason": "Selected external registration contains SCM OAuth credentials only; no compatible key/control-plane registration was selected. Mutations intentionally not run against real authorization policies."
+    }
+  ]
+}

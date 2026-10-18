@@ -16,6 +16,16 @@ for (const [name, info] of Object.entries(pin.files)) {
       crypto.createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${data.length}\0`),data])).digest('hex') !== info.gitBlobSha1) throw Error('Pinned file changed: '+name);
 }
 if(require('js-yaml/package.json').version !== pin.yamlParser.version) throw Error('YAML parser drift');
+if (!isDeepStrictEqual(Object.keys(pin.files).sort(), ['LICENSE','openapi.yaml','parent.yaml'])) throw Error('Pinned inventory drift');
+for (const [name, info] of Object.entries(pin.files)) {
+  const ref = name === 'parent.yaml' ? pin.parent : pin.commit;
+  const sourceName = name === 'parent.yaml' ? 'openapi.yaml' : name;
+  if (info.sourceUrl !== `https://raw.githubusercontent.com/Portkey-AI/openapi/${ref}/${sourceName}`) throw Error('Source URL drift');
+}
+if (pin.licenseSha256 !== pin.files.LICENSE.sha256) throw Error('License pin drift');
+const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)));
+const lock = JSON.parse(fs.readFileSync(new URL('./package-lock.json', import.meta.url)));
+if (pkg.dependencies['js-yaml'] !== pin.yamlParser.version || lock.packages['node_modules/js-yaml'].version !== pin.yamlParser.version) throw Error('Parser pin drift');
 const spec = yaml.load(read('openapi.yaml').toString());
 const parent = yaml.load(read('parent.yaml').toString());
 const routes = ['/policies/access','/policies/access/{accessPolicyId}'];
@@ -52,3 +62,32 @@ const destination = new URL('contract.json',dir);
 if (process.argv.includes('--check')) {if(fs.readFileSync(destination,'utf8')!==output) throw Error('Contract drift');}
 else fs.writeFileSync(destination,output);
 console.log(JSON.stringify({passed:true,operations,schemas:schemas.length}));
+const fixturePath=new URL('model-fixtures.json',dir);
+if(fs.existsSync(fixturePath)) {
+  const Ajv=require('ajv').default;
+  const ajv=new Ajv({strict:false,allErrors:true});
+  require('ajv-formats')(ajv);
+  const id='urn:scm-sdk:portkey-access:a27feb9';
+  ajv.addSchema({...contract,$id:id});
+  const cases=JSON.parse(fs.readFileSync(fixturePath)).cases;
+  for(const row of cases) {
+    const validate=ajv.getSchema(id+'#/components/schemas/'+row.schema);
+    if(!validate || validate(row.value)!==row.schemaValid) throw Error(row.name+': independent schema mismatch '+JSON.stringify(validate?.errors));
+  }
+  console.log(JSON.stringify({independentlyCheckedFixtures:cases.length}));
+}
+const ledgerPath = new URL('operations.json', dir);
+if (fs.existsSync(ledgerPath)) {
+  const ledger = JSON.parse(fs.readFileSync(ledgerPath));
+  if (ledger.operations.length !== operations.length || ledger.upstreamCommit !== pin.commit) throw Error('Operation ledger drift');
+  const root = new URL('../', import.meta.url);
+  for (const operation of operations) {
+    const row = ledger.operations.find(x => x.operationId === operation.operationId);
+    if (!row || row.method !== operation.method || row.path !== operation.path || !row.implemented) throw Error('Missing implementation binding');
+    const source = fs.readFileSync(new URL(row.source, root), 'utf8');
+    const method = row.rustMethod.split('::').at(-1);
+    const [testFile, testName] = row.test.split('::');
+    if (!source.includes(`pub async fn ${method}(`) || !source.includes(`"${row.operationName}"`) ||
+        !fs.readFileSync(new URL(testFile, root), 'utf8').includes(`async fn ${testName}(`)) throw Error('Implementation/test binding drift');
+  }
+}
