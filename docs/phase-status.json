@@ -2264,7 +2264,8 @@
         ]
       },
       "accepted_source_sha256": "de311207659ad73a8a158b79e262714b24e5c158441ee3d40adbe5b4e5e98bce",
-      "accepted_score": 9
+      "accepted_score": 9,
+      "original_private_scan": "docs/checks/phase-12-private-material-reviewed-de311207.json"
     },
     {
       "id": 13,
@@ -2325,7 +2326,13 @@
         "docs/checks/phase-14-release-package-1.89.0.json",
         "docs/checks/phase-14-release-package-1.99.0.json"
       ],
-      "plan": "docs/release-0.2.0-plan.md"
+      "plan": "docs/release-0.2.0-plan.md",
+      "ci_privacy_receipt": {
+        "current": "docs/checks/phase-12-private-material.json",
+        "same_as_release_scan": "docs/checks/phase-14-private-material.json",
+        "historical_original": "docs/checks/phase-12-private-material-reviewed-de311207.json",
+        "reason": "The existing CI command retains its filename and validates current source. Original Phase 12 scan bytes are preserved separately. No accepted command set or SDK source changed."
+      }
     },
     {
       "id": 90,
