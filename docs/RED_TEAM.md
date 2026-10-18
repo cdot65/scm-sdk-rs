@@ -22,7 +22,7 @@ No credentials or tenant registrations are loaded implicitly.
 
 ## Current dataplane contract
 
-These additions target unpublished 0.2.0. See [migration notes](../CHANGELOG.md) and
+These additions ship in 0.2.0. See [migration notes](../CHANGELOG.md) and
 the [compiled offline/async example](../crates/scm-sdk/examples/red_team_dataplane.rs).
 
 The separately pinned OpenAPI 0.93.0 contract has 47 operations. All 47 have
@@ -93,8 +93,12 @@ available; they do not imply a successful scan or a safe target.
 
 ## Pagination and request constraints
 
-Direct list calls omit unspecified `skip`, `limit`, and `search` fields. Each
-family adds its precise endpoint filters; explicit `false` values are transmitted.
+Direct list calls omit unspecified options and send only the filters supported
+by their endpoint. In 0.2.0, supplying any of the twelve unsupported option bindings
+in the [migration table](../CHANGELOG.md#changed--migration-from-01x) fails validation
+before authentication or transport. This includes all three `skip`, `limit` and
+`search` fields on `reports().list_goal_streams`; they are not silently discarded.
+Supported filters preserve explicit `false` and zero values.
 Skip-based all-page walks default to skip 0 and limit 50, and advance by the
 number of received items. A provided total ends the walk when that position
 reaches it. Missing/null totals fall back to whether the page is full. An empty

@@ -15,7 +15,7 @@ The baseline implementation phases and maintenance releases require actual Claud
 Code review of at least 9/10. [Phase status](docs/phase-status.json) records the
 accepted reviews and exact source evidence.
 
-Crate version: **0.2.0** (unpublished development). The checkout adds full
+Crate version: **0.2.0**. This release adds full
 [Red Team dataplane 0.93.0 coverage](docs/RED_TEAM.md): **47 operations**, including
 11 new calls, with a separately pinned vendor ledger. See the
 [migration notes](CHANGELOG.md) before adopting the stricter query contract.
@@ -26,7 +26,9 @@ with [published API docs](https://docs.rs/scm-sdk/0.1.1/scm_sdk/) and a verified
 see [response defaults](docs/RESPONSE_DEFAULTS.md) and the
 [offline example](crates/scm-sdk/examples/response_defaults.rs). The
 [initial 0.1.0 receipt](docs/checks/release-registry-0.1.0.json) remains historical.
-The current vendor APIs require a Git revision of this unpublished checkout.
+Install the vendor update as [scm-sdk 0.2.0](https://crates.io/crates/scm-sdk/0.2.0).
+Its [registry receipt](docs/checks/release-registry-0.2.0.json) records the verified
+archive and exact release source; its immutable tag is `v0.2.0`.
 See [CI](docs/CI.md) and the [release procedure](docs/RELEASE.md).
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
@@ -37,7 +39,7 @@ Add the published crate, optionally using the shorter dependency alias:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.1.1" }
+scm = { package = "scm-sdk", version = "=0.2.0" }
 ```
 
 The alias exposes `scm::airs::scan`, `scm::airs::management`, and the other product

@@ -1,13 +1,19 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.0** (unpublished development). The vendor update
-follows [reviewed phases 9–12](red-team-data-plane-0.93.0-plan.md); current
-qualification uses `python3 tools/check_phase.py --phase 12`. CI runs the separate
-`--phase 12 --verification-only --contracts-only` subset plus its full Rust matrix;
-that subset never substitutes for the complete source review gate.
-Its scope includes the 47 vendor operations, frozen regressions, both compilers,
-packaged consumers and dependency policy. This delivery authorizes a repository
-push; it does not publish 0.2.0 or move an existing release tag.
+The workspace version is **0.2.0**. The completed vendor phases 9–12 qualify
+all 47 Red Team dataplane operations. [Release phases 13–14](release-0.2.0-plan.md)
+add clean archive execution on Rust 1.89.0 and 1.99.0, exact payload comparison,
+actual Claude release review, registry verification and immutable tag delivery.
+The [registry receipt](checks/release-registry-0.2.0.json) and
+[tag receipt](checks/release-tag-v0.2.0.json) establish the actual publication and
+remote source identity. A missing receipt means publication is not yet verified.
+The SDK runtime is unchanged from accepted source `167a359`; the packaged README
+contains reviewed release guidance and is covered by both new archive proofs.
+
+CI continues `--phase 12 --verification-only --contracts-only` and its full Rust
+matrix. Phase 14 uses the
+same current contract checks plus publication-specific evidence, without changing
+historical gates. The supplied Portkey update is deferred until this delivery.
 
 [The 0.1.1 publication receipt](checks/release-registry-0.1.1.json) records the
 published G10 patch, with unchanged default behavior, MSRV and dependencies.
@@ -109,12 +115,12 @@ maintainer credentials, notices and the exact reviewed release commit/artifact.
 No registry token belongs in the repository, tenant files or knowledge workspace.
 The accepted design assigns releases to `cdot65` with minimal-permission,
 owner-controlled automation and supported trusted publishing after setup.
-Until that configuration exists, the explicitly authorized 0.1.1 release uses
+Until that configuration exists, the explicitly authorized maintainer releases use
 Cargo's token provider with the owner's external mode-0600 credentials file.
 CI remains credential-free and never performs registry publication.
 
-New registry publication requires explicit maintainer authorization, provided for
-0.1.1. CI has no publishing job or registry credentials; Cargo reads the maintainer
+Maintainer authorization covers 0.1.1 and the subsequent 0.2.0 delivery recorded
+in the release plan. CI has no publishing job or registry credentials; Cargo reads the maintainer
 credential from the external owner-controlled file. After an
 actual publication, record the registry version/checksum, source commit and
 corresponding archive proof. Do not advertise an unpublished dependency as

@@ -58,11 +58,16 @@ release bookkeeping can retain the final proof in a later evidence-only commit.
 A package build proves the recorded archive on the recorded compiler and host;
 service availability and other platforms require their separate evidence.
 
-## Vendor development candidate
+## Vendor release qualification
 
-The unpublished 0.2.0 vendor update uses Phase 12 package checks on both compilers.
+The 0.2.0 vendor update uses Phase 12 package checks on both compilers.
 Its `red_team_dataplane` example executes offline request validation and compiles
 async helpers; no credential or service call is needed. Current development
 archive checks may allow dirty source and record that fact. They establish the
 recorded archive/consumer behavior, and do not replace the clean release proof or
 publication authorization required above for a future registry release.
+
+Phase 14 adds clean release-commit proofs on both compilers. The candidate guard
+compares every protected runtime input against the accepted source, rejects extra
+or symlink inputs, and binds the reviewed README and all archive files to those
+executed proofs. Registry verification compares the downloaded archive to them.

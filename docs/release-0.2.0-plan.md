@@ -39,6 +39,21 @@ checks execute minimal/all-feature unit tests, examples, doctests and 3,820 prob
 
 ## Execution and recovery
 
+The packaged README is a permitted documentation change, so its bytes are expected
+to differ from Phase 12. Both clean archive proofs must be regenerated after any
+README edit and must include the exact reviewed README. Runtime equality alone
+never qualifies a publishable archive. The final candidate guard checks actual
+filesystem inventories, including untracked/ignored files and symlinks.
+
+Phase 14 resolves the Phase 12 pagination migration guidance and GNU receipt
+pointer advisories. The two low-priority generator advisories (rejecting future
+unsupported query kinds at generation time and pinning additional adversarial
+test names) remain explicit post-0.2.0 maintenance: the current pinned schema uses
+only supported kinds and all existing adversarial tests passed. Their deferral
+does not remove any current acceptance requirement. Phase 13's README scope,
+untracked input detection, plan discoverability and per-phase plan pointers are
+resolved in Phase 14.
+
 1. After Phase 13 acceptance, prepare dated changelog and release guidance locally.
    Push public install guidance after registry verification. Publication receipts
    establish actual release status, separately from candidate preparation.

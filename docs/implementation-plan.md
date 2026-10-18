@@ -126,6 +126,10 @@ Publish incremental public `0.x` releases. Keep patch releases source compatible
 
 Verify the actual packaged crate contents, notices, version, and release commit before publication. Use owner-controlled release automation with minimal permissions and supported trusted publishing after setup. Until a trusted publisher is configured, explicitly authorized maintainer releases may use Cargo's owner-controlled crates.io token stored outside the repository and vault; CI must not receive that credential. The authorized 0.1.1 maintenance procedure is in docs/g10-0.1.1-plan.md. Align source tags and registry artifacts to the exact qualified release commit.
 
+The authorized 0.2.0 registry delivery follows [the release plan](release-0.2.0-plan.md)
+and phases 13–14, after completed vendor phases 9–12. The supplied Gateway update
+is a subsequent task.
+
 ## Delivery milestones
 
 | Milestone | Deliverable | Exit criteria |

@@ -12,8 +12,8 @@ default compiler.
 | `aarch64-apple-darwin` | Compile-only minimal and all product/core features with caller transports. |
 | `x86_64-pc-windows-msvc` | Compile-only minimal and all product/core features with caller transports. |
 
-The [GNU matrix receipt](checks/phase-08-ci-run-11/matrix-capture-receipt.json)
-records six passing commands at source `72765d5`. Its host/compiler/feature scope
+The [GNU matrix receipt](checks/phase-08-ci-run-12/matrix-capture-receipt.json)
+records six passing commands at source `8034e36`. Its host/compiler/feature scope
 is independent of full workflow completion; current remote delivery outcomes are
 recorded in [phase status](phase-status.json). This CI execution supplements the
 native musl phase checks without implying other operating-system execution.
@@ -29,7 +29,7 @@ actual reports. Caller-provided
 
 ## Vendor update boundary
 
-The unpublished 0.2.0 update records fresh Phase 12 native checks on
+The 0.2.0 update records fresh Phase 12 native checks on
 `x86_64-unknown-linux-musl` for Rust 1.89.0/1.99.0 default, minimal and all features,
 plus isolated MSRV Red Team. Its package/public consumer checks use the same host.
 Earlier GNU and cross-target receipts above retain their original source scope;

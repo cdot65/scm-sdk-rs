@@ -51,6 +51,11 @@ Each phase records three milestones: implemented scope, passing independent veri
 
 ## Gateway ownership
 
+The registry release follows [the 0.2.0 delivery plan](release-0.2.0-plan.md).
+Milestone 13 accepts the fixed publication plan. Milestone 14 verifies unchanged
+runtime inputs, both clean archives, actual Claude review, registry payload,
+immutable tag and terminal remote CI before marking delivery complete.
+
 Phase 6 owns 194 of the 196 frozen Gateway-family methods. Two exact methods
 remain visible Phase 7 obligations: `AIGatewayInferenceClient.connectRealtime`
 (bounded experimental realtime lifecycle) and `AIGatewayWorkspacesClient.provision`

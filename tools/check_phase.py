@@ -68,6 +68,16 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 14:
+        return [
+            ["git", "diff", "--check"],
+            ["git", "diff", "--cached", "--check"],
+            ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_*.py", "-v"],
+            *[c for c in commands_for(12)[4:25]],
+            ["python", "scripts/check-release-candidate.py", "--output", "docs/checks/phase-14-candidate.json"],
+            ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-14-dependencies.json"],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-14-private-material.json"],
+        ]
     if phase == 13:
         return [["git", "diff", "--check"], ["python", "tools/verify-contracts.py"],
                 *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]

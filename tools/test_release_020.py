@@ -3,6 +3,8 @@ import json
 import pathlib
 import subprocess
 import unittest
+import importlib.util
+import tempfile
 
 from check_phase import commands_for
 
@@ -36,6 +38,44 @@ class ReleasePlanTests(unittest.TestCase):
         self.assertEqual(next_phase({13: {}, 14: {"final_in_sequence": True},
                                      90: {"status": "complete"}}, 13), 14)
         self.assertIsNone(next_phase(phases, 14))
+
+    def test_candidate_detects_untracked_ignored_changed_and_symlink_inputs(self):
+        path = ROOT / "scripts/check-release-candidate.py"
+        if not path.exists():
+            self.skipTest("Candidate guard is a Phase 14 deliverable")
+        spec = importlib.util.spec_from_file_location("candidate", path)
+        candidate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(candidate)
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            for relative in candidate.PROTECTED:
+                p = root / relative
+                if relative.endswith(("/src", "/examples")):
+                    p = p / "fixture.rs"
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_text("accepted input")
+            subprocess.run(["git", "add", "."], cwd=root, check=True)
+            subprocess.run(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                            "commit", "-qm", "baseline"], cwd=root, check=True)
+            baseline = candidate.git(root, "rev-parse", "HEAD").decode().strip()
+            self.assertTrue(candidate.unchanged_runtime(root, baseline))
+            extra = root / "crates/scm-sdk/src/extra.rs"
+            extra.write_text("unexpected")
+            with self.assertRaises(ValueError):
+                candidate.unchanged_runtime(root, baseline)
+            (root / ".gitignore").write_text("extra.rs\n")
+            with self.assertRaises(ValueError):
+                candidate.unchanged_runtime(root, baseline)
+            extra.unlink()
+            original = root / "crates/scm-sdk/src/fixture.rs"
+            original.write_text("changed")
+            with self.assertRaises(ValueError):
+                candidate.unchanged_runtime(root, baseline)
+            original.write_text("accepted input")
+            extra.symlink_to(original)
+            with self.assertRaises(ValueError):
+                candidate.unchanged_runtime(root, baseline)
 
 
 if __name__ == "__main__":

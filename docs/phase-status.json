@@ -2302,7 +2302,8 @@
             "docs/reviews/phase-13-attempt-01.json"
           ]
         }
-      }
+      },
+      "plan": "docs/release-0.2.0-plan.md"
     },
     {
       "id": 14,
@@ -2311,8 +2312,20 @@
       "reviews": [],
       "final_in_sequence": true,
       "scope_evidence": [
-        "docs/release-0.2.0-plan.md"
-      ]
+        "docs/release-0.2.0-plan.md",
+        "scripts/check-release-candidate.py",
+        "scripts/verify-publication.py",
+        "tools/test_release_020.py",
+        "tools/check_phase.py",
+        "README.md",
+        "CHANGELOG.md",
+        "docs/RELEASE.md",
+        "docs/RED_TEAM.md",
+        "docs/PLATFORMS.md",
+        "docs/checks/phase-14-release-package-1.89.0.json",
+        "docs/checks/phase-14-release-package-1.99.0.json"
+      ],
+      "plan": "docs/release-0.2.0-plan.md"
     },
     {
       "id": 90,

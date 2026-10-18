@@ -1,9 +1,10 @@
 # Compatibility and support status
 
-The current Rust crate version is **0.2.0**, an unpublished vendor-contract update.
+The current Rust crate version is **0.2.0**, a vendor-contract update. Its
+[registry receipt](checks/release-registry-0.2.0.json) records release provenance.
 The [0.1.1 publication receipt](checks/release-registry-0.1.1.json) establishes the
 available G10 patch and its immutable source/archive identity. The opt-in response
-policy and default behavior are retained in development. The 0.2.0 minor increment
+policy and default behavior are retained. The 0.2.0 minor increment
 is required because twelve legacy query options now fail before credentials;
 [CHANGELOG](../CHANGELOG.md) lists every migration binding.
 

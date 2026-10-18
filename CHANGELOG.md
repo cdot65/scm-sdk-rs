@@ -1,10 +1,12 @@
 # Changelog
 
-## 0.2.0 — Unreleased
+## 0.2.0 — 2026-10-18
 
-Unpublished development for the pinned Prisma AIRS Red Team dataplane OpenAPI
-0.93.0 at `afef9d08030a56e18a04ea078f589313f1fa2b0c`. The published G10 patch
-remains [scm-sdk 0.1.1](https://crates.io/crates/scm-sdk/0.1.1).
+Release of the pinned Prisma AIRS Red Team dataplane OpenAPI 0.93.0 at
+`afef9d08030a56e18a04ea078f589313f1fa2b0c`. The
+[registry receipt](docs/checks/release-registry-0.2.0.json) identifies the verified
+publication artifact and source. The G10 patch remains available as
+[scm-sdk 0.1.1](https://crates.io/crates/scm-sdk/0.1.1).
 
 ### Added
 
