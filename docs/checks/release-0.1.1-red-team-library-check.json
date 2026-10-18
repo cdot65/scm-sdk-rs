@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "afd4cce0830fcb5875f86af0c1faca701c932c27",
+  "publishedSdkSourceCommit": "7efd1372806bd1969663993de3083d393b20cc62",
+  "command": [
+    "/home/cdot/.cargo/bin/cargo",
+    "+1.89.0",
+    "check",
+    "-p",
+    "scm-sdk",
+    "--lib",
+    "--no-default-features",
+    "--features",
+    "red-team",
+    "--locked"
+  ],
+  "exitCode": 0,
+  "observedOutputTail": "Checking scm-sdk v0.1.1; Finished dev profile target(s) in 41.73s",
+  "limitations": [
+    "Compile check of the library on the native musl host; the separate SDK unit-test target fails due to an incorrectly gated Gateway-only helper.",
+    "A downstream dependency build does not compile the SDK cfg(test) unit-test module."
+  ],
+  "failedUnitTargetEvidence": "docs/checks/release-0.1.1-red-team-unit-target-limitation.json"
+}
