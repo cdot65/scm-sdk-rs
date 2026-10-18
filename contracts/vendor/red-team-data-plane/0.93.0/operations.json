@@ -4,10 +4,10 @@
   "sourcePin": "contracts/vendor/red-team-data-plane/0.93.0/source.json",
   "generator": {
     "path": "tools/red_team_dataplane.py",
-    "sha256": "d437099dbf806ac5cafc9f8b9a4514255d70935b1446954a290f9e0835f12b82"
+    "sha256": "020444a859c258ad1d4a355e81b2ba1dbaa9eba5d88257ce1f6b4207e87a2c1f"
   },
   "operationCount": 47,
-  "implementedCount": 36,
+  "implementedCount": 47,
   "operations": [
     {
       "operationId": "create_job_v1_scan_post",
@@ -17,7 +17,7 @@
       "nativeClass": "RedTeamScansClient",
       "nativeMethod": "create",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
-      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "sourceSha256": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
       "implemented": true,
       "parameters": [],
       "requestBody": {
@@ -53,7 +53,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "create_job_v1_scan_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "list_jobs_v1_scan_get",
@@ -63,7 +73,7 @@
       "nativeClass": "RedTeamScansClient",
       "nativeMethod": "list",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
-      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "sourceSha256": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
       "implemented": true,
       "parameters": [
         {
@@ -192,7 +202,18 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "list_jobs_v1_scan_get__all_parameters",
+          "list_jobs_v1_scan_get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_job_v1_scan__job_id__get",
@@ -202,7 +223,7 @@
       "nativeClass": "RedTeamScansClient",
       "nativeMethod": "get",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
-      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "sourceSha256": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
       "implemented": true,
       "parameters": [
         {
@@ -240,7 +261,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_job_v1_scan__job_id__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "abort_job_v1_scan__job_id__abort_post",
@@ -250,7 +281,7 @@
       "nativeClass": "RedTeamScansClient",
       "nativeMethod": "abort",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
-      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "sourceSha256": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
       "implemented": true,
       "parameters": [
         {
@@ -288,7 +319,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "abort_job_v1_scan__job_id__abort_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "set_runtime_profile_v1_scan__job_id__runtime_profile_put",
@@ -298,8 +339,8 @@
       "nativeClass": "RedTeamScansClient",
       "nativeMethod": "set_runtime_profile",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
-      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
-      "implemented": false,
+      "sourceSha256": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -345,7 +386,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "set_runtime_profile_v1_scan__job_id__runtime_profile_put__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_all_categories_v1_categories_get",
@@ -355,7 +406,7 @@
       "nativeClass": "RedTeamScansClient",
       "nativeMethod": "get_categories",
       "source": "crates/scm-sdk/src/airs/red_team/scans.rs",
-      "sourceSha256": "a4982bce5e42b321881c60d18cd6d24b7c38d334e486c1977e9243dbe31e9908",
+      "sourceSha256": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
       "implemented": true,
       "parameters": [],
       "requestBody": null,
@@ -386,7 +437,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_all_categories_v1_categories_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_scan_metadata_v1_scan_scan_metadata_get",
@@ -396,7 +457,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_scan_metadata",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [],
       "requestBody": null,
@@ -425,7 +486,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_scan_metadata_v1_scan_scan_metadata_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "list_attacks_v1_report_static__job_id__list_attacks_get",
@@ -435,7 +506,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "list_attacks",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -673,7 +744,18 @@
           "name": "search",
           "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "list_attacks_v1_report_static__job_id__list_attacks_get__all_parameters",
+          "list_attacks_v1_report_static__job_id__list_attacks_get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_attack_detail_v1_report_static__job_id__attack__attack_id__get",
@@ -683,7 +765,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_attack_detail",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -731,7 +813,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_attack_detail_v1_report_static__job_id__attack__attack_id__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_attack_report_v1_report_static__job_id__report_get",
@@ -741,7 +833,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_static_report",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -779,7 +871,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_attack_report_v1_report_static__job_id__report_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_static_runtime_security_policy_config_v1_report_static__job_id__runtime_policy_config_get",
@@ -789,7 +891,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_static_runtime_policy",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -827,7 +929,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_static_runtime_security_policy_config_v1_report_static__job_id__runtime_policy_config_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_static_asr_breakdown_v1_report_static__job_id__asr_get",
@@ -837,8 +949,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_static_asr",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -875,7 +987,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_static_asr_breakdown_v1_report_static__job_id__asr_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_static_remediations_v1_report_static__job_id__remediation_get",
@@ -885,7 +1007,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_static_remediation",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -923,7 +1045,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_static_remediations_v1_report_static__job_id__remediation_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_dynamic_job_report_v1_report_dynamic__job_id__report_get",
@@ -933,7 +1065,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_dynamic_report",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -971,7 +1103,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_dynamic_job_report_v1_report_dynamic__job_id__report_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_dynamic_runtime_security_policy_config_v1_report_dynamic__job_id__runtime_policy_config_get",
@@ -981,7 +1123,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_dynamic_runtime_policy",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1019,7 +1161,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_dynamic_runtime_security_policy_config_v1_report_dynamic__job_id__runtime_policy_config_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_dynamic_asr_breakdown_v1_report_dynamic__job_id__asr_get",
@@ -1029,8 +1181,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_dynamic_asr",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -1067,7 +1219,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_dynamic_asr_breakdown_v1_report_dynamic__job_id__asr_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_dynamic_remediations_v1_report_dynamic__job_id__remediation_get",
@@ -1077,7 +1239,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_dynamic_remediation",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1115,7 +1277,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_dynamic_remediations_v1_report_dynamic__job_id__remediation_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get",
@@ -1125,7 +1297,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "list_goals",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1274,7 +1446,18 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get__all_parameters",
+          "list_dynamic_job_goals_v1_report_dynamic__job_id__list_goals_get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "list_dynamic_job_streams_v1_report_dynamic__job_id__goal__goal_id__list_streams_get",
@@ -1284,7 +1467,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "list_goal_streams",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1334,18 +1517,28 @@
       "liveAcceptance": "unverified",
       "rejectedLegacyParameters": [
         {
-          "name": "skip",
-          "disposition": "validation_error_before_auth"
-        },
-        {
           "name": "limit",
           "disposition": "validation_error_before_auth"
         },
         {
           "name": "search",
           "disposition": "validation_error_before_auth"
+        },
+        {
+          "name": "skip",
+          "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "list_dynamic_job_streams_v1_report_dynamic__job_id__goal__goal_id__list_streams_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_stream_detail_v1_report_dynamic_stream__stream_id__get",
@@ -1355,7 +1548,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_stream_detail",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1393,7 +1586,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_stream_detail_v1_report_dynamic_stream__stream_id__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "download_report_v1_report__job_id__download_get",
@@ -1403,7 +1606,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "download_report",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1449,7 +1652,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "download_report_v1_report__job_id__download_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "generate_partial_job_report_v1_report__job_id__generate_partial_report_post",
@@ -1459,7 +1672,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "generate_partial_report",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1495,7 +1708,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "generate_partial_job_report_v1_report__job_id__generate_partial_report_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "regenerate_report_v1_report__job_id__regenerate_post",
@@ -1505,8 +1728,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "regenerate",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -1543,7 +1766,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "regenerate_report_v1_report__job_id__regenerate_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_report_status_v1_report__job_id__status_get",
@@ -1553,8 +1786,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_status",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -1591,7 +1824,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_report_status_v1_report__job_id__status_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_attack_multi_turn_detail_v1_report_static__job_id__attack_multi_turn__attack_id__get",
@@ -1601,7 +1844,7 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_multi_turn_attack_detail",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
       "implemented": true,
       "parameters": [
         {
@@ -1649,7 +1892,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_attack_multi_turn_detail_v1_report_static__job_id__attack_multi_turn__attack_id__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post",
@@ -1659,8 +1912,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "override_attack",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -1716,7 +1969,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post",
@@ -1726,8 +1989,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "override_multi_turn_attack",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -1783,7 +2046,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post",
@@ -1793,8 +2066,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "override_stream",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -1850,7 +2123,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "post_quota_summary_v1_metering_quota_post",
@@ -1860,7 +2143,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_quota",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [],
       "requestBody": null,
@@ -1887,7 +2170,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "post_quota_summary_v1_metering_quota_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_custom_attack_report_v1_custom_attacks_report__job_id__get",
@@ -1897,7 +2190,7 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "get_report",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
       "implemented": true,
       "parameters": [
         {
@@ -1935,7 +2228,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_custom_attack_report_v1_custom_attacks_report__job_id__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get",
@@ -1945,7 +2248,7 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "get_prompt_sets",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
       "implemented": true,
       "parameters": [
         {
@@ -2051,7 +2354,18 @@
           "name": "search",
           "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get__all_parameters",
+          "get_prompt_sets_v1_custom_attacks_report__job_id__prompt_sets_get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get",
@@ -2061,7 +2375,7 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "get_prompts_by_set",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
       "implemented": true,
       "parameters": [
         {
@@ -2163,7 +2477,18 @@
           "name": "search",
           "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get__all_parameters",
+          "get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_prompt_detail_v1_custom_attacks_report__job_id__prompt__prompt_id__get",
@@ -2173,7 +2498,7 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "get_prompt_detail",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
       "implemented": true,
       "parameters": [
         {
@@ -2221,7 +2546,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_prompt_detail_v1_custom_attacks_report__job_id__prompt__prompt_id__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get",
@@ -2231,7 +2566,7 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "list_custom_attacks",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
       "implemented": true,
       "parameters": [
         {
@@ -2373,7 +2708,18 @@
           "name": "search",
           "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get__all_parameters",
+          "list_custom_attacks_v1_custom_attacks_job__job_id__list_custom_attacks_get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_attack_outputs_v1_custom_attacks_job__job_id__attack__attack_id__list_outputs_get",
@@ -2383,7 +2729,7 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "get_attack_outputs",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
       "implemented": true,
       "parameters": [
         {
@@ -2435,7 +2781,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_attack_outputs_v1_custom_attacks_job__job_id__attack__attack_id__list_outputs_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_property_stats_v1_custom_attacks_job__job_id__property_stats_get",
@@ -2445,7 +2801,7 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "get_property_stats",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
       "implemented": true,
       "parameters": [
         {
@@ -2488,7 +2844,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_property_stats_v1_custom_attacks_job__job_id__property_stats_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post",
@@ -2498,8 +2864,8 @@
       "nativeClass": "RedTeamCustomAttackReportsClient",
       "nativeMethod": "override_attack",
       "source": "crates/scm-sdk/src/airs/red_team/custom_attack_reports.rs",
-      "sourceSha256": "096f236511949127931ebfae20204bfecb6c78873cfe9d887476ef8db540ebe4",
-      "implemented": false,
+      "sourceSha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -2555,7 +2921,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "list_error_logs_for_job_v1_error_log_job__job_id__get",
@@ -2565,7 +2941,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_error_logs",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [
         {
@@ -2635,7 +3011,18 @@
           "name": "search",
           "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "list_error_logs_for_job_v1_error_log_job__job_id__get__all_parameters",
+          "list_error_logs_for_job_v1_error_log_job__job_id__get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "download_error_logs_for_job_v1_error_log_job__job_id__download_get",
@@ -2645,8 +3032,8 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "download_error_logs",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
-      "implemented": false,
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -2676,7 +3063,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "download_error_logs_for_job_v1_error_log_job__job_id__download_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get",
@@ -2686,7 +3083,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_target_profile_error_logs",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [
         {
@@ -2740,14 +3137,25 @@
       "liveAcceptance": "unverified",
       "rejectedLegacyParameters": [
         {
-          "name": "skip",
+          "name": "search",
           "disposition": "validation_error_before_auth"
         },
         {
-          "name": "search",
+          "name": "skip",
           "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get__all_parameters",
+          "list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_goal_categories_v1_goal_categories__target_type__get",
@@ -2757,7 +3165,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_goal_categories",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [
         {
@@ -2794,7 +3202,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_goal_categories_v1_goal_categories__target_type__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_languages_v1_languages_get",
@@ -2804,7 +3222,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_languages",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [],
       "requestBody": null,
@@ -2831,7 +3249,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_languages_v1_languages_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "download_report_v2_report__job_id__download_get",
@@ -2841,8 +3269,8 @@
       "nativeClass": "RedTeamReportsClient",
       "nativeMethod": "get_download_url",
       "source": "crates/scm-sdk/src/airs/red_team/reports.rs",
-      "sourceSha256": "f76bbccca28fce6338443500fb32d122caae845c824328185e5defbe8f88fead",
-      "implemented": false,
+      "sourceSha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "implemented": true,
       "parameters": [
         {
           "name": "job_id",
@@ -2889,7 +3317,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "download_report_v2_report__job_id__download_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_scan_statistics_v1_dashboard_scan_statistics_get",
@@ -2899,7 +3337,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_scan_statistics",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [],
       "requestBody": null,
@@ -2935,7 +3373,17 @@
           "name": "target_id",
           "disposition": "validation_error_before_auth"
         }
-      ]
+      ],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_scan_statistics_v1_dashboard_scan_statistics_get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_score_trend_v1_dashboard_score_trend_get",
@@ -2945,7 +3393,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_score_trend",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [
         {
@@ -3034,7 +3482,18 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_score_trend_v1_dashboard_score_trend_get__all_parameters",
+          "get_score_trend_v1_dashboard_score_trend_get__omitted_optional_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "create_or_update_sentiment_v1_sentiment_post",
@@ -3044,7 +3503,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "update_sentiment",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [],
       "requestBody": {
@@ -3080,7 +3539,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "create_or_update_sentiment_v1_sentiment_post__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     },
     {
       "operationId": "get_job_sentiment_v1_sentiment__job_id__get",
@@ -3090,7 +3559,7 @@
       "nativeClass": "RedTeamClient",
       "nativeMethod": "get_sentiment",
       "source": "crates/scm-sdk/src/airs/red_team/facade.rs",
-      "sourceSha256": "0db618b976bc21a740e980e81971a2abc79c2795b098a7f74b7de74f323f3055",
+      "sourceSha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
       "implemented": true,
       "parameters": [
         {
@@ -3128,7 +3597,17 @@
         }
       },
       "liveAcceptance": "unverified",
-      "rejectedLegacyParameters": []
+      "rejectedLegacyParameters": [],
+      "contractVerification": "executable_fixture",
+      "fixtureBinding": {
+        "path": "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json",
+        "sha256": "57577c04430c88033ca50fac97acf4059b87a850e1e5d5a2f78bce08b8c32188",
+        "cases": [
+          "get_job_sentiment_v1_sentiment__job_id__get__all_parameters"
+        ],
+        "test": "crates/scm-sdk/tests/red_team_contracts.rs::all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies",
+        "testSha256": "5e2c2febfc332615ac7a5899c71d1383da3b5bed37ba28c0ff1f17087df10b87"
+      }
     }
   ]
 }

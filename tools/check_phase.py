@@ -68,6 +68,30 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 11:
+        return [
+            ["git", "diff", "--check"],
+            ["git", "diff", "--cached", "--check"],
+            ["node", "tools/red-team-dataplane.mjs", "--check"],
+            ["node", "tools/make-red-team-fixtures.mjs", "--check"],
+            ["node", "tools/make-red-team-wire-fixtures.mjs", "--check"],
+            ["python", "tools/red_team_dataplane.py", "--check", "--require-complete"],
+            *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+              for name in ("test_vendor_red_team_plan.py", "test_red_team_dataplane.py", "test_review_phase.py")],
+            ["python", "tools/verify-contracts.py"],
+            ["python", "tools/generate_validation.py", "--check"],
+            ["python", "tools/generate_models.py", "--check"],
+            ["python", "tools/response_defaults.py", "--check"],
+            ["python", "tools/verify_gateway_bindings.py", "--check"],
+            ["python", "tools/native_operations.py", "--check", "--require-through-phase", "8"],
+            ["python", "tools/native_exports.py", "--check"],
+            ["python", "tools/live_evidence.py", "--check"],
+            ["python", "tools/qualification.py", "--check"],
+            *[["python", "scripts/check-rust.py", "--toolchain", toolchain, "--feature-set", "red-team",
+               "--output", f"docs/checks/phase-11-rust-{toolchain}-red-team.json"]
+              for toolchain in ("1.89.0", "1.99.0")],
+            ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-11-private-material.json"],
+        ]
     if phase == 10:
         return [
             ["git", "diff", "--check"],

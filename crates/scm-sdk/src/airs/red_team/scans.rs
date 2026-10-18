@@ -92,6 +92,27 @@ impl RedTeamScansClient {
             )
             .await
     }
+    /// Associate a runtime profile with a job. Ambiguous writes are never replayed.
+    pub async fn set_runtime_profile(
+        &self,
+        job_id: &str,
+        body: &RuntimeProfileUpdateRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<JobResponse> {
+        common::uuid(job_id)?;
+        self.client
+            .send_model(
+                RawRequest::new(Method::PUT, "/v1/scan")
+                    .segment(job_id)?
+                    .segment("runtime-profile")?
+                    .named("airs.red_team.scans.set_runtime_profile"),
+                body,
+                "vendor:red-team-dp:0.93.0:set_runtime_profile_v1_scan__job_id__runtime_profile_put:body",
+                "vendor:red-team-dp:0.93.0:set_runtime_profile_v1_scan__job_id__runtime_profile_put:response",
+                options,
+            )
+            .await
+    }
     pub async fn abort(
         &self,
         job_id: &str,
@@ -116,7 +137,7 @@ impl RedTeamScansClient {
         self.client
             .send_contract(
                 RawRequest::read("/v1/categories").named("airs.red_team.scans.get_categories"),
-                "CategoryModelSchema[]",
+                "vendor:red-team-dp:0.93.0:get_all_categories_v1_categories_get:response",
                 options,
             )
             .await

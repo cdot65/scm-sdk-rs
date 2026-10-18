@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Concrete independent JSON Schema specimens; deliberately does not use the Rust graph compiler.
 import fs from 'node:fs';
+import {sample as sampleSchema} from './red-team-specimens.mjs';
 import {createRequire} from 'node:module';
 const require=createRequire(new URL('./package.json',import.meta.url));
 const Ajv=require('ajv/dist/2020.js').default;
@@ -9,31 +10,26 @@ const dir=new URL('../contracts/vendor/red-team-data-plane/0.93.0/',import.meta.
 const spec=JSON.parse(fs.readFileSync(new URL('openapi.json',dir)));
 const id='urn:scm-sdk:red-team-dp:specimens';
 const ajv=new Ajv({strict:false,allErrors:true}); formats(ajv);ajv.addSchema({...spec,$id:id});
-function sample(s){
-  if(s.$ref)return sample(spec.components.schemas[s.$ref.split('/').at(-1)]);
-  if('const'in s)return s.const;
-  if(s.enum)return s.enum[0];
-  if(s.anyOf||s.oneOf)return sample((s.anyOf||s.oneOf).find(x=>x.type!=='null'));
-  if(s.type==='null')return null;
-  if(s.type==='boolean')return false;
-  if(s.type==='integer'||s.type==='number')return Math.max(s.minimum??0,0);
-  if(s.type==='string'){
-    const formatted={uuid:'550e8400-e29b-41d4-a716-446655440000','date-time':'2026-10-18T00:00:00Z',date:'2026-10-18',duration:'PT1S'};
-    return formatted[s.format]??'example'.repeat(Math.ceil((s.minLength??1)/7)).slice(0,s.maxLength??1000);
-  }
-  if(s.type==='array')return Array.from({length:Math.max(s.minItems??0,1)},()=>sample(s.items));
-  if(s.type==='object'){
-    const result=Object.fromEntries(Object.entries(s.properties??{}).map(([k,v])=>[k,sample(v)]));
-    if(!s.properties&&typeof s.additionalProperties==='object')result[s.propertyNames?sample(s.propertyNames):'example']=sample(s.additionalProperties);
-    return result;
-  }
-  return {preserved:true};
+// Response evolution deliberately preserves unknown fields and enum strings.
+// Strict component roots keep required fields; the four route waivers are tested separately.
+function responsePolicy(value){
+  if(Array.isArray(value))return value.map(responsePolicy);
+  if(value===null||typeof value!=='object')return value;
+  const result=Object.fromEntries(Object.entries(value).map(([k,v])=>[k,responsePolicy(v)]));
+  if(result.type==='string'&&result.enum)delete result.enum;
+  if(result.additionalProperties===false)result.additionalProperties=true;
+  return result;
 }
+const responseAjv=new Ajv({strict:false,allErrors:true});formats(responseAjv);
+responseAjv.addSchema({...responsePolicy(spec),$id:id});
+const sample=s=>sampleSchema(spec,s);
 const cases=[];
 function add(name,schema,value,valid){
   const actual=ajv.getSchema(id+'#/components/schemas/'+schema)(value);
   if(actual!==valid)throw Error('Invalid independent specimen: '+name);
-  cases.push({name,schema,value:structuredClone(value),valid});
+  const mutationClass=valid?'valid':name.startsWith('missing_')?'missing_required':name.startsWith('closed_')?'closed_object':name.startsWith('rfc3339_')||name.startsWith('duration_')?'format_violation':name.startsWith('runtime_unicode_')||name.startsWith('override_count_')||name.startsWith('asr_')?'bound_violation':'wrong_type_or_structure';
+  const responseValid=responseAjv.getSchema(id+'#/components/schemas/'+schema)(value);
+  cases.push({name,schema,value:structuredClone(value),valid,mutationClass,responseValid});
 }
 for(const[name,s]of Object.entries(spec.components.schemas)){
   const base=sample(s),validate=ajv.getSchema(id+'#/components/schemas/'+name);

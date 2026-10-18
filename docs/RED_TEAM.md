@@ -20,6 +20,42 @@ They transmit SDK-owned `service-name: api` and
 has a public constructor accepting an explicit `Client` for narrower integrations.
 No credentials or tenant registrations are loaded implicitly.
 
+## Current dataplane contract
+
+The separately pinned OpenAPI 0.93.0 contract has 47 operations. All 47 have
+native methods and independent wire fixtures, including eleven additions:
+
+- `scans().set_runtime_profile` associates a job with a runtime profile.
+- `reports().get_static_asr` and `get_dynamic_asr` return typed ASR breakdowns.
+- `reports().regenerate` returns its HTTP 202 background job without polling;
+  HTTP 409 remains a conflict. `get_status` reads freshness with an open state enum.
+- `reports().override_attack`, `override_multi_turn_attack`, `override_stream`,
+  and `custom_attack_reports().override_attack` accept 1–100 output edits.
+  `Nullable::Value(true/false)` sets the human verdict; `Nullable::Null` clears it.
+  A missing verdict is invalid. Job and parent identifiers remain separately scoped.
+- `download_error_logs` returns bounded CSV bytes, including empty/non-UTF8 data.
+- `reports().get_download_url` takes `FileFormat::CSV`, `JSON` or `ALL` and returns
+  a typed V2 descriptor. `Unknown` is rejected even when it contains a known string.
+  Signed URLs and filenames are opaque data; no request or filesystem write follows.
+
+Current vendor DTOs are available under `models::data_plane`; unique new names
+are also re-exported from `models`. Existing public response types retain their
+field types, with compatible optional additions. Existing standalone schema names
+keep their frozen meaning; client calls use namespaced vendor validation roots.
+Responses retain unknown fields and enum strings, with redacted ordinary formatting.
+All six new writes share the existing no-replay and uncertain-outcome policy.
+
+The [vendor operation ledger](../contracts/vendor/red-team-data-plane/0.93.0/operations.json)
+binds every route to source, fixture cases and the executable Rust wire test by hash.
+The 56 independent wire cases include optional-query omissions and explicit false
+and zero values. The 1,636 model specimens exercise both response policies, including
+negative cases. Closed request objects remain strict; unknown response fields
+deliberately survive. Four reviewed response-only presence waivers retain older
+deployment compatibility; new endpoint responses receive no requiredness waivers.
+This coverage is separate from the frozen 448-method TypeScript denominator.
+These new operations remain live-unverified; contract tests do not establish tenant
+permissions or successful service execution.
+
 ## Resource families
 
 | Accessor | Plane | Capabilities |

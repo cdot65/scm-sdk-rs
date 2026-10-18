@@ -1,5 +1,6 @@
 use super::{common, models::*};
 use crate::{Client, RawRequest, RequestOptions, Result, engine::AuthKind};
+use http::Method;
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct PromptsBySetListOptions {
@@ -110,7 +111,7 @@ impl RedTeamCustomAttackReportsClient {
                     .segment("prompts")?
                     .query(common::current_query("get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get", query)?)
                     .named("airs.red_team.custom_attack_reports.get_prompts_by_set"),
-                "PromptDetailResponseSchema[]",
+                "vendor:red-team-dp:0.93.0:get_prompts_by_set_v1_custom_attacks_report__job_id__prompt_set__prompt_set_id__prompts_get:response",
                 options,
             )
             .await
@@ -181,7 +182,7 @@ impl RedTeamCustomAttackReportsClient {
                     .segment(attack_id)?
                     .segment("list-outputs")?
                     .named("airs.red_team.custom_attack_reports.get_attack_outputs"),
-                "CustomAttackOutputSchema[]",
+                "vendor:red-team-dp:0.93.0:get_attack_outputs_v1_custom_attacks_job__job_id__attack__attack_id__list_outputs_get:response",
                 options,
             )
             .await
@@ -198,7 +199,32 @@ impl RedTeamCustomAttackReportsClient {
                     .segment(job_id)?
                     .segment("property-stats")?
                     .named("airs.red_team.custom_attack_reports.get_property_stats"),
-                "PropertyStatisticResultSchema[]",
+                "vendor:red-team-dp:0.93.0:get_property_stats_v1_custom_attacks_job__job_id__property_stats_get:response",
+                options,
+            )
+            .await
+    }
+    /// Set or clear human verdicts for outputs in this job and custom attack.
+    pub async fn override_attack(
+        &self,
+        job_id: &str,
+        attack_id: &str,
+        body: &ThreatOverrideRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<ThreatOverrideResponse> {
+        common::uuid(job_id)?;
+        common::uuid(attack_id)?;
+        self.client
+            .send_model(
+                RawRequest::new(Method::POST, "/v1/custom-attacks/job")
+                    .segment(job_id)?
+                    .segment("attack")?
+                    .segment(attack_id)?
+                    .segment("override")?
+                    .named("airs.red_team.custom_attack_reports.override_attack"),
+                body,
+                "vendor:red-team-dp:0.93.0:threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post:body",
+                "vendor:red-team-dp:0.93.0:threat_override_custom_attack_v1_custom_attacks_job__job_id__attack__attack_id__override_post:response",
                 options,
             )
             .await

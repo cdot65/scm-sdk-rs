@@ -327,6 +327,179 @@ impl RedTeamReportsClient {
             )
             .await
     }
+    /// Return static attack success rates and category breakdowns.
+    pub async fn get_static_asr(
+        &self,
+        job_id: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<AsrResponse> {
+        common::uuid(job_id)?;
+        self.client
+            .send_contract(
+                RawRequest::read("/v1/report/static")
+                    .segment(job_id)?
+                    .segment("asr")?
+                    .named("airs.red_team.reports.get_static_asr"),
+                "vendor:red-team-dp:0.93.0:get_static_asr_breakdown_v1_report_static__job_id__asr_get:response",
+                options,
+            )
+            .await
+    }
+    /// Return dynamic attack success rates and category breakdowns.
+    pub async fn get_dynamic_asr(
+        &self,
+        job_id: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<AsrResponse> {
+        common::uuid(job_id)?;
+        self.client
+            .send_contract(
+                RawRequest::read("/v1/report/dynamic")
+                    .segment(job_id)?
+                    .segment("asr")?
+                    .named("airs.red_team.reports.get_dynamic_asr"),
+                "vendor:red-team-dp:0.93.0:get_dynamic_asr_breakdown_v1_report_dynamic__job_id__asr_get:response",
+                options,
+            )
+            .await
+    }
+    /// Queue report regeneration once; return its background job without polling.
+    pub async fn regenerate(
+        &self,
+        job_id: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<RegenerateResponse> {
+        common::uuid(job_id)?;
+        self.client
+            .send_contract(
+                RawRequest::new(Method::POST, "/v1/report")
+                    .segment(job_id)?
+                    .segment("regenerate")?
+                    .named("airs.red_team.reports.regenerate"),
+                "vendor:red-team-dp:0.93.0:regenerate_report_v1_report__job_id__regenerate_post:response",
+                options,
+            )
+            .await
+    }
+    /// Read report freshness, preserving unfamiliar states explicitly.
+    pub async fn get_status(
+        &self,
+        job_id: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<ReportStatusResponse> {
+        common::uuid(job_id)?;
+        self.client
+            .send_contract(
+                RawRequest::read("/v1/report")
+                    .segment(job_id)?
+                    .segment("status")?
+                    .named("airs.red_team.reports.get_status"),
+                "vendor:red-team-dp:0.93.0:get_report_status_v1_report__job_id__status_get:response",
+                options,
+            )
+            .await
+    }
+    /// Set or clear human verdicts for a static attack.
+    pub async fn override_attack(
+        &self,
+        job_id: &str,
+        attack_id: &str,
+        body: &ThreatOverrideRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<ThreatOverrideResponse> {
+        common::uuid(job_id)?;
+        common::uuid(attack_id)?;
+        self.client
+            .send_model(
+                RawRequest::new(Method::POST, "/v1/report/static")
+                    .segment(job_id)?
+                    .segment("attack")?
+                    .segment(attack_id)?
+                    .segment("override")?
+                    .named("airs.red_team.reports.override_attack"),
+                body,
+                "vendor:red-team-dp:0.93.0:threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post:body",
+                "vendor:red-team-dp:0.93.0:threat_override_static_attack_v1_report_static__job_id__attack__attack_id__override_post:response",
+                options,
+            )
+            .await
+    }
+    /// Set or clear human verdicts for a multi-turn attack.
+    pub async fn override_multi_turn_attack(
+        &self,
+        job_id: &str,
+        attack_id: &str,
+        body: &ThreatOverrideRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<ThreatOverrideResponse> {
+        common::uuid(job_id)?;
+        common::uuid(attack_id)?;
+        self.client
+            .send_model(
+                RawRequest::new(Method::POST, "/v1/report/static")
+                    .segment(job_id)?
+                    .segment("attack-multi-turn")?
+                    .segment(attack_id)?
+                    .segment("override")?
+                    .named("airs.red_team.reports.override_multi_turn_attack"),
+                body,
+                "vendor:red-team-dp:0.93.0:threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post:body",
+                "vendor:red-team-dp:0.93.0:threat_override_static_multi_turn_v1_report_static__job_id__attack_multi_turn__attack_id__override_post:response",
+                options,
+            )
+            .await
+    }
+    /// Set or clear human verdicts for a stream scoped to this job.
+    pub async fn override_stream(
+        &self,
+        job_id: &str,
+        stream_id: &str,
+        body: &ThreatOverrideRequest,
+        options: Option<&RequestOptions>,
+    ) -> Result<ThreatOverrideResponse> {
+        common::uuid(job_id)?;
+        common::uuid(stream_id)?;
+        self.client
+            .send_model(
+                RawRequest::new(Method::POST, "/v1/report/dynamic")
+                    .segment(job_id)?
+                    .segment("stream")?
+                    .segment(stream_id)?
+                    .segment("override")?
+                    .named("airs.red_team.reports.override_stream"),
+                body,
+                "vendor:red-team-dp:0.93.0:threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post:body",
+                "vendor:red-team-dp:0.93.0:threat_override_dynamic_stream_v1_report_dynamic__job_id__stream__stream_id__override_post:response",
+                options,
+            )
+            .await
+    }
+    /// Return a V2 download location without fetching or trusting its filename.
+    pub async fn get_download_url(
+        &self,
+        job_id: &str,
+        format: FileFormat,
+        options: Option<&RequestOptions>,
+    ) -> Result<ReportDownload> {
+        common::uuid(job_id)?;
+        if matches!(format, FileFormat::Unknown(_)) {
+            return Err(crate::Error::new(crate::ErrorKind::Validation));
+        }
+        self.client
+            .send_contract(
+                RawRequest::read("/v2/report")
+                    .segment(job_id)?
+                    .segment("download")?
+                    .query(common::current_query(
+                        "download_report_v2_report__job_id__download_get",
+                        vec![("file_format".into(), format.as_str().into())],
+                    )?)
+                    .named("airs.red_team.reports.get_download_url"),
+                "vendor:red-team-dp:0.93.0:download_report_v2_report__job_id__download_get:response",
+                options,
+            )
+            .await
+    }
 }
 
 crate::redaction::redacted_debug!(AttackListOptions, GoalListOptions);

@@ -1,0 +1,430 @@
+{
+  "phase": 11,
+  "source_sha256": "365b7d7a3410e3a20009fe18496f8fd72a5f30a9866ca00ec31dafdaed6a470f",
+  "source_unchanged": true,
+  "checked_at": "2026-10-18T17:54:45.442763+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.008
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.099
+    },
+    {
+      "command": [
+        "node",
+        "tools/red-team-dataplane.mjs",
+        "--check"
+      ],
+      "invocation": [
+        "node",
+        "tools/red-team-dataplane.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"canonical\":true,\"independentlyValidatedModelCases\":1636}\n",
+      "stderr": "",
+      "duration_seconds": 0.376
+    },
+    {
+      "command": [
+        "node",
+        "tools/make-red-team-fixtures.mjs",
+        "--check"
+      ],
+      "invocation": [
+        "node",
+        "tools/make-red-team-fixtures.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"independentModelCases\":1636}\n",
+      "stderr": "",
+      "duration_seconds": 0.553
+    },
+    {
+      "command": [
+        "node",
+        "tools/make-red-team-wire-fixtures.mjs",
+        "--check"
+      ],
+      "invocation": [
+        "node",
+        "tools/make-red-team-wire-fixtures.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"independentWireCases\":56,\"operations\":47}\n",
+      "stderr": "",
+      "duration_seconds": 0.475
+    },
+    {
+      "command": [
+        "python",
+        "tools/red_team_dataplane.py",
+        "--check",
+        "--require-complete"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/red_team_dataplane.py",
+        "--check",
+        "--require-complete"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"vendorOperations\": 47, \"implemented\": 47, \"checked\": true}\n",
+      "stderr": "",
+      "duration_seconds": 0.376
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_vendor_red_team_plan.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_vendor_red_team_plan.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_pin_matches_preserved_bytes_and_exact_revision (test_vendor_red_team_plan.VendorPlanReference.test_pin_matches_preserved_bytes_and_exact_revision) ... ok\ntest_pinned_parser_recounts_operations_and_schema_version (test_vendor_red_team_plan.VendorPlanReference.test_pinned_parser_recounts_operations_and_schema_version) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.124s\n\nOK\n",
+      "duration_seconds": 0.175
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_red_team_dataplane.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_red_team_dataplane.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_all_operations_have_exact_native_binding_and_source (test_red_team_dataplane.VendorAdapterTests.test_all_operations_have_exact_native_binding_and_source) ... ok\ntest_all_unsupported_parameters_are_closed_pre_auth_errors (test_red_team_dataplane.VendorAdapterTests.test_all_unsupported_parameters_are_closed_pre_auth_errors) ... ok\ntest_impl_probe_does_not_find_a_method_on_an_unrelated_client (test_red_team_dataplane.VendorAdapterTests.test_impl_probe_does_not_find_a_method_on_an_unrelated_client) ... ok\ntest_nested_and_inline_new_required_fields_fail_closed (test_red_team_dataplane.VendorAdapterTests.test_nested_and_inline_new_required_fields_fail_closed) ... ok\ntest_no_frozen_graph_node_or_root_is_changed (test_red_team_dataplane.VendorAdapterTests.test_no_frozen_graph_node_or_root_is_changed) ... ok\ntest_only_four_reviewed_new_response_presence_waivers_exist (test_red_team_dataplane.VendorAdapterTests.test_only_four_reviewed_new_response_presence_waivers_exist) ... ok\ntest_option_fields_are_derived_from_actual_public_struct (test_red_team_dataplane.VendorAdapterTests.test_option_fields_are_derived_from_actual_public_struct) ... ok\ntest_same_pointer_cannot_silently_reuse_different_schema (test_red_team_dataplane.VendorAdapterTests.test_same_pointer_cannot_silently_reuse_different_schema) ... ok\ntest_source_and_notice_provenance_are_complete (test_red_team_dataplane.VendorAdapterTests.test_source_and_notice_provenance_are_complete) ... ok\ntest_structural_changes_have_discriminated_reviewed_classes (test_red_team_dataplane.VendorAdapterTests.test_structural_changes_have_discriminated_reviewed_classes) ... ok\ntest_unknown_keywords_remote_refs_recursive_and_ambiguous_unions_fail (test_red_team_dataplane.VendorAdapterTests.test_unknown_keywords_remote_refs_recursive_and_ambiguous_unions_fail) ... ok\ntest_wire_bindings_fail_on_missing_extra_tampered_or_unexecutable_operations (test_red_team_dataplane.VendorAdapterTests.test_wire_bindings_fail_on_missing_extra_tampered_or_unexecutable_operations) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.829s\n\nOK\n",
+      "duration_seconds": 0.883
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_successors_do_not_reopen_completed_independent_maintenance (test_review_phase.ReviewGateTests.test_successors_do_not_reopen_completed_independent_maintenance) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.124s\n\nOK\n",
+      "duration_seconds": 0.214
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.244
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "Native semantic registry: 69 explicit bindings\n",
+      "stderr": "",
+      "duration_seconds": 0.195
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"outputs\": 16, \"graphNodes\": 13018, \"partialFamily\": null}\n",
+      "stderr": "",
+      "duration_seconds": 2.467
+    },
+    {
+      "command": [
+        "python",
+        "tools/response_defaults.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/response_defaults.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"defaultBindings\": 23, \"redTeamBindings\": 8, \"outsideRedTeamBindings\": 15}\n",
+      "stderr": "",
+      "duration_seconds": 0.34
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"gatewayPhaseSixMethods\": 194}\n",
+      "stderr": "",
+      "duration_seconds": 0.347
+    },
+    {
+      "command": [
+        "python",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "8"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/native_operations.py",
+        "--check",
+        "--require-through-phase",
+        "8"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"baselineConcreteMethods\": 448, \"implemented\": 448, \"pending\": 0, \"liveVerified\": 17, \"liveRecorded\": 22, \"completeMethodOptionParity\": 448, \"partialMethodOptionParity\": 0}\n",
+      "stderr": "",
+      "duration_seconds": 1.042
+    },
+    {
+      "command": [
+        "python",
+        "tools/native_exports.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/native_exports.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"frozenRoots\": 2630, \"frozenCapabilities\": 3820, \"implemented\": 3820, \"unresolved\": 0, \"liveVerified\": 17, \"liveVerifiedOperations\": 17, \"liveRecordedCapabilities\": 22}\n",
+      "stderr": "",
+      "duration_seconds": 4.461
+    },
+    {
+      "command": [
+        "python",
+        "tools/live_evidence.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/live_evidence.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"nativeMethodsVerified\": 17, \"observedMethods\": 22, \"cleanupState\": \"not_needed\"}\n",
+      "stderr": "",
+      "duration_seconds": 0.081
+    },
+    {
+      "command": [
+        "python",
+        "tools/qualification.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/qualification.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"operations\": 448, \"implemented\": 448, \"contractVerified\": 448, \"completeMethodOptionParity\": 448, \"liveVerified\": 17, \"liveRecorded\": 22, \"liveNotVerified\": 431, \"liveByStatus\": {\"permission_prerequisite\": 3, \"service_contract_rejection\": 2, \"unverified\": 426, \"verified\": 17}, \"unexplainedGaps\": 0}\n",
+      "stderr": "",
+      "duration_seconds": 1.172
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-11-rust-1.89.0-red-team.json"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.89.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-11-rust-1.89.0-red-team.json"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.89.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"red-team\", \"evidence\": \"docs/checks/phase-11-rust-1.89.0-red-team.json\"}\n",
+      "stderr": "",
+      "duration_seconds": 100.612
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-11-rust-1.99.0-red-team.json"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "scripts/check-rust.py",
+        "--toolchain",
+        "1.99.0",
+        "--feature-set",
+        "red-team",
+        "--output",
+        "docs/checks/phase-11-rust-1.99.0-red-team.json"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"fmt\", \"--all\", \"--\", \"--check\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"check\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"clippy\", \"--workspace\", \"--all-targets\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\", \"--\", \"-D\", \"warnings\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"test\", \"--workspace\", \"--examples\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"command\": [\"/home/cdot/.cargo/bin/cargo\", \"+1.99.0\", \"doc\", \"--workspace\", \"--no-deps\", \"--locked\", \"--target\", \"x86_64-unknown-linux-musl\", \"--no-default-features\", \"--features\", \"red-team\"], \"exit_code\": 0}\n{\"passed\": true, \"hostTarget\": \"x86_64-unknown-linux-musl\", \"featureSet\": \"red-team\", \"evidence\": \"docs/checks/phase-11-rust-1.99.0-red-team.json\"}\n",
+      "stderr": "",
+      "duration_seconds": 97.086
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-private-material.py",
+        "--check",
+        "docs/checks/phase-11-private-material.json"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "scripts/check-private-material.py",
+        "--check",
+        "docs/checks/phase-11-private-material.json"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"receiptFresh\": true, \"privateScanReexecuted\": false, \"gitVisibleFilesChecked\": 1470}\n",
+      "stderr": "",
+      "duration_seconds": 0.215
+    }
+  ]
+}

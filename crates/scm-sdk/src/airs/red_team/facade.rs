@@ -119,14 +119,12 @@ impl RedTeamClient {
     /// management metadata fallback. Both reads use one absolute budget.
     pub async fn get_scan_metadata(&self, options: Option<&RequestOptions>) -> Result<JsonObject> {
         let options = self.data.operation_options(options)?;
-        // The frozen inline ZodObject({}).passthrough() accepts arbitrary JSON
-        // objects. Reused s012087 is ZodRecord(string, unknown): its JSON-domain
-        // behavior is equivalent, with the same central resource bounds.
+        // The vendor accepts an opaque metadata object; retain central resource bounds.
         match self
             .data
             .send_contract(
                 RawRequest::read("/v1/scan/scan-metadata").named("airs.red_team.get_scan_metadata"),
-                "s012087",
+                "vendor:red-team-dp:0.93.0:get_scan_metadata_v1_scan_scan_metadata_get:response",
                 Some(&options),
             )
             .await
@@ -253,6 +251,23 @@ impl RedTeamClient {
                     .query(common::current_query("list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get", params.query()?)?)
                     .named("airs.red_team.get_target_profile_error_logs"),
                 "vendor:red-team-dp:0.93.0:list_error_logs_for_target_profile_v1_error_log_target_profile__target_id__get:response",
+                options,
+            )
+            .await
+    }
+    /// Return bounded CSV bytes without text decoding or filesystem writes.
+    pub async fn download_error_logs(
+        &self,
+        job_id: &str,
+        options: Option<&RequestOptions>,
+    ) -> Result<bytes::Bytes> {
+        common::uuid(job_id)?;
+        self.data
+            .send_bytes(
+                RawRequest::read("/v1/error-log/job")
+                    .segment(job_id)?
+                    .segment("download")?
+                    .named("airs.red_team.download_error_logs"),
                 options,
             )
             .await

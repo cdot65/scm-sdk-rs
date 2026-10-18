@@ -18,6 +18,7 @@ WAIVERS = {
     ("AttackOutputResponseSchema", "judge_reasoning"),
     ("AttackMultiTurnOutputResponseSchema", "judge_reasoning"),
 }
+WAIVER_POINTERS = {("#/components/schemas/" + name, field) for name, field in WAIVERS}
 METHODS = {"get", "post", "put", "patch", "delete", "head", "options", "trace"}
 ANNOTATIONS = {"title", "description", "example", "examples", "default", "readOnly"}
 KEYWORDS = ANNOTATIONS | {"$ref", "type", "properties", "required", "additionalProperties",
@@ -213,10 +214,9 @@ class Compiler:
             if not required.issubset(props):
                 raise ValueError("Required property is not declared")
             fields = {}
-            component = pointer.removeprefix("#/components/schemas/")
             for key, field in props.items():
                 child = self.compile(field, pointer + "/properties/" + key)
-                if key not in required or (self.response and (component, key) in WAIVERS):
+                if key not in required or (self.response and (pointer, key) in WAIVER_POINTERS):
                     child = self.node(pointer + "/optional/" + key, {"kind": "ZodOptional", "inner": {"$ref": child},
                         "responseOnly": key in required})
                 fields[key] = {"schema": {"$ref": child}}
@@ -396,6 +396,56 @@ def bindings(ops):
     return old | NEW
 
 
+def required_changes(before, after, pointer):
+    """Find newly required fields throughout shared component/inline schemas."""
+    result = set()
+    if isinstance(before, dict) and isinstance(after, dict):
+        if isinstance(after.get("required"), list):
+            earlier = before.get("required", [])
+            if not isinstance(earlier, list):
+                raise ValueError("Required schema fields must be an array")
+            result.update((pointer, field) for field in set(after["required"]) - set(earlier))
+        for key in before.keys() & after.keys():
+            escaped = key.replace("~", "~0").replace("/", "~1")
+            result.update(required_changes(before[key], after[key], pointer + "/" + escaped))
+    elif isinstance(before, list) and isinstance(after, list):
+        for index, (a, b) in enumerate(zip(before, after)):
+            result.update(required_changes(a, b, pointer + "/" + str(index)))
+    return result
+
+
+def schema_change_classes(before, after):
+    if before is None:
+        return {"added_schema"}
+    if after is None:
+        return {"removed_schema"}
+    classes = set()
+    for key in before.keys() | after.keys():
+        a, b = before.get(key), after.get(key)
+        if a == b:
+            continue
+        if key == "properties":
+            a, b = a or {}, b or {}
+            classes.update("added_required_property" if name in after.get("required", []) else "added_optional_property" for name in b.keys() - a.keys())
+            if a.keys() - b.keys():
+                classes.add("removed_property")
+            for name in a.keys() & b.keys():
+                classes.update(schema_change_classes(a[name], b[name]))
+        elif key == "enum":
+            if set(b or []) - set(a or []): classes.add("enum_values_added")
+            if set(a or []) - set(b or []): classes.add("enum_values_removed")
+        elif key == "required":
+            if set(b or []) - set(a or []): classes.add("required_field_added")
+            if set(a or []) - set(b or []): classes.add("required_field_removed")
+        elif key in {"anyOf", "oneOf"}: classes.add("union_changed")
+        elif key in {"minimum", "maximum", "minLength", "maxLength", "minItems", "maxItems"}: classes.add("bound_changed")
+        elif key in {"type", "$ref", "format", "items", "additionalProperties", "propertyNames", "const", "discriminator", "default"}:
+            classes.add({"type":"type_changed", "$ref":"reference_changed", "format":"format_changed", "items":"array_items_changed", "additionalProperties":"unknown_fields_changed", "propertyNames":"record_keys_changed", "const":"literal_changed", "discriminator":"discriminator_changed", "default":"default_changed"}[key])
+        else:
+            raise ValueError("Unclassified schema change keyword: " + key)
+    return classes
+
+
 def changed_contracts(spec):
     # The canonical frozen vendor source is parsed by the pinned Node checker.
     previous = read_yaml(ROOT / "contracts/sources/pan-dev/openapi-specs/prisma-airs-redteam/data-plane/dp-openapi.yaml")
@@ -409,15 +459,15 @@ def changed_contracts(spec):
     for name, value in spec["components"]["schemas"].items():
         before = previous["components"]["schemas"].get(name)
         if before is not None:
-            required.update((name, field) for field in set(value.get("required", [])) - set(before.get("required", [])))
+            required.update(required_changes(before, value, "#/components/schemas/" + name))
         if structural(before) != structural(value):
             changes.append({"schema": name, "before": structural(before), "after": structural(value),
+                            "changeClasses": sorted(schema_change_classes(structural(before), structural(value))),
                             "disposition": "current_vendor_validation_and_typed_models"})
-    if required != WAIVERS:
-        raise ValueError("New required response fields differ from four reviewed waivers; amend plan and obtain fresh Claude review")
     for name, before in previous["components"]["schemas"].items():
         if name not in spec["components"]["schemas"]:
             changes.append({"schema": name, "before": structural(before), "after": None,
+                            "changeClasses": ["removed_schema"],
                             "disposition": "retain_legacy_native_type_and_use_current_vendor_replacement"})
     operation_changes = []
     for path, methods in spec["paths"].items():
@@ -425,28 +475,113 @@ def changed_contracts(spec):
             if method not in METHODS:
                 continue
             before = previous["paths"].get(path, {}).get(method)
+            if before is not None:
+                required.update(required_changes(before, op, "#/paths/" + path.replace("/", "~1") + "/" + method))
             if structural(before) != structural(op):
+                operation_classes = {"added_operation"} if before is None else {
+                    {"parameters":"operation_parameters_changed", "responses":"operation_responses_changed", "requestBody":"operation_body_changed", "operationId":"operation_identity_changed"}.get(key, "unclassified_operation_" + key)
+                    for key in structural(before).keys() | structural(op).keys()
+                    if structural(before).get(key) != structural(op).get(key)}
                 operation_changes.append({"method": method.upper(), "path": path,
                     "before": structural(before), "after": structural(op),
+                    "changeClasses": sorted(operation_classes),
                     "disposition": "current_vendor_client_contract"})
-    return {"schemaVersion": 1, "responsePresenceWaivers": [dict(schema=n, field=f) for n, f in sorted(required)],
+    if required != WAIVER_POINTERS:
+        raise ValueError("New required response fields differ from four reviewed waivers; amend plan and obtain fresh Claude review")
+    allowed = {"added_schema", "removed_schema", "added_optional_property", "added_required_property", "enum_values_added", "enum_values_removed", "required_field_added", "reference_changed", "union_changed", "array_items_changed", "added_operation", "operation_parameters_changed", "operation_responses_changed"}
+    actual = {cls for row in changes + operation_changes for cls in row["changeClasses"]}
+    if actual - allowed:
+        raise ValueError("Unreviewed vendor change classes require plan review: " + str(sorted(actual - allowed)))
+    return {"schemaVersion": 1, "responsePresenceWaivers": [dict(schema=n, field=f) for n, f in sorted(WAIVERS)],
             "schemaChanges": changes, "operationChanges": operation_changes}
+
+
+def client_impl(text, cls):
+    """Rustfmt keeps the client impl's closing brace at column zero."""
+    match = re.search(r"(?ms)^impl " + re.escape(cls) + r"\s*\{(.*?)^\}", text)
+    return match.group(1) if match else ""
+
+
+def option_fields(text, cls, member):
+    match = re.search(r"(?ms)^    pub async fn " + re.escape(member) + r"\s*\((.*?)\)\s*->", client_impl(text, cls))
+    if not match:
+        return set()
+    option = re.search(r"\bparams:\s*&([A-Za-z0-9_]+)", match.group(1))
+    if not option:
+        return set()
+    definitions = []
+    for source in (ROOT / "crates/scm-sdk/src/airs/red_team").glob("*.rs"):
+        definitions.extend(re.findall(r"(?ms)^pub struct " + re.escape(option.group(1)) + r"\s*\{(.*?)^\}", source.read_text()))
+    if len(definitions) != 1:
+        raise ValueError("Public query option type must have one definition: " + option.group(1))
+    return set(re.findall(r"(?m)^    pub (\w+):", definitions[0]))
+
+
+WIRE_FIXTURES = "contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json"
+WIRE_TEST = "crates/scm-sdk/tests/red_team_contracts.rs"
+WIRE_TEST_NAME = "all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies"
+
+
+def wire_bindings(ops, mapping, corpus=None, test_source=None):
+    path = ROOT / WIRE_FIXTURES
+    if corpus is None:
+        if not path.is_file():
+            return {}
+        corpus = json.loads(path.read_text())
+    expected = {op["operationId"]: (method, route) for method, route, op in ops}
+    rows = corpus["cases"]
+    if {r["operationId"] for r in rows} != set(expected) or len({r["name"] for r in rows}) != len(rows):
+        raise ValueError("Wire operation ID set differs from pinned OpenAPI or cases are duplicated")
+    pin = json.loads((VENDOR / "source.json").read_text())
+    if corpus["sourceSha256"] != pin["sha256"]:
+        raise ValueError("Wire fixture source pin is stale")
+    test_source = (ROOT / WIRE_TEST).read_text() if test_source is None else test_source
+    test = re.search(r"(?s)async fn " + WIRE_TEST_NAME + r"\s*\(\s*\).*", test_source)
+    helper = re.search(r"(?s)async fn call_vendor\b(.*?)#\[tokio::test\]", test_source)
+    if not test or not helper or "call_vendor(" not in test.group() or "VENDOR_WIRE" not in test_source:
+        raise ValueError("Vendor wire test and real dispatch helper are required")
+    result = {}
+    for row in rows:
+        method, route = expected[row["operationId"]]
+        _, cls, member = mapping[method + " " + route]
+        concrete = route
+        for key, value in row["pathParameters"].items():
+            concrete = concrete.replace("{" + key + "}", value)
+        if (row["method"], row["path"]) != (method, concrete) or row["call"] != {"className": cls, "member": member}:
+            raise ValueError("Wire binding does not match its exact native operation")
+        arm = re.search(r'\("' + re.escape(cls) + r'", "' + re.escape(member) + r'"\)\s*=>\s*(.*?)(?=\n\s*\("|\n\s*key =>)', helper.group(1), re.S)
+        if not arm or not re.search(r"\." + re.escape(member) + r"\s*\(", arm.group(1)):
+            raise ValueError("Wire dispatch arm does not call its recorded native method")
+        result.setdefault(row["operationId"], []).append(row["name"])
+    return result
 
 
 def outputs():
     pin, spec, ops, request, graph, meta = contract()
     mapping = bindings(ops)
+    wires = wire_bindings(ops, mapping)
+    rejected = {}
     rows = []
     for method, path, op in ops:
         module, cls, member = mapping[method + " " + path]
         source = f"crates/scm-sdk/src/airs/red_team/{module}.rs"
-        implemented = re.search(r"pub async fn " + re.escape(member) + r"\b", (ROOT / source).read_text()) is not None
+        text = (ROOT / source).read_text()
+        implemented = re.search(r"(?m)^    pub async fn " + re.escape(member) + r"\b", client_impl(text, cls)) is not None
+        declared = {p["name"] for p in op.get("parameters", []) if p["in"] == "query"}
+        unsupported = option_fields(text, cls, member) - declared
+        if unsupported:
+            rejected[member] = unsupported
         rows.append({"operationId": op["operationId"], "method": method, "path": path, "plane": "red_team_data",
             "nativeClass": cls, "nativeMethod": member, "source": source,
             "sourceSha256": sha((ROOT / source).read_bytes()), "implemented": implemented,
             "parameters": op.get("parameters", []), "requestBody": op.get("requestBody"),
             "responses": op["responses"], "liveAcceptance": "unverified",
-            "rejectedLegacyParameters": [{"name": name, "disposition": "validation_error_before_auth"} for name in REJECTED.get(member, [])]})
+            "rejectedLegacyParameters": [{"name": name, "disposition": "validation_error_before_auth"} for name in sorted(unsupported)],
+            "contractVerification": "executable_fixture" if op["operationId"] in wires and implemented else "planned",
+            "fixtureBinding": {"path": WIRE_FIXTURES, "sha256": sha((ROOT / WIRE_FIXTURES).read_bytes()), "cases": wires[op["operationId"]],
+                "test": WIRE_TEST + "::" + WIRE_TEST_NAME, "testSha256": sha((ROOT / WIRE_TEST).read_bytes())} if op["operationId"] in wires else None})
+    if rejected != {name: set(fields) for name, fields in REJECTED.items()}:
+        raise ValueError("Derived rejected legacy parameters differ from reviewed dispositions")
     ledger = {"schemaVersion": 1, "sourceSha256": pin["sha256"], "sourcePin": str((VENDOR / "source.json").relative_to(ROOT)),
               "generator": {"path": "tools/red_team_dataplane.py", "sha256": sha(pathlib.Path(__file__).read_bytes())},
               "operationCount": len(rows), "implementedCount": sum(row["implemented"] for row in rows), "operations": rows}
@@ -478,6 +613,10 @@ let value=&row["value"];let schema=row["schema"].as_str().unwrap();
 let valid=row["valid"].as_bool().unwrap();
 let result=validation::parse(&format!("vendor:red-team-dp:0.93.0:{schema}"),value.clone(),Mode::Request);
 assert_eq!(result.is_ok(),valid,"fixture {}",row["name"]);
+for mode in [Mode::Response,Mode::ResponseWithoutDefaults]{
+let result=validation::parse(&format!("vendor:red-team-dp:0.93.0:{schema}"),value.clone(),mode);
+assert_eq!(result.is_ok(),row["responseValid"].as_bool().unwrap(),"response fixture {} class {}",row["name"],row["mutationClass"]);
+}
 if !valid{continue;}
 assert_eq!(result.unwrap(),*value,"vendor normalization preserves caller JSON");
 for mode in [Mode::Request,Mode::Response,Mode::ResponseWithoutDefaults]{
@@ -511,8 +650,9 @@ def main():
         else:
             path.write_text(text)
     ledger = next(v for p, v in result.items() if p.name == "operations.json")
-    if args.require_complete and ledger["implementedCount"] != ledger["operationCount"]:
-        raise ValueError("Vendor operations remain unimplemented")
+    if args.require_complete and (ledger["implementedCount"] != ledger["operationCount"] or
+            any(row["contractVerification"] != "executable_fixture" for row in ledger["operations"])):
+        raise ValueError("Vendor operations require implemented methods and executable wire fixtures")
     print(json.dumps({"vendorOperations": ledger["operationCount"], "implemented": ledger["implementedCount"], "checked": args.check}))
 
 

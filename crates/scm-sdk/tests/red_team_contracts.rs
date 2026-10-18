@@ -34,6 +34,8 @@ struct Expected {
     status: u16,
     fail: bool,
     delay: Duration,
+    raw_reply: Option<Bytes>,
+    operation: Option<String>,
 }
 #[derive(Default)]
 struct Wire {
@@ -59,6 +61,8 @@ impl Wire {
             status: 200,
             fail: false,
             delay: Duration::ZERO,
+            raw_reply: None,
+            operation: None,
         });
     }
     fn simple(&self, method: Method, base: &str, path: &str, body: Option<Value>, reply: Value) {
@@ -94,6 +98,9 @@ impl Transport for Wire {
                 .pop_front()
                 .expect("unexpected dispatch or mutation replay");
             assert_eq!(request.method(), expected.method);
+            if let Some(operation) = &expected.operation {
+                assert_eq!(request.operation(), operation);
+            }
             let mut url = request.url().clone();
             url.set_query(None);
             assert_eq!(url.as_str(), expected.url);
@@ -150,8 +157,8 @@ impl Transport for Wire {
             Ok(TransportResponse::new(
                 StatusCode::from_u16(expected.status).unwrap(),
                 HeaderMap::new(),
-                Box::pin(stream::iter([Ok(Bytes::from(
-                    serde_json::to_vec(&expected.reply).unwrap(),
+                Box::pin(stream::iter([Ok(expected.raw_reply.unwrap_or_else(
+                    || Bytes::from(serde_json::to_vec(&expected.reply).unwrap()),
                 ))])),
             ))
         })
@@ -199,13 +206,19 @@ impl TokenProvider for Provider {
     }
 }
 fn clients(cancel_second: bool) -> (RedTeamClient, Arc<Wire>, Arc<Provider>) {
+    let mut limits = Limits::default();
+    limits.max_retries = 0;
+    clients_with_limits(cancel_second, limits)
+}
+fn clients_with_limits(
+    cancel_second: bool,
+    limits: Limits,
+) -> (RedTeamClient, Arc<Wire>, Arc<Provider>) {
     let wire = Arc::new(Wire::default());
     let provider = Provider::new(cancel_second);
     let data = Endpoint::parse(DATA).unwrap();
     let management = Endpoint::parse(MGMT).unwrap();
     let broker = Endpoint::parse(BROKER).unwrap();
-    let mut limits = Limits::default();
-    limits.max_retries = 0;
     let raw = Client::builder(data.clone())
         .transport(wire.clone())
         .authentication(Authentication::oauth(provider.clone(), true))
@@ -1717,4 +1730,714 @@ async fn current_scan_body_preserves_reserved_json_keys_without_javascript_norma
     client.scans().create(&request, None).await.unwrap();
     wire.done();
     assert_eq!(wire.count(), 1);
+}
+
+// Current-spec operation corpus, independently validated by AJV before Rust runs.
+const VENDOR_WIRE: &str =
+    include_str!("../../../contracts/vendor/red-team-data-plane/0.93.0/wire-fixtures.json");
+fn vendor_cases() -> Vec<Value> {
+    serde_json::from_str::<Value>(VENDOR_WIRE).unwrap()["cases"]
+        .as_array()
+        .unwrap()
+        .clone()
+}
+fn vendor_fixture(class: &str, method: &str) -> Value {
+    vendor_cases()
+        .into_iter()
+        .find(|r| r["call"]["className"] == class && r["call"]["member"] == method)
+        .unwrap()
+}
+fn raw_fixture(case: &Value) -> Option<Bytes> {
+    case["rawResponseHex"].as_str().map(|hex| {
+        Bytes::from(
+            (0..hex.len())
+                .step_by(2)
+                .map(|i| u8::from_str_radix(&hex[i..i + 2], 16).unwrap())
+                .collect::<Vec<_>>(),
+        )
+    })
+}
+fn arm_vendor(wire: &Wire, case: &Value) {
+    let query = case["queryWire"]
+        .as_object()
+        .unwrap()
+        .iter()
+        .map(|(k, v)| {
+            (
+                k.clone(),
+                v.as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|s| s.as_str().unwrap().to_owned())
+                    .collect(),
+            )
+        })
+        .collect();
+    wire.push(
+        Method::from_bytes(case["method"].as_str().unwrap().as_bytes()).unwrap(),
+        DATA,
+        case["path"].as_str().unwrap(),
+        query,
+        case.get("body").cloned(),
+        case["responseBody"].clone(),
+    );
+    let mut queue = wire.expected.lock().unwrap();
+    let row = queue.back_mut().unwrap();
+    row.status = case["status"].as_u64().unwrap() as u16;
+    row.raw_reply = raw_fixture(case);
+    row.operation = Some(case["operation"].as_str().unwrap().to_owned());
+}
+async fn call_vendor(
+    client: &RedTeamClient,
+    case: &Value,
+    options: Option<&RequestOptions>,
+) -> Result<Value> {
+    let params = &case["pathParameters"];
+    let job = params["job_id"].as_str().unwrap_or(ID);
+    let attack = params["attack_id"].as_str().unwrap_or(ID);
+    let stream_id = params["stream_id"].as_str().unwrap_or(ID);
+    let goal = params["goal_id"].as_str().unwrap_or(ID);
+    let prompt_set = params["prompt_set_id"].as_str().unwrap_or(ID);
+    let prompt = params["prompt_id"].as_str().unwrap_or(ID);
+    let target = params["target_id"]
+        .as_str()
+        .unwrap_or_else(|| case["query"]["target_id"].as_str().unwrap_or(ID));
+    let query = &case["query"];
+    let body = &case["body"];
+    macro_rules! parsed {
+        ($body:expr) => {
+            serde_json::from_value($body.clone()).map_err(|_| Error::new(ErrorKind::Validation))?
+        };
+    }
+    macro_rules! value {
+        ($call:expr) => {
+            serde_json::to_value($call.await?).map_err(|_| Error::new(ErrorKind::Validation))?
+        };
+    }
+    let actual = match (
+        case["call"]["className"].as_str().unwrap(),
+        case["call"]["member"].as_str().unwrap(),
+    ) {
+        ("RedTeamScansClient", "create") => value!(client.scans().create(&parsed!(body), options)),
+        ("RedTeamScansClient", "list") => {
+            let mut opts = RedTeamScanListOptions::from(listing(query));
+            opts.status = qstr(query, "status");
+            opts.job_type = qstr(query, "job_type");
+            opts.target_id = qstr(query, "target_id");
+            value!(client.scans().list(&opts, options))
+        }
+        ("RedTeamScansClient", "get") => value!(client.scans().get(job, options)),
+        ("RedTeamScansClient", "abort") => value!(client.scans().abort(job, options)),
+        ("RedTeamScansClient", "get_categories") => value!(client.scans().get_categories(options)),
+        ("RedTeamClient", "get_scan_metadata") => value!(client.get_scan_metadata(options)),
+        ("RedTeamReportsClient", "list_attacks") => {
+            let mut opts = AttackListOptions::default();
+            opts.skip = query["skip"].as_u64();
+            opts.limit = query["limit"].as_u64().map(|v| v as u32);
+            opts.search = qstr(query, "search");
+            opts.attack_status = qstr(query, "attack_status");
+            opts.compliance = qstr(query, "compliance");
+            opts.attack_modality = qstr(query, "attack_modality");
+            opts.status = qstr(query, "status");
+            opts.severity = qstr(query, "severity");
+            opts.category = qstr(query, "category");
+            opts.sub_category = qstr(query, "sub_category");
+            opts.attack_type = qstr(query, "attack_type");
+            opts.threat = query["threat"].as_bool();
+            value!(client.reports().list_attacks(job, &opts, options))
+        }
+        ("RedTeamReportsClient", "get_attack_detail") => {
+            value!(client.reports().get_attack_detail(job, attack, options))
+        }
+        ("RedTeamReportsClient", "get_multi_turn_attack_detail") => {
+            value!(
+                client
+                    .reports()
+                    .get_multi_turn_attack_detail(job, attack, options)
+            )
+        }
+        ("RedTeamReportsClient", "get_static_report") => {
+            value!(client.reports().get_static_report(job, options))
+        }
+        ("RedTeamReportsClient", "get_static_runtime_policy") => {
+            value!(client.reports().get_static_runtime_policy(job, options))
+        }
+        ("RedTeamReportsClient", "get_static_remediation") => {
+            value!(client.reports().get_static_remediation(job, options))
+        }
+        ("RedTeamReportsClient", "get_dynamic_report") => {
+            value!(client.reports().get_dynamic_report(job, options))
+        }
+        ("RedTeamReportsClient", "get_dynamic_runtime_policy") => {
+            value!(client.reports().get_dynamic_runtime_policy(job, options))
+        }
+        ("RedTeamReportsClient", "get_dynamic_remediation") => {
+            value!(client.reports().get_dynamic_remediation(job, options))
+        }
+        ("RedTeamReportsClient", "list_goals") => {
+            let mut opts = GoalListOptions::default();
+            opts.skip = query["skip"].as_u64();
+            opts.limit = query["limit"].as_u64().map(|v| v as u32);
+            opts.search = qstr(query, "search");
+            opts.goal_category = qstr(query, "goal_category");
+            opts.goal_type = qstr(query, "goal_type");
+            opts.status = qstr(query, "status");
+            opts.count = query["count"].as_bool();
+            value!(client.reports().list_goals(job, &opts, options))
+        }
+        ("RedTeamReportsClient", "list_goal_streams") => value!(
+            client
+                .reports()
+                .list_goal_streams(job, goal, &listing(query), options)
+        ),
+        ("RedTeamReportsClient", "get_stream_detail") => {
+            value!(client.reports().get_stream_detail(stream_id, options))
+        }
+        ("RedTeamReportsClient", "download_report") => value!(client.reports().download_report(
+            job,
+            query["file_format"].as_str().unwrap(),
+            options
+        )),
+        ("RedTeamReportsClient", "generate_partial_report") => {
+            value!(client.reports().generate_partial_report(job, options))
+        }
+        ("RedTeamClient", "get_quota") => value!(client.get_quota(options)),
+        ("RedTeamCustomAttackReportsClient", "get_report") => {
+            value!(client.custom_attack_reports().get_report(job, options))
+        }
+        ("RedTeamCustomAttackReportsClient", "get_prompt_sets") => {
+            let mut opts = PromptSetsReportOptions::default();
+            opts.skip = query["skip"].as_u64();
+            opts.limit = query["limit"].as_u64().map(|v| v as u32);
+            opts.search = qstr(query, "search");
+            opts.property_filters = qstr(query, "property_filters");
+            opts.is_threat = query["is_threat"].as_bool();
+            value!(
+                client
+                    .custom_attack_reports()
+                    .get_prompt_sets(job, &opts, options)
+            )
+        }
+        ("RedTeamCustomAttackReportsClient", "get_prompts_by_set") => {
+            let mut opts = PromptsBySetListOptions::default();
+            opts.skip = query["skip"].as_u64();
+            opts.limit = query["limit"].as_u64().map(|v| v as u32);
+            opts.search = qstr(query, "search");
+            opts.is_threat = query["is_threat"].as_bool();
+            value!(
+                client
+                    .custom_attack_reports()
+                    .get_prompts_by_set(job, prompt_set, &opts, options)
+            )
+        }
+        ("RedTeamCustomAttackReportsClient", "get_prompt_detail") => value!(
+            client
+                .custom_attack_reports()
+                .get_prompt_detail(job, prompt, options)
+        ),
+        ("RedTeamCustomAttackReportsClient", "list_custom_attacks") => {
+            let mut opts = CustomAttacksReportListOptions::default();
+            opts.skip = query["skip"].as_u64();
+            opts.limit = query["limit"].as_u64().map(|v| v as u32);
+            opts.search = qstr(query, "search");
+            opts.status = qstr(query, "status");
+            opts.threat = query["threat"].as_bool();
+            opts.prompt_set_id = qstr(query, "prompt_set_id");
+            opts.property_value = qstr(query, "property_value");
+            value!(
+                client
+                    .custom_attack_reports()
+                    .list_custom_attacks(job, &opts, options)
+            )
+        }
+        ("RedTeamCustomAttackReportsClient", "get_attack_outputs") => value!(
+            client
+                .custom_attack_reports()
+                .get_attack_outputs(job, attack, options)
+        ),
+        ("RedTeamCustomAttackReportsClient", "get_property_stats") => {
+            value!(
+                client
+                    .custom_attack_reports()
+                    .get_property_stats(job, options)
+            )
+        }
+        ("RedTeamClient", "get_error_logs") => {
+            value!(client.get_error_logs(job, &listing(query), options))
+        }
+        ("RedTeamClient", "get_target_profile_error_logs") => {
+            value!(client.get_target_profile_error_logs(target, &listing(query), options))
+        }
+        ("RedTeamClient", "get_goal_categories") => {
+            value!(client.get_goal_categories("APPLICATION", options))
+        }
+        ("RedTeamClient", "get_languages") => value!(client.get_languages(options)),
+        ("RedTeamClient", "get_management_languages") => {
+            value!(client.get_management_languages(options))
+        }
+        ("RedTeamClient", "get_scan_statistics") => {
+            value!(client.get_scan_statistics(&ScanStatisticsOptions::default(), options))
+        }
+        ("RedTeamClient", "get_score_trend") => {
+            let mut opts = ScoreTrendOptions::default();
+            opts.date_range = qstr(query, "date_range");
+            opts.start_date = qstr(query, "start_date");
+            opts.end_date = qstr(query, "end_date");
+            value!(client.get_score_trend(target, &opts, options))
+        }
+        ("RedTeamClient", "update_sentiment") => {
+            value!(client.update_sentiment(&parsed!(body), options))
+        }
+        ("RedTeamClient", "get_sentiment") => value!(client.get_sentiment(job, options)),
+        ("RedTeamClient", "get_dashboard_overview") => {
+            value!(client.get_dashboard_overview(options))
+        }
+
+        ("RedTeamScansClient", "set_runtime_profile") => value!(
+            client
+                .scans()
+                .set_runtime_profile(job, &parsed!(body), options)
+        ),
+        ("RedTeamReportsClient", "get_static_asr") => {
+            value!(client.reports().get_static_asr(job, options))
+        }
+        ("RedTeamReportsClient", "get_dynamic_asr") => {
+            value!(client.reports().get_dynamic_asr(job, options))
+        }
+        ("RedTeamReportsClient", "regenerate") => value!(client.reports().regenerate(job, options)),
+        ("RedTeamReportsClient", "get_status") => value!(client.reports().get_status(job, options)),
+        ("RedTeamReportsClient", "override_attack") => value!(client.reports().override_attack(
+            job,
+            attack,
+            &parsed!(body),
+            options
+        )),
+        ("RedTeamReportsClient", "override_multi_turn_attack") => value!(
+            client
+                .reports()
+                .override_multi_turn_attack(job, attack, &parsed!(body), options)
+        ),
+        ("RedTeamReportsClient", "override_stream") => value!(client.reports().override_stream(
+            job,
+            stream_id,
+            &parsed!(body),
+            options
+        )),
+        ("RedTeamCustomAttackReportsClient", "override_attack") => value!(
+            client
+                .custom_attack_reports()
+                .override_attack(job, attack, &parsed!(body), options)
+        ),
+        ("RedTeamReportsClient", "get_download_url") => value!(client.reports().get_download_url(
+            job,
+            parsed!(&query["file_format"]),
+            options
+        )),
+        ("RedTeamClient", "download_error_logs") => {
+            serde_json::to_value(client.download_error_logs(job, options).await?.to_vec()).unwrap()
+        }
+        key => panic!("uncovered frozen method {key:?}"),
+    };
+    Ok(actual)
+}
+#[tokio::test]
+async fn all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies() {
+    let cases = vendor_cases();
+    let mut ids = std::collections::BTreeSet::new();
+    for without_defaults in [false, true] {
+        let (client, wire, _) = clients(false);
+        for case in &cases {
+            ids.insert(case["operationId"].as_str().unwrap());
+            arm_vendor(&wire, case);
+            let mut options = RequestOptions::with_timeout(Duration::from_secs(5)).unwrap();
+            if without_defaults {
+                options = options.without_response_defaults();
+            }
+            let actual = call_vendor(&client, case, Some(&options))
+                .await
+                .unwrap_or_else(|e| panic!("{}: {e:?}", case["name"]));
+            let expected = raw_fixture(case)
+                .map(|b| serde_json::to_value(b.to_vec()).unwrap())
+                .unwrap_or_else(|| case["responseBody"].clone());
+            assert_eq!(actual, expected, "{}", case["name"]);
+        }
+        assert_eq!(wire.count(), cases.len());
+        wire.done();
+    }
+    assert_eq!(ids.len(), 47);
+}
+
+const NEW_VENDOR_CALLS: &[(&str, &str)] = &[
+    ("RedTeamScansClient", "set_runtime_profile"),
+    ("RedTeamReportsClient", "get_static_asr"),
+    ("RedTeamReportsClient", "get_dynamic_asr"),
+    ("RedTeamReportsClient", "regenerate"),
+    ("RedTeamReportsClient", "get_status"),
+    ("RedTeamReportsClient", "override_attack"),
+    ("RedTeamReportsClient", "override_multi_turn_attack"),
+    ("RedTeamReportsClient", "override_stream"),
+    ("RedTeamCustomAttackReportsClient", "override_attack"),
+    ("RedTeamClient", "download_error_logs"),
+    ("RedTeamReportsClient", "get_download_url"),
+];
+#[tokio::test]
+async fn every_new_vendor_route_rejects_each_invalid_path_id_before_credentials() {
+    for &(class, method) in NEW_VENDOR_CALLS {
+        let case = vendor_fixture(class, method);
+        for key in case["pathParameters"].as_object().unwrap().keys() {
+            let (client, wire, provider) = clients(false);
+            let mut bad = case.clone();
+            bad["pathParameters"][key] = json!("synthetic-private-invalid-id/../?");
+            let error = call_vendor(&client, &bad, None).await.unwrap_err();
+            assert_eq!(
+                error.kind(),
+                ErrorKind::Validation,
+                "{class}.{method}.{key}"
+            );
+            assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
+            assert_eq!(wire.count(), 0);
+            assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+            assert!(!format!("{error:?} {error}").contains("synthetic-private"));
+        }
+    }
+}
+#[tokio::test]
+async fn every_new_vendor_route_honors_cancellation_and_deadlines_before_and_after_dispatch() {
+    for &(class, method) in NEW_VENDOR_CALLS {
+        let case = vendor_fixture(class, method);
+        for kind in [ErrorKind::Cancelled, ErrorKind::Deadline] {
+            for dispatched in [false, true] {
+                let (client, wire, provider) = clients(false);
+                let options = RequestOptions::with_timeout(if kind == ErrorKind::Deadline {
+                    if dispatched {
+                        Duration::from_millis(100)
+                    } else {
+                        Duration::from_millis(1)
+                    }
+                } else {
+                    Duration::from_secs(5)
+                })
+                .unwrap();
+                if dispatched {
+                    arm_vendor(&wire, &case);
+                    wire.delay(Duration::from_secs(2));
+                } else if kind == ErrorKind::Cancelled {
+                    options.cancel();
+                } else {
+                    tokio::time::sleep(Duration::from_millis(3)).await;
+                }
+                let result = if dispatched && kind == ErrorKind::Cancelled {
+                    let (result, ()) =
+                        tokio::join!(call_vendor(&client, &case, Some(&options)), async {
+                            while wire.count() == 0 {
+                                tokio::task::yield_now().await;
+                            }
+                            options.cancel();
+                        });
+                    result
+                } else {
+                    call_vendor(&client, &case, Some(&options)).await
+                };
+                let error = result.unwrap_err();
+                assert_eq!(
+                    error.kind(),
+                    kind,
+                    "{class}.{method} dispatched={dispatched}"
+                );
+                assert_eq!(
+                    error.remote_outcome(),
+                    if dispatched {
+                        RemoteOutcome::Unknown
+                    } else {
+                        RemoteOutcome::NotSent
+                    }
+                );
+                assert_eq!(wire.count(), usize::from(dispatched));
+                if !dispatched {
+                    assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+                }
+                wire.done();
+            }
+        }
+    }
+}
+#[tokio::test]
+async fn six_new_vendor_writes_never_replay_transport_http_decode_or_limit_failures() {
+    let mut writes = 0;
+    for &(class, method) in NEW_VENDOR_CALLS {
+        let case = vendor_fixture(class, method);
+        if case["method"] == "GET" {
+            continue;
+        }
+        writes += 1;
+        for failure in ["transport", "http", "decode", "limit"] {
+            let mut limits = Limits::default();
+            limits.max_retries = 5;
+            if failure == "limit" {
+                limits.max_response_bytes = 64;
+            }
+            let (client, wire, _) = clients_with_limits(false, limits);
+            arm_vendor(&wire, &case);
+            {
+                let mut queue = wire.expected.lock().unwrap();
+                let reply = queue.back_mut().unwrap();
+                if failure == "transport" {
+                    reply.fail = true;
+                }
+                if failure == "http" {
+                    reply.status = 503;
+                }
+                reply.raw_reply = Some(Bytes::from(if failure == "limit" {
+                    vec![b'x'; 65]
+                } else {
+                    b"synthetic-private-echo-and-token".to_vec()
+                }));
+            }
+            let options = RequestOptions::with_timeout(Duration::from_secs(5))
+                .unwrap()
+                .with_retries(5)
+                .unwrap();
+            let error = call_vendor(&client, &case, Some(&options))
+                .await
+                .unwrap_err();
+            assert_eq!(
+                error.remote_outcome(),
+                RemoteOutcome::Unknown,
+                "{class}.{method}.{failure}"
+            );
+            assert_eq!(
+                error.kind(),
+                match failure {
+                    "transport" => ErrorKind::Transport,
+                    "http" => ErrorKind::Http,
+                    "decode" => ErrorKind::Decode,
+                    _ => ErrorKind::Limit,
+                }
+            );
+            assert_eq!(error.operation(), Some(case["operation"].as_str().unwrap()));
+            assert!(!format!("{error:?} {error}").contains("synthetic-private"));
+            assert_eq!(wire.count(), 1);
+            wire.done();
+        }
+    }
+    assert_eq!(writes, 6);
+}
+#[tokio::test]
+async fn all_four_override_routes_validate_counts_nullable_verdicts_uuids_and_closed_objects() {
+    for &(class, method) in NEW_VENDOR_CALLS
+        .iter()
+        .filter(|(_, method)| method.starts_with("override_"))
+    {
+        let base = vendor_fixture(class, method);
+        for count in [0, 1, 100, 101] {
+            for verdict in [json!(true), json!(false), Value::Null] {
+                let (client, wire, provider) = clients(false);
+                let mut case = base.clone();
+                case["body"]["overrides"] = Value::Array(
+                    (0..count)
+                        .map(|_| json!({"output_id":ID,"threat_override":verdict}))
+                        .collect(),
+                );
+                let valid = (1..=100).contains(&count);
+                if valid {
+                    arm_vendor(&wire, &case);
+                }
+                let result = call_vendor(&client, &case, None).await;
+                if valid {
+                    assert_eq!(result.unwrap(), case["responseBody"]);
+                    wire.done();
+                } else {
+                    let error = result.unwrap_err();
+                    assert_eq!(error.kind(), ErrorKind::Validation);
+                    assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
+                    assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+                }
+                assert_eq!(wire.count(), usize::from(valid));
+            }
+        }
+        for mutation in ["missing", "invalid_uuid", "root_extra", "item_extra"] {
+            let (client, wire, provider) = clients(false);
+            let mut case = base.clone();
+            match mutation {
+                "missing" => {
+                    case["body"]["overrides"][0]
+                        .as_object_mut()
+                        .unwrap()
+                        .remove("threat_override");
+                }
+                "invalid_uuid" => case["body"]["overrides"][0]["output_id"] = json!("invalid"),
+                "root_extra" => case["body"]["extra"] = json!(true),
+                _ => case["body"]["overrides"][0]["extra"] = json!(true),
+            }
+            assert_eq!(
+                call_vendor(&client, &case, None).await.unwrap_err().kind(),
+                ErrorKind::Validation
+            );
+            assert_eq!(wire.count(), 0);
+            assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+        }
+    }
+}
+#[tokio::test]
+async fn runtime_profile_uses_unicode_codepoint_bounds_and_rejects_extra_fields_before_auth() {
+    let base = vendor_fixture("RedTeamScansClient", "set_runtime_profile");
+    for length in [0, 1, 256, 257] {
+        let (client, wire, provider) = clients(false);
+        let mut case = base.clone();
+        case["body"]["runtime_profile_id"] = json!("🦀".repeat(length));
+        let valid = (1..=256).contains(&length);
+        if valid {
+            arm_vendor(&wire, &case);
+        }
+        let result = call_vendor(&client, &case, None).await;
+        if valid {
+            result.unwrap();
+            wire.done();
+        } else {
+            assert_eq!(result.unwrap_err().kind(), ErrorKind::Validation);
+            assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+        }
+        assert_eq!(wire.count(), usize::from(valid));
+    }
+    let (client, wire, provider) = clients(false);
+    let mut case = base;
+    case["body"]["extra"] = json!(true);
+    assert_eq!(
+        call_vendor(&client, &case, None).await.unwrap_err().kind(),
+        ErrorKind::Validation
+    );
+    assert_eq!(wire.count(), 0);
+    assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+}
+#[tokio::test]
+async fn csv_download_preserves_empty_non_utf8_and_exact_limit_bytes() {
+    let case = vendor_fixture("RedTeamClient", "download_error_logs");
+    for bytes in [
+        vec![],
+        vec![0, 255, 254, b'\n'],
+        vec![b'x'; 32],
+        vec![b'x'; 33],
+    ] {
+        let mut limits = Limits::default();
+        limits.max_response_bytes = 32;
+        let (client, wire, _) = clients_with_limits(false, limits);
+        arm_vendor(&wire, &case);
+        wire.expected.lock().unwrap().back_mut().unwrap().raw_reply =
+            Some(Bytes::from(bytes.clone()));
+        let result = client
+            .download_error_logs(case["pathParameters"]["job_id"].as_str().unwrap(), None)
+            .await;
+        if bytes.len() > 32 {
+            assert_eq!(result.unwrap_err().kind(), ErrorKind::Limit);
+        } else {
+            assert_eq!(result.unwrap(), bytes);
+        }
+        assert_eq!(wire.count(), 1);
+        wire.done();
+    }
+}
+#[tokio::test]
+async fn report_conflict_future_state_and_download_location_keep_explicit_semantics() {
+    let (client, wire, provider) = clients(false);
+    let case = vendor_fixture("RedTeamReportsClient", "regenerate");
+    arm_vendor(&wire, &case);
+    wire.fault(409, false);
+    let options = RequestOptions::with_timeout(Duration::from_secs(5))
+        .unwrap()
+        .with_retries(5)
+        .unwrap();
+    let error = call_vendor(&client, &case, Some(&options))
+        .await
+        .unwrap_err();
+    assert_eq!(error.status(), Some(409));
+    assert_eq!(error.remote_outcome(), RemoteOutcome::Rejected);
+    assert_eq!(wire.count(), 1);
+    wire.done();
+    let mut case = vendor_fixture("RedTeamReportsClient", "get_status");
+    case["responseBody"]["report_state"] = json!("FUTURE_PRIVATE_STATE");
+    arm_vendor(&wire, &case);
+    let report = client
+        .reports()
+        .get_status(case["pathParameters"]["job_id"].as_str().unwrap(), None)
+        .await
+        .unwrap();
+    assert!(matches!(&report.report_state,ReportState::Unknown(v) if v=="FUTURE_PRIVATE_STATE"));
+    assert_eq!(serde_json::to_value(&report).unwrap(), case["responseBody"]);
+    assert!(!format!("{report:?}").contains("FUTURE_PRIVATE_STATE"));
+    let mut case = vendor_fixture("RedTeamReportsClient", "get_download_url");
+    for format in [FileFormat::CSV, FileFormat::JSON, FileFormat::ALL] {
+        case["queryWire"]["file_format"] = json!([format.as_str()]);
+        arm_vendor(&wire, &case);
+        let report = client
+            .reports()
+            .get_download_url(
+                case["pathParameters"]["job_id"].as_str().unwrap(),
+                format,
+                None,
+            )
+            .await
+            .unwrap();
+        assert_eq!(serde_json::to_value(&report).unwrap(), case["responseBody"]);
+        assert!(!format!("{report:?}").contains("synthetic-private-download"));
+        assert!(!format!("{report:?}").contains("../../opaque"));
+    }
+    wire.done();
+    assert_eq!(wire.count(), 5);
+    let before = provider.calls.load(Ordering::SeqCst);
+    for unknown in [
+        FileFormat::Unknown("CSV".into()),
+        FileFormat::Unknown("synthetic-private-format".into()),
+    ] {
+        let error = client
+            .reports()
+            .get_download_url(ID, unknown, None)
+            .await
+            .unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Validation);
+        assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
+        assert!(!format!("{error:?} {error}").contains("synthetic-private"));
+    }
+    assert_eq!(provider.calls.load(Ordering::SeqCst), before);
+    assert_eq!(wire.count(), 5);
+}
+
+struct VendorDestinationPolicy(std::sync::atomic::AtomicBool);
+impl scm_sdk::config::DestinationPolicy for VendorDestinationPolicy {
+    fn check(&self, _: &url::Url, _: scm_sdk::config::DestinationPurpose) -> Result<()> {
+        if self.0.load(Ordering::SeqCst) {
+            Ok(())
+        } else {
+            Err(Error::new(ErrorKind::Destination))
+        }
+    }
+}
+#[tokio::test]
+async fn every_new_vendor_route_rechecks_destination_policy_before_authentication() {
+    for &(class, method) in NEW_VENDOR_CALLS {
+        let wire = Arc::new(Wire::default());
+        let provider = Provider::new(false);
+        let policy = Arc::new(VendorDestinationPolicy(std::sync::atomic::AtomicBool::new(
+            true,
+        )));
+        let raw = Client::builder(Endpoint::parse(DATA).unwrap())
+            .transport(wire.clone())
+            .authentication(Authentication::oauth(provider.clone(), true))
+            .destination_policy(policy.clone())
+            .build()
+            .unwrap();
+        let client = RedTeamClient::new(
+            raw,
+            Endpoint::parse(MGMT).unwrap(),
+            Endpoint::parse(BROKER).unwrap(),
+        )
+        .unwrap();
+        policy.0.store(false, Ordering::SeqCst);
+        let error = call_vendor(&client, &vendor_fixture(class, method), None)
+            .await
+            .unwrap_err();
+        assert_eq!(error.kind(), ErrorKind::Destination);
+        assert_eq!(error.remote_outcome(), RemoteOutcome::NotSent);
+        assert_eq!(wire.count(), 0);
+        assert_eq!(provider.calls.load(Ordering::SeqCst), 0);
+    }
 }

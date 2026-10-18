@@ -73,13 +73,58 @@ class VendorAdapterTests(unittest.TestCase):
         for row in table["operations"]:
             if not row["rejectedLegacyParameters"]:
                 continue
-            seen[row["nativeMethod"]] = [p["name"] for p in row["rejectedLegacyParameters"]]
+            seen[row["nativeMethod"]] = {p["name"] for p in row["rejectedLegacyParameters"]}
             query = self.graph["nodes"][self.graph["roots"][vendor.PREFIX+row["operationId"]+":query"]]
             self.assertEqual(query["unknownFields"], "strict")
             for item in row["rejectedLegacyParameters"]:
                 self.assertNotIn(item["name"], query["properties"])
                 self.assertEqual(item["disposition"], "validation_error_before_auth")
-        self.assertEqual(seen, vendor.REJECTED)
+        self.assertEqual(seen, {name:set(fields) for name,fields in vendor.REJECTED.items()})
+
+    def test_impl_probe_does_not_find_a_method_on_an_unrelated_client(self):
+        source = 'impl OtherClient {\n    pub async fn get() {}\n}\nimpl ActualClient {\n}\n'
+        self.assertNotIn('pub async fn get', vendor.client_impl(source, 'ActualClient'))
+        self.assertIn('pub async fn get', vendor.client_impl(source, 'OtherClient'))
+
+    def test_option_fields_are_derived_from_actual_public_struct(self):
+        source = 'impl FixtureClient {\n    pub async fn list(&self, params: &RedTeamListOptions) -> Result<()> {}\n}\n'
+        self.assertEqual(vendor.option_fields(source, 'FixtureClient', 'list'), {'skip','limit','search'})
+        self.assertEqual(vendor.option_fields(source, 'OtherClient', 'list'), set())
+
+    def test_nested_and_inline_new_required_fields_fail_closed(self):
+        before={'type':'object','properties':{'nested':{'type':'object','properties':{'x':{'type':'string'}}}}}
+        after=copy.deepcopy(before);after['properties']['nested']['required']=['x']
+        self.assertEqual(vendor.required_changes(before,after,'#/inline'),{('#/inline/properties/nested','x')})
+        changed=copy.deepcopy(self.spec)
+        changed['paths']['/v1/scan']['post']['requestBody']['content']['application/json']['schema']['required']=['new_inline_field']
+        with self.assertRaisesRegex(ValueError,'fresh Claude review'):
+            vendor.changed_contracts(changed)
+
+    def test_structural_changes_have_discriminated_reviewed_classes(self):
+        changes=vendor.changed_contracts(self.spec)
+        for row in changes['schemaChanges']+changes['operationChanges']:
+            self.assertTrue(row['changeClasses'])
+        changed=copy.deepcopy(self.spec)
+        changed['components']['schemas']['JobCreateRequestSchema']['properties']['name']['maxLength']=254
+        with self.assertRaisesRegex(ValueError,'Unreviewed vendor change classes'):
+            vendor.changed_contracts(changed)
+
+    def test_wire_bindings_fail_on_missing_extra_tampered_or_unexecutable_operations(self):
+        mapping = vendor.bindings(self.ops)
+        corpus = json.loads((vendor.ROOT/vendor.WIRE_FIXTURES).read_text())
+        source = (vendor.ROOT/vendor.WIRE_TEST).read_text()
+        bindings = vendor.wire_bindings(self.ops, mapping, corpus, source)
+        self.assertEqual(set(bindings), {op['operationId'] for _,_,op in self.ops})
+        for mutation in ('missing','extra','route','call','source','test'):
+            changed=copy.deepcopy(corpus); test=source
+            if mutation=='missing':changed['cases']=[r for r in changed['cases'] if r['operationId']!=changed['cases'][0]['operationId']]
+            elif mutation=='extra':changed['cases'].append(dict(changed['cases'][0],operationId='invented_operation',name='extra'))
+            elif mutation=='route':changed['cases'][0]['path']='/unrelated'
+            elif mutation=='call':changed['cases'][0]['call']['member']='invented_method'
+            elif mutation=='source':changed['sourceSha256']='0'*64
+            else:test=source.replace('async fn call_vendor(', 'async fn missing_dispatch(')
+            with self.subTest(mutation=mutation),self.assertRaises(ValueError):
+                vendor.wire_bindings(self.ops,mapping,changed,test)
 
 
 if __name__ == "__main__":

@@ -20,6 +20,20 @@ fn every_independent_vendor_model_fixture_matches_native_validation_and_typed_de
             Mode::Request,
         );
         assert_eq!(result.is_ok(), valid, "fixture {}", row["name"]);
+        for mode in [Mode::Response, Mode::ResponseWithoutDefaults] {
+            let result = validation::parse(
+                &format!("vendor:red-team-dp:0.93.0:{schema}"),
+                value.clone(),
+                mode,
+            );
+            assert_eq!(
+                result.is_ok(),
+                row["responseValid"].as_bool().unwrap(),
+                "response fixture {} class {}",
+                row["name"],
+                row["mutationClass"]
+            );
+        }
         if !valid {
             continue;
         }
