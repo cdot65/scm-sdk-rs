@@ -68,6 +68,13 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 15:
+        return [["git", "diff", "--check", "--", ".", ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"],
+                ["git", "diff", "--cached", "--check", "--", ".", ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"],
+                ["node", "tools/portkey-access.mjs", "--check"],
+                ["python", "tools/verify-contracts.py"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_portkey_access.py", "-v"]]
     if phase == 14:
         return [
             ["git", "diff", "--check"],

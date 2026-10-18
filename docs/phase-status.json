@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": null,
+  "active_phase": 16,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -3186,7 +3186,113 @@
         "library_check_evidence": "docs/checks/release-0.1.1-red-team-library-check.json",
         "unit_target_failure_evidence": "docs/checks/release-0.1.1-red-team-unit-target-limitation.json"
       }
+    },
+    {
+      "id": 15,
+      "name": "Portkey access-policy plan",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-15-attempt-02.json"
+      ],
+      "plan": "docs/portkey-access-policies-plan.md",
+      "scope_evidence": [
+        "contracts/vendor/portkey-access/a27feb9/source.json",
+        "contracts/vendor/portkey-access/a27feb9/contract.json",
+        "docs/portkey-access-policies-plan.md",
+        "tools/portkey-access.mjs",
+        "contracts/vendor/portkey-access/a27feb9/openapi.yaml",
+        "contracts/vendor/portkey-access/a27feb9/parent.yaml",
+        "contracts/vendor/portkey-access/a27feb9/LICENSE",
+        "tools/test_portkey_access.py",
+        "docs/portkey-access-policies-research.md"
+      ],
+      "review_attempts": [
+        "docs/reviews/phase-15-attempt-01.json"
+      ],
+      "review_fixes": [
+        {
+          "review": "docs/reviews/phase-15-attempt-01.json",
+          "finding": 0,
+          "status": "implemented_pending_review"
+        },
+        {
+          "review": "docs/reviews/phase-15-attempt-01.json",
+          "finding": 1,
+          "status": "implemented_pending_review"
+        },
+        {
+          "review": "docs/reviews/phase-15-attempt-01.json",
+          "finding": 2,
+          "status": "implemented_pending_review"
+        },
+        {
+          "review": "docs/reviews/phase-15-attempt-01.json",
+          "finding": 3,
+          "status": "implemented_pending_review"
+        },
+        {
+          "review": "docs/reviews/phase-15-attempt-01.json",
+          "finding": 4,
+          "status": "implemented_pending_review"
+        },
+        {
+          "review": "docs/reviews/phase-15-attempt-01.json",
+          "finding": 5,
+          "status": "implemented_pending_review"
+        }
+      ],
+      "accepted_source_sha256": "75b6b6c1c424961f4038836a176cf720e94afd0a43f8e5d25f668d48bbc53676",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-15-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-15.json"
+          ],
+          "source_sha256": "75b6b6c1c424961f4038836a176cf720e94afd0a43f8e5d25f668d48bbc53676"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-15-attempt-02.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": 16,
+      "name": "Portkey access-policy implementation",
+      "status": "in_progress",
+      "reviews": [],
+      "plan": "docs/portkey-access-policies-plan.md",
+      "scope_evidence": [
+        "contracts/vendor/portkey-access/a27feb9/source.json",
+        "contracts/vendor/portkey-access/a27feb9/contract.json",
+        "docs/portkey-access-policies-plan.md",
+        "tools/portkey-access.mjs"
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Portkey access-policy qualification and publication",
+      "status": "pending",
+      "reviews": [],
+      "plan": "docs/portkey-access-policies-plan.md",
+      "scope_evidence": [
+        "contracts/vendor/portkey-access/a27feb9/source.json",
+        "contracts/vendor/portkey-access/a27feb9/contract.json",
+        "docs/portkey-access-policies-plan.md",
+        "tools/portkey-access.mjs"
+      ],
+      "final_in_sequence": true
     }
   ],
-  "active_followup_plan": "docs/release-0.2.0-plan.md"
+  "active_followup_plan": "docs/portkey-access-policies-plan.md"
 }

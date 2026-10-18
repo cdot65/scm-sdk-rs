@@ -74,3 +74,13 @@ is a plan review: no SDK implementation starts until its actual Claude Code
 review reaches at least 9/10 with no blocker/high findings. Phases 10–12 use
 scoped relevant checks and the same review gate. Preserve phases 1–8 as historical
 frozen-TypeScript parity evidence; they do not certify the newer vendor contract.
+
+## Portkey access-policy follow-up
+
+The authorized [0.2.1 plan](portkey-access-policies-plan.md) follows completed
+0.2.0 delivery. Phase15 pins the exact upstream delta and requires Claude plan
+review >=9/10 before SDK changes. Phase16 implements all five typed methods and
+independent contract/security tests. Phase17 qualifies both clean archives,
+obtains final review >=9/10, publishes and verifies crates.io, tags and pushes,
+and waits for terminal 47-job CI before completion. Historical phase14 remains
+a final phase of its completed release; it is not reopened.

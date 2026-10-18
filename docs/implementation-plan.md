@@ -156,3 +156,9 @@ The verified Rust checkout and remote are recorded above. Confirm registry-name 
 - [SCM API families](https://pan.dev/scm/docs/home/), [service-specific request rules](https://pan.dev/scm/docs/api-call/), [DLP APIs](https://pan.dev/dlp/api/), and [IoT SCM authentication](https://pan.dev/iot/api/iot-public-api-new/).
 - [Cargo workspaces](https://doc.rust-lang.org/cargo/reference/workspaces.html), [features](https://doc.rust-lang.org/cargo/reference/features.html), [compiler support](https://doc.rust-lang.org/cargo/reference/rust-version.html), and [compatibility](https://doc.rust-lang.org/cargo/reference/semver.html).
 - [RustSec](https://rustsec.org/), [cargo-deny](https://embarkstudios.github.io/cargo-deny/checks/index.html), [crates.io trusted publishing documentation source](https://github.com/rust-lang/crates.io/blob/main/svelte/src/routes/docs/trusted-publishing/%2Bpage.svelte), and [Apache-2.0 terms](https://www.apache.org/licenses/LICENSE-2.0).
+
+## Authorized Portkey access-policy addition
+
+After 0.2.0 delivery, the maintainer authorized the exact Portkey a27feb9 delta
+through [phases15–17](portkey-access-policies-plan.md), targeting additive 0.2.1.
+Its explicit key-authenticated control plane remains separate from SCM OAuth.
