@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 14,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -2370,8 +2370,10 @@
     {
       "id": 14,
       "name": "SDK 0.2.0 publication and delivery",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-14-attempt-01.json"
+      ],
       "final_in_sequence": true,
       "scope_evidence": [
         "docs/release-0.2.0-plan.md",
@@ -2435,8 +2437,53 @@
         "evidence": "docs/checks/release-registry-0.2.0.json"
       },
       "delivery": {
-        "status": "awaiting_remote_ci",
-        "advance_only_after_remote_gate_passes": true
+        "status": "complete",
+        "source_commit": "659b54520f21ad9e46dbce6174f79b7471dd3675",
+        "registry_receipt": "docs/checks/release-registry-0.2.0.json",
+        "tag_receipt": "docs/checks/release-tag-v0.2.0.json",
+        "ci_receipt": "docs/checks/phase-14-remote-ci-run-20.json"
+      },
+      "accepted_source_sha256": "b4f1c1b58c7d5b9da9b2991fb549bdf6887a4ea3f043aa0e68c36610ed756569",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-14-attempt-01.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-14.json"
+          ],
+          "source_sha256": "b4f1c1b58c7d5b9da9b2991fb549bdf6887a4ea3f043aa0e68c36610ed756569"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-14-attempt-01.json"
+          ]
+        },
+        "remote_delivery": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-14-remote-ci-run-20.json"
+          ],
+          "source_commit": "659b54520f21ad9e46dbce6174f79b7471dd3675",
+          "reviewed_source_sha256": "b4f1c1b58c7d5b9da9b2991fb549bdf6887a4ea3f043aa0e68c36610ed756569"
+        }
+      },
+      "remote_ci": {
+        "status": "success",
+        "run": 20,
+        "expected_jobs": 47,
+        "passed_jobs": 47,
+        "source_commit": "659b54520f21ad9e46dbce6174f79b7471dd3675",
+        "evidence": [
+          "docs/checks/phase-14-remote-ci-run-20.json"
+        ]
       }
     },
     {
