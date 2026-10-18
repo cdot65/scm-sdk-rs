@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "passed": false,
+  "checkedAt": "2026-10-18T16:48:00.326269+00:00",
+  "rustInputsSha256": "135f1b1efa382312fb3cd856d8b5aec2584cc61224e6937c0928bb0f76c3f374",
+  "sourceUnchanged": true,
+  "cargoLockSha256": "6a27723394cef3f4b60219bf14e457fe6e154841e1bcb2a3aca6b6c6d05a6145",
+  "toolchain": "1.89.0",
+  "featureSet": "red-team",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "execution": "native_checks_and_tests",
+  "os": "Linux",
+  "machine": "x86_64",
+  "rustcVersion": "rustc 1.89.0 (29483883e 2025-08-04)\nbinary: rustc\ncommit-hash: 29483883eed69d5fb4db01964cdf2af4d86e9cb2\ncommit-date: 2025-08-04\nhost: x86_64-unknown-linux-musl\nrelease: 1.89.0\nLLVM version: 20.1.7\n",
+  "cargoVersion": "cargo 1.89.0 (c24e10642 2025-06-23)\nrelease: 1.89.0\ncommit-hash: c24e1064277fe51ab72011e2612e556ac56addf7\ncommit-date: 2025-06-23\nhost: x86_64-unknown-linux-musl\nlibgit2: 1.9.0 (sys:0.20.2 vendored)\nlibcurl: 8.12.1-DEV (sys:0.4.80+curl-8.12.1 vendored ssl:OpenSSL/3.5.0)\nssl: OpenSSL 3.5.0 8 Apr 2025\nos: Alpine Linux 3.24.1 [64-bit]\n",
+  "packagedNoticesMatch": true,
+  "limitations": [
+    "This report covers the recorded native host and feature set. It makes no claim about other targets or live service acceptance."
+  ],
+  "checks": [
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 2.382
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "check",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--target",
+        "x86_64-unknown-linux-musl",
+        "--no-default-features",
+        "--features",
+        "red-team"
+      ],
+      "exit_code": 101,
+      "stdout": "",
+      "stderr": "    Checking scm-sdk v0.1.1 (/home/cdot/development/cdot65/scm-sdk-rs-0.1.1/crates/scm-sdk)\nerror[E0599]: no method named `send_contract_one_of` found for struct `engine::Client` in the current scope\n    --> crates/scm-sdk/src/engine/tests.rs:2520:14\n     |\n2519 |           let actual: serde_json::Value = client\n     |  _________________________________________-\n2520 | |             .send_contract_one_of(\n     | |_____________-^^^^^^^^^^^^^^^^^^^^\n     |\n    ::: crates/scm-sdk/src/engine.rs:198:1\n     |\n198  |   pub struct Client {\n     |   ----------------- method `send_contract_one_of` not found for this struct\n     |\nhelp: there is a method `send_contract` with a similar name\n     |\n2520 -             .send_contract_one_of(\n2520 +             .send_contract(\n     |\n\nFor more information about this error, try `rustc --explain E0599`.\nerror: could not compile `scm-sdk` (lib test) due to 1 previous error\nwarning: build failed, waiting for other jobs to finish...\n",
+      "duration_seconds": 40.54
+    }
+  ]
+}

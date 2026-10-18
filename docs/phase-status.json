@@ -1881,7 +1881,22 @@
         "source_commit": "7efd1372806bd1969663993de3083d393b20cc62",
         "version": "0.1.1",
         "without_defaults_uses_response_compatibility": true,
-        "maintenance_followup_92": "Completed actual source review9/10 and remotely passing contracts job18/0; sourceSDK unchanged by that follow-up. Standalone red-team unit-test cfg fixed in this vendor integration."
+        "maintenance_followup_92": "Completed actual source review9/10 and remotely passing contracts job18/0; sourceSDK unchanged by that follow-up. Standalone red-team unit-test cfg fixed in this vendor integration.",
+        "targeted_msrv_checks": {
+          "toolchain": "1.89.0",
+          "library_tests": 164,
+          "dataplane_contract_tests": 16,
+          "resource_contract_tests": 21,
+          "schema_contract_tests": 10,
+          "vendor_model_tests": 1,
+          "independent_vendor_cases": 1636,
+          "valid_vendor_modes": [
+            "Request",
+            "Response",
+            "ResponseWithoutDefaults"
+          ],
+          "status": "passed; cumulative phase gate pending"
+        }
       }
     },
     {
