@@ -364,9 +364,21 @@ class CiContractTests(unittest.TestCase):
         if "source_commit" in publication:
             self.assertEqual(publication["source_commit"], receipt["sourceCommit"])
         changelog = (ROOT / "CHANGELOG.md").read_text()
-        self.assertIn("](" + evidence + ")", changelog)
+        self.assertTrue("](" + evidence + ")" in changelog or "`" + evidence + "`" in changelog,
+                        "Use an explicit receipt link or inline-code repository path")
         # The exact registry artifact is independently checked by verify-publication.py.
-        # Linking that receipt avoids mutating release source after its archive exists.
+        # Explicit receipt locators avoid mutating release source after its archive exists.
+
+    def test_current_release_receipt_links_exist_or_use_plain_paths(self):
+        version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
+        for name in ("README.md", "CHANGELOG.md", "docs/RELEASE.md", "docs/STABILITY.md"):
+            path = ROOT / name
+            for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text()):
+                if f"release-registry-{version}.json" not in target and f"release-tag-v{version}.json" not in target:
+                    continue
+                prefix = "https://git.cdot.io/cdot/scm-sdk-rs/src/branch/main/"
+                receipt = ROOT / target[len(prefix):] if target.startswith(prefix) else path.parent / target
+                self.assertTrue(receipt.is_file(), f"Unpublished receipt must be a plain path: {name}: {target}")
 
     def test_release_documents_require_a_valid_linked_registry_receipt(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -404,6 +416,8 @@ class CiContractTests(unittest.TestCase):
                     (root / evidence).write_text(json.dumps(receipt | change))
                     self.assertFalse(run_guard().wasSuccessful())
             (root / evidence).write_text(fixtures[evidence])
+            (root / "CHANGELOG.md").write_text("See crates.io `" + evidence + "`")
+            self.assertTrue(run_guard().wasSuccessful())
             (root / "CHANGELOG.md").write_text("See crates.io " + evidence)
             self.assertFalse(run_guard().wasSuccessful())
             (root / "CHANGELOG.md").write_text(fixtures["CHANGELOG.md"])

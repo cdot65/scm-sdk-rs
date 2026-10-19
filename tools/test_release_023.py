@@ -3,6 +3,7 @@ import copy
 import contextlib
 import io
 import subprocess
+import sys
 import hashlib
 import importlib.util
 import json
@@ -31,6 +32,22 @@ prepublish = load('prepublish023', 'check-prepublication.py')
 
 
 class ManagementDeliveryTests(unittest.TestCase):
+    def test_delivery_cli_requires_explicit_release_context(self):
+        result = subprocess.run([sys.executable, str(ROOT / 'tools/release_delivery.py')],
+                                cwd=ROOT, capture_output=True, text=True, check=False)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('usage:', result.stderr)
+        self.assertIn('required: --phase, --version', result.stderr)
+        self.assertNotIn('Traceback', result.stderr)
+        self.assertEqual(result.stdout, '')
+        with patch.object(release_delivery, 'verify', return_value={'passed': True}) as verify, \
+                contextlib.redirect_stdout(io.StringIO()) as output:
+            release_delivery.main(['--phase', '24', '--version', '0.2.3'])
+            verify.assert_called_once_with(release_delivery.ROOT, phase=24, version='0.2.3')
+            self.assertTrue(json.loads(output.getvalue())['passed'])
+        # Existing Python callers retain the historical context by default.
+        self.assertEqual(release_delivery.verify.__defaults__, (None, 20, '0.2.2'))
+
     def test_archive_location_binds_exact_commit_even_with_identical_bytes(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)

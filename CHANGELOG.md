@@ -3,8 +3,8 @@
 ## 0.2.3 — AIRS management 0.86.0 compatibility
 
 Publication is established only by the verified
-[registry receipt](docs/checks/release-registry-0.2.3.json) and
-[tag receipt](docs/checks/release-tag-v0.2.3.json). Until those exist and verify,
+`docs/checks/release-registry-0.2.3.json` and
+`docs/checks/release-tag-v0.2.3.json`. Until those exist and verify,
 this entry describes the release candidate.
 
 ### Added and changed

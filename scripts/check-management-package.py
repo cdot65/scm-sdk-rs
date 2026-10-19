@@ -118,6 +118,22 @@ def verify_receipt(root, path, toolchain, source_sha=None):
             or commands[probe_index] != ['run', '--locked', '--offline', '--target', host]
             or pathlib.Path(checks[probe_index]['cwd']) != consumer_root):
         raise ValueError('Frozen capability consumer execution is missing')
+    access_key = 'examples/access_policies.rs'
+    if (access_key not in files
+            or report.get('accessPolicyConsumerSourceSha256') != hashlib.sha256(files[access_key]).hexdigest()
+            or report.get('accessPolicyConsumerSourceSha256') != sha(root / 'crates/scm-sdk' / access_key)):
+        raise ValueError('Access-policy consumer source binding differs')
+    if not archive_command_executed(['run', '--example', 'access_policies', '--all-features',
+                                     '--locked', '--offline', '--target', host]):
+        raise ValueError('Packaged access-policy example did not execute')
+    # The source-bound package runner replaces the frozen probe with the access
+    # policy example immediately after its run. Keep that positional binding:
+    # another successful example or the frozen probe cannot stand in for it.
+    access_index = probe_index + 1
+    if (access_index >= len(checks) or access_index in indices
+            or commands[access_index] != ['run', '--locked', '--offline', '--target', host]
+            or pathlib.Path(checks[access_index]['cwd']) != consumer_root):
+        raise ValueError('External access-policy consumer execution is missing')
     for name in ('response_defaults', 'red_team_dataplane', 'response_compatibility', 'red_team_management'):
         key = f'examples/{name}.rs'
         digest = hashlib.sha256(files[key]).hexdigest()

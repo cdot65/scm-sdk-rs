@@ -38,8 +38,8 @@ See [CI](docs/CI.md) and the [release procedure](docs/RELEASE.md).
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
 
-The 0.2.3 [registry receipt](https://git.cdot.io/cdot/scm-sdk-rs/src/branch/main/docs/checks/release-registry-0.2.3.json) and
-[tag receipt](https://git.cdot.io/cdot/scm-sdk-rs/src/branch/main/docs/checks/release-tag-v0.2.3.json) establish publication only when
+The 0.2.3 `docs/checks/release-registry-0.2.3.json` and
+`docs/checks/release-tag-v0.2.3.json` establish publication only when
 present and verified; missing receipts mean that publication is not yet verified.
 The [published 0.2.2 receipt](docs/checks/release-registry-0.2.2.json) remains historical.
 The access-policy client requires explicit compatible control-plane key credentials

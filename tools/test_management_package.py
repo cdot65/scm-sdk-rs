@@ -31,7 +31,7 @@ class ManagementPackageTests(unittest.TestCase):
         self.consumer_manifest = '[features]\nred-team = ["scm-sdk/red-team"]\n'
         self.files = {}
         self.names = ('response_defaults', 'red_team_dataplane', 'response_compatibility', 'red_team_management')
-        for name in self.names:
+        for name in (*self.names, 'access_policies'):
             data = ('// ' + name + '\nfn main() {}\n').encode()
             member = 'examples/' + name + '.rs'
             self.files[member] = data
@@ -64,7 +64,9 @@ class ManagementPackageTests(unittest.TestCase):
             check(['run', '--example', name, '--all-features', '--locked', '--offline', '--target', self.host])
             index = check(['run', '--features', 'red-team', '--locked', '--offline', '--target', self.host], 'archive/consumer')
             bindings['examples/' + name + '.rs'] = {'sha256': digest(self.files['examples/' + name + '.rs']), 'checkIndex': index, 'selectedFeatures': ['red-team']}
+        check(['run', '--example', 'access_policies', '--all-features', '--locked', '--offline', '--target', self.host])
         probe_index = check(['run', '--locked', '--offline', '--target', self.host], 'archive/consumer')
+        check(['run', '--locked', '--offline', '--target', self.host], 'archive/consumer')
         self.report = {'schemaVersion': 3, 'sourceSha256': self.source, 'toolchain': '1.99.0',
             'passed': True, 'requireClean': True, 'effectiveDirty': False,
             'packageScriptSha256': package.sha(self.root / 'scripts/check-package.py'),
@@ -81,6 +83,7 @@ class ManagementPackageTests(unittest.TestCase):
             'externalConsumerManifest': self.consumer_manifest,
             'externalConsumerManifestSha256': digest(self.consumer_manifest.encode()),
             'frozenProbeCheckIndex': probe_index,
+            'accessPolicyConsumerSourceSha256': digest(self.files['examples/access_policies.rs']),
             'managementConsumerSourceSha256': digest(self.files['examples/red_team_management.rs']),
             'publicConsumerSourceSha256': 'c' * 64}
         policy = types.SimpleNamespace(compiler_identity=lambda root, toolchain: (pathlib.Path('cargo'), self.rustc_version, self.host),
@@ -247,6 +250,31 @@ class ManagementPackageTests(unittest.TestCase):
             elif mutation == 'management': report['managementConsumerSourceSha256'] = '0' * 64
             else: report['publicConsumerSourceSha256'] = '0' * 64
             with self.assertRaises(ValueError): self.verify(report)
+
+    def test_access_policy_requires_bound_archive_and_distinct_external_execution(self):
+        for mutation in ('missing-archive', 'archive-cwd', 'hash', 'missing-external',
+                         'external-cwd', 'external-command', 'reused-index'):
+            with self.subTest(mutation=mutation):
+                report = copy.deepcopy(self.report)
+                external = report['frozenProbeCheckIndex'] + 1
+                archive = next(index for index, row in enumerate(report['checks'])
+                               if row['command'][2:5] == ['run', '--example', 'access_policies'])
+                if mutation == 'missing-archive':
+                    report['checks'][archive]['command'][4] = 'another-example'
+                elif mutation == 'archive-cwd':
+                    report['checks'][archive]['cwd'] = str(self.root / 'crates/scm-sdk')
+                elif mutation == 'hash':
+                    report['accessPolicyConsumerSourceSha256'] = '0' * 64
+                elif mutation == 'missing-external':
+                    report['checks'].pop(external)
+                elif mutation == 'external-cwd':
+                    report['checks'][external]['cwd'] = '/another/consumer'
+                elif mutation == 'external-command':
+                    report['checks'][external]['command'][2] = 'check'
+                else:
+                    report['externalExampleConsumers']['examples/red_team_management.rs']['checkIndex'] = external
+                with self.assertRaisesRegex(ValueError, '[Aa]ccess-policy'):
+                    self.verify(report)
 
     def test_duplicate_or_missing_consumer_execution_is_rejected(self):
         for mutation in ('duplicate', 'missing-probe', 'probe-reuses-example', 'bad-probe-command'):

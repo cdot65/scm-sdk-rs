@@ -2,8 +2,8 @@
 
 The workspace version is **0.2.3**. [Phase 24](red-team-management-0.86-plan.md)
 qualifies AIRS management 0.86.0 while preserving the published 0.2.2 API.
-The [registry receipt](checks/release-registry-0.2.3.json) and
-[tag receipt](checks/release-tag-v0.2.3.json) establish actual publication and
+The `checks/release-registry-0.2.3.json` and
+`checks/release-tag-v0.2.3.json` establish actual publication and
 remote source identity. A missing receipt means publication is not yet verified.
 
 CI runs `--phase 24 --verification-only --contracts-only` alongside 48 Rust jobs

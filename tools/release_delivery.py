@@ -234,9 +234,13 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
     return result
 
 
-if __name__ == '__main__':
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--phase", type=int, default=PHASE)
-    parser.add_argument("--version", default=VERSION)
-    args = parser.parse_args()
+    parser.add_argument("--phase", type=int, required=True, help="Release phase to verify, for example 24")
+    parser.add_argument("--version", required=True, help="Exact release version, for example 0.2.3")
+    args = parser.parse_args(argv)
     print(json.dumps(verify(ROOT, phase=args.phase, version=args.version)))
+
+
+if __name__ == '__main__':
+    main()
