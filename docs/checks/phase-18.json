@@ -1,0 +1,164 @@
+{
+  "phase": 18,
+  "source_sha256": "36c284336898c59987a8a921dd8ec2b63b93a7ce1defd9ab204af00cb2f0e97e",
+  "source_unchanged": true,
+  "checked_at": "2026-10-19T02:35:32.186326+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.006
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "7f4a062",
+        "--",
+        "crates/scm-sdk",
+        "Cargo.toml",
+        "Cargo.lock",
+        "LICENSE",
+        "NOTICE"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--exit-code",
+        "7f4a062",
+        "--",
+        "crates/scm-sdk",
+        "Cargo.toml",
+        "Cargo.lock",
+        "LICENSE",
+        "NOTICE"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.002
+    },
+    {
+      "command": [
+        "python",
+        "-c",
+        "import subprocess; assert not subprocess.check_output(['git','ls-files','--others','--exclude-standard','--','crates/scm-sdk','Cargo.toml','Cargo.lock','LICENSE','NOTICE']), 'Unexpected SDK implementation file before plan acceptance'"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-c",
+        "import subprocess; assert not subprocess.check_output(['git','ls-files','--others','--exclude-standard','--','crates/scm-sdk','Cargo.toml','Cargo.lock','LICENSE','NOTICE']), 'Unexpected SDK implementation file before plan acceptance'"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.022
+    },
+    {
+      "command": [
+        "python",
+        "tools/g25_reproduction.py"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/g25_reproduction.py"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"cases\": 7, \"confirmedFormatMismatches\": 2}\n",
+      "stderr": "",
+      "duration_seconds": 39.575
+    },
+    {
+      "command": [
+        "python",
+        "tools/g25_audit.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/g25_audit.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"operations\": 47, \"jsonResponseRoots\": 46, \"matchedTypeScriptOperations\": 36, \"formatAffectedOperations\": 28, \"formatOccurrences\": {\"rfc3339\": 56, \"uuid\": 124, \"duration\": 4}, \"allFrozenRootsWithFormats\": 172, \"requestUuidOccurrences\": 76}\n",
+      "stderr": "",
+      "duration_seconds": 0.226
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_g25.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_g25.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_all_operations_are_classified (test_g25.G25AuditTests.test_all_operations_are_classified) ... ok\ntest_audit_provenance_and_global_scope (test_g25.G25AuditTests.test_audit_provenance_and_global_scope) ... ok\ntest_reproduction_and_independent_results_are_retained (test_g25.G25AuditTests.test_reproduction_and_independent_results_are_retained) ... ok\ntest_response_mode_policy_and_release_are_explicit (test_g25.G25AuditTests.test_response_mode_policy_and_release_are_explicit) ... ok\ntest_target_error_log_contract_is_explicit (test_g25.G25AuditTests.test_target_error_log_contract_is_explicit) ... ok\ntest_uuid_inventory_and_nested_calls_are_complete (test_g25.G25AuditTests.test_uuid_inventory_and_nested_calls_are_complete) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.642s\n\nOK\n",
+      "duration_seconds": 0.696
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_successors_do_not_reopen_completed_independent_maintenance (test_review_phase.ReviewGateTests.test_successors_do_not_reopen_completed_independent_maintenance) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.126s\n\nOK\n",
+      "duration_seconds": 0.217
+    }
+  ]
+}

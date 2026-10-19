@@ -84,3 +84,11 @@ independent contract/security tests. Phase17 qualifies both clean archives,
 obtains final review >=9/10, publishes and verifies crates.io, tags and pushes,
 and waits for terminal 47-job CI before completion. Historical phase14 remains
 a final phase of its completed release; it is not reopened.
+
+## G25 response compatibility patch
+
+Follow [the G25 0.2.2 plan](g25-response-compatibility-plan.md): phase18 accepts the
+comparison and plan, phase19 implements and independently checks compatibility,
+and phase20 qualifies and publishes the immutable patch with terminal CI evidence.
+Each phase requires an actual Claude Code score >=9/10. Version 0.2.1 remains the
+already published Portkey release. Historical phase17 is not reopened.

@@ -1,0 +1,370 @@
+{
+  "schemaVersion": 1,
+  "executedAt": "2026-10-19T02:35:30.953347+00:00",
+  "sourceCommit": "7f4a062310f0bac1e7b6a5f16009c4feec03a11e",
+  "inputs": {
+    "tools/g25-repro/Cargo.lock": "ac0b9b1f3011b1402f89230b6eb598171dcf480730f1287b97510edf3267501b",
+    "tools/g25-repro/Cargo.toml": "d70e2580ef2bcb43f612200978833e513830f56a49047df75d9aafd614b0de7e",
+    "tools/g25-repro/cases.json": "c7271de5b79edf7723148cca97bd58282a805f8fea1552968ffe39c112215ad9",
+    "tools/g25-repro/src/main.rs": "b9e8c9491bb9049b1f1d720d06612da541389f1555c030b0fe4b48cb1778fb1c",
+    "tools/g25-repro/typescript.mts": "41588f41e744f438bb9bfcd1811052c7e3fb2f2d0759551b1aba3f85fcd9a2e3"
+  },
+  "cases": [
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "sub_category",
+      "value": {
+        "pagination": {
+          "total_items": 0
+        },
+        "data": [
+          {
+            "uuid": "550e8400-e29b-41d4-a716-446655440000",
+            "tsg_id": "example",
+            "job_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt": "example",
+            "status": "INIT",
+            "marked_safe": false,
+            "extra_info": {},
+            "threat": false,
+            "attack_type": "NORMAL",
+            "multi_turn": false,
+            "asr": 0,
+            "version": 0,
+            "error": false,
+            "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "SECURITY",
+            "sub_category": "NEW_SERVICE_SUBCATEGORY",
+            "severity": "example",
+            "category_display_name": "example",
+            "sub_category_display_name": "example",
+            "attack_modality": "TEXT"
+          }
+        ]
+      },
+      "expectedSdk": true,
+      "expectedTypeScript": true
+    },
+    {
+      "schema": "ErrorLogListResponseSchema",
+      "field": "error_type",
+      "value": {
+        "pagination": {
+          "total_items": 0
+        },
+        "data": [
+          {
+            "job_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_version": 0,
+            "attack_id": "550e8400-e29b-41d4-a716-446655440000",
+            "error_type": "NEW_SERVICE_ERROR",
+            "error_source": "TARGET",
+            "error_message": "example",
+            "target_object": {},
+            "extra_info": {},
+            "version": 0,
+            "created_at": "2026-10-18T00:00:00Z",
+            "updated_at": "2026-10-18T00:00:00Z"
+          }
+        ]
+      },
+      "expectedSdk": true,
+      "expectedTypeScript": true
+    },
+    {
+      "schema": "ErrorLogListResponseSchema",
+      "field": "created_at",
+      "value": {
+        "pagination": {
+          "total_items": 0
+        },
+        "data": [
+          {
+            "job_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_version": 0,
+            "attack_id": "550e8400-e29b-41d4-a716-446655440000",
+            "error_type": "CONTENT_FILTER",
+            "error_source": "TARGET",
+            "error_message": "example",
+            "target_object": {},
+            "extra_info": {},
+            "version": 0,
+            "created_at": "service timestamp without RFC3339",
+            "updated_at": "2026-10-18T00:00:00Z"
+          }
+        ]
+      },
+      "expectedSdk": false,
+      "expectedTypeScript": true
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "uuid",
+      "value": {
+        "pagination": {
+          "total_items": 0
+        },
+        "data": [
+          {
+            "uuid": "opaque-service-id",
+            "tsg_id": "example",
+            "job_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt": "example",
+            "status": "INIT",
+            "marked_safe": false,
+            "extra_info": {},
+            "threat": false,
+            "attack_type": "NORMAL",
+            "multi_turn": false,
+            "asr": 0,
+            "version": 0,
+            "error": false,
+            "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "SECURITY",
+            "sub_category": "ADVERSARIAL_SUFFIX",
+            "severity": "example",
+            "category_display_name": "example",
+            "sub_category_display_name": "example",
+            "attack_modality": "TEXT"
+          }
+        ]
+      },
+      "expectedSdk": false,
+      "expectedTypeScript": true
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "category_display_name",
+      "value": {
+        "pagination": {
+          "total_items": 0
+        },
+        "data": [
+          {
+            "uuid": "550e8400-e29b-41d4-a716-446655440000",
+            "tsg_id": "example",
+            "job_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt": "example",
+            "status": "INIT",
+            "marked_safe": false,
+            "extra_info": {},
+            "threat": false,
+            "attack_type": "NORMAL",
+            "multi_turn": false,
+            "asr": 0,
+            "version": 0,
+            "error": false,
+            "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "SECURITY",
+            "sub_category": "ADVERSARIAL_SUFFIX",
+            "severity": "example",
+            "sub_category_display_name": "example",
+            "attack_modality": "TEXT"
+          }
+        ]
+      },
+      "expectedSdk": false,
+      "expectedTypeScript": false
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "tsg_id",
+      "value": {
+        "pagination": {
+          "total_items": 0
+        },
+        "data": [
+          {
+            "uuid": "550e8400-e29b-41d4-a716-446655440000",
+            "tsg_id": 1,
+            "job_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt": "example",
+            "status": "INIT",
+            "marked_safe": false,
+            "extra_info": {},
+            "threat": false,
+            "attack_type": "NORMAL",
+            "multi_turn": false,
+            "asr": 0,
+            "version": 0,
+            "error": false,
+            "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "SECURITY",
+            "sub_category": "ADVERSARIAL_SUFFIX",
+            "severity": "example",
+            "category_display_name": "example",
+            "sub_category_display_name": "example",
+            "attack_modality": "TEXT"
+          }
+        ]
+      },
+      "expectedSdk": false,
+      "expectedTypeScript": false
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "sub_category",
+      "value": {
+        "pagination": {
+          "total_items": 0
+        },
+        "data": [
+          {
+            "uuid": "550e8400-e29b-41d4-a716-446655440000",
+            "tsg_id": "example",
+            "job_id": "550e8400-e29b-41d4-a716-446655440000",
+            "target_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt": "example",
+            "status": "INIT",
+            "marked_safe": false,
+            "extra_info": {},
+            "threat": false,
+            "attack_type": "NORMAL",
+            "multi_turn": false,
+            "asr": 0,
+            "version": 0,
+            "error": false,
+            "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+            "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "SECURITY",
+            "sub_category": null,
+            "severity": "example",
+            "category_display_name": "example",
+            "sub_category_display_name": "example",
+            "attack_modality": "TEXT"
+          }
+        ]
+      },
+      "expectedSdk": false,
+      "expectedTypeScript": false
+    }
+  ],
+  "sdkOutcomes": [
+    {
+      "accepted": true,
+      "field": "sub_category",
+      "schema": "AttackListResponseSchema"
+    },
+    {
+      "accepted": true,
+      "field": "error_type",
+      "schema": "ErrorLogListResponseSchema"
+    },
+    {
+      "accepted": false,
+      "field": "created_at",
+      "schema": "ErrorLogListResponseSchema"
+    },
+    {
+      "accepted": false,
+      "field": "uuid",
+      "schema": "AttackListResponseSchema"
+    },
+    {
+      "accepted": false,
+      "field": "category_display_name",
+      "schema": "AttackListResponseSchema"
+    },
+    {
+      "accepted": false,
+      "field": "tsg_id",
+      "schema": "AttackListResponseSchema"
+    },
+    {
+      "accepted": false,
+      "field": "sub_category",
+      "schema": "AttackListResponseSchema"
+    }
+  ],
+  "typeScriptOutcomes": [
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "sub_category",
+      "accepted": true
+    },
+    {
+      "schema": "ErrorLogListResponseSchema",
+      "field": "error_type",
+      "accepted": true
+    },
+    {
+      "schema": "ErrorLogListResponseSchema",
+      "field": "created_at",
+      "accepted": true
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "uuid",
+      "accepted": true
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "category_display_name",
+      "accepted": false
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "tsg_id",
+      "accepted": false
+    },
+    {
+      "schema": "AttackListResponseSchema",
+      "field": "sub_category",
+      "accepted": false
+    }
+  ],
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 8,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 6,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": true,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.99.0",
+        "run",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "tools/g25-repro/Cargo.toml",
+        "--target",
+        "x86_64-unknown-linux-musl",
+        "--quiet"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"accepted\":true,\"field\":\"sub_category\",\"schema\":\"AttackListResponseSchema\"}\n{\"accepted\":true,\"field\":\"error_type\",\"schema\":\"ErrorLogListResponseSchema\"}\n{\"accepted\":false,\"field\":\"created_at\",\"schema\":\"ErrorLogListResponseSchema\"}\n{\"accepted\":false,\"field\":\"uuid\",\"schema\":\"AttackListResponseSchema\"}\n{\"accepted\":false,\"field\":\"category_display_name\",\"schema\":\"AttackListResponseSchema\"}\n{\"accepted\":false,\"field\":\"tsg_id\",\"schema\":\"AttackListResponseSchema\"}\n{\"accepted\":false,\"field\":\"sub_category\",\"schema\":\"AttackListResponseSchema\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".local/typescript/node_modules/.bin/tsx",
+        "tools/g25-repro/typescript.mts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"schema\":\"AttackListResponseSchema\",\"field\":\"sub_category\",\"accepted\":true}\n{\"schema\":\"ErrorLogListResponseSchema\",\"field\":\"error_type\",\"accepted\":true}\n{\"schema\":\"ErrorLogListResponseSchema\",\"field\":\"created_at\",\"accepted\":true}\n{\"schema\":\"AttackListResponseSchema\",\"field\":\"uuid\",\"accepted\":true}\n{\"schema\":\"AttackListResponseSchema\",\"field\":\"category_display_name\",\"accepted\":false}\n{\"schema\":\"AttackListResponseSchema\",\"field\":\"tsg_id\",\"accepted\":false}\n{\"schema\":\"AttackListResponseSchema\",\"field\":\"sub_category\",\"accepted\":false}\n",
+      "stderr": ""
+    }
+  ],
+  "confirmedFormatMismatches": 2,
+  "limitations": [
+    "Historical pre-fix validator reproduction; the expected outcomes deliberately change after implementation.",
+    "Not the unavailable airs-cli-rs consumer suite."
+  ]
+}

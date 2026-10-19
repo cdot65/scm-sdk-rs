@@ -1,0 +1,8 @@
+[package]
+name="g25-repro"
+version="0.0.0"
+edition="2024"
+[workspace]
+[dependencies]
+scm-sdk={path="../../crates/scm-sdk",default-features=false,features=["red-team"]}
+serde_json="1"

@@ -68,6 +68,14 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 18:
+        return [["git", "diff", "--check"],
+                ["git", "diff", "--exit-code", "7f4a062", "--", "crates/scm-sdk", "Cargo.toml", "Cargo.lock", "LICENSE", "NOTICE"],
+                ["python", "-c", "import subprocess; assert not subprocess.check_output(['git','ls-files','--others','--exclude-standard','--','crates/scm-sdk','Cargo.toml','Cargo.lock','LICENSE','NOTICE']), 'Unexpected SDK implementation file before plan acceptance'"],
+                ["python", "tools/g25_reproduction.py"],
+                ["python", "tools/g25_audit.py", "--check"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_g25.py", "-v"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"]]
     if phase == 17:
         return [
             ["git", "diff", "--check", "b65f3c9..HEAD", "--", ".", ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"],

@@ -1,0 +1,240 @@
+[
+  {
+    "schema": "AttackListResponseSchema",
+    "field": "sub_category",
+    "value": {
+      "pagination": {
+        "total_items": 0
+      },
+      "data": [
+        {
+          "uuid": "550e8400-e29b-41d4-a716-446655440000",
+          "tsg_id": "example",
+          "job_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt": "example",
+          "status": "INIT",
+          "marked_safe": false,
+          "extra_info": {},
+          "threat": false,
+          "attack_type": "NORMAL",
+          "multi_turn": false,
+          "asr": 0,
+          "version": 0,
+          "error": false,
+          "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+          "category": "SECURITY",
+          "sub_category": "NEW_SERVICE_SUBCATEGORY",
+          "severity": "example",
+          "category_display_name": "example",
+          "sub_category_display_name": "example",
+          "attack_modality": "TEXT"
+        }
+      ]
+    },
+    "expectedSdk": true,
+    "expectedTypeScript": true
+  },
+  {
+    "schema": "ErrorLogListResponseSchema",
+    "field": "error_type",
+    "value": {
+      "pagination": {
+        "total_items": 0
+      },
+      "data": [
+        {
+          "job_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_version": 0,
+          "attack_id": "550e8400-e29b-41d4-a716-446655440000",
+          "error_type": "NEW_SERVICE_ERROR",
+          "error_source": "TARGET",
+          "error_message": "example",
+          "target_object": {},
+          "extra_info": {},
+          "version": 0,
+          "created_at": "2026-10-18T00:00:00Z",
+          "updated_at": "2026-10-18T00:00:00Z"
+        }
+      ]
+    },
+    "expectedSdk": true,
+    "expectedTypeScript": true
+  },
+  {
+    "schema": "ErrorLogListResponseSchema",
+    "field": "created_at",
+    "value": {
+      "pagination": {
+        "total_items": 0
+      },
+      "data": [
+        {
+          "job_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_version": 0,
+          "attack_id": "550e8400-e29b-41d4-a716-446655440000",
+          "error_type": "CONTENT_FILTER",
+          "error_source": "TARGET",
+          "error_message": "example",
+          "target_object": {},
+          "extra_info": {},
+          "version": 0,
+          "created_at": "service timestamp without RFC3339",
+          "updated_at": "2026-10-18T00:00:00Z"
+        }
+      ]
+    },
+    "expectedSdk": false,
+    "expectedTypeScript": true
+  },
+  {
+    "schema": "AttackListResponseSchema",
+    "field": "uuid",
+    "value": {
+      "pagination": {
+        "total_items": 0
+      },
+      "data": [
+        {
+          "uuid": "opaque-service-id",
+          "tsg_id": "example",
+          "job_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt": "example",
+          "status": "INIT",
+          "marked_safe": false,
+          "extra_info": {},
+          "threat": false,
+          "attack_type": "NORMAL",
+          "multi_turn": false,
+          "asr": 0,
+          "version": 0,
+          "error": false,
+          "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+          "category": "SECURITY",
+          "sub_category": "ADVERSARIAL_SUFFIX",
+          "severity": "example",
+          "category_display_name": "example",
+          "sub_category_display_name": "example",
+          "attack_modality": "TEXT"
+        }
+      ]
+    },
+    "expectedSdk": false,
+    "expectedTypeScript": true
+  },
+  {
+    "schema": "AttackListResponseSchema",
+    "field": "category_display_name",
+    "value": {
+      "pagination": {
+        "total_items": 0
+      },
+      "data": [
+        {
+          "uuid": "550e8400-e29b-41d4-a716-446655440000",
+          "tsg_id": "example",
+          "job_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt": "example",
+          "status": "INIT",
+          "marked_safe": false,
+          "extra_info": {},
+          "threat": false,
+          "attack_type": "NORMAL",
+          "multi_turn": false,
+          "asr": 0,
+          "version": 0,
+          "error": false,
+          "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+          "category": "SECURITY",
+          "sub_category": "ADVERSARIAL_SUFFIX",
+          "severity": "example",
+          "sub_category_display_name": "example",
+          "attack_modality": "TEXT"
+        }
+      ]
+    },
+    "expectedSdk": false,
+    "expectedTypeScript": false
+  },
+  {
+    "schema": "AttackListResponseSchema",
+    "field": "tsg_id",
+    "value": {
+      "pagination": {
+        "total_items": 0
+      },
+      "data": [
+        {
+          "uuid": "550e8400-e29b-41d4-a716-446655440000",
+          "tsg_id": 1,
+          "job_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt": "example",
+          "status": "INIT",
+          "marked_safe": false,
+          "extra_info": {},
+          "threat": false,
+          "attack_type": "NORMAL",
+          "multi_turn": false,
+          "asr": 0,
+          "version": 0,
+          "error": false,
+          "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+          "category": "SECURITY",
+          "sub_category": "ADVERSARIAL_SUFFIX",
+          "severity": "example",
+          "category_display_name": "example",
+          "sub_category_display_name": "example",
+          "attack_modality": "TEXT"
+        }
+      ]
+    },
+    "expectedSdk": false,
+    "expectedTypeScript": false
+  },
+  {
+    "schema": "AttackListResponseSchema",
+    "field": "sub_category",
+    "value": {
+      "pagination": {
+        "total_items": 0
+      },
+      "data": [
+        {
+          "uuid": "550e8400-e29b-41d4-a716-446655440000",
+          "tsg_id": "example",
+          "job_id": "550e8400-e29b-41d4-a716-446655440000",
+          "target_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt": "example",
+          "status": "INIT",
+          "marked_safe": false,
+          "extra_info": {},
+          "threat": false,
+          "attack_type": "NORMAL",
+          "multi_turn": false,
+          "asr": 0,
+          "version": 0,
+          "error": false,
+          "prompt_mapping_id": "550e8400-e29b-41d4-a716-446655440000",
+          "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+          "category": "SECURITY",
+          "sub_category": null,
+          "severity": "example",
+          "category_display_name": "example",
+          "sub_category_display_name": "example",
+          "attack_modality": "TEXT"
+        }
+      ]
+    },
+    "expectedSdk": false,
+    "expectedTypeScript": false
+  }
+]

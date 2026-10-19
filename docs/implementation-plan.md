@@ -162,3 +162,11 @@ The verified Rust checkout and remote are recorded above. Confirm registry-name 
 After 0.2.0 delivery, the maintainer authorized the exact Portkey a27feb9 delta
 through [phases15–17](portkey-access-policies-plan.md), targeting additive 0.2.1.
 Its explicit key-authenticated control plane remains separate from SCM OAuth.
+
+## G25 response compatibility patch
+
+Follow [the G25 plan](g25-response-compatibility-plan.md) for scm-sdk 0.2.2.
+Both response modes relax string formats across the SDK while requests retain
+strict validation. Existing Red Team responses must accept their frozen TypeScript
+contract, including preservation through typed decoding. Phases18–20 require
+reviewed planning, implementation and actual registry/remote delivery evidence.

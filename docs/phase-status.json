@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": null,
+  "active_phase": 19,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -3688,7 +3688,89 @@
           "docs/checks/phase-17-remote-ci-run-21.json"
         ]
       }
+    },
+    {
+      "id": 18,
+      "name": "G25 response compatibility plan and audit",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-18-attempt-02.json"
+      ],
+      "plan": "docs/g25-response-compatibility-plan.md",
+      "scope_evidence": [
+        "docs/g25-response-compatibility-plan.md",
+        "contracts/compatibility/g25/audit.json",
+        "tools/g25_audit.py",
+        "tools/test_g25.py",
+        "tools/check_phase.py",
+        "docs/PHASES.md",
+        "docs/implementation-plan.md",
+        "tools/g25_reproduction.py",
+        "docs/checks/phase-18-reproduction.json",
+        "tools/g25-repro/typescript.mts",
+        "tools/g25-repro/Cargo.toml",
+        "tools/g25-repro/cases.json",
+        "tools/g25-repro/Cargo.lock",
+        "tools/g25-repro/src/main.rs"
+      ],
+      "final_in_sequence": false,
+      "review_findings_disposition": [
+        {
+          "review": "docs/reviews/phase-18-attempt-01.json",
+          "disposition": "All nine findings addressed: tracked executable reproduction and phase check; actual read-input hashes and source hash assertions; fail-closed class-scoped token extraction with nested-argument support and count reconciliation; expanded source freeze; whole-SDK format inventory and deliberate-difference policy; implementation-plan link; complete scope evidence; explicit Catch/response handling and synthetic row shape; prose correction."
+        }
+      ],
+      "accepted_source_sha256": "36c284336898c59987a8a921dd8ec2b63b93a7ce1defd9ab204af00cb2f0e97e",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-18-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-18.json"
+          ],
+          "source_sha256": "36c284336898c59987a8a921dd8ec2b63b93a7ce1defd9ab204af00cb2f0e97e"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-18-attempt-02.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": 19,
+      "name": "G25 response compatibility implementation",
+      "status": "in_progress",
+      "reviews": [],
+      "plan": "docs/g25-response-compatibility-plan.md",
+      "scope_evidence": [
+        "docs/g25-response-compatibility-plan.md",
+        "contracts/compatibility/g25/audit.json",
+        "tools/g25_audit.py"
+      ],
+      "final_in_sequence": false
+    },
+    {
+      "id": 20,
+      "name": "G25 0.2.2 qualification and delivery",
+      "status": "pending",
+      "reviews": [],
+      "plan": "docs/g25-response-compatibility-plan.md",
+      "scope_evidence": [
+        "docs/g25-response-compatibility-plan.md",
+        "contracts/compatibility/g25/audit.json",
+        "tools/g25_audit.py"
+      ],
+      "final_in_sequence": true
     }
   ],
-  "active_followup_plan": "docs/portkey-access-policies-plan.md"
+  "active_followup_plan": "docs/g25-response-compatibility-plan.md"
 }
