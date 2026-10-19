@@ -4202,7 +4202,3425 @@
     }
   ],
   "plan": "docs/red-team-management-0.86-plan.md",
-  "runtimeAdoption": "pending_phase22",
+  "runtimeAdoption": "adopted_phase22",
   "schemaVersion": 1,
-  "sourceId": "prisma-airs-redteam/management/mp-openapi.yaml@0.86.0+582e30543bf2"
+  "sourceId": "prisma-airs-redteam/management/mp-openapi.yaml@0.86.0+582e30543bf2",
+  "targetResponseDeclarations": [
+    {
+      "comparisonLimit": "Field presence/nullability comparison and reviewed nested fixtures, not a formal proof of complete JSON Schema equivalence. Frozen response tolerance and passthrough semantics remain authoritative.",
+      "fieldComparisons": [
+        {
+          "field": "active",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012140"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is active",
+            "title": "Active",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "adapter_secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012117"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Frozen Secret Manager version of the referenced adapter, pinned at scan (job) creation so an adapter edited mid-scan doesn't change the script/secrets that scan uses. Server-managed; null for non-adapter targets.",
+            "title": "Adapter Secret Version"
+          }
+        },
+        {
+          "field": "adapter_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012109"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Custom adapter this target uses. Required when connection_type is CUSTOM_TARGET_ADAPTER; must be null for every other connection type.",
+            "title": "Adapter Uuid"
+          }
+        },
+        {
+          "field": "additional_context",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012184"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetAdditionalContext"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Additional context with source tracking (user + profiler)"
+          }
+        },
+        {
+          "field": "api_endpoint_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012153"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApiEndpointType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Accessibility type of the API endpoint",
+            "examples": [
+              "PUBLIC",
+              "PRIVATE",
+              "NETWORK_BROKER"
+            ]
+          }
+        },
+        {
+          "field": "auth_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012186"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/red_team_shared__schemas__auth_config__AuthType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication method for target API access",
+            "examples": [
+              "HEADERS",
+              "BASIC_AUTH",
+              "OAUTH2"
+            ]
+          }
+        },
+        {
+          "field": "canonical_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012113"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Partner-supplied stable identifier. Null for targets without partner integration metadata (most targets).",
+            "title": "Canonical Id"
+          }
+        },
+        {
+          "field": "connection_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012150"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetConnectionType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Connection type/provider for the target",
+            "examples": [
+              "CUSTOM",
+              "OPENAI",
+              "BEDROCK"
+            ]
+          }
+        },
+        {
+          "field": "created_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012142"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "created_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012172"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of target creator",
+            "title": "Created By User Id"
+          }
+        },
+        {
+          "field": "description",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012144"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional target description",
+            "examples": [
+              "AI model for testing"
+            ],
+            "title": "Description"
+          }
+        },
+        {
+          "field": "extra_info",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012161"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": {},
+            "description": "Additional configuration or metadata for the target",
+            "examples": [
+              {
+                "custom_key": "custom_value"
+              }
+            ],
+            "title": "Extra Info"
+          }
+        },
+        {
+          "field": "name",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012138"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Target name",
+            "examples": [
+              "GPT 4.1 Nano"
+            ],
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "field": "profiling_progress",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012121"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling progress percentage (0–100)",
+            "title": "Profiling Progress"
+          }
+        },
+        {
+          "field": "profiling_status",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012181"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfilingStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling status; null unless the target is ACTIVE"
+          }
+        },
+        {
+          "field": "response_mode",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012156"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResponseMode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Response mode for API interactions",
+            "examples": [
+              "REST",
+              "STREAMING",
+              "WEBSOCKET"
+            ]
+          }
+        },
+        {
+          "field": "secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012169"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Secret Manager version for connection_params. When present, sensitive connection data is stored in Secret Manager. When None, connection_params are stored in GCS (legacy).",
+            "title": "Secret Version"
+          }
+        },
+        {
+          "field": "session_supported",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012159"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "default": false,
+            "description": "Whether target supports session for multi-turn conversations",
+            "title": "Session Supported",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "status",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012139"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetStatus",
+            "description": "Target status"
+          }
+        },
+        {
+          "field": "target_background",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012179"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetBackground"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target background info: industry, use_case, competitors"
+          }
+        },
+        {
+          "field": "target_metadata",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012178"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetMetadata",
+            "description": "Target metadata and configuration options"
+          }
+        },
+        {
+          "field": "target_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012147"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type of target"
+          }
+        },
+        {
+          "field": "tsg_id",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012137"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "title": "Tsg Id",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012143"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012175"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of last target updater",
+            "title": "Updated By User Id"
+          }
+        },
+        {
+          "field": "uuid",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012136"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "format": "uuid",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "field": "validated",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012141"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is validated",
+            "title": "Validated",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012166"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Configuration version",
+            "title": "Version"
+          }
+        }
+      ],
+      "fixture": "crates/scm-sdk/tests/red_team_management_contracts.rs::all_five_operations_preserve_declared_sensitive_response_shapes",
+      "method": "POST",
+      "path": "/v1/target",
+      "requiredFields": [
+        "active",
+        "created_at",
+        "name",
+        "status",
+        "tsg_id",
+        "updated_at",
+        "uuid",
+        "validated"
+      ],
+      "responseModes": [
+        "Response",
+        "ResponseWithoutDefaults"
+      ],
+      "retainedSdkRoot": "src/models/red-team.ts#TargetResponseSchema",
+      "retainedSdkSchema": "s012107",
+      "sdkAdditionalFields": [
+        "adapter_variable_overrides",
+        "auth_config",
+        "connection_params",
+        "network_broker_channel_uuid"
+      ],
+      "supersetJustification": "All declared top-level fields are represented, required fields agree, and declared nullable fields remain accepted. The shared root retains optional credentials and connection fields, including on operations whose vendor response base omits them. Nested provider/auth/multi-turn variants are verified by the bound fixture matrix.",
+      "vendorSchema": "TargetResponseSchema"
+    },
+    {
+      "comparisonLimit": "Field presence/nullability comparison and reviewed nested fixtures, not a formal proof of complete JSON Schema equivalence. Frozen response tolerance and passthrough semantics remain authoritative.",
+      "fieldComparisons": [
+        {
+          "field": "active",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012140"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is active",
+            "title": "Active",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "adapter_secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012117"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Frozen Secret Manager version of the referenced adapter, pinned at scan (job) creation so an adapter edited mid-scan doesn't change the script/secrets that scan uses. Server-managed; null for non-adapter targets.",
+            "title": "Adapter Secret Version"
+          }
+        },
+        {
+          "field": "adapter_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012109"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Custom adapter this target uses. Required when connection_type is CUSTOM_TARGET_ADAPTER; must be null for every other connection type.",
+            "title": "Adapter Uuid"
+          }
+        },
+        {
+          "field": "adapter_variable_overrides",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012133"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AdapterVarResponseSchema"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target-level overrides for the adapter's variables (secret values masked). Only set for CUSTOM_TARGET_ADAPTER targets.",
+            "title": "Adapter Variable Overrides"
+          }
+        },
+        {
+          "field": "additional_context",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012184"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetAdditionalContext"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Additional context with source tracking (user + profiler)"
+          }
+        },
+        {
+          "field": "api_endpoint_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012153"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApiEndpointType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Accessibility type of the API endpoint",
+            "examples": [
+              "PUBLIC",
+              "PRIVATE",
+              "NETWORK_BROKER"
+            ]
+          }
+        },
+        {
+          "field": "auth_config",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012127"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HeadersAuthConfigRedact"
+              },
+              {
+                "$ref": "#/components/schemas/BasicAuthAuthConfigRedact"
+              },
+              {
+                "$ref": "#/components/schemas/OAuth2AuthConfigRedact"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication configuration (sensitive data masked for security)",
+            "title": "Auth Config"
+          }
+        },
+        {
+          "field": "auth_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012186"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/red_team_shared__schemas__auth_config__AuthType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication method for target API access",
+            "examples": [
+              "HEADERS",
+              "BASIC_AUTH",
+              "OAUTH2"
+            ]
+          }
+        },
+        {
+          "field": "canonical_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012113"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Partner-supplied stable identifier. Null for targets without partner integration metadata (most targets).",
+            "title": "Canonical Id"
+          }
+        },
+        {
+          "field": "connection_params",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012125"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/NativeConnectionParamsRedactBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/WebSocketConnectionParamsRedactBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StreamingConnectionParamsRedactBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RestConnectionParamsRedactBase"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "API connection parameters (sensitive data masked for security)",
+            "title": "Connection Params"
+          }
+        },
+        {
+          "field": "connection_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012150"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetConnectionType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Connection type/provider for the target",
+            "examples": [
+              "CUSTOM",
+              "OPENAI",
+              "BEDROCK"
+            ]
+          }
+        },
+        {
+          "field": "created_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012142"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "created_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012172"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of target creator",
+            "title": "Created By User Id"
+          }
+        },
+        {
+          "field": "description",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012144"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional target description",
+            "examples": [
+              "AI model for testing"
+            ],
+            "title": "Description"
+          }
+        },
+        {
+          "field": "extra_info",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012161"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": {},
+            "description": "Additional configuration or metadata for the target",
+            "examples": [
+              {
+                "custom_key": "custom_value"
+              }
+            ],
+            "title": "Extra Info"
+          }
+        },
+        {
+          "field": "name",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012138"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Target name",
+            "examples": [
+              "GPT 4.1 Nano"
+            ],
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "field": "network_broker_channel_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012129"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Network broker channel UUID for routing requests. Required when api_endpoint_type is NETWORK_BROKER.",
+            "examples": [
+              "550e8400-e29b-41d4-a716-446655440000"
+            ],
+            "title": "Network Broker Channel Uuid"
+          }
+        },
+        {
+          "field": "profiling_progress",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012121"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling progress percentage (0–100)",
+            "title": "Profiling Progress"
+          }
+        },
+        {
+          "field": "profiling_status",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012181"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfilingStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling status; null unless the target is ACTIVE"
+          }
+        },
+        {
+          "field": "response_mode",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012156"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResponseMode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Response mode for API interactions",
+            "examples": [
+              "REST",
+              "STREAMING",
+              "WEBSOCKET"
+            ]
+          }
+        },
+        {
+          "field": "secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012169"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Secret Manager version for connection_params. When present, sensitive connection data is stored in Secret Manager. When None, connection_params are stored in GCS (legacy).",
+            "title": "Secret Version"
+          }
+        },
+        {
+          "field": "session_supported",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012159"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "default": false,
+            "description": "Whether target supports session for multi-turn conversations",
+            "title": "Session Supported",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "status",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012139"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetStatus",
+            "description": "Target status"
+          }
+        },
+        {
+          "field": "target_background",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012179"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetBackground"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target background info: industry, use_case, competitors"
+          }
+        },
+        {
+          "field": "target_metadata",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012178"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetMetadata",
+            "description": "Target metadata and configuration options"
+          }
+        },
+        {
+          "field": "target_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012147"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type of target"
+          }
+        },
+        {
+          "field": "tsg_id",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012137"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "title": "Tsg Id",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012143"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012175"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of last target updater",
+            "title": "Updated By User Id"
+          }
+        },
+        {
+          "field": "uuid",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012136"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "format": "uuid",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "field": "validated",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012141"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is validated",
+            "title": "Validated",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012166"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Configuration version reference for encrypted config",
+            "title": "Version"
+          }
+        }
+      ],
+      "fixture": "crates/scm-sdk/tests/red_team_management_contracts.rs::all_five_operations_preserve_declared_sensitive_response_shapes",
+      "method": "GET",
+      "path": "/v1/target/{target_uuid}",
+      "requiredFields": [
+        "active",
+        "created_at",
+        "name",
+        "status",
+        "tsg_id",
+        "updated_at",
+        "uuid",
+        "validated"
+      ],
+      "responseModes": [
+        "Response",
+        "ResponseWithoutDefaults"
+      ],
+      "retainedSdkRoot": "src/models/red-team.ts#TargetResponseSchema",
+      "retainedSdkSchema": "s012107",
+      "sdkAdditionalFields": [],
+      "supersetJustification": "All declared top-level fields are represented, required fields agree, and declared nullable fields remain accepted. The shared root retains optional credentials and connection fields, including on operations whose vendor response base omits them. Nested provider/auth/multi-turn variants are verified by the bound fixture matrix.",
+      "vendorSchema": "TargetRedactSchema"
+    },
+    {
+      "comparisonLimit": "Field presence/nullability comparison and reviewed nested fixtures, not a formal proof of complete JSON Schema equivalence. Frozen response tolerance and passthrough semantics remain authoritative.",
+      "fieldComparisons": [
+        {
+          "field": "active",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012140"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is active",
+            "title": "Active",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "adapter_secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012117"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Frozen Secret Manager version of the referenced adapter, pinned at scan (job) creation so an adapter edited mid-scan doesn't change the script/secrets that scan uses. Server-managed; null for non-adapter targets.",
+            "title": "Adapter Secret Version"
+          }
+        },
+        {
+          "field": "adapter_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012109"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Custom adapter this target uses. Required when connection_type is CUSTOM_TARGET_ADAPTER; must be null for every other connection type.",
+            "title": "Adapter Uuid"
+          }
+        },
+        {
+          "field": "adapter_variable_overrides",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012133"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AdapterVarBase"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target-level overrides for the adapter's variables/secrets",
+            "title": "Adapter Variable Overrides"
+          }
+        },
+        {
+          "field": "additional_context",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012184"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetAdditionalContext"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Additional context with source tracking (user + profiler)"
+          }
+        },
+        {
+          "field": "api_endpoint_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012153"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApiEndpointType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Accessibility type of the API endpoint",
+            "examples": [
+              "PUBLIC",
+              "PRIVATE",
+              "NETWORK_BROKER"
+            ]
+          }
+        },
+        {
+          "field": "auth_config",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012127"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HeadersAuthConfig"
+              },
+              {
+                "$ref": "#/components/schemas/BasicAuthAuthConfig"
+              },
+              {
+                "$ref": "#/components/schemas/OAuth2AuthConfig"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication configuration (resolved based on auth_type)",
+            "title": "Auth Config"
+          }
+        },
+        {
+          "field": "auth_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012186"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/red_team_shared__schemas__auth_config__AuthType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication method for target API access",
+            "examples": [
+              "HEADERS",
+              "BASIC_AUTH",
+              "OAUTH2"
+            ]
+          }
+        },
+        {
+          "field": "canonical_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012113"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Partner-supplied stable identifier. Null for targets without partner integration metadata (most targets).",
+            "title": "Canonical Id"
+          }
+        },
+        {
+          "field": "connection_params",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012125"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/NativeConnectionParamsBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/WebSocketConnectionParamsBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StreamingConnectionParamsBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RestConnectionParamsBase"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "API connection parameters (sensitive data masked for security)",
+            "examples": [
+              {
+                "api_endpoint": "https://api.openai.com/v1/responses",
+                "request_headers": {
+                  "Authorization": "Bearer sk-xxx",
+                  "Content-Type": "application/json"
+                },
+                "request_json": {
+                  "input": [
+                    {
+                      "content": [
+                        {
+                          "text": "{INPUT}",
+                          "type": "input_text"
+                        }
+                      ],
+                      "role": "user"
+                    }
+                  ],
+                  "model": "gpt-4.1-nano"
+                },
+                "response_json": {
+                  "content": "{RESPONSE}"
+                },
+                "response_key": "content"
+              }
+            ],
+            "title": "Connection Params"
+          }
+        },
+        {
+          "field": "connection_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012150"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetConnectionType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Connection type/provider for the target",
+            "examples": [
+              "CUSTOM",
+              "OPENAI",
+              "BEDROCK"
+            ]
+          }
+        },
+        {
+          "field": "created_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012142"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "created_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012172"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of target creator",
+            "title": "Created By User Id"
+          }
+        },
+        {
+          "field": "description",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012144"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional target description",
+            "examples": [
+              "AI model for testing"
+            ],
+            "title": "Description"
+          }
+        },
+        {
+          "field": "extra_info",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012161"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": {},
+            "description": "Additional configuration or metadata for the target",
+            "examples": [
+              {
+                "custom_key": "custom_value"
+              }
+            ],
+            "title": "Extra Info"
+          }
+        },
+        {
+          "field": "name",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012138"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Target name",
+            "examples": [
+              "GPT 4.1 Nano"
+            ],
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "field": "network_broker_channel_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012129"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Network broker channel UUID for routing requests. Required when api_endpoint_type is NETWORK_BROKER.",
+            "examples": [
+              "550e8400-e29b-41d4-a716-446655440000"
+            ],
+            "title": "Network Broker Channel Uuid"
+          }
+        },
+        {
+          "field": "profiling_progress",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012121"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling progress percentage (0–100)",
+            "title": "Profiling Progress"
+          }
+        },
+        {
+          "field": "profiling_status",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012181"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfilingStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling status; null unless the target is ACTIVE"
+          }
+        },
+        {
+          "field": "response_mode",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012156"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResponseMode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Response mode for API interactions",
+            "examples": [
+              "REST",
+              "STREAMING",
+              "WEBSOCKET"
+            ]
+          }
+        },
+        {
+          "field": "secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012169"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Secret Manager version for connection_params. When present, sensitive connection data is stored in Secret Manager. When None, connection_params are stored in GCS (legacy).",
+            "title": "Secret Version"
+          }
+        },
+        {
+          "field": "session_supported",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012159"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "default": false,
+            "description": "Whether target supports session for multi-turn conversations",
+            "title": "Session Supported",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "status",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012139"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetStatus",
+            "description": "Target status"
+          }
+        },
+        {
+          "field": "target_background",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012179"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetBackground"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target background info: industry, use_case, competitors"
+          }
+        },
+        {
+          "field": "target_metadata",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012178"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetMetadata",
+            "description": "Target metadata and configuration options"
+          }
+        },
+        {
+          "field": "target_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012147"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type of target"
+          }
+        },
+        {
+          "field": "tsg_id",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012137"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "title": "Tsg Id",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012143"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012175"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of last target updater",
+            "title": "Updated By User Id"
+          }
+        },
+        {
+          "field": "uuid",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012136"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "format": "uuid",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "field": "validated",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012141"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is validated",
+            "title": "Validated",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012166"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Configuration version reference for encrypted config",
+            "title": "Version"
+          }
+        }
+      ],
+      "fixture": "crates/scm-sdk/tests/red_team_management_contracts.rs::all_five_operations_preserve_declared_sensitive_response_shapes",
+      "method": "PUT",
+      "path": "/v1/target/{target_uuid}",
+      "requiredFields": [
+        "active",
+        "created_at",
+        "name",
+        "status",
+        "tsg_id",
+        "updated_at",
+        "uuid",
+        "validated"
+      ],
+      "responseModes": [
+        "Response",
+        "ResponseWithoutDefaults"
+      ],
+      "retainedSdkRoot": "src/models/red-team.ts#TargetResponseSchema",
+      "retainedSdkSchema": "s012107",
+      "sdkAdditionalFields": [],
+      "supersetJustification": "All declared top-level fields are represented, required fields agree, and declared nullable fields remain accepted. The shared root retains optional credentials and connection fields, including on operations whose vendor response base omits them. Nested provider/auth/multi-turn variants are verified by the bound fixture matrix.",
+      "vendorSchema": "TargetSchema"
+    },
+    {
+      "comparisonLimit": "Field presence/nullability comparison and reviewed nested fixtures, not a formal proof of complete JSON Schema equivalence. Frozen response tolerance and passthrough semantics remain authoritative.",
+      "fieldComparisons": [
+        {
+          "field": "active",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012140"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is active",
+            "title": "Active",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "adapter_secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012117"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Frozen Secret Manager version of the referenced adapter, pinned at scan (job) creation so an adapter edited mid-scan doesn't change the script/secrets that scan uses. Server-managed; null for non-adapter targets.",
+            "title": "Adapter Secret Version"
+          }
+        },
+        {
+          "field": "adapter_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012109"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Custom adapter this target uses. Required when connection_type is CUSTOM_TARGET_ADAPTER; must be null for every other connection type.",
+            "title": "Adapter Uuid"
+          }
+        },
+        {
+          "field": "additional_context",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012184"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetAdditionalContext"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Additional context with source tracking (user + profiler)"
+          }
+        },
+        {
+          "field": "api_endpoint_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012153"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApiEndpointType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Accessibility type of the API endpoint",
+            "examples": [
+              "PUBLIC",
+              "PRIVATE",
+              "NETWORK_BROKER"
+            ]
+          }
+        },
+        {
+          "field": "auth_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012186"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/red_team_shared__schemas__auth_config__AuthType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication method for target API access",
+            "examples": [
+              "HEADERS",
+              "BASIC_AUTH",
+              "OAUTH2"
+            ]
+          }
+        },
+        {
+          "field": "canonical_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012113"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Partner-supplied stable identifier. Null for targets without partner integration metadata (most targets).",
+            "title": "Canonical Id"
+          }
+        },
+        {
+          "field": "connection_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012150"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetConnectionType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Connection type/provider for the target",
+            "examples": [
+              "CUSTOM",
+              "OPENAI",
+              "BEDROCK"
+            ]
+          }
+        },
+        {
+          "field": "created_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012142"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "created_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012172"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of target creator",
+            "title": "Created By User Id"
+          }
+        },
+        {
+          "field": "description",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012144"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional target description",
+            "examples": [
+              "AI model for testing"
+            ],
+            "title": "Description"
+          }
+        },
+        {
+          "field": "extra_info",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012161"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": {},
+            "description": "Additional configuration or metadata for the target",
+            "examples": [
+              {
+                "custom_key": "custom_value"
+              }
+            ],
+            "title": "Extra Info"
+          }
+        },
+        {
+          "field": "name",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012138"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Target name",
+            "examples": [
+              "GPT 4.1 Nano"
+            ],
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "field": "profiling_progress",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012121"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling progress percentage (0–100)",
+            "title": "Profiling Progress"
+          }
+        },
+        {
+          "field": "profiling_status",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012181"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfilingStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling status; null unless the target is ACTIVE"
+          }
+        },
+        {
+          "field": "response_mode",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012156"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResponseMode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Response mode for API interactions",
+            "examples": [
+              "REST",
+              "STREAMING",
+              "WEBSOCKET"
+            ]
+          }
+        },
+        {
+          "field": "secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012169"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Secret Manager version for connection_params. When present, sensitive connection data is stored in Secret Manager. When None, connection_params are stored in GCS (legacy).",
+            "title": "Secret Version"
+          }
+        },
+        {
+          "field": "session_supported",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012159"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "default": false,
+            "description": "Whether target supports session for multi-turn conversations",
+            "title": "Session Supported",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "status",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012139"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetStatus",
+            "description": "Target status"
+          }
+        },
+        {
+          "field": "target_background",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012179"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetBackground"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target background info: industry, use_case, competitors"
+          }
+        },
+        {
+          "field": "target_metadata",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012178"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetMetadata",
+            "description": "Target metadata and configuration options"
+          }
+        },
+        {
+          "field": "target_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012147"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type of target"
+          }
+        },
+        {
+          "field": "tsg_id",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012137"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "title": "Tsg Id",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012143"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012175"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of last target updater",
+            "title": "Updated By User Id"
+          }
+        },
+        {
+          "field": "uuid",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012136"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "format": "uuid",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "field": "validated",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012141"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is validated",
+            "title": "Validated",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012166"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Configuration version",
+            "title": "Version"
+          }
+        }
+      ],
+      "fixture": "crates/scm-sdk/tests/red_team_management_contracts.rs::all_five_operations_preserve_declared_sensitive_response_shapes",
+      "method": "POST",
+      "path": "/v1/target/probe",
+      "requiredFields": [
+        "active",
+        "created_at",
+        "name",
+        "status",
+        "tsg_id",
+        "updated_at",
+        "uuid",
+        "validated"
+      ],
+      "responseModes": [
+        "Response",
+        "ResponseWithoutDefaults"
+      ],
+      "retainedSdkRoot": "src/models/red-team.ts#TargetResponseSchema",
+      "retainedSdkSchema": "s012107",
+      "sdkAdditionalFields": [
+        "adapter_variable_overrides",
+        "auth_config",
+        "connection_params",
+        "network_broker_channel_uuid"
+      ],
+      "supersetJustification": "All declared top-level fields are represented, required fields agree, and declared nullable fields remain accepted. The shared root retains optional credentials and connection fields, including on operations whose vendor response base omits them. Nested provider/auth/multi-turn variants are verified by the bound fixture matrix.",
+      "vendorSchema": "TargetResponseSchema"
+    },
+    {
+      "comparisonLimit": "Field presence/nullability comparison and reviewed nested fixtures, not a formal proof of complete JSON Schema equivalence. Frozen response tolerance and passthrough semantics remain authoritative.",
+      "fieldComparisons": [
+        {
+          "field": "active",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012140"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is active",
+            "title": "Active",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "adapter_secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012117"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Frozen Secret Manager version of the referenced adapter, pinned at scan (job) creation so an adapter edited mid-scan doesn't change the script/secrets that scan uses. Server-managed; null for non-adapter targets.",
+            "title": "Adapter Secret Version"
+          }
+        },
+        {
+          "field": "adapter_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012109"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Custom adapter this target uses. Required when connection_type is CUSTOM_TARGET_ADAPTER; must be null for every other connection type.",
+            "title": "Adapter Uuid"
+          }
+        },
+        {
+          "field": "adapter_variable_overrides",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012133"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AdapterVarBase"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target-level overrides for the adapter's variables/secrets",
+            "title": "Adapter Variable Overrides"
+          }
+        },
+        {
+          "field": "additional_context",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012184"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetAdditionalContext"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Additional context with source tracking (user + profiler)"
+          }
+        },
+        {
+          "field": "api_endpoint_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012153"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApiEndpointType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Accessibility type of the API endpoint",
+            "examples": [
+              "PUBLIC",
+              "PRIVATE",
+              "NETWORK_BROKER"
+            ]
+          }
+        },
+        {
+          "field": "auth_config",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012127"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HeadersAuthConfig"
+              },
+              {
+                "$ref": "#/components/schemas/BasicAuthAuthConfig"
+              },
+              {
+                "$ref": "#/components/schemas/OAuth2AuthConfig"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication configuration (resolved based on auth_type)",
+            "title": "Auth Config"
+          }
+        },
+        {
+          "field": "auth_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012186"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/red_team_shared__schemas__auth_config__AuthType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Authentication method for target API access",
+            "examples": [
+              "HEADERS",
+              "BASIC_AUTH",
+              "OAUTH2"
+            ]
+          }
+        },
+        {
+          "field": "canonical_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012113"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Partner-supplied stable identifier. Null for targets without partner integration metadata (most targets).",
+            "title": "Canonical Id"
+          }
+        },
+        {
+          "field": "connection_params",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012125"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/NativeConnectionParamsBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/WebSocketConnectionParamsBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StreamingConnectionParamsBase"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RestConnectionParamsBase"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "API connection parameters (sensitive data masked for security)",
+            "examples": [
+              {
+                "api_endpoint": "https://api.openai.com/v1/responses",
+                "request_headers": {
+                  "Authorization": "Bearer sk-xxx",
+                  "Content-Type": "application/json"
+                },
+                "request_json": {
+                  "input": [
+                    {
+                      "content": [
+                        {
+                          "text": "{INPUT}",
+                          "type": "input_text"
+                        }
+                      ],
+                      "role": "user"
+                    }
+                  ],
+                  "model": "gpt-4.1-nano"
+                },
+                "response_json": {
+                  "content": "{RESPONSE}"
+                },
+                "response_key": "content"
+              }
+            ],
+            "title": "Connection Params"
+          }
+        },
+        {
+          "field": "connection_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012150"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetConnectionType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Connection type/provider for the target",
+            "examples": [
+              "CUSTOM",
+              "OPENAI",
+              "BEDROCK"
+            ]
+          }
+        },
+        {
+          "field": "created_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012142"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "created_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012172"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of target creator",
+            "title": "Created By User Id"
+          }
+        },
+        {
+          "field": "description",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012144"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional target description",
+            "examples": [
+              "AI model for testing"
+            ],
+            "title": "Description"
+          }
+        },
+        {
+          "field": "extra_info",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012161"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": {},
+            "description": "Additional configuration or metadata for the target",
+            "examples": [
+              {
+                "custom_key": "custom_value"
+              }
+            ],
+            "title": "Extra Info"
+          }
+        },
+        {
+          "field": "name",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012138"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Target name",
+            "examples": [
+              "GPT 4.1 Nano"
+            ],
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "field": "network_broker_channel_uuid",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012129"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Network broker channel UUID for routing requests. Required when api_endpoint_type is NETWORK_BROKER.",
+            "examples": [
+              "550e8400-e29b-41d4-a716-446655440000"
+            ],
+            "title": "Network Broker Channel Uuid"
+          }
+        },
+        {
+          "field": "profiling_progress",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012121"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling progress percentage (0–100)",
+            "title": "Profiling Progress"
+          }
+        },
+        {
+          "field": "profiling_status",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012181"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfilingStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Profiling status; null unless the target is ACTIVE"
+          }
+        },
+        {
+          "field": "response_mode",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012156"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResponseMode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Response mode for API interactions",
+            "examples": [
+              "REST",
+              "STREAMING",
+              "WEBSOCKET"
+            ]
+          }
+        },
+        {
+          "field": "secret_version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012169"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Secret Manager version for connection_params. When present, sensitive connection data is stored in Secret Manager. When None, connection_params are stored in GCS (legacy).",
+            "title": "Secret Version"
+          }
+        },
+        {
+          "field": "session_supported",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012159"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "default": false,
+            "description": "Whether target supports session for multi-turn conversations",
+            "title": "Session Supported",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "status",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012139"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetStatus",
+            "description": "Target status"
+          }
+        },
+        {
+          "field": "target_background",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012179"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetBackground"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Target background info: industry, use_case, competitors"
+          }
+        },
+        {
+          "field": "target_metadata",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012178"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "$ref": "#/components/schemas/TargetMetadata",
+            "description": "Target metadata and configuration options"
+          }
+        },
+        {
+          "field": "target_type",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012147"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type of target"
+          }
+        },
+        {
+          "field": "tsg_id",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012137"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "title": "Tsg Id",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_at",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012143"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Last update timestamp",
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        {
+          "field": "updated_by_user_id",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012175"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "User ID of last target updater",
+            "title": "Updated By User Id"
+          }
+        },
+        {
+          "field": "uuid",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012136"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "format": "uuid",
+            "title": "Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "field": "validated",
+          "sdkAcceptsMissing": false,
+          "sdkAcceptsNull": false,
+          "sdkFieldSchema": {
+            "$ref": "s012141"
+          },
+          "vendorExplicitlyNullable": false,
+          "vendorRequired": true,
+          "vendorSchema": {
+            "description": "Whether target is validated",
+            "title": "Validated",
+            "type": "boolean"
+          }
+        },
+        {
+          "field": "version",
+          "sdkAcceptsMissing": true,
+          "sdkAcceptsNull": true,
+          "sdkFieldSchema": {
+            "$ref": "s012166"
+          },
+          "vendorExplicitlyNullable": true,
+          "vendorRequired": false,
+          "vendorSchema": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Configuration version reference for encrypted config",
+            "title": "Version"
+          }
+        }
+      ],
+      "fixture": "crates/scm-sdk/tests/red_team_management_contracts.rs::all_five_operations_preserve_declared_sensitive_response_shapes",
+      "method": "PUT",
+      "path": "/v1/target/{target_uuid}/profile",
+      "requiredFields": [
+        "active",
+        "created_at",
+        "name",
+        "status",
+        "tsg_id",
+        "updated_at",
+        "uuid",
+        "validated"
+      ],
+      "responseModes": [
+        "Response",
+        "ResponseWithoutDefaults"
+      ],
+      "retainedSdkRoot": "src/models/red-team.ts#TargetResponseSchema",
+      "retainedSdkSchema": "s012107",
+      "sdkAdditionalFields": [],
+      "supersetJustification": "All declared top-level fields are represented, required fields agree, and declared nullable fields remain accepted. The shared root retains optional credentials and connection fields, including on operations whose vendor response base omits them. Nested provider/auth/multi-turn variants are verified by the bound fixture matrix.",
+      "vendorSchema": "TargetSchema"
+    }
+  ]
 }

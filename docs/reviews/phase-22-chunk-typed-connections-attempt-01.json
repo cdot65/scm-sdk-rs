@@ -1,0 +1,119 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 22,
+  "attempt": 1,
+  "reviewed_at": "2026-10-19T15:02:37.214928+00:00",
+  "source_sha256": "a5f303826de01da8434122faa798a005a981c4595a1e4fa0ec7808a7ad784881",
+  "source_unchanged": true,
+  "checks_sha256": "dcc8741d554afcc683470b9e573294e17d92e44bd9b312ef22be49112ba5c19d",
+  "prompt_sha256": "ba5feafd10e2aaa18b7ea2d5abadbd55fd38e2290adcecb0866367c07e340153",
+  "cli_output_sha256": "c8d2735272856506dc88e53242c03447ae373d8007abca0740df0a572203168d",
+  "gate_passed": true,
+  "review": {
+    "score": 8.5,
+    "summary": "Phase 22 chunk \"typed-connections\" delivers a faithful, deliberately narrow additive management 0.86.0 model layer: three new vendor models in a dedicated generated `red_team_management` namespace, two appended union tails, two schema-bound enum tails, twelve optional typed projections over formerly raw passthrough keys, hash-bound overlay/extension ledgers, updated NOTICE (root and packaged), and a genuinely strengthened `--require-through-phase 22` gate that binds implementation bytes and wire-test names. I verified vendor fidelity against the pinned YAML, that only four frozen graph nodes change, that legacy union prefixes and first-success order are preserved, that the response regex bypass and the 23 frozen default bindings are untouched, that projections cannot narrow validation, and that secrets stay redacted in Debug, errors and transport formatting. Evidence is real and executed: full phase command list at the reviewed SHA, including cargo fmt/check/clippy -D warnings/test/examples/doc on 1.89.0 and 1.99.0 for both red-team feature sets, and a re-executed private-material scan. Deficiencies are real but not blocking: two changed derived ledgers in the declared chunk scope have no owning verifier in the phase-22 command list; the frozen TS-parity enums `ResponseMode`/`TargetConnectionType` keep the old value sets with no documented rationale; `VertexAIConnectionRedactParams` is an unreferenced public model with no explanatory rustdoc; the overlay ledger hardcodes its enum extensions instead of deriving them; and the main five-operation wire test file is name-bound but not hash-bound. Python-level unit coverage of the overlay is thin (5 tests), though the Rust suite compensates substantially.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/check_phase.py",
+        "line": 179,
+        "description": "`management_commands(22)` omits the owning verifiers of two derived ledgers that are in this chunk's declared scope and were modified: `contracts/native-fixtures/gateway-specimens.json` (owner `tools/verify-gateway-specimens.mts --check`, present only in phases 12/21 at lines 173/336) and `contracts/native-gateway-bindings.json` (owner `tools/verify_gateway_bindings.py --check`, present only in phase 12 at line 327). Both files embed input digests that had to be rebound when `contracts/manifest.json` and `contracts/native-operations.json` changed in this phase, and no executed phase-22 check re-derives or re-verifies them. I cross-checked that the manifest digest recorded in gateway-specimens.json (`f8dec5a0\u2026`) equals the digest that `model_fixtures.py --check` verified against the actual manifest bytes, so the rebinding looks correct, but that is an inference rather than executed evidence for these two artifacts. No governance test requires the coverage either: `tools/test_management_phases.py:128-134` asserts the gateway proof verifier only for phase 21.",
+        "required_fix": "Add `[\"tools/node_modules/.bin/tsx\", \"tools/verify-gateway-specimens.mts\", \"--check\"]` and `[\"python\", \"tools/verify_gateway_bindings.py\", \"--check\"]` to `management_commands(22)` (and to phases 23-25 where those ledgers remain in scope), extend `tools/test_management_phases.py` with an assertion that every contract ledger inside the active phase scope has its generating/verifying tool in that phase's command list, and re-run the phase-22 gate so the receipts cover both files."
+      },
+      {
+        "severity": "medium",
+        "path": "crates/scm-sdk/src/models/generated.rs",
+        "line": 162441,
+        "description": "The public frozen-parity enums `ResponseMode` (line 162441) and `TargetConnectionType` (line 174149) still expose only the pre-0.86.0 value sets, while the schema-bound enums actually used by the models gained the new values (`TargetCreateRequestResponseMode::REALTIME` at line 174764; `TargetCreateRequestConnectionType::VERTEXAI`/`N8N` at lines 174700-174701). I confirmed no struct field is typed as the frozen enums and that both retain `Unknown(String)`, so there is no functional loss and leaving the frozen TS-derived constants untouched is the right call for export parity. However nothing records the divergence: the plan text (docs/red-team-management-0.86-plan.md:96-98) names `TargetConnectionType` and `ResponseMode` as the types to extend, and a consumer who reaches for the identically named exported enum will reasonably conclude REALTIME/VERTEX_AI/N8N are unsupported.",
+        "required_fix": "Document the deliberate divergence where a consumer will see it: add rustdoc on the two frozen parity enums (or a generator-emitted note plus an explicit field in contracts/red-team-management-model-overlay.json) stating that they reproduce the frozen TypeScript constants, that the new values are declared on the schema-bound `TargetCreateRequest*` enums, and that unknown strings remain accepted in responses."
+      },
+      {
+        "severity": "low",
+        "path": "crates/scm-sdk/src/models/red_team_management.rs",
+        "line": 243,
+        "description": "`VertexAIConnectionRedactParams` is exported publicly (re-exported at crates/scm-sdk/src/models/red_team.rs:242) but is referenced by no union branch or graph edge: it does not appear anywhere in generated.rs, and `UNION_BRANCHES` (tools/red_team_management_models.py:29) appends only the non-redact Vertex model. The SDK has a single shared connection union (the frozen TypeScript baseline declares no target redact tree), and because the redact schema is structurally identical apart from `format: password`/`writeOnly` on the masked email, a redacted GET resolves through the `VertexAIConnectionParams` branch with response-mode regex bypass; crates/scm-sdk/tests/red_team_management_contracts.rs:338-418 proves masked GET payloads parse. So the behaviour is correct, but the model is reachable only through its own `parse` and nothing explains why it exists or which branch a GET actually selects.",
+        "required_fix": "Record the reviewed rationale where a maintainer or consumer will find it: emit rustdoc on the redact model (or add an explicit `declarationOnlyModels`/`sharedRedactBranch` entry to contracts/red-team-management-model-overlay.json) stating that redacted GET payloads resolve through the shared `VertexAIConnectionParams` branch and that the redact type is a declaration-only typed view of the masked shape."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management_models.py",
+        "line": 198,
+        "description": "`ledger()` hardcodes `runtimeEnumExtensions` as `{'s012061': ['VERTEX_AI','N8N'], 's012067': ['REALTIME']}`, while `extend_nodes()` (line 126-129) appends whatever values the pinned spec's `TargetConnectionType`/`ResponseMode` enums contain. Nothing cross-checks the two, so the published ledger is an assertion rather than a derived fact. A re-pinned source could widen a runtime enum beyond what the ledger declares; today only the `SOURCE_SHA256` pin in `load_spec()` and generated.rs byte-binding prevent that, and `test_runtime_changes_are_only_reviewed_nodes_and_two_unions` asserts which sids changed but not which values were added.",
+        "required_fix": "Derive the ledger's enum extensions from the actual appended values (or assert equality between the computed additions and the declared lists) so a changed pin fails closed, and add a unit test that an extra vendor enum value is rejected rather than silently widening the runtime vocabulary."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 647,
+        "description": "`verify_runtime_adoption` hash-binds `crates/scm-sdk/tests/red_team_management_models.rs` but not `crates/scm-sdk/tests/red_team_management_contracts.rs`, even though the latter carries the five-operation, both-response-mode, credential-redaction, pre-auth-rejection and pagination evidence. That file is only name-bound through `MANAGEMENT_WIRE_TESTS` (line 664-667), which checks that functions with those names exist; their bodies could be reduced to no-ops while the gate still passes.",
+        "required_fix": "Add `crates/scm-sdk/tests/red_team_management_contracts.rs` to the overlay `sourceBindings` required set and to the generated binding list in tools/generate_models.py so its exact bytes are pinned alongside the other implementation artifacts."
+      }
+    ],
+    "evidence": [
+      "contracts/vendor/red-team-management/0.86.0/mp-openapi.yaml:6174-6233 and :3257-3277 match the generated models field-for-field (three Vertex patterns, required set, masked email with format password/writeOnly, client_session const+default), and tools/red_team_management_models.py:40-47 refuses to proceed unless the YAML hashes to the reviewed pin 5fbb533b\u2026 and the normalized JSON equals the parsed YAML.",
+      "tools/test_red_team_management_models.py:16-23 asserts the only changed frozen graph nodes are {s012061, s012067, s010462, s010504}, that no ZodDefault node is added, and that each extended union's variant list is the old list plus one; tools/red_team_management_models.py:130-133 fails closed if a legacy prefix length changes.",
+      "tools/red_team_management_models.py:176-192 trims only the exact reviewed tail (sourceIndex, schema, rustVariant, rustType) before delegating to the strict frozen comparison in tools/generate_models.py:920-921, so contracts/native-union-variants.json stays byte-frozen; test_union_extension_verifier_preserves_exact_legacy_prefix exercises prefix-swap, tail-tamper and missing-tail rejection.",
+      "crates/scm-sdk/src/validation.rs:1058-1067 adds exactly the three reviewed Vertex patterns to the registry, line 1219 fails closed on an unregistered regex source, and lines 1225-1233 retain the pre-existing response-mode bypass for regex/format checks only; tools/generate_models.py:894-897 requires the native registry to equal REGEX_SOURCES | PATTERNS.",
+      "crates/scm-sdk/tests/red_team_management_models.rs:18-40 proves Vertex patterns are enforced in Mode::Request and bypassed (with exact string preservation) in both response modes, while a wrong JSON type is still rejected in response mode; :119-132 proves REALTIME is accepted for s012067 and rejected for s012061.",
+      "crates/scm-sdk/tests/red_team_management_contracts.rs:338-445 drives all five target operations through a stub transport in both response modes across five provider shapes and four auth shapes, asserting operation names, HTTP methods, /mgmt-plane paths, model/validator parity and that the synthetic secret never appears in Debug output; :504-521 proves an invalid profiling filter fails before any token acquisition or dispatch.",
+      "tools/generate_models.py:471-506 keeps projection fields optional, falls back to the raw extension entry when a typed decode fails, and skips the duplicate extension key only when the typed field is set; crates/scm-sdk/tests/red_team_management_contracts.rs:174-193 and :536-565 confirm null/number/array/object/string values and Patch::Unset round-trip byte-identically with secrets redacted.",
+      "docs/reviews/phase-22-chunk-typed-connections-attempt-01.checks.json records exit_code 0 for the complete phase-22 list at source a5f30382\u2026 with source_unchanged true, including cargo fmt/check/clippy -D warnings/test/test --examples/doc on 1.89.0 and 1.99.0 for feature sets red-team and red-team,serde_json/arbitrary_precision (durations 273s, 123s, 60s, 285s, 297s), response_defaults.py reporting the unchanged 23 default bindings, and generate_models.py --check reporting 19 outputs over 13018 graph nodes.",
+      "tools/red_team_management.py:640-667 is a real phase-22 gate extension: it hash-checks the overlay generator, vendor YAML, generated models, validation.rs and schema_graph.json, requires the two union ledgers to agree, requires every publicModel sid to exist in the runtime graph, and requires the twelve named wire tests to exist in the contracts test file; :674-688 rejects any current live receipt or inherited live annotation, and the executed native_operations/native_exports/qualification checks report liveVerified 0 with 448 operations unverified.",
+      "docs/checks/phase-22-private-material.json shows an actually executed scan at the reviewed SHA (1934 git-visible files, 0 selected matches, explicit limitations), and the gate's `--check` confirmed receipt freshness without re-executing matching, which the receipt states plainly.",
+      "NOTICE:12-14 and crates/scm-sdk/NOTICE:13-14 both name pan.dev revision 582e30543bf2adfd8b0ee457170d22b5c380dfbe / OpenAPI 0.86.0 alongside the data-plane revision, satisfying the milestone-2 packaging requirement before publication; contracts/manifest.json:1949-1963 and :2442-2470 carry full source and vendorArtifact ownership with usedForGeneration true."
+    ],
+    "limitations": [
+      "Read-only review: I executed nothing. I could not recompute SHA256 digests, so the stated reviewed-source digest a5f30382\u2026 and the checks-file digest dcc8741d\u2026 are accepted as recorded; I corroborated them only through the self-consistent source_sha256/source_unchanged fields and matching timestamps in docs/checks/phase-22.json and docs/checks/phase-22-private-material.json.",
+      "scripts/check-rust.py receipts record only each cargo command and exit code 0, not per-test names or counts, so I cannot confirm from the receipt alone which individual Rust tests ran; I confirmed the two feature sets that compile the #![cfg(feature = \"red-team\")] test files were among them.",
+      "The five target response declarations are evidenced by example-based fixtures over the shared TargetResponseSchema root plus the phase-21 delta classification, not by a field-complete matrix derived from each vendor schema (TargetSchema / TargetRedactSchema); the plan defers the full changed-schema matrix to phase 23, so I did not treat its absence as a chunk deficiency.",
+      "Reviewed the typed-connections chunk scope only. crates/scm-sdk/src/airs/red_team/targets.rs (target-filtering chunk) and the validation graph/G25 documentation ownership (connection-compatibility chunk) were inspected only where needed to judge this chunk's models and ledgers; the profiling-filter rustdoc requirement belongs to a sibling chunk and is not scored here.",
+      "The typed projections move previously extension-visible keys (basic_username, basic_password, audio_request_json, audio_curl) into typed fields, and pure-Vertex payloads transition from a validation failure/Unknown to the named Variant5 branch. Both are observable behaviour changes for existing consumers; the plan assigns their disclosure to the phase 24 changelog, so I recorded them here rather than as findings.",
+      "No live or network verification exists or is claimed for this phase; the gate actively rejects any current live receipt, so nothing in this chunk establishes upstream acceptance of the new variants or filters."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8.5,
+      "supportability": 8,
+      "architecture": 9.5,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": "typed-connections",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    ".forgejo/workflows/ci.yml",
+    "NOTICE",
+    "contracts/airs-operations.json",
+    "contracts/airs-retained-capabilities.json",
+    "contracts/historical/0.2.2-live-evidence.json",
+    "contracts/manifest.json",
+    "contracts/native-exports.json",
+    "contracts/native-fixtures/gateway-specimens.json",
+    "contracts/native-fixtures/schemas.json",
+    "contracts/native-gateway-bindings.json",
+    "contracts/native-models.json",
+    "contracts/native-operations.json",
+    "contracts/qualification.json",
+    "contracts/red-team-management-model-overlay.json",
+    "contracts/red-team-management-union-extensions.json",
+    "crates/scm-sdk/NOTICE",
+    "crates/scm-sdk/src/fixtures/model-regressions.json",
+    "crates/scm-sdk/src/models",
+    "crates/scm-sdk/tests/red_team_management_contracts.rs",
+    "crates/scm-sdk/tests/red_team_management_models.rs",
+    "docs/CI.md",
+    "docs/PHASES.md",
+    "docs/RELEASE.md",
+    "tools/check_phase.py",
+    "tools/generate_models.py",
+    "tools/red_team_management_models.py",
+    "tools/review_phase.py",
+    "tools/test_ci.py",
+    "tools/test_management_phases.py",
+    "tools/test_model_fixtures.py",
+    "tools/test_red_team_management_models.py"
+  ]
+}

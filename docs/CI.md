@@ -8,7 +8,7 @@ registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
-CI now executes the Phase 21 contracts gate, whose invocation and current
+CI now executes the Phase 22 contracts gate, whose invocation and current
 script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
 Phase 12, maintenance Phase 92 and access-policy Phase 17 gates remain historical.
 See [the G25 plan](g25-response-compatibility-plan.md).
@@ -107,7 +107,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 21 --verification-only --contracts-only. Its 25 credential-free commands verify planning provenance, retained capabilities, unchanged SDK inputs with narrowly checked metadata hash rebinding, manifest-dependent generators/oracles, governance tests and privacy. Its separate phase-21-contracts.json cannot qualify or advance a phase review and does not establish current live acceptance. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 22 --verification-only --contracts-only. Its 37 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-22-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current ledgers explicitly remain live-unverified. |
 | rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -142,14 +142,11 @@ The retained Phase 17 release-range whitespace check excludes the two byte-pinne
 upstream Portkey YAML files; the historical Phase 12 range excludes its original
 `dp-openapi.yaml`. Phase 20 retains these exclusions for the reused checks.
 Original upstream whitespace remains part of each reviewed digest.
-The current Phase 21 gate additionally excludes only the byte-pinned management
-`contracts/vendor/red-team-management/0.86.0/*.yaml` from whitespace style. The current gate checks both uncommitted/staged changes
-and committed changes from the frozen 0.2.2 baseline through HEAD, retaining all
-three vendor corpus exclusions.
-Before the planning work is committed, HEAD equals the frozen baseline and the
-ranged check is vacuous. The separate worktree and index whitespace checks cover
-those uncommitted changes. A nonempty committed-range check becomes evidence only
-after the planning commit exists; a successful empty range proves no new content.
+The current Phase 22 gate excludes the three byte-pinned vendor YAML corpora
+(management, data plane and Portkey) from whitespace style while retaining their
+exact source hashes. Worktree, index and committed baseline-to-HEAD checks cover
+owned source changes. The Phase 21 planning receipt's committed range was empty
+before its commit; its worktree and index checks supplied that earlier evidence.
 Every owned source file retains the whitespace check; source-pin verification
 still rejects any byte change to that vendor input.
 
@@ -159,14 +156,26 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 21 gate has 25 commands.
-CI's 25-command subset writes `phase-21-contracts.json`. Its planning
-command list currently equals the full Phase 21 list, but its explicit CI scope
-marker prevents it from qualifying a review; review requires a separate complete
-`phase-21.json` receipt. Full Git history supplies the frozen 0.2.2 baseline.
+The complete local Phase 22 gate has 42 commands.
+CI's 37-command subset writes `phase-22-contracts.json`. The full local gate
+additionally executes five compiler/feature combinations covering Red Team on
+both compilers, arbitrary-precision JSON, and their combined feature sets.
+Both new integration suites are included by the Red Team cargo test commands.
+The Red Team and combined Red Team/JSON runner selections also execute the offline
+`red_team_management` example with `cargo run` on both 1.89.0 and 1.99.0;
+`cargo test --examples` alone only compiles its main function.
+Only a complete source-bound `phase-22.json` receipt can qualify review; the
+contracts-only scope marker cannot substitute for it. Full Git history supplies
+the frozen baseline used by the committed hygiene check.
 The independent 48-job Rust matrix remains unchanged: 24 feature selections on both
-compilers. Together they form 49 required jobs. Neither the planning contracts
-job nor local checks establish that those remote jobs have actually passed.
+compilers. Together they form 49 required jobs. Local checks do not establish
+that those remote jobs have actually passed.
+
+Phase 21's 25-command historical planning gate remains unchanged. The historical
+0.2.2 live reference is retained byte-for-byte under
+`contracts/historical/0.2.2-live-evidence.json`, with its original report untouched.
+It does not qualify new runtime code. Current native ledgers have zero verified
+live methods; Phase 24 must obtain and validate a fresh receipt before publication.
 
 Historical Phase 20 retains its 59-command full gate and 41-command contracts
 subset without modification. Those qualified the recorded 0.2.2 delivery and do

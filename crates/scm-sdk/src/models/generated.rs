@@ -8921,15 +8921,55 @@ impl fmt::Debug for AuthConfigRequestVariant2 {
 }
 
 /// Native typed contract for frozen schema `s010755`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct AuthConfigRequestVariant3 {
-    #[serde(rename = "basic_auth_location", default)]
     pub basic_auth_location: Optional<String>,
-    #[serde(rename = "basic_auth_header", default)]
     pub basic_auth_header: Patch<TypedMap<String>>,
-    #[serde(flatten)]
+    pub basic_username: Patch<String>,
+    pub basic_password: Patch<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for AuthConfigRequestVariant3 {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut basic_username: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("basic_username") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => basic_username = value,
+                Err(_) => {
+                    raw.insert("basic_username".into(), value);
+                }
+            }
+        }
+        let mut basic_password: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("basic_password") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => basic_password = value,
+                Err(_) => {
+                    raw.insert("basic_password".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "basic_auth_location", default)]
+            basic_auth_location: Optional<String>,
+            #[serde(rename = "basic_auth_header", default)]
+            basic_auth_header: Patch<TypedMap<String>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            basic_auth_location: baseline.basic_auth_location,
+            basic_auth_header: baseline.basic_auth_header,
+            basic_username,
+            basic_password,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for AuthConfigRequestVariant3 {
     fn serialize<S: serde::Serializer>(
@@ -8953,7 +8993,19 @@ impl Serialize for AuthConfigRequestVariant3 {
         if !self.basic_auth_header.is_unset() {
             map.serialize_entry("basic_auth_header", &self.basic_auth_header)?;
         }
+        if !self.basic_username.is_unset() {
+            map.serialize_entry("basic_username", &self.basic_username)?;
+        }
+        if !self.basic_password.is_unset() {
+            map.serialize_entry("basic_password", &self.basic_password)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "basic_username" && !self.basic_username.is_unset() {
+                continue;
+            }
+            if key == "basic_password" && !self.basic_password.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -8972,6 +9024,8 @@ impl AuthConfigRequestVariant3 {
 pub struct AuthConfigRequestVariant3Builder {
     basic_auth_location: Optional<String>,
     basic_auth_header: Patch<TypedMap<String>>,
+    basic_username: Patch<String>,
+    basic_password: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl AuthConfigRequestVariant3Builder {
@@ -8983,6 +9037,14 @@ impl AuthConfigRequestVariant3Builder {
         self.basic_auth_header = value;
         self
     }
+    pub fn basic_username(mut self, value: Patch<String>) -> Self {
+        self.basic_username = value;
+        self
+    }
+    pub fn basic_password(mut self, value: Patch<String>) -> Self {
+        self.basic_password = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -8991,6 +9053,8 @@ impl AuthConfigRequestVariant3Builder {
         Ok(AuthConfigRequestVariant3 {
             basic_auth_location: self.basic_auth_location,
             basic_auth_header: self.basic_auth_header,
+            basic_username: self.basic_username,
+            basic_password: self.basic_password,
             extensions: self.extensions,
         })
     }
@@ -9237,15 +9301,55 @@ impl fmt::Debug for BaseResponse {
 }
 
 /// Native typed contract for frozen schema `s010721`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct BasicAuthAuthConfig {
-    #[serde(rename = "basic_auth_location", default)]
     pub basic_auth_location: Optional<String>,
-    #[serde(rename = "basic_auth_header", default)]
     pub basic_auth_header: Patch<TypedMap<String>>,
-    #[serde(flatten)]
+    pub basic_username: Patch<String>,
+    pub basic_password: Patch<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for BasicAuthAuthConfig {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut basic_username: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("basic_username") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => basic_username = value,
+                Err(_) => {
+                    raw.insert("basic_username".into(), value);
+                }
+            }
+        }
+        let mut basic_password: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("basic_password") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => basic_password = value,
+                Err(_) => {
+                    raw.insert("basic_password".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "basic_auth_location", default)]
+            basic_auth_location: Optional<String>,
+            #[serde(rename = "basic_auth_header", default)]
+            basic_auth_header: Patch<TypedMap<String>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            basic_auth_location: baseline.basic_auth_location,
+            basic_auth_header: baseline.basic_auth_header,
+            basic_username,
+            basic_password,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for BasicAuthAuthConfig {
     fn serialize<S: serde::Serializer>(
@@ -9269,7 +9373,19 @@ impl Serialize for BasicAuthAuthConfig {
         if !self.basic_auth_header.is_unset() {
             map.serialize_entry("basic_auth_header", &self.basic_auth_header)?;
         }
+        if !self.basic_username.is_unset() {
+            map.serialize_entry("basic_username", &self.basic_username)?;
+        }
+        if !self.basic_password.is_unset() {
+            map.serialize_entry("basic_password", &self.basic_password)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "basic_username" && !self.basic_username.is_unset() {
+                continue;
+            }
+            if key == "basic_password" && !self.basic_password.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -9288,6 +9404,8 @@ impl BasicAuthAuthConfig {
 pub struct BasicAuthAuthConfigBuilder {
     basic_auth_location: Optional<String>,
     basic_auth_header: Patch<TypedMap<String>>,
+    basic_username: Patch<String>,
+    basic_password: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl BasicAuthAuthConfigBuilder {
@@ -9299,6 +9417,14 @@ impl BasicAuthAuthConfigBuilder {
         self.basic_auth_header = value;
         self
     }
+    pub fn basic_username(mut self, value: Patch<String>) -> Self {
+        self.basic_username = value;
+        self
+    }
+    pub fn basic_password(mut self, value: Patch<String>) -> Self {
+        self.basic_password = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -9307,6 +9433,8 @@ impl BasicAuthAuthConfigBuilder {
         Ok(BasicAuthAuthConfig {
             basic_auth_location: self.basic_auth_location,
             basic_auth_header: self.basic_auth_header,
+            basic_username: self.basic_username,
+            basic_password: self.basic_password,
             extensions: self.extensions,
         })
     }
@@ -12745,31 +12873,87 @@ impl fmt::Debug for ConnectionParamsRequest {
 }
 
 /// Native typed contract for frozen schema `s010829`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct ConnectionParamsRequestVariant2 {
-    #[serde(rename = "multi_turn_supported", default)]
     pub multi_turn_supported: Optional<bool>,
-    #[serde(rename = "api_endpoint", default)]
     pub api_endpoint: Patch<String>,
-    #[serde(rename = "request_headers", default)]
     pub request_headers: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "request_json", default)]
     pub request_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_json", default)]
     pub response_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_key", default)]
     pub response_key: Patch<String>,
-    #[serde(rename = "target_connection_config", default)]
     pub target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
-    #[serde(rename = "curl", default)]
     pub curl: Patch<String>,
-    #[serde(rename = "multi_turn_config", default)]
     pub multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
-    #[serde(rename = "ws_response_timeout", default)]
     pub ws_response_timeout: Optional<FiniteNumber>,
-    #[serde(flatten)]
+    pub audio_request_json: Patch<TypedMap<JsonValue>>,
+    pub audio_curl: Patch<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for ConnectionParamsRequestVariant2 {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut audio_request_json: Patch<TypedMap<JsonValue>> = Default::default();
+        if let Some(value) = raw.remove("audio_request_json") {
+            match crate::json_decode::from_value::<Patch<TypedMap<JsonValue>>>(value.clone()) {
+                Ok(value) => audio_request_json = value,
+                Err(_) => {
+                    raw.insert("audio_request_json".into(), value);
+                }
+            }
+        }
+        let mut audio_curl: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_curl") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_curl = value,
+                Err(_) => {
+                    raw.insert("audio_curl".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "multi_turn_supported", default)]
+            multi_turn_supported: Optional<bool>,
+            #[serde(rename = "api_endpoint", default)]
+            api_endpoint: Patch<String>,
+            #[serde(rename = "request_headers", default)]
+            request_headers: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "request_json", default)]
+            request_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_json", default)]
+            response_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_key", default)]
+            response_key: Patch<String>,
+            #[serde(rename = "target_connection_config", default)]
+            target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
+            #[serde(rename = "curl", default)]
+            curl: Patch<String>,
+            #[serde(rename = "multi_turn_config", default)]
+            multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
+            #[serde(rename = "ws_response_timeout", default)]
+            ws_response_timeout: Optional<FiniteNumber>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            multi_turn_supported: baseline.multi_turn_supported,
+            api_endpoint: baseline.api_endpoint,
+            request_headers: baseline.request_headers,
+            request_json: baseline.request_json,
+            response_json: baseline.response_json,
+            response_key: baseline.response_key,
+            target_connection_config: baseline.target_connection_config,
+            curl: baseline.curl,
+            multi_turn_config: baseline.multi_turn_config,
+            ws_response_timeout: baseline.ws_response_timeout,
+            audio_request_json,
+            audio_curl,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for ConnectionParamsRequestVariant2 {
     fn serialize<S: serde::Serializer>(
@@ -12828,7 +13012,19 @@ impl Serialize for ConnectionParamsRequestVariant2 {
         if !self.ws_response_timeout.is_unset() {
             map.serialize_entry("ws_response_timeout", &self.ws_response_timeout)?;
         }
+        if !self.audio_request_json.is_unset() {
+            map.serialize_entry("audio_request_json", &self.audio_request_json)?;
+        }
+        if !self.audio_curl.is_unset() {
+            map.serialize_entry("audio_curl", &self.audio_curl)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "audio_request_json" && !self.audio_request_json.is_unset() {
+                continue;
+            }
+            if key == "audio_curl" && !self.audio_curl.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -12855,6 +13051,8 @@ pub struct ConnectionParamsRequestVariant2Builder {
     curl: Patch<String>,
     multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
     ws_response_timeout: Optional<FiniteNumber>,
+    audio_request_json: Patch<TypedMap<JsonValue>>,
+    audio_curl: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl ConnectionParamsRequestVariant2Builder {
@@ -12904,6 +13102,14 @@ impl ConnectionParamsRequestVariant2Builder {
         self.ws_response_timeout = value;
         self
     }
+    pub fn audio_request_json(mut self, value: Patch<TypedMap<JsonValue>>) -> Self {
+        self.audio_request_json = value;
+        self
+    }
+    pub fn audio_curl(mut self, value: Patch<String>) -> Self {
+        self.audio_curl = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -12920,6 +13126,8 @@ impl ConnectionParamsRequestVariant2Builder {
             curl: self.curl,
             multi_turn_config: self.multi_turn_config,
             ws_response_timeout: self.ws_response_timeout,
+            audio_request_json: self.audio_request_json,
+            audio_curl: self.audio_curl,
             extensions: self.extensions,
         })
     }
@@ -162230,6 +162438,8 @@ impl fmt::Debug for ResponseDetectionDetailsToxicContentDetails {
 
 #[derive(Clone, PartialEq, Eq)]
 #[non_exhaustive]
+/// Frozen TypeScript constant parity. Current management values are named on `TargetCreateRequestResponseMode`.
+/// Unknown response strings remain represented by `Unknown(String)`.
 pub enum ResponseMode {
     REST,
     STREAMING,
@@ -162272,29 +162482,83 @@ impl fmt::Debug for ResponseMode {
 }
 
 /// Native typed contract for frozen schema `s010789`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct RestConnectionParams {
-    #[serde(rename = "multi_turn_supported", default)]
     pub multi_turn_supported: Optional<bool>,
-    #[serde(rename = "api_endpoint", default)]
     pub api_endpoint: Patch<String>,
-    #[serde(rename = "request_headers", default)]
     pub request_headers: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "request_json", default)]
     pub request_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_json", default)]
     pub response_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_key", default)]
     pub response_key: Patch<String>,
-    #[serde(rename = "target_connection_config", default)]
     pub target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
-    #[serde(rename = "curl", default)]
     pub curl: Patch<String>,
-    #[serde(rename = "multi_turn_config", default)]
     pub multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
-    #[serde(flatten)]
+    pub audio_request_json: Patch<TypedMap<JsonValue>>,
+    pub audio_curl: Patch<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for RestConnectionParams {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut audio_request_json: Patch<TypedMap<JsonValue>> = Default::default();
+        if let Some(value) = raw.remove("audio_request_json") {
+            match crate::json_decode::from_value::<Patch<TypedMap<JsonValue>>>(value.clone()) {
+                Ok(value) => audio_request_json = value,
+                Err(_) => {
+                    raw.insert("audio_request_json".into(), value);
+                }
+            }
+        }
+        let mut audio_curl: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_curl") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_curl = value,
+                Err(_) => {
+                    raw.insert("audio_curl".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "multi_turn_supported", default)]
+            multi_turn_supported: Optional<bool>,
+            #[serde(rename = "api_endpoint", default)]
+            api_endpoint: Patch<String>,
+            #[serde(rename = "request_headers", default)]
+            request_headers: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "request_json", default)]
+            request_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_json", default)]
+            response_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_key", default)]
+            response_key: Patch<String>,
+            #[serde(rename = "target_connection_config", default)]
+            target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
+            #[serde(rename = "curl", default)]
+            curl: Patch<String>,
+            #[serde(rename = "multi_turn_config", default)]
+            multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            multi_turn_supported: baseline.multi_turn_supported,
+            api_endpoint: baseline.api_endpoint,
+            request_headers: baseline.request_headers,
+            request_json: baseline.request_json,
+            response_json: baseline.response_json,
+            response_key: baseline.response_key,
+            target_connection_config: baseline.target_connection_config,
+            curl: baseline.curl,
+            multi_turn_config: baseline.multi_turn_config,
+            audio_request_json,
+            audio_curl,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for RestConnectionParams {
     fn serialize<S: serde::Serializer>(
@@ -162349,7 +162613,19 @@ impl Serialize for RestConnectionParams {
         if !self.multi_turn_config.is_unset() {
             map.serialize_entry("multi_turn_config", &self.multi_turn_config)?;
         }
+        if !self.audio_request_json.is_unset() {
+            map.serialize_entry("audio_request_json", &self.audio_request_json)?;
+        }
+        if !self.audio_curl.is_unset() {
+            map.serialize_entry("audio_curl", &self.audio_curl)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "audio_request_json" && !self.audio_request_json.is_unset() {
+                continue;
+            }
+            if key == "audio_curl" && !self.audio_curl.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -162375,6 +162651,8 @@ pub struct RestConnectionParamsBuilder {
     target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
     curl: Patch<String>,
     multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
+    audio_request_json: Patch<TypedMap<JsonValue>>,
+    audio_curl: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl RestConnectionParamsBuilder {
@@ -162420,6 +162698,14 @@ impl RestConnectionParamsBuilder {
         self.multi_turn_config = value;
         self
     }
+    pub fn audio_request_json(mut self, value: Patch<TypedMap<JsonValue>>) -> Self {
+        self.audio_request_json = value;
+        self
+    }
+    pub fn audio_curl(mut self, value: Patch<String>) -> Self {
+        self.audio_curl = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -162435,6 +162721,8 @@ impl RestConnectionParamsBuilder {
             target_connection_config: self.target_connection_config,
             curl: self.curl,
             multi_turn_config: self.multi_turn_config,
+            audio_request_json: self.audio_request_json,
+            audio_curl: self.audio_curl,
             extensions: self.extensions,
         })
     }
@@ -171680,33 +171968,91 @@ impl fmt::Debug for StreamType {
 }
 
 /// Native typed contract for frozen schema `s010821`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct StreamingConnectionParams {
-    #[serde(rename = "multi_turn_supported", default)]
     pub multi_turn_supported: Optional<bool>,
-    #[serde(rename = "api_endpoint", default)]
     pub api_endpoint: Patch<String>,
-    #[serde(rename = "request_headers", default)]
     pub request_headers: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "request_json", default)]
     pub request_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_json", default)]
     pub response_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_key", default)]
     pub response_key: Patch<String>,
-    #[serde(rename = "target_connection_config", default)]
     pub target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
-    #[serde(rename = "curl", default)]
     pub curl: Patch<String>,
-    #[serde(rename = "multi_turn_config", default)]
     pub multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
-    #[serde(rename = "response_stop_key")]
     pub response_stop_key: String,
-    #[serde(rename = "response_stop_value")]
     pub response_stop_value: String,
-    #[serde(flatten)]
+    pub audio_request_json: Patch<TypedMap<JsonValue>>,
+    pub audio_curl: Patch<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for StreamingConnectionParams {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut audio_request_json: Patch<TypedMap<JsonValue>> = Default::default();
+        if let Some(value) = raw.remove("audio_request_json") {
+            match crate::json_decode::from_value::<Patch<TypedMap<JsonValue>>>(value.clone()) {
+                Ok(value) => audio_request_json = value,
+                Err(_) => {
+                    raw.insert("audio_request_json".into(), value);
+                }
+            }
+        }
+        let mut audio_curl: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_curl") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_curl = value,
+                Err(_) => {
+                    raw.insert("audio_curl".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "multi_turn_supported", default)]
+            multi_turn_supported: Optional<bool>,
+            #[serde(rename = "api_endpoint", default)]
+            api_endpoint: Patch<String>,
+            #[serde(rename = "request_headers", default)]
+            request_headers: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "request_json", default)]
+            request_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_json", default)]
+            response_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_key", default)]
+            response_key: Patch<String>,
+            #[serde(rename = "target_connection_config", default)]
+            target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
+            #[serde(rename = "curl", default)]
+            curl: Patch<String>,
+            #[serde(rename = "multi_turn_config", default)]
+            multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
+            #[serde(rename = "response_stop_key")]
+            response_stop_key: String,
+            #[serde(rename = "response_stop_value")]
+            response_stop_value: String,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            multi_turn_supported: baseline.multi_turn_supported,
+            api_endpoint: baseline.api_endpoint,
+            request_headers: baseline.request_headers,
+            request_json: baseline.request_json,
+            response_json: baseline.response_json,
+            response_key: baseline.response_key,
+            target_connection_config: baseline.target_connection_config,
+            curl: baseline.curl,
+            multi_turn_config: baseline.multi_turn_config,
+            response_stop_key: baseline.response_stop_key,
+            response_stop_value: baseline.response_stop_value,
+            audio_request_json,
+            audio_curl,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for StreamingConnectionParams {
     fn serialize<S: serde::Serializer>(
@@ -171765,7 +172111,19 @@ impl Serialize for StreamingConnectionParams {
         }
         map.serialize_entry("response_stop_key", &self.response_stop_key)?;
         map.serialize_entry("response_stop_value", &self.response_stop_value)?;
+        if !self.audio_request_json.is_unset() {
+            map.serialize_entry("audio_request_json", &self.audio_request_json)?;
+        }
+        if !self.audio_curl.is_unset() {
+            map.serialize_entry("audio_curl", &self.audio_curl)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "audio_request_json" && !self.audio_request_json.is_unset() {
+                continue;
+            }
+            if key == "audio_curl" && !self.audio_curl.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -171793,6 +172151,8 @@ pub struct StreamingConnectionParamsBuilder {
     multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
     response_stop_key: Option<String>,
     response_stop_value: Option<String>,
+    audio_request_json: Patch<TypedMap<JsonValue>>,
+    audio_curl: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl StreamingConnectionParamsBuilder {
@@ -171846,6 +172206,14 @@ impl StreamingConnectionParamsBuilder {
         self.response_stop_value = Some(value);
         self
     }
+    pub fn audio_request_json(mut self, value: Patch<TypedMap<JsonValue>>) -> Self {
+        self.audio_request_json = value;
+        self
+    }
+    pub fn audio_curl(mut self, value: Patch<String>) -> Self {
+        self.audio_curl = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -171867,6 +172235,8 @@ impl StreamingConnectionParamsBuilder {
             response_stop_value: self
                 .response_stop_value
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
+            audio_request_json: self.audio_request_json,
+            audio_curl: self.audio_curl,
             extensions: self.extensions,
         })
     }
@@ -171897,6 +172267,7 @@ impl fmt::Debug for StreamingConnectionParams {
 pub enum StreamingConnectionParamsMultiTurnConfig {
     Variant1(StreamingConnectionParamsMultiTurnConfigVariant1),
     Variant2(StreamingConnectionParamsMultiTurnConfigVariant2),
+    Variant3(super::red_team_management::MultiTurnClientSessionConfig),
     Unknown(JsonValue),
 }
 impl fmt::Debug for StreamingConnectionParamsMultiTurnConfig {
@@ -172185,6 +172556,7 @@ pub enum StreamingConnectionParamsTargetConnectionConfig {
     Variant2(StreamingConnectionParamsTargetConnectionConfigVariant2),
     Variant3(StreamingConnectionParamsTargetConnectionConfigVariant3),
     Variant4(StreamingConnectionParamsTargetConnectionConfigVariant4),
+    Variant5(super::red_team_management::VertexAIConnectionParams),
     Unknown(JsonValue),
 }
 impl fmt::Debug for StreamingConnectionParamsTargetConnectionConfig {
@@ -173776,6 +174148,8 @@ impl fmt::Debug for TargetConnectionConfig {
 
 #[derive(Clone, PartialEq, Eq)]
 #[non_exhaustive]
+/// Frozen TypeScript constant parity. Current management values are named on `TargetCreateRequestConnectionType`.
+/// Unknown response strings remain represented by `Unknown(String)`.
 pub enum TargetConnectionType {
     DATABRICKS,
     BEDROCK,
@@ -174327,6 +174701,8 @@ pub enum TargetCreateRequestConnectionType {
     WEBSOCKETSTREAMING,
     MSCOPILOTSTUDIO,
     CUSTOMTARGETADAPTER,
+    VERTEXAI,
+    N8N,
     Unknown(String),
 }
 impl TargetCreateRequestConnectionType {
@@ -174343,6 +174719,8 @@ impl TargetCreateRequestConnectionType {
             Self::WEBSOCKETSTREAMING => "WEBSOCKET_STREAMING",
             Self::MSCOPILOTSTUDIO => "MS_COPILOT_STUDIO",
             Self::CUSTOMTARGETADAPTER => "CUSTOM_TARGET_ADAPTER",
+            Self::VERTEXAI => "VERTEX_AI",
+            Self::N8N => "N8N",
             Self::Unknown(value) => value,
         }
     }
@@ -174367,6 +174745,8 @@ impl<'de> Deserialize<'de> for TargetCreateRequestConnectionType {
             "WEBSOCKET_STREAMING" => Self::WEBSOCKETSTREAMING,
             "MS_COPILOT_STUDIO" => Self::MSCOPILOTSTUDIO,
             "CUSTOM_TARGET_ADAPTER" => Self::CUSTOMTARGETADAPTER,
+            "VERTEX_AI" => Self::VERTEXAI,
+            "N8N" => Self::N8N,
             _ => Self::Unknown(value),
         })
     }
@@ -174385,6 +174765,7 @@ pub enum TargetCreateRequestResponseMode {
     STREAMING,
     WEBSOCKET,
     WEBSOCKETSTREAMING,
+    REALTIME,
     Unknown(String),
 }
 impl TargetCreateRequestResponseMode {
@@ -174394,6 +174775,7 @@ impl TargetCreateRequestResponseMode {
             Self::STREAMING => "STREAMING",
             Self::WEBSOCKET => "WEBSOCKET",
             Self::WEBSOCKETSTREAMING => "WEBSOCKET_STREAMING",
+            Self::REALTIME => "REALTIME",
             Self::Unknown(value) => value,
         }
     }
@@ -174411,6 +174793,7 @@ impl<'de> Deserialize<'de> for TargetCreateRequestResponseMode {
             "STREAMING" => Self::STREAMING,
             "WEBSOCKET" => Self::WEBSOCKET,
             "WEBSOCKET_STREAMING" => Self::WEBSOCKETSTREAMING,
+            "REALTIME" => Self::REALTIME,
             _ => Self::Unknown(value),
         })
     }
@@ -183985,31 +184368,87 @@ impl fmt::Debug for ViolationSeverityCounts {
 }
 
 /// Native typed contract for frozen schema `s010824`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct WebSocketConnectionParams {
-    #[serde(rename = "multi_turn_supported", default)]
     pub multi_turn_supported: Optional<bool>,
-    #[serde(rename = "api_endpoint", default)]
     pub api_endpoint: Patch<String>,
-    #[serde(rename = "request_headers", default)]
     pub request_headers: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "request_json", default)]
     pub request_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_json", default)]
     pub response_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "response_key", default)]
     pub response_key: Patch<String>,
-    #[serde(rename = "target_connection_config", default)]
     pub target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
-    #[serde(rename = "curl", default)]
     pub curl: Patch<String>,
-    #[serde(rename = "multi_turn_config", default)]
     pub multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
-    #[serde(rename = "ws_response_timeout", default)]
     pub ws_response_timeout: Optional<FiniteNumber>,
-    #[serde(flatten)]
+    pub audio_request_json: Patch<TypedMap<JsonValue>>,
+    pub audio_curl: Patch<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for WebSocketConnectionParams {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut audio_request_json: Patch<TypedMap<JsonValue>> = Default::default();
+        if let Some(value) = raw.remove("audio_request_json") {
+            match crate::json_decode::from_value::<Patch<TypedMap<JsonValue>>>(value.clone()) {
+                Ok(value) => audio_request_json = value,
+                Err(_) => {
+                    raw.insert("audio_request_json".into(), value);
+                }
+            }
+        }
+        let mut audio_curl: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_curl") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_curl = value,
+                Err(_) => {
+                    raw.insert("audio_curl".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "multi_turn_supported", default)]
+            multi_turn_supported: Optional<bool>,
+            #[serde(rename = "api_endpoint", default)]
+            api_endpoint: Patch<String>,
+            #[serde(rename = "request_headers", default)]
+            request_headers: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "request_json", default)]
+            request_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_json", default)]
+            response_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "response_key", default)]
+            response_key: Patch<String>,
+            #[serde(rename = "target_connection_config", default)]
+            target_connection_config: Patch<StreamingConnectionParamsTargetConnectionConfig>,
+            #[serde(rename = "curl", default)]
+            curl: Patch<String>,
+            #[serde(rename = "multi_turn_config", default)]
+            multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
+            #[serde(rename = "ws_response_timeout", default)]
+            ws_response_timeout: Optional<FiniteNumber>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            multi_turn_supported: baseline.multi_turn_supported,
+            api_endpoint: baseline.api_endpoint,
+            request_headers: baseline.request_headers,
+            request_json: baseline.request_json,
+            response_json: baseline.response_json,
+            response_key: baseline.response_key,
+            target_connection_config: baseline.target_connection_config,
+            curl: baseline.curl,
+            multi_turn_config: baseline.multi_turn_config,
+            ws_response_timeout: baseline.ws_response_timeout,
+            audio_request_json,
+            audio_curl,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for WebSocketConnectionParams {
     fn serialize<S: serde::Serializer>(
@@ -184068,7 +184507,19 @@ impl Serialize for WebSocketConnectionParams {
         if !self.ws_response_timeout.is_unset() {
             map.serialize_entry("ws_response_timeout", &self.ws_response_timeout)?;
         }
+        if !self.audio_request_json.is_unset() {
+            map.serialize_entry("audio_request_json", &self.audio_request_json)?;
+        }
+        if !self.audio_curl.is_unset() {
+            map.serialize_entry("audio_curl", &self.audio_curl)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "audio_request_json" && !self.audio_request_json.is_unset() {
+                continue;
+            }
+            if key == "audio_curl" && !self.audio_curl.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -184095,6 +184546,8 @@ pub struct WebSocketConnectionParamsBuilder {
     curl: Patch<String>,
     multi_turn_config: Patch<StreamingConnectionParamsMultiTurnConfig>,
     ws_response_timeout: Optional<FiniteNumber>,
+    audio_request_json: Patch<TypedMap<JsonValue>>,
+    audio_curl: Patch<String>,
     extensions: Extensions<JsonValue>,
 }
 impl WebSocketConnectionParamsBuilder {
@@ -184144,6 +184597,14 @@ impl WebSocketConnectionParamsBuilder {
         self.ws_response_timeout = value;
         self
     }
+    pub fn audio_request_json(mut self, value: Patch<TypedMap<JsonValue>>) -> Self {
+        self.audio_request_json = value;
+        self
+    }
+    pub fn audio_curl(mut self, value: Patch<String>) -> Self {
+        self.audio_curl = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -184160,6 +184621,8 @@ impl WebSocketConnectionParamsBuilder {
             curl: self.curl,
             multi_turn_config: self.multi_turn_config,
             ws_response_timeout: self.ws_response_timeout,
+            audio_request_json: self.audio_request_json,
+            audio_curl: self.audio_curl,
             extensions: self.extensions,
         })
     }

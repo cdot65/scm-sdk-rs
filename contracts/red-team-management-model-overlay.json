@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": "5fbb533bd5f0156bf85c0a549b962aaf2f96cf09d0b6d9d82ac2d2afe87509a0",
+  "generator": "tools/red_team_management_models.py",
+  "generatorSha256": "7ddeb5795fe8cdbb43f313c2d5a737ec3bf72686297f5a7a32a2fe1a0ac75083",
+  "runtimeEnumExtensions": {
+    "s012061": [
+      "VERTEX_AI",
+      "N8N"
+    ],
+    "s012067": [
+      "REALTIME"
+    ]
+  },
+  "enumCompatibility": {
+    "TargetConnectionType": {
+      "frozenParityType": "TargetConnectionType",
+      "schemaBoundType": "TargetCreateRequestConnectionType",
+      "policy": "Frozen TypeScript constants unchanged; schema-bound enums declare current values; response unknown strings preserved."
+    },
+    "ResponseMode": {
+      "frozenParityType": "ResponseMode",
+      "schemaBoundType": "TargetCreateRequestResponseMode",
+      "policy": "Frozen TypeScript constants unchanged; schema-bound enums declare current values; response unknown strings preserved."
+    }
+  },
+  "sharedRedactBranch": {
+    "declarationOnlyModel": "VertexAIConnectionRedactParams",
+    "targetResponseBranch": "VertexAIConnectionParams",
+    "reason": "Frozen shared union retained; masked response strings bypass request patterns."
+  },
+  "runtimeUnionExtensions": [
+    {
+      "schema": "s010462",
+      "legacyBranches": 4,
+      "appendedSchema": "smp_bc45d353b11579547ea9cf9e",
+      "rustType": "super::red_team_management::VertexAIConnectionParams",
+      "rustVariant": "Variant5"
+    },
+    {
+      "schema": "s010504",
+      "legacyBranches": 2,
+      "appendedSchema": "smp_32d526d72ac63585e587daf7",
+      "rustType": "super::red_team_management::MultiTurnClientSessionConfig",
+      "rustVariant": "Variant3"
+    }
+  ],
+  "modelOnlyProjections": [
+    {
+      "legacySchema": "s010721",
+      "field": "basic_username",
+      "schema": "smp_8c7c832e403f33b0d9a83f4d",
+      "rustType": "BasicAuthAuthConfig"
+    },
+    {
+      "legacySchema": "s010721",
+      "field": "basic_password",
+      "schema": "smp_a2447111dd6369a5b7e6679d",
+      "rustType": "BasicAuthAuthConfig"
+    },
+    {
+      "legacySchema": "s010755",
+      "field": "basic_username",
+      "schema": "smp_8c7c832e403f33b0d9a83f4d",
+      "rustType": "AuthConfigRequestVariant3"
+    },
+    {
+      "legacySchema": "s010755",
+      "field": "basic_password",
+      "schema": "smp_a2447111dd6369a5b7e6679d",
+      "rustType": "AuthConfigRequestVariant3"
+    },
+    {
+      "legacySchema": "s010789",
+      "field": "audio_request_json",
+      "schema": "smp_cf638b809afc72d2d0645313",
+      "rustType": "RestConnectionParams"
+    },
+    {
+      "legacySchema": "s010789",
+      "field": "audio_curl",
+      "schema": "smp_bd14324793e1c5e5ef32d289",
+      "rustType": "RestConnectionParams"
+    },
+    {
+      "legacySchema": "s010821",
+      "field": "audio_request_json",
+      "schema": "smp_7598a4cd624d2c0d6ac4f34b",
+      "rustType": "StreamingConnectionParams"
+    },
+    {
+      "legacySchema": "s010821",
+      "field": "audio_curl",
+      "schema": "smp_9f46acea9a82a3fdbf696782",
+      "rustType": "StreamingConnectionParams"
+    },
+    {
+      "legacySchema": "s010824",
+      "field": "audio_request_json",
+      "schema": "smp_f1736c470e2062ad95cfdd1b",
+      "rustType": "WebSocketConnectionParams"
+    },
+    {
+      "legacySchema": "s010824",
+      "field": "audio_curl",
+      "schema": "smp_d29a692f2383e05431f18e37",
+      "rustType": "WebSocketConnectionParams"
+    },
+    {
+      "legacySchema": "s010829",
+      "field": "audio_request_json",
+      "schema": "smp_f1736c470e2062ad95cfdd1b",
+      "rustType": "ConnectionParamsRequestVariant2"
+    },
+    {
+      "legacySchema": "s010829",
+      "field": "audio_curl",
+      "schema": "smp_d29a692f2383e05431f18e37",
+      "rustType": "ConnectionParamsRequestVariant2"
+    }
+  ],
+  "publicModels": {
+    "VertexAIConnectionParams": "smp_bc45d353b11579547ea9cf9e",
+    "VertexAIConnectionRedactParams": "smp_4bcd2c718055eb4ea89dcd95",
+    "MultiTurnClientSessionConfig": "smp_32d526d72ac63585e587daf7"
+  },
+  "defaultPolicy": "No added default nodes; frozen default bindings unchanged; client_session requires explicit tag.",
+  "responsePolicy": "Frozen roots retained; new patterns request-only; passthrough fields remain unvalidated optional typed projections.",
+  "sourceBindings": [
+    {
+      "path": "tools/red_team_management_models.py",
+      "sha256": "7ddeb5795fe8cdbb43f313c2d5a737ec3bf72686297f5a7a32a2fe1a0ac75083"
+    },
+    {
+      "path": "tools/generate_models.py",
+      "sha256": "b915ef666cf567202b386f5d99a50ade1fbfa58d641d4f03bc352ab17f293a46"
+    },
+    {
+      "path": "contracts/vendor/red-team-management/0.86.0/mp-openapi.yaml",
+      "sha256": "5fbb533bd5f0156bf85c0a549b962aaf2f96cf09d0b6d9d82ac2d2afe87509a0"
+    },
+    {
+      "path": "contracts/vendor/red-team-management/0.86.0/openapi.json",
+      "sha256": "4d8e6b2f55eb7a2b1fbdfd8de7642dcdd5ed925b799415c35eb28e888f1b3fd6"
+    },
+    {
+      "path": "crates/scm-sdk/src/validation.rs",
+      "sha256": "eb76df2418411fab469effbb2410884b82fb0de69c85b18a4e625ebc6b8cd2d2"
+    },
+    {
+      "path": "crates/scm-sdk/src/validation/schema_graph.json",
+      "sha256": "3bfcae4d6f27b79f4ff330d67a565aa52b7bb70b3d42053671b1045a340cccdd"
+    },
+    {
+      "path": "crates/scm-sdk/src/models/generated.rs",
+      "sha256": "b829dbcec2b0f6e2ad38ecc5dcd1dee80fa28f992273cfc5aea427d41520eaf1"
+    },
+    {
+      "path": "crates/scm-sdk/src/models/red_team_management.rs",
+      "sha256": "9e0ea49cb6a14138d762984cd65d568b1248913ef9e65fd319aa98ef979426a3"
+    },
+    {
+      "path": "crates/scm-sdk/tests/red_team_management_models.rs",
+      "sha256": "a56e5a6ac517870076fc1aa386aa564095c5ad4fa7c26b560a076fb96cffee14"
+    },
+    {
+      "path": "crates/scm-sdk/tests/red_team_management_contracts.rs",
+      "sha256": "edf07088e850a1f0343c221088f16d4a2baf936bda1f7af645526b962b70eb92"
+    },
+    {
+      "path": "tools/test_red_team_management_models.py",
+      "sha256": "f112a69af6bd0c35f499c01ee71e6f8d6c2440740d67c3c2cfccd5c6caf12c99"
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "479c05a3a1e3586e6ec9c4f8371ef23c536c0db2f59ce4fcfd1808c7c2c5b837"
+    }
+  ]
+}

@@ -152,7 +152,7 @@ def fingerprint(root=None):
     return digest.hexdigest()
 
 
-def validate_review(review, *, rubric=False, chunk=False, attempt=1, completed_prior=0):
+def validate_review(review, *, rubric=False, chunk=False, attempt=1, completed_prior=0, phase=None):
     """Reject malformed or fabricated pass records before applying the gate."""
     if not isinstance(review, dict):
         raise ValueError("Claude must return a structured review object")
@@ -191,7 +191,7 @@ def validate_review(review, *, rubric=False, chunk=False, attempt=1, completed_p
         total = review["total"]
         if isinstance(total, bool) or not isinstance(total, (int, float)) or total != sum(categories.values()):
             raise ValueError("Review total must equal the sum of its five categories")
-    return gate_decision(review, rubric=rubric, chunk=chunk, attempt=attempt, completed_prior=completed_prior) != "rejected"
+    return gate_decision(review, rubric=rubric, chunk=chunk, attempt=attempt, completed_prior=completed_prior, phase=phase) != "rejected"
 
 
 def sha256(path):
@@ -267,7 +267,7 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
         return False
     rubric = uses_rubric(phase)
     if rubric:
-        validate_review(record.get("review"), rubric=True, chunk=bool(chunk), attempt=attempt)
+        validate_review(record.get("review"), rubric=True, chunk=bool(chunk), attempt=attempt, phase=phase)
         completed_prior = verify_attempt_sequence(root, phase, attempt, chunk)
         if (record.get("chunk") != chunk or record.get("rubric") != "five-category-v1"
                 or record.get("decision") != gate_decision(record["review"], rubric=True,
@@ -277,7 +277,7 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
             and record.get("source_sha256") == source_sha256
             and record.get("source_unchanged") is True and record.get("gate_passed") is True
             and validate_review(record.get("review"), rubric=rubric, chunk=bool(chunk), attempt=attempt,
-                                completed_prior=completed_prior if rubric else 0)):
+                                completed_prior=completed_prior if rubric else 0, phase=phase)):
         return False
     for key, suffix in (("prompt_sha256", ".prompt.md"), ("cli_output_sha256", ".cli.json")):
         evidence = path.with_suffix(suffix)
@@ -585,7 +585,7 @@ phase 20. A fresh complete-phase review after delivery and both accepted chunks 
         review = envelope.get("structured_output")
         if review is None:
             review = json.loads(envelope.get("result", "{}"))
-        passed = validate_review(review, rubric=rubric, chunk=bool(args.chunk), attempt=args.attempt, completed_prior=completed_prior)
+        passed = validate_review(review, rubric=rubric, chunk=bool(args.chunk), attempt=args.attempt, completed_prior=completed_prior, phase=args.phase)
     except (ValueError, TypeError, KeyError, RuntimeError):
         failed_invocation("invalid_output")
         raise

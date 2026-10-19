@@ -16,9 +16,61 @@ import unittest
 from review_phase import fingerprint
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-# The longest Rust checker runs six subprocesses with 900-second limits.
+# The longest Rust checker runs seven subprocesses with 900-second limits.
 # Preserve an outer bound while allowing their full budget and cleanup overhead.
-COMMAND_TIMEOUT_SECONDS = 6 * 900 + 60
+COMMAND_TIMEOUT_SECONDS = 7 * 900 + 60
+
+
+
+# Every scoped contract JSON requires a declared verifying owner. Unknown artifacts
+# fail closed, including new files discovered under a directory scope.
+CONTRACT_LEDGER_OWNERS = {
+    'contracts/airs-active-sources.json': ('tools/red_team_management.py', '--check'),
+    'contracts/airs-operations.json': ('tools/red_team_management.py', '--check'),
+    'contracts/airs-retained-capabilities.json': ('tools/red_team_management.py', '--check'),
+    'contracts/historical/0.2.2-live-evidence.json': ('tools/red_team_management.py', '--check'),
+    'contracts/vendor/red-team-management/0.86.0/operations.json': ('tools/red_team_management.py', '--check'),
+    'contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json': ('tools/red_team_management.py', '--check'),
+    'contracts/manifest.json': ('tools/verify-contracts.py',),
+    'contracts/vendor/red-team-management/0.86.0/openapi.json': ('tools/verify-contracts.py',),
+    'contracts/vendor/red-team-management/0.86.0/source.json': ('tools/verify-contracts.py',),
+    'contracts/native-models.json': ('tools/generate_models.py', '--check'),
+    'contracts/red-team-management-model-overlay.json': ('tools/generate_models.py', '--check'),
+    'contracts/red-team-management-union-extensions.json': ('tools/generate_models.py', '--check'),
+    'contracts/native-operations.json': ('tools/native_operations.py', '--check'),
+    'contracts/native-exports.json': ('tools/native_exports.py', '--check'),
+    'contracts/qualification.json': ('tools/qualification.py', '--check'),
+    'contracts/response-defaults.json': ('tools/response_defaults.py', '--check'),
+    'contracts/native-gateway-bindings.json': ('tools/verify_gateway_bindings.py', '--check'),
+    'contracts/native-fixtures/gateway-specimens.json': ('tools/verify-gateway-specimens.mts', '--check'),
+    'contracts/native-fixtures/schemas.json': ('tools/schema-oracle.mts', '--check'),
+    'contracts/compatibility/g25/audit.json': ('tools/g25_audit.py', '--check'),
+    'contracts/compatibility/g25/comparison.json': ('tools/g25_report.py', '--check'),
+    'contracts/compatibility/g25/cases.json': ('tools/g25_fixtures.py', '--check'),
+    'contracts/compatibility/g25/projection-bindings.json': ('tools/g25_fixtures.py', '--check'),
+    'contracts/compatibility/g25/projections.json': ('tools/g25_fixtures.py', '--check'),
+    'contracts/compatibility/g25/outcomes.json': ('tools/g25-oracle.mts', '--check'),
+}
+
+
+def verify_scoped_ledger_owners(scope, commands, root=ROOT):
+    """Require an executed owning checker for every scoped contract JSON."""
+    artifacts = set()
+    for relative in scope:
+        path = root / relative
+        candidates = path.rglob('*.json') if path.is_dir() else (path,)
+        for candidate in candidates:
+            name = candidate.relative_to(root).as_posix()
+            if name.startswith('contracts/') and name.endswith('.json'):
+                artifacts.add(name)
+    for artifact in sorted(artifacts):
+        owner = CONTRACT_LEDGER_OWNERS.get(artifact)
+        if owner is None:
+            raise ValueError('No declared ledger owner: ' + artifact)
+        if not any(any(tuple(command[i:i + len(owner)]) == owner
+                       for i in range(len(command) - len(owner) + 1))
+                   for command in commands):
+            raise ValueError('Missing ledger owning check: ' + artifact)
 
 
 def require_nonempty_tests(command):
@@ -176,7 +228,22 @@ def management_commands(phase):
     # The verifier must reject unimplemented later milestones. Listing a future
     # gate is not a claim that its fixtures, qualification or delivery exist.
     commands = [*common, ["python", "tools/red_team_management.py", "--check", "--require-through-phase", str(phase)]]
+    commands += [
+        ["tools/node_modules/.bin/tsx", "tools/verify-gateway-specimens.mts", "--check"],
+        ["python", "tools/verify_gateway_bindings.py", "--check"],
+    ]
     if phase == 22:
+        commands += [
+            ["git", "diff", "--check", MANAGEMENT_BASELINE + "..HEAD", "--", ".",
+             ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml",
+             ":(exclude)contracts/vendor/red-team-data-plane/0.93.0/*.yaml",
+             ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"],
+            unit("test_red_team_management_models.py"),
+            ["python", "tools/native_operations.py", "--check", "--require-through-phase", "8"],
+            ["python", "tools/native_exports.py", "--check"],
+            ["python", "tools/qualification.py", "--check"],
+            ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-22-dependencies.json"],
+        ]
         inherited = commands_for(19)
     else:
         inherited = commands_for(20)
@@ -185,6 +252,8 @@ def management_commands(phase):
         # publication readiness/delivery belongs to the phase 24 milestone gate.
         if "scripts/check-access-release.py" in original:
             continue
+        if phase == 23 and original == ["python", "tools/live_evidence.py", "--check"]:
+            continue  # Cumulative offline qualification; fresh live acceptance belongs to phase 24.
         command = [value.replace("phase-19-", f"phase-{phase}-").replace("phase-20-", f"phase-{phase}-")
                    for value in original]
         if command[:2] == ["git", "diff"] and "--check" in command:

@@ -3,9 +3,10 @@ import copy
 import pathlib
 import json
 import hashlib
+import re
 import unittest
 
-from g25_report import grouped, ledger, residual_strictness, signature, validate_corpus_binding, projection_usage, render
+from g25_report import grouped, ledger, residual_strictness, signature, validate_corpus_binding, projection_usage, render, management_projection_section
 
 
 class ComparisonReportTests(unittest.TestCase):
@@ -92,7 +93,7 @@ class ComparisonReportTests(unittest.TestCase):
         audit = json.loads((root / 'contracts/compatibility/g25/audit.json').read_text())
         comparison = json.loads((root / 'contracts/compatibility/g25/comparison.json').read_text())
         report = render(audit, comparison, projections)
-        paragraph = report.split('every request-reachable projection model: ', 1)[1].split('. If a caller', 1)[0]
+        paragraph = report.split('every request-reachable projection model in the data-plane corpus: ', 1)[1].split('. If a caller', 1)[0]
         expected = sorted({r['rustType'] for r in projections if r['usage'] in ('request-only', 'request-and-response')})
         self.assertEqual(paragraph, ', '.join(f'`{name}`' for name in expected))
         self.assertIn('`TargetMetadata`', paragraph)
@@ -104,6 +105,36 @@ class ComparisonReportTests(unittest.TestCase):
         # Synthetic new request projections must be reflected without editing prose.
         expanded = render(audit, comparison, projections + [{'usage': 'request-and-response', 'rustType': 'FutureModel'}])
         self.assertIn('`FutureModel`', expanded.split('. If a caller', 1)[0])
+
+    def test_documented_projection_models_cover_both_generators(self):
+        root = pathlib.Path(__file__).resolve().parents[1]
+        load = lambda path: json.loads((root / path).read_text())
+        projections = load('contracts/compatibility/g25/projections.json')
+        management = load('contracts/red-team-management-model-overlay.json')['modelOnlyProjections']
+        self.assertEqual(len(management), 12)
+        expected_management = {'BasicAuthAuthConfig', 'AuthConfigRequestVariant3',
+                              'RestConnectionParams', 'StreamingConnectionParams',
+                              'WebSocketConnectionParams', 'ConnectionParamsRequestVariant2'}
+        self.assertEqual({row['rustType'] for row in management}, expected_management)
+        report = render(load('contracts/compatibility/g25/audit.json'),
+                        load('contracts/compatibility/g25/comparison.json'), projections, management)
+        table = report.split('| Management projection model |', 1)[1].split('### Rules deliberately retained', 1)[0]
+        actual_management = set(re.findall(r'^\| `([^`]+)` \|', table, re.MULTILINE))
+        self.assertEqual(actual_management, expected_management)
+        for row in management:
+            self.assertRegex(table, rf'\| `{row["rustType"]}` \| `{row["legacySchema"]}` \|[^\n]*`{row["field"]}`')
+        # Every data-plane model is in its usage table, including standalone types.
+        dataplane_table = report.split('| Projection reachability |', 1)[1].split('Baseline decoding errors', 1)[0]
+        actual_dataplane = {name for name in re.findall(r'`([^`]+)`', dataplane_table)
+                           if name not in projection_usage(projections)}
+        self.assertEqual(actual_dataplane | actual_management,
+                         {row['rustType'] for row in projections} | expected_management)
+        self.assertIn('explicit null, supersedes', report)
+        self.assertIn('data-plane vendor contract is Red Team 0.93.0', report)
+        self.assertIn('management projection addendum covers Red Team management 0.86.0', report)
+        self.assertIn('historical `projection-bindings.json` owns only that data-plane corpus', report)
+        with self.assertRaisesRegex(ValueError, 'Duplicate management projection'):
+            management_projection_section(management + [management[0]])
 
     def test_report_handles_no_residual_strictness_cases(self):
         root = pathlib.Path(__file__).resolve().parents[1]

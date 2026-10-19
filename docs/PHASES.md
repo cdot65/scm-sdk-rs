@@ -147,7 +147,7 @@ their actual artifacts and checks exist. Registering commands is not completion.
 
 `--contracts-only --verification-only` has a separate receipt for each new phase;
 it can never substitute for the complete phase check list. The current workflow
-routes to phase 21 contracts. Update routing, tests and documentation together
+routes to phase 22 contracts. Update routing, tests and documentation together
 when moving to phases 22 and 23. Phase 24 must align delivery-context verification
 with that workflow, select the actual release version and implement its own
 readiness/delivery guards. No existing 0.2.2-specific publication helper is reused
@@ -180,7 +180,7 @@ from a timeout, score, elapsed time or the general instruction to continue work.
 Until authorization exists, keep the exhausted scope incomplete and continue
 only independent work that does not depend on its acceptance.
 
-The current workflow routes to phase 21 contracts and preserves its independent
+The current workflow routes to phase 22 contracts and preserves its independent
 48-job Rust matrix. The contracts job checks planning provenance and frozen
 runtime inputs, not current live acceptance or release readiness. Local passing
 records do not prove the workflow ran remotely: retain an actual terminal run
@@ -207,8 +207,8 @@ fingerprint, so `native_exports.py --check` correctly considers the old live
 qualification stale. Phase 21 retains exact baseline native/export/default/vendor
 ledger bytes and verifies the immutable capability-retention floor for static
 closure. It neither rebinds historical live receipts nor reruns mutating service
-qualification during planning. Current-source native-export and live-evidence
-checks remain required in phases 23–24 after implementation settles. This is an
+qualification during planning. Current-source native-export checks remain required in phases 23–24; fresh
+live-evidence checks belong to Phase 24 after implementation settles. This is an
 evidence-scope boundary, not a discovered runtime capability gap.
 
 The planning metadata exception is byte-exact: only the specified 64-character
@@ -229,3 +229,16 @@ Phase 21 requires network access to refresh the RustSec advisory database and
 full Git history for the baseline-to-HEAD whitespace check. `deny.toml` remains
 byte-identical to the audited baseline alongside Cargo inputs; a passing audit
 cannot silently authorize a relaxed dependency policy.
+
+
+### Phase 22 offline qualification boundary
+
+Archive the original current-live reference byte-for-byte as
+`contracts/historical/0.2.2-live-evidence.json`; its recorded execution report is
+unchanged. The 17 historically verified methods remain evidence for their old
+runtime fingerprint, never acceptance of the changed runtime. Regenerate current
+native operations, exports and qualification with no current live reference:
+every live annotation must be unverified and current verified counts must be zero.
+Phase 22's verifier rejects a current-live reference, altered history or inherited
+live annotations. Fresh service qualification belongs to Phase 24. Phase 23
+cumulative offline qualification must preserve this separation when activated.

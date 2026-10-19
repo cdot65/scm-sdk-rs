@@ -19,8 +19,12 @@ class ModelFixturesTests(unittest.TestCase):
     def test_g25_format_tolerant_response_policy_and_observations_are_pinned(self):
         corpus=json.loads((fixture.ROOT/fixture.SOURCE).read_text())
         corpus['provenance'].pop('tooling')
+        # New source pins rebind the manifest, while frozen oracle observations
+        # remain identical. Verify the live binding separately from that pin.
+        manifest_sha=corpus['provenance'].pop('manifestSha256')
+        self.assertEqual(manifest_sha,fixture.sha(fixture.ROOT/'contracts/manifest.json'))
         digest=hashlib.sha256(json.dumps(corpus,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
-        self.assertEqual(digest,'ce15ed5d6326f9216060bd6f7bfca92b51d34920c319accb834b70d1ae3d79dd')
+        self.assertEqual(digest,'ddc0f2ac51368005823957a1de68c0517ce151b6d94ff4e95e5875553ba5615b')
 
     def test_original_frozen_request_observations_are_unchanged(self):
         corpus=json.loads((fixture.ROOT/fixture.SOURCE).read_text())

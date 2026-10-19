@@ -1060,6 +1060,10 @@ fn patterns() -> &'static BTreeMap<String, regex::Regex> {
             r"^[^,\s]+__[^,\s]+$",
             r"^[a-zA-Z0-9_-]+$",
             r"^\d+$",
+            // Reviewed Vertex AI request patterns from management 0.86.0.
+            r"^[a-z0-9][a-z0-9-]{0,62}$",
+            r"^[a-z0-9-]+$",
+            r"^[0-9]+$",
         ]
         .into_iter()
         .filter_map(|source| {

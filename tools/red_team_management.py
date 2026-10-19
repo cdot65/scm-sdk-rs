@@ -420,7 +420,7 @@ def retained_floor(current):
 
 
 def verify_retention_origin(floor=None):
-    """Phase21-only digest proof; future phases retain the floor but may add rows."""
+    """Phase 21-only digest proof; future phases retain the floor but may add rows."""
     if floor is None:
         floor = json.loads(checked_bytes(RETENTION_SEED, RETENTION_SHA256))
     if set(floor.get('sourceLedgerSha256', {})) != set(RETENTION_LEDGER_PATHS):
@@ -519,10 +519,11 @@ def build():
             'activeSourceId': SOURCE_ID if management else ('contracts/vendor/red-team-data-plane/0.93.0/source.json' if dataplane else frozen_id),
             'identityKind': 'source_metadata' if dataplane else 'manifest_source',
             'version': spec['info']['version'], 'operationCount': len(ops),
-            'adoptionState': 'pinned_for_phase22_not_runtime_adopted' if management else 'already_adopted',
+            # Machine identifiers retain stable phase-number tokens; prose uses normal spacing.
+            'adoptionState': management_adoption_tokens(source_ids[SOURCE_ID]['usedForGeneration'])[0] if management else 'already_adopted',
             'runtimeCompatibilityFloor': 'Frozen TypeScript 0.34.0 plus G10/G25; never infer precedence from usedForGeneration.',
             'owner': 'tools/verify-contracts.py' if not dataplane else 'tools/red_team_dataplane.py',
-            'overlayOwner': 'tools/red_team_management.py (plan); phase22 implements overlay' if management else ('tools/red_team_dataplane.py + tools/generate_validation.py' if dataplane else 'frozen generator + reviewed semantics'),
+            'overlayOwner': ('tools/red_team_management_models.py + tools/generate_models.py' if source_ids[SOURCE_ID]['usedForGeneration'] else 'tools/red_team_management.py (plan); phase 22 implements overlay') if management else ('tools/red_team_dataplane.py + tools/generate_validation.py' if dataplane else 'frozen generator + reviewed semantics'),
             'canonicalSemanticJsonSha256': sha(json.dumps(spec, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()),
         })
         if dataplane:
@@ -589,29 +590,183 @@ def build():
         'preservedPolicies': ['G10: omission/null/value and opt-in no-default mode', 'G25: response format tolerance, open enums and unknown keys; requests retain reviewed strictness', 'Legacy target status inputs transmitted unchanged', 'Legacy provider order and first-success resolution for absent multi-turn discriminator', 'Pagination, bounded collections, cancellation and uncertain mutation handling', 'Authentication, destination admission, no authenticated redirect forwarding, secret-safe diagnostics', 'Gateway/Portkey, AgentGuard, realtime, DLP and IAM retain separate provenance outside AIRS denominator'],
         'redTeamExtraMethods': [{'baselineId': x['baselineId'], 'rustMethods': x['rustMethods'], 'source': x['source']} for x in native if x['family'] == 'red-team' and any(t in x['source'] for t in ('/eula.rs', '/instances.rs'))],
         'additionalTargetTemplates': ['RedTeamTargetsClient::get_target_metadata', 'RedTeamTargetsClient::get_target_templates'],
-        'evidenceLimit': 'Static preservation inventory; phase23 must exercise old consumers and round-trips.'}
+        'evidenceLimit': 'Static preservation inventory; phase 23 must exercise old consumers and round-trips.'}
     retention = retained_floor(current_inventory)
+    adopted = source_ids[SOURCE_ID]['usedForGeneration']
+    if type(adopted) is not bool:
+        raise ValueError('Management generation adoption must be explicit boolean')
+    if adopted:
+        verify_runtime_adoption()
     return {
         Path('contracts/airs-active-sources.json'): {'schemaVersion': 1, 'snapshotCommit': COMMIT, 'sources': source_rows},
         Path('contracts/airs-operations.json'): {'schemaVersion': 1, 'snapshotCommit': COMMIT, 'bindingProvenance': str(AUDIT), 'operations': rows},
         Path('contracts/airs-retained-capabilities.json'): retention,
-        VENDOR / 'operations.json': {'schemaVersion': 1, 'sourceId': SOURCE_ID, 'operations': management_rows},
-        VENDOR / 'compatibility-decisions.json': {'schemaVersion': 1, 'sourceId': SOURCE_ID, 'baselineVersion': baseline['info']['version'], 'currentVersion': management_spec['info']['version'], 'deltas': deltas, 'plan': 'docs/red-team-management-0.86-plan.md', 'runtimeAdoption': 'pending_phase22'},
+        VENDOR / 'operations.json': {'schemaVersion': 1, 'sourceId': SOURCE_ID, 'operations': management_rows,
+            'runtimeEvidence': management_runtime_evidence() if adopted else None},
+        # Stable machine identifiers consumed downstream; do not reformat phase tokens.
+        VENDOR / 'compatibility-decisions.json': {'schemaVersion': 1, 'sourceId': SOURCE_ID, 'baselineVersion': baseline['info']['version'], 'currentVersion': management_spec['info']['version'], 'deltas': deltas, 'plan': 'docs/red-team-management-0.86-plan.md', 'runtimeAdoption': management_adoption_tokens(adopted)[1], 'targetResponseDeclarations': target_response_declarations(management_spec) if adopted else None},
     }
+
+
+MANAGEMENT_WIRE_TESTS = (
+    'vertex_client_session_and_new_values_preserve_both_response_modes',
+    'request_new_variants_and_vertex_patterns_are_strict',
+    'missing_defaults_and_explicit_null_are_distinct',
+    'new_projected_fields_keep_previous_passthrough_values',
+    'legacy_multi_turn_resolution_and_hybrid_provider_precedence_remain',
+    'all_five_operations_preserve_declared_sensitive_response_shapes',
+    'profiling_filter_propagates_through_every_page_and_collection_surface',
+    'invalid_profiling_filter_never_acquires_token_or_dispatches',
+    'unknown_discriminators_and_required_vertex_types_stay_validated',
+    'untagged_complete_stateful_config_keeps_frozen_branch_selection',
+    'explicit_client_session_wins_over_legacy_structural_fields',
+    'malformed_target_response_errors_never_echo_credentials',
+    'typed_projection_values_override_raw_collisions_and_unset_restores_them',
+)
+
+
+TARGET_RESPONSE_DECLARATIONS = (
+    ('POST', '/v1/target', 'TargetResponseSchema'),
+    ('GET', '/v1/target/{target_uuid}', 'TargetRedactSchema'),
+    ('PUT', '/v1/target/{target_uuid}', 'TargetSchema'),
+    ('POST', '/v1/target/probe', 'TargetResponseSchema'),
+    ('PUT', '/v1/target/{target_uuid}/profile', 'TargetSchema'),
+)
+
+
+def target_response_declarations(spec):
+    """Record field coverage without claiming full JSON Schema equivalence."""
+    graph = load('crates/scm-sdk/src/validation/schema_graph.json')
+    root_name = 'src/models/red-team.ts#TargetResponseSchema'
+    sid = graph['roots'][root_name]
+    node = graph['nodes'][sid]
+    fields = node['properties']
+    required = sorted(name for name, field in fields.items() if field['inputPresence'] == 'rejects')
+    rows = []
+    for method, path, component in TARGET_RESPONSE_DECLARATIONS:
+        operation = spec['paths'][path][method.lower()]
+        expected_ref = '#/components/schemas/' + component
+        response_refs = [response.get('content', {}).get('application/json', {}).get('schema', {}).get('$ref')
+                         for status, response in operation['responses'].items() if status.startswith('2')]
+        if expected_ref not in response_refs:
+            raise ValueError('Target operation response declaration changed')
+        vendor = spec['components']['schemas'][component]
+        vendor_required = sorted(vendor.get('required', []))
+        if required != vendor_required or not set(vendor['properties']) <= fields.keys():
+            raise ValueError('Retained target root required fields or vendor field coverage differ')
+        comparisons = []
+        for name, schema in sorted(vendor['properties'].items()):
+            nullable = schema.get('type') == 'null' or any(
+                branch.get('type') == 'null' for branch in schema.get('anyOf', []) + schema.get('oneOf', []))
+            if nullable and fields[name]['inputNull'] != 'accepts':
+                raise ValueError('Retained target root rejects a declared nullable field: ' + name)
+            comparisons.append({'field': name, 'vendorSchema': schema, 'vendorRequired': name in vendor_required,
+                                'vendorExplicitlyNullable': nullable, 'sdkFieldSchema': fields[name]['schema'],
+                                'sdkAcceptsMissing': fields[name]['inputPresence'] == 'accepts',
+                                'sdkAcceptsNull': fields[name]['inputNull'] == 'accepts'})
+        rows.append({'method': method, 'path': path, 'vendorSchema': component,
+                     'retainedSdkRoot': root_name, 'retainedSdkSchema': sid,
+                     'requiredFields': required, 'fieldComparisons': comparisons,
+                     'sdkAdditionalFields': sorted(fields.keys() - vendor['properties'].keys()),
+                     'supersetJustification': 'All declared top-level fields are represented, required fields agree, and declared nullable fields remain accepted. The shared root retains optional credentials and connection fields, including on operations whose vendor response base omits them. Nested provider/auth/multi-turn variants are verified by the bound fixture matrix.',
+                     'comparisonLimit': 'Field presence/nullability comparison and reviewed nested fixtures, not a formal proof of complete JSON Schema equivalence. Frozen response tolerance and passthrough semantics remain authoritative.',
+                     'fixture': 'crates/scm-sdk/tests/red_team_management_contracts.rs::all_five_operations_preserve_declared_sensitive_response_shapes',
+                     'responseModes': ['Response', 'ResponseWithoutDefaults']})
+    return rows
+
+
+def management_runtime_evidence():
+    paths = [
+        'contracts/red-team-management-model-overlay.json',
+        'contracts/red-team-management-union-extensions.json',
+        'crates/scm-sdk/src/airs/red_team/targets.rs',
+        'crates/scm-sdk/tests/red_team_management_contracts.rs',
+        'crates/scm-sdk/tests/red_team_management_models.rs',
+        'tools/test_red_team_management_models.py',
+    ]
+    return {'scope': 'Source-bound implementation and test bindings; execution is established only by separate phase checks, never live acceptance.',
+            'sourceBindings': [{'path': path, 'sha256': sha(safe_path(path).read_bytes())} for path in paths],
+            'wireTestBindings': list(MANAGEMENT_WIRE_TESTS)}
+
+
+def management_adoption_tokens(adopted):
+    # Stable machine identifiers consumed downstream; intentionally not reformatted.
+    return (('runtime_adopted_phase22', 'adopted_phase22') if adopted else
+            ('pinned_for_phase22_not_runtime_adopted', 'pending_phase22'))
+
+
+def verify_runtime_adoption():
+    ledger = load('contracts/red-team-management-model-overlay.json')
+    if ledger.get('generator') != 'tools/red_team_management_models.py':
+        raise ValueError('Management overlay generator identity differs')
+    checked_bytes(ledger['generator'], ledger['generatorSha256'])
+    checked_bytes(VENDOR / 'mp-openapi.yaml', ledger['sourceSha256'])
+    bindings = ledger.get('sourceBindings', [])
+    required = {'tools/red_team_management_models.py', 'tools/generate_models.py',
+                'crates/scm-sdk/src/models/red_team_management.rs',
+                'crates/scm-sdk/src/models/generated.rs', 'NOTICE',
+                'tools/test_red_team_management_models.py',
+                'crates/scm-sdk/src/validation/schema_graph.json', 'crates/scm-sdk/src/validation.rs',
+                'crates/scm-sdk/tests/red_team_management_models.rs',
+                'crates/scm-sdk/tests/red_team_management_contracts.rs',
+                str(VENDOR / 'mp-openapi.yaml'), str(VENDOR / 'openapi.json')}
+    if (not isinstance(bindings, list) or len({row['path'] for row in bindings}) != len(bindings)
+            or not required <= {row['path'] for row in bindings}):
+        raise ValueError('Management overlay lacks required source bindings')
+    for row in bindings:
+        checked_bytes(row['path'], row['sha256'])
+    extensions = load('contracts/red-team-management-union-extensions.json')
+    if extensions.get('extensions') != ledger.get('runtimeUnionExtensions'):
+        raise ValueError('Management union extension ledgers differ')
+    checked_bytes(extensions['baselinePins'], extensions['baselinePinsSha256'])
+    graph = load('crates/scm-sdk/src/validation/schema_graph.json')
+    if not ledger.get('publicModels') or any(sid not in graph['nodes'] for sid in ledger['publicModels'].values()):
+        raise ValueError('Management public models lack runtime graph nodes')
+    tokens = rust_code_tokens(safe_path('crates/scm-sdk/tests/red_team_management_contracts.rs').read_text())
+    for name in MANAGEMENT_WIRE_TESTS:
+        if not re.search(r'\bfn\s+' + re.escape(name) + r'\s*\(', tokens):
+            raise ValueError('Missing management contract test binding: ' + name)
+
+
+HISTORICAL_LIVE_REFERENCE = 'contracts/historical/0.2.2-live-evidence.json'
+HISTORICAL_LIVE_SHA256 = 'a95495f685ec3718dc91e400c5a0f3184b30742e3997148f484222c3ab39e0c5'
+
+
+def verify_offline_live_boundary():
+    """Retain old acceptance without promoting it onto changed runtime source."""
+    reference = json.loads(checked_bytes(HISTORICAL_LIVE_REFERENCE, HISTORICAL_LIVE_SHA256))
+    checked_bytes(reference['report'], reference['reportSha256'])
+    current = ROOT / 'contracts/live-evidence.json'
+    if current.exists() or current.is_symlink():
+        raise ValueError('Phase 22 offline scope cannot claim a current live receipt')
+    for name, rows in (('native-operations', 'operations'), ('native-exports', 'capabilities'),
+                       ('qualification', 'operations')):
+        document = load('contracts/' + name + '.json')
+        if document.get('liveReceipt') is not None or document['summary'].get('liveVerified') != 0:
+            raise ValueError('Offline qualification must have zero current live acceptance: ' + name)
+        for row in document[rows]:
+            if row.get('liveAcceptance') != 'unverified' or 'liveEvidence' in row:
+                raise ValueError('Historical live acceptance leaked into current ledger: ' + name)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
-    parser.add_argument('--verify-retention-origin', action='store_true', help='Phase21 only: verify current source ledgers equal audited seed digests')
+    parser.add_argument('--verify-retention-origin', action='store_true', help='Phase 21 only: verify current source ledgers equal audited seed digests')
     parser.add_argument('--require-through-phase', type=int, choices=range(21, 26), default=21)
     args = parser.parse_args()
     try:
-        if args.require_through_phase > 21:
-            raise ValueError('Phase22–25 implementation/qualification evidence is not implemented; static plan evidence cannot advance these phases')
+        if args.require_through_phase > 22:
+            raise ValueError('Phase 23–25 qualification evidence is not implemented; static plan evidence cannot advance these phases')
         if args.verify_retention_origin:
             verify_retention_origin()
         outputs = build()
+        if args.require_through_phase == 22:
+            source = next(row for row in load('contracts/manifest.json')['sources'] if row['id'] == SOURCE_ID)
+            if source['usedForGeneration'] is not True:
+                raise ValueError('Management runtime adoption is not declared')
+            verify_runtime_adoption()
+            verify_offline_live_boundary()
         for path, value in outputs.items():
             content = encoded(value)
             if args.check:

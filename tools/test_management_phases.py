@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from check_phase import MANAGEMENT_BASELINE, PLANNING_FIXTURE, commands_for, ci_commands_for, verify_planning_fixture, verify_planning_gateway_proof, require_only_hash_replacements, MANAGEMENT_PHASES
+from check_phase import CONTRACT_LEDGER_OWNERS, verify_scoped_ledger_owners, MANAGEMENT_BASELINE, PLANNING_FIXTURE, commands_for, ci_commands_for, verify_planning_fixture, verify_planning_gateway_proof, require_only_hash_replacements, MANAGEMENT_PHASES
 from review_phase import check_evidence, main, matches_declared_scope, next_phase, verify_record, sha256, gate_decision, verify_attempt_sequence, SCOPE_BOUND_PHASES
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -146,7 +146,8 @@ class ManagementPhaseTests(unittest.TestCase):
             self.assertIn(path, frozen)
         for phase in (23, 24):
             self.assertIn(["python", "tools/native_exports.py", "--check"], commands_for(phase))
-            self.assertIn(["python", "tools/live_evidence.py", "--check"], commands_for(phase))
+        self.assertNotIn(["python", "tools/live_evidence.py", "--check"], commands_for(23))
+        self.assertIn(["python", "tools/live_evidence.py", "--check"], commands_for(24))
 
     def test_every_manifest_reader_is_selected_or_explicitly_explained(self):
         # Source-text discovery intentionally overcounts comments: a new literal
@@ -172,6 +173,22 @@ class ManagementPhaseTests(unittest.TestCase):
         self.assertFalse(readers - selected - exemptions.keys())
         self.assertTrue(exemptions.keys() <= readers)
         self.assertTrue(all(exemptions.values()))
+
+    def test_scoped_contract_ledgers_keep_their_declared_owning_checks(self):
+        status = json.loads((ROOT / 'docs/phase-status.json').read_text())
+        active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
+        scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
+        verify_scoped_ledger_owners(scope, commands_for(active['id']))
+        for phase in range(22, 26):
+            verify_scoped_ledger_owners(list(CONTRACT_LEDGER_OWNERS), commands_for(phase))
+        with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
+            verify_scoped_ledger_owners(['contracts/native-models.json'], [])
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            (root / 'contracts/new').mkdir(parents=True)
+            (root / 'contracts/new/unowned.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'No declared ledger owner'):
+                verify_scoped_ledger_owners(['contracts/new'], commands_for(22), root)
 
     def test_future_milestones_require_explicit_complete_artifacts(self):
         for phase in range(22, 26):
@@ -270,6 +287,9 @@ class ManagementPhaseTests(unittest.TestCase):
             path, record = self.complete_record(root)
             self.assertTrue(verify_record(root, path, 21, "fixed"))
             path, record = self.complete_record(root, score=8.5)
+            self.assertFalse(verify_record(root, path, 21, "fixed"))
+            record["decision"] = "rejected"
+            path.write_text(json.dumps(record))
             self.assertFalse(verify_record(root, path, 21, "fixed"))
             self.assertEqual(gate_decision(record["review"], rubric=True, phase=21), "rejected")
 

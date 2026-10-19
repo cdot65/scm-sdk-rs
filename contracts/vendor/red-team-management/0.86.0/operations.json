@@ -3346,6 +3346,50 @@
       "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
     }
   ],
+  "runtimeEvidence": {
+    "scope": "Source-bound implementation and test bindings; execution is established only by separate phase checks, never live acceptance.",
+    "sourceBindings": [
+      {
+        "path": "contracts/red-team-management-model-overlay.json",
+        "sha256": "215ed5e813834aedec7dbe315025153d2cc9837c04e7a43571507b5252704d8e"
+      },
+      {
+        "path": "contracts/red-team-management-union-extensions.json",
+        "sha256": "38e98d40f716c772f278cedf70d14cade93b5ff785e2530bcd69743c24568b56"
+      },
+      {
+        "path": "crates/scm-sdk/src/airs/red_team/targets.rs",
+        "sha256": "f5ac8cbbed0650f627a61a70079a7f3939a6b6e646c37fde1f8498fbc2a7dfa4"
+      },
+      {
+        "path": "crates/scm-sdk/tests/red_team_management_contracts.rs",
+        "sha256": "edf07088e850a1f0343c221088f16d4a2baf936bda1f7af645526b962b70eb92"
+      },
+      {
+        "path": "crates/scm-sdk/tests/red_team_management_models.rs",
+        "sha256": "a56e5a6ac517870076fc1aa386aa564095c5ad4fa7c26b560a076fb96cffee14"
+      },
+      {
+        "path": "tools/test_red_team_management_models.py",
+        "sha256": "f112a69af6bd0c35f499c01ee71e6f8d6c2440740d67c3c2cfccd5c6caf12c99"
+      }
+    ],
+    "wireTestBindings": [
+      "vertex_client_session_and_new_values_preserve_both_response_modes",
+      "request_new_variants_and_vertex_patterns_are_strict",
+      "missing_defaults_and_explicit_null_are_distinct",
+      "new_projected_fields_keep_previous_passthrough_values",
+      "legacy_multi_turn_resolution_and_hybrid_provider_precedence_remain",
+      "all_five_operations_preserve_declared_sensitive_response_shapes",
+      "profiling_filter_propagates_through_every_page_and_collection_surface",
+      "invalid_profiling_filter_never_acquires_token_or_dispatches",
+      "unknown_discriminators_and_required_vertex_types_stay_validated",
+      "untagged_complete_stateful_config_keeps_frozen_branch_selection",
+      "explicit_client_session_wins_over_legacy_structural_fields",
+      "malformed_target_response_errors_never_echo_credentials",
+      "typed_projection_values_override_raw_collisions_and_unset_restores_them"
+    ]
+  },
   "schemaVersion": 1,
   "sourceId": "prisma-airs-redteam/management/mp-openapi.yaml@0.86.0+582e30543bf2"
 }

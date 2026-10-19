@@ -235,5 +235,11 @@ pub use super::red_team_data_plane::{
     ToolChainingSubtype, ToolMisuseSubtype, ToxicContentGuardrail, ToxicContentGuardrailBuilder,
     TranscriptSource, ValidationErrorCtx, ValidationErrorCtxBuilder,
 };
+/// Additive management models.
+pub use super::red_team_management::{
+    MultiTurnClientSessionConfig, MultiTurnClientSessionConfigBuilder,
+    MultiTurnClientSessionConfigType, VertexAIConnectionParams, VertexAIConnectionParamsBuilder,
+    VertexAIConnectionRedactParams, VertexAIConnectionRedactParamsBuilder,
+};
 pub use super::support::*;
 pub use crate::data::{FiniteNumber, JsonObject, JsonValue, Nullable, Optional, Patch};

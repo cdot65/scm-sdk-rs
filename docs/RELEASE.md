@@ -6,10 +6,10 @@ qualify the G25 response compatibility correction. The
 [tag receipt](checks/release-tag-v0.2.2.json) establish actual publication and
 remote source identity. A missing receipt means publication is not yet verified.
 
-CI currently runs `--phase 21 --verification-only --contracts-only` alongside 48 Rust jobs
+CI currently runs `--phase 22 --verification-only --contracts-only` alongside 48 Rust jobs
 (24 feature sets on both reviewed compilers), including Red Team with JSON feature
-unification. Phase 21 is planning/provenance verification and does not qualify a
-new release or current live workflows. Routing, CI documentation and tests move
+unification. Phase 22 verifies implementation and offline compatibility; it does not qualify
+a new release or current live workflows. Routing, CI documentation and tests move
 together for later phases; Phase 24 needs its own readiness and delivery guards.
 The historical complete local phase 20 gate additionally required both clean
 archive proofs, executed offline examples and external consumers, current live

@@ -58,7 +58,7 @@ def cargo_path(explicit):
 def commands(cargo, toolchain, feature_set, host):
     base = [cargo, f"+{toolchain}"]
     flags = FEATURES[feature_set]
-    return [
+    checks = [
         [*base, "fmt", "--all", "--", "--check"],
         [*base, "check", "--workspace", "--all-targets", "--locked", "--target", host, *flags],
         [*base, "clippy", "--workspace", "--all-targets", "--locked", "--target", host, *flags, "--", "-D", "warnings"],
@@ -66,6 +66,11 @@ def commands(cargo, toolchain, feature_set, host):
         [*base, "test", "--workspace", "--examples", "--locked", "--target", host, *flags],
         [*base, "doc", "--workspace", "--no-deps", "--locked", "--target", host, *flags],
     ]
+    if feature_set in {"red-team", "red-team-json-unification"}:
+        # cargo test --examples compiles examples but does not execute their main.
+        checks.append([*base, "run", "--package", "scm-sdk", "--example",
+                       "red_team_management", "--locked", "--target", host, *flags])
+    return checks
 
 
 def main():

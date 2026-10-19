@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "inputs": {
-    "contracts/manifest.json": "69606473681ba0744b6310eef942fb7b04aa072125ddf267f6718b8935e84251",
+    "contracts/manifest.json": "de70d80d92d1bd7eed5e26a988f2fd143c99d200d0c84bb64530131ef97c2c47",
     "contracts/native-operation-mappings/red-team-resources.json": "6ce5c1acda382055995967fb2f5fe6225042f448cd5b29a2804d90c8a7915421",
     "contracts/native-operation-mappings/red-team.json": "2cebad0c30b6637bce3a77a81cfd7f6b7f27e14c8e775dbc2e81fbd39ee31dcb",
     "contracts/operations.json": "028acb96f9740018f2fbdf699d7a110688553e667433e63abf7a137ab67d8abf",
@@ -18,8 +18,8 @@
     "crates/scm-sdk/src/airs/red_team/network_broker.rs": "9b05f6273850226868e89d0db11ac492bbc9b6a55319d48e7a50937e84c78e08",
     "crates/scm-sdk/src/airs/red_team/reports.rs": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
     "crates/scm-sdk/src/airs/red_team/scans.rs": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
-    "crates/scm-sdk/src/airs/red_team/targets.rs": "3a6ec2f01f726fc6d7433aa45d956e78034970ce23b931b6db9f872a78baf921",
-    "crates/scm-sdk/src/validation/schema_graph.json": "1483a063c284531f02e6428576ccdffb7c34c6a6da663d130bbbb41c3cb83c35"
+    "crates/scm-sdk/src/airs/red_team/targets.rs": "f5ac8cbbed0650f627a61a70079a7f3939a6b6e646c37fde1f8498fbc2a7dfa4",
+    "crates/scm-sdk/src/validation/schema_graph.json": "3bfcae4d6f27b79f4ff330d67a565aa52b7bb70b3d42053671b1045a340cccdd"
   },
   "operations": [
     {
@@ -42289,6 +42289,40 @@
       ]
     },
     {
+      "root": "ConnectionParamsRequestSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "ConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
       "root": "CreateCustomTopicRequestSchema",
       "formatSites": [
         {
@@ -42952,6 +42986,23 @@
       ]
     },
     {
+      "root": "RestConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
       "root": "RuleResultConditionSchema",
       "formatSites": [
         {
@@ -43001,6 +43052,23 @@
       ]
     },
     {
+      "root": "StreamingConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
       "root": "TargetAuthValidationRequestSchema",
       "formatSites": [
         {
@@ -43014,6 +43082,40 @@
       ]
     },
     {
+      "root": "TargetConnectionConfigDefinition",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "TargetConnectionConfigSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
       "root": "TargetCreateRequestSchema",
       "formatSites": [
         {
@@ -43023,6 +43125,18 @@
         {
           "node": "s012095",
           "kind": "uuid"
+        },
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
         }
       ]
     },
@@ -43049,6 +43163,35 @@
         {
           "node": "s012256",
           "kind": "uuid"
+        },
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "TargetResponseSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
         }
       ]
     },
@@ -43062,6 +43205,69 @@
         {
           "node": "s012095",
           "kind": "uuid"
+        },
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "VertexAIConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "VertexAIConnectionRedactParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_6adbb4fc4089a5db30b6deb3",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_8f855607471f5186a31d40cf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_bd841f14be06506e1a3090b4",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "WebSocketConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
         }
       ]
     },
@@ -43966,6 +44172,40 @@
       ]
     },
     {
+      "root": "src/models/red-team-details.ts#TargetConnectionConfigDefinition",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "src/models/red-team-details.ts#TargetConnectionConfigSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
       "root": "src/models/red-team.ts#AdapterCreateRequestSchema",
       "formatSites": [
         {
@@ -44044,6 +44284,40 @@
       ]
     },
     {
+      "root": "src/models/red-team.ts#ConnectionParamsRequestSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "src/models/red-team.ts#ConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
       "root": "src/models/red-team.ts#CustomPromptCreateRequestSchema",
       "formatSites": [
         {
@@ -44062,11 +44336,45 @@
       ]
     },
     {
+      "root": "src/models/red-team.ts#RestConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
       "root": "src/models/red-team.ts#SentimentRequestSchema",
       "formatSites": [
         {
           "node": "s011881",
           "kind": "uuid"
+        }
+      ]
+    },
+    {
+      "root": "src/models/red-team.ts#StreamingConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
         }
       ]
     },
@@ -44093,6 +44401,18 @@
         {
           "node": "s012095",
           "kind": "uuid"
+        },
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
         }
       ]
     },
@@ -44119,6 +44439,35 @@
         {
           "node": "s012256",
           "kind": "uuid"
+        },
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "src/models/red-team.ts#TargetResponseSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
         }
       ]
     },
@@ -44132,6 +44481,35 @@
         {
           "node": "s012095",
           "kind": "uuid"
+        },
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
+        }
+      ]
+    },
+    {
+      "root": "src/models/red-team.ts#WebSocketConnectionParamsSchema",
+      "formatSites": [
+        {
+          "node": "smp_18924f16a2ab37dcb5359303",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_410180cdb308e7f9dcc80abf",
+          "kind": "regex"
+        },
+        {
+          "node": "smp_4e72e1c9bceac01a0054e364",
+          "kind": "regex"
         }
       ]
     },
@@ -44183,7 +44561,7 @@
       "uuid": 124,
       "duration": 4
     },
-    "allFrozenRootsWithFormats": 172,
+    "allFrozenRootsWithFormats": 190,
     "requestUuidOccurrences": 76
   },
   "policy": "Inventory only. Presence/type differences are explicit paired field records, not an assertion of semantic equivalence. New operations without a TypeScript counterpart are classified separately."

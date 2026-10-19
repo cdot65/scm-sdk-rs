@@ -12,6 +12,8 @@ const PATH: &str = "/v1/target";
 // -> Record s012087 (unconstrained string key s012088, unknown value s012089).
 const METADATA_SCHEMA: &str = "s012087";
 
+/// Target query options. Invalid values fail before authentication or dispatch,
+/// so their validation errors do not carry a dispatched operation name.
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct TargetListOptions {
@@ -20,7 +22,23 @@ pub struct TargetListOptions {
     pub search: Option<String>,
     pub adapter_uuid: Option<String>,
     pub target_type: Option<String>,
+    /// Legacy status filter, transmitted unchanged for compatibility.
+    ///
+    /// Management API 0.86.0 declares only `DRAFT` and `ACTIVE` here.
+    /// `FAILED`, `QUEUED`, `IN_PROGRESS`, `COMPLETED`, and `PARTIALLY_COMPLETE`
+    /// are no longer declared for this query. Use [`Self::profiling_status`]
+    /// for `FAILED`, `IN_PROGRESS`, or `COMPLETED`; no equivalent is declared
+    /// for `QUEUED` or `PARTIALLY_COMPLETE`. The service may reject legacy
+    /// values. This SDK does not rewrite them automatically.
     pub status: Option<String>,
+    /// Profiling filter: `NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, or `FAILED`.
+    ///
+    /// The value is preserved on every page of a paginated collection.
+    /// Unsupported values fail validation before authentication or dispatch.
+    /// Responses may contain `INIT`, `QUEUED`, or `PARTIALLY_COMPLETE`, but the vendor
+    /// declares no filter for these values. None is mapped to `NOT_STARTED`
+    /// or any other filter automatically.
+    pub profiling_status: Option<String>,
 }
 crate::redaction::redacted_debug!(TargetListOptions);
 #[derive(Clone, Default)]
@@ -57,6 +75,14 @@ impl RedTeamTargetsClient {
         if let Some(value) = &params.status {
             common::filter(value)?;
             query.push(("status".into(), value.clone()));
+        }
+        if let Some(value) = &params.profiling_status {
+            if !crate::models::red_team_management::TARGET_PROFILING_FILTER_VALUES
+                .contains(&value.as_str())
+            {
+                return Err(crate::Error::new(crate::ErrorKind::Validation));
+            }
+            query.push(("profiling_status".into(), value.clone()));
         }
         Ok(query)
     }
@@ -359,6 +385,66 @@ impl RedTeamTargetsClient {
         match self.list_pages(params, collect.max_pages, options) {
             Ok(pages) => pages.collect(collect).await,
             Err(error) => Err(error.into()),
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn profiling_filter_preserves_legacy_status_without_translation() {
+        for status in [
+            "DRAFT",
+            "ACTIVE",
+            "FAILED",
+            "QUEUED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "PARTIALLY_COMPLETE",
+            "future-status",
+        ] {
+            for profiling in ["NOT_STARTED", "IN_PROGRESS", "COMPLETED", "FAILED"] {
+                let params = TargetListOptions {
+                    status: Some(status.into()),
+                    profiling_status: Some(profiling.into()),
+                    ..Default::default()
+                };
+                assert_eq!(
+                    RedTeamTargetsClient::query(&params).unwrap(),
+                    vec![
+                        ("status".into(), status.into()),
+                        ("profiling_status".into(), profiling.into()),
+                    ]
+                );
+            }
+        }
+        assert!(
+            RedTeamTargetsClient::query(&TargetListOptions::default())
+                .unwrap()
+                .is_empty()
+        );
+    }
+
+    #[test]
+    fn profiling_filter_rejects_undeclared_values() {
+        for value in [
+            "",
+            "INIT",
+            "QUEUED",
+            "PARTIALLY_COMPLETE",
+            "failed",
+            "FAILED\n",
+        ] {
+            let params = TargetListOptions {
+                profiling_status: Some(value.into()),
+                ..Default::default()
+            };
+            assert_eq!(
+                RedTeamTargetsClient::query(&params).unwrap_err().kind(),
+                crate::ErrorKind::Validation
+            );
         }
     }
 }

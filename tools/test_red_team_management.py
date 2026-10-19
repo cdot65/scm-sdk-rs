@@ -2,6 +2,8 @@
 import copy
 import subprocess
 import sys
+import json
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -19,10 +21,26 @@ class ManagementPlanTests(unittest.TestCase):
         self.assertEqual(len(self.outputs[subject.Path('contracts/airs-operations.json')]['operations']), 160)
         management = next(row for row in sources if row['activeSourceId'] == subject.SOURCE_ID)
         self.assertNotEqual(management['frozenSha256'], management['activeSpecificationSha256'])
-        self.assertEqual(management['adoptionState'], 'pinned_for_phase22_not_runtime_adopted')
+        self.assertEqual(management['adoptionState'], 'runtime_adopted_phase22')
+
+    def test_adoption_machine_tokens_are_stable(self):
+        self.assertEqual(subject.management_adoption_tokens(True),
+                         ('runtime_adopted_phase22', 'adopted_phase22'))
+        self.assertEqual(subject.management_adoption_tokens(False),
+                         ('pinned_for_phase22_not_runtime_adopted', 'pending_phase22'))
+
+    def test_management_attribution_is_present_in_both_notices(self):
+        license_text = (subject.ROOT / 'contracts/licenses/pan-dev-582e30543bf2.LICENSE').read_text()
+        for relative in ('NOTICE', 'crates/scm-sdk/NOTICE'):
+            notice = (subject.ROOT / relative).read_text()
+            with self.subTest(path=relative):
+                self.assertIn(subject.COMMIT, notice)
+                self.assertIn('OpenAPI version 0.86.0.', notice)
+                self.assertIn(license_text.strip(), notice)
 
     def test_every_delta_has_disposition_and_no_removed_operations(self):
         decisions = self.outputs[subject.VENDOR / 'compatibility-decisions.json']
+        self.assertEqual(decisions['runtimeAdoption'], 'adopted_phase22')
         self.assertEqual(decisions['baselineVersion'], '0.7.67')
         self.assertEqual(decisions['currentVersion'], '0.86.0')
         self.assertGreater(len(decisions['deltas']), 60)
@@ -305,10 +323,100 @@ class ManagementPlanTests(unittest.TestCase):
         self.assertNotIn('sourceLedgerSha256', result)
 
     def test_future_phase_cannot_pass_on_plan_artifacts(self):
-        for phase in range(22, 26):
+        for phase in range(23, 26):
             result = subprocess.run([sys.executable, str(subject.ROOT / 'tools/red_team_management.py'), '--check', '--require-through-phase', str(phase)], capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn('static plan evidence cannot advance', result.stderr)
+
+    def test_runtime_adoption_rejects_unbound_or_stale_overlay_sources(self):
+        original_load = subject.load
+        path = 'contracts/red-team-management-model-overlay.json'
+        original = original_load(path)
+        cases = []
+        changed = copy.deepcopy(original)
+        changed['generatorSha256'] = '0' * 64
+        cases.append(changed)
+        changed = copy.deepcopy(original)
+        changed['sourceBindings'] = []
+        cases.append(changed)
+        changed = copy.deepcopy(original)
+        changed['sourceBindings'][0]['sha256'] = '0' * 64
+        cases.append(changed)
+        for missing in ('crates/scm-sdk/src/models/generated.rs', 'NOTICE',
+                        'tools/test_red_team_management_models.py'):
+            changed = copy.deepcopy(original)
+            changed['sourceBindings'] = [row for row in changed['sourceBindings'] if row['path'] != missing]
+            cases.append(changed)
+        for value in cases:
+            with patch.object(subject, 'load', side_effect=lambda name: value if str(name) == path else original_load(name)):
+                with self.assertRaises(ValueError):
+                    subject.verify_runtime_adoption()
+
+    def test_runtime_adoption_rejects_changed_union_extension_ledger(self):
+        original_load = subject.load
+        path = 'contracts/red-team-management-union-extensions.json'
+        changed = copy.deepcopy(original_load(path))
+        changed['extensions'][0]['rustVariant'] = 'InventedVariant'
+        with patch.object(subject, 'load', side_effect=lambda name: changed if str(name) == path else original_load(name)):
+            with self.assertRaisesRegex(ValueError, 'union extension ledgers differ'):
+                subject.verify_runtime_adoption()
+
+    def test_runtime_adoption_rejects_renamed_wire_test(self):
+        relative = 'crates/scm-sdk/tests/red_team_management_contracts.rs'
+        original_path = subject.safe_path
+        original_bytes = subject.checked_bytes
+        data = original_path(relative).read_bytes()
+        with tempfile.TemporaryDirectory() as temporary:
+            changed = subject.Path(temporary) / 'contracts.rs'
+            changed.write_text(data.decode().replace('fn ' + subject.MANAGEMENT_WIRE_TESTS[0], 'fn renamed_fixture', 1))
+            with patch.object(subject, 'safe_path', side_effect=lambda name: changed if str(name) == relative else original_path(name)), \
+                    patch.object(subject, 'checked_bytes', side_effect=lambda name, digest: data if str(name) == relative else original_bytes(name, digest)):
+                with self.assertRaisesRegex(ValueError, 'Missing management contract test binding'):
+                    subject.verify_runtime_adoption()
+
+    def test_target_response_comparison_records_every_vendor_field_and_retained_root(self):
+        spec = subject.load(subject.VENDOR / 'openapi.json')
+        rows = subject.target_response_declarations(spec)
+        self.assertEqual(len(rows), 5)
+        for row in rows:
+            vendor = spec['components']['schemas'][row['vendorSchema']]
+            self.assertEqual(row['requiredFields'], sorted(vendor['required']))
+            self.assertEqual({field['field'] for field in row['fieldComparisons']}, set(vendor['properties']))
+            self.assertEqual(row['retainedSdkRoot'], 'src/models/red-team.ts#TargetResponseSchema')
+            self.assertTrue(row['fixture'].endswith('::all_five_operations_preserve_declared_sensitive_response_shapes'))
+            self.assertEqual(row['responseModes'], ['Response', 'ResponseWithoutDefaults'])
+            for field in row['fieldComparisons']:
+                self.assertEqual(field['vendorSchema'], vendor['properties'][field['field']])
+                if field['vendorExplicitlyNullable']:
+                    self.assertTrue(field['sdkAcceptsNull'])
+        changed = copy.deepcopy(spec)
+        changed['components']['schemas']['TargetSchema']['properties']['unrepresented_field'] = {'type': 'string'}
+        with self.assertRaisesRegex(ValueError, 'vendor field coverage differ'):
+            subject.target_response_declarations(changed)
+
+    def test_offline_boundary_cannot_inherit_historical_live_acceptance(self):
+        reference = {"report": "docs/checks/historical.json", "reportSha256": "1" * 64}
+        document = {"liveReceipt": None, "summary": {"liveVerified": 0},
+                    "operations": [{"liveAcceptance": "unverified"}],
+                    "capabilities": [{"liveAcceptance": "unverified"}]}
+        with tempfile.TemporaryDirectory() as temporary:
+            root = subject.Path(temporary)
+            (root / "contracts").mkdir()
+            with patch.object(subject, "ROOT", root), \
+                    patch.object(subject, "checked_bytes", return_value=json.dumps(reference).encode()), \
+                    patch.object(subject, "load", return_value=document):
+                subject.verify_offline_live_boundary()
+                document["summary"]["liveVerified"] = 17
+                with self.assertRaisesRegex(ValueError, "zero current live acceptance"):
+                    subject.verify_offline_live_boundary()
+                document["summary"]["liveVerified"] = 0
+                document["operations"][0]["liveEvidence"] = {"historical": True}
+                with self.assertRaisesRegex(ValueError, "Historical live acceptance leaked"):
+                    subject.verify_offline_live_boundary()
+                del document["operations"][0]["liveEvidence"]
+                (root / "contracts/live-evidence.json").write_text("{}")
+                with self.assertRaisesRegex(ValueError, "cannot claim a current live receipt"):
+                    subject.verify_offline_live_boundary()
 
     def test_all_five_operation_specific_target_response_declarations(self):
         rows = self.outputs[subject.VENDOR / 'operations.json']['operations']

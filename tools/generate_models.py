@@ -893,7 +893,8 @@ def validate_graph_contract(inventory, validator_source=None):
         raise ValueError("Native validator check dispatch differs from the reviewed inventory")
     pattern_body=source.split("fn patterns(",1)[1].split("fn email(",1)[0]
     native_regexes={value for value in re.findall(r'r"([^"\n]+)"',pattern_body) if value.startswith("^")}
-    if native_regexes!=REGEX_SOURCES:raise ValueError("Native regex implementations differ from the reviewed inventory")
+    from red_team_management_models import PATTERNS as MANAGEMENT_REGEX_SOURCES
+    if native_regexes!=REGEX_SOURCES | MANAGEMENT_REGEX_SOURCES:raise ValueError("Native regex implementations differ from the reviewed inventory")
     def refs(value):
         if isinstance(value,dict):
             if "$ref" in value:yield value["$ref"]
@@ -1043,15 +1044,34 @@ def main():
     if inventory["baseline"]["commit"] != "4a80dbdb3dc14365e1c25d838ac0bd139485d48c":
         raise ValueError("Unexpected model generation baseline")
     import red_team_dataplane as vendor
+    import red_team_management_models as management
+    management_overlay = management.Overlay()
     _, _, _, current, vendor_graph, _ = vendor.contract()
-    merged = vendor.extend_graph(compact_graph(inventory), vendor_graph)
+    merged = management_overlay.extend_graph(vendor.extend_graph(compact_graph(inventory), vendor_graph))
     outputs = {ROOT / "crates/scm-sdk/src/validation/schema_graph.json": json.dumps(merged, separators=(",", ":"), ensure_ascii=False) + "\n"}
     if not args.graph_only:
         generator = Generator(inventory)
         vendor_source, vendor_generator = vendor.model_outputs(Generator, current)
         additions = vendor.augment_models(generator, current, vendor_generator)
+        management_source, management_generator = management_overlay.model_outputs(Generator)
+        management_overlay.augment_models(generator, management_generator)
         rust = generator.generate(args.only)
+        if not args.only:
+            management_overlay.verify_model_names(generator)
+        if args.only in {None, "red_team"}:
+            for name, bound in [('TargetConnectionType', 'TargetCreateRequestConnectionType'), ('ResponseMode', 'TargetCreateRequestResponseMode')]:
+                rust[OUT / "generated.rs"] = management.replace_once(rust[OUT / "generated.rs"], 'pub enum ' + name + ' {',
+                    '/// Frozen TypeScript constant parity. Current management values are named on `' + bound + '`.\n'
+                    '/// Unknown response strings remain represented by `Unknown(String)`.\n'
+                    'pub enum ' + name + ' {')
         rust[OUT / "red_team_data_plane.rs"] = vendor_source
+        rust[OUT / "red_team_management.rs"] = management_source
+        rust[OUT / "mod.rs"] += "/// Additive current management model contracts.\npub mod red_team_management;\n"
+        management_names = set(management_generator.declarations) | set(management_generator.aliases)
+        for declaration in management_generator.declarations.values():
+            management_names.update(re.findall(r"pub struct (\w+Builder)\b", declaration))
+        rust[OUT / "red_team.rs"] += "/// Additive management models.\npub use super::red_team_management::{" + ",".join(sorted(management_names)) + "};\n"
+        outputs[management.EXTENSIONS] = json.dumps(management_overlay.extension_ledger(), indent=2) + "\n"
         rust[OUT / "mod.rs"] += "/// Current vendor dataplane model contracts.\npub mod red_team_data_plane;\n"
         primary = re.search(r"pub use super::generated::\{([^}]+)\}", rust[OUT / "red_team.rs"])
         existing = set(primary.group(1).split(",")) if primary else set()
@@ -1066,13 +1086,30 @@ def main():
                 if args.check or UNION_PINS.exists():raise ValueError("Union pins already exist or initialization requested in check mode")
                 UNION_PINS.write_text(json.dumps(pins,indent=2)+"\n")
             if not UNION_PINS.is_file():raise ValueError("Reviewed positional union pins are missing; initialize once before review")
-            verify_union_pins(pins,json.loads(UNION_PINS.read_text()))
+            management_overlay.verify_union_pins(pins,json.loads(UNION_PINS.read_text()),verify_union_pins)
         formatter = shutil.which("rustfmt") or str(pathlib.Path.home() / ".cargo/bin/rustfmt")
         for file, content in rust.items():
             result = subprocess.run([formatter, "+1.99.0", "--edition", "2024"], input=content, text=True, capture_output=True)
             if result.returncode:
                 raise ValueError(f"Generated Rust syntax failure {file.name}: {result.stderr[:2000]}")
             outputs[file] = result.stdout
+        management_bindings = [
+            "tools/red_team_management_models.py", "tools/generate_models.py",
+            "contracts/vendor/red-team-management/0.86.0/mp-openapi.yaml",
+            "contracts/vendor/red-team-management/0.86.0/openapi.json",
+            "crates/scm-sdk/src/validation.rs", "crates/scm-sdk/src/validation/schema_graph.json",
+            "crates/scm-sdk/src/models/generated.rs", "crates/scm-sdk/src/models/red_team_management.rs",
+            "crates/scm-sdk/tests/red_team_management_models.rs", "crates/scm-sdk/tests/red_team_management_contracts.rs",
+            "tools/test_red_team_management_models.py", "NOTICE",
+        ]
+        management_ledger = management_overlay.ledger(generator)
+        management_ledger["sourceBindings"] = []
+        for relative in management_bindings:
+            file = ROOT / relative
+            rendered = outputs.get(file, rust.get(file))
+            data = rendered.encode() if rendered is not None else file.read_bytes()
+            management_ledger["sourceBindings"].append({"path": relative, "sha256": sha(data)})
+        outputs[management.OVERLAY] = json.dumps(management_ledger, indent=2) + "\n"
         unresolved = [row for row in generator.model_rows if row["status"].startswith("pending_")]
         if not args.only and unresolved:
             raise ValueError(f"Known source models lack a typed adapter: {[row['export'] for row in unresolved]}")

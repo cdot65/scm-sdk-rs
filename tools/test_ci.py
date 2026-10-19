@@ -480,9 +480,25 @@ class CiContractTests(unittest.TestCase):
         phase_spec = importlib.util.spec_from_file_location("phase_ci_budget", ROOT / "tools/check_phase.py")
         phase = importlib.util.module_from_spec(phase_spec)
         phase_spec.loader.exec_module(phase)
-        maximum_children = len(module.commands("cargo", "1.99.0", "all", "native-host"))
+        maximum_children = max(len(module.commands("cargo", "1.99.0", feature, "native-host"))
+                               for feature in module.FEATURES)
         self.assertGreaterEqual(phase.COMMAND_TIMEOUT_SECONDS,
                                 maximum_children * module.DEFAULT_COMMAND_TIMEOUT_SECONDS)
+
+    def test_management_example_executes_on_both_compilers_and_red_team_features(self):
+        spec = importlib.util.spec_from_file_location("check_rust_example", ROOT / "scripts/check-rust.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        for compiler in ('1.89.0', '1.99.0'):
+            for feature in module.FEATURES:
+                commands = module.commands('/explicit/cargo', compiler, feature, 'native-host')
+                runs = [command for command in commands if 'run' in command]
+                expected = []
+                if feature in {'red-team', 'red-team-json-unification'}:
+                    expected = [['/explicit/cargo', '+' + compiler, 'run', '--package', 'scm-sdk',
+                                 '--example', 'red_team_management', '--locked', '--target',
+                                 'native-host', *module.FEATURES[feature]]]
+                self.assertEqual(runs, expected)
 
     def test_node_matches_owned_pin_and_phase_gate_verifies_only(self):
         node = (ROOT / ".node-version").read_text().strip()
@@ -509,9 +525,9 @@ class CiContractTests(unittest.TestCase):
         for script in ('scripts/check-rust.py','scripts/check-native-exports.py','scripts/check-package.py'):
             self.assertTrue(any(script in command for command in full))
             self.assertFalse(any(script in command for command in fast))
-        self.assertIn('--phase 21 --verification-only --contracts-only',WORKFLOW)
-        self.assertIn('docs/checks/phase-21-contracts.json',WORKFLOW)
-        self.assertNotIn('docs/checks/phase-21.json',WORKFLOW)
+        self.assertIn('--phase 22 --verification-only --contracts-only',WORKFLOW)
+        self.assertIn('docs/checks/phase-22-contracts.json',WORKFLOW)
+        self.assertNotIn('docs/checks/phase-22.json',WORKFLOW)
         current, selected = commands_for(17), ci_commands_for(17)
         self.assertTrue(all(c in current for c in selected))
         self.assertIn(['node', 'tools/portkey-access.mjs', '--check'], selected)
