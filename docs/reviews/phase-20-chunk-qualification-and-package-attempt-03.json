@@ -1,0 +1,121 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 20,
+  "attempt": 3,
+  "reviewed_at": "2026-10-19T09:10:37.448425+00:00",
+  "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+  "source_unchanged": true,
+  "checks_sha256": "b75e9709dca7e70c9b54392d47586cfa67a37931137b3fabb7850a8f10228a82",
+  "prompt_sha256": "5beaf482ebcfb68b3f7987a2a106efe86364c85f9411aa72b2dc0bc1383a1f51",
+  "cli_output_sha256": "ba202bd54b04c835c9d02857a31cc0d7ed684b13de13995a821e91ed74225ed4",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Chunk \"qualification-and-package\" for phase 20 (G25 0.2.2) is delivered and mechanically substantiated at the reviewed source 519219d6. I independently enumerated the full phase-20 gate from tools/check_phase.py:70-87 (commands_for(17)+commands_for(19), deduplicated, plus generate_models --verify-fixtures and both native-export probes) and it is exactly 59 commands; the recorded snapshot docs/reviews/phase-20-chunk-qualification-and-package-attempt-03.checks.json contains those same 59 invocations in order, all exit_code 0, with source_sha256 = 519219d6 and source_unchanged true. No command in the snapshot is unexecuted or timed out. Version is bumped (crates/scm-sdk/Cargo.toml:3 = 0.2.2). Both clean archive proofs (docs/checks/phase-20-release-package-1.89.0.json / -1.99.0.json) are real executions at releaseCommit 0716cfd with requireClean true, effectiveDirty false, four packaged examples (including the new response_compatibility) and three external-consumer `cargo run --locked` executions each at exit 0; scripts/check-access-release.py then rebinds both proofs to HEAD, re-reads the retained archives, recomputes the file inventory and VCS, and compares every packaged src/examples/legal/manifest byte against both the filesystem and the release commit, so the candidate receipt is not a self-assertion. Contract documentation is complete and generated: docs/G25_COMPATIBILITY.md is produced by tools/g25_report.py (gate-checked for staleness, corpus digest-bound) and links each of the 47 operations to its actual frozen response expression, the 76 retained caller UUID checks, the rejected query options, the retained numeric/array domains and the time_order refinement; CHANGELOG.md:11-68 states the loosened and retained rules, the --offset/--search usage-error requirement, and explicitly declines consumer-adoption and live-acceptance claims. Regressions are wired into the 49-job matrix and enforced (tools/test_ci.py:111,113-127,461-484), historical gate lists are pinned (tools/test_review_phase.py:20-44), and the phase-19 deferred items are now present: strict starting-witness assertions (crates/scm-sdk/tests/g25_response_compatibility.rs:92-102), regex metadata validated before response relaxation (crates/scm-sdk/src/validation.rs:1209-1229), the fifth-attempt >40 floor made explicit with category and deficiency conditions (tools/review_phase.py:68-83), and chunk scope/prompt binding (tools/review_phase.py:239-251). The live re-run is genuine and honest: docs/checks/phase-08-live-attempt-14.json records crateVersion 0.2.2, 24 requests, three 403s and two 400s, cleanupState not_needed, sanitized external-registration placeholders, and tools/live_evidence.py --check (executed, exit 0) binds its runtimeInputsSha256 to the current runtime fingerprint, so the live claim cannot drift from the shipped source. Remaining gaps are low-severity bookkeeping: an undisclosed dangling readiness attempt 03, current-release receipt links that cannot yet resolve while the publication document guard is dormant, and operator-run package proofs plus HEAD-bound candidate reproducibility that rely on prose-only constraints. Registry publication, tag and terminal CI are the separate delivery chunk and are correctly represented as pending rather than done.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "docs/reviews/phase-20-attempt-03.prompt.md",
+        "line": 1,
+        "description": "A release_readiness review attempt 03 was requested at this exact source (same checks digest b75e9709), and its prompt plus .checks.json snapshot are retained, but there is no phase-20-attempt-03.json record and no .cli.json output, and docs/phase-status.json release_readiness_attempts (lines 4578-4591) still lists only attempts 01 and 02. The attempt is therefore undisclosed, and tools/review_phase.py:425-426 will refuse to reuse attempt 3 because the prompt already exists, so the delivery instruction in docs/RELEASE.md:42 must use a different NN.",
+        "required_fix": "Record the actual disposition of readiness attempt 03 in docs/phase-status.json (in-flight, failed, or abandoned, with its preserved prompt/checks paths) and obtain the mandatory accepted current-source readiness review under the next unused attempt number."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_ci.py",
+        "line": 346,
+        "description": "test_verified_publication_is_consistent_in_current_release_documents returns early whenever the workspace version differs from the last recorded publication, which is the case now (0.2.2 vs 0.2.1). Consequently nothing currently asserts that the current-release receipt links in CHANGELOG.md:6-7 and docs/RELEASE.md:5-6 resolve; both point at docs/checks/release-registry-0.2.2.json and release-tag-v0.2.2.json, which do not yet exist. The dormancy is disclosed in phase-status (finding 5 disposition, lines 4440-4448) and the guard is fixture-tested at tools/test_ci.py:370-410, but the live assertion only activates after registry_publication is recorded.",
+        "required_fix": "Keep the mandated post-publication sequence (record registry_publication, then execute tools/test_ci.py and preserve its output before the delivery commit), or add a link-existence assertion for the current development version so dangling release-document links cannot ship unnoticed."
+      },
+      {
+        "severity": "low",
+        "path": "tools/check_phase.py",
+        "line": 74,
+        "description": "commands_for(20) reuses commands_for(17), which takes commands_for(12)[4:25] and therefore deliberately excludes scripts/check-package.py. The two clean archive proofs are thus operator-run artifacts rather than gate-executed commands. scripts/check-access-release.py:60-110 mitigates this strongly (archive bytes, inventory, VCS, filesystem and release-commit byte equality, executed-example and consumer assertions), but the recorded `checks` arrays themselves are accepted as evidence of execution, which is the documented repository-writer trust boundary rather than a verified property.",
+        "required_fix": "No functional change is required for this release; state the package-proof execution boundary where the gate is defined (a comment at tools/check_phase.py:70-87 or docs/PACKAGING.md) so a future maintainer does not read the 59-command gate as including clean packaging."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/check-access-release.py",
+        "line": 63,
+        "description": "The candidate guard requires proof['releaseCommit'] to equal the current HEAD, so docs/checks/phase-20-candidate.json becomes non-reproducible after any later evidence-only commit. That operational rule currently exists only as prose in docs/phase-status.json delivery_execution_constraints (line 4533, 'do not rerun the HEAD-bound candidate checker after receipt-only delivery commits').",
+        "required_fix": "Document the HEAD-binding constraint in docs/RELEASE.md alongside the delivery sequence (or accept an explicit --release-commit argument) so the rule is discoverable from the release procedure rather than only from phase bookkeeping."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-20-chunk-qualification-and-package-attempt-03.checks.json: 59 recorded commands, every exit_code 0, no timeout, phase 20, source_sha256 519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3, source_unchanged true, passed true",
+      "Independent enumeration of tools/check_phase.py:70-87 (17+19 merge with phase renames, dedup, +generate_models --verify-fixtures, +2 native-export probes) yields exactly 59 commands, matching the snapshot order including the new red-team-json-unification runs on both compilers",
+      "docs/checks/phase-20-release-package-1.89.0.json and -1.99.0.json: releaseCommit 0716cfdcdbd522bb8fa63072d944e8fc15ba1824, requireClean true, effectiveDirty false, archive_sha256 13ebff0d... / c908cad8..., 4 packaged example runs and 3 external-consumer `run --locked` executions, all exit_code 0",
+      "scripts/check-access-release.py:55-110 re-reads each retained archive, recomputes file rows and VCS, compares every src/examples/README/LICENSE/NOTICE/Cargo.toml byte with the filesystem and with git show <releaseCommit>, and requires both compiler proofs to qualify identical files",
+      "docs/checks/phase-20-candidate.json: passed true, version 0.2.2, releaseCommit 0716cfd, archiveSha256 c908cad8..., toolchains [1.89.0, 1.99.0]",
+      "crates/scm-sdk/Cargo.toml:3 version = \"0.2.2\"; examples/response_compatibility.rs registered at line 76",
+      "crates/scm-sdk/examples/response_compatibility.rs: both response modes, exact string preservation, the three retained strict cases, Mode::Request rejection, both reported timestamp forms, job-1/p-1/map-1 opaque IDs, u64::MAX projection fallback with raw round-trip",
+      "docs/checks/phase-20-rust-1.89.0-red-team.json: cargo fmt/check/clippy -D warnings/test all exit 0 with rustInputsSha256 bound and sourceUnchanged true; test output shows the 8 g25_response_compatibility tests, response_format/length/regex fail-closed validation tests, and all_47_vendor_operations_match_independent_wire_contracts_under_both_response_policies passing",
+      "crates/scm-sdk/src/validation.rs:1209-1229 resolves regex metadata (failing closed on unknown patterns) before the response-mode skip, which is limited to uuid/rfc3339/datetime/date/duration/email/url/regex plus min/max marked requestOnly",
+      "crates/scm-sdk/tests/g25_response_compatibility.rs:92-102 asserts every base and selected union branch is a strict-valid starting witness; :114-139 compares strict and both response modes against independent oracle outcomes with value preservation and typed round-trip; 46 roots, 55 projections",
+      "contracts/compatibility/g25/projections.json contains 55 classified projection rows, matching the 6/8/39/2 usage partition rendered in docs/G25_COMPATIBILITY.md:21-26",
+      "tools/g25_report.py:258-283 binds the report and ledger to cases.json/outcomes.json digests and fails on staleness; `python tools/g25_report.py --check` and `tools/g25_fixtures.py --check` are both in the executed snapshot",
+      "docs/G25_COMPATIBILITY.md:62-115 links all 47 operations to their actual frozen response contracts; :116-131 documents the retained query rejections; :133-135 documents all 76 retained caller UUID checks",
+      "CHANGELOG.md:11-68 documents every loosened and retained rule, the CLI --offset/--search usage-error requirement, and explicitly states publication is established only by the (currently absent) receipts and that consumer adoption is not claimed",
+      "tools/test_ci.py:111 asserts toolchains x features + 1 == 49; :113-127 ties documented CI/RELEASE job counts to the configured matrix; :461-484 asserts FEATURES parity including red-team-json-unification; test_ci.py ran at exit 0 in the snapshot",
+      "tools/review_phase.py:68-83 (fifth-attempt exception requires total > 40, all categories >= 8 and recorded findings/limitations), :86-106 (previous-attempt integrity), :239-251 (phase-20 review_scope and chunk scope/prompt binding), :258-259 (checks snapshot digest binding)",
+      "tools/release_delivery.py:55-194 derives the 49 expected CI contexts from the workflow matrix, requires published/CI commit tree fingerprints to equal the reviewed source, and requires phase-20 registry_publication metadata plus accepted current-source readiness provenance in the registry receipt",
+      "scripts/verify-publication.py:56-71,249-252 requires an accepted current-source release_readiness review before registry access and re-checks it before writing the receipt",
+      "docs/checks/phase-08-live-attempt-14.json: crateVersion 0.2.2, executedAt 2026-10-19T06:04Z, 24 service requests, 1 token exchange, three 403s, two 400s, cleanupState not_needed, sanitized [external-registration] command template; tools/live_evidence.py:99-110,261-266 (executed, exit 0) binds runtimeInputsSha256 to the current src/examples/manifest fingerprint and crateVersion to Cargo.toml",
+      "docs/LIVE_ACCEPTANCE.md:13-22 reports attempt 14 honestly, including that an SDK request-shape defect is not excluded for the two 400s",
+      "docs/SECURITY.md:33-39 states the response-mode format relaxation and what remains enforced; docs/PACKAGING.md:82-98 and docs/RELEASE.md:1-48 match the tooling behavior and documented counts",
+      "tools/test_release_022.py, tools/test_release_delivery.py (14 tests incl. publication metadata, readiness provenance, chunk scope binding, matrix fail-closed) and tools/test_review_phase.py (50 tests incl. fifth-exception and chunk-followup paths) all ran within the snapshot's unittest discovery commands at exit 0"
+    ],
+    "limitations": [
+      "I used only read-only Read/Glob/Grep and executed nothing; all compiler, package, live and gate outcomes are judged from the recorded receipts and their internal cross-bindings, not from re-execution. Recorded `checks` arrays prove structure and claimed exit codes, not cryptographic proof of execution; repository writers remain trusted, as PHASES.md states.",
+      "I could not diff this source against the accepted phase-19 source (no shell), so I assessed crates/scm-sdk/src/validation.rs, validation/tests.rs, the g25 tooling and the Rust regression suite as they stand rather than isolating what phase 20 changed. phase-status.json states production src is unchanged since phase 19 apart from the manifest/example additions, and the gate's generator --check commands are consistent with that.",
+      "Registry publication, the v0.2.2 remote tag and terminal 49-job CI receipts do not exist yet and are explicitly out of this chunk; I did not evaluate them as deliverables. The current-version release-document guard in tools/test_ci.py remains dormant until registry_publication is recorded.",
+      "The 17 reported airs-cli-rs loopback failures on the consumer checkout were not and could not be executed here; the repository consistently declines to claim them, and no consumer adoption is asserted.",
+      "Live acceptance remains partial by the maintainer's own record: three Red Team reads returned 403 and IAM scope creation plus Gateway provisioning returned 400 with an unestablished cause, so no mutation/cleanup chain is live-qualified for 0.2.2.",
+      "I did not read credential or tenant-registration material; the live receipt's sanitized placeholders mean I verified metadata and request/response classifications, not the underlying tenant interaction."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 45
+  },
+  "rubric": "five-category-v1",
+  "chunk": "qualification-and-package",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "scripts/check-package.py",
+    "scripts/check-access-release.py",
+    "tools/test_release_022.py",
+    "tools/check_phase.py",
+    "tools/review_phase.py",
+    "tools/test_review_phase.py",
+    "tools/release_delivery.py",
+    "tools/test_release_delivery.py",
+    "crates/scm-sdk/examples/response_compatibility.rs",
+    "CHANGELOG.md",
+    "docs/G25_COMPATIBILITY.md",
+    "docs/RELEASE.md",
+    "docs/PACKAGING.md",
+    "docs/CI.md",
+    "docs/LIVE_ACCEPTANCE.md",
+    "docs/checks/phase-20-release-package-1.89.0.json",
+    "docs/checks/phase-20-release-package-1.99.0.json",
+    "crates/scm-sdk/src/validation.rs",
+    "crates/scm-sdk/src/validation/tests.rs",
+    "tools/g25_fixtures.py",
+    "tools/test_g25_generation.py",
+    "tools/g25_report.py",
+    "tools/test_g25_report.py",
+    "crates/scm-sdk/tests/g25_response_compatibility.rs",
+    "contracts/compatibility/g25/projections.json",
+    "docs/SECURITY.md",
+    "scripts/verify-publication.py",
+    "tools/test_ci.py",
+    ".forgejo/workflows/ci.yml"
+  ]
+}

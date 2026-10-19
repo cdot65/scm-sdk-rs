@@ -4279,10 +4279,11 @@
       "chunks": [
         {
           "id": "qualification-and-package",
-          "status": "pending_fresh_source_review",
+          "status": "accepted",
           "attempts": [
             "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
-            "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json"
+            "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
+            "docs/reviews/phase-20-chunk-qualification-and-package-attempt-03.json"
           ],
           "scope_evidence": [
             "scripts/check-package.py",
@@ -4324,8 +4325,8 @@
             "architecture": 9,
             "feature_delivery": 9
           },
-          "accepted_review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
-          "accepted_source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa",
+          "accepted_review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-03.json",
+          "accepted_source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
           "review_decision": "accepted"
         },
         {
@@ -4336,7 +4337,9 @@
             "tools/release_delivery.py",
             "scripts/verify-publication.py",
             "docs/checks/release-registry-0.2.2.json",
-            "docs/checks/release-tag-v0.2.2.json"
+            "docs/checks/release-tag-v0.2.2.json",
+            "tools/test_ci.py",
+            "docs/checks/phase-20-published-document-guard.json"
           ]
         }
       ],
@@ -4346,7 +4349,7 @@
           "status": "failed",
           "evidence": "docs/checks/phase-20-candidate-01/phase-20.json",
           "cause": "Gateway binding receipt generated before the live-updated native-operation ledger; generated input hash stale.",
-          "resolution": "Gateway binding regenerated after the native ledger. Candidate 938adbe then passed all 59 commands and both clean archive proofs; its proofs are preserved but superseded under docs/checks/phase-20-candidate-02/. The final currently qualified candidate is d64d9dc7f71d95eaa1e7849e661c252660970914 after documentation/advisory corrections; all 59 commands and both clean proofs passed again."
+          "resolution": "Historical initial outcome retained. Current qualified candidate 0716cfdcdbd522bb8fa63072d944e8fc15ba1824 passed all 59 commands and both clean archive proofs after release-readiness tooling corrections. Superseded candidates remain in the historical_supplementary_evidence inventory."
         }
       ],
       "live_acceptance": {
@@ -4522,10 +4525,10 @@
       ],
       "candidate_private_scan": {
         "status": "passed",
+        "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
+        "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
         "evidence": "docs/checks/phase-20-private-material.json",
-        "head_commit": "d64d9dc7f71d95eaa1e7849e661c252660970914",
-        "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa",
-        "final_bookkeeping_scan": "pending_until_final_evidence_exists"
+        "final_bookkeeping_scan": "pending"
       },
       "delivery_execution_constraints": {
         "ci_commit_message": "Must not contain [skip ci] or another skip marker. Push the receipt-bearing delivery commit to main to trigger the exact 49-job workflow.",
@@ -4533,14 +4536,14 @@
         "qualification_snapshot": "Preserve the accepted 59-command snapshot; do not rerun the HEAD-bound candidate checker after receipt-only delivery commits."
       },
       "qualified_candidate": {
-        "source_commit": "d64d9dc7f71d95eaa1e7849e661c252660970914",
-        "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa",
-        "archive_sha256": "1e5085b7ce7659cd1c1436b6fd716d0f5a1161f403dc6df9fe0cb5de6c0fbd78",
+        "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
+        "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+        "archive_sha256": "c908cad8b27863d0e2d3987f5554b196313877788ac8cfef35c16d589910db7c",
         "evidence": [
           "docs/checks/phase-20.json",
+          "docs/checks/phase-20-candidate.json",
           "docs/checks/phase-20-release-package-1.89.0.json",
-          "docs/checks/phase-20-release-package-1.99.0.json",
-          "docs/checks/phase-20-private-material.json"
+          "docs/checks/phase-20-release-package-1.99.0.json"
         ]
       },
       "historical_supplementary_evidence": [
@@ -4567,13 +4570,13 @@
         }
       ],
       "planned_registry_publication": {
-        "status": "pending_actual_publication_and_registry_verification",
+        "status": "completed_actual_publication_and_registry_verification",
         "version": "0.2.2",
         "evidence": "docs/checks/release-registry-0.2.2.json",
-        "source_commit": "d64d9dc7f71d95eaa1e7849e661c252660970914",
+        "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
         "required_transition": "Only after verify-publication.py succeeds, create phase 20 registry_publication with status published_and_verified, this version, this canonical evidence STRING and the actual source_commit. Then run tools/test_ci.py and preserve its actual output before committing and pushing the delivery commit. Do not insert registry_publication or claim published status while the registry receipt is absent.",
         "completion_requirement": "Final delivery review must inspect the actual registry_publication entry, executed current-version document guard, registry/tag receipts and exact terminal 49-job CI. Missing entry or failed document guard is unfinished delivery.",
-        "enforcement_boundary": "release_delivery.py validates canonical receipt contents but does not enforce registry_publication metadata. The explicit recorded delivery obligation plus executed current-version test closes this release; adding a metadata assertion to the general guard is deferred to a later qualified source change."
+        "enforcement_boundary": "tools/release_delivery.py now enforces actual phase20 registry_publication metadata; scripts/verify-publication.py requires accepted current-source readiness and binds it into the registry receipt. Actual publication and current-version document test remain pending delivery obligations."
       },
       "release_readiness_attempts": [
         {
@@ -4587,15 +4590,99 @@
           "total": 45,
           "decision": "rejected",
           "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa"
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-03.json",
+          "total": 46,
+          "decision": "accepted",
+          "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3"
         }
       ],
       "readiness_followup": {
-        "status": "implementing",
+        "status": "implemented_and_qualified",
         "review": "docs/reviews/phase-20-attempt-02.json",
         "scope": "Enforce actual phase20 publication metadata in delivery guard, require accepted current-source readiness in registry receipt tooling, bind packaged compatibility example and documented CI counts, clarify security/delivery documentation. SDK runtime unchanged.",
         "deferred": [
           "Generated projection-field rustdoc remains documented in G25_COMPATIBILITY.md; later generated-code patch with its own qualification."
-        ]
+        ],
+        "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+        "checks": "docs/checks/phase-20.json"
+      },
+      "readiness_followup_dispositions": [
+        {
+          "review": "docs/reviews/phase-20-attempt-02.json",
+          "resolution": "Both medium tooling findings and applicable low publication-example, CI-count, unused-metadata, security and delivery guidance findings addressed in qualified source. Generated projection rustdoc remains deferred; shipped G25 guide documents raw-extension precedence. Prior dispositions remain historical."
+        }
+      ],
+      "in_flight_review": {
+        "scope": "release_readiness",
+        "attempt": 3,
+        "status": "completed_accepted46",
+        "prompt": "docs/reviews/phase-20-attempt-03.prompt.md",
+        "checks": "docs/reviews/phase-20-attempt-03.checks.json",
+        "explanation": "Started concurrently with qualification chunk03 after all59 commands passed; prompt/checks exist while actual Claude process completes. This is not an abandoned attempt; preserve its result under attempt03.",
+        "result": "docs/reviews/phase-20-attempt-03.json"
+      },
+      "qualification_chunk03_dispositions": [
+        {
+          "finding": 1,
+          "status": "in_flight_review_disclosed",
+          "resolution": "Readiness03 was running concurrently, not failed or abandoned; retain actual result when process exits. No attempt number reuse or fabricated review."
+        },
+        {
+          "finding": 2,
+          "status": "required_delivery_action_pending",
+          "resolution": "Record actual registry_publication and execute current-version document guard before delivery commit; final guard now enforces metadata and readiness receipt."
+        },
+        {
+          "finding": 3,
+          "status": "accepted_documented_trust_boundary",
+          "resolution": "Clean archive checks executed separately at clean0716cfd; gate independently re-extracts and compares archive bytes. PHASES documents trusted repository writers; docs/PACKAGING documents clean run sequence. No claim that59 commands include clean packaging."
+        },
+        {
+          "finding": 4,
+          "status": "accepted_operational_constraint",
+          "resolution": "Candidate checker binds source HEAD before evidence commits. Preserve passing immutable59-command snapshot after publication; finaldelivery guard verifies published/CI source fingerprints and ancestry. Broader procedure prose deferred to later qualified change."
+        }
+      ],
+      "release_readiness": {
+        "status": "accepted",
+        "review": "docs/reviews/phase-20-attempt-03.json",
+        "total": 46,
+        "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+        "scope": "Authorizes publication; final phase review and terminal delivery evidence remain required."
+      },
+      "readiness03_dispositions": [
+        {
+          "finding": 1,
+          "status": "required_actual_post_publication_test",
+          "resolution": "Retain actual test_ci execution after registry_publication activates current-version assertions. Generic direct doclink assertion is a low-priority follow-up; finaldelivery still validates actual registry/tag/CI receipts."
+        },
+        {
+          "finding": 2,
+          "status": "deferred_fail_closed_legacy_tooling",
+          "resolution": "Do not use --delta for0.2.2. G10-only comparison fails closed, cannot publish or overwrite registry receipt. Later tooling patch may explicitly restrict version."
+        },
+        {
+          "finding": 3,
+          "status": "resolved_current_chunk_acceptance",
+          "resolution": "Concurrent qualification chunk03 now accepted45 at current519219d6 source and status/current accepted fields updated. Previous paths remain historical attempts."
+        },
+        {
+          "finding": 4,
+          "status": "deferred_registry_readme_navigation",
+          "resolution": "Future qualified README change can use absolute receipt URLs. Receipt links are usable in source repository; published SDK content remains immutable and final delivery report will provide absolute registry/repository links."
+        }
+      ],
+      "registry_publication": {
+        "status": "published_and_verified",
+        "version": "0.2.2",
+        "evidence": "docs/checks/release-registry-0.2.2.json",
+        "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824"
+      },
+      "published_document_guard": {
+        "status": "passed",
+        "evidence": "docs/checks/phase-20-published-document-guard.json"
       }
     }
   ],
