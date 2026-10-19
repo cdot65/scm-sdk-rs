@@ -1,0 +1,92 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 23,
+  "attempt": 2,
+  "reviewed_at": "2026-10-19T21:19:30.978578+00:00",
+  "source_sha256": "79f03235ed349d674019b834fc9304b110273738f6f213a784b6bcf983b3965e",
+  "source_unchanged": true,
+  "checks_sha256": "955bd2a91919980c8a4bc1c22c11f5737a3dbbc56d4bc0a34cd4345bacdf8fc5",
+  "prompt_sha256": "9eb174e42f0a4b29486852121ed859516d6631c38e6c9d13f233ca98b039cb9e",
+  "cli_output_sha256": "79908965895c0712ee27262480c7c0d7b80be7217acf748fed6aa0b606fdb0b6",
+  "gate_passed": true,
+  "review": {
+    "score": 9.3,
+    "summary": "Phase 23 chunk `compatibility-matrix` delivers a genuine, executed compatibility and security matrix for AIRS management 0.86.0, and every attempt-01 finding is actually closed in the reviewed source. The overlay in tools/red_team_management_models.py confines runtime graph change to exactly four reviewed nodes (two enum vocabularies at s012061/s012067, two appended union tails at s010462/s010504), proven by tools/test_red_team_management_models.py:31-38, and fails closed on unreviewed vendor keywords, patterns, defaults, additionalProperties policies, divergent masked counterparts and renamed baseline models (test_red_team_management_models.py:52-121). The enum split is real in generated code: TargetConnectionType (generated.rs:174153-174166) and ResponseMode (:162443-162449) keep only frozen variants with Unknown(String), while TargetCreateRequestConnectionType adds VERTEXAI/N8N (:174692-174707) and TargetCreateRequestResponseMode adds REALTIME (:174763-174770); red_team_management_models.rs:119-164 asserts both the graph-level rejection of REALTIME on s012061 and the typed-level behaviour. Typed projections relocate four formerly raw keys into Patch fields with lossless raw re-insertion on decode failure and typed-over-raw precedence (generated.rs:9313-9392), exercised by 84 vendor-derived cases across three modes (red_team_management_fixtures.rs:57-88) and by collision/unset-restore tests (red_team_management_contracts.rs:572-602). All five target response declarations are wire-asserted for operation name, method, path, both response modes, masked and credential-bearing branches and secret-free Debug across 5 providers x 4 auth shapes (red_team_management_contracts.rs:345-459). The profiling filter validates against the vendor ProfilingStatusFilter vocabulary before token acquisition or dispatch (targets.rs:84-91; red_team_management.rs:359-361) and propagates with exact query-pair counts over list/pages/items/all (contracts.rs:466-539), while legacy `status` is transmitted untranslated with accurate rustdoc naming the five values upstream no longer declares (targets.rs:26-46). All five attempt-01 findings are closed: the chunk scope has an attempt-2 revision covering the generated models, graph, union ledger, model tests, example and notices (phase-status.json:5970-5997); unionDecodeTransitions are recorded in the overlay ledger and rendered into docs/G25_COMPATIBILITY.md:36-37 with a binding test (test_g25_report.py:120-126); management_fixtures.py:99 adds an explicit expectationsOrigin disclosure; the unused import is gone; and both NOTICE files name pan.dev revision 582e30543bf2adfd8b0ee457170d22b5c380dfbe. Evidence is executed rather than registered: the attempt-02 checks file records ~68 checks at source 79f0323..., every one exit_code 0 with source_unchanged true, spanning both compilers, six feature sets, generator --check/--verify-fixtures (27479 typed cases, 0 failures), management_fixtures/g25_report freshness, native exports and both clean packaged consumers. No preserve_order feature is introduced (Cargo.toml:44). Remaining defects are cosmetic: the doc-before-attributes correction was applied to only one of three injected declarations, and the delivered example contains a tautological filter assertion.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "tools/generate_models.py",
+        "line": 1063,
+        "description": "The attempt-01 required fix (\"place generated documentation before attributes\") and the attempt-1 followups note at docs/reviews/phase-23-attempt-01-followups.md:13 were applied only to VertexAIConnectionRedactParams (red_team_management_models.py:238-243, visible correctly at crates/scm-sdk/src/models/red_team_management.rs:240-246). The two frozen-parity enum doc injections still anchor on 'pub enum NAME {', so their reviewed doc comments are emitted after #[derive] and #[non_exhaustive]: crates/scm-sdk/src/models/generated.rs:162439-162443 (ResponseMode) and :174149-174153 (TargetConnectionType). This compiles and renders in rustdoc, but it is the same inconsistency the earlier finding asked to remove, so the correction is only partially delivered.",
+        "required_fix": "Change the replace_once anchor at tools/generate_models.py:1063 to target the attribute block preceding each enum (e.g. the '#[derive(Clone, PartialEq, Eq)]\\n#[non_exhaustive]\\npub enum NAME {' span) so the injected doc comment precedes #[derive]/#[non_exhaustive], then regenerate and re-record generate_models.py --check."
+      },
+      {
+        "severity": "low",
+        "path": "crates/scm-sdk/examples/red_team_management.rs",
+        "line": 87,
+        "description": "The example's only assertion about the new profiling filter is `assert_eq!(listing.profiling_status.as_deref(), Some(\"COMPLETED\"))`, which merely re-reads the value assigned four lines earlier at :83 and therefore demonstrates nothing about the feature. The example is bound as runtime evidence (the ledger's sourceBindings at contracts/red-team-management-model-overlay.json:196-199 and the executed `cargo run --example red_team_management` receipts), so a reader may mistake it for filter verification. The real coverage lives in crates/scm-sdk/tests/red_team_management_contracts.rs:466-558 and is not referenced from the example.",
+        "required_fix": "Replace the tautological assertion with either a meaningful offline demonstration (for example constructing TargetListOptions with an undeclared value and showing that RedTeamTargetsClient::list_pages returns ErrorKind::Validation without a transport) or a comment pointing at crates/scm-sdk/tests/red_team_management_contracts.rs for the executable filter/pagination evidence."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-23-chunk-compatibility-matrix-attempt-02.checks.json:2-6 records phase 23, source_sha256 79f03235ed349d674019b834fc9304b110273738f6f213a784b6bcf983b3965e and passed=true; an exhaustive grep over the file returns exit_code 0 for every check, timeout false everywhere, and source_unchanged true on every entry (~68 checks, 20:31:34 to 21:13 UTC).",
+      "Both compilers executed the chunk's tests, not just compiled them: checks.json:1561 (1.89.0 red-team) and :1593 (1.99.0 red-team) record the actual cargo invocations - fmt --all --check, check/clippy --all-targets --locked -D warnings, test --workspace, test --examples, doc, and `cargo run --package scm-sdk --example red_team_management` - each exit_code 0 under --no-default-features --features red-team. Both management test files are gated by #![cfg(feature = \"red-team\")] (red_team_management_contracts.rs:2, red_team_management_fixtures.rs:2, red_team_management_models.rs:2), so these are the sets that execute them.",
+      "Runtime graph change is provably minimal: tools/test_red_team_management_models.py:31-38 asserts the set of touched nodes equals exactly {s012061, s012067, s010462, s010504}, that no ZodDefault node is added, and that each extended union's variant prefix is byte-identical to the baseline; red_team_management_models.py:212-215 appends one branch only after asserting the legacy branch count, and :268-284 strips the reviewed tail before delegating to the strict baseline union verifier.",
+      "Enum split verified in generated code and tests: generated.rs:174153-174166 vs :174692-174707 and :162443-162449 vs :174763-174770; crates/scm-sdk/tests/red_team_management_models.rs:119-132 asserts validation::parse(\"s012061\", \"REALTIME\", Request) fails while s012067 accepts it, and :134-164 asserts VERTEX_AI/N8N/REALTIME name variants on the schema-bound enums while TargetConnectionType/ResponseMode yield Unknown(\"VERTEX_AI\")/Unknown(\"REALTIME\").",
+      "Typed projection semantics verified in generated code: generated.rs:9313-9333 removes basic_username/basic_password, decodes to Patch and re-inserts the raw value into the baseline map on decode failure; :9369-9392 serializes typed values first and skips colliding extension keys. Behaviour is exercised for all seven value kinds over 84 corpus cases x 3 modes (red_team_management_fixtures.rs:57-88) and for wrong-type passthrough and secret-free Debug at red_team_management_contracts.rs:181-201.",
+      "Five response declarations: crates/scm-sdk/tests/red_team_management_contracts.rs:345-459 drives get/create/update/probe/update_profile through an injected transport, asserting operation names, HTTP methods, exact paths under the /mgmt-plane prefix, byte-exact equality in ResponseWithoutDefaults, validator-normalized equality in Response, masked and credential-bearing auth/provider branches, and absence of the synthetic secret in both Debug output and the transport request.",
+      "Filter behaviour and pre-auth rejection: targets.rs:84-91 validates against TARGET_PROFILING_FILTER_VALUES (crates/scm-sdk/src/models/red_team_management.rs:359-361, derived from the vendor ProfilingStatusFilter enum at red_team_management_models.py:244-247) and returns ErrorKind::Validation; contracts.rs:466-539 asserts exact query-pair counts on every page of list/pages/items/all for all four accepted values while legacy status=QUEUED rides unchanged, and :540-558 asserts zero token acquisitions and zero dispatches for five invalid values across all four surfaces.",
+      "Attempt-01 findings are closed in the reviewed source: docs/phase-status.json:5970-5997 adds the from_attempt 2 scope revision with the four previously missing artifacts plus NOTICE files and the example (attempt-1 revision preserved at :5950-5968); contracts/red-team-management-model-overlay.json:48-65 adds unionDecodeTransitions, rendered into docs/G25_COMPATIBILITY.md:36-37 by tools/g25_report.py:139-142 and asserted by tools/test_g25_report.py:120-126; tools/management_fixtures.py:99 adds expectationsOrigin, asserted at tools/test_management_fixtures.py:20-21; tools/test_management_fixtures.py:1-4 no longer imports copy; crates/scm-sdk/src/models/red_team_management.rs:240-246 places the reviewed doc before the attributes.",
+      "Corpus is independent of the generated graph and vendor-pinned: tools/management_fixtures.py:7 states it deliberately does not import the model compiler, :38-42 rejects any change to the 5fbb533b... YAML pin and normalized-JSON mismatch, :92-93 fails on coverage drift, and tools/test_management_fixtures.py:33-40 asserts schema_graph.json and the overlay ledger are absent from sourceBindings while the ws_response_timeout=110 default expectation is authored independently. The materialized corpus contains 84 projection cases, 15 union cases and 3 enum additions, matching the Rust assertions at red_team_management_fixtures.rs:65, :93 and :143.",
+      "Generator and ledger freshness executed at the reviewed source: checks.json records tools/generate_models.py --check (exit 0), tools/generate_models.py --verify-fixtures at :1711 ({\"failures\":0,\"typedCases\":27479,\"publicSchemas\":1086}), tools/management_fixtures.py --check at :339 ({\"projectionOccurrences\":12,\"models\":6,\"unionTails\":2,\"enumAdditions\":3}), tools/g25_report.py --check, and tools/red_team_management.py --check --require-through-phase 23 --verify-package-receipts (exit 0). tools/generate_models.py:1096-1113 recomputes the overlay ledger sourceBindings from the post-rustfmt generated bytes, so a hand-edit to generated.rs, schema_graph.json, the model tests, the example or NOTICE breaks --check.",
+      "Fixture tests are bound and removal-tested: tools/red_team_management.py:632-636 pins the three Rust fixture test function names and :772-775 greps the tokenized test source for each, with tools/test_red_team_management.py's test_cumulative_gate_rejects_each_missing_fixture_test and test_cumulative_gate_rejects_stale_corpus_and_invalid_old_consumers passing in the recorded run (checks.json:168).",
+      "Dependency and license policy respected: crates/scm-sdk/Cargo.toml:44 enables only serde_json feature \"raw_value\" (no preserve_order), and both NOTICE and crates/scm-sdk/NOTICE lines 12-14 name pan.dev revision 582e30543bf2adfd8b0ee457170d22b5c380dfbe, OpenAPI version 0.86.0 alongside the existing data-plane revision under the MIT notice."
+    ],
+    "limitations": [
+      "Read-only review: I executed no commands. All pass/fail evidence is taken from the recorded attempt-02 checks file. I did not recompute the SHA256 of the reviewed source tree, of the checks file, or of the docs/checks/*.json receipts it binds; I verified internal consistency (per-check exit codes, timeout flags, source_unchanged flags, checkpoint_bindings presence and recorded cargo sub-invocations) rather than cryptographic authenticity.",
+      "The docs/checks/phase-23-*.json receipt files are modified/untracked in the working tree, so their bytes are outside the reviewed source hash; I relied on the checkpoint_bindings digests recorded inside the checks file.",
+      "Generated-model correctness was assessed through the compiler receipts, selected generated declarations (the four enums, the three new structs and their builders, the BasicAuthAuthConfig projection codec) and the independent fixture/test evidence, not by reading the full 174k-line generated.rs or the minified schema_graph.json node-by-node.",
+      "The union acceptance expectations in the corpus remain reviewed, hand-authored vendor-schema-derived values rather than independent validator-oracle outputs. This is now explicitly disclosed (management_fixtures.py:99) and was the required fix, but it is weaker evidence than the G25 Zod/AJV-oracle corpus.",
+      "I did not independently re-derive the vendor OpenAPI content; pin verification (mp-openapi.yaml 5fbb533b..., openapi.json normalized equality) is taken from the tools' own guards, whose tamper tests are recorded as passing.",
+      "Cross-chunk artifacts (contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json, the frozen 0.2.2 old-consumer sources, CHANGELOG.md, the CI workflow, the clean package wrappers) were consulted only to validate this chunk's design claims; they belong to the package-security chunk and were not reviewed for their own acceptance. Note that the per-operation supersetJustification text is identical boilerplate across the five rows and explicitly covers only top-level fields, deferring nested variants to this chunk's fixture matrix.",
+      "Offline scope only. Nothing here establishes live service acceptance. The observable behaviour change in which a representable basic_username/basic_password/audio_request_json/audio_curl value is removed from extensions and surfaced on the typed Patch field is disclosed in docs/G25_COMPATIBILITY.md:32 but its changelog entry and the release-version decision (0.2.3 vs 0.3.0) belong to phase 24 and were not judged here."
+    ],
+    "categories": {
+      "implementation": 9.5,
+      "code_quality": 9,
+      "supportability": 9,
+      "architecture": 9.5,
+      "feature_delivery": 9.5
+    },
+    "total": 46.5
+  },
+  "rubric": "five-category-v1",
+  "chunk": "compatibility-matrix",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "NOTICE",
+    "contracts/native-fixtures/red-team-management.json",
+    "contracts/red-team-management-model-overlay.json",
+    "contracts/red-team-management-union-extensions.json",
+    "crates/scm-sdk/NOTICE",
+    "crates/scm-sdk/examples/red_team_management.rs",
+    "crates/scm-sdk/src/airs/red_team/targets.rs",
+    "crates/scm-sdk/src/fixtures/model-regressions.json",
+    "crates/scm-sdk/src/models/generated.rs",
+    "crates/scm-sdk/src/models/red_team_management.rs",
+    "crates/scm-sdk/src/validation/schema_graph.json",
+    "crates/scm-sdk/tests/red_team_management_contracts.rs",
+    "crates/scm-sdk/tests/red_team_management_fixtures.rs",
+    "crates/scm-sdk/tests/red_team_management_models.rs",
+    "docs/G25_COMPATIBILITY.md",
+    "docs/red-team-management-0.86-plan.md",
+    "tools/g25_report.py",
+    "tools/generate_models.py",
+    "tools/management_fixtures.py",
+    "tools/red_team_management_models.py",
+    "tools/test_g25_report.py",
+    "tools/test_management_fixtures.py",
+    "tools/test_red_team_management_models.py"
+  ]
+}
