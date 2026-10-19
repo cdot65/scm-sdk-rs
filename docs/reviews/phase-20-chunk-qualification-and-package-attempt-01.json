@@ -1,0 +1,131 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 20,
+  "attempt": 1,
+  "reviewed_at": "2026-10-19T07:42:58.441459+00:00",
+  "source_sha256": "bec9e52c4771d058026ad8e838fc9b376466ad02dbb214b17b08fdece1d98b42",
+  "source_unchanged": true,
+  "checks_sha256": "373bf1f95dfaa3dc1599892e42a96aaae7c43434caf961c43cd0bd7abc7a7f5e",
+  "prompt_sha256": "1254b1ac3a8df41427fcde887726ece560aacda2abe32741a941d5049a06f38e",
+  "cli_output_sha256": "da927c84515c76b64868e683698f862a4e1c44e78a8cd06ef4620852346bcada",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Chunk qualification-and-package is genuinely qualified. The 56-command phase-20 gate (docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.checks.json) is complete, all exit codes are 0, and it is bound to the reviewed source bec9e52c with source_unchanged true; the recorded command list matches the in-code derivation at tools/check_phase.py:70-87, which review_phase.check_evidence enforces by exact equality, so it cannot be silently narrowed. Both --require-clean archive proofs bind the exact release commit 938adbe with effectiveDirty false and identical packaged file inventories across 1.89.0 and 1.99.0, and scripts/check-access-release.py re-extracts each retained archive in-gate to compare every packaged byte against the working tree and against git show <releaseCommit>, requires releaseCommit == HEAD, and requires the four executed offline examples plus all three external consumer executions including the new response_compatibility consumer. The new offline consumer (crates/scm-sdk/examples/response_compatibility.rs) exercises precisely the reported G25 failures (opaque job-1/p-1/map-1, space-separated and offset-less timestamps, novel enum vocabulary, unknown nested data), the three deliberately retained strict cases, Mode::Request strictness and large-number projection round-trips. The 49-job matrix is wired with the new red-team-json-unification combination and asserted in two independent tests, and the CI contracts subset now carries every G25 check, closing finding 3 of the accepted phase-19 review. A real new live run exists at crateVersion 0.2.2 (docs/checks/phase-08-live-attempt-14.json) with honest 403/400 outcomes, and the source-bound ledgers (contracts/live-evidence.json, contracts/qualification.json) were rebuilt against it and --check verified. Documentation is accurate, generated-and-checked where appropriate, and quantitatively honest about residual strictness (213 corpus cases across 6 operations), retained constraints, the 76 retained caller UUID checks, query behavior, and the un-executed airs-cli-rs loopback suite. Validation and generated-model behavior match the accepted policy: only the eight reviewed format kinds and requestOnly string bounds are skipped in response modes, unknown check kinds still fail closed, undecodable vendor-added values are preserved in extension storage, baseline-key collisions still error, and set projections suppress the same-key extension so no duplicate JSON keys are emitted. The deficiencies are documentation and bookkeeping, not functionality: docs/LIVE_ACCEPTANCE.md still presents attempt 13 as the newest named run and never summarizes the new 0.2.2 execution, and the phase-20 record in docs/phase-status.json carries no live receipt reference and no disposition for the three low findings inherited from docs/reviews/phase-19-attempt-03.json, two of which remain unimplemented. No blocker or high finding.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "docs/LIVE_ACCEPTANCE.md",
+        "line": 13,
+        "description": "This document is declared chunk scope evidence, and the plan's milestone 20 requires re-running the bounded nonproduction live qualification and reporting failures and missing privileges honestly. A new run was in fact executed for this release (docs/checks/phase-08-live-attempt-14.json:4,27 records executedAt 2026-10-19T06:04Z at crateVersion 0.2.2, with 21 verified probes, three 403 permission prerequisites at lines 100-118 and two 400 service contract rejections at lines 212 and 232), and contracts/live-evidence.json:4 points at it. But the human-readable narrative at lines 13-30 still describes only the historical 0.2.1 attempt 13, the 0.1.1 attempt 08, attempt 07 and the 0.1.0 receipts, and lines 22-24 merely defer to 'the current receipt reference above'. A reader of the scope evidence therefore gets no summary of the executed 0.2.2 run. Worse, line 13-15 states that the synchronous scan-ID query 'returned HTTP 200 without a complete correlated receipt and remains unqualified', whereas the current receipt classifies scan.query_scan_results as verified with status 200 (docs/checks/phase-08-live-attempt-14.json:172-174), so the prose actively contradicts the current machine evidence for a reader who does not open the JSON.",
+        "required_fix": "Add a current-run paragraph to docs/LIVE_ACCEPTANCE.md naming docs/checks/phase-08-live-attempt-14.json as the applicable 0.2.2 receipt, stating its verified operation count, the three Red Team 403 permission prerequisites, the two 400 service-contract rejections with the cause still unestablished and an SDK request-shape defect not excluded, and the cleanupState not_needed reason. Explicitly relabel the attempt-13 sentence as historical to the 0.2.1 source so the sync scan-ID statement is not read as current."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/phase-status.json",
+        "line": 4247,
+        "description": "The phase-20 record (lines 4247-4332) contains only scope_evidence, the two chunk declarations and one honest qualification_attempts entry. It records no live receipt and no live_acceptance field, even though a new 0.2.2 live run was executed and the ledgers were rebuilt against it, and earlier delivery phases do record this (phase 8 at line 569 and its sdk_runtime_unchanged flag at line 637). It also records no disposition for the three low findings of the accepted phase-19 review, which the plan requires preserving ('Preserve every attempt and disposition advisory findings') and which docs/phase-status.json:4091 and 4095 explicitly say were 'carried to phase20'. Two of those three are still unimplemented at this source: tools/red_team_dataplane.py:423-426 still silently continues when a legacy root resolves no vendor candidate, and no rustdoc or accessor documents the projection wire-key precedence (docs/reviews/phase-19-attempt-03.json:17-28). Only the CI finding (line 31-35 of that review) is resolved. Nothing in the phase-20 record tells a later reader whether the other two are accepted-as-is, deferred, or forgotten.",
+        "required_fix": "Add to the phase-20 record a live_acceptance field naming docs/checks/phase-08-live-attempt-14.json with its outcome summary, and a review_advisories (or carried_findings) list that gives an explicit disposition and evidence for each of the three findings in docs/reviews/phase-19-attempt-03.json, including which remain open and why. Also state whether any SDK runtime input changed between the accepted phase-19 source 99a0568b and this source beyond the 0.2.2 version bump."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/phase-20-private-material.json",
+        "line": 5,
+        "description": "The retained privacy receipt records headCommit e4cabb0ee28c67959997c45312d89514befa999c and checkedAt 06:20:49Z, i.e. the private matching ran before the qualified release commit 938adbef948e962a5d9b997fbcd078130a175522 that both clean archive proofs bind (docs/checks/phase-20-release-package-1.89.0.json:8). The gate only re-ran the credential-free --check mode, and scripts/check-private-material.py:174-175 validates headCommit for shape alone, never against the current HEAD, so this staleness is undetectable by the gate. The receipt's existingTenantIdentifier.alreadyPresentInHeadFilesCount classification (lines 13-18) was therefore computed against the pre-release HEAD. The source fingerprint bec9e52c does match the reviewed source, so content coverage is intact, and the phase-8 advisory final-bookkeeping-credential-scan required exactly this refresh after the final records.",
+        "required_fix": "Re-run scripts/check-private-material.py in private scan mode at the qualified release commit so headCommit equals 938adbef948e962a5d9b997fbcd078130a175522 before publication, and add a headCommit-versus-HEAD assertion to check_receipt (or record in docs/SECURITY.md that --check deliberately does not bind headCommit)."
+      },
+      {
+        "severity": "low",
+        "path": "crates/scm-sdk/src/models/generated.rs",
+        "line": 175266,
+        "description": "The typed-over-raw projection precedence is implemented correctly and without duplicate keys (lines 175266-175293 skip an extension entry whose key matches a set vendor-added projection field, while lines 175178-175186 keep baseline-key collisions as hard errors), and it is documented in CHANGELOG.md:21-28 and docs/G25_COMPATIBILITY.md. However the generated projection fields carry no rustdoc, and no grep for 'precedence', 'supersede' or 'same key' in crates/scm-sdk/src matches anything about this behavior. A consumer reading docs.rs for the published 0.2.2 crate cannot discover that setting a projection field silently drops a same-key preserved extension. This is the unimplemented half of finding 2 in docs/reviews/phase-19-attempt-03.json, which the maintainer dispositioned as documentation-only at docs/phase-status.json:4142.",
+        "required_fix": "Either emit a short generated doc comment on the vendor-added projection fields (and on Extensions) stating that a set typed projection supersedes a same-key extension on serialization, or record in the phase-20 bookkeeping that the markdown-only disposition is final and that generated models deliberately carry no rustdoc."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_ci.py",
+        "line": 329,
+        "description": "test_verified_publication_is_consistent_in_current_release_documents returns early whenever the workspace version differs from the last recorded registry_publication version. Because 0.2.2 is unpublished, every receipt-specific assertion (lines 331-349, including the CHANGELOG receipt-link check) is skipped for the current version, so the generalized release-documentation guard that the plan asked for is currently exercised only through the synthetic fixture at lines 353-389. The unpublished-state assertions at lines 318-327 do still run, and the early return is honest, but nothing yet enforces that the 0.2.2 receipt links actually resolve once published.",
+        "required_fix": "Assert in the skipped branch that the linked docs/checks/release-registry-<workspace_version>.json and release-tag-v<workspace_version>.json paths referenced by CHANGELOG.md, README.md, docs/RELEASE.md and docs/STABILITY.md are either absent-and-labeled-unverified or present-and-valid, so the delivery chunk cannot publish with a dangling receipt link."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_dataplane.py",
+        "line": 423,
+        "description": "Finding 1 of the accepted phase-19 review required raising instead of silently continuing when a legacy root resolves no vendor candidate, with a negative test. The loop at lines 423-426 still computes a candidate via next((... ), None) and only pairs when a candidate exists, with no recorded no-counterpart allowlist and no error path. This file is outside this chunk's declared scope, so it is correctly not reworked here, but phase 20 is the owning phase for the carried disposition and no disposition exists.",
+        "required_fix": "Either implement the phase-19 required fix (raise on an unresolvable root, permitting an explicitly recorded no-counterpart list, plus a negative test beside tools/test_g25_generation.py:316-345) or record an explicit accept-as-is disposition with rationale in the phase-20 record of docs/phase-status.json."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.checks.json:3-6 records phase 20, source_sha256 bec9e52c4771d058026ad8e838fc9b376466ad02dbb214b17b08fdece1d98b42, source_unchanged true, passed true; all 56 recorded commands have exit_code 0 and timeout false (verified across every exit_code/timeout pair in the file).",
+      "Recorded command list matches the in-code derivation: tools/check_phase.py:71-87 builds phase 20 as commands_for(17)+commands_for(19) with phase-17-/phase-19- renamed to phase-20-, de-duplicated, then appends generate_models.py --verify-fixtures and both check-native-exports runs. tools/review_phase.py:187 requires [item['command'] for item in checks] == commands_for(phase), so the list cannot be trimmed.",
+      "docs/checks/phase-20-release-package-1.89.0.json:3-20 and docs/checks/phase-20-release-package-1.99.0.json:3-20: passed true, requireClean true, effectiveDirty false, releaseCommit 938adbef948e962a5d9b997fbcd078130a175522 for both, distinct archive digests d0843a98\u2026 and e5017602\u2026 with identical file inventories.",
+      "scripts/check-access-release.py:60-115 requires proof releaseCommit == HEAD, re-reads and re-hashes the retained .local/artifacts archive, re-extracts it, compares file_rows and validate_vcs, compares the packaged src/examples inventory and every packaged byte against the current filesystem and against git show <releaseCommit>:<path>, and requires both compiler proofs to agree on releaseCommit/files/vcs. It ran in-gate (checks.json line 734-758, exit 0).",
+      "scripts/check-access-release.py:38-51 (verify_offline_delivery) requires executed response_defaults, red_team_dataplane, access_policies and response_compatibility examples plus exactly three external 'run --locked' consumers for 0.2.2, with responseCompatibilityConsumerSourceSha256 equal to the packaged example bytes; scripts/verify-publication.py:31-53 (require_proof) additionally requires schemaVersion 2, passed true, requireClean true, effectiveDirty false, a matching rustcVersion banner, and exit_code 0 on every recorded cargo command.",
+      "scripts/check-package.py:109-110 and 192-196 enforce an empty 'git status --porcelain --untracked-files=all' before and after each --require-clean run, which is why the proofs must be written to ignored .local paths and copied afterwards; this exact procedure is documented at docs/RELEASE.md:23-24 and 104-121 and docs/PACKAGING.md:91-93.",
+      "crates/scm-sdk/examples/response_compatibility.rs:17-59 accepts opaque job-1/p-1/map-1 and FUTURE_* enum values with unknown nested data in both response modes with byte-exact preservation; lines 60-79 keep the three structurally rejected cases failing; line 80 and 121 assert Mode::Request still rejects; lines 98-99 cover the two reported timestamp forms; lines 124-136 assert u64::MAX preservation and unset typed projections.",
+      "crates/scm-sdk/src/validation.rs:1219-1229 skips only uuid/rfc3339/datetime/date/duration/email/url/regex and requestOnly min/max in response modes, after validating the check metadata at lines 1199-1218, with unknown kinds falling through to 'valid = false' at line 1241; validation.rs:542-555 selects the frozen TypeScript floor only for response modes via the generated ZodResponseCompatibility node.",
+      "crates/scm-sdk/src/models/generated.rs:175021-175046 reinserts an undecodable vendor-added value into the raw map so the typed projection stays unset; 175178-175186 keeps baseline-key extension collisions a serialization error; 175266-175293 suppresses an extension entry whose key matches a set projection field, so no duplicate JSON keys are produced.",
+      "crates/scm-sdk/tests/g25_response_compatibility.rs contains eight corpus-driven tests covering every vendor response root against independent outcomes (line 62), every string-format node in both response modes across the SDK (line 339), projection absence/null/unrepresentable preservation (line 416), typed replacement versus baseline collisions (line 523) and large-number preservation through the public parse boundary (lines 547, 1114, 1127).",
+      "Live re-run exists and is bound: docs/checks/phase-08-live-attempt-14.json:4-10 (executedAt 2026-10-19T06:04Z, exitCode 0, sourceUnchanged true), line 27 crateVersion 0.2.2, lines 100-118 three 403 permission_prerequisite rows, lines 212 and 232 two 400 service_contract_rejection rows; contracts/live-evidence.json:4-5 names that report with its SHA-256, and contracts/qualification.json references it in every live row.",
+      "CI matrix: .forgejo/workflows/ci.yml:89-90 declares 2 toolchains x 24 feature sets including red-team-json-unification, plus the contracts-and-package job at line 72 running check_phase.py --phase 20 --verification-only --contracts-only. tools/test_ci.py:111 asserts toolchains x features + 1 == 49; tools/test_ci.py:455-456 pins the red-team-json-unification feature arguments; tools/test_release_delivery.py:109-110 asserts expected_contexts derives 49 contexts including that combination.",
+      "CI contracts subset now includes the G25 guards: tools/check_phase.py:510-515 filters only native scripts, and tools/test_ci.py:495-502 asserts ci_commands_for(20) is a subset of commands_for(20) containing g25_audit.py, g25_fixtures.py, g25_report.py and g25-oracle.mts while excluding check-access-release.py and check-rust.py. This resolves finding 3 of docs/reviews/phase-19-attempt-03.json.",
+      "Generated documentation is checked, not hand-maintained: tools/g25_report.py:81-88 binds the ledger to auditSha256/casesSha256/outcomesSha256, lines 258-260 reject an oracle whose corpus digest differs, and lines 274-282 fail on stale docs/G25_COMPATIBILITY.md or comparison.json. tools/g25_fixtures.py:562-583 generates and --checks contracts/compatibility/g25/projections.json. Both --check commands ran in-gate (checks.json lines 833 and 850).",
+      "Honest quantitative disclosure: docs/G25_COMPATIBILITY.md:52 states 213 residual-strictness corpus cases across 6 operations with mutation counts at line 56, line 58 gives format occurrences (uuid 124, rfc3339 56, duration 4) across 28 operations, and line 60 states the shared relaxation reaches 172 frozen roots. CHANGELOG.md:30-68 enumerates every retained rule, the 76 retained caller UUID checks, the get_target_profile_error_logs query behavior, and explicitly states the airs-cli-rs loopback suite was not run and no consumer adoption is claimed.",
+      "Delivery gate for the next chunk is rigorous and enforced: tools/release_delivery.py:71-116 cross-checks registry identity/ownership/non-yanked state, per-field equality with the clean proof, annotated tag object and peel, remote main, terminal run status, exact per-job context set against the derived matrix, per-job success and unique job URLs; lines 119-124 require the published and CI commits to fingerprint to the reviewed source and be ancestors of HEAD. tools/review_phase.py:385-392 blocks phase-20 advancement without review_scope 'phase' plus a passing release_delivery.verify. tools/test_release_delivery.py:51-162 covers missing/extra/duplicate/failed/pending/wrong-run contexts, stale sources, false summaries, registry and tag tampering, and that a release-readiness review cannot advance the phase.",
+      "Review governance is sound: tools/review_phase.py:68-83 applies the five-category rubric with chunk target 42, category floor 8, blocker/high rejection and a fifth-attempt-only >40 exception; lines 86-105 verify every prior attempt against its preserved prompt and actual CLI envelope; lines 239-251 require the phase-20 prompt to begin with the declared review scope and to embed the exact declared chunk scope artifacts; lines 193-209 require the chunk scope to match docs/phase-status.json exactly. tools/test_release_delivery.py:209-254 proves bookkeeping edits cannot broaden or narrow the accepted scope.",
+      "Scope-hashing exclusions are as documented: tools/review_phase.py:15-16 excludes docs/reviews/, docs/checks/ and docs/phase-status.json from fingerprint(), matching docs/PHASES.md:7, so the uncommitted gate outputs in the working tree do not perturb the reviewed source hash. docs/checks/phase-20.json:3-6 carries the same source hash and timestamp as the preserved chunk checks file.",
+      "Version statements are bound to the actual crate version: tools/test_g10_release.py:161-168 asserts README.md, docs/RELEASE.md, docs/STABILITY.md and the top CHANGELOG heading all carry the Cargo.toml version, which is the generalized release-documentation test the plan requested; tools/test_ci.py:311-349 additionally requires the published receipt to be linked from CHANGELOG.md and rejects obsolete 'currently unpublished' prose, with fail-closed negatives at lines 353-389.",
+      "Supporting scans executed: docs/checks/phase-20-dependencies.json:3-26 (passed true, fresh advisory-db head 999ec89d, pinned cargo-audit 0.22.2 and cargo-deny 0.20.2 with binary digests) and docs/checks/phase-20-private-material.json:3-18 (passed true, zero credential and zero package registration-value matches, sourceSha256 equal to the reviewed source).",
+      "docs/CI.md:4, 107, 162-173 and docs/RELEASE.md:9-14, 26-27 accurately describe the 49 required jobs, the 24 feature selections per compiler, and explicitly state that the retained phase-17 run does not evidence the expanded 49-job phase-20 workflow, which has not yet run."
+    ],
+    "limitations": [
+      "Read-only review with no shell: I executed nothing. I could not recompute the reviewed source SHA-256 bec9e52c, the archive digests, the retained .local/artifacts crate bytes, or any fingerprint, and I re-ran no cargo, python, node or tsx command. Every pass/fail claim rests on reading the recorded receipts and the code that produces and validates them.",
+      "I verified the recorded 56-command list against tools/check_phase.py by reading the composition logic and spot-checking the ordering and de-duplication at each boundary (phase-12 slice [4:25], the phase-19 additions, the two trailing native-export runs). I did not mechanically diff all 56 entries against a computed list, so a single mis-ordered entry in the middle of the list is possible in principle; review_phase.check_evidence would have rejected it at gate time, which is an independent but same-process guard.",
+      "Internal consistency of receipts is not authentication. docs/PHASES.md:7 states that repository writers and the invoked reviewer tool are trusted; the hashes detect staleness, not forgery. I could not confirm that the recorded cargo and live executions actually occurred, only that their reports are structurally valid, mutually consistent in source hashes and timestamps, and carry plausible compiler banners, durations and outputs.",
+      "Live service acceptance is outside what I can verify. I read docs/checks/phase-08-live-attempt-14.json as a record; I cannot confirm the requests were made, and the two 400 rejections leave the IAM scope-creation and Gateway provisioning mutation/cleanup chains live-unqualified with an SDK request-shape defect explicitly not excluded.",
+      "The registry-and-remote-delivery chunk is pending by declaration. docs/checks/release-registry-0.2.2.json, docs/checks/release-tag-v0.2.2.json and any phase-20 remote CI receipt do not exist, so publication, the immutable tag and terminal 49-job CI are unevidenced. I judged this chunk's criteria only and did not penalize those absent later-chunk artifacts.",
+      "scripts/check-package.py is deliberately absent from commands_for(20): its --require-clean mode demands an empty working tree including untracked files, so it cannot run inside a gate that writes reports. Package evidence therefore enters this gate indirectly, through check-access-release.py's re-extraction and byte comparison of the retained archives. I consider that sound and it is documented, but it means the archive tests themselves were executed outside the recorded gate run.",
+      "I did not re-audit historical phase 1-19 infrastructure, the frozen TypeScript baseline, or prior release receipts beyond what this chunk's artifacts depend on, per the scoping instruction. I read no credential or tenant-registration files and nothing outside this repository."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": "qualification-and-package",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "scripts/check-package.py",
+    "scripts/check-access-release.py",
+    "tools/test_release_022.py",
+    "tools/check_phase.py",
+    "tools/review_phase.py",
+    "tools/test_review_phase.py",
+    "tools/release_delivery.py",
+    "tools/test_release_delivery.py",
+    "crates/scm-sdk/examples/response_compatibility.rs",
+    "CHANGELOG.md",
+    "docs/G25_COMPATIBILITY.md",
+    "docs/RELEASE.md",
+    "docs/PACKAGING.md",
+    "docs/CI.md",
+    "docs/LIVE_ACCEPTANCE.md",
+    "docs/checks/phase-20-release-package-1.89.0.json",
+    "docs/checks/phase-20-release-package-1.99.0.json",
+    "crates/scm-sdk/src/validation.rs",
+    "crates/scm-sdk/src/validation/tests.rs",
+    "tools/g25_fixtures.py",
+    "tools/test_g25_generation.py",
+    "tools/g25_report.py",
+    "tools/test_g25_report.py",
+    "crates/scm-sdk/tests/g25_response_compatibility.rs",
+    "contracts/compatibility/g25/projections.json"
+  ]
+}

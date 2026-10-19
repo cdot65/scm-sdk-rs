@@ -1,0 +1,942 @@
+{
+  "schemaVersion": 2,
+  "checkedAt": "2026-10-19T06:30:06.024366+00:00",
+  "passed": true,
+  "toolchain": "1.89.0",
+  "rustcVersion": "rustc 1.89.0 (29483883e 2025-08-04)\nbinary: rustc\ncommit-hash: 29483883eed69d5fb4db01964cdf2af4d86e9cb2\ncommit-date: 2025-08-04\nhost: x86_64-unknown-linux-musl\nrelease: 1.89.0\nLLVM version: 20.1.7\n",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "releaseCommit": "938adbef948e962a5d9b997fbcd078130a175522",
+  "requireClean": true,
+  "vcs": {
+    "git": {
+      "sha1": "938adbef948e962a5d9b997fbcd078130a175522"
+    },
+    "path_in_vcs": "crates/scm-sdk"
+  },
+  "effectiveDirty": false,
+  "dirtyFieldPresent": false,
+  "archive_sha256": "d0843a98c41acc679ee011281a340341a399640296190273ed4d24367cdd174c",
+  "archive_bytes": 1031519,
+  "retainedArchive": "/home/cdot/development/cdot65/scm-sdk-rs/.local/artifacts/scm-sdk-0.2.2-d0843a98c41acc67.crate",
+  "files": [
+    {
+      "path": ".cargo_vcs_info.json",
+      "sha256": "572cc48a9bd905483118043639927738585be5fd4382dab4a3783c82158e5c37",
+      "bytes": 108
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "785e16a52d7f6529db46c8afa240cce798342a2189535cd3e82e8e8a36102fc2",
+      "bytes": 50218
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "878ad410e9e1d68a4688a4ad50a828fda6302176304ebd0b00dac907d45654f9",
+      "bytes": 4908
+    },
+    {
+      "path": "Cargo.toml.orig",
+      "sha256": "f43f1c594c030afb3f9badde27ccca67d3ddcd1113582aabe57c3b90577dc546",
+      "bytes": 2836
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "8bbb3b541bc1ab282fdeb89f0578ca1d604ac9046aacc0ef267bd33cb9799f74",
+      "bytes": 10935
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "88a2010d481964082d94a97939f6f703d14dba51eb49f2a966f309724e97dd24",
+      "bytes": 2975
+    },
+    {
+      "path": "README.md",
+      "sha256": "5baf828a5be20ebdcbfc212784ea7a4fc0845a15d837f3ee0bc394b7ff3c65cc",
+      "bytes": 6675
+    },
+    {
+      "path": "examples/access_policies.rs",
+      "sha256": "e7a951327a273889f758d8f87eb6d01c3b2f88389067032d73c943f68a2f847b",
+      "bytes": 2153
+    },
+    {
+      "path": "examples/foundation.rs",
+      "sha256": "adc50718bdc090a7b7d9a3397886507eb9b0e846fc8cf3495ca9e1fc2f6a3718",
+      "bytes": 698
+    },
+    {
+      "path": "examples/gateway.rs",
+      "sha256": "bdc3c25511bacb80d581f7bd74d4efe688b04adf2d6cce7d598190d2389b979b",
+      "bytes": 1983
+    },
+    {
+      "path": "examples/live_qualification.rs",
+      "sha256": "6d3a02cf3ce59901dc77e7cf1e56931c5dcb9d9b3f452769d9ad89b766d83dbc",
+      "bytes": 60981
+    },
+    {
+      "path": "examples/management.rs",
+      "sha256": "f2c3813bc5f11092bf065a088f5d05837001192fcf1638b82db39d3b49cd5e38",
+      "bytes": 1403
+    },
+    {
+      "path": "examples/model_and_red_team.rs",
+      "sha256": "65683a38ad1d3a8f0aafc3d901dd83f1c49332372578946261b9edfa0dffc602",
+      "bytes": 2555
+    },
+    {
+      "path": "examples/pagination.rs",
+      "sha256": "07e3ced20af67ff1695f49d288d1c5a1b5e996a6274d78cfa0b1540611fa317f",
+      "bytes": 896
+    },
+    {
+      "path": "examples/realtime.rs",
+      "sha256": "bc00326b3852ea40653a4cae45030c4be024739d7a85011b53816c441d8a79fb",
+      "bytes": 2446
+    },
+    {
+      "path": "examples/red_team_dataplane.rs",
+      "sha256": "2b746fb711bf773751eb01c5e04ca79a030035f70a07767907e773b367594730",
+      "bytes": 2154
+    },
+    {
+      "path": "examples/response_compatibility.rs",
+      "sha256": "d22faee50ff2b7c522ccca8bbb4c1de0385e2a9b3cd8267afa39ef401715f4b4",
+      "bytes": 5418
+    },
+    {
+      "path": "examples/response_defaults.rs",
+      "sha256": "89c8150110433b1e61e4ca1a4bfeb2b4d9aa22493128332ebaad57600a6a335e",
+      "bytes": 1496
+    },
+    {
+      "path": "examples/scan.rs",
+      "sha256": "d05176edaee33940d4f323b744868c17a20c9a04e45c1a29764af6f538ba494f",
+      "bytes": 1042
+    },
+    {
+      "path": "src/airs/agentguard/client.rs",
+      "sha256": "3414f70eac84544bd7dbf6b866aad600559ef71519e86fa37463552d0d3d9d8b",
+      "bytes": 7356
+    },
+    {
+      "path": "src/airs/agentguard/mod.rs",
+      "sha256": "a4d18334395320f3237446453e697211301c77982a05f3d62536e6476af6a485",
+      "bytes": 268
+    },
+    {
+      "path": "src/airs/gateway/access_policies.rs",
+      "sha256": "c4637514b143f016386bac8f5c5800b5e7760b38d1bb71f97a6115e36711144f",
+      "bytes": 13048
+    },
+    {
+      "path": "src/airs/gateway/access_policy_models.rs",
+      "sha256": "f740ae8da2299020ecb3652d316bf361336a61b12b1ad8f4db82635fa2e2093f",
+      "bytes": 14887
+    },
+    {
+      "path": "src/airs/gateway/admin_guardrails.rs",
+      "sha256": "904b60749ce6d00d4a1af063348facad6759cd7d4d2b2779c70b90048d8ce2fb",
+      "bytes": 5733
+    },
+    {
+      "path": "src/airs/gateway/api_keys.rs",
+      "sha256": "921e05bd8e1ef6d8578a46a23f3a4368c6722252424a56cf496dd4fdd2c62670",
+      "bytes": 7275
+    },
+    {
+      "path": "src/airs/gateway/audit_logs.rs",
+      "sha256": "ef0e39c5438a12e501b1ef642641c01c2917cd008630eef220f8d7b27dc20f23",
+      "bytes": 1532
+    },
+    {
+      "path": "src/airs/gateway/common.rs",
+      "sha256": "c2543d0552f7fe6c0ebe4520e8c6a9741dfa117f6ad91017f679b6f633ab48f5",
+      "bytes": 13339
+    },
+    {
+      "path": "src/airs/gateway/configs.rs",
+      "sha256": "b5af0f34aad80d07e48e486907e2c031de174ee3796d7d4b2d9b57885ad7788d",
+      "bytes": 3612
+    },
+    {
+      "path": "src/airs/gateway/deployments.rs",
+      "sha256": "ebf5f77488bcb9a4a3e1aa224a723a2b668eb8453d84db4779771c378988687b",
+      "bytes": 3687
+    },
+    {
+      "path": "src/airs/gateway/guardrails.rs",
+      "sha256": "21f9d60493be3a1e1b91f8a8fa675c48fdbe1d460b14d4badf69b6ab63bda3af",
+      "bytes": 6042
+    },
+    {
+      "path": "src/airs/gateway/helpers.rs",
+      "sha256": "ca2304e719d3538093bb44ddd9a75f0231e21a8fc5af74bdcae117659b0aa4cf",
+      "bytes": 15971
+    },
+    {
+      "path": "src/airs/gateway/integrations.rs",
+      "sha256": "396ea7c56bbbdad7e0d0ac25bf6f55511c51a3be8e18fe5cd9f8bd947fa42ab4",
+      "bytes": 8601
+    },
+    {
+      "path": "src/airs/gateway/log_exports.rs",
+      "sha256": "2057a70efbc06fbdad31c8dd3ae7bbeada8c946389f77c6723e9d87e9f86ac5f",
+      "bytes": 5049
+    },
+    {
+      "path": "src/airs/gateway/mcp_integrations.rs",
+      "sha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "bytes": 7133
+    },
+    {
+      "path": "src/airs/gateway/mcp_servers.rs",
+      "sha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "bytes": 9683
+    },
+    {
+      "path": "src/airs/gateway/mod.rs",
+      "sha256": "2f1d2801cc7a5eb5903cbc7339b77363eb5ac116ec639c84f458d63fba93ee55",
+      "bytes": 8694
+    },
+    {
+      "path": "src/airs/gateway/model_pricing.rs",
+      "sha256": "908c3622bccfa817ffb7045e7b324f6491b47d691870a83a22a840e8f4fef432",
+      "bytes": 2450
+    },
+    {
+      "path": "src/airs/gateway/organisations.rs",
+      "sha256": "9c2be2d47957a0e27b4b6bdd42e6f17c6593f1eab02f15dabe32d85085b04157",
+      "bytes": 3275
+    },
+    {
+      "path": "src/airs/gateway/plugins.rs",
+      "sha256": "7b65a9713e0dc035a3e25754cbf5bcf89549631bd4d36ae102cb9ab7eaa53fb4",
+      "bytes": 1257
+    },
+    {
+      "path": "src/airs/gateway/providers.rs",
+      "sha256": "dd0e4ea40301eaf776341794a89b3bc41f5e7b05ca145c3f5a121f6fd6162908",
+      "bytes": 3122
+    },
+    {
+      "path": "src/airs/gateway/provision.rs",
+      "sha256": "b67199ecc30da77a6ca54a68ef7bf1d415994fffb3cb640dbc6da5935024258c",
+      "bytes": 13087
+    },
+    {
+      "path": "src/airs/gateway/rate_limits.rs",
+      "sha256": "caaffff65849835dd4c9304ef09c112c77898bb871d430ce968a6c2ab83e5b09",
+      "bytes": 4190
+    },
+    {
+      "path": "src/airs/gateway/runtime.rs",
+      "sha256": "2b605b5a49e38d7255b9fa364bf8537402871eda03be94a3e51f7adccbfcc104",
+      "bytes": 13195
+    },
+    {
+      "path": "src/airs/gateway/runtime_audio.rs",
+      "sha256": "c616636857f42a221b709678bde49886d3757e473acf6423d63d6389d74669f7",
+      "bytes": 14819
+    },
+    {
+      "path": "src/airs/gateway/runtime_resources.rs",
+      "sha256": "227bc5941e6ba88f70077264b58562613ff5254411b6433e18f99b0333976137",
+      "bytes": 27897
+    },
+    {
+      "path": "src/airs/gateway/secret_references.rs",
+      "sha256": "d05a3635acfd552d4d041210466da35c5cbbc7e7e559096b7801dd00fdc74f5f",
+      "bytes": 3807
+    },
+    {
+      "path": "src/airs/gateway/telemetry.rs",
+      "sha256": "da6744b851de9639ff44e2f56620e1409d4f97aca2d69c236d2a404566b8b366",
+      "bytes": 20144
+    },
+    {
+      "path": "src/airs/gateway/usage_limits.rs",
+      "sha256": "301fe1d2314b9474c7e4cd535e4bfdeb4dff9f58f1654dccc9861804a5f7d06f",
+      "bytes": 5853
+    },
+    {
+      "path": "src/airs/gateway/workspaces.rs",
+      "sha256": "02f4986d39db6a3c614eea6d1e4d6947d088f1e850c7591f60cf93eeaecc8384",
+      "bytes": 4791
+    },
+    {
+      "path": "src/airs/management/api_keys.rs",
+      "sha256": "f96ef1b59e3c9c9327b68efe03721cf046036b8ee94c7614e79bc6a482a30541",
+      "bytes": 4741
+    },
+    {
+      "path": "src/airs/management/customer_apps.rs",
+      "sha256": "b3dabce8a2e64bb6d9d3c7d066806b5cd1821d41e0cc834dffd779314d2b13b6",
+      "bytes": 4881
+    },
+    {
+      "path": "src/airs/management/dashboard.rs",
+      "sha256": "cb972a2a0b90a497e1454f386dbd53034b4e05873e661a07f251340c0aa6fc35",
+      "bytes": 22626
+    },
+    {
+      "path": "src/airs/management/inventory.rs",
+      "sha256": "d3f48fd0f3db28a5edd2a620a49d28793df41fec23824f6b1aaf5253c118fff9",
+      "bytes": 4454
+    },
+    {
+      "path": "src/airs/management/mod.rs",
+      "sha256": "c51401cb2a3b49630822107c4dd2ccefc0f952058a9a45cbff81d458b809e06a",
+      "bytes": 6452
+    },
+    {
+      "path": "src/airs/management/oauth_management.rs",
+      "sha256": "f19d8cea9412341c76a57c019c546ffb2d459b6c50f5e1f5d8665d8ce16241f4",
+      "bytes": 3846
+    },
+    {
+      "path": "src/airs/management/profiles.rs",
+      "sha256": "c3a3b4cf104cdb1265e8785dea9d2a40140c532773495409d7557ae72d682fcd",
+      "bytes": 8209
+    },
+    {
+      "path": "src/airs/management/topics.rs",
+      "sha256": "57c69fb3c466fb0c50a2c5ac446f72df4a59035ff50ffb5f7ce87a32503186d1",
+      "bytes": 9799
+    },
+    {
+      "path": "src/airs/mod.rs",
+      "sha256": "772a8a09c6c9d540dce0f7a568688b8a2741fb06c7879265b90cb62ab329d03c",
+      "bytes": 270
+    },
+    {
+      "path": "src/airs/model_security/client.rs",
+      "sha256": "f5fb333630697da19102cbd7fd3a8c0bf5fac76c07d1c6afa575408a4d394961",
+      "bytes": 3370
+    },
+    {
+      "path": "src/airs/model_security/custom_rules.rs",
+      "sha256": "bcbd8c9aa610ffd68bc583067959e925bd5e3231f1b15f3e87fac85fab705fc0",
+      "bytes": 9374
+    },
+    {
+      "path": "src/airs/model_security/groups.rs",
+      "sha256": "5175bb775c7984a30bac1fb204af920118e7fbab6580722acc09872d5bff257d",
+      "bytes": 7608
+    },
+    {
+      "path": "src/airs/model_security/inventory.rs",
+      "sha256": "f48adf5ed96e8aedfc121cc6dd1d82f425fe6671d211020a41fdd8b163513e55",
+      "bytes": 11924
+    },
+    {
+      "path": "src/airs/model_security/mod.rs",
+      "sha256": "cc65056a5f4decfddd19299231b4bf20f2798cab2561f78a7e5c5738ccf72e99",
+      "bytes": 2413
+    },
+    {
+      "path": "src/airs/model_security/query.rs",
+      "sha256": "db301a702838481313e6588944fd9bbdfdb037ec2d56e2381b5658555295c7fc",
+      "bytes": 21711
+    },
+    {
+      "path": "src/airs/model_security/scans.rs",
+      "sha256": "de197ba07990e4eedafed8ec353b852fc5c9a79cef087630a6ea257b46eec917",
+      "bytes": 12779
+    },
+    {
+      "path": "src/airs/red_team/adapters.rs",
+      "sha256": "1029430ca550c4237ec70e109157e9b0c88f7d4bdcb64fe37bbb76adde617f58",
+      "bytes": 7912
+    },
+    {
+      "path": "src/airs/red_team/common.rs",
+      "sha256": "68b955f795964bbec7c86836c56114020bbf4372c13ca40b99502cd3b7cdaa9e",
+      "bytes": 4745
+    },
+    {
+      "path": "src/airs/red_team/contract.json",
+      "sha256": "77549923ebd6c32e61800d994a4abe697d6f6c49b40720f0d4fe6fa628f9cb2c",
+      "bytes": 11283
+    },
+    {
+      "path": "src/airs/red_team/custom_attack_reports.rs",
+      "sha256": "912b060668df3ce0275c2b66df8316c9107553f2602798bcdc894eb056417157",
+      "bytes": 9072
+    },
+    {
+      "path": "src/airs/red_team/custom_attacks.rs",
+      "sha256": "b4fd39c98fb9c31e2593f701a3dfc9b792f7f6ce7b9895ba6183d7c6ab67bfb1",
+      "bytes": 19397
+    },
+    {
+      "path": "src/airs/red_team/eula.rs",
+      "sha256": "dfe9167e41cf753c2204fdd250151cb1bd854e665dcd99df93e75241a5d4fe28",
+      "bytes": 1770
+    },
+    {
+      "path": "src/airs/red_team/facade.rs",
+      "sha256": "5cead46c647a89e7acda247078711af32eb3c6a29218d6f239af9c521f538142",
+      "bytes": 12809
+    },
+    {
+      "path": "src/airs/red_team/instances.rs",
+      "sha256": "293b3bace828d14af11b66f30833198828c34c075a35de1fcf27faa31ca2157b",
+      "bytes": 4869
+    },
+    {
+      "path": "src/airs/red_team/mod.rs",
+      "sha256": "9f88813c3763d5ed4e25072786a1ac7486e8b814b2e552c64c33d697d8ed6717",
+      "bytes": 1349
+    },
+    {
+      "path": "src/airs/red_team/network_broker.rs",
+      "sha256": "9b05f6273850226868e89d0db11ac492bbc9b6a55319d48e7a50937e84c78e08",
+      "bytes": 4048
+    },
+    {
+      "path": "src/airs/red_team/reports.rs",
+      "sha256": "2cf2f5d67322d9a661f3e8639e671fe8b293399fc7adbb2c7aa1aaf24909f5f7",
+      "bytes": 19387
+    },
+    {
+      "path": "src/airs/red_team/scans.rs",
+      "sha256": "82f4912506c7222ed770a61d28956ba34b36fd7270bf5aebece3db5e44d47ad5",
+      "bytes": 6745
+    },
+    {
+      "path": "src/airs/red_team/targets.rs",
+      "sha256": "3a6ec2f01f726fc6d7433aa45d956e78034970ce23b931b6db9f872a78baf921",
+      "bytes": 12061
+    },
+    {
+      "path": "src/airs/scan/content.rs",
+      "sha256": "0e6f2083223c22ee7e930e4f381a990b49a71f6a5e87b873d9b100674f8cdaef",
+      "bytes": 9130
+    },
+    {
+      "path": "src/airs/scan/mod.rs",
+      "sha256": "c46db2eef83e1c3f248c8f030e8c0fb627fa91452ab747759ac3a0b48df13f10",
+      "bytes": 358
+    },
+    {
+      "path": "src/airs/scan/scanner.rs",
+      "sha256": "f34c74ba224da093f71052a529ffbcd7505d3ee073d13cd1cee9f5af17a15159",
+      "bytes": 9461
+    },
+    {
+      "path": "src/auth.rs",
+      "sha256": "e8bfe692101737c13b278b60b8b1bf22b861ab18cd6eec42276fedd5b8a255f1",
+      "bytes": 63165
+    },
+    {
+      "path": "src/config.rs",
+      "sha256": "b4c455b9476d6fe5b42ab643c489d38db57b815751c4e278fecb5869cbb88dc3",
+      "bytes": 15830
+    },
+    {
+      "path": "src/configuration.rs",
+      "sha256": "a0dcae9ab174e2b6561d01d750574cd2c3c6fb7be161ef681b6ca6f6f7b19683",
+      "bytes": 4734
+    },
+    {
+      "path": "src/constants.rs",
+      "sha256": "0ef9b88d6fb4a37102ab341927df9251ba87cb8d3722874b06bb08a583710a45",
+      "bytes": 31643
+    },
+    {
+      "path": "src/data.rs",
+      "sha256": "0fa8b9c45e2aaf868357f70aa704727fa0e2cc0b7d4a3513b455f94ed2bc88c1",
+      "bytes": 13545
+    },
+    {
+      "path": "src/dlp/common.rs",
+      "sha256": "ef2ab993fd696dbbe1937a6f5428268a6df493f0553155fd4d7b4c2bacfb6e37",
+      "bytes": 4081
+    },
+    {
+      "path": "src/dlp/data_patterns.rs",
+      "sha256": "5226c4b0baa2b1c3e3a9bf4cd51ae43ece835c5e2fddd0deba2dc29d1a1e7bb5",
+      "bytes": 5232
+    },
+    {
+      "path": "src/dlp/data_profiles.rs",
+      "sha256": "a7a70bace8961ab7733ad732ed8e85a89d5d131b472989d044a361dc300f0c7d",
+      "bytes": 4839
+    },
+    {
+      "path": "src/dlp/dictionaries.rs",
+      "sha256": "c6e021e1620b7b0e80494fca4fcca0b5680021db43b745062a0f627c17fced70",
+      "bytes": 7793
+    },
+    {
+      "path": "src/dlp/filtering_profiles.rs",
+      "sha256": "55d5778b5fbf5fb7a5f34916acebdd31a7fdf44ebf0e5f13999c823de9a90779",
+      "bytes": 4263
+    },
+    {
+      "path": "src/dlp/mod.rs",
+      "sha256": "0ca91bfbe312f00df2d82db00f5ed1ce7c523f20795fa9caa0e62060ad138323",
+      "bytes": 2797
+    },
+    {
+      "path": "src/engine.rs",
+      "sha256": "55dda4a249bd0269d25397287eee641e5bbd8dafe66a90417064345099ea661d",
+      "bytes": 56980
+    },
+    {
+      "path": "src/engine/tests.rs",
+      "sha256": "0ec04cfb45e85c2801fb44f153b1c600662a1c4b2bb7f99687ef80a6a410680d",
+      "bytes": 87481
+    },
+    {
+      "path": "src/environment.rs",
+      "sha256": "2c185d59591240346fa0649567a4d5593c3350902b4421d4bf01474f90d4b16d",
+      "bytes": 9929
+    },
+    {
+      "path": "src/error.rs",
+      "sha256": "1e3de976fc1c716fae06257db298f9d2bddeabf5f0d66c7d79898b436e725133",
+      "bytes": 10704
+    },
+    {
+      "path": "src/error/problem.rs",
+      "sha256": "a519b25ef84c2fbb45868b148ad061e880b55dc89e9b8d78739d633d4d19476c",
+      "bytes": 12648
+    },
+    {
+      "path": "src/fixtures/gateway-contracts.json",
+      "sha256": "0e15d984efacee27e3dd541ff029a1cb6a179a41f2f5639e084f585938e040ad",
+      "bytes": 22248
+    },
+    {
+      "path": "src/fixtures/model-regressions.json",
+      "sha256": "91170e629634572d8ea9db0d4344a5ca826ff13d96b6ba613d4a5ef6f42f9458",
+      "bytes": 6877
+    },
+    {
+      "path": "src/fixtures/red-team-contracts.json",
+      "sha256": "04f0a1a2868cf63f4ac517da814c01544f949ded6c55034e01053ca2cf9c4a0a",
+      "bytes": 83616
+    },
+    {
+      "path": "src/helpers.rs",
+      "sha256": "df3b6be6fc8119d1d580443e93cd5cc53eeb5da73c1fbea6cbe8ece255d8bcd7",
+      "bytes": 16280
+    },
+    {
+      "path": "src/json_decode.rs",
+      "sha256": "2d383b7cceff8fe0ae296023496acc540701ae2889b0c4503bec30f14ab9bb22",
+      "bytes": 18790
+    },
+    {
+      "path": "src/json_decode/tests.rs",
+      "sha256": "7313b68701b71af4d0450bea423832a307789990736c6929ba3fc3b895d5611d",
+      "bytes": 22729
+    },
+    {
+      "path": "src/lib.rs",
+      "sha256": "5572a2a016b5d60232ef8144b5e90d9eeb1decf2c6e7f33a666590b1cfd245bf",
+      "bytes": 1384
+    },
+    {
+      "path": "src/models/agentguard.rs",
+      "sha256": "df24d1eb80c3d6bcbad1cc7dc97b1467c93d639ba9a04656cba5c329a394a2fe",
+      "bytes": 1351
+    },
+    {
+      "path": "src/models/dlp.rs",
+      "sha256": "792987e76929d147219f0369796eac632e3156c8820a648297b7ba988bf99c0e",
+      "bytes": 3320
+    },
+    {
+      "path": "src/models/gateway.rs",
+      "sha256": "7d6a516fab2f47621197a38bb2077955bf7573a566cb1434af3a211b9fdf4c51",
+      "bytes": 102341
+    },
+    {
+      "path": "src/models/generated.rs",
+      "sha256": "d199e4b08f6f31d66ce4584c5bf3030f7085b2bdffcca79fd126d6343d5ffd3a",
+      "bytes": 6716048
+    },
+    {
+      "path": "src/models/iam.rs",
+      "sha256": "7a897554e379e33525152db5dafc5a8fbe07af2df2d5557bc3df33bf93bf587e",
+      "bytes": 648
+    },
+    {
+      "path": "src/models/management.rs",
+      "sha256": "89344e5bca366345410e013ef3b180e67c4d6b7e8463c9fe0a7efb8c16527a05",
+      "bytes": 5299
+    },
+    {
+      "path": "src/models/mod.rs",
+      "sha256": "ca59010c0852d37a35bc33fc5b204a34ae48a67e89ecf4bfef2e962390f6472c",
+      "bytes": 365
+    },
+    {
+      "path": "src/models/model_security.rs",
+      "sha256": "912f59701f3c7482133129f24fccb4c5da4c67f22cc1fd0244255df840cd0c2c",
+      "bytes": 4074
+    },
+    {
+      "path": "src/models/red_team.rs",
+      "sha256": "795fd654e1916080616959c8e538a4f7d4446a19186007a0510ae4045dc94bec",
+      "bytes": 19516
+    },
+    {
+      "path": "src/models/red_team_data_plane.rs",
+      "sha256": "2250e14eb5c245b3ea304040e501de33cb139f9cc732ac312cfa96d8fff5f06f",
+      "bytes": 784506
+    },
+    {
+      "path": "src/models/scan.rs",
+      "sha256": "f0e07e0d010d72878e93809551af0aa646907eaecf996cb4edca30080539d82b",
+      "bytes": 2433
+    },
+    {
+      "path": "src/models/shared.rs",
+      "sha256": "0425485b520704064f51bfdb947417887b669712160930231a04d8616501923a",
+      "bytes": 559
+    },
+    {
+      "path": "src/models/support.rs",
+      "sha256": "7cd179aa27455fc10aecd054d437ffd15da490cf7efd81e64c2a45a087e9aa02",
+      "bytes": 12468
+    },
+    {
+      "path": "src/models/tests.rs",
+      "sha256": "3973bc81cfbc0bb710523635c0e38c0799d6ffebe4d924f2dcb12004069264a8",
+      "bytes": 14772
+    },
+    {
+      "path": "src/multipart.rs",
+      "sha256": "d11c757e9b5813fcc535dd289e3fd4911e2db5fdf55853ef17a2b449353960eb",
+      "bytes": 7640
+    },
+    {
+      "path": "src/observability.rs",
+      "sha256": "e753fd73a225f99ae9c1244739fac0e9b9d5aff34f0cce237656d7cda1540cef",
+      "bytes": 7189
+    },
+    {
+      "path": "src/observability/tests.rs",
+      "sha256": "02c33f6ebb99ff03e835a60d5ad257de3166655ce9adb5c7269d6f4820b2d812",
+      "bytes": 21519
+    },
+    {
+      "path": "src/pagination.rs",
+      "sha256": "dc5de466c82f30d51182a4157aabe665b7e288df5f504b4546b344a64039e472",
+      "bytes": 21756
+    },
+    {
+      "path": "src/pagination/tests.rs",
+      "sha256": "32aee62da615a4440bddb75004174b4ffc9e1c3888a99c1bc982e0cbc9aa860f",
+      "bytes": 17992
+    },
+    {
+      "path": "src/realtime/mod.rs",
+      "sha256": "a6f15652f8fa0ea191ba51f8be05282b2fe95c27706d0538358939911c165b7f",
+      "bytes": 19402
+    },
+    {
+      "path": "src/realtime/native.rs",
+      "sha256": "98735fbb432a4e82b0df04b165c6b6a3cbc1808ac00ad837994394f31ba4a6a2",
+      "bytes": 20631
+    },
+    {
+      "path": "src/redaction.rs",
+      "sha256": "38fb1196281e1c6f79bd58cea09a09c2a961bbe989aed556681c67ec1c45eb5e",
+      "bytes": 425
+    },
+    {
+      "path": "src/routing.rs",
+      "sha256": "fddb04858fce11a2f76417d2161499d37ba1b901a9d64d943b37fa148ac9d36f",
+      "bytes": 4539
+    },
+    {
+      "path": "src/secret.rs",
+      "sha256": "70f0af3373dee273fc74c9fc2e6393fbf69a236d3930d6ad0c1d033d289ebf92",
+      "bytes": 1172
+    },
+    {
+      "path": "src/shared/iam/mod.rs",
+      "sha256": "5f52fa8b562648bf9730c278d6658c46006bffae796dd17491afa30462b57658",
+      "bytes": 326
+    },
+    {
+      "path": "src/shared/iam/scopes.rs",
+      "sha256": "84aaa34c7433437d82265709dc19de9781e31cdef388f6932a838ad18054a456",
+      "bytes": 7695
+    },
+    {
+      "path": "src/shared/mod.rs",
+      "sha256": "a27544ceccf0e9de7be137055c9ed4b89ec155c484d3a82e4426a58e38099f0f",
+      "bytes": 125
+    },
+    {
+      "path": "src/streaming.rs",
+      "sha256": "27aae97e2fedcefdcfcbd91e842509f0b12e5fe277c0b78a195d0ca56fe9db08",
+      "bytes": 11906
+    },
+    {
+      "path": "src/streaming/sse.rs",
+      "sha256": "090d386427f9508e953df83f0844e750e606fb1284982e8727a680ea6863294b",
+      "bytes": 17985
+    },
+    {
+      "path": "src/streaming/sse/tests.rs",
+      "sha256": "cf2cf815cfb9cd875b72ea0f4df947b6838cc7dd68efa1e9cd44ceb72ab71599",
+      "bytes": 32182
+    },
+    {
+      "path": "src/transport.rs",
+      "sha256": "5eb87c8128b700834e77c1548f2a7eed67818327ef1685cc3b73eb173176ac19",
+      "bytes": 6662
+    },
+    {
+      "path": "src/validation.rs",
+      "sha256": "174da5ce0bc9fccd6cff703c6a1de9abff4aa61810da001a9b7fa3597f93eb9b",
+      "bytes": 55827
+    },
+    {
+      "path": "src/validation/schema_graph.json",
+      "sha256": "1483a063c284531f02e6428576ccdffb7c34c6a6da663d130bbbb41c3cb83c35",
+      "bytes": 2166461
+    },
+    {
+      "path": "src/validation/semantics.json",
+      "sha256": "ad7efd54b9f6bf5368acd78fe5f7030dc7b98d4733cb58593bdc58791b224844",
+      "bytes": 2867
+    },
+    {
+      "path": "src/validation/tests.rs",
+      "sha256": "b7440341f425af733b5c27cd7444f4948e62e008852eaa8eb23e79b21e8e3ed9",
+      "bytes": 20590
+    }
+  ],
+  "publicConsumerSourceSha256": "7103682560a4cd8f9e77936bfaa41c2ed4eb44656d697797c6a1a4d6ba125359",
+  "accessPolicyConsumerSourceSha256": "e7a951327a273889f758d8f87eb6d01c3b2f88389067032d73c943f68a2f847b",
+  "responseCompatibilityConsumerSourceSha256": "d22faee50ff2b7c522ccca8bbb4c1de0385e2a9b3cd8267afa39ef401715f4b4",
+  "checks": [
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "package",
+        "-p",
+        "scm-sdk",
+        "--locked",
+        "--offline",
+        "--no-verify",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/home/cdot/development/cdot65/scm-sdk-rs",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "   Packaging scm-sdk v0.2.2 (/home/cdot/development/cdot65/scm-sdk-rs/crates/scm-sdk)\nwarning: ignoring test `agentguard_contracts` as `tests/agentguard_contracts.rs` is not included in the published package\nwarning: ignoring test `configuration_contracts` as `tests/configuration_contracts.rs` is not included in the published package\nwarning: ignoring test `dlp_contracts` as `tests/dlp_contracts.rs` is not included in the published package\nwarning: ignoring test `facade_contracts` as `tests/facade_contracts.rs` is not included in the published package\nwarning: ignoring test `g25_response_compatibility` as `tests/g25_response_compatibility.rs` is not included in the published package\nwarning: ignoring test `gateway_contracts` as `tests/gateway_contracts.rs` is not included in the published package\nwarning: ignoring test `gateway_control_contracts` as `tests/gateway_control_contracts.rs` is not included in the published package\nwarning: ignoring test `gateway_provision_contracts` as `tests/gateway_provision_contracts.rs` is not included in the published package\nwarning: ignoring test `gateway_runtime_contracts` as `tests/gateway_runtime_contracts.rs` is not included in the published package\nwarning: ignoring test `helpers_contracts` as `tests/helpers_contracts.rs` is not included in the published package\nwarning: ignoring test `iam_contracts` as `tests/iam_contracts.rs` is not included in the published package\nwarning: ignoring test `management_contracts` as `tests/management_contracts.rs` is not included in the published package\nwarning: ignoring test `model_security_contracts` as `tests/model_security_contracts.rs` is not included in the published package\nwarning: ignoring test `native_export_probes` as `tests/native_export_probes.rs` is not included in the published package\nwarning: ignoring test `native_realtime` as `tests/native_realtime.rs` is not included in the published package\nwarning: ignoring test `oauth_management_contracts` as `tests/oauth_management_contracts.rs` is not included in the published package\nwarning: ignoring test `parser_qualification` as `tests/parser_qualification.rs` is not included in the published package\nwarning: ignoring test `portkey_access_contracts` as `tests/portkey_access_contracts.rs` is not included in the published package\nwarning: ignoring test `realtime_contracts` as `tests/realtime_contracts.rs` is not included in the published package\nwarning: ignoring test `red_team_contracts` as `tests/red_team_contracts.rs` is not included in the published package\nwarning: ignoring test `red_team_resources_contracts` as `tests/red_team_resources_contracts.rs` is not included in the published package\nwarning: ignoring test `red_team_vendor_models_generated` as `tests/red_team_vendor_models_generated.rs` is not included in the published package\nwarning: ignoring test `representative_clients` as `tests/representative_clients.rs` is not included in the published package\nwarning: ignoring test `scan_contracts` as `tests/scan_contracts.rs` is not included in the published package\nwarning: ignoring test `schema_contracts` as `tests/schema_contracts.rs` is not included in the published package\n    Packaged 139 files, 10.8MiB (1007.3KiB compressed)\n",
+      "durationSeconds": 0.19
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "test",
+        "--lib",
+        "--no-default-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "\nrunning 148 tests\ntest auth::tests::immutable_context_rejects_cross_tenant_or_unsafe_scope_configuration ... ok\ntest auth::tests::already_cancelled_waiter_never_starts_token_exchange ... ok\ntest auth::tests::header_injection_and_wrong_auth_domains_are_rejected ... ok\ntest data::tests::numbers_never_turn_nonfinite_into_null ... ok\ntest auth::tests::refresh_event_capacity_is_validated_before_provider_creation ... ok\ntest data::tests::shared_uuid_preserves_frozen_case_nil_and_position_grammar ... ok\ntest data::tests::omission_null_and_value_are_distinct ... ok\ntest data::tests::ordinary_formatting_excludes_values ... ok\ntest auth::tests::explicit_session_cancellation_interrupts_shared_refresh ... ok\ntest auth::tests::token_destination_policy_runs_before_transport ... ok\ntest auth::tests::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets ... ok\ntest auth::tests::refresh_has_its_own_thirty_second_deadline ... ok\ntest engine::tests::client_validation_limits_are_explicit_and_validated ... ok\ntest auth::tests::refresh_is_deduplicated_and_one_cancelled_waiter_preserves_the_other ... ok\ntest auth::tests::one_waiter_deadline_does_not_expire_other_waiters ... ok\ntest auth::tests::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials ... ok\ntest engine::tests::already_cancelled_request_never_calls_authentication ... ok\ntest auth::tests::last_waiter_drop_releases_http_and_next_call_can_refresh ... ok\ntest auth::tests::rfc4231_signature_uses_exact_bytes_and_protected_headers ... ok\ntest auth::tests::token_lifetime_starts_before_exchange_latency ... ok\ntest auth::tests::late_unauthorized_response_cannot_evict_new_generation ... ok\ntest auth::tests::invalidating_old_cached_token_preserves_new_pending_refresh ... ok\ntest auth::tests::clear_prevents_pending_old_refresh_from_restoring_cache ... ok\ntest auth::tests::token_exchange_uses_encoded_basic_form_and_no_runtime_credentials ... ok\ntest auth::tests::identities_caches_and_formatting_are_isolated ... ok\ntest auth::tests::failed_and_cleared_pending_refreshes_publish_no_success_event ... ok\ntest engine::tests::empty_json_success_hydrates_an_object_and_optional_json_preserves_absence ... ok\ntest engine::tests::echoed_error_values_never_enter_debug_or_display ... ok\ntest engine::tests::authentication_and_oauth_factory_setters_use_the_last_explicit_choice ... ok\ntest engine::tests::encoded_separators_and_double_encoded_traversal_reject_before_authentication ... ok\ntest auth::tests::lagged_dropped_and_absent_subscribers_never_block_token_delivery ... ok\ntest engine::tests::failure_origin_is_preserved_even_after_successful_response_headers ... ok\ntest engine::tests::invalid_limits_fail_and_injected_client_constructs_without_runtime ... ok\ntest engine::tests::framing_credentials_and_header_injection_are_rejected ... ok\ntest engine::tests::oauth_factory_honors_issuer_denial_before_token_transport ... ok\ntest engine::tests::invalid_json_and_request_limits_reject_before_authentication ... ok\ntest auth::tests::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults ... ok\ntest engine::tests::json_serialization_bounds_depth_before_validation ... ok\ntest engine::tests::oauth_factory_default_policy_admits_distinct_api_and_issuer_origins ... ok\ntest engine::tests::one_retry_budget_permits_exactly_one_fresh_token_replay ... ok\ntest engine::tests::oauth_factory_session_cancellation_drops_token_exchange_and_blocks_api ... ok\ntest engine::tests::oauth_factory_reuses_injected_transport_policy_and_cached_identity ... ok\ntest engine::tests::policy_and_invalid_paths_reject_before_authentication_or_transport ... ok\ntest engine::tests::per_request_cancellation_drops_response_stream_and_releases_permit ... ok\ntest engine::tests::http_problem_fields_and_body_retry_guidance_are_sanitized_metadata_only ... ok\ntest engine::tests::per_call_retry_override_keeps_mutations_single_attempt ... ok\ntest engine::tests::post_send_body_and_decode_failures_report_uncertain_outcomes ... ok\ntest engine::tests::forbidden_token_refresh_respects_opa_denial_and_replay_safety ... ok\ntest engine::tests::segment_checks_borrowed_length_before_owning_identifier ... ok\ntest engine::tests::rebinding_endpoints_preserves_policy_provider_cancellation_and_shared_capacity ... ok\ntest engine::tests::rfc4231_hmac_signs_the_exact_transmitted_body ... ok\ntest engine::tests::session_cancellation_reaches_clones_and_blocks_future_requests ... ok\ntest engine::tests::queue_deadline_and_cancellation_do_not_consume_auth_or_leak_permits ... ok\ntest engine::tests::only_explicitly_safe_reads_retry_transport_and_server_failures ... ok\ntest engine::tests::retry_after_obeys_retry_delay_and_total_budget ... ok\ntest engine::tests::stream_caller_and_session_deadlines_include_inter_read_time ... ok\ntest auth::tests::malformed_or_unbounded_token_responses_fail_without_values ... ok\ntest engine::tests::stream_total_bytes_and_formatting_are_bounded ... ok\ntest engine::tests::streaming_error_body_deadlines_retain_known_status_and_correlation ... ok\ntest engine::tests::stream_cancellation_and_drop_release_body_and_permit ... ok\ntest engine::tests::streaming_idle_deadline_drops_body_and_releases_capacity ... ok\ntest engine::tests::retry_cap_and_nonretryable_statuses_are_respected ... ok\ntest engine::tests::stream_handshake_never_replays_including_authentication_refresh ... ok\ntest engine::tests::successful_body_limits_keep_status_and_correlation ... ok\ntest engine::tests::structured_identifiers_encode_once_and_reject_recursive_traversal ... ok\ntest engine::tests::streaming_permit_is_owned_until_close_or_drop ... ok\ntest engine::tests::success_and_error_bodies_are_bounded_with_uncertain_local_failures ... ok\ntest engine::tests::successful_decode_failures_preserve_status_and_allowlisted_correlation ... ok\ntest engine::tests::text_body_deadlines_keep_metadata_and_cancel_before_dispatch ... ok\ntest engine::tests::oversized_header_collection_is_rejected_before_authentication ... ok\ntest engine::tests::unauthorized_mutation_invalidates_token_without_replaying ... ok\ntest engine::tests::text_responses_match_fetch_decoding_and_preserve_body_bounds ... ok\ntest engine::tests::transport_policy_and_limit_errors_never_trigger_retries ... ok\ntest engine::tests::zero_retry_budget_invalidates_unauthorized_token_without_replay ... ok\ntest engine::tests::assembled_query_and_authenticated_headers_obey_total_bounds ... ok\ntest error::problem::tests::body_retry_metadata_is_bounded_and_does_not_authorize_replay ... ok\ntest json_decode::tests::opaque_overflow_numbers_remain_exact_when_feature_unification_permits_them ... ok\ntest json_decode::tests::harmless_keys_marker_values_and_json_escapes_remain_accepted ... ok\ntest json_decode::tests::ordinary_floats_preserve_bits_without_a_number_wire_roundtrip ... ok\ntest error::tests::explicit_application_messages_and_backtraces_are_never_formatted ... ok\ntest json_decode::tests::json_numeric_boolean_and_enum_map_key_rules_are_preserved ... ok\ntest json_decode::tests::ordinary_strings_move_without_a_wire_roundtrip ... ok\ntest error::problem::tests::allowlists_are_exact_and_unknown_text_never_survives ... ok\ntest json_decode::tests::raw_value_newtype_uses_public_json_deserializer_protocol ... ok\ntest json_decode::tests::presence_wrappers_reenter_compatible_decoding_from_raw_json ... ok\ntest observability::disabled_tests::disabled_observability_has_no_runtime_state ... ok\ntest json_decode::tests::ordinary_newtypes_and_external_enum_payloads_use_recursive_adapter ... ok\ntest error::problem::tests::unrelated_errors_null_and_malformed_entries_match_source ... ok\ntest engine::tests::unauthorized_refresh_and_server_retries_share_one_total_budget ... ok\ntest pagination::tests::buffered_items_honor_per_call_and_session_cancellation ... ok\ntest pagination::tests::all_pages_share_one_absolute_deadline ... ok\ntest pagination::tests::byte_cap_counts_serialized_array_framing_and_retains_unconsumed_item ... ok\ntest pagination::tests::empty_final_pages_succeed_and_empty_nonfinal_pages_fail ... ok\ntest pagination::tests::failed_iterators_cannot_later_claim_a_complete_collection ... ok\ntest pagination::tests::exact_final_item_cap_reports_complete_without_more_network_work ... ok\ntest pagination::tests::invalid_resume_and_invalid_collection_limits_are_rejected ... ok\ntest pagination::tests::cursor_values_and_retained_history_have_independent_bounds ... ok\ntest pagination::tests::inactive_walks_never_invoke_the_fetch_callback ... ok\ntest json_decode::tests::wide_numbers_preserve_untagged_variant_and_opaque_nested_values ... ok\ntest pagination::tests::local_cancellation_is_latched_even_after_consuming_the_last_buffered_item ... ok\ntest pagination::tests::item_cap_preserves_mid_page_resume_without_an_extra_fetch ... ok\ntest pagination::tests::mid_walk_remote_failure_retains_accepted_data_and_source_error ... ok\ntest pagination::tests::page_and_item_iteration_preserve_order_and_duplicate_rows ... ok\ntest json_decode::tests::literal_reserved_protocol_keys_are_rejected_before_wire_value_coercion ... ok\ntest pagination::tests::page_cap_has_explicit_truncation_and_next_page_resume ... ok\ntest pagination::tests::resuming_after_the_last_item_in_a_page_obeys_the_collection_page_cap ... ok\ntest pagination::tests::repeated_cursors_never_trigger_a_duplicate_request_and_keep_partial_rows ... ok\ntest pagination::tests::rejected_cursor_errors_remain_visible_at_collection_limits ... ok\ntest streaming::sse::tests::absolute_deadline_applies_to_buffered_events ... ok\ntest streaming::sse::tests::done_marker_takes_precedence_over_error_event_name_as_in_frozen_parser ... ok\ntest streaming::sse::tests::cancellation_checks_buffered_events_and_releases_resources ... ok\ntest streaming::sse::tests::idle_body_and_transport_failures_are_bounded_and_sanitized ... ok\ntest streaming::sse::tests::fields_multiline_comments_ids_retry_empty_data_and_eof ... ok\ntest streaming::sse::tests::event_byte_limit_counts_utf8_comments_and_unknown_fields ... ok\ntest pagination::tests::rejected_next_cursor_retains_rows_and_can_resume_with_larger_bounds ... ok\ntest streaming::sse::tests::invalid_media_type_or_limit_releases_body_before_reading ... ok\ntest streaming::sse::tests::empty_chunk_flood_is_rejected_and_explicit_close_is_idempotent ... ok\ntest streaming::sse::tests::malformed_utf8_and_error_events_fail_without_sensitive_values ... ok\ntest streaming::sse::tests::overflow_response_error_fails_closed_and_releases_resources ... ok\ntest streaming::sse::tests::eof_policy_requires_complete_data_frames_and_required_policies_require_terminal ... ok\ntest streaming::sse::tests::required_terminal_cannot_be_spoofed_by_name_or_done_marker ... ok\ntest streaming::sse::tests::reserved_number_objects_cannot_hide_a_truthy_error_envelope ... ok\ntest streaming::sse::tests::retry_advice_ignores_invalid_numbers_and_preserves_valid_zero ... ok\ntest streaming::sse::tests::slow_consumer_has_no_prefetch_or_hidden_reader ... ok\ntest streaming::sse::tests::protocol_named_literal_objects_fail_closed_in_event_data ... ok\ntest streaming::sse::tests::raw_error_envelope_uses_last_duplicate_key_and_decoded_strings ... ok\ntest validation::tests::configured_byte_budgets_scale_node_and_work_limits_monotonically ... ok\ntest streaming::sse::tests::typed_decode_failure_and_duplicate_media_headers_are_sanitized ... ok\ntest streaming::sse::tests::typed_json_errors_and_formatting_never_echo_data_ids_or_event_names ... ok\ntest streaming::sse::tests::responses_deliver_each_terminal_lifecycle_then_release_immediately ... ok\ntest validation::tests::response_format_relaxation_keeps_malformed_units_fail_closed ... ok\ntest validation::tests::response_length_relaxation_keeps_malformed_bounds_fail_closed ... ok\ntest streaming::sse::tests::numeric_error_envelopes_follow_javascript_truthiness_including_overflow ... ok\ntest validation::tests::response_format_relaxation_keeps_malformed_regex_metadata_fail_closed ... ok\ntest streaming::sse::tests::independently_chunked_frames_preserve_event_sequence ... ok\ntest streaming::sse::tests::bom_crlf_and_utf8_survive_every_two_chunk_split ... ok\ntest engine::tests::deadline_after_response_headers_retains_status_and_correlation ... ok\ntest json_decode::tests::programmatic_literal_protocol_objects_and_overdeep_values_fail_safely ... ok\ntest validation::tests::anonymous_array_contracts_share_whole_operation_limits ... ok\ntest validation::tests::schema_wrappers_do_not_consume_json_depth ... ok\ntest validation::tests::typed_dates_cancellation_and_public_errors_are_safe ... ok\ntest validation::tests::ordered_contract_alternatives_share_work_and_preserve_source_order ... ok\ntest validation::tests::required_nullable_does_not_mean_missing_and_patch_defaults_are_exact ... ok\ntest validation::tests::both_finite_json_bindings_charge_recursive_work ... ok\ntest validation::tests::response_evolution_preserves_unknown_values_but_not_invalid_known_structure ... ok\ntest validation::tests::utf16_lengths_trim_date_regex_and_decimal_steps_match_frozen_semantics ... ok\ntest validation::tests::all_semantic_bindings_are_exercised ... ok\ntest validation::tests::resource_limits_are_explicit_and_deep_values_drop_without_recursion ... ok\n\ntest result: ok. 148 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s\n\n",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.40s\n     Running unittests src/lib.rs (/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/deps/scm_sdk-0bd4a454ecfbef7f)\n",
+      "durationSeconds": 7.544
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "test",
+        "--lib",
+        "--all-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "\nrunning 206 tests\ntest airs::gateway::common::tests::native_dates_match_literal_javascript_iso_vectors_over_the_entire_range ... ok\ntest airs::gateway::common::tests::offset_iso_and_js_number_and_whitespace_rules_are_literal ... ok\ntest airs::scan::content::tests::explicit_file_reader_is_bounded_and_safe ... ok\ntest airs::scan::content::tests::byte_limits_and_required_content_are_transactional ... ok\ntest auth::tests::already_cancelled_waiter_never_starts_token_exchange ... ok\ntest auth::tests::immutable_context_rejects_cross_tenant_or_unsafe_scope_configuration ... ok\ntest data::tests::numbers_never_turn_nonfinite_into_null ... ok\ntest data::tests::shared_uuid_preserves_frozen_case_nil_and_position_grammar ... ok\ntest auth::tests::refresh_event_capacity_is_validated_before_provider_creation ... ok\ntest data::tests::ordinary_formatting_excludes_values ... ok\ntest auth::tests::header_injection_and_wrong_auth_domains_are_rejected ... ok\ntest data::tests::omission_null_and_value_are_distinct ... ok\ntest auth::tests::token_destination_policy_runs_before_transport ... ok\ntest auth::tests::explicit_session_cancellation_interrupts_shared_refresh ... ok\ntest auth::tests::refresh_has_its_own_thirty_second_deadline ... ok\ntest auth::tests::one_waiter_deadline_does_not_expire_other_waiters ... ok\ntest auth::tests::rfc4231_signature_uses_exact_bytes_and_protected_headers ... ok\ntest auth::tests::refresh_is_deduplicated_and_one_cancelled_waiter_preserves_the_other ... ok\ntest auth::tests::public_lifecycle_reports_expiry_buffer_and_clear_without_secrets ... ok\ntest auth::tests::last_waiter_drop_releases_http_and_next_call_can_refresh ... ok\ntest engine::tests::already_cancelled_request_never_calls_authentication ... ok\ntest auth::tests::invalidating_old_cached_token_preserves_new_pending_refresh ... ok\ntest auth::tests::late_unauthorized_response_cannot_evict_new_generation ... ok\ntest engine::tests::client_validation_limits_are_explicit_and_validated ... ok\ntest auth::tests::failed_and_cleared_pending_refreshes_publish_no_success_event ... ok\ntest auth::tests::refresh_metadata_is_once_per_published_generation_and_never_contains_credentials ... ok\ntest auth::tests::token_exchange_uses_encoded_basic_form_and_no_runtime_credentials ... ok\ntest auth::tests::clear_prevents_pending_old_refresh_from_restoring_cache ... ok\ntest auth::tests::identities_caches_and_formatting_are_isolated ... ok\ntest engine::tests::deadline_after_response_headers_retains_status_and_correlation ... ok\ntest engine::tests::authentication_and_oauth_factory_setters_use_the_last_explicit_choice ... ok\ntest auth::tests::lagged_dropped_and_absent_subscribers_never_block_token_delivery ... ok\ntest engine::tests::empty_json_success_hydrates_an_object_and_optional_json_preserves_absence ... ok\ntest engine::tests::echoed_error_values_never_enter_debug_or_display ... ok\ntest engine::tests::failure_origin_is_preserved_even_after_successful_response_headers ... ok\ntest engine::tests::encoded_separators_and_double_encoded_traversal_reject_before_authentication ... ok\ntest engine::tests::invalid_limits_fail_and_injected_client_constructs_without_runtime ... ok\ntest auth::tests::configurable_fixed_and_adaptive_windows_preserve_source_and_safe_defaults ... ok\ntest engine::tests::framing_credentials_and_header_injection_are_rejected ... ok\ntest engine::tests::oauth_factory_honors_issuer_denial_before_token_transport ... ok\ntest engine::tests::json_serialization_bounds_depth_before_validation ... ok\ntest engine::tests::oauth_factory_default_policy_admits_distinct_api_and_issuer_origins ... ok\ntest engine::tests::one_retry_budget_permits_exactly_one_fresh_token_replay ... ok\ntest engine::tests::oauth_factory_session_cancellation_drops_token_exchange_and_blocks_api ... ok\ntest engine::tests::oauth_factory_reuses_injected_transport_policy_and_cached_identity ... ok\ntest auth::tests::malformed_or_unbounded_token_responses_fail_without_values ... ok\ntest engine::tests::per_request_cancellation_drops_response_stream_and_releases_permit ... ok\ntest engine::tests::queue_deadline_and_cancellation_do_not_consume_auth_or_leak_permits ... ok\ntest engine::tests::rebinding_endpoints_preserves_policy_provider_cancellation_and_shared_capacity ... ok\ntest engine::tests::segment_checks_borrowed_length_before_owning_identifier ... ok\ntest engine::tests::rfc4231_hmac_signs_the_exact_transmitted_body ... ok\ntest engine::tests::retry_after_obeys_retry_delay_and_total_budget ... ok\ntest engine::tests::forbidden_token_refresh_respects_opa_denial_and_replay_safety ... ok\ntest engine::tests::stream_total_bytes_and_formatting_are_bounded ... ok\ntest engine::tests::stream_caller_and_session_deadlines_include_inter_read_time ... ok\ntest engine::tests::streaming_error_body_deadlines_retain_known_status_and_correlation ... ok\ntest engine::tests::assembled_query_and_authenticated_headers_obey_total_bounds ... ok\ntest engine::tests::stream_cancellation_and_drop_release_body_and_permit ... ok\ntest engine::tests::successful_body_limits_keep_status_and_correlation ... ok\ntest engine::tests::stream_handshake_never_replays_including_authentication_refresh ... ok\ntest engine::tests::success_and_error_bodies_are_bounded_with_uncertain_local_failures ... ok\ntest engine::tests::retry_cap_and_nonretryable_statuses_are_respected ... ok\ntest engine::tests::text_body_deadlines_keep_metadata_and_cancel_before_dispatch ... ok\ntest engine::tests::text_responses_match_fetch_decoding_and_preserve_body_bounds ... ok\ntest engine::tests::transport_policy_and_limit_errors_never_trigger_retries ... ok\ntest engine::tests::unauthorized_mutation_invalidates_token_without_replaying ... ok\ntest error::problem::tests::body_retry_metadata_is_bounded_and_does_not_authorize_replay ... ok\ntest error::problem::tests::allowlists_are_exact_and_unknown_text_never_survives ... ok\ntest engine::tests::unauthorized_refresh_and_server_retries_share_one_total_budget ... ok\ntest error::problem::tests::unrelated_errors_null_and_malformed_entries_match_source ... ok\ntest error::tests::explicit_application_messages_and_backtraces_are_never_formatted ... ok\ntest json_decode::tests::boundaries::typed_http_and_stream_keep_validation_budgets ... ok\ntest json_decode::tests::harmless_keys_marker_values_and_json_escapes_remain_accepted ... ok\ntest json_decode::tests::intersection_reenters_compatible_decoding_for_both_sides ... ok\ntest json_decode::tests::json_numeric_boolean_and_enum_map_key_rules_are_preserved ... ok\ntest engine::tests::runtime_replay_requires_explicit_permit_and_uses_exact_status_set ... ok\ntest json_decode::tests::opaque_overflow_numbers_remain_exact_when_feature_unification_permits_them ... ok\ntest json_decode::tests::ordinary_floats_preserve_bits_without_a_number_wire_roundtrip ... ok\ntest json_decode::tests::literal_reserved_protocol_keys_are_rejected_before_wire_value_coercion ... ok\ntest json_decode::tests::ordinary_newtypes_and_external_enum_payloads_use_recursive_adapter ... ok\ntest json_decode::tests::ordinary_strings_move_without_a_wire_roundtrip ... ok\ntest json_decode::tests::presence_wrappers_reenter_compatible_decoding_from_raw_json ... ok\ntest json_decode::tests::raw_value_newtype_uses_public_json_deserializer_protocol ... ok\ntest engine::tests::default_adapter::gzip_limit_applies_to_decompressed_bytes ... ok\ntest json_decode::tests::realtime_boundary::realtime_reserved_objects_fail_before_inbound_coercion_or_outbound_write ... ok\ntest engine::tests::default_adapter::cancellation_closes_an_incomplete_default_http_response ... ok\ntest models::tests::binary_file_is_bounded_header_safe_and_not_json ... ok\ntest json_decode::tests::wide_numbers_preserve_untagged_variant_and_opaque_nested_values ... ok\ntest models::tests::dlp_explicit_discriminator_selects_the_matching_rule ... ok\ntest models::tests::enum_unknown_values_roundtrip_and_never_format_payloads ... ok\ntest models::tests::extensions_cannot_duplicate_or_override_known_fields ... ok\ntest models::tests::chat_message_roles_preserve_native_variant_identity ... ok\ntest models::tests::intersections_merge_independently_stripped_object_fields ... ok\ntest models::tests::intersections_merge_nested_objects_and_arrays_and_reject_conflicts ... ok\ntest models::tests::known_fields_and_unknown_extensions_roundtrip_with_redacted_debug ... ok\ntest models::tests::literal_decoders_reject_mismatches_and_whole_unions_retain_unknown_values ... ok\ntest json_decode::tests::programmatic_literal_protocol_objects_and_overdeep_values_fail_safely ... ok\ntest models::tests::optional_nonnull_fields_reject_null_and_preserve_omission ... ok\ntest models::tests::patch_fields_preserve_omission_clear_and_replacement ... ok\ntest models::tests::required_nullable_fields_accept_null_and_reject_missing ... ok\ntest engine::tests::zero_retry_budget_invalidates_unauthorized_token_without_replay ... ok\ntest engine::tests::successful_decode_failures_preserve_status_and_allowlisted_correlation ... ok\ntest engine::tests::streaming_idle_deadline_drops_body_and_releases_capacity ... ok\ntest engine::tests::session_cancellation_reaches_clones_and_blocks_future_requests ... ok\ntest engine::tests::policy_and_invalid_paths_reject_before_authentication_or_transport ... ok\ntest engine::tests::structured_identifiers_encode_once_and_reject_recursive_traversal ... ok\ntest auth::tests::token_lifetime_starts_before_exchange_latency ... ok\ntest engine::tests::streaming_permit_is_owned_until_close_or_drop ... ok\ntest engine::tests::runtime_replay_stops_at_success_headers_and_body_failures_keep_metadata ... ok\ntest multipart::tests::bytes_headers_and_terminator_are_exact ... ok\ntest engine::tests::post_send_body_and_decode_failures_report_uncertain_outcomes ... ok\ntest engine::tests::invalid_json_and_request_limits_reject_before_authentication ... ok\ntest engine::tests::per_call_retry_override_keeps_mutations_single_attempt ... ok\ntest engine::tests::http_problem_fields_and_body_retry_guidance_are_sanitized_metadata_only ... ok\ntest observability::tests::metadata_vocabulary_and_status_range_are_closed_even_for_caller_supplied_errors ... ok\ntest engine::tests::only_explicitly_safe_reads_retry_transport_and_server_failures ... ok\ntest pagination::tests::all_pages_share_one_absolute_deadline ... ok\ntest observability::tests::subscriberless_first_callsite_registration_keeps_local_capture_enabled ... ok\ntest multipart::tests::injection_count_and_envelope_limits_are_local ... ok\ntest pagination::tests::buffered_items_honor_per_call_and_session_cancellation ... ok\ntest pagination::tests::byte_cap_counts_serialized_array_framing_and_retains_unconsumed_item ... ok\ntest observability::tests::cancellation_and_dropped_http_futures_distinguish_pre_dispatch_from_uncertainty ... ok\ntest pagination::tests::empty_final_pages_succeed_and_empty_nonfinal_pages_fail ... ok\ntest pagination::tests::failed_iterators_cannot_later_claim_a_complete_collection ... ok\ntest pagination::tests::exact_final_item_cap_reports_complete_without_more_network_work ... ok\ntest observability::tests::deadline_and_adapter_custom_errors_never_format_external_error_values ... ok\ntest pagination::tests::inactive_walks_never_invoke_the_fetch_callback ... ok\ntest pagination::tests::invalid_resume_and_invalid_collection_limits_are_rejected ... ok\ntest pagination::tests::local_cancellation_is_latched_even_after_consuming_the_last_buffered_item ... ok\ntest pagination::tests::cursor_values_and_retained_history_have_independent_bounds ... ok\ntest engine::tests::oversized_header_collection_is_rejected_before_authentication ... ok\ntest pagination::tests::mid_walk_remote_failure_retains_accepted_data_and_source_error ... ok\ntest pagination::tests::item_cap_preserves_mid_page_resume_without_an_extra_fetch ... ok\ntest observability::tests::dropping_a_queued_http_future_does_not_claim_dispatch ... ok\ntest observability::tests::oauth_refresh_publication_cache_hits_and_dropped_exchange_are_observable_without_identity ... ok\ntest pagination::tests::page_cap_has_explicit_truncation_and_next_page_resume ... ok\ntest pagination::tests::page_and_item_iteration_preserve_order_and_duplicate_rows ... ok\ntest pagination::tests::resuming_after_the_last_item_in_a_page_obeys_the_collection_page_cap ... ok\ntest pagination::tests::repeated_cursors_never_trigger_a_duplicate_request_and_keep_partial_rows ... ok\ntest pagination::tests::rejected_cursor_errors_remain_visible_at_collection_limits ... ok\ntest observability::tests::http_and_decode_events_capture_status_presence_and_no_echoed_data ... ok\ntest realtime::native::tests::rfc6455_known_accept_vector_and_connection_tokens_are_exact ... ok\ntest routing::tests::routing_is_case_insensitive_bounded_and_redacted ... ok\ntest streaming::sse::tests::absolute_deadline_applies_to_buffered_events ... ok\ntest pagination::tests::rejected_next_cursor_retains_rows_and_can_resume_with_larger_bounds ... ok\ntest streaming::sse::tests::cancellation_checks_buffered_events_and_releases_resources ... ok\ntest streaming::sse::tests::done_marker_takes_precedence_over_error_event_name_as_in_frozen_parser ... ok\ntest observability::tests::realtime::realtime_upgrade_clean_close_malformed_event_and_drop_use_only_fixed_metadata ... ok\ntest streaming::sse::tests::idle_body_and_transport_failures_are_bounded_and_sanitized ... ok\ntest models::tests::stream_event_literal_discriminators_preserve_native_variant_identity ... ok\ntest streaming::sse::tests::fields_multiline_comments_ids_retry_empty_data_and_eof ... ok\ntest observability::tests::body_stream_eof_cancel_close_and_drop_are_separate_owned_lifecycles ... ok\ntest streaming::sse::tests::event_byte_limit_counts_utf8_comments_and_unknown_fields ... ok\ntest realtime::native::tests::untrusted_accepts_duplicates_protocol_extensions_and_versions_never_panic ... ok\ntest streaming::sse::tests::invalid_media_type_or_limit_releases_body_before_reading ... ok\ntest streaming::sse::tests::malformed_utf8_and_error_events_fail_without_sensitive_values ... ok\ntest streaming::sse::tests::empty_chunk_flood_is_rejected_and_explicit_close_is_idempotent ... ok\ntest streaming::sse::tests::eof_policy_requires_complete_data_frames_and_required_policies_require_terminal ... ok\ntest streaming::sse::tests::overflow_response_error_fails_closed_and_releases_resources ... ok\ntest streaming::sse::tests::required_terminal_cannot_be_spoofed_by_name_or_done_marker ... ok\ntest streaming::sse::tests::reserved_number_objects_cannot_hide_a_truthy_error_envelope ... ok\ntest streaming::sse::tests::slow_consumer_has_no_prefetch_or_hidden_reader ... ok\ntest streaming::sse::tests::retry_advice_ignores_invalid_numbers_and_preserves_valid_zero ... ok\ntest streaming::sse::tests::typed_decode_failure_and_duplicate_media_headers_are_sanitized ... ok\ntest validation::tests::configured_byte_budgets_scale_node_and_work_limits_monotonically ... ok\ntest streaming::sse::tests::typed_json_errors_and_formatting_never_echo_data_ids_or_event_names ... ok\ntest streaming::sse::tests::raw_error_envelope_uses_last_duplicate_key_and_decoded_strings ... ok\ntest streaming::sse::tests::protocol_named_literal_objects_fail_closed_in_event_data ... ok\ntest streaming::sse::tests::responses_deliver_each_terminal_lifecycle_then_release_immediately ... ok\ntest streaming::sse::tests::numeric_error_envelopes_follow_javascript_truthiness_including_overflow ... ok\ntest validation::tests::response_format_relaxation_keeps_malformed_units_fail_closed ... ok\ntest validation::tests::response_length_relaxation_keeps_malformed_bounds_fail_closed ... ok\ntest engine::tests::default_adapter::default_adapter_constructs_without_a_tokio_runtime ... ok\ntest validation::tests::response_format_relaxation_keeps_malformed_regex_metadata_fail_closed ... ok\ntest engine::tests::default_adapter::exact_json_hmac_and_bytes_survive_the_default_http_adapter ... ok\ntest streaming::sse::tests::independently_chunked_frames_preserve_event_sequence ... ok\ntest streaming::sse::tests::bom_crlf_and_utf8_survive_every_two_chunk_split ... ok\ntest streaming::sse::tests::default_http_adapter_decodes_sse_and_terminal_releases_socket_and_permit ... ok\ntest realtime::native::tests::optional_tls_setup_preserves_global_crypto_provider_and_rejects_bad_certificates ... ok\ntest validation::tests::ordered_contract_alternatives_share_work_and_preserve_source_order ... ok\ntest validation::tests::schema_wrappers_do_not_consume_json_depth ... ok\ntest models::tests::numeric_literal_unions_choose_the_matching_literal ... ok\ntest validation::tests::typed_dates_cancellation_and_public_errors_are_safe ... ok\ntest validation::tests::required_nullable_does_not_mean_missing_and_patch_defaults_are_exact ... ok\ntest validation::tests::anonymous_array_contracts_share_whole_operation_limits ... ok\ntest engine::tests::typed_stream_and_sse_parser_errors_keep_allowlisted_correlation_without_payloads ... ok\ntest models::tests::validated_build_checks_semantics_after_presence ... ok\ntest engine::tests::typed_sse_standard_stream_adapter_releases_its_owned_permit ... ok\ntest validation::tests::response_evolution_preserves_unknown_values_but_not_invalid_known_structure ... ok\ntest engine::tests::typed_empty_response_hydration_and_decode_metadata_follow_the_named_contract ... ok\ntest json_decode::tests::boundaries::typed_stream_checks_cancellation_before_buffered_event_decode ... ok\ntest observability::tests::typed_stream_validation_failure_is_distinct_from_successful_http_body ... ok\ntest json_decode::tests::realtime_boundary::realtime_events_keep_exact_numbers_and_latch_safe_decode_metadata ... ok\ntest engine::tests::buffered_alternative_contracts_use_the_operation_response_default_policy ... ok\ntest validation::tests::both_finite_json_bindings_charge_recursive_work ... ok\ntest json_decode::tests::boundaries::typed_stream_preserves_numbers_and_latches_decode_failure ... ok\ntest json_decode::tests::boundaries::typed_http_preserves_numbers_and_decode_failure_never_replays ... ok\ntest validation::tests::native_multipart_validates_every_required_blob_and_metadata_with_shared_limits ... ok\ntest engine::tests::contract_sse_events_use_the_operation_response_default_policy ... ok\ntest validation::tests::utf16_lengths_trim_date_regex_and_decimal_steps_match_frozen_semantics ... ok\ntest engine::tests::default_adapter::failed_post_is_not_replayed_by_the_default_http_adapter ... ok\ntest engine::tests::default_adapter::redirect_never_transmits_credentials_to_the_location_target ... ok\ntest airs::gateway::common::tests::ordered_query_adapter_keeps_repeated_values_zero_and_empty_with_finite_bounds ... ok\ntest validation::tests::all_semantic_bindings_are_exercised ... ok\ntest validation::tests::resource_limits_are_explicit_and_deep_values_drop_without_recursion ... ok\ntest models::tests::intersection_merge_enforces_depth_node_and_combined_wire_bounds ... ok\n\ntest result: ok. 206 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s\n\n",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 02s\n     Running unittests src/lib.rs (/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/deps/scm_sdk-c59cc3a05fe628f5)\n",
+      "durationSeconds": 62.603
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "check",
+        "--examples",
+        "--all-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "    Checking scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 47.17s\n",
+      "durationSeconds": 47.195
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "test",
+        "--doc",
+        "--all-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "\nrunning 11 tests\ntest src/airs/gateway/access_policies.rs - airs::gateway::access_policies::AccessPoliciesClient::new (line 139) - compile ... ok\ntest src/airs/agentguard/client.rs - airs::agentguard::client::AgentGuardClient::new (line 20) - compile ... ok\ntest src/airs/gateway/mod.rs - airs::gateway::AIGatewayClient::new (line 123) - compile ... ok\ntest src/airs/gateway/runtime.rs - airs::gateway::runtime::RuntimeClient::new (line 33) - compile ... ok\ntest src/airs/model_security/client.rs - airs::model_security::client::ModelSecurityClient::new (line 18) - compile ... ok\ntest src/airs/management/mod.rs - airs::management::ManagementClient::new (line 54) - compile ... ok\ntest src/airs/red_team/facade.rs - airs::red_team::facade::RedTeamClient::new (line 34) - compile ... ok\ntest src/airs/scan/scanner.rs - airs::scan::scanner::Scanner::for_region (line 90) - compile ... ok\ntest src/airs/scan/scanner.rs - airs::scan::scanner::Scanner::new (line 69) - compile ... ok\ntest src/dlp/mod.rs - dlp::DlpClient::new (line 42) - compile ... ok\ntest src/shared/iam/scopes.rs - shared::iam::scopes::IamScopesClient::new (line 33) - compile ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 1 test\ntest src/lib.rs - (line 7) - compile ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s\n\n",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 35s\n   Doc-tests scm_sdk\n",
+      "durationSeconds": 104.053
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "run",
+        "--example",
+        "response_defaults",
+        "--all-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "Omitted fields and explicit nulls round-trip; default policy is unchanged.\n",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.80s\n     Running `/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/examples/response_defaults`\n",
+      "durationSeconds": 4.916
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "run",
+        "--example",
+        "red_team_dataplane",
+        "--all-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.57s\n     Running `/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/examples/red_team_dataplane`\n",
+      "durationSeconds": 4.686
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "run",
+        "--example",
+        "access_policies",
+        "--all-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.60s\n     Running `/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/examples/access_policies`\n",
+      "durationSeconds": 5.628
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "run",
+        "--example",
+        "response_compatibility",
+        "--all-features",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/scm-sdk",
+      "exit_code": 0,
+      "stdout": "G25 response formats, unknown values and typed round-trips pass; requests remain strict.\n",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.72s\n     Running `/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/examples/response_compatibility`\n",
+      "durationSeconds": 4.835
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "run",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/consumer",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "   Compiling scm-sdk v0.2.2 (/tmp/scm-sdk-archive-ex6x7duw/scm-sdk)\n   Compiling scm-sdk-export-probes v0.0.0 (/tmp/scm-sdk-archive-ex6x7duw/consumer)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 41s\n     Running `/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/scm-sdk-export-probes`\n",
+      "durationSeconds": 101.536
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "run",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/consumer",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "   Compiling scm-sdk-export-probes v0.0.0 (/tmp/scm-sdk-archive-ex6x7duw/consumer)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.52s\n     Running `/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/scm-sdk-export-probes`\n",
+      "durationSeconds": 5.549
+    },
+    {
+      "command": [
+        "/home/cdot/.cargo/bin/cargo",
+        "+1.89.0",
+        "run",
+        "--locked",
+        "--offline",
+        "--target",
+        "x86_64-unknown-linux-musl"
+      ],
+      "cwd": "/tmp/scm-sdk-archive-ex6x7duw/consumer",
+      "exit_code": 0,
+      "stdout": "G25 response formats, unknown values and typed round-trips pass; requests remain strict.\n",
+      "stderr": "   Compiling scm-sdk-export-probes v0.0.0 (/tmp/scm-sdk-archive-ex6x7duw/consumer)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.75s\n     Running `/build/rust/scm-sdk-vendor-target/x86_64-unknown-linux-musl/debug/scm-sdk-export-probes`\n",
+      "durationSeconds": 4.867
+    }
+  ],
+  "limitations": [
+    "Only the recorded host executes code; examples compile without contacting services. The response_defaults example, when present, also executes offline.",
+    "The full development integration corpus remains repository-only; the archive runs its packaged unit/doctests and external public capability consumer."
+  ]
+}

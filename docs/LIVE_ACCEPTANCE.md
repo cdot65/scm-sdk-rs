@@ -10,9 +10,21 @@ Each unqualified method has a reason. The [current receipt reference](../contrac
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
+The current **0.2.2** run is [attempt 14](checks/phase-08-live-attempt-14.json).
+It verified **17 exact native methods** from 24 service requests and one token
+exchange. The synchronous scan-ID query and async lookup both returned complete,
+correlated results in this run. Three Red Team reads returned **403 permission
+prerequisites**. IAM scope creation and Gateway provisioning returned **400 service
+contract rejections**; their cause remains unestablished, and an SDK request-shape
+defect is not excluded. Both creations were rejected before ownership, so
+`cleanupState` is `not_needed`; these mutation/cleanup chains remain live-unqualified.
+This receipt binds the 0.2.2 runtime fingerprint and does not establish consumer
+adoption or additional live privileges.
+
 The historical 0.2.1 run (attempt 13) verified 16 exact native methods
 from 24 service requests and one token exchange. Its synchronous scan-ID query
-returned HTTP 200 without a complete correlated receipt and remains unqualified.
+returned HTTP 200 without a complete correlated receipt and was unqualified
+in that historical receipt; attempt 14 supersedes that observation for 0.2.2.
 The async lookup completed with correlated results. Three Red Team reads returned 403 permission rejections;
 IAM scope creation and Gateway provisioning returned 400 rejecting the submitted
 requests. The cause of these two 400s remains unestablished, including whether a

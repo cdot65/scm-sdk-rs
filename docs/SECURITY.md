@@ -115,8 +115,15 @@ python3 -m unittest tools/test_auxiliary_evidence.py
 ```
 
 `--check` validates the recorded successful scope, counts and current source
-and package-candidate fingerprints. It does not repeat secret matching or certify later changes to
-review/check/status bookkeeping excluded from that fingerprint; run the
+and package-candidate fingerprints. The recorded `headCommit` identifies the HEAD
+used by the private scan for historical-identifier classification; `--check`
+deliberately does not require it to equal the current HEAD. Receipt-only commits
+may advance HEAD while leaving the checked source unchanged. Release qualification
+refreshes the private scan at the clean candidate commit, and final bookkeeping
+receives another private scan before delivery completion.
+
+The credential-free check does not repeat secret matching or certify later changes
+to review/check/status bookkeeping excluded from that fingerprint; run the
 explicit private scan again after final evidence changes when qualifying the
 complete tree. Exact-value scanning does not cover encoded, split or unrelated
 secrets. Python retains selected values in process memory and cannot guarantee

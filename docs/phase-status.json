@@ -4272,14 +4272,17 @@
         "tools/g25_report.py",
         "tools/test_g25_report.py",
         "crates/scm-sdk/tests/g25_response_compatibility.rs",
-        "contracts/compatibility/g25/projections.json"
+        "contracts/compatibility/g25/projections.json",
+        "docs/SECURITY.md"
       ],
       "final_in_sequence": true,
       "chunks": [
         {
           "id": "qualification-and-package",
           "status": "in_progress",
-          "attempts": [],
+          "attempts": [
+            "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json"
+          ],
           "scope_evidence": [
             "scripts/check-package.py",
             "scripts/check-access-release.py",
@@ -4305,8 +4308,10 @@
             "tools/g25_report.py",
             "tools/test_g25_report.py",
             "crates/scm-sdk/tests/g25_response_compatibility.rs",
-            "contracts/compatibility/g25/projections.json"
-          ]
+            "contracts/compatibility/g25/projections.json",
+            "docs/SECURITY.md"
+          ],
+          "historical_accepted_total": 44
         },
         {
           "id": "registry-and-remote-delivery",
@@ -4318,6 +4323,123 @@
             "docs/checks/release-registry-0.2.2.json",
             "docs/checks/release-tag-v0.2.2.json"
           ]
+        }
+      ],
+      "qualification_attempts": [
+        {
+          "attempt": 1,
+          "status": "failed",
+          "evidence": "docs/checks/phase-20-candidate-01/phase-20.json",
+          "cause": "Gateway binding receipt generated before the live-updated native-operation ledger; generated input hash stale.",
+          "resolution": "Regenerated Gateway binding after native ledger. All 41 contract commands pass; clean compiler proofs rerun on corrected candidate 938adbef948e962a5d9b997fbcd078130a175522. Runtime source unchanged."
+        }
+      ],
+      "live_acceptance": {
+        "status": "verified_with_explicit_limitations",
+        "evidence": "docs/checks/phase-08-live-attempt-14.json",
+        "crate_version": "0.2.2",
+        "runtime_inputs_sha256": "5b3b58c4ac55b6fd8d693885d23f453585da53447ec94b86478a5f7c18aedeff",
+        "verified_native_methods": 17,
+        "observed_native_methods": 22,
+        "service_requests": 24,
+        "token_exchanges": 1,
+        "red_team_permission_prerequisites": 3,
+        "service_contract_rejections": 2,
+        "cleanup_state": "not_needed",
+        "limitations": "Three Red Team reads returned 403. IAM scope creation and Gateway provisioning returned 400 before ownership; cause unestablished, including a possible SDK request-shape defect. No successful mutation/cleanup chain or airs-cli-rs adoption is claimed.",
+        "runtime_change_from_phase19": "Compared with accepted phase19 commit 2908a98/source 99a0568b, production src files are unchanged. Runtime fingerprint inputs changed for the 0.2.2 manifest/lock version bump, Cargo example registration and new offline response_compatibility example. The live qualification example itself is unchanged. Attempt 14 was executed after these changes; later phase 20 edits affect only documentation, ledger evidence and bookkeeping."
+      },
+      "review_advisories": [
+        {
+          "review": "docs/reviews/phase-19-attempt-03.json",
+          "finding": 1,
+          "disposition": "accepted_as_is_for_this_release",
+          "rationale": "The explicit nongenerated 55-field projection binding ledger and negative tests reject any changed/missing known projection. No current missing pairing was demonstrated. General diagnostics for unmatched legacy roots remain deferred to future schema expansion; this patch does not claim that diagnostic was implemented.",
+          "evidence": [
+            "contracts/compatibility/g25/projection-bindings.json",
+            "tools/g25_fixtures.py",
+            "tools/test_g25_generation.py"
+          ]
+        },
+        {
+          "review": "docs/reviews/phase-19-attempt-03.json",
+          "finding": 2,
+          "disposition": "markdown_documentation_final_for_this_release",
+          "rationale": "Typed-over-raw precedence is deliberate and tested. CHANGELOG and the generated compatibility report document it. Generated projection fields still have no dedicated rustdoc/accessor; this discoverability improvement remains deferred and is not claimed delivered.",
+          "evidence": [
+            "CHANGELOG.md",
+            "docs/G25_COMPATIBILITY.md",
+            "crates/scm-sdk/tests/g25_response_compatibility.rs"
+          ]
+        },
+        {
+          "review": "docs/reviews/phase-19-attempt-03.json",
+          "finding": 3,
+          "disposition": "resolved",
+          "rationale": "CI now uses phase 20 contracts and the 49-job matrix including both red-team-json-unification configurations.",
+          "evidence": [
+            ".forgejo/workflows/ci.yml",
+            "tools/test_ci.py",
+            "docs/CI.md"
+          ]
+        }
+      ],
+      "review_findings_disposition": [
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+          "finding": 1,
+          "disposition": "corrected",
+          "evidence": [
+            "docs/LIVE_ACCEPTANCE.md"
+          ],
+          "resolution": "Current attempt 14 outcomes summarized explicitly; attempt 13 scan query result is historical."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+          "finding": 2,
+          "disposition": "corrected",
+          "evidence": [
+            "docs/phase-status.json"
+          ],
+          "resolution": "Added live acceptance, exact runtime changes since phase19, and explicit dispositions for all three inherited advisories."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+          "finding": 3,
+          "disposition": "refresh_at_candidate_and_final_bookkeeping",
+          "evidence": [
+            "docs/SECURITY.md"
+          ],
+          "resolution": "Documented intentional source-based --check semantics. Private scan will run at the corrected clean candidate commit and after final bookkeeping; neither scan is claimed before execution."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+          "finding": 4,
+          "disposition": "accepted_markdown_only",
+          "resolution": "The inherited projection documentation advisory has an explicit final markdown-only disposition; generated-field rustdoc is deferred."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+          "finding": 5,
+          "disposition": "covered_by_final_delivery_guard",
+          "resolution": "The current-version publication assertions will execute after registry_publication is recorded. The final phase cannot advance without canonical registry/tag receipts matching the qualified archive and remote refs. No absent receipt is treated as valid.",
+          "evidence": [
+            "tools/release_delivery.py",
+            "tools/test_release_delivery.py",
+            "tools/test_ci.py"
+          ]
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+          "finding": 6,
+          "disposition": "accepted_as_is",
+          "resolution": "Explicit known projection bindings fail closed; broad unpaired-root diagnostics are deferred as recorded in review_advisories."
+        }
+      ],
+      "review_evidence_corrections": [
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+          "correction": "The reviewer prose says 56 commands; the immutable checks snapshot actually contains 59. The mechanical gate validates all 59 exact commands. Reviewer output is preserved unchanged."
         }
       ]
     }
