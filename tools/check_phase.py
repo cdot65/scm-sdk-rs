@@ -3,6 +3,7 @@
 
 import argparse
 import datetime
+import hashlib
 import json
 import os
 import pathlib
@@ -67,7 +68,142 @@ def run_check(command):
             "timeout": timed_out, "stdout": stdout, "stderr": stderr}
 
 
+MANAGEMENT_PHASES = (21, 22, 23, 24, 25)
+CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES)
+MANAGEMENT_BASELINE = "0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e"
+
+
+PLANNING_FIXTURE = "crates/scm-sdk/src/fixtures/model-regressions.json"
+
+
+def require_only_hash_replacements(original_bytes, current_bytes, replacements):
+    expected = original_bytes
+    for before, after in replacements:
+        if not all(isinstance(value, str) and len(value) == 64
+                   and all(c in "0123456789abcdef" for c in value) for value in (before, after)):
+            raise ValueError("Provenance replacement must contain SHA256 values")
+        before_bytes = ('"' + before + '"').encode()
+        if expected.count(before_bytes) != 1:
+            raise ValueError("Provenance hash replacement must identify exactly one baseline value")
+        expected = expected.replace(before_bytes, ('"' + after + '"').encode(), 1)
+    if current_bytes != expected:
+        raise ValueError("Planning fixture bytes changed outside allowed provenance hashes")
+
+
+def verify_planning_fixture(root=ROOT):
+    """Permit only the generated fixture's source-corpus hash to be rebound."""
+    path = root / PLANNING_FIXTURE
+    if path.is_symlink():
+        raise ValueError("Planning fixture must be a regular file")
+    original_bytes = subprocess.check_output(
+        ["git", "show", MANAGEMENT_BASELINE + ":" + PLANNING_FIXTURE], cwd=root)
+    original = json.loads(original_bytes)
+    current = json.loads(path.read_text())
+    original_hash = original["provenance"].pop("sha256")
+    source_hash = current["provenance"].pop("sha256")
+    require_only_hash_replacements(original_bytes, path.read_bytes(), [(original_hash, source_hash)])
+    if current != original:
+        raise ValueError("Planning fixture changed outside its source-corpus hash")
+    source = root / original["provenance"]["source"]
+    if source.is_symlink() or hashlib.sha256(source.read_bytes()).hexdigest() != source_hash:
+        raise ValueError("Planning fixture source-corpus hash is stale")
+    corpus_bytes = subprocess.check_output(
+        ["git", "show", MANAGEMENT_BASELINE + ":" + original["provenance"]["source"]], cwd=root)
+    corpus_original = json.loads(corpus_bytes)
+    corpus_current = json.loads(source.read_text())
+    original_manifest_hash = corpus_original["provenance"].pop("manifestSha256")
+    manifest_hash = corpus_current["provenance"].pop("manifestSha256")
+    require_only_hash_replacements(corpus_bytes, source.read_bytes(), [(original_manifest_hash, manifest_hash)])
+    if corpus_current != corpus_original:
+        raise ValueError("Planning oracle corpus changed outside its manifest hash")
+    if hashlib.sha256((root / "contracts/manifest.json").read_bytes()).hexdigest() != manifest_hash:
+        raise ValueError("Planning oracle corpus manifest hash is stale")
+
+
+def verify_planning_gateway_proof(root=ROOT):
+    relative = "contracts/native-fixtures/gateway-specimens.json"
+    original = subprocess.check_output(["git", "show", MANAGEMENT_BASELINE + ":" + relative], cwd=root)
+    old = json.loads(original)
+    changed_inputs = {"tools/verify-contracts.py", "contracts/manifest.json"}
+    replacements = [(row["sha256"], hashlib.sha256((root / row["file"]).read_bytes()).hexdigest())
+                    for row in old["inputs"] if row["file"] in changed_inputs]
+    if len(replacements) != len(changed_inputs):
+        raise ValueError("Gateway provenance input allowlist is incomplete")
+    require_only_hash_replacements(original, (root / relative).read_bytes(), replacements)
+
+
+def management_commands(phase):
+    """New phase gates retain historical checks and fail closed on later scope."""
+    unit = lambda name: ["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+    vendor_scope = ["--", ".", ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml"]
+    common = [["git", "diff", "--check", *vendor_scope],
+              ["git", "diff", "--cached", "--check", *vendor_scope],
+              ["python", "tools/verify-contracts.py"],
+              ["python", "tools/verify-contracts.py", "--baseline", ".local/typescript"],
+              ["python", "tools/verify-contracts.py", "--self-test"],
+              ["python", "tools/red_team_management.py", "--check", *(["--verify-retention-origin"] if phase == 21 else [])],
+              *[unit(name) for name in ("test_red_team_management.py", "test_management_phases.py", "test_review_phase.py")],
+              ["python", "scripts/check-private-material.py", "--check", f"docs/checks/phase-{phase}-private-material.json"]]
+    if phase == 21:
+        paths = ["crates/scm-sdk", "Cargo.toml", "Cargo.lock", "LICENSE", "NOTICE", "deny.toml",
+                 "contracts/native-exports.json", "contracts/native-operations.json",
+                 "contracts/response-defaults.json",
+                 "contracts/vendor/portkey-access/a27feb9/operations.json",
+                 "contracts/vendor/red-team-data-plane/0.93.0/operations.json",
+                 "contracts/vendor/red-team-data-plane/0.93.0/model-additions.json"]
+        return [
+            ["git", "diff", "--exit-code", MANAGEMENT_BASELINE, "--", *paths,
+             ":(exclude)" + PLANNING_FIXTURE],
+            ["python", "-c", "import sys; sys.path.insert(0, 'tools'); from check_phase import verify_planning_fixture, verify_planning_gateway_proof; verify_planning_fixture(); verify_planning_gateway_proof()"],
+            ["python", "-c", "import subprocess; assert not subprocess.check_output("
+             + repr(["git", "ls-files", "--others", "--exclude-standard", "--", *paths])
+             + "), 'Unexpected SDK implementation file before plan acceptance'"],
+            ["git", "diff", "--check", MANAGEMENT_BASELINE + "..HEAD", "--", ".",
+             ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml",
+             ":(exclude)contracts/vendor/red-team-data-plane/0.93.0/*.yaml",
+             ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"],
+            *common,
+            ["python", "scripts/check-dependencies.py", "--output", "docs/checks/phase-21-dependencies.json"],
+            unit("test_ci.py"),
+            *[["python", "tools/" + tool, "--check"] for tool in
+              ("model_fixtures.py", "generate_constants.py", "response_defaults.py")],
+            ["python", "tools/verify_native_fixtures.py", "--require-test-bindings"],
+            ["python", "tools/red_team_dataplane.py", "--check", "--require-complete"],
+            [".local/typescript/node_modules/.bin/tsx", "tools/schema-oracle.mts", "--check"],
+            ["tools/node_modules/.bin/tsx", "tools/verify-gateway-specimens.mts", "--check"],
+            ["python", "tools/generate_validation.py", "--check"],
+            ["python", "tools/generate_models.py", "--check"]]
+    # The verifier must reject unimplemented later milestones. Listing a future
+    # gate is not a claim that its fixtures, qualification or delivery exist.
+    commands = [*common, ["python", "tools/red_team_management.py", "--check", "--require-through-phase", str(phase)]]
+    if phase == 22:
+        inherited = commands_for(19)
+    else:
+        inherited = commands_for(20)
+    for original in inherited:
+        # Historical release proofs are immutable and version-specific. New
+        # publication readiness/delivery belongs to the phase 24 milestone gate.
+        if "scripts/check-access-release.py" in original:
+            continue
+        command = [value.replace("phase-19-", f"phase-{phase}-").replace("phase-20-", f"phase-{phase}-")
+                   for value in original]
+        if command[:2] == ["git", "diff"] and "--check" in command:
+            if "--" not in command:
+                command += ["--", "."]
+            if vendor_scope[-1] not in command:
+                command.append(vendor_scope[-1])
+        if command not in commands:
+            commands.append(command)
+    if phase >= 23:
+        for compiler in ("1.89.0", "1.99.0"):
+            commands.append(["python", "scripts/check-package.py", "--toolchain", compiler,
+                             "--output", f"docs/checks/phase-{phase}-package-{compiler}.json"])
+    return commands
+
+
 def commands_for(phase):
+    if phase in MANAGEMENT_PHASES:
+        return management_commands(phase)
     if phase == 20:
         # Reuse complete prior qualification and G25 regressions without changing
         # their historical command lists or overwriting historical check reports.
@@ -507,8 +643,8 @@ def ci_commands_for(phase):
     This subset cannot qualify a phase review: it writes a separate report and
     review_phase.check_evidence still requires the complete commands_for list.
     """
-    if phase not in (12, 17, 20):
-        raise ValueError("The contracts-only scope is defined only for phases 12, 17 and 20")
+    if phase not in CONTRACT_CI_PHASES:
+        raise ValueError("The contracts-only scope is not defined for this phase")
     native_scripts = {"scripts/check-rust.py", "scripts/check-native-exports.py", "scripts/check-package.py", "scripts/check-access-release.py"}
     return [command for command in commands_for(phase)
             if not native_scripts.intersection(command)
@@ -523,8 +659,8 @@ def main():
     parser.add_argument("--contracts-only", action="store_true",
                         help="Selected phase CI contract subset; requires --verification-only and never qualifies a phase review")
     args = parser.parse_args()
-    if args.contracts_only and (not args.verification_only or args.phase not in (12, 17, 20)):
-        parser.error("--contracts-only requires --phase 12 --verification-only or --phase 17 --verification-only or --phase 20 --verification-only")
+    if args.contracts_only and (not args.verification_only or args.phase not in CONTRACT_CI_PHASES):
+        parser.error("--contracts-only requires --phase 12 --verification-only (or another supported phase: 17, 20, 21–25)")
     status = json.loads((ROOT / "docs/phase-status.json").read_text())
     if status["active_phase"] != args.phase and not args.verification_only:
         raise ValueError("Run the active phase's checks")

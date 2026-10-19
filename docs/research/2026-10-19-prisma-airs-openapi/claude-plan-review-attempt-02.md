@@ -1,0 +1,48 @@
+Note: the `Write` tool is disabled this session, so the plan file can't be persisted. Delivering the review inline.
+
+# Prisma AIRS audit — second advisory review (attempt 02)
+
+**Scope.** Re-evaluated B1–B9 against the current `docs/research/2026-10-19-prisma-airs-openapi/README.md` (hash per `review-input-02.json`) plus the six evidence JSONs, with targeted spot checks in SDK source, `contracts/manifest.json`, frozen specs and repo tooling. Read-only: no commands, tests, service calls, or edits. Research/planning only — no implementation-phase acceptance is claimed.
+
+## Verdict
+
+**Plan 9/10 (target ≥9: met). Phase-planning total 45/50, every category ≥8 (target ≥46: one short).** All six must-close blockers (B1–B5, B7) are closed in report and plan text; B6, B8, B9 are closed in the same pass. The shortfall traces to one concrete tooling-invariant gap in milestone A.1.
+
+| Category | Score |
+|---|---:|
+| Implementation feasibility | 9/10 |
+| Code-quality approach | 9/10 |
+| Supportability | 9/10 |
+| Architecture | 9/10 |
+| Feature delivery / coverage claims | 9/10 |
+| **Total** | **45/50** |
+
+## B1–B9 resolution
+
+| ID | Status | Basis (verified this pass) |
+|---|---|---|
+| **B1** response-schema divergence | **Closed** | Matrix (README:62–70) names all five operations, the three vendor schemas, `s012107` and `TargetResponse`. Verified `"TargetResponseSchema":"s012107"` in `schema_graph.json`, and that all five ops bind that single node: `targets.rs:146,177,198,229,266`. Redacted *and* unredacted fixture rows plus no-secrets-in-Debug/tracing/errors are explicit B.1/C exit conditions. |
+| **B2** union resolution | **Closed** | B.1 (README:112) specifies discriminator-first on `type`, legacy resolution retained for an absent discriminator including `{}`, no injected `client_session` default, validator/untagged-serde alignment, Vertex branch appended after existing shapes, and `Unknown(JsonValue)`→named-variant transitions in changelog + match-based consumer fixtures. The `{}`→stateless claim is right, for a non-obvious reason: `s010505` (stateful) marks `request_id_field`/`response_id_field` `inputPresence:"rejects"`, so `{}` fails it and falls through to `s010511` (stateless, all optional) under first-match (`validation.rs:680–693`). `ZodDiscriminatedUnion` already exists at `validation.rs:695`, so the rule is implementable. |
+| **B3** host cross-product + false assertion | **Closed** | All six constants named (README:50) and verified at `constants.rs:629–637`, all `api.apps`; runtime scan correctly excluded (`DEFAULT_ENDPOINT:627` is a different host family). The prior false Model Security assertion is gone — README:396 now states the SDK exports `api.apps` and defers both planes to the Phase21 endpoint-profile decision with destination admission. |
+| **B4** evidence reproducibility | **Closed, one residual** | Both misdescriptions corrected: README:285 and :505 now call the `.local/` snapshots and `audit-model-security.py` ignored ephemeral helpers, explicitly not committed or production tooling. A.1 vendors exact 0.86.0 YAML + normalized JSON + commit/hash + license/notice, with hash/semantic-diff tooling under `tools/`. Residual: `inventory.json:45–47` (MP `5fbb533b…`, 212515 bytes) still hashes bytes absent from the repo; flagged generally at :285 but not labeled unreproducible-today. |
+| **B5** gating machinery | **Closed, residuals** | A.0 (README:95) names the scope doc `docs/red-team-management-0.86-plan.md`, PHASES.md + `docs/phase-status.json` registration, `tools/check_phase.py` extension, `docs/reviews/`, the manifest ID convention, and "confirm the ledger has not advanced." Verified highest registered phase is 20 (`phase-status.json` ids 18/19/20; no `phase-2[1-5]` artifacts) and that `check_phase.py:501` raises for undefined phases, so the wiring is genuinely required and 21–25 don't collide. |
+| **B6** source precedence | **Closed** | README:102 adds a per-upstream-path precedence ledger, states "`usedForGeneration` alone must never select precedence," pins YAML bytes as canonical with separately recorded normalized-JSON hash, and keys E on the active pin. Facts verified: frozen DP `version: 0.7.75`, MP `0.7.67`; `manifest.json:1845–1875` both `usedForGeneration:true`; `inventory.json:39` selects the vendor 0.93.0 YAML as active. |
+| **B7** release ordering | **Closed** | README:139 restores qualify both archives → final review → publish → verify registry + downloaded archive → immutable tag → push → terminal CI, names `ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git` (matches `AGENTS.md:13`), and :142 makes terminal remote CI an exit condition. |
+| **B8** filter migration | **Closed** | Six-row table (README:76–85). Old-side column verified exactly against frozen 0.7.67: `TargetStatusFilter` (`mp-openapi.yaml:5881–5890`) = DRAFT/ACTIVE/FAILED/QUEUED/IN_PROGRESS/COMPLETED/PARTIALLY_COMPLETE; `ProfilingStatus` (`:3559–3568`) = INIT/QUEUED/IN_PROGRESS/COMPLETED/FAILED/PARTIALLY_COMPLETE — including the subtle "INIT is response-only, never an old filter value" row. No auto-rewriting; PARTIALLY_COMPLETE recorded as a vendor inconsistency. |
+| **B9** thin/overstated claims | **Closed** | (a) `runtime-operation-mapping.json` now carries, for 25 operations, `operationId`, `declared_parameters`, request body + schema refs, full `declared_responses`, security, servers, resolved response content, and `native_bindings` with file/line/signature/validator names (spot-verified `Scanner::sync_scan` at `scanner.rs:115`); README:25's methodology claim now holds for Runtime. (b) Widening recount: **19 is correct, not 18**. The 19th is `management:ModelSecurityRuleListItemSchema.enabled_security_group_count`, whose SDK types are `["integer","null","number"]` — a different ordering from the other 18, which is exactly why a narrower match yields 18. Both Pagination `total_items` occurrences present; README:487's list matches the file item-for-item. (c) Language schema corrected to an *added* component with `LanguageOptionSchema` retained (only `LanguageOptionSchema` exists in frozen 0.7.67), described as an alias decision. (d) DP precedent cited and verified: `red_team_data_plane.rs:19480–19494` has named `VERTEXAI` and `N8N`. |
+
+## Remaining concrete blockers
+
+1. **(Medium — the point holding this at 45) A.1 collides with an unnamed contract-corpus invariant.** `tools/verify-contracts.py:416–418` requires manifest-owned paths to equal *exactly* the files under `contracts/{fixtures,sources,licenses}`; `contracts/vendor` is not globbed, which is why the existing 0.93.0 pin has no manifest entry. A `sources` entry whose `path` is `contracts/vendor/red-team-management/0.86.0/...` will fail that equality. Separately, `:316–320` requires a redistributed source's `license` record to exist with matching repository **and commit**, so commit `582e3054…` needs a new license record plus a file under `contracts/licenses`. A.1's "update readers and integrity checks accordingly" gestures at this without naming either. Accuracy nit in the same bullet: multiple revisions per `upstreamPath` already work — uniqueness is enforced on `id` (`:313`), not `upstreamPath`.
+2. **(Low-Medium) check_phase wiring under-specified.** Beyond `commands_for` (`:70`, raising at `:501`), the plan doesn't mention `ci_commands_for`/`--contracts-only`, hard-restricted to phases {12,17,20} (`:510`, `:526`), nor the review-evidence gate its docstring depends on (`:508`). Phase 20's reuse-of-17+19 construction (`:71–87`) is the precedent to follow.
+3. **(Low) Two imprecisions.** Appendix:182 cites `contracts/vendor/red-team-data-plane/0.93.0/openapi.json` while `inventory.json:39` pins `dp-openapi.yaml`; both files exist and A.1's YAML-canonical rule explains it, but the appendix doesn't say which artifact it compared. README:228 cites `facade.rs:287` as the "existing shared model" anchor; that line is the `get_management_languages` operation, not a model.
+
+## Unproven static assertions (acceptable for research — keep them labeled)
+
+- Every 0.86.0-side claim is unverifiable from this repo today, since those bytes aren't committed: new `status`/`profiling_status` filter enums, `VERTEX_AI`/`N8N`/`REALTIME`, `MultiTurnClientSessionConfig`, `LanguageDropdownOptionSchema`, the five-operation response-schema split, 10 added / 8 renamed-away / 21 changed components, 68 JSON-pointer entries, and `inventory.json`'s MP sha256/bytes. The 0.93.0-side and frozen-side claims are repo-checkable, and everything I checked there held.
+- All RT findings are static code-path evidence, which the README states correctly and repeatedly. No tenant evidence is required for a proposed future plan, and none is claimed.
+- Not re-verified (spot-check only, per request): the 47 DP / 5 broker rows, 94 RT rows, 320 property comparisons, 68 pointer entries, and all SHA256/byte-identity claims — no hashing was performed.
+
+## Score rationale
+
+Each category sits at 9 rather than 10 for one shared reason: the governance and provenance wiring is now correct in intent and names the right files, but stops one level short of the invariants that will actually gate execution (`verify-contracts.py` corpus equality + license-commit binding; the `ci_commands_for` allowlist). Closing blocker 1 and labeling the MP 0.86.0 hash as not-yet-reproducible would lift feasibility and architecture to 10 and the total to 46–47. No security or release blocker remains, and the preservation-first stance — no removal of SDK extras, no silent tightening, no default-host switch, no bearer redirect forwarding — is held consistently throughout.

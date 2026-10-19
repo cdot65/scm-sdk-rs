@@ -1,0 +1,118 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 21,
+  "attempt": 1,
+  "reviewed_at": "2026-10-19T12:38:38.389784+00:00",
+  "source_sha256": "7c4a07f752bdf2c3ed416bb33703e06098f9441eb05ecb9ac5dbf04a24a8e91f",
+  "source_unchanged": true,
+  "checks_sha256": "f915bb483396151ab20206a4dff3dc47572f149f78d39b211a0da2c998ed3708",
+  "prompt_sha256": "b8bef4c25dc27fe9e9c245cf4a984aecf78871101ce3e37d0f2dd22bb5c1fd90",
+  "cli_output_sha256": "ddfc7449a756666daf799ea5428a7c2b5b3d323552b315f73bbe699960bc905a",
+  "gate_passed": true,
+  "review": {
+    "score": 8.5,
+    "summary": "Phase 21's plan-and-provenance chunk delivers what it claims: the exact 0.86.0 management bytes are vendored with license and explicit manifest source/vendorArtifact ownership (contracts/manifest.json:1950-1963, 2442-2482), the seven-source/160-operation inventory is reproducible and hash-pinned (tools/red_team_management.py:190-245; contracts/airs-active-sources.json; 160 ledger rows and the 42-operation management subset verified by independent grep counts), every management delta carries a category and disposition (67 deltas in compatibility-decisions.json), and the 0.2.2 capability floor is a separate immutable, hash-bound seed that regeneration cannot rewrite (tools/red_team_management.py:23-25, 163-187). tools/verify-contracts.py gained real vendor-ownership enforcement with nine new self-tested tamper cases, and the recorded receipt (docs/checks/phase-21.json) contains all 14 commands registered for phase 21 in tools/check_phase.py:85-94, each with a real invocation, exit code 0 and plausible output \u2014 including the frozen-SDK diff against 0a213fe7, the private-material scan bound to the reviewed source hash, and the fail-closed --require-through-phase gate for phases 22-25. No runtime adoption, live acceptance or later-phase evidence is claimed anywhere. The substantive weaknesses are all latent fail-open paths in the classifier and provenance edges rather than wrong current output: disposition() keys on leaf names and path prefixes while ignoring delta kind, so a property literally named description/title/example (14 such property schemas exist in this very spec) or any future change to GET /v1/target would be auto-labelled \"no runtime behavior change\"/\"add profiling_status\"; the eight whole-component removals are swept into an additive alias category; the native-binding audit JSON under docs/research is consumed unpinned and unguarded; and the retention seed is not tied to the ledger bytes it was derived from. No blocker or high findings.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/red_team_management.py",
+        "line": 107,
+        "description": "disposition() classifies by leaf key and path prefix while ignoring delta kind, creating two fail-open paths. (a) `path[-1] in ANNOTATIONS` returns 'documentation'/'No runtime behavior change.' for any delta whose last path element is description/title/example/examples \u2014 but these specs contain properties literally named `description` (14 occurrences of \"description\": { in contracts/vendor/red-team-management/0.86.0/openapi.json, e.g. lines 3182, 3246, 3441), so adding, removing or retyping such a property in a later revision would be silently dispositioned as documentation. (b) `path[:3] == ['paths', '/v1/target', 'get']` returns 'new_behavior'/'Add profiling_status' for ANY future change to that operation, including security, responses or a removed parameter. The plan (docs/red-team-management-0.86-plan.md:66-68) requires upstream deletions and unknown changes to create review work, and phase 25 must fail classification on unknown changes; these rules absorb them instead.",
+        "required_fix": "Make classification kind-aware and leaf-aware: require `path[-2] != 'properties'` (and that the delta is not under `required`/`enum`) before the ANNOTATIONS disposition, restrict the paths rule to exactly ['paths','/v1/target','get','parameters'], and raise 'Unclassified' for `kind == 'removed'` or requiredness changes unless an explicit reviewed removal category applies. Add tests in tools/test_red_team_management.py covering a property named 'description', a removed property, and a security change on GET /v1/target."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 128,
+        "description": "The eight whole-component removals in the delta set (compatibility-decisions.json kinds 'removed' at lines 415, 492, 997, 1158, 1743, 1916, 3398, 3569 \u2014 NativeConnectionParams*, RestConnectionParams*, StreamingConnectionParams*, WebSocketConnectionParams* bases) are classified 'new_behavior_and_alias' with the text 'without narrowing frozen acceptance' purely from the name prefix. Nothing records the replacement component for each removed one, and test_every_delta_has_disposition_and_no_removed_operations (tools/test_red_team_management.py:30) only asserts that no path was removed, so a genuine component removal with no successor would pass the gate with additive-sounding prose.",
+        "required_fix": "Add an explicit 'component_removed_or_renamed' disposition that records the declared successor reference for each removed component, and assert in tools/test_red_team_management.py that every delta with kind 'removed' under components/schemas names an existing replacement schema in the current spec."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 133,
+        "description": "bindings() reads docs/research/2026-10-19-prisma-airs-openapi/*.json with load() and then opens `ROOT / binding['source']` directly (line 148), without the hash pin and symlink/escape guard applied to specification bytes by checked_bytes() (lines 40-48). The committed derived artifacts bind these inputs only indirectly through --check; a regeneration run would absorb an altered audit file, and a '../' value in nativeSource would read outside the repository. The plan states the tool 'uses committed YAML pins and committed reviewed native-binding records' (docs/red-team-management-0.86-plan.md:28-31), which implies the same integrity treatment.",
+        "required_fix": "Pin the sha256 of inventory.json, red-team-operations.json, model-security-operations.json and runtime-operation-mapping.json as module constants verified through checked_bytes(), and resolve every nativeSource through the same relative-path/symlink guard before reading it."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 149,
+        "description": "Native binding verification greps the whole file for `\\bfn <name>\\s*[(<]`, so the recorded `class` (e.g. RedTeamAdaptersClient in contracts/vendor/red-team-management/0.86.0/operations.json:8-11) is never checked: a same-named function in a different impl block or a free function satisfies the check. The coverage string correctly says static_mapping_only, but the ledger asserts a class-qualified binding that is not verified.",
+        "required_fix": "Verify that the matched fn occurs inside the `impl <class>` block of the recorded source (or record and verify a module/type-qualified path), and add a negative test where the function exists only in a different impl block."
+      },
+      {
+        "severity": "low",
+        "path": "tools/verify-contracts.py",
+        "line": 464,
+        "description": "corpus_roots scans only the exact pinned root contracts/vendor/red-team-management/0.86.0, so files added under a sibling path such as contracts/vendor/red-team-management/0.87.0/ are owned by no verifier: verify-contracts ignores them (red_team_dataplane.py and the Portkey verifier own only their own trees), and red_team_management.py --check only compares its own four outputs. The plan requires source ownership to reject unowned cases (docs/red-team-management-0.86-plan.md:58-62).",
+        "required_fix": "Require that every file under contracts/vendor/red-team-management is inside VENDOR_ROOTS (walk the parent of each registered root), and add a self-test case that places a file in a sibling version directory and expects rejection."
+      },
+      {
+        "severity": "low",
+        "path": "contracts/manifest.json",
+        "line": 1959,
+        "description": "The new management source is registered with \"usedForGeneration\": true (also contracts/vendor/red-team-management/0.86.0/source.json:12) while the same chunk records adoptionState 'pinned_for_phase22_not_runtime_adopted' (contracts/airs-active-sources.json:62) and runtimeAdoption 'pending_phase22'. No Rust generation consumes this source yet, and the flag is the field the plan explicitly says must never be used to infer precedence; leaving it true makes the manifest the least accurate record of adoption state.",
+        "required_fix": "Either set usedForGeneration to false until the phase 22 overlay actually generates from this source, or document in contracts/sources/PROVENANCE.md that the flag means 'input to derived contract artifacts' and point to adoptionState as the runtime authority."
+      },
+      {
+        "severity": "low",
+        "path": "contracts/compatibility/airs-0.2.2-retention.json",
+        "line": 6,
+        "description": "The floor asserts auditedSourceCommit 0a213fe7 and sdkVersion 0.2.2 (checked at tools/red_team_management.py:166) but carries no binding to the ledger bytes it was derived from (contracts/native-exports.json, contracts/native-operations.json, contracts/response-defaults.json, the Portkey and data-plane vendor ledgers). The phase-21 frozen-input check only diffs crates/scm-sdk, Cargo.toml, Cargo.lock, LICENSE and NOTICE against that commit (docs/checks/phase-21.json:9-20), so an offline reviewer cannot confirm the seed equals the audited 0.2.2 inventory rather than a snapshot of the current tree.",
+        "required_fix": "Record the sha256 of each source ledger used to build the floor inside the seed and verify them in retained_floor(), or extend the phase-21 baseline git-diff check to the contracts/*.json ledgers the floor is derived from."
+      },
+      {
+        "severity": "low",
+        "path": "docs/implementation-plan.md",
+        "line": 166,
+        "description": "The implementation plan still ends with the G25/0.2.2 follow-up; it was not extended with the authorized AIRS management 0.86.0 phases 21-25, although the two previous follow-ups each received an explicit section (lines 160-173) and AGENTS.md:3 directs readers there when acceptance criteria change. docs/PHASES.md:125-154 and docs/phase-status.json were updated, so the three governing documents now disagree about the active follow-up scope.",
+        "required_fix": "Add a short 'Prisma AIRS management 0.86.0 reconciliation' section to docs/implementation-plan.md linking docs/red-team-management-0.86-plan.md and stating the candidate version and the contract/live evidence separation, matching the Portkey and G25 precedent."
+      }
+    ],
+    "evidence": [
+      "docs/checks/phase-21.json records exactly the 14 commands registered for phase 21 in tools/check_phase.py:85-94, each with a real `invocation`, exit_code 0, no timeout and non-trivial durations: frozen-SDK diff vs 0a213fe7 (lines 9-38), git diff --check/--cached (56-91), verify-contracts default/--baseline .local/typescript/--self-test (92-142), red_team_management --check (143-159), the three unittest suites (160-246), the private-material --check (247-265), generate_validation --check and generate_models --check (266-299). No check in the receipt is unexecuted or skipped.",
+      "verify-contracts.py --self-test output lists 26 rejected tampering cases, matching the 25 cases in tools/verify-contracts.py:134-141 plus extracted-non-src-byte-change; the nine new ones (unowned-vendor-file, missing/modified-vendor-file, vendor-symlink, vendor-license-commit, duplicate-source-id, vendor-artifact-origin/omission/escape) are implemented at lines 215-238 and enforced by the ownership block at 388-402 and the corpus scan at 463-474.",
+      "Independent counts of the committed artifacts match the claims: 42 `operationId` rows in contracts/vendor/red-team-management/0.86.0/operations.json, 160 `coverage` rows in contracts/airs-operations.json, and COUNTS [18,23,47,42,5,21,4] in tools/red_team_management.py:22 sums to 160 with per-source counts asserted at line 207.",
+      "The management source is fully owned: contracts/manifest.json:1950-1963 registers the spec, 2442-2482 registers all four derived artifacts with matching repository/commit/license, 2033-2042 registers the MIT license pin, and tools/verify-contracts.py:464-474 requires the five files in that root to be exactly the manifested set.",
+      "Retention is a real floor, not a tautology: contracts/compatibility/airs-0.2.2-retention.json is hash-pinned at tools/red_team_management.py:24 and loaded through checked_bytes() in retained_floor() (165), which rejects removals, changed defaults and changed export paths while allowing additions; tools/test_red_team_management.py:74-108 exercises pops across all nine sections, an emptied rustPaths, a changed default, seed-byte tampering, and the additions-allowed path (3820 exports/448 methods/23 defaults/14 query occurrences asserted at 58-65).",
+      "Fail-closed behavior is implemented and tested: unmapped operations, changed operation counts, unclassified deltas, external $refs and unsafe pin paths all raise (tools/red_team_management.py:77, 112, 130, 207, 233, 244), and --require-through-phase 22..25 exits non-zero (284-288), verified by tools/test_red_team_management.py:110-114 via a real subprocess run.",
+      "Compatibility decisions are substantive and preservation-oriented rather than cosmetic: the ProfilingStatus enum narrowing that drops INIT/QUEUED is recorded as compatibility_exception with 'retain old response values and legacy status inputs; do not invent filter mappings' (compatibility-decisions.json:694-717), TargetConnectionType gains VERTEX_AI/N8N (2288-2324), ResponseMode gains REALTIME (752-773), the new profiling_status query parameter is captured on GET /v1/target (3942-4178), and the five operation-specific target response schemas are asserted against the vendor bytes in tools/test_red_team_management.py:116-121.",
+      "Evidence boundaries are explicit and consistent: every operation row carries 'native_method_exists; static_mapping_only; not_live_acceptance', the --check banner says 'static evidence only', adoptionState is 'pinned_for_phase22_not_runtime_adopted' (contracts/airs-active-sources.json:62), runtimeAdoption is 'pending_phase22', and the retention ledger's evidenceLimit defers consumer round-trips to phase 23. No SDK source changed (git status shows no crates/ modifications; receipt checks 1-2 prove it against 0a213fe7).",
+      "The private-material receipt docs/checks/phase-21-private-material.json is bound to the reviewed source hash 7c4a07f7... with headCommit 0a213fe7, 1858 git-visible files, zero secret/registration matches and only three unchanged preexisting tenant-identifier occurrences; its own limitations state that --check does not re-execute matching, and the gate's output (privateScanReexecuted false, receiptFresh true) is consistent with that.",
+      "The endpoint-preservation decision is backed by existing pinned evidence rather than prose alone: the six DEFAULT_* endpoint exports are in the retention floor (contracts/airs-retained-capabilities.json:6673-6695) and their api.apps.paloaltonetworks.com values remain pinned in contracts/native-fixtures/helpers.json:1334-1336, while 156 of 160 operation rows record the advertised api.sase host, matching the plan's six-of-seven-specs statement."
+    ],
+    "limitations": [
+      "Read-only Read/Glob/Grep only: I could not execute any command, so I verified the recorded receipts' internal consistency (command list vs tools/check_phase.py, self-test case list vs source, counts vs committed artifacts) but did not re-run tools/red_team_management.py --check, the unittest suites or verify-contracts.py myself.",
+      "I cannot compute SHA-256 digests with these tools, so the reviewed source fingerprint 7c4a07f7..., the checks-file digest f915bb48..., the manifest/vendorArtifact hashes and the retention-seed pin 6b158dab... are taken as recorded rather than independently recomputed.",
+      "Upstream authenticity of the 0.86.0 bytes at pan.dev commit 582e30543bf2 rests on the dated research observation in docs/research/2026-10-19-prisma-airs-openapi/inventory.json (observedAt 2026-10-19, non-truncated recursive tree); no network call was made and the per-row `activeBytesEqualUpstream` flags are not themselves checked by the tool.",
+      "docs/research/ and all phase-21 artifacts are still untracked working-tree files in this snapshot, so my review covers the working tree, not a committed state; I did not inspect git history or run git commands.",
+      "Phase 21's second chunk (phase-governance: docs/PHASES.md, tools/check_phase.py, tools/review_phase.py, tools/test_management_phases.py) is outside this chunk's declared scope; I inspected check_phase.py only to confirm that the recorded receipt matches the registered phase-21 command list, and I did not assess review_phase.py or the governance tests on their merits.",
+      "No credential, tenant-registration or out-of-repository file was read, and I did not evaluate runtime behavior, request construction, generated Rust or live service acceptance \u2014 none of which this chunk claims."
+    ],
+    "categories": {
+      "implementation": 8.5,
+      "code_quality": 8.5,
+      "supportability": 8.5,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 43.5
+  },
+  "rubric": "five-category-v1",
+  "chunk": "plan-and-provenance",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "docs/red-team-management-0.86-plan.md",
+    "contracts/vendor/red-team-management/0.86.0",
+    "contracts/manifest.json",
+    "tools/red_team_management.py",
+    "tools/verify-contracts.py",
+    "contracts/airs-active-sources.json",
+    "contracts/airs-operations.json",
+    "contracts/airs-retained-capabilities.json",
+    "tools/test_red_team_management.py",
+    "contracts/compatibility/airs-0.2.2-retention.json"
+  ]
+}

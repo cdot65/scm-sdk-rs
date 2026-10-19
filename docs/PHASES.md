@@ -78,21 +78,21 @@ frozen-TypeScript parity evidence; they do not certify the newer vendor contract
 ## Portkey access-policy follow-up
 
 The authorized [0.2.1 plan](portkey-access-policies-plan.md) follows completed
-0.2.0 delivery. Phase15 pins the exact upstream delta and requires Claude plan
-review >=9/10 before SDK changes. Phase16 implements all five typed methods and
-independent contract/security tests. Phase17 qualifies both clean archives,
+0.2.0 delivery. Phase 15 pins the exact upstream delta and requires Claude plan
+review >=9/10 before SDK changes. Phase 16 implements all five typed methods and
+independent contract/security tests. Phase 17 qualifies both clean archives,
 obtains final review >=9/10, publishes and verifies crates.io, tags and pushes,
-and waits for terminal 47-job CI before completion. Historical phase14 remains
+and waits for terminal 47-job CI before completion. Historical phase 14 remains
 a final phase of its completed release; it is not reopened.
 
 ## Current review rubric (maintainer instruction, 2026-10-19)
 
-For phase19 onward, score implementation, code quality, supportability, architecture,
+For phase 19 onward, score implementation, code quality, supportability, architecture,
 and feature delivery independently from 0 to 10. Chunk acceptance requires every
 category >=8 and total >=42/50 (target >=45). Phase acceptance requires >=46/50.
 Use actual independent Claude Code reviews and retain each attempt, evidence and
 fixes. Limit each chunk/phase loop to five attempts. After the fifth attempt only,
-a total strictly above40 may advance with every category still >=8 and every
+a total strictly above 40 may advance with every category still >=8 and every
 remaining deficiency explicitly recorded. Scores do not replace passing checks or publication evidence. Historical
 reviews keep their original rubric. This maintainer instruction supersedes the
 earlier 9/10 threshold for current work.
@@ -103,7 +103,7 @@ Each chunk and its enclosing phase has its own five-attempt budget. Once a chunk
 has an accepted fifth review, corrections requested by the enclosing phase review
 do not start a sixth chunk iteration. Advancement may retain that chunk's original
 accepted source hash only when a fresh, current-source phase review scores at
-least46/50 (or satisfies the phase's fifth-attempt >40 exception with recorded
+least 46/50 (or satisfies the phase's fifth-attempt >40 exception with recorded
 deficiencies), every category remains >=8, and no blocker/high finding remains. The
 phase review covers the intervening corrections and all declared chunk scope.
 The gate verifies the original chunk's preserved review and checks, records its
@@ -115,8 +115,117 @@ to require their own current-source acceptance.
 
 ## G25 response compatibility patch
 
-Follow [the G25 0.2.2 plan](g25-response-compatibility-plan.md): phase18 accepts the
-comparison and plan, phase19 implements and independently checks compatibility,
-and phase20 qualifies and publishes the immutable patch with terminal CI evidence.
+Follow [the G25 0.2.2 plan](g25-response-compatibility-plan.md): phase 18 accepts the
+comparison and plan, phase 19 implements and independently checks compatibility,
+and phase 20 qualifies and publishes the immutable patch with terminal CI evidence.
 Current phases use the review rubric above. Version 0.2.1 remains the
-already published Portkey release. Historical phase17 is not reopened.
+already published Portkey release. Historical phase 17 is not reopened.
+
+
+## Prisma AIRS management and source reconciliation
+
+Follow [the management 0.86.0 plan](red-team-management-0.86-plan.md) for
+phases 21–25. The seven-spec audit is planning evidence; it does not qualify new
+runtime code or live provider workflows. Keep all existing SDK capabilities,
+including routes and options absent from upstream specs. Historical phases and
+their accepted evidence remain immutable.
+
+| Phase | Milestones | Required evidence |
+| --- | --- | --- |
+| 21. Source inventory and compatibility plan | Vendor exact management 0.86.0 bytes and license; reproduce the seven-source/160-operation inventory; classify deltas, retention, endpoint and public-layout decisions; register subsequent gates. | Baseline contracts/self-tests, provenance tampering tests, generation reproducibility, private-material scan, current dependency/advisory audit, baseline-to-HEAD committed hygiene check, unchanged SDK and dependency-policy inputs against `0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e` (only the generated model-regressions fixture source-corpus hash may rebind), accepted current-source chunk and phase reviews. Plan score must also be >=9/10 before runtime changes. |
+| 22. Target configuration and filters | Extend provider/multi-turn branches and enums; profiling filters through every page; typed Basic Auth/audio fields with preserved legacy defaults and names. | Changed-component and per-operation response fixtures, both response modes and typed round-trips, redaction and request validation tests, MSRV/current compiler regressions. |
+| 23. Compatibility and security qualification | Full changed-schema matrix, old/new consumers, secrets, omission/null/defaults, bounded pagination and unchanged-family retention. | Complete inherited qualification and both compiler package consumers; no new `preserve_order`; explicit implementation/contract/live boundaries. |
+| 24. Service qualification and release | Controlled available workflows, explicit unmet prerequisites, source-bound ledgers, compatible release version, reviewed clean archives, publication, tag and remote CI. | Release-specific current-source readiness guard before publication; registry/archive/tag verification; terminal successful CI and final delivery review. Historical 0.2.2 receipts cannot qualify this release. |
+| 25. Drift detection | Reproducible semantic comparison against active pins, alias/reference closure, read-only upstream reporting. | Synthetic added-field/removed-route/enum changes correctly classified; no automatic API removal; separate contract, fixture and live coverage. |
+
+Each phase declares named chunks in `docs/phase-status.json`; new chunk reviews
+must match those artifact scopes exactly and preserve source-bound checks. Apply
+the current five-category rubric to every chunk and enclosing phase. Phase 21 is
+scoped planning/provenance work; SDK implementation starts only after its gate.
+The `--require-through-phase` verification for later phases must fail closed until
+their actual artifacts and checks exist. Registering commands is not completion.
+
+`--contracts-only --verification-only` has a separate receipt for each new phase;
+it can never substitute for the complete phase check list. The current workflow
+routes to phase 21 contracts. Update routing, tests and documentation together
+when moving to phases 22 and 23. Phase 24 must align delivery-context verification
+with that workflow, select the actual release version and implement its own
+readiness/delivery guards. No existing 0.2.2-specific publication helper is reused
+as evidence for a different version.
+
+
+### Review invocation failures and CI coverage boundary
+
+A timed-out, failed-to-launch, nonzero-exit or invalid-output Claude invocation
+writes a sanitized `phase-N[-chunk-ID]-attempt-N.failed.json` receipt alongside
+the preserved prompt and check snapshot. Raw diagnostic output stays under
+ignored `.local/reviews`. This is a consumed attempt, never an accepted review.
+After inspecting the diagnostics and correcting the cause, rerun phase checks
+and request the next numbered attempt; the five-attempt ceiling still applies. Invocation failures do not count as
+substantive reviews: the fifth-attempt lower-score exception requires four
+previous completed, source-bound Claude reviews. Otherwise the normal score
+threshold still applies, even on attempt five.
+The next attempt verifies the failed receipt's identity and preserved prompt/check
+hashes. Do not delete or overwrite prior attempt artifacts. An in-flight prompt
+without a completed or failed receipt is not evidence of failure: wait for the
+actual invocation to finish. This distinction applies to the concurrent
+plan-and-provenance review observed during Phase 21 governance review attempt 1.
+
+If the fifth invocation fails, that chunk cannot advance and no sixth attempt is
+permitted. A recovery budget requires explicit maintainer authorization for a
+new chunk identity or explicitly revised scope with its own declared budget;
+record that authorization and preserve all original attempts and failure receipts.
+No automatic budget reset is allowed: agents must not infer this authorization
+from a timeout, score, elapsed time or the general instruction to continue work.
+Until authorization exists, keep the exhausted scope incomplete and continue
+only independent work that does not depend on its acceptance.
+
+The current workflow routes to phase 21 contracts and preserves its independent
+48-job Rust matrix. The contracts job checks planning provenance and frozen
+runtime inputs, not current live acceptance or release readiness. Local passing
+records do not prove the workflow ran remotely: retain an actual terminal run
+before claiming remote coverage. Historical phase 20 command sets and receipts
+remain unchanged. Repoint the workflow, tests and documentation together at each
+later phase; phase 24 additionally binds release delivery to exact CI contexts.
+
+
+Phase 21's only SDK-file exception is
+`crates/scm-sdk/src/fixtures/model-regressions.json`: manifest provenance refresh
+changes its corpus `provenance.sha256`. A separate gate compares every other
+JSON value, including every specimen and all remaining provenance, to the frozen
+baseline and verifies the new hash against the actual corpus bytes. Runtime
+Rust, validation/model output, fixture cases and generator identities remain
+unchanged. The underlying `contracts/native-fixtures/schemas.json` is likewise
+compared to baseline: only `provenance.manifestSha256` may change, and it must
+match the current manifest bytes. Six historical capability/default/vendor
+ledgers also remain frozen.
+
+
+Phase 21 does not claim current-source native-export/live qualification. The
+metadata-only fixture refresh changes the existing live-evidence runtime
+fingerprint, so `native_exports.py --check` correctly considers the old live
+qualification stale. Phase 21 retains exact baseline native/export/default/vendor
+ledger bytes and verifies the immutable capability-retention floor for static
+closure. It neither rebinds historical live receipts nor reruns mutating service
+qualification during planning. Current-source native-export and live-evidence
+checks remain required in phases 23–24 after implementation settles. This is an
+evidence-scope boundary, not a discovered runtime capability gap.
+
+The planning metadata exception is byte-exact: only the specified 64-character
+hash values may change; formatting, key order and every other byte remain frozen.
+The Gateway specimen proof likewise allows only the manifest and
+`tools/verify-contracts.py` input hashes to rebind to their current bytes.
+
+
+New management chunks retain `scope_revisions`, ordered by `from_attempt`, with
+an immutable scope for each prior attempt. The current scope equals the latest
+revision. Historical record verification uses its attempt's revision and retained
+prompt; phase acceptance requires the latest chunk review to cover the current
+scope. Expanding scope requires a new revision and review, never rewriting prior
+artifacts. Missing prior artifacts fail with a sanitized gate error. Failure to
+supply substantive-review history never enables the fifth-attempt exception.
+
+Phase 21 requires network access to refresh the RustSec advisory database and
+full Git history for the baseline-to-HEAD whitespace check. `deny.toml` remains
+byte-identical to the audited baseline alongside Cargo inputs; a passing audit
+cannot silently authorize a relaxed dependency policy.

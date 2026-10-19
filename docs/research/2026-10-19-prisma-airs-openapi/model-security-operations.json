@@ -1,0 +1,1525 @@
+[
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/evaluations/{uuid}",
+    "operation_id": "get_evaluation_v1_evaluations__uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/evaluations/{}",
+      "rust_method": "get_evaluation",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 362,
+      "query": null,
+      "schemas": [
+        "RuleEvaluationResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RuleEvaluationResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/model-versions/{uuid}",
+    "operation_id": "get_model_version_v1_model_versions__uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/model-versions/{}",
+      "rust_method": "get_model_version",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 165,
+      "query": null,
+      "schemas": [
+        "ModelVersionResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelVersionResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/model-versions/{uuid}/files",
+    "operation_id": "list_model_version_files_v1_model_versions__uuid__files_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/model-versions/{}/files",
+      "rust_method": "list_model_version_files",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 181,
+      "query": "ModelSecurityModelVersionFileListOptions",
+      "schemas": [
+        "FileListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FileListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/models",
+    "operation_id": "list_models_v1_models_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/models",
+      "rust_method": "list_models",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 22,
+      "query": "ModelSecurityModelListOptions",
+      "schemas": [
+        "ModelListSchema"
+      ]
+    },
+    "spec_query": [
+      "search_query",
+      "limit",
+      "skip",
+      "sort_field",
+      "sort_order",
+      "latest_version_outcomes",
+      "latest_version_formats",
+      "latest_version_source_types",
+      "latest_version_scan_time_before",
+      "start_time",
+      "end_time"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "isBackgroundRefresh",
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/models/{uuid}",
+    "operation_id": "get_model_v1_models__uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/models/{}",
+      "rust_method": "get_model",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 82,
+      "query": null,
+      "schemas": [
+        "ModelResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/models/{uuid}/model-versions",
+    "operation_id": "list_model_versions_v1_models__uuid__model_versions_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/models/{}/model-versions",
+      "rust_method": "list_model_versions",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 94,
+      "query": "ModelSecurityModelVersionListOptions",
+      "schemas": [
+        "ModelVersionListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "sort_order"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelVersionListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/scans",
+    "operation_id": "list_scans_v1_scans_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/scans",
+      "rust_method": "list",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 123,
+      "query": "ModelSecurityScanListOptions",
+      "schemas": [
+        "ScanListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "sort_order",
+      "search_query",
+      "security_group_uuid",
+      "model_version_uuid",
+      "source_types",
+      "eval_outcomes",
+      "start_time",
+      "end_time",
+      "labels_query"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "isBackgroundRefresh",
+      "search",
+      "sort_by"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ScanListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "POST",
+    "path": "/v1/scans",
+    "operation_id": "create_scan_v1_scans_post",
+    "sdk": {
+      "method": "POST",
+      "path": "/v1/scans",
+      "rust_method": "create",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 107,
+      "query": null,
+      "schemas": [
+        "ScanCreateRequestSchema",
+        "ScanBaseResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ScanCreateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ScanBaseResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/scans/label-keys",
+    "operation_id": "list_scan_label_keys_v1_scans_label_keys_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/scans/label-keys",
+      "rust_method": "get_label_keys",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 329,
+      "query": "ModelSecurityLabelListOptions",
+      "schemas": [
+        "LabelKeyListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "search"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LabelKeyListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/scans/label-keys/{key}/values",
+    "operation_id": "list_scan_label_key_values_v1_scans_label_keys__key__values_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/scans/label-keys/{}/values",
+      "rust_method": "get_label_values",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 344,
+      "query": "ModelSecurityLabelListOptions",
+      "schemas": [
+        "LabelValueListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "search"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LabelValueListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/scans/{scan_uuid}/evaluations",
+    "operation_id": "get_scan_evaluations_v1_scans__scan_uuid__evaluations_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/scans/{}/evaluations",
+      "rust_method": "get_evaluations",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 210,
+      "query": "ModelSecurityEvaluationListOptions",
+      "schemas": [
+        "RuleEvaluationListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "sort_field",
+      "sort_order",
+      "result",
+      "rule_instance_uuid"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RuleEvaluationListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/scans/{scan_uuid}/files",
+    "operation_id": "get_files_v1_scans__scan_uuid__files_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/scans/{}/files",
+      "rust_method": "get_files",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 229,
+      "query": "ModelSecurityFileListOptions",
+      "schemas": [
+        "FileListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "sort_field",
+      "sort_dir",
+      "query_path",
+      "recursive",
+      "type"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "result",
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FileListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "DELETE",
+    "path": "/v1/scans/{scan_uuid}/labels",
+    "operation_id": "delete_scan_labels_v1_scans__scan_uuid__labels_delete",
+    "sdk": {
+      "method": "DELETE",
+      "path": "/v1/scans/{}/labels",
+      "rust_method": "delete_labels",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 288,
+      "query": null,
+      "schemas": []
+    },
+    "spec_query": [
+      "keys"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "204": {
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "POST",
+    "path": "/v1/scans/{scan_uuid}/labels",
+    "operation_id": "add_scan_labels_v1_scans__scan_uuid__labels_post",
+    "sdk": {
+      "method": "POST",
+      "path": "/v1/scans/{}/labels",
+      "rust_method": "add_labels",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 248,
+      "query": null,
+      "schemas": [
+        "LabelsCreateRequestSchema",
+        "LabelsResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/LabelsCreateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LabelsResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "PUT",
+    "path": "/v1/scans/{scan_uuid}/labels",
+    "operation_id": "set_scan_labels_v1_scans__scan_uuid__labels_put",
+    "sdk": {
+      "method": "PUT",
+      "path": "/v1/scans/{}/labels",
+      "rust_method": "set_labels",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 268,
+      "query": null,
+      "schemas": [
+        "LabelsCreateRequestSchema",
+        "LabelsResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/LabelsCreateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LabelsResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/scans/{scan_uuid}/rule-violations",
+    "operation_id": "get_scan_violations_v1_scans__scan_uuid__rule_violations_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/scans/{}/rule-violations",
+      "rust_method": "get_violations",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 310,
+      "query": "ModelSecurityViolationListOptions",
+      "schemas": [
+        "ViolationListSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ViolationListSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/scans/{uuid}",
+    "operation_id": "get_scan_v1_scans__uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/scans/{}",
+      "rust_method": "get",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 194,
+      "query": null,
+      "schemas": [
+        "ScanBaseResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ScanBaseResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "dataplane",
+    "method": "GET",
+    "path": "/v1/violations/{uuid}",
+    "operation_id": "get_violation_v1_violations__uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/violations/{}",
+      "rust_method": "get_violation",
+      "source": "crates/scm-sdk/src/airs/model_security/scans.rs",
+      "line": 378,
+      "query": null,
+      "schemas": [
+        "ViolationResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ViolationResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/custom-rules",
+    "operation_id": "list_custom_rules_v1_custom_rules_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/custom-rules",
+      "rust_method": "list",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 22,
+      "query": "CustomRuleListOptions",
+      "schemas": [
+        "ListCustomRulesResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "sort_field",
+      "sort_dir",
+      "is_archived",
+      "search_query",
+      "source_types",
+      "generation"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListCustomRulesResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "POST",
+    "path": "/v1/custom-rules",
+    "operation_id": "create_custom_rule_v1_custom_rules_post",
+    "sdk": {
+      "method": "POST",
+      "path": "/v1/custom-rules",
+      "rust_method": "create",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 82,
+      "query": null,
+      "schemas": [
+        "CustomRuleCreateRequestSchema",
+        "CustomRuleResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/CustomRuleCreateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomRuleResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/custom-rules/versions",
+    "operation_id": "list_custom_rules_versions_v1_custom_rules_versions_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/custom-rules/versions",
+      "rust_method": "list_versions",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 216,
+      "query": "SnapshotVersionListOptions",
+      "schemas": [
+        "SnapshotVersionListResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "next_token"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SnapshotVersionListResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/custom-rules/{custom_rule_uuid}",
+    "operation_id": "get_custom_rule_v1_custom_rules__custom_rule_uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/custom-rules/{}",
+      "rust_method": "get",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 98,
+      "query": null,
+      "schemas": [
+        "CustomRuleResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomRuleResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "PUT",
+    "path": "/v1/custom-rules/{custom_rule_uuid}",
+    "operation_id": "update_custom_rule_v1_custom_rules__custom_rule_uuid__put",
+    "sdk": {
+      "method": "PUT",
+      "path": "/v1/custom-rules/{}",
+      "rust_method": "update",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 114,
+      "query": null,
+      "schemas": [
+        "CustomRuleUpdateRequestSchema",
+        "CustomRuleResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/CustomRuleUpdateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomRuleResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "POST",
+    "path": "/v1/custom-rules/{custom_rule_uuid}/archive",
+    "operation_id": "archive_custom_rule_v1_custom_rules__custom_rule_uuid__archive_post",
+    "sdk": {
+      "method": "POST",
+      "path": "/v1/custom-rules/{}/archive",
+      "rust_method": "archive",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 133,
+      "query": null,
+      "schemas": []
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "204": {
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/custom-rules/{custom_rule_uuid}/security-groups",
+    "operation_id": "list_custom_rule_security_groups_v1_custom_rules__custom_rule_uuid__security_groups_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/custom-rules/{}/security-groups",
+      "rust_method": "list_security_groups",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 157,
+      "query": "CustomRuleSecurityGroupListOptions",
+      "schemas": [
+        "ListCustomRuleSecurityGroupsResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListCustomRuleSecurityGroupsResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "POST",
+    "path": "/v1/custom-rules/{custom_rule_uuid}/security-groups",
+    "operation_id": "batch_assign_custom_rule_v1_custom_rules__custom_rule_uuid__security_groups_post",
+    "sdk": {
+      "method": "POST",
+      "path": "/v1/custom-rules/{}/security-groups",
+      "rust_method": "assign_security_groups",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 177,
+      "query": null,
+      "schemas": [
+        "BatchAssignCustomRuleRequestSchema",
+        "BatchAssignCustomRuleResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/BatchAssignCustomRuleRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "207": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BatchAssignCustomRuleResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "DELETE",
+    "path": "/v1/custom-rules/{custom_rule_uuid}/security-groups/{sg_uuid}",
+    "operation_id": "remove_custom_rule_assignment_v1_custom_rules__custom_rule_uuid__security_groups__sg_uuid__delete",
+    "sdk": {
+      "method": "DELETE",
+      "path": "/v1/custom-rules/{}/security-groups/{}",
+      "rust_method": "remove_assignment",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 197,
+      "query": null,
+      "schemas": []
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "204": {
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "POST",
+    "path": "/v1/custom-rules/{custom_rule_uuid}/unarchive",
+    "operation_id": "unarchive_custom_rule_v1_custom_rules__custom_rule_uuid__unarchive_post",
+    "sdk": {
+      "method": "POST",
+      "path": "/v1/custom-rules/{}/unarchive",
+      "rust_method": "unarchive",
+      "source": "crates/scm-sdk/src/airs/model_security/custom_rules.rs",
+      "line": 145,
+      "query": null,
+      "schemas": []
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "204": {
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/pypi/authenticate",
+    "operation_id": "get_pypi_url_v1_pypi_authenticate_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/pypi/authenticate",
+      "rust_method": "get_pypi_auth",
+      "source": "crates/scm-sdk/src/airs/model_security/client.rs",
+      "line": 74,
+      "query": null,
+      "schemas": [
+        "PyPIAuthResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PyPIAuthResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-groups",
+    "operation_id": "list_security_groups_v1_security_groups_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-groups",
+      "rust_method": "list",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 37,
+      "query": "ModelSecurityGroupListOptions",
+      "schemas": [
+        "ListModelSecurityGroupsResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "skip",
+      "limit",
+      "sort_field",
+      "sort_dir",
+      "source_types",
+      "search_query",
+      "enabled_rules"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListModelSecurityGroupsResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "POST",
+    "path": "/v1/security-groups",
+    "operation_id": "create_security_group_v1_security_groups_post",
+    "sdk": {
+      "method": "POST",
+      "path": "/v1/security-groups",
+      "rust_method": "create",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 21,
+      "query": null,
+      "schemas": [
+        "ModelSecurityGroupCreateRequestSchema",
+        "ModelSecurityGroupResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ModelSecurityGroupCreateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelSecurityGroupResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-groups/{security_group_uuid}/rule-instances",
+    "operation_id": "list_rule_instances_v1_security_groups__security_group_uuid__rule_instances_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-groups/{}/rule-instances",
+      "rust_method": "list_rule_instances",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 143,
+      "query": "ModelSecurityRuleInstanceListOptions",
+      "schemas": [
+        "ListModelSecurityRuleInstancesResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "security_rule_uuid",
+      "state",
+      "is_custom",
+      "generation"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListModelSecurityRuleInstancesResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-groups/{security_group_uuid}/rule-instances/versions",
+    "operation_id": "list_rule_instances_versions_v1_security_groups__security_group_uuid__rule_instances_versions_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-groups/{}/rule-instances/versions",
+      "rust_method": "list_rule_instance_versions",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 205,
+      "query": "SnapshotVersionListOptions",
+      "schemas": [
+        "SnapshotVersionListResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "next_token"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SnapshotVersionListResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-groups/{security_group_uuid}/rule-instances/{rule_instance_uuid}",
+    "operation_id": "get_rule_instance_v1_security_groups__security_group_uuid__rule_instances__rule_instance_uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-groups/{}/rule-instances/{}",
+      "rust_method": "get_rule_instance",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 162,
+      "query": null,
+      "schemas": [
+        "ModelSecurityRuleInstanceResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelSecurityRuleInstanceResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "PUT",
+    "path": "/v1/security-groups/{security_group_uuid}/rule-instances/{rule_instance_uuid}",
+    "operation_id": "update_rule_instance_v1_security_groups__security_group_uuid__rule_instances__rule_instance_uuid__put",
+    "sdk": {
+      "method": "PUT",
+      "path": "/v1/security-groups/{}/rule-instances/{}",
+      "rust_method": "update_rule_instance",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 182,
+      "query": null,
+      "schemas": [
+        "ModelSecurityRuleInstanceUpdateRequestSchema",
+        "ModelSecurityRuleInstanceResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ModelSecurityRuleInstanceUpdateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelSecurityRuleInstanceResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "DELETE",
+    "path": "/v1/security-groups/{uuid}",
+    "operation_id": "delete_security_group_v1_security_groups__uuid__delete",
+    "sdk": {
+      "method": "DELETE",
+      "path": "/v1/security-groups/{}",
+      "rust_method": "delete",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 132,
+      "query": null,
+      "schemas": []
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "204": {
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-groups/{uuid}",
+    "operation_id": "get_security_group_v1_security_groups__uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-groups/{}",
+      "rust_method": "get",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 97,
+      "query": null,
+      "schemas": [
+        "ModelSecurityGroupResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelSecurityGroupResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "PUT",
+    "path": "/v1/security-groups/{uuid}",
+    "operation_id": "update_security_group_v1_security_groups__uuid__put",
+    "sdk": {
+      "method": "PUT",
+      "path": "/v1/security-groups/{}",
+      "rust_method": "update",
+      "source": "crates/scm-sdk/src/airs/model_security/groups.rs",
+      "line": 113,
+      "query": null,
+      "schemas": [
+        "ModelSecurityGroupUpdateRequestSchema",
+        "ModelSecurityGroupResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ModelSecurityGroupUpdateRequestSchema"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelSecurityGroupResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-rules",
+    "operation_id": "list_security_rules_v1_security_rules_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-rules",
+      "rust_method": "list",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 263,
+      "query": "ModelSecurityRuleListOptions",
+      "schemas": [
+        "ListModelSecurityRulesResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "skip",
+      "source_type",
+      "search_query",
+      "generation"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [
+      "search"
+    ],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListModelSecurityRulesResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-rules/versions",
+    "operation_id": "list_security_rules_versions_v1_security_rules_versions_get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-rules/versions",
+      "rust_method": "list_versions",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 339,
+      "query": "SnapshotVersionListOptions",
+      "schemas": [
+        "SnapshotVersionListResponseSchema"
+      ]
+    },
+    "spec_query": [
+      "limit",
+      "next_token"
+    ],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/SnapshotVersionListResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  },
+  {
+    "plane": "management",
+    "method": "GET",
+    "path": "/v1/security-rules/{uuid}",
+    "operation_id": "get_security_rule_v1_security_rules__uuid__get",
+    "sdk": {
+      "method": "GET",
+      "path": "/v1/security-rules/{}",
+      "rust_method": "get",
+      "source": "crates/scm-sdk/src/airs/model_security/inventory.rs",
+      "line": 323,
+      "query": null,
+      "schemas": [
+        "ModelSecurityRuleResponseSchema"
+      ]
+    },
+    "spec_query": [],
+    "missing_query": [],
+    "sdk_extra_query": [],
+    "request_body": null,
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ModelSecurityRuleResponseSchema"
+            }
+          }
+        },
+        "description": "Successful Response"
+      }
+    }
+  }
+]

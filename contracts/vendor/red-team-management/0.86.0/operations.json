@@ -1,0 +1,3351 @@
+{
+  "operations": [
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "DELETE",
+      "nativeBindings": [
+        {
+          "class": "RedTeamAdaptersClient",
+          "method": "delete",
+          "source": "crates/scm-sdk/src/airs/red_team/adapters.rs"
+        }
+      ],
+      "operationId": "delete_adapter_v1_adapters__adapter_uuid__delete",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "adapter_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Adapter Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/adapters/{adapter_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "204": {
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "DELETE",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "delete_prompt",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "delete_prompt_v1_custom_attack_custom_prompt_set__prompt_set_uuid__custom_prompt__prompt_uuid__delete",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "prompt_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}/custom-prompt/{prompt_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "204": {
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "DELETE",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "delete_copilot_token",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "delete_ms_copilot_studio_token_v1_target_ms_copilot_studio_token__token_json_uuid__delete",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "token_json_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Token Json Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/target/ms-copilot-studio/token/{token_json_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "204": {
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "DELETE",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "delete",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "delete_target_v1_target__target_uuid__delete",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "target_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Target Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/target/{target_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "204": {
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamAdaptersClient",
+          "method": "list",
+          "source": "crates/scm-sdk/src/airs/red_team/adapters.rs"
+        }
+      ],
+      "operationId": "list_adapters_v1_adapters_get",
+      "parameters": [
+        {
+          "description": "Number of records to skip",
+          "in": "query",
+          "name": "skip",
+          "required": false,
+          "schema": {
+            "default": 0,
+            "description": "Number of records to skip",
+            "minimum": 0,
+            "title": "Skip",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Maximum records to return",
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "description": "Maximum records to return",
+            "maximum": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Search adapter by name",
+          "in": "query",
+          "name": "search",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Search adapter by name",
+            "title": "Search"
+          }
+        },
+        {
+          "description": "Filter adapters by status (DRAFT or ACTIVE)",
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CustomTargetAdapterStatus"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter adapters by status (DRAFT or ACTIVE)",
+            "title": "Status"
+          }
+        },
+        {
+          "description": "Include the number of targets referencing each adapter. Heavier query — only enable when needed.",
+          "in": "query",
+          "name": "include_target_count",
+          "required": false,
+          "schema": {
+            "default": false,
+            "description": "Include the number of targets referencing each adapter. Heavier query — only enable when needed.",
+            "title": "Include Target Count",
+            "type": "boolean"
+          }
+        }
+      ],
+      "path": "/v1/adapters",
+      "reachableReferences": [
+        "#/components/schemas/CustomTargetAdapterListItemSchema",
+        "#/components/schemas/CustomTargetAdapterListSchema",
+        "#/components/schemas/CustomTargetAdapterStatus",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PaginationSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTargetAdapterListSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamAdaptersClient",
+          "method": "get_config",
+          "source": "crates/scm-sdk/src/airs/red_team/adapters.rs"
+        }
+      ],
+      "operationId": "get_adapter_config_v1_adapters_config_get",
+      "parameters": [],
+      "path": "/v1/adapters/config",
+      "reachableReferences": [
+        "#/components/schemas/CustomTargetAdapterConfigResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTargetAdapterConfigResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "401": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Unauthorized"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamAdaptersClient",
+          "method": "get",
+          "source": "crates/scm-sdk/src/airs/red_team/adapters.rs"
+        }
+      ],
+      "operationId": "get_adapter_v1_adapters__adapter_uuid__get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "adapter_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Adapter Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/adapters/{adapter_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarResponseSchema",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/CustomTargetAdapterSchema",
+        "#/components/schemas/CustomTargetAdapterStatus",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTargetAdapterSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "list_active_prompt_sets",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "list_active_prompt_sets_v1_custom_attack_active_custom_prompt_sets_get",
+      "parameters": [],
+      "path": "/v1/custom-attack/active-custom-prompt-sets",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetListActiveSchema",
+        "#/components/schemas/CustomPromptSetReferenceSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/SupportedLanguage",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetListActiveSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "401": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Unauthorized"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "get_prompt_set",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "get_prompt_set_v1_custom_attack_custom_prompt_set__prompt_set_uuid__get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/LanguageOptionSchema",
+        "#/components/schemas/PromptSetStatsSchema",
+        "#/components/schemas/PropertyDefinitionSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "get_prompt",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "get_prompt_v1_custom_attack_custom_prompt_set__prompt_set_uuid__custom_prompt__prompt_uuid__get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "prompt_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}/custom-prompt/{prompt_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyAssignmentSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "list_prompts",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "list_prompts_in_set_v1_custom_attack_custom_prompt_set__prompt_set_uuid__list_custom_prompts_get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Number of records to skip",
+          "in": "query",
+          "name": "skip",
+          "required": false,
+          "schema": {
+            "default": 0,
+            "description": "Number of records to skip",
+            "minimum": 0,
+            "title": "Skip",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Maximum records to return",
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "description": "Maximum records to return",
+            "maximum": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Filter by status",
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by status",
+            "title": "Status"
+          }
+        },
+        {
+          "description": "Filter by active status",
+          "in": "query",
+          "name": "active",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by active status",
+            "title": "Active"
+          }
+        },
+        {
+          "description": "Search in prompt text",
+          "in": "query",
+          "name": "search",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Search in prompt text",
+            "title": "Search"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}/list-custom-prompts",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptListItemSchema",
+        "#/components/schemas/CustomPromptListSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PaginationSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptListSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "get_prompt_set_reference",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "resolve_prompt_set_reference_v1_custom_attack_custom_prompt_set__prompt_set_uuid__reference_get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}/reference",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetReferenceSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/SupportedLanguage",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetReferenceSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "get_prompt_set_version_info",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "get_prompt_set_version_info_v1_custom_attack_custom_prompt_set__prompt_set_uuid__version_info_get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Specific version ID",
+          "in": "query",
+          "name": "version",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Specific version ID",
+            "title": "Version"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}/version-info",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetVersionInfoSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PromptSetStatsSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetVersionInfoSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "download_template",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "download_template_v1_custom_attack_download_template__prompt_set_uuid__get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/download-template/{prompt_set_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "list_prompt_sets",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "list_prompt_sets_v1_custom_attack_list_custom_prompt_sets_get",
+      "parameters": [
+        {
+          "description": "Number of records to skip",
+          "in": "query",
+          "name": "skip",
+          "required": false,
+          "schema": {
+            "default": 0,
+            "description": "Number of records to skip",
+            "minimum": 0,
+            "title": "Skip",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Maximum records to return",
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "description": "Maximum records to return",
+            "maximum": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Filter by status",
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by status",
+            "title": "Status"
+          }
+        },
+        {
+          "description": "Filter by active status",
+          "in": "query",
+          "name": "active",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by active status",
+            "title": "Active"
+          }
+        },
+        {
+          "description": "Filter by archive status (None=non-archived only, True=archived only, False=non-archived only)",
+          "in": "query",
+          "name": "archive",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by archive status (None=non-archived only, True=archived only, False=non-archived only)",
+            "title": "Archive"
+          }
+        },
+        {
+          "description": "Search in name and description",
+          "in": "query",
+          "name": "search",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Search in name and description",
+            "title": "Search"
+          }
+        },
+        {
+          "description": "Filter by language code (ISO 639-1)",
+          "in": "query",
+          "name": "language",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by language code (ISO 639-1)",
+            "title": "Language"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/list-custom-prompt-sets",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetListItemSchema",
+        "#/components/schemas/CustomPromptSetListSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/LanguageOptionSchema",
+        "#/components/schemas/PaginationSchema",
+        "#/components/schemas/PromptSetStatsSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetListSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "get_property_names",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "get_property_names_v1_custom_attack_property_names_get",
+      "parameters": [],
+      "path": "/v1/custom-attack/property-names",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyNamesListResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropertyNamesListResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "401": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Unauthorized"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "get_property_values_multiple",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "get_property_values_multiple_v1_custom_attack_property_values_get",
+      "parameters": [
+        {
+          "description": "Comma-separated list of property names",
+          "in": "query",
+          "name": "property_names",
+          "required": true,
+          "schema": {
+            "description": "Comma-separated list of property names",
+            "title": "Property Names",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/property-values",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyValuesMultipleResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropertyValuesMultipleResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "get_property_values",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "get_property_values_v1_custom_attack_property_values__property_name__get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "property_name",
+          "required": true,
+          "schema": {
+            "title": "Property Name",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/property-values/{property_name}",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyValuesResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropertyValuesResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamClient",
+          "method": "get_dashboard_overview",
+          "source": "crates/scm-sdk/src/airs/red_team/facade.rs"
+        }
+      ],
+      "operationId": "get_overview_v1_dashboard_overview_get",
+      "parameters": [],
+      "path": "/v1/dashboard/overview",
+      "reachableReferences": [
+        "#/components/schemas/CountByNameSchema",
+        "#/components/schemas/DashboardOverviewResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DashboardOverviewResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "401": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Unauthorized"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamClient",
+          "method": "get_management_languages",
+          "source": "crates/scm-sdk/src/airs/red_team/facade.rs"
+        }
+      ],
+      "operationId": "get_languages_v1_languages_get",
+      "parameters": [],
+      "path": "/v1/languages",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/LanguageDropdownOptionSchema",
+        "#/components/schemas/TenantLanguagesResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantLanguagesResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "401": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Unauthorized"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "list",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "list_targets_v1_target_get",
+      "parameters": [
+        {
+          "description": "Number of records to skip",
+          "in": "query",
+          "name": "skip",
+          "required": false,
+          "schema": {
+            "default": 0,
+            "description": "Number of records to skip",
+            "minimum": 0,
+            "title": "Skip",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Maximum records to return",
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "description": "Maximum records to return",
+            "maximum": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Filter by target type",
+          "in": "query",
+          "name": "target_type",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by target type",
+            "title": "Target Type"
+          }
+        },
+        {
+          "description": "Filter by target status",
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TargetStatusFilter"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by target status",
+            "title": "Status"
+          }
+        },
+        {
+          "description": "Filter by profiling status",
+          "in": "query",
+          "name": "profiling_status",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfilingStatusFilter"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by profiling status",
+            "title": "Profiling Status"
+          }
+        },
+        {
+          "description": "Search target by name",
+          "in": "query",
+          "name": "search",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Search target by name",
+            "title": "Search"
+          }
+        },
+        {
+          "description": "Filter targets by the custom adapter they use",
+          "in": "query",
+          "name": "adapter_uuid",
+          "required": false,
+          "schema": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter targets by the custom adapter they use",
+            "title": "Adapter Uuid"
+          }
+        }
+      ],
+      "path": "/v1/target",
+      "reachableReferences": [
+        "#/components/schemas/ApiEndpointType",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PaginationSchema",
+        "#/components/schemas/ProfilingStatus",
+        "#/components/schemas/ProfilingStatusFilter",
+        "#/components/schemas/ResponseMode",
+        "#/components/schemas/TargetConnectionType",
+        "#/components/schemas/TargetListItemSchema",
+        "#/components/schemas/TargetListSchema",
+        "#/components/schemas/TargetStatus",
+        "#/components/schemas/TargetStatusFilter",
+        "#/components/schemas/TargetType",
+        "#/components/schemas/ValidationError",
+        "#/components/schemas/red_team_shared__schemas__auth_config__AuthType"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetListSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "get",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "get_target_v1_target__target_uuid__get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "target_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Target Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/target/{target_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarResponseSchema",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/ApiEndpointType",
+        "#/components/schemas/AudioFormat",
+        "#/components/schemas/BasicAuthAuthConfigRedact",
+        "#/components/schemas/BasicAuthLocation",
+        "#/components/schemas/BedrockAccessConnectionRedactParams",
+        "#/components/schemas/DatabricksConnectionRedactParams",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/HeadersAuthConfigRedact",
+        "#/components/schemas/HuggingfaceConnectionRedactParams",
+        "#/components/schemas/MSCopilotStudioConnectionRedactParams",
+        "#/components/schemas/MultiTurnClientSessionConfig",
+        "#/components/schemas/MultiTurnStatefulConfig",
+        "#/components/schemas/MultiTurnStatelessConfig",
+        "#/components/schemas/NativeConnectionParamsRedactBase",
+        "#/components/schemas/OAuth2AuthConfigRedact",
+        "#/components/schemas/OpenAIConnectionRedactParams",
+        "#/components/schemas/ProfilingStatus",
+        "#/components/schemas/ResponseMode",
+        "#/components/schemas/RestConnectionParamsRedactBase",
+        "#/components/schemas/StreamingConnectionParamsRedactBase",
+        "#/components/schemas/TargetAdditionalContext",
+        "#/components/schemas/TargetBackground",
+        "#/components/schemas/TargetConnectionType",
+        "#/components/schemas/TargetMetadata",
+        "#/components/schemas/TargetRedactSchema",
+        "#/components/schemas/TargetStatus",
+        "#/components/schemas/TargetType",
+        "#/components/schemas/ValidationError",
+        "#/components/schemas/VertexAIConnectionRedactParams",
+        "#/components/schemas/WebSocketConnectionParamsRedactBase",
+        "#/components/schemas/red_team_shared__schemas__auth_config__AuthType",
+        "#/components/schemas/red_team_shared__schemas__databricks__AuthType"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetRedactSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "GET",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "get_profile",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "get_profiling_results_v1_target__target_uuid__profile_get",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "target_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Target Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/target/{target_uuid}/profile",
+      "reachableReferences": [
+        "#/components/schemas/AiGeneratedItems",
+        "#/components/schemas/AiGeneratedLanguageListFieldInfo",
+        "#/components/schemas/AiGeneratedListFieldInfo",
+        "#/components/schemas/AiGeneratedStringFieldInfo",
+        "#/components/schemas/AiItemTag",
+        "#/components/schemas/AiLanguageItemTag",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/OtherDetails",
+        "#/components/schemas/OtherDetailsPrettified",
+        "#/components/schemas/TargetAdditionalContext",
+        "#/components/schemas/TargetBackground",
+        "#/components/schemas/TargetProfileResponse",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetProfileResponse"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamAdaptersClient",
+          "method": "create",
+          "source": "crates/scm-sdk/src/airs/red_team/adapters.rs"
+        }
+      ],
+      "operationId": "create_adapter_v1_adapters_post",
+      "parameters": [
+        {
+          "description": "Run static validation on the script. When false, the adapter is saved as DRAFT; when true it is validated and set ACTIVE.",
+          "in": "query",
+          "name": "validate",
+          "required": false,
+          "schema": {
+            "default": true,
+            "description": "Run static validation on the script. When false, the adapter is saved as DRAFT; when true it is validated and set ACTIVE.",
+            "title": "Validate",
+            "type": "boolean"
+          }
+        }
+      ],
+      "path": "/v1/adapters",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarBase",
+        "#/components/schemas/AdapterVarResponseSchema",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/CustomTargetAdapterCreateRequestSchema",
+        "#/components/schemas/CustomTargetAdapterSchema",
+        "#/components/schemas/CustomTargetAdapterStatus",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomTargetAdapterCreateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTargetAdapterSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamAdaptersClient",
+          "method": "validate",
+          "source": "crates/scm-sdk/src/airs/red_team/adapters.rs"
+        }
+      ],
+      "operationId": "validate_adapter_v1_adapters_validate_post",
+      "parameters": [],
+      "path": "/v1/adapters/validate",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarBase",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/CustomTargetAdapterValidateRequestSchema",
+        "#/components/schemas/CustomTargetAdapterValidateResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomTargetAdapterValidateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTargetAdapterValidateResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "create_prompt_set",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "create_prompt_set_v1_custom_attack_custom_prompt_set_post",
+      "parameters": [],
+      "path": "/v1/custom-attack/custom-prompt-set",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetCreateRequestSchema",
+        "#/components/schemas/CustomPromptSetResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/LanguageOptionSchema",
+        "#/components/schemas/PromptSetStatsSchema",
+        "#/components/schemas/PropertyDefinitionSchema",
+        "#/components/schemas/SupportedLanguage",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomPromptSetCreateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "create_prompt",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "create_prompt_v1_custom_attack_custom_prompt_set_custom_prompt_post",
+      "parameters": [],
+      "path": "/v1/custom-attack/custom-prompt-set/custom-prompt",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptCreateRequestSchema",
+        "#/components/schemas/CustomPromptResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyAssignmentSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomPromptCreateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "create_property_name",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "create_property_name_v1_custom_attack_property_names_post",
+      "parameters": [],
+      "path": "/v1/custom-attack/property-names",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyNameCreateRequestSchema",
+        "#/components/schemas/PropertyNamesListResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PropertyNameCreateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropertyNamesListResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "create_property_value",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "create_property_value_v1_custom_attack_property_values_post",
+      "parameters": [],
+      "path": "/v1/custom-attack/property-values",
+      "reachableReferences": [
+        "#/components/schemas/BaseResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyValueCreateRequestSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PropertyValueCreateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "upload_prompts_csv",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "upload_prompts_csv_v1_custom_attack_upload_custom_prompts_csv_post",
+      "parameters": [
+        {
+          "description": "UUID of the prompt set",
+          "in": "query",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "description": "UUID of the prompt set",
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/upload-custom-prompts-csv",
+      "reachableReferences": [
+        "#/components/schemas/BaseResponseSchema",
+        "#/components/schemas/Body_upload_prompts_csv_v1_custom_attack_upload_custom_prompts_csv_post",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/Body_upload_prompts_csv_v1_custom_attack_upload_custom_prompts_csv_post"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "create",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "create_target_v1_target_post",
+      "parameters": [
+        {
+          "description": "Whether to validate target configuration",
+          "in": "query",
+          "name": "validate",
+          "required": false,
+          "schema": {
+            "description": "Whether to validate target configuration",
+            "examples": [
+              true
+            ],
+            "title": "Validate",
+            "type": "boolean"
+          }
+        }
+      ],
+      "path": "/v1/target",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarBase",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/ApiEndpointType",
+        "#/components/schemas/AudioFormat",
+        "#/components/schemas/BasicAuthAuthConfig",
+        "#/components/schemas/BasicAuthLocation",
+        "#/components/schemas/BedrockAccessConnectionParams",
+        "#/components/schemas/DatabricksConnectionParams",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/HeadersAuthConfig",
+        "#/components/schemas/HuggingfaceConnectionParams",
+        "#/components/schemas/MSCopilotStudioConnectionParams",
+        "#/components/schemas/MultiTurnClientSessionConfig",
+        "#/components/schemas/MultiTurnStatefulConfig",
+        "#/components/schemas/MultiTurnStatelessConfig",
+        "#/components/schemas/NativeConnectionParamsBase",
+        "#/components/schemas/OAuth2AuthConfig",
+        "#/components/schemas/OpenAIConnectionParams",
+        "#/components/schemas/ProfilingStatus",
+        "#/components/schemas/ResponseMode",
+        "#/components/schemas/RestConnectionParamsBase",
+        "#/components/schemas/StreamingConnectionParamsBase",
+        "#/components/schemas/TargetAdditionalContext",
+        "#/components/schemas/TargetBackground",
+        "#/components/schemas/TargetConnectionType",
+        "#/components/schemas/TargetCreateRequestSchema",
+        "#/components/schemas/TargetMetadata",
+        "#/components/schemas/TargetResponseSchema",
+        "#/components/schemas/TargetStatus",
+        "#/components/schemas/TargetType",
+        "#/components/schemas/ValidationError",
+        "#/components/schemas/VertexAIConnectionParams",
+        "#/components/schemas/WebSocketConnectionParamsBase",
+        "#/components/schemas/red_team_shared__schemas__auth_config__AuthType",
+        "#/components/schemas/red_team_shared__schemas__databricks__AuthType"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TargetCreateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "get_copilot_auth_url",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "generate_ms_copilot_studio_auth_url_v1_target_ms_copilot_studio_auth_url_post",
+      "parameters": [],
+      "path": "/v1/target/ms-copilot-studio/auth-url",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/MSCopilotStudioAuthUrlRequestSchema",
+        "#/components/schemas/MSCopilotStudioAuthUrlResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MSCopilotStudioAuthUrlRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MSCopilotStudioAuthUrlResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "exchange_copilot_token",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "exchange_ms_copilot_studio_token_v1_target_ms_copilot_studio_token_post",
+      "parameters": [],
+      "path": "/v1/target/ms-copilot-studio/token",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/MSCopilotStudioTokenRequestSchema",
+        "#/components/schemas/MSCopilotStudioTokenResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MSCopilotStudioTokenRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MSCopilotStudioTokenResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "probe",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "run_target_probes_v1_target_probe_post",
+      "parameters": [],
+      "path": "/v1/target/probe",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarBase",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/ApiEndpointType",
+        "#/components/schemas/AudioFormat",
+        "#/components/schemas/BasicAuthAuthConfig",
+        "#/components/schemas/BasicAuthLocation",
+        "#/components/schemas/BedrockAccessConnectionParams",
+        "#/components/schemas/DatabricksConnectionParams",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/HeadersAuthConfig",
+        "#/components/schemas/HuggingfaceConnectionParams",
+        "#/components/schemas/MSCopilotStudioConnectionParams",
+        "#/components/schemas/MultiTurnClientSessionConfig",
+        "#/components/schemas/MultiTurnStatefulConfig",
+        "#/components/schemas/MultiTurnStatelessConfig",
+        "#/components/schemas/NativeConnectionParamsBase",
+        "#/components/schemas/OAuth2AuthConfig",
+        "#/components/schemas/OpenAIConnectionParams",
+        "#/components/schemas/ProfilingStatus",
+        "#/components/schemas/ResponseMode",
+        "#/components/schemas/RestConnectionParamsBase",
+        "#/components/schemas/StreamingConnectionParamsBase",
+        "#/components/schemas/TargetAdditionalContext",
+        "#/components/schemas/TargetBackground",
+        "#/components/schemas/TargetConnectionType",
+        "#/components/schemas/TargetMetadata",
+        "#/components/schemas/TargetProbeRequest",
+        "#/components/schemas/TargetResponseSchema",
+        "#/components/schemas/TargetStatus",
+        "#/components/schemas/TargetType",
+        "#/components/schemas/ValidationError",
+        "#/components/schemas/VertexAIConnectionParams",
+        "#/components/schemas/WebSocketConnectionParamsBase",
+        "#/components/schemas/red_team_shared__schemas__auth_config__AuthType",
+        "#/components/schemas/red_team_shared__schemas__databricks__AuthType"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TargetProbeRequest"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "validate_auth",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "validate_auth_v1_target_validate_auth_post",
+      "parameters": [],
+      "path": "/v1/target/validate-auth",
+      "reachableReferences": [
+        "#/components/schemas/BasicAuthAuthConfig",
+        "#/components/schemas/BasicAuthLocation",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/HeadersAuthConfig",
+        "#/components/schemas/OAuth2AuthConfig",
+        "#/components/schemas/TargetAuthValidationRequestSchema",
+        "#/components/schemas/TargetAuthValidationResponseSchema",
+        "#/components/schemas/ValidationError",
+        "#/components/schemas/red_team_shared__schemas__auth_config__AuthType"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TargetAuthValidationRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetAuthValidationResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "POST",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "start_profiling",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "start_profiling_v1_target__target_uuid__profile_post",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "target_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Target Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/target/{target_uuid}/profile",
+      "reachableReferences": [
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/StartProfilingResponseSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": null,
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartProfilingResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "PUT",
+      "nativeBindings": [
+        {
+          "class": "RedTeamAdaptersClient",
+          "method": "update",
+          "source": "crates/scm-sdk/src/airs/red_team/adapters.rs"
+        }
+      ],
+      "operationId": "update_adapter_v1_adapters__adapter_uuid__put",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "adapter_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Adapter Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Run validation on the adapter. When false, the adapter is saved as DRAFT (save for later) without validation; when true it is validated and set ACTIVE.",
+          "in": "query",
+          "name": "validate",
+          "required": false,
+          "schema": {
+            "default": true,
+            "description": "Run validation on the adapter. When false, the adapter is saved as DRAFT (save for later) without validation; when true it is validated and set ACTIVE.",
+            "title": "Validate",
+            "type": "boolean"
+          }
+        }
+      ],
+      "path": "/v1/adapters/{adapter_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarBase",
+        "#/components/schemas/AdapterVarResponseSchema",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/CustomTargetAdapterSchema",
+        "#/components/schemas/CustomTargetAdapterStatus",
+        "#/components/schemas/CustomTargetAdapterUpdateRequestSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomTargetAdapterUpdateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTargetAdapterSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "PUT",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "update_prompt_set",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "update_prompt_set_v1_custom_attack_custom_prompt_set__prompt_set_uuid__put",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetResponseSchema",
+        "#/components/schemas/CustomPromptSetUpdateRequestSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/LanguageOptionSchema",
+        "#/components/schemas/PromptSetStatsSchema",
+        "#/components/schemas/PropertyDefinitionSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomPromptSetUpdateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "PUT",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "archive_prompt_set",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "archive_prompt_set_v1_custom_attack_custom_prompt_set__prompt_set_uuid__archive_put",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}/archive",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptSetArchiveRequestSchema",
+        "#/components/schemas/CustomPromptSetResponseSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/LanguageOptionSchema",
+        "#/components/schemas/PromptSetStatsSchema",
+        "#/components/schemas/PropertyDefinitionSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomPromptSetArchiveRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptSetResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "PUT",
+      "nativeBindings": [
+        {
+          "class": "RedTeamCustomAttacksClient",
+          "method": "update_prompt",
+          "source": "crates/scm-sdk/src/airs/red_team/custom_attacks.rs"
+        }
+      ],
+      "operationId": "update_prompt_v1_custom_attack_custom_prompt_set__prompt_set_uuid__custom_prompt__prompt_uuid__put",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "prompt_set_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Set Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "prompt_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Prompt Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/custom-attack/custom-prompt-set/{prompt_set_uuid}/custom-prompt/{prompt_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/CustomPromptResponseSchema",
+        "#/components/schemas/CustomPromptUpdateRequestSchema",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/PropertyAssignmentSchema",
+        "#/components/schemas/ValidationError"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomPromptUpdateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomPromptResponseSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "PUT",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "update",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "update_target_v1_target__target_uuid__put",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "target_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Target Uuid",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Whether to validate target configuration",
+          "in": "query",
+          "name": "validate",
+          "required": false,
+          "schema": {
+            "default": true,
+            "description": "Whether to validate target configuration",
+            "title": "Validate",
+            "type": "boolean"
+          }
+        }
+      ],
+      "path": "/v1/target/{target_uuid}",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarBase",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/ApiEndpointType",
+        "#/components/schemas/AudioFormat",
+        "#/components/schemas/BasicAuthAuthConfig",
+        "#/components/schemas/BasicAuthLocation",
+        "#/components/schemas/BedrockAccessConnectionParams",
+        "#/components/schemas/DatabricksConnectionParams",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/HeadersAuthConfig",
+        "#/components/schemas/HuggingfaceConnectionParams",
+        "#/components/schemas/MSCopilotStudioConnectionParams",
+        "#/components/schemas/MultiTurnClientSessionConfig",
+        "#/components/schemas/MultiTurnStatefulConfig",
+        "#/components/schemas/MultiTurnStatelessConfig",
+        "#/components/schemas/NativeConnectionParamsBase",
+        "#/components/schemas/OAuth2AuthConfig",
+        "#/components/schemas/OpenAIConnectionParams",
+        "#/components/schemas/ProfilingStatus",
+        "#/components/schemas/ResponseMode",
+        "#/components/schemas/RestConnectionParamsBase",
+        "#/components/schemas/StreamingConnectionParamsBase",
+        "#/components/schemas/TargetAdditionalContext",
+        "#/components/schemas/TargetBackground",
+        "#/components/schemas/TargetConnectionType",
+        "#/components/schemas/TargetMetadata",
+        "#/components/schemas/TargetSchema",
+        "#/components/schemas/TargetStatus",
+        "#/components/schemas/TargetType",
+        "#/components/schemas/TargetUpdateRequestSchema",
+        "#/components/schemas/ValidationError",
+        "#/components/schemas/VertexAIConnectionParams",
+        "#/components/schemas/WebSocketConnectionParamsBase",
+        "#/components/schemas/red_team_shared__schemas__auth_config__AuthType",
+        "#/components/schemas/red_team_shared__schemas__databricks__AuthType"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TargetUpdateRequestSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    },
+    {
+      "coverage": "native_method_exists; static_mapping_only; not_live_acceptance",
+      "method": "PUT",
+      "nativeBindings": [
+        {
+          "class": "RedTeamTargetsClient",
+          "method": "update_profile",
+          "source": "crates/scm-sdk/src/airs/red_team/targets.rs"
+        }
+      ],
+      "operationId": "update_target_profile_v1_target__target_uuid__profile_put",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "target_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "title": "Target Uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/v1/target/{target_uuid}/profile",
+      "reachableReferences": [
+        "#/components/schemas/AdapterVarBase",
+        "#/components/schemas/AdapterVarType",
+        "#/components/schemas/ApiEndpointType",
+        "#/components/schemas/AudioFormat",
+        "#/components/schemas/BasicAuthAuthConfig",
+        "#/components/schemas/BasicAuthLocation",
+        "#/components/schemas/BedrockAccessConnectionParams",
+        "#/components/schemas/DatabricksConnectionParams",
+        "#/components/schemas/HTTPValidationError",
+        "#/components/schemas/HeadersAuthConfig",
+        "#/components/schemas/HuggingfaceConnectionParams",
+        "#/components/schemas/MSCopilotStudioConnectionParams",
+        "#/components/schemas/MultiTurnClientSessionConfig",
+        "#/components/schemas/MultiTurnStatefulConfig",
+        "#/components/schemas/MultiTurnStatelessConfig",
+        "#/components/schemas/NativeConnectionParamsBase",
+        "#/components/schemas/OAuth2AuthConfig",
+        "#/components/schemas/OpenAIConnectionParams",
+        "#/components/schemas/ProfilingStatus",
+        "#/components/schemas/ResponseMode",
+        "#/components/schemas/RestConnectionParamsBase",
+        "#/components/schemas/StreamingConnectionParamsBase",
+        "#/components/schemas/TargetAdditionalContext",
+        "#/components/schemas/TargetBackground",
+        "#/components/schemas/TargetConnectionType",
+        "#/components/schemas/TargetContextUpdateSchema",
+        "#/components/schemas/TargetMetadata",
+        "#/components/schemas/TargetSchema",
+        "#/components/schemas/TargetStatus",
+        "#/components/schemas/TargetType",
+        "#/components/schemas/ValidationError",
+        "#/components/schemas/VertexAIConnectionParams",
+        "#/components/schemas/WebSocketConnectionParamsBase",
+        "#/components/schemas/red_team_shared__schemas__auth_config__AuthType",
+        "#/components/schemas/red_team_shared__schemas__databricks__AuthType"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TargetContextUpdateSchema"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetSchema"
+              }
+            }
+          },
+          "description": "Successful Response"
+        },
+        "422": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          },
+          "description": "Validation Error"
+        }
+      },
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt-plane"
+        }
+      ],
+      "source": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml"
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceId": "prisma-airs-redteam/management/mp-openapi.yaml@0.86.0+582e30543bf2"
+}

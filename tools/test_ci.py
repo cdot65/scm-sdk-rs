@@ -63,6 +63,7 @@ class CiContractTests(unittest.TestCase):
         executed = {argument for command in selected for argument in command
                     if argument.startswith("scripts/check-") and argument.endswith(".py")}
         self.assertEqual(documented, executed)
+        self.assertIn("scripts/check-private-material.py", executed)
         self.assertIn("scripts/check-dependencies.py", executed)
 
     def test_committed_range_fails_on_shallow_history_and_passes_after_full_fetch(self):
@@ -491,6 +492,13 @@ class CiContractTests(unittest.TestCase):
         self.assertIsNotNone(match)
         from check_phase import commands_for
         self.assertTrue(commands_for(int(match.group(1))))
+        selected = commands_for(int(match.group(1)))
+        if any(command[0].startswith((".local/typescript/node_modules/", "tools/node_modules/"))
+               for command in selected):
+            job = WORKFLOW.split("  contracts-and-package:", 1)[1].split("\n  rust:", 1)[0]
+            lines = [line.strip() for line in job.splitlines()]
+            gate = next(line for line in lines if "run: python3 tools/check_phase.py --phase" in line)
+            self.assertLess(lines.index("run: python3 tools/bootstrap_reference.py"), lines.index(gate))
 
     def test_ci_contract_subset_cannot_replace_complete_phase_qualification(self):
         from check_phase import commands_for, ci_commands_for
@@ -501,9 +509,9 @@ class CiContractTests(unittest.TestCase):
         for script in ('scripts/check-rust.py','scripts/check-native-exports.py','scripts/check-package.py'):
             self.assertTrue(any(script in command for command in full))
             self.assertFalse(any(script in command for command in fast))
-        self.assertIn('--phase 20 --verification-only --contracts-only',WORKFLOW)
-        self.assertIn('docs/checks/phase-20-contracts.json',WORKFLOW)
-        self.assertNotIn('docs/checks/phase-20.json',WORKFLOW)
+        self.assertIn('--phase 21 --verification-only --contracts-only',WORKFLOW)
+        self.assertIn('docs/checks/phase-21-contracts.json',WORKFLOW)
+        self.assertNotIn('docs/checks/phase-21.json',WORKFLOW)
         current, selected = commands_for(17), ci_commands_for(17)
         self.assertTrue(all(c in current for c in selected))
         self.assertIn(['node', 'tools/portkey-access.mjs', '--check'], selected)
@@ -520,6 +528,15 @@ class CiContractTests(unittest.TestCase):
         invalid=subprocess.run([sys.executable,'tools/check_phase.py','--phase','12','--contracts-only'],cwd=ROOT,capture_output=True,text=True)
         self.assertEqual(invalid.returncode,2)
         self.assertIn('requires --phase 12 --verification-only',invalid.stderr)
+
+    def test_active_management_ci_preserves_exact_vendor_bytes_and_scoped_receipts(self):
+        from check_phase import ci_commands_for
+        selected = ci_commands_for(21)
+        for command in selected:
+            if command[:2] == ["git", "diff"] and "--check" in command:
+                self.assertIn(":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml", command)
+        self.assertFalse(any("tools/live_evidence.py" in command for command in selected))
+        self.assertTrue(any("--verify-retention-origin" in command for command in selected))
 
     def test_vendor_input_keeps_exact_upstream_bytes_outside_owned_whitespace_style(self):
         from check_phase import commands_for

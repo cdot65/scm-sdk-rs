@@ -1,0 +1,301 @@
+{
+  "phase": 21,
+  "source_sha256": "7c4a07f752bdf2c3ed416bb33703e06098f9441eb05ecb9ac5dbf04a24a8e91f",
+  "source_unchanged": true,
+  "checked_at": "2026-10-19T12:30:11.466521+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e",
+        "--",
+        "crates/scm-sdk",
+        "Cargo.toml",
+        "Cargo.lock",
+        "LICENSE",
+        "NOTICE"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--exit-code",
+        "0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e",
+        "--",
+        "crates/scm-sdk",
+        "Cargo.toml",
+        "Cargo.lock",
+        "LICENSE",
+        "NOTICE"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.003
+    },
+    {
+      "command": [
+        "python",
+        "-c",
+        "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk', 'Cargo.toml', 'Cargo.lock', 'LICENSE', 'NOTICE']), 'Unexpected SDK implementation file before plan acceptance'"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-c",
+        "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk', 'Cargo.toml', 'Cargo.lock', 'LICENSE', 'NOTICE']), 'Unexpected SDK implementation file before plan acceptance'"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.02
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.008
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.002
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 9,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 7,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.256
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py",
+        "--baseline",
+        ".local/typescript"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 9,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 7,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": true,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.265
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/verify-contracts.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"rejectedTamperingCases\": [\n    \"fixture-change\",\n    \"fixture-removal\",\n    \"unmanifested-source\",\n    \"license-removal\",\n    \"fixture-inventory-omission\",\n    \"baseline-source-omission\",\n    \"tree-ledger-omission\",\n    \"excluded-source-generation\",\n    \"export-source-change\",\n    \"fixture-category-relabel\",\n    \"fixture-category-unknown\",\n    \"specification-pin-removal\",\n    \"observed-specification-pin\",\n    \"extraction-input-omission\",\n    \"extraction-input-origin-change\",\n    \"license-evidence-change\",\n    \"unowned-vendor-file\",\n    \"missing-vendor-file\",\n    \"modified-vendor-file\",\n    \"vendor-license-commit\",\n    \"duplicate-source-id\",\n    \"vendor-artifact-origin\",\n    \"vendor-artifact-omission\",\n    \"vendor-artifact-escape\",\n    \"vendor-symlink\",\n    \"extracted-non-src-byte-change\"\n  ]\n}\n",
+      "stderr": "",
+      "duration_seconds": 3.101
+    },
+    {
+      "command": [
+        "python",
+        "tools/red_team_management.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/red_team_management.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "AIRS contracts: 7 source pins, 160 operation mappings, 42 management operations; static evidence only\n",
+      "stderr": "",
+      "duration_seconds": 0.661
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_red_team_management.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_red_team_management.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_all_five_operation_specific_target_response_declarations (test_red_team_management.ManagementPlanTests.test_all_five_operation_specific_target_response_declarations) ... ok\ntest_closure_handles_cycles_escaped_pointers_and_rejects_remote (test_red_team_management.ManagementPlanTests.test_closure_handles_cycles_escaped_pointers_and_rejects_remote) ... ok\ntest_every_delta_has_disposition_and_no_removed_operations (test_red_team_management.ManagementPlanTests.test_every_delta_has_disposition_and_no_removed_operations) ... ok\ntest_future_phase_cannot_pass_on_plan_artifacts (test_red_team_management.ManagementPlanTests.test_future_phase_cannot_pass_on_plan_artifacts) ... ok\ntest_missing_binding_rejected (test_red_team_management.ManagementPlanTests.test_missing_binding_rejected) ... ok\ntest_pinned_hash_tampering_rejected (test_red_team_management.ManagementPlanTests.test_pinned_hash_tampering_rejected) ... ok\ntest_retention_allows_additions_without_rewriting_floor (test_red_team_management.ManagementPlanTests.test_retention_allows_additions_without_rewriting_floor) ... ok\ntest_retention_includes_all_baseline_methods_exports_defaults (test_red_team_management.ManagementPlanTests.test_retention_includes_all_baseline_methods_exports_defaults) ... ok\ntest_retention_removals_and_changed_defaults_cannot_be_regenerated_away (test_red_team_management.ManagementPlanTests.test_retention_removals_and_changed_defaults_cannot_be_regenerated_away) ... ok\ntest_retention_seed_tampering_is_rejected (test_red_team_management.ManagementPlanTests.test_retention_seed_tampering_is_rejected) ... ok\ntest_seven_sources_and_160_operations (test_red_team_management.ManagementPlanTests.test_seven_sources_and_160_operations) ... ok\ntest_structural_diff_preserves_null_removal_and_union_order (test_red_team_management.ManagementPlanTests.test_structural_diff_preserves_null_removal_and_union_order) ... ok\ntest_unclassified_delta_rejected (test_red_team_management.ManagementPlanTests.test_unclassified_delta_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 1.107s\n\nOK\n",
+      "duration_seconds": 1.2
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_management_phases.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_management_phases.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_ci_subsets_cannot_replace_full_reports (test_management_phases.ManagementPhaseTests.test_ci_subsets_cannot_replace_full_reports) ... ok\ntest_cli_rejects_scope_mismatch_before_requesting_review (test_management_phases.ManagementPhaseTests.test_cli_rejects_scope_mismatch_before_requesting_review) ... ok\ntest_declared_chunk_scope_must_match_exactly (test_management_phases.ManagementPhaseTests.test_declared_chunk_scope_must_match_exactly) ... ok\ntest_future_milestones_require_explicit_complete_artifacts (test_management_phases.ManagementPhaseTests.test_future_milestones_require_explicit_complete_artifacts) ... ok\ntest_phases_registered_with_nonempty_scopes_and_order (test_management_phases.ManagementPhaseTests.test_phases_registered_with_nonempty_scopes_and_order) ... ok\ntest_plan_gate_freezes_sdk_and_checks_provenance (test_management_phases.ManagementPhaseTests.test_plan_gate_freezes_sdk_and_checks_provenance) ... ok\ntest_plan_score_floor_cannot_be_bypassed_by_category_total (test_management_phases.ManagementPhaseTests.test_plan_score_floor_cannot_be_bypassed_by_category_total) ... ok\ntest_qualification_has_both_packaged_compilers (test_management_phases.ManagementPhaseTests.test_qualification_has_both_packaged_compilers) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.029s\n\nOK\n",
+      "duration_seconds": 0.105
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage (test_review_phase.FiveCategoryReviewTests.test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage) ... ok\ntest_attempt_five_cannot_skip_previous_reviews (test_review_phase.FiveCategoryReviewTests.test_attempt_five_cannot_skip_previous_reviews) ... ok\ntest_blockers_still_block_fifth_attempt (test_review_phase.FiveCategoryReviewTests.test_blockers_still_block_fifth_attempt) ... ok\ntest_categories_cannot_be_fabricated (test_review_phase.FiveCategoryReviewTests.test_categories_cannot_be_fabricated) ... ok\ntest_chunk_followup_accepts_authorized_fifth_phase_exception (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_accepts_authorized_fifth_phase_exception) ... ok\ntest_chunk_followup_rejects_missing_rejected_stale_or_early_coverage (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_rejects_missing_rejected_stale_or_early_coverage) ... ok\ntest_chunk_orchestration_accumulates_scope_and_binds_record (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_accumulates_scope_and_binds_record) ... ok\ntest_chunk_orchestration_rejects_advance_and_missing_scope (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_advance_and_missing_scope) ... ok\ntest_chunk_orchestration_rejects_historical_rubric (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_historical_rubric) ... ok\ntest_chunk_scope_must_resolve_to_existing_repository_path (test_review_phase.FiveCategoryReviewTests.test_chunk_scope_must_resolve_to_existing_repository_path) ... ok\ntest_fifth_exception_is_explicit_and_requires_deficiency (test_review_phase.FiveCategoryReviewTests.test_fifth_exception_is_explicit_and_requires_deficiency) ... ok\ntest_historical_policy_and_chunk_names (test_review_phase.FiveCategoryReviewTests.test_historical_policy_and_chunk_names) ... ok\ntest_live_new_rubric_record_and_snapshot (test_review_phase.FiveCategoryReviewTests.test_live_new_rubric_record_and_snapshot) ... ok\ntest_phase_advancement_never_selects_earlier_passing_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_never_selects_earlier_passing_chunk) ... ok\ntest_phase_advancement_records_all_verified_chunk_scores (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_records_all_verified_chunk_scores) ... ok\ntest_phase_advancement_rejects_missing_or_empty_chunk_declarations (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_missing_or_empty_chunk_declarations) ... ok\ntest_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk) ... ok\ntest_phase_advancement_rejects_stale_or_misbound_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_stale_or_misbound_chunk) ... ok\ntest_phase_advancement_requires_every_declared_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_requires_every_declared_chunk) ... ok\ntest_phase_and_chunk_thresholds (test_review_phase.FiveCategoryReviewTests.test_phase_and_chunk_thresholds) ... ok\ntest_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_phase19_gate_retains_privacy_ci_and_all_rust_combinations (test_review_phase.ReviewGateTests.test_phase19_gate_retains_privacy_ci_and_all_rust_combinations) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_successors_do_not_reopen_completed_independent_maintenance (test_review_phase.ReviewGateTests.test_successors_do_not_reopen_completed_independent_maintenance) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 51 tests in 0.652s\n\nOK\n",
+      "duration_seconds": 0.724
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-private-material.py",
+        "--check",
+        "docs/checks/phase-21-private-material.json"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "scripts/check-private-material.py",
+        "--check",
+        "docs/checks/phase-21-private-material.json"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"receiptFresh\": true, \"privateScanReexecuted\": false, \"gitVisibleFilesChecked\": 1858}\n",
+      "stderr": "",
+      "duration_seconds": 0.229
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "Native semantic registry: 69 explicit bindings\n",
+      "stderr": "",
+      "duration_seconds": 0.202
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "invocation": [
+        "/usr/bin/python3",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"outputs\": 16, \"graphNodes\": 13018, \"partialFamily\": null}\n",
+      "stderr": "",
+      "duration_seconds": 2.874
+    }
+  ]
+}

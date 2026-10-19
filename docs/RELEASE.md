@@ -1,14 +1,17 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.2**. [Phases18–20](g25-response-compatibility-plan.md)
+The workspace version is **0.2.2**. [Phases 18–20](g25-response-compatibility-plan.md)
 qualify the G25 response compatibility correction. The
 [registry receipt](checks/release-registry-0.2.2.json) and
 [tag receipt](checks/release-tag-v0.2.2.json) establish actual publication and
 remote source identity. A missing receipt means publication is not yet verified.
 
-CI runs `--phase 20 --verification-only --contracts-only` alongside 48 Rust jobs
+CI currently runs `--phase 21 --verification-only --contracts-only` alongside 48 Rust jobs
 (24 feature sets on both reviewed compilers), including Red Team with JSON feature
-unification. The complete local phase20 gate additionally requires both clean
+unification. Phase 21 is planning/provenance verification and does not qualify a
+new release or current live workflows. Routing, CI documentation and tests move
+together for later phases; Phase 24 needs its own readiness and delivery guards.
+The historical complete local phase 20 gate additionally required both clean
 archive proofs, executed offline examples and external consumers, current live
 and native ledgers, dependency/privacy checks, and the full G25 regression corpus.
 Historical gates retain their accepted command sets.
@@ -154,12 +157,13 @@ Until that configuration exists, the explicitly authorized maintainer releases u
 Cargo's token provider with the owner's external mode-0600 credentials file.
 CI remains credential-free and never performs registry publication.
 
-Maintainer authorization covers 0.1.1 and the subsequent 0.2.0 delivery recorded
-in the release plan. CI has no publishing job or registry credentials; Cargo reads the maintainer
-credential from the external owner-controlled file. After an
-actual publication, record the registry version/checksum, source commit and
-corresponding archive proof. Do not advertise an unpublished dependency as
-installable from crates.io.
+Maintainer authorization covers the completed 0.1.1 and 0.2.0 deliveries, the
+[0.2.1 Portkey release](portkey-access-policies-plan.md), and the
+[0.2.2 G25 release](g25-response-compatibility-plan.md). The approved
+[management 0.86.0 plan](red-team-management-0.86-plan.md) authorizes the current
+additive implementation and subsequent qualified publication. Its release
+version follows the reviewed compatibility decision; publication still requires
+Phase 24's actual readiness, clean-package and delivery gates.
 
 The previous corrected workflow ran remotely at source `bde0f4e5`: all 46 Rust
 matrix jobs succeeded, while `contracts-and-package` failed after setup.

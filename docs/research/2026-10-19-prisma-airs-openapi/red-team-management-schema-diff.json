@@ -1,0 +1,3271 @@
+[
+  {
+    "path": "/components/schemas/AudioFormat",
+    "kind": "added",
+    "new": {
+      "type": "string",
+      "enum": [
+        "WAV",
+        "MP3",
+        "PCM16"
+      ],
+      "title": "AudioFormat",
+      "description": "Wire format for audio we SEND to a REST audio-chat target.\n\nCustomer-declared on the connection config (which format the target accepts\non the wire). ``Attack.audio_format`` reuses this same enum to record the format\nof the stored corpus audio bytes. WAV/MP3 are the REST audio-chat wire formats;\nPCM16 is the realtime S2S wire form (headerless PCM16 at the provider's rate) \u2014\nstored in the corpus now but NOT selectable on REST targets until the realtime\npath lands (MR9). See ``REST_AUDIO_FORMATS``.\n"
+    }
+  },
+  {
+    "path": "/components/schemas/BasicAuthAuthConfig/description",
+    "kind": "changed",
+    "old": "Basic Auth credentials \u2014 header or payload location.",
+    "new": "Basic Auth credentials \u2014 header or payload location.\n\nCredentials may be supplied either as ``basic_username``/``basic_password``\n(preferred: it is what a UI collects, and it lets the edit form show the account\nwhile masking only the secret) or as a pre-encoded ``basic_auth_header``. When\nthe pair is supplied the header is derived from it, so auth handlers keep reading\nonly ``basic_auth_header`` and need no change.\n"
+  },
+  {
+    "path": "/components/schemas/BasicAuthAuthConfig/properties/basic_auth_header/description",
+    "kind": "changed",
+    "old": "Auth header as {name: value} dict (required when location=HEADER)",
+    "new": "Auth header as {name: value} dict. Derived automatically from basic_username/basic_password when those are supplied; send directly only if you are encoding the credentials yourself."
+  },
+  {
+    "path": "/components/schemas/BasicAuthAuthConfig/properties/basic_password",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Basic Password",
+      "description": "Basic Auth password. Masked on read \u2014 echo the masked value back unchanged to keep the stored credential."
+    }
+  },
+  {
+    "path": "/components/schemas/BasicAuthAuthConfig/properties/basic_username",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Basic Username",
+      "description": "Basic Auth username. Send with `basic_password` instead of encoding `basic_auth_header` yourself.",
+      "examples": [
+        "svc-redteam"
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/BasicAuthAuthConfigRedact/properties/basic_auth_header/description",
+    "kind": "changed",
+    "old": "Auth header as {name: value} dict (required when location=HEADER)",
+    "new": "Auth header as {name: value} dict. Derived automatically from basic_username/basic_password when those are supplied; send directly only if you are encoding the credentials yourself."
+  },
+  {
+    "path": "/components/schemas/BasicAuthAuthConfigRedact/properties/basic_password",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Basic Password",
+      "description": "Basic Auth password. Masked on read \u2014 echo the masked value back unchanged to keep the stored credential."
+    }
+  },
+  {
+    "path": "/components/schemas/BasicAuthAuthConfigRedact/properties/basic_username",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Basic Username",
+      "description": "Basic Auth username. Send with `basic_password` instead of encoding `basic_auth_header` yourself.",
+      "examples": [
+        "svc-redteam"
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/Body_upload_prompts_csv_v1_custom_attack_upload_custom_prompts_csv_post/properties/file/contentMediaType",
+    "kind": "added",
+    "new": "application/octet-stream"
+  },
+  {
+    "path": "/components/schemas/Body_upload_prompts_csv_v1_custom_attack_upload_custom_prompts_csv_post/properties/file/format",
+    "kind": "removed",
+    "old": "binary"
+  },
+  {
+    "path": "/components/schemas/LanguageDropdownOptionSchema",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "title": "Code"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "country_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Country Code"
+        }
+      },
+      "type": "object",
+      "required": [
+        "code",
+        "name"
+      ],
+      "title": "LanguageDropdownOptionSchema",
+      "description": "Language option for the dropdown, with a country code for the flag icon."
+    }
+  },
+  {
+    "path": "/components/schemas/MultiTurnClientSessionConfig",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "client_session",
+          "title": "Type",
+          "default": "client_session"
+        }
+      },
+      "type": "object",
+      "title": "MultiTurnClientSessionConfig",
+      "description": "Configuration for targets where the *client* issues the session id.\n\nA third protocol, distinct from both of the above. The target keeps the\nconversation server-side (like stateful) but never returns an id to chain\n(unlike stateful) -- instead it expects the caller to mint one, send it with\nevery turn, and key its memory on it. n8n's Chat Trigger works exactly this way.\n\nSuch a target fits neither existing mode: ``stateful`` needs a\n``response_id_field`` to read back, which is unfillable when nothing is ever\nreturned; ``stateless`` resends the whole transcript, which double-counts\nagainst the target's own memory. So we send only the current turn and let the\nid do the correlating.\n\nThere is deliberately no configuration beyond the discriminator: the id is\ninjected through the ``{SESSION_ID}`` placeholder in ``request_json``, so the\nbody itself already says where it goes.\n"
+    }
+  },
+  {
+    "path": "/components/schemas/NativeConnectionParamsBase",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/VertexAIConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Provider-specific connection config"
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi-turn config for stateful or stateless target"
+        },
+        "multi_turn_supported": {
+          "type": "boolean",
+          "title": "Multi Turn Supported",
+          "description": "Whether a native target that drives multi-turn internally supports it. Currently consumed only by custom target adapters, which have no multi_turn_config to infer it from; gates the multi-turn validation probe.",
+          "default": false
+        }
+      },
+      "type": "object",
+      "title": "NativeConnectionParamsBase",
+      "description": "Base connection parameters for native/SDK-based targets (no HTTP endpoint).\n\nUsed for no-code agent platforms like Microsoft Copilot Studio where\ninteraction is via a provider's client library, not HTTP REST/streaming.\n\n# TODO: Consider refactoring RestConnectionParamsBase and StreamingConnectionParamsBase\n# to share a common base with this class (e.g., extract target_connection_config and\n# multi_turn_config into a shared parent).\n"
+    }
+  },
+  {
+    "path": "/components/schemas/NativeConnectionParamsBase-Input",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Provider-specific connection config"
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi-turn config for stateful or stateless target"
+        },
+        "multi_turn_supported": {
+          "type": "boolean",
+          "title": "Multi Turn Supported",
+          "description": "Whether a native target that drives multi-turn internally supports it. Currently consumed only by custom target adapters, which have no multi_turn_config to infer it from; gates the multi-turn validation probe.",
+          "default": false
+        }
+      },
+      "type": "object",
+      "title": "NativeConnectionParamsBase",
+      "description": "Base connection parameters for native/SDK-based targets (no HTTP endpoint).\n\nUsed for no-code agent platforms like Microsoft Copilot Studio where\ninteraction is via a provider's client library, not HTTP REST/streaming.\n\n# TODO: Consider refactoring RestConnectionParamsBase and StreamingConnectionParamsBase\n# to share a common base with this class (e.g., extract target_connection_config and\n# multi_turn_config into a shared parent).\n"
+    }
+  },
+  {
+    "path": "/components/schemas/NativeConnectionParamsBase-Output",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Provider-specific connection config"
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi-turn config for stateful or stateless target"
+        },
+        "multi_turn_supported": {
+          "type": "boolean",
+          "title": "Multi Turn Supported",
+          "description": "Whether a native target that drives multi-turn internally supports it. Currently consumed only by custom target adapters, which have no multi_turn_config to infer it from; gates the multi-turn validation probe.",
+          "default": false
+        }
+      },
+      "type": "object",
+      "title": "NativeConnectionParamsBase",
+      "description": "Base connection parameters for native/SDK-based targets (no HTTP endpoint).\n\nUsed for no-code agent platforms like Microsoft Copilot Studio where\ninteraction is via a provider's client library, not HTTP REST/streaming.\n\n# TODO: Consider refactoring RestConnectionParamsBase and StreamingConnectionParamsBase\n# to share a common base with this class (e.g., extract target_connection_config and\n# multi_turn_config into a shared parent).\n"
+    }
+  },
+  {
+    "path": "/components/schemas/NativeConnectionParamsRedactBase/properties/multi_turn_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/NativeConnectionParamsRedactBase/properties/target_connection_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/VertexAIConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/ProfilingStatus/enum",
+    "kind": "changed",
+    "old": [
+      "INIT",
+      "QUEUED",
+      "IN_PROGRESS",
+      "COMPLETED",
+      "FAILED",
+      "PARTIALLY_COMPLETE"
+    ],
+    "new": [
+      "NOT_STARTED",
+      "IN_PROGRESS",
+      "COMPLETED",
+      "FAILED",
+      "PARTIALLY_COMPLETE"
+    ]
+  },
+  {
+    "path": "/components/schemas/ProfilingStatusFilter",
+    "kind": "added",
+    "new": {
+      "type": "string",
+      "enum": [
+        "NOT_STARTED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ],
+      "title": "ProfilingStatusFilter",
+      "description": "Profiling values accepted by the list-targets ``profiling_status`` filter.\n\nMatches the ``target.profiling_status`` column only.\n"
+    }
+  },
+  {
+    "path": "/components/schemas/ResponseMode/enum",
+    "kind": "changed",
+    "old": [
+      "REST",
+      "STREAMING",
+      "WEBSOCKET",
+      "WEBSOCKET_STREAMING"
+    ],
+    "new": [
+      "REST",
+      "STREAMING",
+      "WEBSOCKET",
+      "WEBSOCKET_STREAMING",
+      "REALTIME"
+    ]
+  },
+  {
+    "path": "/components/schemas/RestConnectionParamsBase",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/VertexAIConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "audio_curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Curl",
+          "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+          "examples": [
+            "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        },
+        "audio_request_json": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Request Json",
+          "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "audio": "{AUDIO}",
+                      "type": "input_audio"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4o-audio-preview"
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "title": "RestConnectionParamsBase",
+      "description": "Base connection parameters without generated fields."
+    }
+  },
+  {
+    "path": "/components/schemas/RestConnectionParamsBase-Input",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "RestConnectionParamsBase",
+      "description": "Base connection parameters without generated fields."
+    }
+  },
+  {
+    "path": "/components/schemas/RestConnectionParamsBase-Output",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        }
+      },
+      "type": "object",
+      "title": "RestConnectionParamsBase",
+      "description": "Base connection parameters without generated fields."
+    }
+  },
+  {
+    "path": "/components/schemas/RestConnectionParamsRedactBase/properties/audio_curl",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Curl",
+      "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+      "examples": [
+        "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/RestConnectionParamsRedactBase/properties/audio_request_json",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Request Json",
+      "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+      "examples": [
+        {
+          "input": [
+            {
+              "content": [
+                {
+                  "audio": "{AUDIO}",
+                  "type": "input_audio"
+                }
+              ],
+              "role": "user"
+            }
+          ],
+          "model": "gpt-4o-audio-preview"
+        }
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/RestConnectionParamsRedactBase/properties/multi_turn_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/RestConnectionParamsRedactBase/properties/target_connection_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/VertexAIConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/StreamingConnectionParamsBase",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/VertexAIConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "audio_curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Curl",
+          "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+          "examples": [
+            "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        },
+        "audio_request_json": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Request Json",
+          "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "audio": "{AUDIO}",
+                      "type": "input_audio"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4o-audio-preview"
+            }
+          ]
+        },
+        "response_stop_key": {
+          "type": "string",
+          "title": "Response Stop Key"
+        },
+        "response_stop_value": {
+          "type": "string",
+          "title": "Response Stop Value"
+        }
+      },
+      "type": "object",
+      "required": [
+        "response_stop_key",
+        "response_stop_value"
+      ],
+      "title": "StreamingConnectionParamsBase",
+      "description": "Base streaming connection parameters without generated fields."
+    }
+  },
+  {
+    "path": "/components/schemas/StreamingConnectionParamsBase-Input",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        },
+        "response_stop_key": {
+          "type": "string",
+          "title": "Response Stop Key"
+        },
+        "response_stop_value": {
+          "type": "string",
+          "title": "Response Stop Value"
+        }
+      },
+      "type": "object",
+      "required": [
+        "response_stop_key",
+        "response_stop_value"
+      ],
+      "title": "StreamingConnectionParamsBase",
+      "description": "Base streaming connection parameters without generated fields."
+    }
+  },
+  {
+    "path": "/components/schemas/StreamingConnectionParamsBase-Output",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        },
+        "response_stop_key": {
+          "type": "string",
+          "title": "Response Stop Key"
+        },
+        "response_stop_value": {
+          "type": "string",
+          "title": "Response Stop Value"
+        }
+      },
+      "type": "object",
+      "required": [
+        "response_stop_key",
+        "response_stop_value"
+      ],
+      "title": "StreamingConnectionParamsBase",
+      "description": "Base streaming connection parameters without generated fields."
+    }
+  },
+  {
+    "path": "/components/schemas/StreamingConnectionParamsRedactBase/properties/audio_curl",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Curl",
+      "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+      "examples": [
+        "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/StreamingConnectionParamsRedactBase/properties/audio_request_json",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Request Json",
+      "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+      "examples": [
+        {
+          "input": [
+            {
+              "content": [
+                {
+                  "audio": "{AUDIO}",
+                  "type": "input_audio"
+                }
+              ],
+              "role": "user"
+            }
+          ],
+          "model": "gpt-4o-audio-preview"
+        }
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/StreamingConnectionParamsRedactBase/properties/multi_turn_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/StreamingConnectionParamsRedactBase/properties/target_connection_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/VertexAIConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/TargetConnectionType/enum",
+    "kind": "changed",
+    "old": [
+      "DATABRICKS",
+      "BEDROCK",
+      "OPENAI",
+      "HUGGING_FACE",
+      "CUSTOM",
+      "REST",
+      "STREAMING",
+      "WEBSOCKET",
+      "WEBSOCKET_STREAMING",
+      "MS_COPILOT_STUDIO",
+      "CUSTOM_TARGET_ADAPTER"
+    ],
+    "new": [
+      "DATABRICKS",
+      "BEDROCK",
+      "OPENAI",
+      "HUGGING_FACE",
+      "CUSTOM",
+      "REST",
+      "STREAMING",
+      "WEBSOCKET",
+      "WEBSOCKET_STREAMING",
+      "MS_COPILOT_STUDIO",
+      "VERTEX_AI",
+      "CUSTOM_TARGET_ADAPTER",
+      "N8N"
+    ]
+  },
+  {
+    "path": "/components/schemas/TargetCreateRequestSchema/properties/connection_params/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase-Input"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/TargetListItemSchema/properties/profiling_status/description",
+    "kind": "changed",
+    "old": "Status of the profiling workflow",
+    "new": "Profiling status"
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/description",
+    "kind": "changed",
+    "old": "Metadata stored in the database for targets (user-provided + computed fields).\n\nInherits the multimodal-capability fields from ``MultiModalResult`` and the\nmulti-turn fields from ``MultiTurnResult``. The base order\n``(MultiModalResult, MultiTurnResult)`` keeps the serialized field order\n``multi_turn, multi_turn_error_message, supports_multimodal_files,\nsupports_multimodal_files_error_message, rate_limit, \u2026`` identical to before this\nrefactor \u2014 which preserves the Restate journal bytes for pre-V4 in-flight scans.\n",
+    "new": "Metadata stored in the database for targets (user-provided + computed fields).\n\nOne base per probe lane \u2014 ``MultiTurnResult``, ``MultiModalResult``,\n``AudioProbeResult`` \u2014 so no lane's verdict fields are re-declared here. The audio\nbase is exactly what ``probe_audio_support`` returns, so the copy from lane verdict\nto stored metadata cannot drift. Base order fixes the serialized field order, which\nthe Restate journal is sensitive to; ``AudioProbeResult`` records why inheriting it\nis safe for journals predating audio.\n"
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/properties/audio_format",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/AudioFormat"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Wire format (WAV/MP3/PCM16) the target accepts; selects which per-format corpus variant mint attaches. None when supports_audio is False."
+    }
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/properties/audio_multi_turn_probe_error",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Multi Turn Probe Error",
+      "description": "Concise error message if the audio multi-turn probe failed",
+      "examples": [
+        "HTTP 400: target rejected audio conversation history"
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/properties/audio_multi_turn_probe_passed",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Multi Turn Probe Passed",
+      "description": "Whether the target held an AUDIO conversation across turns (Probe 2 of the audio lane). None means it was not probed \u2014 no verdict from Probe 1, no multi-turn config, or the transport has no audio multi-turn."
+    }
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/properties/audio_probe_error",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Probe Error",
+      "description": "Concise error message if the audio probe failed or was skipped",
+      "examples": [
+        "HTTP 400: target rejected audio payload",
+        "Target has no {AUDIO} placeholder in its request template",
+        "Probe audio clip unavailable"
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/properties/audio_probe_passed",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Probe Passed",
+      "description": "Whether the target accepted a sample audio clip at validation time (Probe 1 of the audio lane). False means it rejected the clip; None means no verdict was reached \u2014 see audio_probe_error, which is set on every such path."
+    }
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/properties/supports_audio",
+    "kind": "added",
+    "new": {
+      "type": "boolean",
+      "title": "Supports Audio",
+      "description": "Whether the target accepts audio attacks (customer-declared on the connection config). When False, scans against this target skip audio attacks and run text/file-only.",
+      "default": false
+    }
+  },
+  {
+    "path": "/components/schemas/TargetMetadata/properties/supports_text",
+    "kind": "added",
+    "new": {
+      "type": "boolean",
+      "title": "Supports Text",
+      "description": "Whether the target accepts text attacks. Defaults True (text is the baseline modality). When False, scans skip text/{INPUT} attacks and run file/audio-only \u2014 enabling audio-only or file-only targets.",
+      "default": true
+    }
+  },
+  {
+    "path": "/components/schemas/TargetProbeRequest/properties/connection_params/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase-Input"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/TargetRedactSchema/properties/profiling_status/description",
+    "kind": "changed",
+    "old": "Status of the profiling workflow",
+    "new": "Profiling status; null unless the target is ACTIVE"
+  },
+  {
+    "path": "/components/schemas/TargetResponseSchema/properties/profiling_status/description",
+    "kind": "changed",
+    "old": "Status of the profiling workflow",
+    "new": "Profiling status; null unless the target is ACTIVE"
+  },
+  {
+    "path": "/components/schemas/TargetSchema/description",
+    "kind": "changed",
+    "old": "Target Get Schema with profiling fields.\n\nInherits from TargetDetailSchema which includes:\n- target_background: industry, use_case, competitors\n- profiling_status: INIT, QUEUED, IN_PROGRESS, COMPLETED, FAILED\n- additional_context: merged user + profiler values with source tracking\n",
+    "new": "Target Get Schema with profiling fields.\n\nInherits from TargetDetailSchema which includes:\n- target_background: industry, use_case, competitors\n- profiling_status: NOT_STARTED, IN_PROGRESS, COMPLETED, FAILED\n- additional_context: merged user + profiler values with source tracking\n"
+  },
+  {
+    "path": "/components/schemas/TargetSchema/properties/connection_params/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase-Output"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase-Output"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase-Output"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase-Output"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/TargetSchema/properties/profiling_status/description",
+    "kind": "changed",
+    "old": "Status of the profiling workflow",
+    "new": "Profiling status; null unless the target is ACTIVE"
+  },
+  {
+    "path": "/components/schemas/TargetStatusFilter/description",
+    "kind": "changed",
+    "old": "Status values accepted by the list-targets ``status`` filter.\n\nUnions the target status and profiling status values so a single ``status``\nfilter can match on either. A supplied value matches a target whose target\nstatus or profiling status equals it.\n\nNote (internal): keep members in sync with :class:`TargetStatus` and\n:class:`ProfilingStatus`. ``FAILED`` is shared by both and defined once.\n",
+    "new": "Lifecycle values accepted by the list-targets ``status`` filter.\n\nMatches the ``target.status`` column only. Members expand to column values\nvia ``TARGET_STATUS_FILTER_VALUES``; ``DRAFT`` covers ``VALIDATED`` too,\nsince a validated-but-unconfigured target reads as a draft to the user.\n"
+  },
+  {
+    "path": "/components/schemas/TargetStatusFilter/enum",
+    "kind": "changed",
+    "old": [
+      "DRAFT",
+      "ACTIVE",
+      "FAILED",
+      "QUEUED",
+      "IN_PROGRESS",
+      "COMPLETED",
+      "PARTIALLY_COMPLETE"
+    ],
+    "new": [
+      "DRAFT",
+      "ACTIVE"
+    ]
+  },
+  {
+    "path": "/components/schemas/TargetUpdateRequestSchema/properties/connection_params/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase-Input"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase-Input"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NativeConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/WebSocketConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/StreamingConnectionParamsBase"
+          },
+          {
+            "$ref": "#/components/schemas/RestConnectionParamsBase"
+          }
+        ]
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/TenantLanguagesResponseSchema/properties/languages/items/$ref",
+    "kind": "changed",
+    "old": "#/components/schemas/LanguageOptionSchema",
+    "new": "#/components/schemas/LanguageDropdownOptionSchema"
+  },
+  {
+    "path": "/components/schemas/ValidationError/properties/ctx",
+    "kind": "added",
+    "new": {
+      "type": "object",
+      "title": "Context"
+    }
+  },
+  {
+    "path": "/components/schemas/ValidationError/properties/input",
+    "kind": "added",
+    "new": {
+      "title": "Input"
+    }
+  },
+  {
+    "path": "/components/schemas/VertexAIConnectionParams",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,62}$",
+          "title": "Project Id",
+          "description": "Customer's GCP project ID or project number"
+        },
+        "location": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "title": "Location",
+          "description": "GCP region (e.g. us-central1) or 'global'"
+        },
+        "engine_id": {
+          "type": "string",
+          "pattern": "^[0-9]+$",
+          "title": "Engine Id",
+          "description": "Reasoning Engine / Agent Engine ID"
+        },
+        "customer_sa_email": {
+          "type": "string",
+          "title": "Customer Sa Email",
+          "description": "Customer's service account email for impersonation"
+        }
+      },
+      "type": "object",
+      "required": [
+        "project_id",
+        "location",
+        "engine_id",
+        "customer_sa_email"
+      ],
+      "title": "VertexAIConnectionParams",
+      "description": "Google Vertex AI Agent Engine connection parameters."
+    }
+  },
+  {
+    "path": "/components/schemas/VertexAIConnectionRedactParams",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,62}$",
+          "title": "Project Id",
+          "description": "Customer's GCP project ID or project number"
+        },
+        "location": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "title": "Location",
+          "description": "GCP region (e.g. us-central1) or 'global'"
+        },
+        "engine_id": {
+          "type": "string",
+          "pattern": "^[0-9]+$",
+          "title": "Engine Id",
+          "description": "Reasoning Engine / Agent Engine ID"
+        },
+        "customer_sa_email": {
+          "type": "string",
+          "format": "password",
+          "title": "Customer Sa Email",
+          "description": "Customer's service account email (masked)",
+          "writeOnly": true
+        }
+      },
+      "type": "object",
+      "required": [
+        "project_id",
+        "location",
+        "engine_id",
+        "customer_sa_email"
+      ],
+      "title": "VertexAIConnectionRedactParams",
+      "description": "Redacted version \u2014 SA email masked on GET/edit."
+    }
+  },
+  {
+    "path": "/components/schemas/WebSocketConnectionParamsBase",
+    "kind": "added",
+    "new": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/VertexAIConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "audio_curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Curl",
+          "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+          "examples": [
+            "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        },
+        "audio_request_json": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Audio Request Json",
+          "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "audio": "{AUDIO}",
+                      "type": "input_audio"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4o-audio-preview"
+            }
+          ]
+        },
+        "ws_response_timeout": {
+          "type": "number",
+          "title": "Ws Response Timeout",
+          "description": "Timeout in seconds for waiting for a WebSocket response message",
+          "default": 110,
+          "examples": [
+            60,
+            110
+          ]
+        }
+      },
+      "type": "object",
+      "title": "WebSocketConnectionParamsBase",
+      "description": "Connection parameters for WebSocket targets."
+    }
+  },
+  {
+    "path": "/components/schemas/WebSocketConnectionParamsBase-Input",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        },
+        "ws_response_timeout": {
+          "type": "number",
+          "title": "Ws Response Timeout",
+          "description": "Timeout in seconds for waiting for a WebSocket response message",
+          "default": 110,
+          "examples": [
+            60,
+            110
+          ]
+        }
+      },
+      "type": "object",
+      "title": "WebSocketConnectionParamsBase",
+      "description": "Connection parameters for WebSocket targets."
+    }
+  },
+  {
+    "path": "/components/schemas/WebSocketConnectionParamsBase-Output",
+    "kind": "removed",
+    "old": {
+      "properties": {
+        "api_endpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Api Endpoint",
+          "description": "API endpoint URL",
+          "examples": [
+            "https://api.openai.com/v1/responses"
+          ]
+        },
+        "request_headers": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Headers",
+          "description": "Request headers",
+          "default": {},
+          "examples": [
+            {
+              "Authorization": "Bearer sk-xxx",
+              "Content-Type": "application/json"
+            }
+          ]
+        },
+        "request_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Request Json",
+          "description": "Request JSON",
+          "default": {},
+          "examples": [
+            {
+              "input": [
+                {
+                  "content": [
+                    {
+                      "text": "{INPUT}",
+                      "type": "input_text"
+                    }
+                  ],
+                  "role": "user"
+                }
+              ],
+              "model": "gpt-4.1-nano"
+            }
+          ]
+        },
+        "response_json": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Response Json",
+          "description": "Response JSON",
+          "default": {},
+          "examples": [
+            {
+              "content": "{RESPONSE}"
+            }
+          ]
+        },
+        "response_key": {
+          "type": "string",
+          "title": "Response Key",
+          "description": "Response key",
+          "default": null,
+          "examples": [
+            "content"
+          ]
+        },
+        "target_connection_config": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/OpenAIConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/HuggingfaceConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/DatabricksConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/BedrockAccessConnectionParams"
+            },
+            {
+              "$ref": "#/components/schemas/MSCopilotStudioConnectionParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Connection Config",
+          "description": "Target Connection config of type openai/huggingface .."
+        },
+        "curl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curl",
+          "description": "Generated cURL command ready to use (redacted for security)",
+          "examples": [
+            "curl \"https://api.openai.com/v1/chat/completions\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" -d '{\"model\":\"gpt-4\",\"messages\":[{\"role\":\"user\",\"content\":\"{INPUT}\"}]}'"
+          ]
+        },
+        "multi_turn_config": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+                },
+                {
+                  "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type",
+                "mapping": {
+                  "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+                  "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Multi Turn Config",
+          "description": "Multi turn config for stateful or stateless target",
+          "examples": [
+            "assistant_role: assistant"
+          ]
+        },
+        "ws_response_timeout": {
+          "type": "number",
+          "title": "Ws Response Timeout",
+          "description": "Timeout in seconds for waiting for a WebSocket response message",
+          "default": 110,
+          "examples": [
+            60,
+            110
+          ]
+        }
+      },
+      "type": "object",
+      "title": "WebSocketConnectionParamsBase",
+      "description": "Connection parameters for WebSocket targets."
+    }
+  },
+  {
+    "path": "/components/schemas/WebSocketConnectionParamsRedactBase/properties/audio_curl",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Curl",
+      "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+      "examples": [
+        "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/WebSocketConnectionParamsRedactBase/properties/audio_request_json",
+    "kind": "added",
+    "new": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Audio Request Json",
+      "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+      "examples": [
+        {
+          "input": [
+            {
+              "content": [
+                {
+                  "audio": "{AUDIO}",
+                  "type": "input_audio"
+                }
+              ],
+              "role": "user"
+            }
+          ],
+          "model": "gpt-4o-audio-preview"
+        }
+      ]
+    }
+  },
+  {
+    "path": "/components/schemas/WebSocketConnectionParamsRedactBase/properties/multi_turn_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MultiTurnStatefulConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnStatelessConfig"
+          },
+          {
+            "$ref": "#/components/schemas/MultiTurnClientSessionConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "client_session": "#/components/schemas/MultiTurnClientSessionConfig",
+            "stateful": "#/components/schemas/MultiTurnStatefulConfig",
+            "stateless": "#/components/schemas/MultiTurnStatelessConfig"
+          }
+        }
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/components/schemas/WebSocketConnectionParamsRedactBase/properties/target_connection_config/anyOf",
+    "kind": "changed",
+    "old": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ],
+    "new": [
+      {
+        "$ref": "#/components/schemas/OpenAIConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/HuggingfaceConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/DatabricksConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/BedrockAccessConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/MSCopilotStudioConnectionRedactParams"
+      },
+      {
+        "$ref": "#/components/schemas/VertexAIConnectionRedactParams"
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  {
+    "path": "/info/version",
+    "kind": "changed",
+    "old": "0.7.67",
+    "new": "0.86.0"
+  },
+  {
+    "path": "/paths//v1/target/get/parameters",
+    "kind": "changed",
+    "old": [
+      {
+        "name": "skip",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of records to skip",
+          "default": 0,
+          "title": "Skip"
+        },
+        "description": "Number of records to skip"
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 1,
+          "description": "Maximum records to return",
+          "default": 10,
+          "title": "Limit"
+        },
+        "description": "Maximum records to return"
+      },
+      {
+        "name": "target_type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/TargetType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Filter by target type",
+          "title": "Target Type"
+        },
+        "description": "Filter by target type"
+      },
+      {
+        "name": "status",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/TargetStatusFilter"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Filter by target status or profiling status",
+          "title": "Status"
+        },
+        "description": "Filter by target status or profiling status"
+      },
+      {
+        "name": "search",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Search target by name",
+          "title": "Search"
+        },
+        "description": "Search target by name"
+      },
+      {
+        "name": "adapter_uuid",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Filter targets by the custom adapter they use",
+          "title": "Adapter Uuid"
+        },
+        "description": "Filter targets by the custom adapter they use"
+      }
+    ],
+    "new": [
+      {
+        "name": "skip",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of records to skip",
+          "default": 0,
+          "title": "Skip"
+        },
+        "description": "Number of records to skip"
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 1,
+          "description": "Maximum records to return",
+          "default": 10,
+          "title": "Limit"
+        },
+        "description": "Maximum records to return"
+      },
+      {
+        "name": "target_type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/TargetType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Filter by target type",
+          "title": "Target Type"
+        },
+        "description": "Filter by target type"
+      },
+      {
+        "name": "status",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/TargetStatusFilter"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Filter by target status",
+          "title": "Status"
+        },
+        "description": "Filter by target status"
+      },
+      {
+        "name": "profiling_status",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/ProfilingStatusFilter"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Filter by profiling status",
+          "title": "Profiling Status"
+        },
+        "description": "Filter by profiling status"
+      },
+      {
+        "name": "search",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Search target by name",
+          "title": "Search"
+        },
+        "description": "Search target by name"
+      },
+      {
+        "name": "adapter_uuid",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Filter targets by the custom adapter they use",
+          "title": "Adapter Uuid"
+        },
+        "description": "Filter targets by the custom adapter they use"
+      }
+    ]
+  }
+]

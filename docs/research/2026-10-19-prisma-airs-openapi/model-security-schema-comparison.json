@@ -1,0 +1,3700 @@
+[
+  {
+    "plane": "dataplane",
+    "vendor_schema": "EvalSummarySchema",
+    "sdk_schema": "EvalSummarySchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "rules_failed",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "rules_passed",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "total_rules",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "FileListSchema",
+    "sdk_schema": "FileListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "files",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "FileResponseSchema",
+    "sdk_schema": "FileResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "blob_id",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "formats",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "model_version_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "parent_path",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "path",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "result",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "scan_uuid",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "FileScanDataSchema",
+    "sdk_schema": "FileScanDataSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "blob_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "error_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "file_path",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "formats",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "issues_detected",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "modelscan_status",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "sha256",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "size_bytes",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "HTTPValidationError",
+    "status": "generic_error_envelope"
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "LabelKeyListSchema",
+    "sdk_schema": "LabelKeyListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "keys",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "LabelSchema",
+    "sdk_schema": "LabelSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "key",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "value",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "LabelValueListSchema",
+    "sdk_schema": "LabelValueListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "values",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "LabelsCreateRequestSchema",
+    "sdk_schema": "LabelsCreateRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "labels",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "LabelsResponseSchema",
+    "sdk_schema": "LabelsResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": []
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ModelListSchema",
+    "sdk_schema": "ModelListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "models",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ModelResponseSchema",
+    "sdk_schema": "ModelResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "latest_version_fingerprint",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "latest_version_formats",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "latest_version_hf_commit_sha",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "latest_version_outcome",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "latest_version_revision",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "latest_version_scan_time",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "latest_version_source_types",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "latest_version_uuid",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ModelScanIssue",
+    "sdk_schema": "ModelScanIssueSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "module",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "operator",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "source",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "threat",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ModelVersionListSchema",
+    "sdk_schema": "ModelVersionListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "model_versions",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ModelVersionResponseSchema",
+    "sdk_schema": "ModelVersionResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "file_count",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "fingerprint",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "hf_commit_authors",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "hf_commit_sha",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "hf_commit_title",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "hf_model_name",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "hf_organization",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "last_eval_outcome",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "last_eval_summary",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "latest_scan_time",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "license",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "model_formats",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "model_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "revision",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "source_types",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "PaginationSchema",
+    "sdk_schema": "ModelSecurityPaginationSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "total_items",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "RuleEvaluationListSchema",
+    "sdk_schema": "RuleEvaluationListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "evaluations",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "RuleEvaluationResponseSchema",
+    "sdk_schema": "RuleEvaluationResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "result",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_instance_state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_instance_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_origin",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "scan_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "violation_count",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ScanBaseResponseSchema",
+    "sdk_schema": "ScanBaseResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "created_by",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "enabled_rule_count_snapshot",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "error_code",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "error_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "eval_outcome",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "eval_summary",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "labels",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "model_formats",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "model_uri",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "model_version_uuid",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "owner",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "scan_origin",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "scanner_version",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "sdk_version",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "null",
+          "string"
+        ]
+      },
+      {
+        "field": "security_group_name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "security_group_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "source_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "time_started",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "total_files_scanned",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "total_files_skipped",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ScanCreateRequestSchema",
+    "sdk_schema": "ScanCreateRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "allow_patterns",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "ignore_patterns",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "labels",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "model_author",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "model_name",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "model_uri",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "model_version",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "scan_details",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "scan_origin",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "security_group_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ScanDetails",
+    "sdk_schema": "ScanDetailsSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "error_code",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "error_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "files",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "model_formats",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "model_size_bytes",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "scan_duration_ms",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "scanner_version",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "time_started",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "total_files_scanned",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "total_files_skipped",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ScanListSchema",
+    "sdk_schema": "ScanListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "count_capped",
+        "vendor": [
+          "boolean"
+        ],
+        "sdk": [
+          "boolean"
+        ]
+      },
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "scans",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ValidationError",
+    "status": "generic_error_envelope"
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ViolationListSchema",
+    "sdk_schema": "ViolationListSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "violations",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ViolationRemediationSchema",
+    "sdk_schema": "ViolationRemediationSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "steps",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "url",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "dataplane",
+    "vendor_schema": "ViolationResponseSchema",
+    "sdk_schema": "ViolationResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "file",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "hash",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "insights_url",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "null",
+          "string"
+        ]
+      },
+      {
+        "field": "module",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "operator",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "remediation",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "rule_description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_instance_state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_instance_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_origin",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "threat",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "threat_description",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "threat_kb_url",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "null",
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "BatchAssignCustomRuleRequestSchema",
+    "sdk_schema": "BatchAssignCustomRuleRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "assignments",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "BatchAssignCustomRuleResponseSchema",
+    "sdk_schema": "BatchAssignCustomRuleResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "results",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ConditionGroup-Input",
+    "sdk_schema": "ConditionGroupSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "conditions",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "operator",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ConditionGroup-Output",
+    "sdk_schema": "ConditionGroupSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "conditions",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "operator",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CursorPaginationSchema",
+    "sdk_schema": "CursorPaginationSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "next_token",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleAssignmentResultSchema",
+    "sdk_schema": "CustomRuleAssignmentResultSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "error",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_instance_uuid",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "security_group_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "status",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleAssignmentSchema",
+    "sdk_schema": "CustomRuleAssignmentSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "security_group_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleCreateRequestSchema",
+    "sdk_schema": "CustomRuleCreateRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "compatible_sources",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "condition",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "remediation_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_action",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "violation_message",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleInstanceSummarySchema",
+    "sdk_schema": "CustomRuleInstanceSummarySchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleListItemSchema",
+    "sdk_schema": "CustomRuleListItemSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "compatible_sources",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "condition",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "created_at",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "created_by",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "enabled_security_group_count",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "is_archived",
+        "vendor": [
+          "boolean"
+        ],
+        "sdk": [
+          "boolean"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "remediation_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_action",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_by",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "violation_message",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleResponseSchema",
+    "sdk_schema": "CustomRuleResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "compatible_sources",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "condition",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "created_at",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "created_by",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "is_archived",
+        "vendor": [
+          "boolean"
+        ],
+        "sdk": [
+          "boolean"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "remediation_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_action",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_by",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "violation_message",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleSecurityGroupSchema",
+    "sdk_schema": "CustomRuleSecurityGroupSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "source_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "CustomRuleUpdateRequestSchema",
+    "sdk_schema": "CustomRuleUpdateRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "condition",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "remediation_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_action",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "violation_message",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "HTTPValidationError",
+    "status": "generic_error_envelope"
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "LabelCondition",
+    "sdk_schema": "LabelConditionSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "key",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "operator",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "str"
+        ]
+      },
+      {
+        "field": "value",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ListCustomRuleSecurityGroupsResponseSchema",
+    "sdk_schema": "ListCustomRuleSecurityGroupsResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "security_groups",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ListCustomRulesResponseSchema",
+    "sdk_schema": "ListCustomRulesResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "custom_rules",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ListModelSecurityGroupsResponseSchema",
+    "sdk_schema": "ListModelSecurityGroupsResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "security_groups",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ListModelSecurityRuleInstancesResponseSchema",
+    "sdk_schema": "ListModelSecurityRuleInstancesResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "rule_instances",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ListModelSecurityRulesResponseSchema",
+    "sdk_schema": "ListModelSecurityRulesResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "rules",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityGroupCreateRequestSchema",
+    "sdk_schema": "ModelSecurityGroupCreateRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "rule_configurations",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "source_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityGroupListItemSchema",
+    "sdk_schema": "ModelSecurityGroupResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "enabled_rule_count",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "is_tombstone",
+        "vendor": [
+          "boolean"
+        ],
+        "sdk": [
+          "boolean"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "source_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityGroupResponseSchema",
+    "sdk_schema": "ModelSecurityGroupResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [
+      "enabled_rule_count"
+    ],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "is_tombstone",
+        "vendor": [
+          "boolean"
+        ],
+        "sdk": [
+          "boolean"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "source_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityGroupUpdateRequestSchema",
+    "sdk_schema": "ModelSecurityGroupUpdateRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "description",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityRuleInstanceResponseSchema",
+    "sdk_schema": "ModelSecurityRuleInstanceResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "created_at",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "created_by",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "null",
+          "string"
+        ]
+      },
+      {
+        "field": "custom_rule",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "null",
+          "object"
+        ]
+      },
+      {
+        "field": "custom_rule_uuid",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "null",
+          "string"
+        ]
+      },
+      {
+        "field": "field_values",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "rule",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "security_group_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "security_rule_uuid",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "tsg_id",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_at",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "updated_by",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "null",
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityRuleInstanceUpdateRequestSchema",
+    "sdk_schema": "ModelSecurityRuleInstanceUpdateRequestSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "field_values",
+        "vendor": [
+          "null",
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "security_group_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "state",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityRuleListItemSchema",
+    "sdk_schema": "ModelSecurityRuleResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "compatible_sources",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "constant_values",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "default_state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "default_values",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "editable_fields",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "enabled_security_group_count",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "null",
+          "number"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "remediation",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "rule_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ModelSecurityRuleResponseSchema",
+    "sdk_schema": "ModelSecurityRuleResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [
+      "enabled_security_group_count"
+    ],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "compatible_sources",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "constant_values",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "default_state",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "default_values",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "editable_fields",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "remediation",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "rule_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "PaginationSchema",
+    "sdk_schema": "ModelSecurityPaginationSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "total_items",
+        "vendor": [
+          "integer",
+          "null"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "PyPIAuthResponseSchema",
+    "sdk_schema": "PyPIAuthResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "expires_at",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "url",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "RuleConfigurationSchema",
+    "sdk_schema": "RuleConfigurationSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "field_values",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "state",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "RuleEditableFieldDropdownSchema",
+    "sdk_schema": "RuleEditableFieldDropdownSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "label",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "value",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "RuleEditableFieldSchema",
+    "sdk_schema": "RuleEditableFieldSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "attribute_name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "description",
+        "vendor": [
+          "null",
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "display_name",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "display_type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "dropdown_values",
+        "vendor": [
+          "array",
+          "null"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "RuleRemediationSchema",
+    "sdk_schema": "RuleRemediationSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "description",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "steps",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      },
+      {
+        "field": "url",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "RuleResultCondition",
+    "sdk_schema": "RuleResultConditionSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "operator",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "str"
+        ]
+      },
+      {
+        "field": "rule_uuid",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      },
+      {
+        "field": "type",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "str"
+        ]
+      },
+      {
+        "field": "value",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "SnapshotVersionListResponseSchema",
+    "sdk_schema": "SnapshotVersionListResponseSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "pagination",
+        "vendor": [
+          "object"
+        ],
+        "sdk": [
+          "object"
+        ]
+      },
+      {
+        "field": "versions",
+        "vendor": [
+          "array"
+        ],
+        "sdk": [
+          "array"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "SnapshotVersionSchema",
+    "sdk_schema": "SnapshotVersionSchema",
+    "missing_fields": [],
+    "extra_fields": [],
+    "vendor_optional_sdk_required": [],
+    "vendor_nullable_sdk_nonnullable": [],
+    "field_types": [
+      {
+        "field": "generation",
+        "vendor": [
+          "integer"
+        ],
+        "sdk": [
+          "integer",
+          "number"
+        ]
+      },
+      {
+        "field": "timestamp",
+        "vendor": [
+          "string"
+        ],
+        "sdk": [
+          "string"
+        ]
+      }
+    ]
+  },
+  {
+    "plane": "management",
+    "vendor_schema": "ValidationError",
+    "status": "generic_error_envelope"
+  }
+]

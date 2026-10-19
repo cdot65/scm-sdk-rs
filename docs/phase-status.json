@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "active_phase": null,
-  "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
+  "active_phase": 22,
+  "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations); additive Prisma AIRS OpenAPI reconciliation at pan.dev 582e30543bf2adfd8b0ee457170d22b5c380dfbe with retained SDK capabilities",
   "review_threshold": 9,
   "phases": [
     {
@@ -5014,7 +5014,738 @@
         "head_commit": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
         "scope": "Actual scan after final review and phase advancement, before evidence-only commit; this scan receipt and its metadata link are appended afterward. No additional source change."
       }
+    },
+    {
+      "id": 21,
+      "name": "AIRS source inventory and management compatibility plan",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-21-attempt-03.json"
+      ],
+      "scope_evidence": [
+        ".forgejo/workflows/ci.yml",
+        "contracts/airs-active-sources.json",
+        "contracts/airs-operations.json",
+        "contracts/airs-retained-capabilities.json",
+        "contracts/compatibility/airs-0.2.2-retention.json",
+        "contracts/manifest.json",
+        "contracts/native-fixtures/gateway-specimens.json",
+        "contracts/native-fixtures/schemas.json",
+        "contracts/vendor/red-team-management/0.86.0",
+        "crates/scm-sdk/src/fixtures/model-regressions.json",
+        "docs/CI.md",
+        "docs/PHASES.md",
+        "docs/RELEASE.md",
+        "docs/implementation-plan.md",
+        "docs/red-team-management-0.86-plan.md",
+        "tools/check_phase.py",
+        "tools/red_team_management.py",
+        "tools/review_phase.py",
+        "tools/test_ci.py",
+        "tools/test_management_phases.py",
+        "tools/test_red_team_management.py",
+        "tools/test_review_phase.py",
+        "tools/verify-contracts.py"
+      ],
+      "chunks": [
+        {
+          "id": "plan-and-provenance",
+          "status": "accepted",
+          "scope_evidence": [
+            "docs/red-team-management-0.86-plan.md",
+            "contracts/vendor/red-team-management/0.86.0",
+            "contracts/manifest.json",
+            "tools/red_team_management.py",
+            "tools/verify-contracts.py",
+            "contracts/airs-active-sources.json",
+            "contracts/airs-operations.json",
+            "contracts/airs-retained-capabilities.json",
+            "tools/test_red_team_management.py",
+            "contracts/compatibility/airs-0.2.2-retention.json",
+            "docs/implementation-plan.md",
+            "contracts/native-fixtures/schemas.json",
+            "crates/scm-sdk/src/fixtures/model-regressions.json",
+            "contracts/native-fixtures/gateway-specimens.json"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/red-team-management-0.86-plan.md",
+                "contracts/vendor/red-team-management/0.86.0",
+                "contracts/manifest.json",
+                "tools/red_team_management.py",
+                "tools/verify-contracts.py",
+                "contracts/airs-active-sources.json",
+                "contracts/airs-operations.json",
+                "contracts/airs-retained-capabilities.json",
+                "tools/test_red_team_management.py",
+                "contracts/compatibility/airs-0.2.2-retention.json"
+              ]
+            },
+            {
+              "from_attempt": 2,
+              "scope_evidence": [
+                "docs/red-team-management-0.86-plan.md",
+                "contracts/vendor/red-team-management/0.86.0",
+                "contracts/manifest.json",
+                "tools/red_team_management.py",
+                "tools/verify-contracts.py",
+                "contracts/airs-active-sources.json",
+                "contracts/airs-operations.json",
+                "contracts/airs-retained-capabilities.json",
+                "tools/test_red_team_management.py",
+                "contracts/compatibility/airs-0.2.2-retention.json",
+                "docs/implementation-plan.md",
+                "contracts/native-fixtures/schemas.json",
+                "crates/scm-sdk/src/fixtures/model-regressions.json",
+                "contracts/native-fixtures/gateway-specimens.json"
+              ]
+            }
+          ],
+          "phase_followup_review": "docs/reviews/phase-21-attempt-03.json",
+          "phase_followup_current_source_sha256": "cf84fe545acaee705eef797f3961cf40526f2cd384fd9c057eac7fae0c68e1ec",
+          "accepted_total": 44,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 8.5,
+            "supportability": 8.5,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-05.json",
+          "accepted_source_sha256": "bc704b5f8a8dae6f358a32391765e462af5ca9c0d7dab44f4c7b24436e450b24",
+          "review_decision": "accepted"
+        },
+        {
+          "id": "phase-governance",
+          "status": "accepted",
+          "scope_evidence": [
+            "docs/PHASES.md",
+            "tools/check_phase.py",
+            "tools/review_phase.py",
+            "tools/test_management_phases.py",
+            ".forgejo/workflows/ci.yml",
+            "tools/test_ci.py",
+            "docs/CI.md",
+            "docs/RELEASE.md",
+            "tools/test_review_phase.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/PHASES.md",
+                "tools/check_phase.py",
+                "tools/review_phase.py",
+                "tools/test_management_phases.py"
+              ]
+            },
+            {
+              "from_attempt": 3,
+              "scope_evidence": [
+                "docs/PHASES.md",
+                "tools/check_phase.py",
+                "tools/review_phase.py",
+                "tools/test_management_phases.py",
+                ".forgejo/workflows/ci.yml",
+                "tools/test_ci.py",
+                "docs/CI.md",
+                "docs/RELEASE.md"
+              ]
+            },
+            {
+              "from_attempt": 4,
+              "scope_evidence": [
+                "docs/PHASES.md",
+                "tools/check_phase.py",
+                "tools/review_phase.py",
+                "tools/test_management_phases.py",
+                ".forgejo/workflows/ci.yml",
+                "tools/test_ci.py",
+                "docs/CI.md",
+                "docs/RELEASE.md",
+                "tools/test_review_phase.py"
+              ]
+            }
+          ],
+          "phase_followup_review": "docs/reviews/phase-21-attempt-03.json",
+          "phase_followup_current_source_sha256": "cf84fe545acaee705eef797f3961cf40526f2cd384fd9c057eac7fae0c68e1ec",
+          "accepted_total": 44.5,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 9,
+            "supportability": 8.5,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-21-chunk-phase-governance-attempt-05.json",
+          "accepted_source_sha256": "bc704b5f8a8dae6f358a32391765e462af5ca9c0d7dab44f4c7b24436e450b24",
+          "review_decision": "accepted"
+        }
+      ],
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-21-attempt-03.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/reviews/phase-21-attempt-03.checks.json"
+          ],
+          "source_sha256": "cf84fe545acaee705eef797f3961cf40526f2cd384fd9c057eac7fae0c68e1ec"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-21-attempt-03.json"
+          ]
+        }
+      },
+      "review_findings_disposition": {
+        "status": "accepted_by_phase_attempt03",
+        "reviews": [
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-01.json",
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-02.json",
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-03.json",
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-01.json",
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-02.json",
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-03.json",
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-04.json",
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-04.json",
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-05.json",
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-05.json"
+        ],
+        "note": "Phase 21 accepted at 46/50 and 9/10. The current phase review covers every final correction after the preserved accepted fifth chunk reviews. No blocker, high or medium findings remain. Residual low findings are preserved verbatim in the accepted phase review and do not claim runtime adoption.",
+        "resolution": "All phase attempt 02 and chunk attempt 04 findings addressed: every structural delta and renamed successor is bound to reviewed content; legacy union prefixes preserved; duplicate/private bindings rejected; source counts keyed by identity. Dependency policy frozen, evidence table and prerequisites corrected, command/bootstrap/manifest-reader tests strengthened, prose proofread, and specific scan-history reasons recorded.",
+        "decisions": {
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-01.json": {
+            "decision": "accepted",
+            "total": 42,
+            "scope_evidence": [
+              "docs/PHASES.md",
+              "tools/check_phase.py",
+              "tools/review_phase.py",
+              "tools/test_management_phases.py"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-02.json": {
+            "decision": "rejected",
+            "total": 41,
+            "scope_evidence": [
+              "docs/PHASES.md",
+              "tools/check_phase.py",
+              "tools/review_phase.py",
+              "tools/test_management_phases.py"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-03.json": {
+            "decision": "accepted",
+            "total": 44,
+            "scope_evidence": [
+              "docs/PHASES.md",
+              "tools/check_phase.py",
+              "tools/review_phase.py",
+              "tools/test_management_phases.py",
+              ".forgejo/workflows/ci.yml",
+              "tools/test_ci.py",
+              "docs/CI.md",
+              "docs/RELEASE.md"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-01.json": {
+            "decision": "accepted",
+            "total": 43.5,
+            "scope_evidence": [
+              "docs/red-team-management-0.86-plan.md",
+              "contracts/vendor/red-team-management/0.86.0",
+              "contracts/manifest.json",
+              "tools/red_team_management.py",
+              "tools/verify-contracts.py",
+              "contracts/airs-active-sources.json",
+              "contracts/airs-operations.json",
+              "contracts/airs-retained-capabilities.json",
+              "tools/test_red_team_management.py",
+              "contracts/compatibility/airs-0.2.2-retention.json"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-02.json": {
+            "decision": "accepted",
+            "total": 44.5,
+            "scope_evidence": [
+              "docs/red-team-management-0.86-plan.md",
+              "contracts/vendor/red-team-management/0.86.0",
+              "contracts/manifest.json",
+              "tools/red_team_management.py",
+              "tools/verify-contracts.py",
+              "contracts/airs-active-sources.json",
+              "contracts/airs-operations.json",
+              "contracts/airs-retained-capabilities.json",
+              "tools/test_red_team_management.py",
+              "contracts/compatibility/airs-0.2.2-retention.json",
+              "docs/implementation-plan.md",
+              "contracts/native-fixtures/schemas.json",
+              "crates/scm-sdk/src/fixtures/model-regressions.json",
+              "contracts/native-fixtures/gateway-specimens.json"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-03.json": {
+            "decision": "accepted",
+            "total": 43,
+            "scope_evidence": [
+              "docs/red-team-management-0.86-plan.md",
+              "contracts/vendor/red-team-management/0.86.0",
+              "contracts/manifest.json",
+              "tools/red_team_management.py",
+              "tools/verify-contracts.py",
+              "contracts/airs-active-sources.json",
+              "contracts/airs-operations.json",
+              "contracts/airs-retained-capabilities.json",
+              "tools/test_red_team_management.py",
+              "contracts/compatibility/airs-0.2.2-retention.json",
+              "docs/implementation-plan.md",
+              "contracts/native-fixtures/schemas.json",
+              "crates/scm-sdk/src/fixtures/model-regressions.json",
+              "contracts/native-fixtures/gateway-specimens.json"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-04.json": {
+            "decision": "accepted",
+            "total": 44.5,
+            "scope_evidence": [
+              "docs/PHASES.md",
+              "tools/check_phase.py",
+              "tools/review_phase.py",
+              "tools/test_management_phases.py",
+              ".forgejo/workflows/ci.yml",
+              "tools/test_ci.py",
+              "docs/CI.md",
+              "docs/RELEASE.md",
+              "tools/test_review_phase.py"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-04.json": {
+            "decision": "accepted",
+            "total": 45,
+            "scope_evidence": [
+              "docs/red-team-management-0.86-plan.md",
+              "contracts/vendor/red-team-management/0.86.0",
+              "contracts/manifest.json",
+              "tools/red_team_management.py",
+              "tools/verify-contracts.py",
+              "contracts/airs-active-sources.json",
+              "contracts/airs-operations.json",
+              "contracts/airs-retained-capabilities.json",
+              "tools/test_red_team_management.py",
+              "contracts/compatibility/airs-0.2.2-retention.json",
+              "docs/implementation-plan.md",
+              "contracts/native-fixtures/schemas.json",
+              "crates/scm-sdk/src/fixtures/model-regressions.json",
+              "contracts/native-fixtures/gateway-specimens.json"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-phase-governance-attempt-05.json": {
+            "decision": "accepted",
+            "total": 44.5,
+            "scope_evidence": [
+              "docs/PHASES.md",
+              "tools/check_phase.py",
+              "tools/review_phase.py",
+              "tools/test_management_phases.py",
+              ".forgejo/workflows/ci.yml",
+              "tools/test_ci.py",
+              "docs/CI.md",
+              "docs/RELEASE.md",
+              "tools/test_review_phase.py"
+            ]
+          },
+          "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-05.json": {
+            "decision": "accepted",
+            "total": 44,
+            "scope_evidence": [
+              "docs/red-team-management-0.86-plan.md",
+              "contracts/vendor/red-team-management/0.86.0",
+              "contracts/manifest.json",
+              "tools/red_team_management.py",
+              "tools/verify-contracts.py",
+              "contracts/airs-active-sources.json",
+              "contracts/airs-operations.json",
+              "contracts/airs-retained-capabilities.json",
+              "tools/test_red_team_management.py",
+              "contracts/compatibility/airs-0.2.2-retention.json",
+              "docs/implementation-plan.md",
+              "contracts/native-fixtures/schemas.json",
+              "crates/scm-sdk/src/fixtures/model-regressions.json",
+              "contracts/native-fixtures/gateway-specimens.json"
+            ]
+          }
+        },
+        "phase_review": {
+          "path": "docs/reviews/phase-21-attempt-01.json",
+          "decision": "rejected",
+          "score": 8.5,
+          "total": 43
+        },
+        "phase_reviews": [
+          {
+            "path": "docs/reviews/phase-21-attempt-01.json",
+            "decision": "rejected",
+            "score": 8.5,
+            "total": 43
+          },
+          {
+            "path": "docs/reviews/phase-21-attempt-02.json",
+            "decision": "rejected",
+            "score": 8.5,
+            "total": 44
+          },
+          {
+            "path": "docs/reviews/phase-21-attempt-03.json",
+            "decision": "accepted",
+            "score": 9,
+            "total": 46
+          }
+        ],
+        "followup_corrections": "Explicit user-facing status-filter migration deliverables; trailing-null-only union guard; unused review registry rejection; cached baseline closures; prompt spacing; honest precommit range limitation; recursive manifest-reader discovery; failed final invocation recovery requires explicit maintainer authorization, never automatic budget reset.",
+        "residual_findings": [
+          {
+            "severity": "low",
+            "path": "tools/review_phase.py",
+            "line": 279,
+            "description": "verify_record applies the phase-aware gate twice with different inputs. Line 273-274 computes gate_decision(..., phase=phase) and requires record[\"decision\"] to equal it, but the second call at line 279 invokes validate_review(...) without a phase argument (its signature at line 155 has no phase parameter), so the phase-21-only >=9/10 plan floor at line 70 is not re-applied there. A record that honestly states decision \"rejected\" (score 8.5, total 50, all categories 10) but whose gate_passed field is flipped to true therefore satisfies both gates: line 273-274 sees matching \"rejected\" values and line 276-281 sees gate_passed true plus validate_review returning True because its phase-blind gate_decision yields \"accepted\". main() never writes such a record (line 594 sets passed = passed and decision != \"rejected\"), and test_plan_score_floor_cannot_be_bypassed_by_category_total covers the realistic forgery where decision is also flipped, so nothing is wrong in this source state and PHASES.md:7 declares repository writers trusted. The gap is that this is precisely the mutual inconsistency the hashes and record checks exist to detect, and it sits on the one criterion this review is gated by.",
+            "required_fix": "Add a phase keyword to validate_review and pass phase=phase at tools/review_phase.py:279 (and at line 114 for consistency), or require record[\"gate_passed\"] is True to imply the computed decision is not \"rejected\". Add a regression asserting that a record with decision \"rejected\" and gate_passed true fails verify_record for phase 21."
+          },
+          {
+            "severity": "low",
+            "path": "tools/red_team_management.py",
+            "line": 592,
+            "description": "The glued-digit proofreading fix requested by phase attempt-02 finding 7 and governance chunk attempt-05 finding 1 was applied to the five scoped documents and to the review_phase.py prompt template, but the identical defect remains in prose this scoped tool emits. Line 592 writes 'phase23 must exercise old consumers and round-trips' into contracts/airs-retained-capabilities.json:27162-area, line 525 writes 'phase22 implements overlay' into contracts/airs-active-sources.json:76, line 611 is the maintainer-facing CLI error 'Phase22-25 implementation/qualification evidence is not implemented', and lines 423 and 606 put 'Phase21-only'/'Phase21 only:' into the docstring and --help text. The newly added audit document docs/research/2026-10-19-prisma-airs-openapi/README.md is pervasively affected (:263 'all42operation mappings and the9functional dependency closures plus33error-metadata closures', :342 'capped2MiB each, context100MiB', :506 'all64 object-component classifications and320 property comparisons'), and the immutable seed carries 'phase21 baseline diff' at contracts/compatibility/airs-0.2.2-retention.json:27248. These are the documents a future maintainer reads to re-derive the pins, and the fix was requested twice.",
+            "required_fix": "Normalise spacing before numerals in the emitted strings at tools/red_team_management.py:423, 525, 592, 606, 611 and in docs/research/2026-10-19-prisma-airs-openapi/README.md and REVIEW.md; update RETENTION_SHA256 if the seed's sourceLedgerEvidence sentence is corrected, and regenerate the affected contract artifacts with tools/red_team_management.py so --check stays byte-exact."
+          },
+          {
+            "severity": "low",
+            "path": "contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json",
+            "line": 2863,
+            "description": "The single most user-visible delta is the TargetStatusFilter enum narrowing from seven declared values to exactly DRAFT and ACTIVE (:2858-2884, old/new recorded losslessly). Its machine-readable decision string, shared by the enum group at tools/red_team_management.py:260-261, reads 'Extend declared values; retain old response values and legacy status inputs; do not invent filter mappings.' The first clause describes an extension and is wrong for this row and for the ProfilingStatus INIT/QUEUED removal that reuses the same text; only the trailing clauses apply. The category (compatibility_exception) and the plan prose (docs/red-team-management-0.86-plan.md:152-168) are both correct, so no decision is actually mistaken, but compatibility-decisions.json is the artifact phases 22-25 and the phase-25 drift detector consume, and its narrative for the headline narrowing mis-describes the change.",
+            "required_fix": "Split the enum-group decision in tools/red_team_management.py:260-261 so narrowing/removal rows carry text naming the removed values and the migration (or add a per-row 'direction' field), regenerate the artifact, and assert in tools/test_red_team_management.py that the TargetStatusFilter enum row's decision text names the narrowed domain."
+          },
+          {
+            "severity": "low",
+            "path": "tools/red_team_management.py",
+            "line": 489,
+            "description": "build() loads the hash-pinned audit inventory and checks that its spec paths equal COUNTS and that the management row exists, but never compares inventory['commit'] (docs/research/2026-10-19-prisma-airs-openapi/inventory.json:2) with the module COMMIT constant at line 25. COMMIT is then stamped into every output as observedCommit and snapshotCommit (lines 516, 595-596) and into SOURCE_ID. Provenance correctness therefore rests on two independently maintained constants happening to agree rather than on one asserted equality. The practical exposure is narrow: for the management source a mismatch would fail checked_bytes, but the six already-adopted sources have activeSpecificationSha256 equal to frozenSha256, so re-pinning inventory.json to a different upstream commit whose bytes are unchanged would silently relabel their observedCommit. Separately, the management row's own activeSpecificationPath/activeSpecificationSha256 fields in inventory.json still point at the frozen baseline and are ignored by the tool, which is harmless but inconsistent with the artifact the tool emits.",
+            "required_fix": "Assert inventory['commit'] == COMMIT immediately after loading the inventory in build(), and add a test patching the inventory commit that expects an explicit provenance error."
+          },
+          {
+            "severity": "low",
+            "path": "tools/red_team_management.py",
+            "line": 473,
+            "description": "verify_component_successor.prefixes() now correctly strips only a trailing {'type': 'null'} branch, closing the attempt-05 finding, but the comparison it performs is narrower than the invariant the plan states at docs/red-team-management-0.86-plan.md:289-290 ('verify each old union reference prefix'). It enforces left == right only when the legacy branch is a $ref or the null literal (line 478); an inline structural legacy branch at the same index may be replaced or altered without tripping the guard, and the loop iterates old.keys() & new.keys(), so a successor that renamed a union key (for example multi_turn_config's oneOf to anyOf) is skipped entirely. The current eight renames all use $ref branches, so the guard is fully effective on this diff, and the successor content digest in REVIEWED_SUCCESSORS still forces re-review of any such change. This is precision rather than an active hole, but phase 25 inherits this comparator for drift classification.",
+            "required_fix": "Compare branch lists by index for all branch shapes (not only $ref/null), and raise when a successor drops or renames a union key present in the removed variant; add regressions covering an altered inline legacy branch and a oneOf-to-anyOf rename."
+          }
+        ]
+      },
+      "plan": "docs/red-team-management-0.86-plan.md",
+      "private_scan_history": {
+        "authoritative": "docs/checks/phase-21-private-material.json",
+        "history": [
+          {
+            "path": "docs/checks/phase-21-private-material-attempt-01.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded by chunk attempt-01 classification, input pinning, ownership and governance repairs."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-attempt-02.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded by phase-21 CI routing, substantive-review budget enforcement and stronger provenance checks."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-attempt-03.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded by full-phase attempt-01 repairs: all-constraint checking, current retention output, source metadata verification, dependency audit and scope history."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-initial.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded after immutable retention seed and plan-score prompt corrections."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-interrupted.json",
+            "status": "superseded",
+            "passed": false,
+            "reason": "Rejected because the concurrent phase check wrote evidence during scanning; sourceUnchanged false despite zero credential matches."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-pre-oracle.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded by frozen Zod and packaged fixture provenance rebinding after the manifest update."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-pre-scope-correction.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded by the planning evidence-scope correction excluding stale historical live/export claims."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-attempt-04.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded by full-phase attempt 02 repairs: complete delta/successor identities, public binding checks, dependency-policy freeze, strengthened CI assertions, and documentation proofreading."
+          },
+          {
+            "path": "docs/checks/phase-21-private-material-attempt-05.json",
+            "status": "superseded",
+            "passed": true,
+            "reason": "Superseded by final chunk follow-ups: explicit filter migration disclosure, strict trailing-null and review-registry checks, cached closures, recursive CI input discovery, and documented final-invocation recovery."
+          }
+        ]
+      },
+      "accepted_source_sha256": "cf84fe545acaee705eef797f3961cf40526f2cd384fd9c057eac7fae0c68e1ec",
+      "accepted_score": 9,
+      "accepted_total": 46,
+      "accepted_categories": {
+        "implementation": 9.5,
+        "code_quality": 9,
+        "supportability": 8.5,
+        "architecture": 9.5,
+        "feature_delivery": 9.5
+      },
+      "review_decision": "accepted"
+    },
+    {
+      "id": 22,
+      "name": "Red Team target configuration and filtering support",
+      "status": "in_progress",
+      "reviews": [],
+      "scope_evidence": [
+        "docs/red-team-management-0.86-plan.md"
+      ],
+      "chunks": [
+        {
+          "id": "connection-compatibility",
+          "status": "pending",
+          "scope_evidence": [
+            "crates/scm-sdk/src/validation.rs",
+            "crates/scm-sdk/src/validation/schema_graph.json"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "crates/scm-sdk/src/validation.rs",
+                "crates/scm-sdk/src/validation/schema_graph.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "target-filtering",
+          "status": "pending",
+          "scope_evidence": [
+            "crates/scm-sdk/src/airs/red_team"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "crates/scm-sdk/src/airs/red_team"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "typed-connections",
+          "status": "pending",
+          "scope_evidence": [
+            "crates/scm-sdk/src/models"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "crates/scm-sdk/src/models"
+              ]
+            }
+          ]
+        }
+      ],
+      "milestones": {
+        "implemented_scope": {
+          "status": "pending"
+        },
+        "independent_verification": {
+          "status": "pending"
+        },
+        "claude_review": {
+          "status": "pending"
+        }
+      },
+      "plan": "docs/red-team-management-0.86-plan.md"
+    },
+    {
+      "id": 23,
+      "name": "AIRS management compatibility and security qualification",
+      "status": "pending",
+      "reviews": [],
+      "scope_evidence": [
+        "docs/red-team-management-0.86-plan.md"
+      ],
+      "chunks": [
+        {
+          "id": "compatibility-matrix",
+          "status": "pending",
+          "scope_evidence": [
+            "contracts/vendor/red-team-management/0.86.0",
+            "crates/scm-sdk"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "contracts/vendor/red-team-management/0.86.0",
+                "crates/scm-sdk"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "package-security",
+          "status": "pending",
+          "scope_evidence": [
+            "scripts/check-package.py",
+            "tools/red_team_management.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "scripts/check-package.py",
+                "tools/red_team_management.py"
+              ]
+            }
+          ]
+        }
+      ],
+      "milestones": {
+        "implemented_scope": {
+          "status": "pending"
+        },
+        "independent_verification": {
+          "status": "pending"
+        },
+        "claude_review": {
+          "status": "pending"
+        }
+      },
+      "plan": "docs/red-team-management-0.86-plan.md"
+    },
+    {
+      "id": 24,
+      "name": "AIRS management service qualification and release",
+      "status": "pending",
+      "reviews": [],
+      "scope_evidence": [
+        "docs/red-team-management-0.86-plan.md"
+      ],
+      "chunks": [
+        {
+          "id": "release-readiness",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/RELEASE.md",
+            "tools/red_team_management.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/RELEASE.md",
+                "tools/red_team_management.py"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "delivery",
+          "status": "pending",
+          "scope_evidence": [
+            "tools/release_delivery.py",
+            "scripts/verify-publication.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "tools/release_delivery.py",
+                "scripts/verify-publication.py"
+              ]
+            }
+          ]
+        }
+      ],
+      "milestones": {
+        "implemented_scope": {
+          "status": "pending"
+        },
+        "independent_verification": {
+          "status": "pending"
+        },
+        "claude_review": {
+          "status": "pending"
+        }
+      },
+      "plan": "docs/red-team-management-0.86-plan.md"
+    },
+    {
+      "id": 25,
+      "name": "Prisma AIRS upstream drift detection",
+      "status": "pending",
+      "reviews": [],
+      "scope_evidence": [
+        "docs/red-team-management-0.86-plan.md"
+      ],
+      "chunks": [
+        {
+          "id": "semantic-drift",
+          "status": "pending",
+          "scope_evidence": [
+            "tools/red_team_management.py",
+            "contracts/vendor/red-team-management/0.86.0"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "tools/red_team_management.py",
+                "contracts/vendor/red-team-management/0.86.0"
+              ]
+            }
+          ]
+        }
+      ],
+      "milestones": {
+        "implemented_scope": {
+          "status": "pending"
+        },
+        "independent_verification": {
+          "status": "pending"
+        },
+        "claude_review": {
+          "status": "pending"
+        }
+      },
+      "final_in_sequence": true,
+      "plan": "docs/red-team-management-0.86-plan.md"
     }
   ],
-  "active_followup_plan": "docs/g25-response-compatibility-plan.md"
+  "active_followup_plan": "docs/red-team-management-0.86-plan.md"
 }

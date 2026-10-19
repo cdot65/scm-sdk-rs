@@ -160,7 +160,7 @@ The verified Rust checkout and remote are recorded above. Confirm registry-name 
 ## Authorized Portkey access-policy addition
 
 After 0.2.0 delivery, the maintainer authorized the exact Portkey a27feb9 delta
-through [phases15–17](portkey-access-policies-plan.md), targeting additive 0.2.1.
+through [phases 15–17](portkey-access-policies-plan.md), targeting additive 0.2.1.
 Its explicit key-authenticated control plane remains separate from SCM OAuth.
 
 ## G25 response compatibility patch
@@ -170,3 +170,14 @@ Both response modes relax string formats across the SDK while requests retain
 strict validation. Existing Red Team responses must accept their frozen TypeScript
 contract, including preservation through typed decoding. Phases18–20 require
 reviewed planning, implementation and actual registry/remote delivery evidence.
+
+## Prisma AIRS management 0.86.0 reconciliation
+
+The authorized [AIRS reconciliation plan](red-team-management-0.86-plan.md)
+executes phases 21–25 after completed 0.2.2 delivery. It pins all seven current
+AIRS sources, updates management 0.86.0 target contracts, preserves every existing
+capability, and establishes repeatable drift detection. Candidate version 0.2.3
+requires source compatibility proof; an unavoidable public break requires a
+minor release and migration guidance. Static contract coverage, executable
+qualification and live tenant acceptance remain separate evidence. Actual Claude
+reviews and the current five-category rubric gate implementation and delivery.

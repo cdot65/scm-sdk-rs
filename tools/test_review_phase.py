@@ -339,8 +339,8 @@ class FiveCategoryReviewTests(unittest.TestCase):
         review['limitations'] = ['Delivery documentation needs improvement']
         for attempt in range(1, 5):
             self.assertFalse(validate_review(review, rubric=True, attempt=attempt))
-        self.assertTrue(validate_review(review, rubric=True, attempt=5))
-        self.assertEqual(gate_decision(review, rubric=True, attempt=5), 'accepted_with_deficiencies')
+        self.assertTrue(validate_review(review, rubric=True, attempt=5, completed_prior=4))
+        self.assertEqual(gate_decision(review, rubric=True, attempt=5, completed_prior=4), 'accepted_with_deficiencies')
         catastrophic = self.review((10, 10, 10, 10, 1))
         catastrophic['limitations'] = ['One category is unacceptable']
         self.assertFalse(validate_review(catastrophic, rubric=True, attempt=5))
@@ -697,7 +697,7 @@ class FiveCategoryReviewTests(unittest.TestCase):
     def test_attempt_five_cannot_skip_previous_reviews(self):
         from review_phase import verify_attempt_sequence
         with tempfile.TemporaryDirectory() as directory:
-            with self.assertRaises(FileNotFoundError):
+            with self.assertRaisesRegex(ValueError, "Previous review evidence has changed"):
                 verify_attempt_sequence(pathlib.Path(directory), 19, 5)
 
 

@@ -1,0 +1,97 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 21,
+  "attempt": 5,
+  "reviewed_at": "2026-10-19T13:59:59.751307+00:00",
+  "source_sha256": "bc704b5f8a8dae6f358a32391765e462af5ca9c0d7dab44f4c7b24436e450b24",
+  "source_unchanged": true,
+  "checks_sha256": "ebd06b6f89bcd04d8d4bfc09e1f4aa12b8011b2b123d970fa67e71b1db4f3f65",
+  "prompt_sha256": "878d9359563e4267ad420b21896a54edcafa300b276bea8883165600461d26e1",
+  "cli_output_sha256": "167fc721104e15aa4e9a63fdb6218ac7de3c8c98cc9b452519bf38e5189e88dd",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Phase 21 chunk \"plan-and-provenance\" is substantive, source-bound planning/provenance work, not completion prose. The vendored Red Team management 0.86.0 corpus (YAML, normalized JSON, source metadata, MIT license) is byte-pinned and owned end-to-end: contracts/manifest.json registers the source plus four vendorArtifacts, tools/verify-contracts.py:393-407,471-489 rejects unowned/missing/altered/escaping/symlinked/duplicate-ID vendor files (27 self-test tampering cases pass), and tools/red_team_management.py re-derives seven active source pins, 160 operation mappings with recursive reference closure, native bindings verified against real inherent `pub fn` impls, 42 management operations, and a complete structural delta set where every delta (including whole added/removed subtrees and renamed successors) must match an explicitly reviewed SHA256 identity or the tool fails closed. The immutable 0.2.2 retention seed (hash-pinned, 4279 export/method identities + defaults + post-baseline ledgers) is never rewritten by generation, and --verify-retention-origin proves the six current ledgers still equal audited bytes. Independent spot checks against the actual vendor bytes confirm the plan's design claims are accurate rather than aspirational: ProfilingStatusFilter is exactly {NOT_STARTED,IN_PROGRESS,COMPLETED,FAILED}, ResponseMode gains only REALTIME, TargetConnectionType gains only VERTEX_AI and N8N, Vertex has four fields with three regex patterns, new provider branches are appended after legacy branches before the trailing null, and s012107 really is the shared public TargetResponse root used by all five target methods (crates/scm-sdk/src/airs/red_team/targets.rs:138-266), which makes the five-declaration design seam real. Evidence is verified, not trusted: all 25 commands registered for phase 21 in tools/check_phase.py:135-175 are present in the attempt-05 checks report with exit_code 0 at source bc704b5f\u2026, source_unchanged true, with a fresh private-material receipt and dependency audit at the same source hash, and the SDK-freeze, planning-fixture and Gateway-proof guards restrict changes to the exactly documented single-hash rebinds. Remaining issues are non-blocking: the plan never requires user-facing disclosure that the legacy `status` filter domain narrowed from seven to two declared values, the successor union check strips null branches anywhere instead of only a trailing one, stale/unused REVIEWED_DELTAS or REVIEWED_SUCCESSORS entries are never reported, and affectedOperations recomputes baseline closures per delta. Total 44/50 clears the 42 chunk threshold on its own merits with every category >=8 and no blocker/high finding; the fifth-attempt exception is not needed.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "docs/red-team-management-0.86-plan.md",
+        "line": 147,
+        "description": "The single most user-visible delta is the `status` filter domain narrowing from seven declared values (DRAFT, ACTIVE, FAILED, QUEUED, IN_PROGRESS, COMPLETED, PARTIALLY_COMPLETE) to exactly DRAFT and ACTIVE (confirmed in contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json:2858-2882). The plan correctly decides to transmit legacy strings unchanged with no invented mapping, but no milestone requires telling callers: phase 22 milestone 2 only says \"unchanged legacy status wire\", and the phase 24 changelog list (lines 226-230) enumerates new variants/filters/projections, Unknown transitions, retained validation rules and live limitations without naming the narrowed filter domain. A caller passing status=FAILED can now receive an upstream 422 with no documented migration note.",
+        "required_fix": "Add an explicit deliverable in the Target filters section and the phase 24 changelog bullet requiring changelog plus rustdoc/option-level notes that name FAILED, QUEUED, IN_PROGRESS, COMPLETED and PARTIALLY_COMPLETE as no longer declared by upstream for `status`, and point to `profiling_status` where a successor filter exists."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 473,
+        "description": "verify_component_successor.prefixes() filters {'type': 'null'} out of anyOf/oneOf lists at any position before comparing legacy prefixes, while the documented rule (docs/red-team-management-0.86-plan.md:278-279) is to ignore only a trailing nullable branch. A successor that relocated a null branch into the middle of a union, changing nullable semantics of an interior branch position, would pass the prefix check unflagged; only the exact successor content digest would catch it.",
+        "required_fix": "Strip only a trailing {'type': 'null'} element (or assert that null-branch positions are identical between old and successor) so the implementation matches the documented trailing-nullable exemption."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 35,
+        "description": "REVIEWED_DELTAS (69 entries) and REVIEWED_SUCCESSORS (8 entries) are only consulted by lookup in disposition()/verify_component_successor(); nothing detects entries that no longer correspond to any delta in the current diff. As upstream evolves through phases 22-25, obsolete reviewed digests accumulate silently and a later reviewer cannot distinguish a live reviewed decision from a stale one, which weakens exactly the registry phase 25 drift detection depends on.",
+        "required_fix": "After computing deltas in build(), fail (or emit an explicit report line) when any REVIEWED_DELTAS path or REVIEWED_SUCCESSORS key is unused by the current diff, and cover that behavior with a test in tools/test_red_team_management.py."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 566,
+        "description": "affectedOperations recomputes operations(baseline) and closure(...) for every (delta, management row) pair, i.e. roughly 70 x 42 repeated reference-closure traversals of the baseline spec. It passes today (0.82 s for the whole --check), but the cost grows multiplicatively with delta count and operation count, which matters once phase 25 runs comparisons over a newly pinned complete tree.",
+        "required_fix": "Precompute the baseline operation map and each row's baseline closure once before the delta loop and reuse them when computing affectedOperations."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-21-chunk-plan-and-provenance-attempt-05.checks.json records source_sha256 bc704b5f8a8dae6f358a32391765e462af5ca9c0d7dab44f4c7b24436e450b24, source_unchanged true, passed true, with 25 check entries all at exit_code 0 and timeout false; counted against the 25 commands registered for phase 21 in tools/check_phase.py:135-175 (baseline SDK diff, planning fixture/Gateway proof, untracked-SDK guard, baseline..HEAD hygiene, 10 common checks, dependency audit, test_ci, three generator --check tools, native fixtures with test bindings, dataplane --require-complete, schema oracle, gateway specimens, generate_validation, generate_models) - the recorded set is complete, not a subset.",
+      "docs/checks/phase-21.json carries the identical source hash and timestamp (2026-10-19T13:51:33Z) as the chunk checks file, so the chunk evidence is the actual full phase report rather than a narrowed rerun.",
+      "docs/checks/phase-21-private-material.json is bound to the same source bc704b5f\u2026 with passed true, 1907 git-visible files, zero credential/registration matches, and explicitly states its --check mode does not re-execute private matching; the check output in the attempt-05 report confirms receiptFresh true / privateScanReexecuted false, so the scan was genuinely executed at 13:51:04 before the gate at 13:51:33.",
+      "tools/red_team_management.py:216-266 disposition() computes sha256(encoded(path/kind/old/new)) for every delta and raises unless REVIEWED_DELTAS holds that exact path and digest; required-list deltas, property-named annotations, removals outside the eight known renames, non-schema deltas and unknown schema names all raise. tools/test_red_team_management.py:67-76,119-126,156-162,207-210 exercises added required fields, type narrowing, enum narrowing, security emptying, new subtrees and unknown-prefixed components and asserts each fails closed.",
+      "tools/red_team_management.py:391-429 retained_floor() reads the floor only from hash-pinned contracts/compatibility/airs-0.2.2-retention.json (RETENTION_SHA256 25a77256\u2026), indexes exports/methods/redTeamExtraMethods by baselineId, and emits the current inventory plus floorReference instead of copying the seed; verify_retention_origin() re-hashes the six ledger files against seed sourceLedgerSha256 (contracts/compatibility/airs-0.2.2-retention.json:27249-27256). Both current and seed files contain 4279 baselineId occurrences (3820 exports + 448 methods + 11 red-team extras), so the current inventory equals the floor with no silent removals.",
+      "Independent byte checks against contracts/vendor/red-team-management/0.86.0/openapi.json confirm plan accuracy: ProfilingStatusFilter enum exactly NOT_STARTED/IN_PROGRESS/COMPLETED/FAILED (5300-5310), ResponseMode adds only REALTIME (5489-5500), TargetConnectionType adds only VERTEX_AI and N8N over the frozen 11-value enum at contracts/sources/pan-dev/openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml:4458-4472, VertexAIConnectionParams has exactly project_id/location/engine_id/customer_sa_email with three regex patterns and all four required (9431-9466), and the redact variant marks customer_sa_email writeOnly/password (9467-9504).",
+      "contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json:632-690 shows VertexAIConnectionRedactParams appended after the five legacy provider refs and before the trailing null, matching the plan's \"append after old branches\" rule; 2858-2882 records the TargetStatusFilter narrowing and 691-723 the ProfilingStatus INIT/QUEUED removal with NOT_STARTED addition, each with category and decision text.",
+      "The plan's shared-root concern is real: crates/scm-sdk/src/models/generated.rs:178608,178824 defines public TargetResponse with SCHEMA \"s012107\", and crates/scm-sdk/src/airs/red_team/targets.rs:138-266 decodes all five target operations through \"TargetResponseSchema\", so the five per-operation declarations in the plan table address an actual single validation root.",
+      "Provenance coherence: docs/research/2026-10-19-prisma-airs-openapi/inventory.json (hash-pinned in AUDIT_PINS) marks the management row activeBytesEqualUpstream false with upstream sha256 5fbb533b\u2026 and frozen 4b92495d\u2026; tools/red_team_management.py:504-514 therefore checks the vendored YAML against the upstream hash and the frozen baseline separately, and contracts/airs-active-sources.json:62-81 reflects both, with adoptionState pinned_for_phase22_not_runtime_adopted.",
+      "Ownership and artifact binding: contracts/manifest.json:1949-1963 (source), 2032-2042 (license) and 2442-2482 (four vendorArtifacts) all carry matching repository/commit/license identity, and tools/verify-contracts.py:393-407,471-489 enforces artifact-root registration, redistributable source, origin match, unregistered-future-version rejection and exact corpus file equality; the self-test output lists 27 rejected tampering cases including unowned-vendor-file, modified-vendor-file, vendor-symlink, vendor-artifact-escape and unowned-vendor-version.",
+      "Planning metadata exception is enforced byte-exactly: tools/check_phase.py:79-132 require_only_hash_replacements/verify_planning_fixture/verify_planning_gateway_proof permit exactly one occurrence per allowlisted 64-hex value and compare everything else to the baseline git objects; the chain is consistent in crates/scm-sdk/src/fixtures/model-regressions.json:4-12 (source hash to schemas.json) and contracts/native-fixtures/schemas.json:611-614 (manifestSha256 to manifest bytes).",
+      "Evidence honesty: every airs-operations.json row carries coverage \"native_method_exists; static_mapping_only; not_live_acceptance\" (e.g. line 9680), the retention artifact records evidenceLimit deferring consumer round-trips to phase 23, and tools/red_team_management.py:602-603 plus test_future_phase_cannot_pass_on_plan_artifacts prove --require-through-phase 22-25 fail on plan artifacts.",
+      "No credential-shaped material found in contracts/vendor/red-team-management/0.86.0 for JWT, PEM private key, sk- or AKIA patterns."
+    ],
+    "limitations": [
+      "Bash is disabled in this session, so I could not independently recompute any SHA256, git blob SHA1 or canonical semantic hash. Hash correctness rests on the recorded, source-bound execution of tools/red_team_management.py --check --verify-retention-origin and tools/verify-contracts.py, whose logic I read and judged sound; I verified internal consistency of pinned values across manifest, source.json, inventory.json, active-sources and the retention seed by inspection.",
+      "Upstream byte provenance (that the vendored 0.86.0 bytes are pan.dev at commit 582e30543bf2) cannot be established offline. It rests on the pinned audit inventory plus the recorded sourceUrl and gitBlobSha1; docs/research/2026-10-19-prisma-airs-openapi/README.md:25 states this fresh-checkout limitation explicitly, and phase 25 is the registered mechanism for an explicitly invoked online refresh.",
+      "I did not re-execute any check; I compared the registered phase-21 command list to the recorded invocations, exit codes and stdout/stderr. The gate hashes detect stale artifacts but do not cryptographically authenticate the CLI process, as docs/PHASES.md:7 already records.",
+      "Assessment is limited to the declared plan-and-provenance chunk scope. I read tools/check_phase.py, tools/test_management_phases.py output and tools/test_review_phase.py output only to verify that the recorded evidence matches registered commands; findings about the phase-governance chunk's own files are out of scope.",
+      "Static binding checks prove referenced Rust functions exist with public inherent impls; they prove nothing about request construction, response acceptance or tenant permissions. No runtime, packaging, MSRV or live acceptance claim is evaluated here, and phase 22-25 operations marked planned are not treated as missing deliverables.",
+      "I did not audit unrelated historical infrastructure (0.2.2 release receipts, Gateway/Portkey corpora, prior phase ledgers) beyond confirming the phase-21 freeze and retention-origin guards keep them byte-identical."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8.5,
+      "supportability": 8.5,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": "plan-and-provenance",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "docs/red-team-management-0.86-plan.md",
+    "contracts/vendor/red-team-management/0.86.0",
+    "contracts/manifest.json",
+    "tools/red_team_management.py",
+    "tools/verify-contracts.py",
+    "contracts/airs-active-sources.json",
+    "contracts/airs-operations.json",
+    "contracts/airs-retained-capabilities.json",
+    "tools/test_red_team_management.py",
+    "contracts/compatibility/airs-0.2.2-retention.json",
+    "docs/implementation-plan.md",
+    "contracts/native-fixtures/schemas.json",
+    "crates/scm-sdk/src/fixtures/model-regressions.json",
+    "contracts/native-fixtures/gateway-specimens.json"
+  ]
+}

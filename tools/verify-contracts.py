@@ -25,6 +25,8 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 PIN = "4a80dbdb3dc14365e1c25d838ac0bd139485d48c"
 VERSION = "0.34.0"
+# Explicit ownership: historical vendor trees retain their dedicated verifiers.
+VENDOR_ROOTS = ("contracts/vendor/red-team-management/0.86.0",)
 EXTRACTION_INPUTS = {"package.json", "tsconfig.json", "scripts/openapi/inventory.ts"}
 FIXTURE_CATEGORIES = {
     "independent-openapi-fixture", "fixture-test-reference",
@@ -133,7 +135,11 @@ def self_test() -> None:
              "fixture-inventory-omission", "baseline-source-omission", "tree-ledger-omission",
              "excluded-source-generation", "export-source-change", "fixture-category-relabel",
              "fixture-category-unknown", "specification-pin-removal", "observed-specification-pin",
-             "extraction-input-omission", "extraction-input-origin-change", "license-evidence-change")
+             "extraction-input-omission", "extraction-input-origin-change", "license-evidence-change",
+             "unowned-vendor-file", "missing-vendor-file", "modified-vendor-file",
+             "vendor-license-commit", "duplicate-source-id", "vendor-artifact-origin",
+             "vendor-artifact-omission", "vendor-artifact-escape", "vendor-symlink",
+             "unowned-vendor-version")
     with tempfile.TemporaryDirectory(prefix="scm-contract-verifier-") as temporary:
         root = Path(temporary)
         shutil.copytree(ROOT / "contracts", root / "contracts")
@@ -207,12 +213,42 @@ def self_test() -> None:
                 changed_path = root / official["licenseEvidence"]["observation"]["path"]
                 original_data = changed_path.read_bytes()
                 changed_path.write_bytes(original_data + b"\n")
+            elif case == "unowned-vendor-file":
+                changed_path = root / VENDOR_ROOTS[0] / "unowned.json"
+                changed_path.write_text("{}\n")
+            elif case in ("missing-vendor-file", "modified-vendor-file", "vendor-symlink"):
+                changed_path = root / manifest["vendorArtifacts"][0]["path"]
+                original_data = changed_path.read_bytes()
+                if case == "missing-vendor-file":
+                    changed_path.unlink()
+                elif case == "vendor-symlink":
+                    changed_path.unlink()
+                    changed_path.symlink_to(root / manifest["licenses"][0]["path"])
+                else:
+                    changed_path.write_bytes(original_data + b"\n")
+            elif case == "vendor-license-commit":
+                vendor_license = manifest["vendorArtifacts"][0]["license"]
+                next(entry for entry in manifest["licenses"] if entry["id"] == vendor_license)["commit"] = "0" * 40
+            elif case == "duplicate-source-id":
+                manifest["sources"].append(manifest["sources"][-1].copy())
+            elif case == "unowned-vendor-version":
+                changed_path = root / Path(VENDOR_ROOTS[0]).parent / "0.87.0" / "unowned.json"
+                changed_path.parent.mkdir()
+                changed_path.write_text("{}\n")
+            elif case == "vendor-artifact-origin":
+                manifest["vendorArtifacts"][0]["commit"] = "0" * 40
+            elif case == "vendor-artifact-omission":
+                manifest["vendorArtifacts"].pop(0)
+            elif case == "vendor-artifact-escape":
+                manifest["vendorArtifacts"][0]["path"] = VENDOR_ROOTS[0] + "/../escape.json"
             manifest_path.write_bytes(canonical(manifest))
             result = subprocess.run(command, capture_output=True, text=True)
             require(result.returncode != 0 and "Contract verification failed:" in result.stderr,
                     f"Verifier accepted tampered corpus: {case}")
             manifest_path.write_bytes(original_manifest)
             if changed_path is not None:
+                if changed_path.is_symlink():
+                    changed_path.unlink()
                 if original_data is not None:
                     changed_path.write_bytes(original_data)
                 else:
@@ -354,6 +390,22 @@ def main() -> None:
     require({entry["id"] for entry in excluded} == {"official-gateway/openapi.yaml"}, "Excluded official Gateway pin is missing")
     require(any(entry["source"] == "official-gateway/openapi.yaml" and entry["status"] == "excluded-pending-license" for entry in manifest["distributionConstraints"]), "Missing official Gateway distribution constraint")
 
+    for entry in manifest["vendorArtifacts"]:
+        require(any(Path(entry["path"]).is_relative_to(Path(root)) for root in VENDOR_ROOTS),
+                f"Unregistered vendor artifact root: {entry['path']}")
+        tracked(entry)
+        source = sources.get(entry["source"])
+        require(source is not None and source["redistributed"],
+                f"Missing redistributed vendor artifact source: {entry['path']}")
+        require(any(Path(source["path"]).is_relative_to(Path(root)) for root in VENDOR_ROOTS),
+                f"Vendor artifact source is outside registered roots: {entry['path']}")
+        for key in ("repository", "commit", "license"):
+            require(entry[key] == source[key], f"Vendor artifact {key} origin mismatch: {entry['path']}")
+        license_record = licenses[entry["license"]]
+        require(license_record["repository"] == entry["repository"]
+                and license_record["commit"] == entry["commit"],
+                f"Vendor artifact license origin mismatch: {entry['path']}")
+
     required_prefix = manifest["fixturePolicy"]["requiredTreePrefix"]
     require(required_prefix == "test/openapi/", "Complete OpenAPI fixture tree is required")
     required = {path for path in upstream if path.startswith(required_prefix)}
@@ -414,7 +466,26 @@ def main() -> None:
     require(inventory["sourceFingerprint"] == expected_fingerprint, "Export inventory fingerprint differs")
 
     expected_paths = owned_files
-    actual_paths = {path.relative_to(ROOT).as_posix() for directory in ("fixtures", "sources", "licenses") for path in (ROOT / "contracts" / directory).rglob("*") if path.is_file() or path.is_symlink()}
+    # Own the product subtree, including unregistered future version directories.
+    # Other products retain their existing dedicated verifier ownership.
+    vendor_parents = sorted({Path(directory).parent.as_posix() for directory in VENDOR_ROOTS})
+    for parent in vendor_parents:
+        for path in safe_path(parent).rglob("*"):
+            relative = path.relative_to(ROOT)
+            safe_path(relative.as_posix())
+            if path.is_file():
+                require(any(relative.is_relative_to(Path(directory)) for directory in VENDOR_ROOTS),
+                        f"Unregistered vendor version file: {relative.as_posix()}")
+    corpus_roots = ("contracts/fixtures", "contracts/sources", "contracts/licenses", *VENDOR_ROOTS)
+    actual_paths = set()
+    for directory in corpus_roots:
+        directory_path = safe_path(directory)
+        require(directory_path.is_dir(), f"Missing corpus root: {directory}")
+        for path in directory_path.rglob("*"):
+            # Reject directory symlinks too; rglob does not descend through them.
+            safe_path(path.relative_to(ROOT).as_posix())
+            if path.is_file():
+                actual_paths.add(path.relative_to(ROOT).as_posix())
     require(expected_paths == actual_paths, f"Unmanifested/missing corpus files: {sorted(expected_paths ^ actual_paths)}")
     print(json.dumps({"status": "verified", "baseline": VERSION, "commit": PIN,
                       "fixtures": len(manifest["fixtures"]), "bundledSpecifications": len(sources) - len(excluded),

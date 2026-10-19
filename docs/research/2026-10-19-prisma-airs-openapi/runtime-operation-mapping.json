@@ -1,0 +1,3841 @@
+{
+  "upstream_commit": "582e30543bf2adfd8b0ee457170d22b5c380dfbe",
+  "scan_operations": 4,
+  "management_operations": 21,
+  "semantic_source_drift": false,
+  "operations": [
+    {
+      "operation": "POST `/v1/scan/sync/request`",
+      "rust_methods": "`Scanner::sync_scan`, `scan_request`",
+      "contract_notes": "`ScanRequestSchema` \u2192 `ScanResponseSchema`; convenience method sends one content item, complete-request method supports full content list.",
+      "family": "scan",
+      "http_method": "POST",
+      "path": "/v1/scan/sync/request",
+      "operationId": "ScanSyncRequest",
+      "declared_parameters": [],
+      "declared_request_body": {
+        "description": "Scan request object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ScanRequest"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/ScanRequest"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "successfully scanned request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "#/components/responses/BadRequest"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthenticated"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "405": {
+          "$ref": "#/components/responses/MethodNotAllowed"
+        },
+        "413": {
+          "$ref": "#/components/responses/RequestTooLarge"
+        },
+        "415": {
+          "$ref": "#/components/responses/UnsupportedMediaType"
+        },
+        "429": {
+          "$ref": "#/components/responses/TooManyRequests"
+        },
+        "default": {
+          "description": "error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/responses/BadRequest",
+        "#/components/responses/Forbidden",
+        "#/components/responses/MethodNotAllowed",
+        "#/components/responses/NotFound",
+        "#/components/responses/RequestTooLarge",
+        "#/components/responses/TooManyRequests",
+        "#/components/responses/Unauthenticated",
+        "#/components/responses/UnsupportedMediaType",
+        "#/components/schemas/ScanResponse"
+      ],
+      "declared_security": [
+        {
+          "x-pan-token": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://service.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for US regions"
+        },
+        {
+          "url": "https://service-de.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for EU (Germany) regions"
+        },
+        {
+          "url": "https://service-in.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for India regions"
+        },
+        {
+          "url": "https://service-sg.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for Singapore regions"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ScanResponse"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request data is invalid or malformed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid API Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Resource is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The method is not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "413": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The request body is too large"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "415": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The media type is not supported"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "429": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request exceeds limit"
+                    },
+                    "retry_after": {
+                      "type": "object",
+                      "properties": {
+                        "interval": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "unit": {
+                          "type": "string",
+                          "example": "minute"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "Scanner::sync_scan",
+          "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+          "line": 115,
+          "signature": "pub async fn sync_scan(\n        &self,\n        profile: &AiProfile,\n        content: &Content,\n        options: Option<&SyncScanOptions>,\n    ) -> Result<ScanResponse>",
+          "operation_names": [
+            "airs.scan.sync"
+          ],
+          "validator_names": [
+            "ScanRequestSchema",
+            "ScanResponseSchema"
+          ],
+          "source_span_end_line": 150
+        },
+        {
+          "method": "Scanner::scan_request",
+          "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+          "line": 154,
+          "signature": "pub async fn scan_request(\n        &self,\n        request: &ScanRequest,\n        options: Option<&RequestOptions>,\n    ) -> Result<ScanResponse>",
+          "operation_names": [
+            "airs.scan.sync"
+          ],
+          "validator_names": [
+            "ScanRequestSchema",
+            "ScanResponseSchema"
+          ],
+          "source_span_end_line": 171
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "sdk_auth_kind": "Scan",
+      "mapping_status": "implemented_with_documented_compatibility_differences"
+    },
+    {
+      "operation": "POST `/v1/scan/async/request`",
+      "rust_methods": "`Scanner::async_scan`",
+      "contract_notes": "`AsyncScanObjectSchema[]` \u2192 `AsyncScanResponseSchema`; flat batch of 1\u201320. Vendor nested-array defect described below.",
+      "family": "scan",
+      "http_method": "POST",
+      "path": "/v1/scan/async/request",
+      "operationId": "ScanAsyncRequest",
+      "declared_parameters": [],
+      "declared_request_body": {
+        "description": "A list of scan request objects",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AsyncScanRequest"
+              }
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/AsyncScanRequest"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "successfully scanned request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsyncScanResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "#/components/responses/BadRequest"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthenticated"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "405": {
+          "$ref": "#/components/responses/MethodNotAllowed"
+        },
+        "413": {
+          "$ref": "#/components/responses/RequestTooLarge"
+        },
+        "415": {
+          "$ref": "#/components/responses/UnsupportedMediaType"
+        },
+        "429": {
+          "$ref": "#/components/responses/TooManyRequests"
+        },
+        "default": {
+          "description": "error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/responses/BadRequest",
+        "#/components/responses/Forbidden",
+        "#/components/responses/MethodNotAllowed",
+        "#/components/responses/NotFound",
+        "#/components/responses/RequestTooLarge",
+        "#/components/responses/TooManyRequests",
+        "#/components/responses/Unauthenticated",
+        "#/components/responses/UnsupportedMediaType",
+        "#/components/schemas/AsyncScanResponse",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "x-pan-token": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://service.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for US regions"
+        },
+        {
+          "url": "https://service-de.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for EU (Germany) regions"
+        },
+        {
+          "url": "https://service-in.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for India regions"
+        },
+        {
+          "url": "https://service-sg.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for Singapore regions"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AsyncScanResponse"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request data is invalid or malformed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid API Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Resource is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The method is not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "413": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The request body is too large"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "415": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The media type is not supported"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "429": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request exceeds limit"
+                    },
+                    "retry_after": {
+                      "type": "object",
+                      "properties": {
+                        "interval": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "unit": {
+                          "type": "string",
+                          "example": "minute"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "Scanner::async_scan",
+          "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+          "line": 175,
+          "signature": "pub async fn async_scan(\n        &self,\n        requests: &[AsyncScanObject],\n        options: Option<&RequestOptions>,\n    ) -> Result<AsyncScanResponse>",
+          "operation_names": [
+            "airs.scan.async"
+          ],
+          "validator_names": [
+            "AsyncScanObjectSchema[]",
+            "AsyncScanResponseSchema"
+          ],
+          "source_span_end_line": 197
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "sdk_auth_kind": "Scan",
+      "mapping_status": "implemented_with_documented_compatibility_differences"
+    },
+    {
+      "operation": "GET `/v1/scan/results`",
+      "rust_methods": "`Scanner::query_by_scan_ids`",
+      "contract_notes": "CSV `scan_ids`, 1\u20135; SDK requires UUIDs; `ScanIdResultSchema[]`.",
+      "family": "scan",
+      "http_method": "GET",
+      "path": "/v1/scan/results",
+      "operationId": "GetScanResultsByScanIDs",
+      "declared_parameters": [
+        {
+          "name": "scan_ids",
+          "in": "query",
+          "description": "Scan IDs for results.",
+          "required": true,
+          "allowEmptyValue": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "nullable": false
+            },
+            "maximum": 5
+          },
+          "style": "form",
+          "explode": false
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned records for scan results",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ScanIdResult"
+                }
+              },
+              "examples": {
+                "ExampleAsyncScanResults": {
+                  "$ref": "#/components/examples/ExampleAsyncScanResults"
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "#/components/responses/BadRequest"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthenticated"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "405": {
+          "$ref": "#/components/responses/MethodNotAllowed"
+        },
+        "413": {
+          "$ref": "#/components/responses/RequestTooLarge"
+        },
+        "415": {
+          "$ref": "#/components/responses/UnsupportedMediaType"
+        },
+        "429": {
+          "$ref": "#/components/responses/TooManyRequests"
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/examples/ExampleAsyncScanResults",
+        "#/components/responses/BadRequest",
+        "#/components/responses/Forbidden",
+        "#/components/responses/MethodNotAllowed",
+        "#/components/responses/NotFound",
+        "#/components/responses/RequestTooLarge",
+        "#/components/responses/TooManyRequests",
+        "#/components/responses/Unauthenticated",
+        "#/components/responses/UnsupportedMediaType",
+        "#/components/schemas/Error",
+        "#/components/schemas/ScanIdResult"
+      ],
+      "declared_security": [
+        {
+          "x-pan-token": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://service.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for US regions"
+        },
+        {
+          "url": "https://service-de.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for EU (Germany) regions"
+        },
+        {
+          "url": "https://service-in.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for India regions"
+        },
+        {
+          "url": "https://service-sg.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for Singapore regions"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ScanIdResult"
+              }
+            },
+            "examples": {
+              "ExampleAsyncScanResults": {
+                "$ref": "#/components/examples/ExampleAsyncScanResults"
+              }
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request data is invalid or malformed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid API Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Resource is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The method is not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "413": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The request body is too large"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "415": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The media type is not supported"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "429": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request exceeds limit"
+                    },
+                    "retry_after": {
+                      "type": "object",
+                      "properties": {
+                        "interval": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "unit": {
+                          "type": "string",
+                          "example": "minute"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "Scanner::query_by_scan_ids",
+          "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+          "line": 201,
+          "signature": "pub async fn query_by_scan_ids(\n        &self,\n        ids: &[String],\n        options: Option<&RequestOptions>,\n    ) -> Result<Vec<ScanIdResult>>",
+          "operation_names": [
+            "airs.scan.results"
+          ],
+          "validator_names": [
+            "ScanIdResultSchema[]"
+          ],
+          "source_span_end_line": 216
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "sdk_auth_kind": "Scan",
+      "mapping_status": "implemented_with_documented_compatibility_differences"
+    },
+    {
+      "operation": "GET `/v1/scan/reports`",
+      "rust_methods": "`Scanner::query_by_report_ids`",
+      "contract_notes": "CSV `report_ids`, 1\u20135 opaque strings; `ThreatScanReportSchema[]`.",
+      "family": "scan",
+      "http_method": "GET",
+      "path": "/v1/scan/reports",
+      "operationId": "GetThreatScanReports",
+      "declared_parameters": [
+        {
+          "name": "report_ids",
+          "in": "query",
+          "description": "Report IDs for results.",
+          "required": true,
+          "allowEmptyValue": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "nullable": false
+            },
+            "maximum": 5
+          },
+          "style": "form",
+          "explode": false
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned threat scan reports",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThreatScanReportObjects"
+              },
+              "examples": {
+                "ExampleAsyncReports": {
+                  "$ref": "#/components/examples/ExampleMultipleThreatScanReports"
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "#/components/responses/BadRequest"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthenticated"
+        },
+        "403": {
+          "$ref": "#/components/responses/Forbidden"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "405": {
+          "$ref": "#/components/responses/MethodNotAllowed"
+        },
+        "413": {
+          "$ref": "#/components/responses/RequestTooLarge"
+        },
+        "415": {
+          "$ref": "#/components/responses/UnsupportedMediaType"
+        },
+        "429": {
+          "$ref": "#/components/responses/TooManyRequests"
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/examples/ExampleMultipleThreatScanReports",
+        "#/components/responses/BadRequest",
+        "#/components/responses/Forbidden",
+        "#/components/responses/MethodNotAllowed",
+        "#/components/responses/NotFound",
+        "#/components/responses/RequestTooLarge",
+        "#/components/responses/TooManyRequests",
+        "#/components/responses/Unauthenticated",
+        "#/components/responses/UnsupportedMediaType",
+        "#/components/schemas/Error",
+        "#/components/schemas/ThreatScanReportObjects"
+      ],
+      "declared_security": [
+        {
+          "x-pan-token": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://service.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for US regions"
+        },
+        {
+          "url": "https://service-de.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for EU (Germany) regions"
+        },
+        {
+          "url": "https://service-in.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for India regions"
+        },
+        {
+          "url": "https://service-sg.api.aisecurity.paloaltonetworks.com",
+          "description": "Prisma AIRS API service URL for Singapore regions"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ThreatScanReportObjects"
+            },
+            "examples": {
+              "ExampleAsyncReports": {
+                "$ref": "#/components/examples/ExampleMultipleThreatScanReports"
+              }
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request data is invalid or malformed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid API Key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Resource is not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The method is not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "413": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The request body is too large"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "415": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "The media type is not supported"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "429": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Request exceeds limit"
+                    },
+                    "retry_after": {
+                      "type": "object",
+                      "properties": {
+                        "interval": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "unit": {
+                          "type": "string",
+                          "example": "minute"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "Scanner::query_by_report_ids",
+          "source": "crates/scm-sdk/src/airs/scan/scanner.rs",
+          "line": 221,
+          "signature": "pub async fn query_by_report_ids(\n        &self,\n        ids: &[String],\n        options: Option<&RequestOptions>,\n    ) -> Result<Vec<ThreatScanReport>>",
+          "operation_names": [
+            "airs.scan.reports"
+          ],
+          "validator_names": [
+            "ThreatScanReportSchema[]"
+          ],
+          "source_span_end_line": 236
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "sdk_auth_kind": "Scan",
+      "mapping_status": "implemented_with_documented_compatibility_differences"
+    },
+    {
+      "operation": "POST `/v1/mgmt/apikey`",
+      "rust_methods": "`ApiKeysClient::create`",
+      "contract_notes": "`ApiKeyCreateRequestSchema` \u2192 `ApiKeySchema`.",
+      "family": "management",
+      "http_method": "POST",
+      "path": "/v1/mgmt/apikey",
+      "operationId": "CreateNewAPIKey",
+      "declared_parameters": [],
+      "declared_request_body": {
+        "description": "API key creation request object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIKeyCreationObject"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/APIKeyCreationObject"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully created a new API key",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIKeyObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/APIKeyObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIKeyObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ApiKeysClient::create",
+          "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+          "line": 46,
+          "signature": "pub async fn create(\n        &self,\n        body: &ApiKeyCreateRequest,\n        options: Option<&RequestOptions>,\n    ) -> Result<ApiKey>",
+          "operation_names": [
+            "airs.management.api_keys.create"
+          ],
+          "validator_names": [
+            "ApiKeyCreateRequestSchema",
+            "ApiKeySchema"
+          ],
+          "source_span_end_line": 61
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "GET `/v1/mgmt/apikeys`",
+      "rust_methods": "`ApiKeysClient::list_for_token`",
+      "contract_notes": "offset, limit; `ApiKeyListResponseSchema`.",
+      "family": "management",
+      "http_method": "GET",
+      "path": "/v1/mgmt/apikeys",
+      "operationId": "GetAllAPIKeysForTsgId",
+      "declared_parameters": [
+        {
+          "name": "offset",
+          "in": "query",
+          "description": "The offset at which to start fetching more records",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The number of records to return.",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned metadata for a given API key",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginatedAPIKeyObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error",
+        "#/components/schemas/PaginatedAPIKeyObject"
+      ],
+      "declared_security": null,
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaginatedAPIKeyObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ApiKeysClient::list_for_token",
+          "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+          "line": 31,
+          "signature": "pub async fn list_for_token(\n        &self,\n        page: PaginationOptions,\n        options: Option<&RequestOptions>,\n    ) -> Result<ApiKeyListResponse>",
+          "operation_names": [
+            "airs.management.api_keys.list_for_token"
+          ],
+          "validator_names": [
+            "ApiKeyListResponseSchema"
+          ],
+          "source_span_end_line": 45
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "DELETE `/v1/mgmt/apikey/delete/{api_key_name}`",
+      "rust_methods": "`ApiKeysClient::delete`",
+      "contract_notes": "name path + required updated_by query; `ApiKeyDeleteResponseSchema`.",
+      "family": "management",
+      "http_method": "DELETE",
+      "path": "/v1/mgmt/apikey/delete/{api_key_name}",
+      "operationId": "DeleteAPIKey",
+      "declared_parameters": [
+        {
+          "name": "api_key_name",
+          "in": "path",
+          "description": "API key Name to delete",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "updated_by",
+          "in": "query",
+          "description": "The email address of the person who performed the deletion",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully deleted a given API key and associated customer app",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "API key not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ApiKeysClient::delete",
+          "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+          "line": 121,
+          "signature": "pub async fn delete(\n        &self,\n        name: &str,\n        updated_by: &str,\n        options: Option<&RequestOptions>,\n    ) -> Result<ApiKeyDeleteResponse>",
+          "operation_names": [
+            "airs.management.api_keys.delete"
+          ],
+          "validator_names": [
+            "ApiKeyDeleteResponseSchema"
+          ],
+          "source_span_end_line": 137
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "POST `/v1/mgmt/apikey/regenerate/{api_key_id}`",
+      "rust_methods": "`ApiKeysClient::regenerate`",
+      "contract_notes": "ID path; `ApiKeyRegenerateRequestSchema` \u2192 `ApiKeySchema`.",
+      "family": "management",
+      "http_method": "POST",
+      "path": "/v1/mgmt/apikey/regenerate/{api_key_id}",
+      "operationId": "RegenerateAPIKeyById",
+      "declared_parameters": [
+        {
+          "name": "api_key_id",
+          "in": "path",
+          "description": "API key uuid to regenerate",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": {
+        "description": "Request to regenerate an API key with the given uuid and optional rotation time interval and unit",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rotation_time_interval": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "rotation_time_unit": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "rotation_time_interval",
+                "rotation_time_unit"
+              ]
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully regenerated API key",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIKeyObject"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "API key not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/APIKeyObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIKeyObject"
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ApiKeysClient::regenerate",
+          "source": "crates/scm-sdk/src/airs/management/api_keys.rs",
+          "line": 138,
+          "signature": "pub async fn regenerate(\n        &self,\n        id: &str,\n        body: &ApiKeyRegenerateRequest,\n        options: Option<&RequestOptions>,\n    ) -> Result<ApiKey>",
+          "operation_names": [
+            "airs.management.api_keys.regenerate"
+          ],
+          "validator_names": [
+            "ApiKeyRegenerateRequestSchema",
+            "ApiKeySchema"
+          ],
+          "source_span_end_line": 155
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "POST `/v1/mgmt/profile`",
+      "rust_methods": "`ProfilesClient::create`",
+      "contract_notes": "`CreateSecurityProfileRequestSchema` \u2192 `SecurityProfileSchema`; preserves optional revision behavior.",
+      "family": "management",
+      "http_method": "POST",
+      "path": "/v1/mgmt/profile",
+      "operationId": "CreateNewAIProfile",
+      "declared_parameters": [],
+      "declared_request_body": {
+        "description": "AI Sec Profile creation request object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AIProfileObject"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/AIProfileObject"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully created a new AI Sec Profile",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIProfileObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/AIProfileObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AIProfileObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ProfilesClient::create",
+          "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+          "line": 81,
+          "signature": "pub async fn create(\n        &self,\n        body: &CreateSecurityProfileRequest,\n        options: Option<&RequestOptions>,\n    ) -> Result<SecurityProfile>",
+          "operation_names": [
+            "airs.management.profiles.create"
+          ],
+          "validator_names": [
+            "CreateSecurityProfileRequestSchema",
+            "SecurityProfileSchema"
+          ],
+          "source_span_end_line": 96
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "DELETE `/v1/mgmt/profile/{profile_id}`",
+      "rust_methods": "`ProfilesClient::delete`",
+      "contract_notes": "UUID validation before I/O; `DeleteProfileResponseSchema`.",
+      "family": "management",
+      "http_method": "DELETE",
+      "path": "/v1/mgmt/profile/{profile_id}",
+      "operationId": "DeleteAIProfile",
+      "declared_parameters": [
+        {
+          "name": "profile_id",
+          "in": "path",
+          "description": "AI Sec ProfileId to delete",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully deleted a given AI Sec Profile",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "conflict occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAIProfileResponse"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/DeleteAIProfileResponse",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeleteAIProfileResponse"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ProfilesClient::delete",
+          "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+          "line": 220,
+          "signature": "pub async fn delete(\n        &self,\n        id: &str,\n        options: Option<&RequestOptions>,\n    ) -> Result<DeleteProfileResponse>",
+          "operation_names": [
+            "airs.management.profiles.delete"
+          ],
+          "validator_names": [
+            "DeleteProfileResponseSchema"
+          ],
+          "source_span_end_line": 235
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "PUT `/v1/mgmt/profile/uuid/{profile_id}`",
+      "rust_methods": "`ProfilesClient::update`",
+      "contract_notes": "UUID; `CreateSecurityProfileRequestSchema` \u2192 `SecurityProfileSchema`.",
+      "family": "management",
+      "http_method": "PUT",
+      "path": "/v1/mgmt/profile/uuid/{profile_id}",
+      "operationId": "UpdateProfileByProfileId",
+      "declared_parameters": [
+        {
+          "name": "profile_id",
+          "in": "path",
+          "description": "encoded AI Sec Profile Id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": {
+        "description": "AI SEC profile object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AIProfileObject"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/AIProfileObject"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully updated metadata for a given AI Sec Profile Id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIProfileObject"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Profile not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/AIProfileObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AIProfileObject"
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ProfilesClient::update",
+          "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+          "line": 201,
+          "signature": "pub async fn update(\n        &self,\n        id: &str,\n        body: &CreateSecurityProfileRequest,\n        options: Option<&RequestOptions>,\n    ) -> Result<SecurityProfile>",
+          "operation_names": [
+            "airs.management.profiles.update"
+          ],
+          "validator_names": [
+            "CreateSecurityProfileRequestSchema",
+            "SecurityProfileSchema"
+          ],
+          "source_span_end_line": 219
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "GET `/v1/mgmt/profiles`",
+      "rust_methods": "`ProfilesClient::list_for_token`",
+      "contract_notes": "offset, limit, latest; `SecurityProfileListResponseSchema`.",
+      "family": "management",
+      "http_method": "GET",
+      "path": "/v1/mgmt/profiles",
+      "operationId": "GetAllAIProfilesForTsgId",
+      "declared_parameters": [
+        {
+          "name": "offset",
+          "in": "query",
+          "description": "The offset at which to start fetching more records",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The number of records to return.",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "latest",
+          "in": "query",
+          "description": "Get only the latest AI Sec Profiles for a given TSG ID",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned metadata for all AI Sec Profiles for a given CspId and TsgId.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginatedAIProfileObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error",
+        "#/components/schemas/PaginatedAIProfileObject"
+      ],
+      "declared_security": null,
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaginatedAIProfileObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ProfilesClient::list_for_token",
+          "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+          "line": 66,
+          "signature": "pub async fn list_for_token(\n        &self,\n        page: PaginationOptions,\n        options: Option<&RequestOptions>,\n    ) -> Result<SecurityProfileListResponse>",
+          "operation_names": [
+            "airs.management.profiles.list_for_token"
+          ],
+          "validator_names": [
+            "SecurityProfileListResponseSchema"
+          ],
+          "source_span_end_line": 80
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "DELETE `/v1/mgmt/profile/{profile_id}/force`",
+      "rust_methods": "`ProfilesClient::force_delete`",
+      "contract_notes": "UUID + updated_by query; `DeleteProfileResponseSchema`.",
+      "family": "management",
+      "http_method": "DELETE",
+      "path": "/v1/mgmt/profile/{profile_id}/force",
+      "operationId": "ForceDeleteAIProfile",
+      "declared_parameters": [
+        {
+          "name": "profile_id",
+          "in": "path",
+          "description": "ProfileId to force delete",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "updated_by",
+          "in": "query",
+          "description": "User performing the force deletion",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully force deleted the AI Sec Profile",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Profile not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error"
+      ],
+      "declared_security": null,
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "ProfilesClient::force_delete",
+          "source": "crates/scm-sdk/src/airs/management/profiles.rs",
+          "line": 236,
+          "signature": "pub async fn force_delete(\n        &self,\n        id: &str,\n        updated_by: &str,\n        options: Option<&RequestOptions>,\n    ) -> Result<DeleteProfileResponse>",
+          "operation_names": [
+            "airs.management.profiles.force_delete"
+          ],
+          "validator_names": [
+            "DeleteProfileResponseSchema"
+          ],
+          "source_span_end_line": 254
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "GET `/v1/mgmt/dlpprofiles`",
+      "rust_methods": "`DlpProfilesClient::list`",
+      "contract_notes": "`DlpProfileListResponseSchema`. Preserve alongside canonical `crate::dlp` API.",
+      "family": "management",
+      "http_method": "GET",
+      "path": "/v1/mgmt/dlpprofiles",
+      "operationId": "GetAllDlpProfilesByTsgId",
+      "declared_parameters": [],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned metadata for all DLP Profiles for a given TsgId.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArrayDlpProfileObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/ArrayDlpProfileObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ArrayDlpProfileObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "DlpProfilesClient::list",
+          "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+          "line": 49,
+          "signature": "pub async fn list(&self, options: Option<&RequestOptions>) -> Result<DlpProfileListResponse>",
+          "operation_names": [
+            "airs.management.dlp_profiles.list"
+          ],
+          "validator_names": [
+            "DlpProfileListResponseSchema"
+          ],
+          "source_span_end_line": 57
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "GET `/v1/mgmt/deploymentprofiles`",
+      "rust_methods": "`DeploymentProfilesClient::list`",
+      "contract_notes": "unactivated query supported; `DeploymentProfilesResponseSchema`.",
+      "family": "management",
+      "http_method": "GET",
+      "path": "/v1/mgmt/deploymentprofiles",
+      "operationId": "GetDeploymentProfilesByTsgId",
+      "declared_parameters": [
+        {
+          "name": "unactivated",
+          "in": "query",
+          "description": "Get available and unactivated Deployment Profiles. Also include previously activated DP that do not have any associated apps or api keys.",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned Deployment Profiles for TSG Id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeploymentProfilesObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/DeploymentProfilesObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeploymentProfilesObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "DeploymentProfilesClient::list",
+          "source": "crates/scm-sdk/src/airs/management/inventory.rs",
+          "line": 19,
+          "signature": "pub async fn list(\n        &self,\n        query: DeploymentProfileListOptions,\n        options: Option<&RequestOptions>,\n    ) -> Result<DeploymentProfilesResponse>",
+          "operation_names": [
+            "airs.management.deployment_profiles.list"
+          ],
+          "validator_names": [
+            "DeploymentProfilesResponseSchema"
+          ],
+          "source_span_end_line": 37
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "GET `/v1/mgmt/customerapp`",
+      "rust_methods": "`CustomerAppsClient::get`",
+      "contract_notes": "app_name query; `CustomerAppSchema`.",
+      "family": "management",
+      "http_method": "GET",
+      "path": "/v1/mgmt/customerapp",
+      "operationId": "GetCustomerApp",
+      "declared_parameters": [
+        {
+          "name": "app_name",
+          "in": "query",
+          "description": "The customer app name for which to fetch details",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned metadata for a Customer App",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerAppObject"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Customer app not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/CustomerAppObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomerAppObject"
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "CustomerAppsClient::get",
+          "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+          "line": 46,
+          "signature": "pub async fn get(&self, name: &str, options: Option<&RequestOptions>) -> Result<CustomerApp>",
+          "operation_names": [
+            "airs.management.customer_apps.get"
+          ],
+          "validator_names": [
+            "CustomerAppSchema"
+          ],
+          "source_span_end_line": 56
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "DELETE `/v1/mgmt/customerapp`",
+      "rust_methods": "`CustomerAppsClient::delete`",
+      "contract_notes": "app_name + updated_by; `CustomerAppDeleteResponseSchema` union includes `CustomerAppSchema`, plus existing message shapes.",
+      "family": "management",
+      "http_method": "DELETE",
+      "path": "/v1/mgmt/customerapp",
+      "operationId": "DeleteCustomerApp",
+      "declared_parameters": [
+        {
+          "name": "app_name",
+          "in": "query",
+          "description": "The customer app name for which to delete",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "updated_by",
+          "in": "query",
+          "description": "The email address of the user who is deleting the Customer App",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully deleted Customer App",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerAppObject"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Customer app not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/CustomerAppObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": null,
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomerAppObject"
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "CustomerAppsClient::delete",
+          "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+          "line": 134,
+          "signature": "pub async fn delete(\n        &self,\n        name: &str,\n        updated_by: &str,\n        options: Option<&RequestOptions>,\n    ) -> Result<CustomerAppDeleteResponse>",
+          "operation_names": [
+            "airs.management.customer_apps.delete"
+          ],
+          "validator_names": [
+            "CustomerAppDeleteResponseSchema"
+          ],
+          "source_span_end_line": 152
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "PUT `/v1/mgmt/customerapp`",
+      "rust_methods": "`CustomerAppsClient::update`",
+      "contract_notes": "customer_app_id query; `CustomerAppSchema` request/response.",
+      "family": "management",
+      "http_method": "PUT",
+      "path": "/v1/mgmt/customerapp",
+      "operationId": "updateCustomerAppById",
+      "declared_parameters": [
+        {
+          "name": "customer_app_id",
+          "in": "query",
+          "description": "The uuid of the Customer App to update",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": {
+        "description": "CustomerApp object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomerAppObject"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/CustomerAppObject"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully updated Customer App",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerAppObject"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Customer app not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/CustomerAppObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": null,
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomerAppObject"
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "CustomerAppsClient::update",
+          "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+          "line": 116,
+          "signature": "pub async fn update(\n        &self,\n        id: &str,\n        body: &CustomerApp,\n        options: Option<&RequestOptions>,\n    ) -> Result<CustomerApp>",
+          "operation_names": [
+            "airs.management.customer_apps.update"
+          ],
+          "validator_names": [
+            "CustomerAppSchema",
+            "CustomerAppSchema"
+          ],
+          "source_span_end_line": 133
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "GET `/v1/mgmt/customerapps`",
+      "rust_methods": "`CustomerAppsClient::list_for_token`",
+      "contract_notes": "offset, limit; `CustomerAppListResponseSchema`.",
+      "family": "management",
+      "http_method": "GET",
+      "path": "/v1/mgmt/customerapps",
+      "operationId": "GetAllCustomerAppsForTsgID",
+      "declared_parameters": [
+        {
+          "name": "offset",
+          "in": "query",
+          "description": "The offset at which to start fetching more records",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The number of records to return.",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned metadata for all Customer Apps for a given TSG ID",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginatedCustomerAppObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error",
+        "#/components/schemas/PaginatedCustomerAppObject"
+      ],
+      "declared_security": null,
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaginatedCustomerAppObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "CustomerAppsClient::list_for_token",
+          "source": "crates/scm-sdk/src/airs/management/customer_apps.rs",
+          "line": 31,
+          "signature": "pub async fn list_for_token(\n        &self,\n        page: PaginationOptions,\n        options: Option<&RequestOptions>,\n    ) -> Result<CustomerAppListResponse>",
+          "operation_names": [
+            "airs.management.customer_apps.list_for_token"
+          ],
+          "validator_names": [
+            "CustomerAppListResponseSchema"
+          ],
+          "source_span_end_line": 45
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "POST `/v1/mgmt/topic`",
+      "rust_methods": "`TopicsClient::create`",
+      "contract_notes": "`CreateCustomTopicRequestSchema` \u2192 `CustomTopicSchema`.",
+      "family": "management",
+      "http_method": "POST",
+      "path": "/v1/mgmt/topic",
+      "operationId": "CreateNewCustomTopic",
+      "declared_parameters": [],
+      "declared_request_body": {
+        "description": "Custom Topic creation request object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomTopicObject"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/CustomTopicObject"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully created a new Custom Topic",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTopicObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/CustomTopicObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomTopicObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "TopicsClient::create",
+          "source": "crates/scm-sdk/src/airs/management/topics.rs",
+          "line": 64,
+          "signature": "pub async fn create(\n        &self,\n        body: &CreateCustomTopicRequest,\n        options: Option<&RequestOptions>,\n    ) -> Result<CustomTopic>",
+          "operation_names": [
+            "airs.management.topics.create"
+          ],
+          "validator_names": [
+            "CreateCustomTopicRequestSchema",
+            "CustomTopicSchema"
+          ],
+          "source_span_end_line": 79
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "DELETE `/v1/mgmt/topic/{topic_id}`",
+      "rust_methods": "`TopicsClient::delete`",
+      "contract_notes": "UUID; `DeleteTopicResponseSchema`.",
+      "family": "management",
+      "http_method": "DELETE",
+      "path": "/v1/mgmt/topic/{topic_id}",
+      "operationId": "DeleteCustomTopic",
+      "declared_parameters": [
+        {
+          "name": "topic_id",
+          "in": "path",
+          "description": "Custom TopicId to delete",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully deleted a given Custom Topic",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "conflict occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteCustomTopicResponse"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/DeleteCustomTopicResponse",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DeleteCustomTopicResponse"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "TopicsClient::delete",
+          "source": "crates/scm-sdk/src/airs/management/topics.rs",
+          "line": 258,
+          "signature": "pub async fn delete(\n        &self,\n        id: &str,\n        options: Option<&RequestOptions>,\n    ) -> Result<DeleteTopicResponse>",
+          "operation_names": [
+            "airs.management.topics.delete"
+          ],
+          "validator_names": [
+            "DeleteTopicResponseSchema"
+          ],
+          "source_span_end_line": 273
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "DELETE `/v1/mgmt/topic/{topic_id}/force`",
+      "rust_methods": "`TopicsClient::force_delete_with_audit`, `force_delete`",
+      "contract_notes": "UUID + nonblank updated_by; `DeleteTopicResponseSchema`.",
+      "family": "management",
+      "http_method": "DELETE",
+      "path": "/v1/mgmt/topic/{topic_id}/force",
+      "operationId": "ForceDeleteCustomTopic",
+      "declared_parameters": [
+        {
+          "name": "topic_id",
+          "in": "path",
+          "description": "Custom TopicId to force delete",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "updated_by",
+          "in": "query",
+          "description": "User performing the force deletion",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully force deleted the Custom Topic",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Topic not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "TopicsClient::force_delete_with_audit",
+          "source": "crates/scm-sdk/src/airs/management/topics.rs",
+          "line": 274,
+          "signature": "pub async fn force_delete_with_audit(\n        &self,\n        id: &str,\n        updated_by: &str,\n        options: Option<&RequestOptions>,\n    ) -> Result<DeleteTopicResponse>",
+          "operation_names": [
+            "airs.management.topics.force_delete_with_audit"
+          ],
+          "validator_names": [
+            "DeleteTopicResponseSchema"
+          ],
+          "source_span_end_line": 293
+        },
+        {
+          "method": "TopicsClient::force_delete",
+          "source": "crates/scm-sdk/src/airs/management/topics.rs",
+          "line": 294,
+          "signature": "pub async fn force_delete(\n        &self,\n        id: &str,\n        updated_by: Option<&str>,\n        options: Option<&RequestOptions>,\n    ) -> Result<DeleteTopicResponse>",
+          "operation_names": [],
+          "validator_names": [],
+          "source_span_end_line": 302
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "PUT `/v1/mgmt/topic/uuid/{topic_id}`",
+      "rust_methods": "`TopicsClient::update`",
+      "contract_notes": "UUID; `CreateCustomTopicRequestSchema` \u2192 `CustomTopicSchema`.",
+      "family": "management",
+      "http_method": "PUT",
+      "path": "/v1/mgmt/topic/uuid/{topic_id}",
+      "operationId": "UpdateTopicByTopicId",
+      "declared_parameters": [
+        {
+          "name": "topic_id",
+          "in": "path",
+          "description": "encoded Custom Topic Id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": {
+        "description": "Custom Topic object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomTopicObject"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/CustomTopicObject"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully updated metadata for a given Custom Topic Id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomTopicObject"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Topic not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/CustomTopicObject",
+        "#/components/schemas/Error"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomTopicObject"
+            }
+          }
+        },
+        "404": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "TopicsClient::update",
+          "source": "crates/scm-sdk/src/airs/management/topics.rs",
+          "line": 239,
+          "signature": "pub async fn update(\n        &self,\n        id: &str,\n        body: &CreateCustomTopicRequest,\n        options: Option<&RequestOptions>,\n    ) -> Result<CustomTopic>",
+          "operation_names": [
+            "airs.management.topics.update"
+          ],
+          "validator_names": [
+            "CreateCustomTopicRequestSchema",
+            "CustomTopicSchema"
+          ],
+          "source_span_end_line": 257
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "GET `/v1/mgmt/topics`",
+      "rust_methods": "`TopicsClient::list_for_token`",
+      "contract_notes": "offset, limit; `CustomTopicListResponseSchema`.",
+      "family": "management",
+      "http_method": "GET",
+      "path": "/v1/mgmt/topics",
+      "operationId": "GetAllCustomTopicsForTsgId",
+      "declared_parameters": [
+        {
+          "name": "offset",
+          "in": "query",
+          "description": "The offset at which to start fetching more records",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The number of records to return.",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ],
+      "declared_request_body": null,
+      "declared_request_schema_refs": [],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned metadata for all Custom Topics for a given CspId and TsgId.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaginatedCustomTopicObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error",
+        "#/components/schemas/PaginatedCustomTopicObject"
+      ],
+      "declared_security": null,
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaginatedCustomTopicObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "TopicsClient::list_for_token",
+          "source": "crates/scm-sdk/src/airs/management/topics.rs",
+          "line": 49,
+          "signature": "pub async fn list_for_token(\n        &self,\n        page: PaginationOptions,\n        options: Option<&RequestOptions>,\n    ) -> Result<CustomTopicListResponse>",
+          "operation_names": [
+            "airs.management.topics.list_for_token"
+          ],
+          "validator_names": [
+            "CustomTopicListResponseSchema"
+          ],
+          "source_span_end_line": 63
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    },
+    {
+      "operation": "POST `/v1/mgmt/oauth/client_credential/accesstoken`",
+      "rust_methods": "`OAuthManagementClient::get_access_token`",
+      "contract_notes": "body `ClientIdAndCustomerAppSchema`, tokenTtlInterval + tokenTtlUnit; `Oauth2TokenSchema`.",
+      "family": "management",
+      "http_method": "POST",
+      "path": "/v1/mgmt/oauth/client_credential/accesstoken",
+      "operationId": "GetApigeeOauthToken",
+      "declared_parameters": [
+        {
+          "name": "tokenTtlInterval",
+          "in": "query",
+          "description": "The token time-to-live (TTL) interval (1h, 3h, 24h, 1 day, 7 days, 30 days) in the OAuth token request",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "tokenTtlUnit",
+          "in": "query",
+          "description": "The token time-to-live (TTL) unit (hours) in the OAuth token request",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "declared_request_body": {
+        "description": "ClientId and Customer App Name object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientIdAndCustomerApp"
+            }
+          }
+        }
+      },
+      "declared_request_schema_refs": [
+        "#/components/schemas/ClientIdAndCustomerApp"
+      ],
+      "declared_responses": {
+        "200": {
+          "description": "Successfully returned Oauth2 token for a given set of client credentials for a given TSG ID. Default duration is 24 hour.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Oauth2TokenObject"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        },
+        "default": {
+          "description": "error occurred",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+              }
+            }
+          }
+        }
+      },
+      "declared_response_schema_refs": [
+        "#/components/schemas/Error",
+        "#/components/schemas/Oauth2TokenObject"
+      ],
+      "declared_security": [
+        {
+          "Auth": []
+        }
+      ],
+      "declared_servers": [
+        {
+          "url": "https://api.sase.paloaltonetworks.com/aisec",
+          "description": "Prisma AIRS API service URL"
+        }
+      ],
+      "resolved_response_content": {
+        "200": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Oauth2TokenObject"
+            }
+          }
+        },
+        "400": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "default": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "native_bindings": [
+        {
+          "method": "OAuthManagementClient::get_access_token",
+          "source": "crates/scm-sdk/src/airs/management/oauth_management.rs",
+          "line": 57,
+          "signature": "pub async fn get_access_token(\n        &self,\n        input: &GetTokenOptions,\n        options: Option<&RequestOptions>,\n    ) -> Result<Oauth2Token>",
+          "operation_names": [
+            "airs.management.oauth.get_access_token"
+          ],
+          "validator_names": [
+            "ClientIdAndCustomerAppSchema",
+            "Oauth2TokenSchema"
+          ],
+          "source_span_end_line": 84
+        }
+      ],
+      "spec_source": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "spec_url": "https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "sdk_auth_kind": "OAuth",
+      "mapping_status": "implemented_with_documented_compatibility_differences",
+      "host_qualification": "Vendor declares api.sase.paloaltonetworks.com/aisec; SDK DEFAULT_MGMT_ENDPOINT is api.apps.paloaltonetworks.com/aisec. ManagementClient uses caller-configured endpoint. Both-host equivalence not proven by this static audit; preserve current default pending evidence."
+    }
+  ],
+  "endpoint_findings": [
+    {
+      "family": "management",
+      "vendor_server": "https://api.sase.paloaltonetworks.com/aisec",
+      "sdk_default_constant": "DEFAULT_MGMT_ENDPOINT",
+      "sdk_default_value": "https://api.apps.paloaltonetworks.com/aisec",
+      "sdk_default_source": "crates/scm-sdk/src/constants.rs:629",
+      "client_endpoint_source": "crates/scm-sdk/src/airs/management/mod.rs:62",
+      "status": "host_difference_requires_documented_qualification_not_automatic_default_replacement",
+      "detail": "ManagementClient::new receives the configured Client; default constant and spec differ. No live equivalence/redirect proof was gathered. Preserve existing functionality and default until an explicit compatibility-reviewed migration is justified."
+    }
+  ],
+  "analysis_notes": [
+    "Declared bodies, parameters, responses and schema refs are transcribed from pinned vendor JSON, not normalized to conceal known defects.",
+    "Native bindings identify actual function source lines, signatures, diagnostic operation names and validators; force_delete delegates to force_delete_with_audit.",
+    "No tests or live calls run; route coverage is not live acceptance."
+  ]
+}

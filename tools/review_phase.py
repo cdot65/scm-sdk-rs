@@ -14,6 +14,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 EXCLUDED_DIRECTORIES = ("docs/reviews/", "docs/checks/")
 EXCLUDED_FILES = {"docs/phase-status.json"}
+SCOPE_BOUND_PHASES = frozenset({20, 21, 22, 23, 24, 25})
 SCHEMA = {
     "type": "object",
     "required": ["score", "summary", "findings", "evidence", "limitations"],
@@ -65,7 +66,9 @@ def review_destination(root, phase, attempt, chunk=None):
     return root / f"docs/reviews/phase-{phase:02d}{suffix}-attempt-{attempt:02d}.json"
 
 
-def gate_decision(review, *, rubric=False, chunk=False, attempt=1):
+def gate_decision(review, *, rubric=False, chunk=False, attempt=1, phase=None, completed_prior=0):
+    if phase == 21 and not chunk and review["score"] < 9:
+        return "rejected"
     if not rubric:
         return "accepted" if review["score"] >= 9 and not any(
             x["severity"] in {"blocker", "high"} for x in review["findings"]) else "rejected"
@@ -76,7 +79,7 @@ def gate_decision(review, *, rubric=False, chunk=False, attempt=1):
     target = 42 if chunk else 46
     if review["total"] >= target and all(value >= 8 for value in review["categories"].values()):
         return "accepted"
-    if (attempt == 5 and review["total"] > 40
+    if (attempt == 5 and completed_prior == 4 and review["total"] > 40
             and all(value >= 8 for value in review["categories"].values())
             and (review["findings"] or review["limitations"])):
         return "accepted_with_deficiencies"
@@ -85,8 +88,24 @@ def gate_decision(review, *, rubric=False, chunk=False, attempt=1):
 
 def verify_attempt_sequence(root, phase, attempt, chunk=None):
     """An exception cannot be obtained by jumping straight to attempt five."""
+    completed = 0
     for previous in range(1, attempt):
         path = review_destination(root, phase, previous, chunk)
+        failure = path.with_suffix(".failed.json")
+        if not path.exists() and failure.exists():
+            record = json.loads(failure.read_text())
+            if (failure.is_symlink() or record.get("phase") != phase
+                    or record.get("attempt") != previous or record.get("chunk") != chunk
+                    or record.get("reviewer") != "Claude Code" or record.get("status") != "invocation_failed"
+                    or record.get("reason") not in {"timeout", "process_error", "invalid_output", "launch_error"}):
+                raise ValueError("Previous failed invocation is invalid")
+            for key, suffix in (("prompt_sha256", ".prompt.md"), ("checks_sha256", ".checks.json")):
+                evidence = path.with_suffix(suffix)
+                if not evidence.is_file() or evidence.is_symlink() or sha256(evidence) != record.get(key):
+                    raise ValueError("Previous failed invocation evidence has changed")
+            continue
+        if not path.is_file():
+            raise ValueError("Previous review evidence has changed")
         record = json.loads(path.read_text())
         if (record.get("phase") != phase or record.get("attempt") != previous
                 or record.get("chunk") != chunk or record.get("reviewer") != "Claude Code"
@@ -95,7 +114,7 @@ def verify_attempt_sequence(root, phase, attempt, chunk=None):
         validate_review(record.get("review"), rubric=True, chunk=bool(chunk), attempt=previous)
         for key, suffix in (("prompt_sha256", ".prompt.md"), ("cli_output_sha256", ".cli.json")):
             evidence = path.with_suffix(suffix)
-            if evidence.is_symlink() or sha256(evidence) != record.get(key):
+            if not evidence.is_file() or evidence.is_symlink() or sha256(evidence) != record.get(key):
                 raise ValueError("Previous review evidence has changed")
         envelope = json.loads(path.with_suffix(".cli.json").read_text())
         output = envelope.get("structured_output")
@@ -103,6 +122,14 @@ def verify_attempt_sequence(root, phase, attempt, chunk=None):
             output = json.loads(envelope.get("result", "{}"))
         if envelope.get("is_error") is not False or output != record["review"]:
             raise ValueError("Previous review does not match actual Claude output")
+        if chunk and phase in SCOPE_BOUND_PHASES - {20}:
+            if not matches_declared_scope(root, phase, chunk, record.get("scope_evidence"), previous):
+                raise ValueError("Previous review scope differs from its declared revision")
+            prompt_scope = "Chunk scope artifacts: " + json.dumps(record["scope_evidence"]) + "."
+            if prompt_scope not in path.with_suffix(".prompt.md").read_text():
+                raise ValueError("Previous review scope differs from its preserved prompt")
+        completed += 1
+    return completed
 
 
 def fingerprint(root=None):
@@ -125,7 +152,7 @@ def fingerprint(root=None):
     return digest.hexdigest()
 
 
-def validate_review(review, *, rubric=False, chunk=False, attempt=1):
+def validate_review(review, *, rubric=False, chunk=False, attempt=1, completed_prior=0):
     """Reject malformed or fabricated pass records before applying the gate."""
     if not isinstance(review, dict):
         raise ValueError("Claude must return a structured review object")
@@ -164,7 +191,7 @@ def validate_review(review, *, rubric=False, chunk=False, attempt=1):
         total = review["total"]
         if isinstance(total, bool) or not isinstance(total, (int, float)) or total != sum(categories.values()):
             raise ValueError("Review total must equal the sum of its five categories")
-    return gate_decision(review, rubric=rubric, chunk=chunk, attempt=attempt) != "rejected"
+    return gate_decision(review, rubric=rubric, chunk=chunk, attempt=attempt, completed_prior=completed_prior) != "rejected"
 
 
 def sha256(path):
@@ -181,6 +208,7 @@ def check_evidence(root, phase, source_sha256, path=None):
     report = json.loads(path.read_text())
     checks = report.get("checks", [])
     if not (report.get("phase") == phase and report.get("passed") is True
+            and report.get("scope") is None
             and report.get("source_sha256") == source_sha256
             and report.get("source_unchanged") is True
             and isinstance(checks, list)
@@ -190,21 +218,39 @@ def check_evidence(root, phase, source_sha256, path=None):
     return path
 
 
-def declared_chunk_scope(root, phase, name):
+def declared_chunk_scope(root, phase, name, attempt=None):
     status = json.loads((root / "docs/phase-status.json").read_text())
     phases = [item for item in status["phases"] if item["id"] == phase]
     declarations = [item for item in phases[0].get("chunks", []) if item.get("id") == name] if len(phases) == 1 else []
     if len(declarations) != 1:
         raise ValueError("Chunk review needs exactly one matching declaration")
     scope = declarations[0].get("scope_evidence")
+    if phase in SCOPE_BOUND_PHASES - {20}:
+        revisions = declarations[0].get("scope_revisions")
+        if not isinstance(revisions, list) or not revisions:
+            raise ValueError("Chunk declaration requires versioned scope revisions")
+        starts = [revision.get("from_attempt") for revision in revisions if isinstance(revision, dict)]
+        if (len(starts) != len(revisions) or any(type(n) is not int or n < 1 or n > 5 for n in starts)
+                or starts != sorted(set(starts)) or starts[0] != 1
+                or revisions[-1].get("scope_evidence") != scope):
+            raise ValueError("Chunk scope revisions are invalid or differ from current scope")
+        for revision in revisions:
+            paths = revision.get("scope_evidence")
+            if (not isinstance(paths, list) or not paths
+                    or not all(isinstance(path, str) and path for path in paths)
+                    or len(set(paths)) != len(paths)):
+                raise ValueError("Chunk scope revisions require nonempty unique paths")
+        if attempt is not None:
+            scope = next(revision["scope_evidence"] for revision in reversed(revisions)
+                         if revision["from_attempt"] <= attempt)
     if (not isinstance(scope, list) or not scope or not all(isinstance(path, str) and path for path in scope)
             or len(set(scope)) != len(scope)):
         raise ValueError("Chunk declaration needs nonempty, unique scope_evidence paths")
     return scope
 
 
-def matches_declared_scope(root, phase, name, scope):
-    declared = declared_chunk_scope(root, phase, name)
+def matches_declared_scope(root, phase, name, scope, attempt=None):
+    declared = declared_chunk_scope(root, phase, name, attempt)
     return (isinstance(scope, list) and all(isinstance(path, str) for path in scope)
             and len(scope) == len(declared) and set(scope) == set(declared))
 
@@ -222,29 +268,30 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
     rubric = uses_rubric(phase)
     if rubric:
         validate_review(record.get("review"), rubric=True, chunk=bool(chunk), attempt=attempt)
-        verify_attempt_sequence(root, phase, attempt, chunk)
+        completed_prior = verify_attempt_sequence(root, phase, attempt, chunk)
         if (record.get("chunk") != chunk or record.get("rubric") != "five-category-v1"
                 or record.get("decision") != gate_decision(record["review"], rubric=True,
-                                                           chunk=bool(chunk), attempt=attempt)):
+                                                           chunk=bool(chunk), attempt=attempt, phase=phase, completed_prior=completed_prior)):
             return False
     if not (record.get("reviewer") == "Claude Code" and record.get("phase") == phase
             and record.get("source_sha256") == source_sha256
             and record.get("source_unchanged") is True and record.get("gate_passed") is True
-            and validate_review(record.get("review"), rubric=rubric, chunk=bool(chunk), attempt=attempt)):
+            and validate_review(record.get("review"), rubric=rubric, chunk=bool(chunk), attempt=attempt,
+                                completed_prior=completed_prior if rubric else 0)):
         return False
     for key, suffix in (("prompt_sha256", ".prompt.md"), ("cli_output_sha256", ".cli.json")):
         evidence = path.with_suffix(suffix)
         if not evidence.is_file() or evidence.is_symlink() or sha256(evidence) != record.get(key):
             return False
-    if phase == 20:
+    if phase in SCOPE_BOUND_PHASES:
         scope = record.get("review_scope")
-        allowed = {"chunk"} if chunk else {"phase", "release_readiness"}
+        allowed = {"chunk"} if chunk else ({"phase", "release_readiness"} if phase == 20 else {"phase"})
         if scope not in allowed or not path.with_suffix(".prompt.md").read_text().startswith(
                 f"Review scope: {scope}.\n"):
             return False
         if chunk:
             evidence_scope = record.get("scope_evidence")
-            if not matches_declared_scope(root, phase, chunk, evidence_scope):
+            if not matches_declared_scope(root, phase, chunk, evidence_scope, attempt):
                 return False
             prompt_scope = "Chunk scope artifacts: " + json.dumps(evidence_scope) + "."
             if prompt_scope not in path.with_suffix(".prompt.md").read_text():
@@ -302,6 +349,9 @@ def accepted_chunks(root, phase, declared, source_sha256, phase_review=None):
             raise ValueError(f"Missing accepted chunk review: {name}")
         _, path = max(candidates, key=lambda item: (item[0], item[1].name))
         record = json.loads(path.read_text())
+        if phase in SCOPE_BOUND_PHASES - {20} and not matches_declared_scope(
+                root, phase, name, record.get("scope_evidence")):
+            raise ValueError("Latest chunk review does not cover current declared scope")
         original_source = record.get("source_sha256")
         if original_source != source_sha256:
             if (record.get("attempt") != 5 or phase_review is None
@@ -353,7 +403,7 @@ def main(argv=None, root=None):
     parser.add_argument("--chunk", help="Named chunk review; cannot advance the phase")
     parser.add_argument("--scope-evidence", nargs="*", action="extend", default=[], help="Chunk artifact paths for the reviewer")
     parser.add_argument("--release-readiness", action="store_true",
-                        help="Phase20 prepublication readiness review; cannot complete the phase")
+                        help="Phase 20 prepublication readiness review; cannot complete the phase")
     parser.add_argument("--verify", type=pathlib.Path)
     parser.add_argument("--advance", action="store_true",
                         help="Advance only after verifying an accepted current-source review")
@@ -363,14 +413,15 @@ def main(argv=None, root=None):
     if args.phase not in phases or args.attempt < 1:
         raise ValueError("Unknown phase or invalid attempt")
     rubric = uses_rubric(args.phase)
+    completed_prior = 0
     if args.release_readiness and (args.phase != 20 or args.chunk or args.verify or args.advance):
-        raise ValueError("Release readiness requires a new phase20 review without chunk, verify, or advance")
+        raise ValueError("Release readiness requires a new phase 20 review without chunk, verify, or advance")
     if args.chunk and (not rubric or args.advance):
         raise ValueError("Chunk reviews require the new rubric and cannot advance a phase")
     if rubric and not args.verify:
         if not 1 <= args.attempt <= 5:
             raise ValueError("The review loop allows at most five attempts")
-        verify_attempt_sequence(root, args.phase, args.attempt, args.chunk)
+        completed_prior = verify_attempt_sequence(root, args.phase, args.attempt, args.chunk)
     if args.advance and not args.verify:
         raise ValueError("Advancement requires --verify with the actual Claude review artifact")
     validate_predecessors(root, status, args.phase)
@@ -426,7 +477,7 @@ def main(argv=None, root=None):
         raise ValueError("Review attempt already exists; preserve it and use a new attempt")
     if args.chunk and not args.scope_evidence:
         raise ValueError("Chunk reviews require --scope-evidence with scoped artifact paths")
-    if args.phase == 20 and args.chunk and not matches_declared_scope(
+    if args.phase in SCOPE_BOUND_PHASES and args.chunk and not matches_declared_scope(
             root, args.phase, args.chunk, args.scope_evidence):
         raise ValueError("Supplied chunk scope differs from its declared scope_evidence")
     if rubric:
@@ -434,7 +485,7 @@ def main(argv=None, root=None):
         snapshot.parent.mkdir(parents=True, exist_ok=True)
         snapshot.write_bytes(checks.read_bytes())
         checks = snapshot
-    followup = status.get("active_followup_plan")
+    followup = phases[args.phase].get("plan") or status.get("active_followup_plan") or "docs/implementation-plan.md"
     focus = f"\nActive follow-up plan: {followup}. Read it and this phase's scope_evidence.\n" if followup else ""
     prompt = f"""Independently review phase {args.phase}: {phases[args.phase]['name']}.
 Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md and
@@ -450,7 +501,6 @@ reference and may be inspected. Do not modify files or perform network calls.
 {focus}
 Reviewed source SHA256: {before}.
 Passing check evidence: {checks.relative_to(root)}, SHA256 {sha256(checks)}.
-Active follow-up plan: {phases[args.phase].get('plan', 'docs/implementation-plan.md')}.
 Scope evidence: {json.dumps(phases[args.phase].get('scope_evidence', []))}.
 For a vendor follow-up phase, focus on the active milestones and relevant cumulative
 regressions. Generated model correctness is assessed through the compiler, selected
@@ -468,10 +518,12 @@ Score implementation, code_quality, supportability, architecture and feature_del
 separately from 0 to 10. Return categories and their exact sum as total (/50).
 Retain score (/10) as a legacy summary only; it does not decide acceptance.
 Each category must be >=8; chunks require >=42/50 (aim >=45); phases require >=46/50.
-On attempt five only, a total strictly above40 may proceed with every category >=8
+On attempt five only, a total strictly above 40 may proceed with every category >=8
 and documented remaining findings or limitations. Blocker/high findings still block acceptance. Do not inflate scores.
 Chunk scope artifacts: {json.dumps(args.scope_evidence)}.
 """
+    if args.phase == 21 and not args.chunk:
+        prompt += "\nThis phase is also a plan gate: score must be >=9/10 in addition to the five-category rubric.\n"
     if rubric and not args.chunk:
         prompt += """
 Inspect the latest prior phase findings, phase-status review_findings_disposition,
@@ -484,12 +536,12 @@ review remains historical evidence; this phase review must cover current source.
         prompt += """
 This is the prepublication RELEASE READINESS assessment, not phase completion.
 Assess implementation, code quality, supportability, architecture and feature delivery
-against the qualified package and readiness to publish. The phase threshold remains46/50.
+against the qualified package and readiness to publish. The phase threshold remains 46/50.
 Actual registry publication, remote tag and terminal CI are subsequent delivery obligations;
 identify them as pending limitations, not completed outcomes. This record cannot advance
-phase20. A fresh complete-phase review after delivery and both accepted chunks is required.
+phase 20. A fresh complete-phase review after delivery and both accepted chunks is required.
 """
-    if args.phase == 20:
+    if args.phase in SCOPE_BOUND_PHASES:
         review_scope = "release_readiness" if args.release_readiness else ("chunk" if args.chunk else "phase")
         prompt = f"Review scope: {review_scope}.\n" + prompt
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -501,6 +553,13 @@ phase20. A fresh complete-phase review after delivery and both accepted chunks i
             path = local / f"{destination.stem}.{suffix}"
             path.write_bytes(output if isinstance(output, bytes) else (output or "").encode())
             path.chmod(0o600)
+    def failed_invocation(reason):
+        # Sanitized public receipt; raw model/process output remains private.
+        failure = {"reviewer": "Claude Code", "phase": args.phase, "attempt": args.attempt,
+                   "chunk": args.chunk, "status": "invocation_failed", "reason": reason,
+                   "source_sha256": before, "prompt_sha256": sha256(destination.with_suffix(".prompt.md")),
+                   "checks_sha256": sha256(checks)}
+        destination.with_suffix(".failed.json").write_text(json.dumps(failure, indent=2) + "\n")
     try:
         result = subprocess.run(
             ["claude", "-p", "--restricted", "--permission-mode", "plan", "--tools", "Read,Glob,Grep",
@@ -510,17 +569,29 @@ phase20. A fresh complete-phase review after delivery and both accepted chunks i
         )
     except subprocess.TimeoutExpired as error:
         diagnostics(error.stdout, error.stderr)
+        failed_invocation("timeout")
         raise RuntimeError("Claude Code review timed out; prompt and private diagnostics preserved") from None
+    except OSError:
+        failed_invocation("launch_error")
+        raise
     diagnostics(result.stdout, result.stderr)
     if result.returncode:
+        failed_invocation("process_error")
         raise RuntimeError(f"Claude Code exited {result.returncode}; see local review output")
-    envelope = json.loads(result.stdout)
-    if envelope.get("is_error") is not False:
-        raise RuntimeError("Claude Code returned an error; see local review output")
-    review = envelope.get("structured_output")
-    if review is None:
-        review = json.loads(envelope.get("result", "{}"))
-    passed = validate_review(review, rubric=rubric, chunk=bool(args.chunk), attempt=args.attempt)
+    try:
+        envelope = json.loads(result.stdout)
+        if envelope.get("is_error") is not False:
+            raise RuntimeError("Claude Code returned an error; see local review output")
+        review = envelope.get("structured_output")
+        if review is None:
+            review = json.loads(envelope.get("result", "{}"))
+        passed = validate_review(review, rubric=rubric, chunk=bool(args.chunk), attempt=args.attempt, completed_prior=completed_prior)
+    except (ValueError, TypeError, KeyError, RuntimeError):
+        failed_invocation("invalid_output")
+        raise
+    decision = gate_decision(review, rubric=rubric, chunk=bool(args.chunk),
+                             attempt=args.attempt, phase=args.phase, completed_prior=completed_prior)
+    passed = passed and decision != "rejected"
     unchanged = before == fingerprint(root)
     destination.with_suffix(".cli.json").write_text(result.stdout)
     record = {
@@ -534,8 +605,8 @@ phase20. A fresh complete-phase review after delivery and both accepted chunks i
     }
     if rubric:
         record.update({"rubric": "five-category-v1", "chunk": args.chunk,
-                       "decision": gate_decision(review, rubric=True, chunk=bool(args.chunk), attempt=args.attempt)})
-    if args.phase == 20:
+                       "decision": decision})
+    if args.phase in SCOPE_BOUND_PHASES:
         record["review_scope"] = "release_readiness" if args.release_readiness else ("chunk" if args.chunk else "phase")
         if args.chunk:
             record["scope_evidence"] = args.scope_evidence
