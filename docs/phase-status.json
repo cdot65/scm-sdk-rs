@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 17,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -3461,8 +3461,10 @@
     {
       "id": 17,
       "name": "Portkey access-policy qualification and publication",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-17-attempt-02.json"
+      ],
       "plan": "docs/portkey-access-policies-plan.md",
       "scope_evidence": [
         "contracts/vendor/portkey-access/a27feb9/source.json",
@@ -3518,17 +3520,18 @@
         "docs/checks/release-registry-0.2.1.json",
         "docs/checks/phase-17-prepublication.json",
         "docs/checks/phase-17-private-material-postpublication.json",
-        "docs/checks/phase-17-private-material-prepublication.json"
+        "docs/checks/phase-17-private-material-prepublication.json",
+        "docs/checks/phase-17-remote-ci-run-21.json",
+        "docs/checks/release-tag-v0.2.1.json"
       ],
       "final_in_sequence": true,
       "delivery": {
-        "status": "published_remote_delivery_pending",
-        "advance_requires": [
-          "actual Claude >=9/10",
-          "verified registry 0.2.1",
-          "verified immutable v0.2.1 source tag",
-          "terminal exact 47-job CI run"
-        ]
+        "status": "complete",
+        "source_commit": "3eeed47f3b1d91509ad68d683dafe925f9be0a75",
+        "registry_receipt": "docs/checks/release-registry-0.2.1.json",
+        "tag_receipt": "docs/checks/release-tag-v0.2.1.json",
+        "ci_receipt": "docs/checks/phase-17-remote-ci-run-21.json",
+        "published_source_commit": "80baf80f0f6d90f9b382e8895083ca30fa5e8997"
       },
       "live_evidence": {
         "current": "docs/checks/phase-08-live-attempt-13.json",
@@ -3631,8 +3634,60 @@
           "review": "docs/reviews/phase-17-attempt-02.json",
           "finding_index": 7,
           "disposition": "All retained phase17 check reports added to scope_evidence; generic inventory assertion deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 0,
+          "disposition": "Before advancement, executed assertions verified registry ownership/non-yanked state, archive proof checksum and source identity, actual remote peeled tag source, exact 47 successful CI contexts and terminal workflow success. Generalized regression coverage remains deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 2,
+          "disposition": "Resolved: actual remote tag receipt retained at docs/checks/release-tag-v0.2.1.json."
         }
-      ]
+      ],
+      "accepted_source_sha256": "ca1e71973db1bc0aef8aad57466948ef5edd664bc204d7e5e3d518a2efd72be9",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-17-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-17.json"
+          ],
+          "source_sha256": "ca1e71973db1bc0aef8aad57466948ef5edd664bc204d7e5e3d518a2efd72be9"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-17-attempt-02.json"
+          ]
+        },
+        "remote_delivery": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-17-remote-ci-run-21.json"
+          ],
+          "source_commit": "3eeed47f3b1d91509ad68d683dafe925f9be0a75",
+          "reviewed_source_sha256": "ca1e71973db1bc0aef8aad57466948ef5edd664bc204d7e5e3d518a2efd72be9"
+        }
+      },
+      "remote_ci": {
+        "status": "success",
+        "run": 21,
+        "expected_jobs": 47,
+        "passed_jobs": 47,
+        "source_commit": "3eeed47f3b1d91509ad68d683dafe925f9be0a75",
+        "evidence": [
+          "docs/checks/phase-17-remote-ci-run-21.json"
+        ]
+      }
     }
   ],
   "active_followup_plan": "docs/portkey-access-policies-plan.md"
