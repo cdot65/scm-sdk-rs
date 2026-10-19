@@ -2,6 +2,9 @@
 
 ## 0.2.1 — 2026-10-18
 
+Published 2026-10-18 from `80baf80f0f6d90f9b382e8895083ca30fa5e8997`.
+Verified crates.io archive SHA256: `624f97bbc3fba604e0317d68c04a8ef88b35c104d504b44e1a235f38bd01d0d4`.
+
 Additive Portkey access-policy update at `a27feb9efaac3653d2d94eca5d7d210944b6e160`.
 The [crates.io release](https://crates.io/crates/scm-sdk/0.2.1) is verified only by
 the [registry receipt](docs/checks/release-registry-0.2.1.json); a missing receipt

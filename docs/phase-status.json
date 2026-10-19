@@ -3495,11 +3495,34 @@
         "scripts/check-package.py",
         ".forgejo/workflows/ci.yml",
         "docs/checks/phase-17-release-package-1.89.0.json",
-        "docs/checks/phase-17-release-package-1.99.0.json"
+        "docs/checks/phase-17-release-package-1.99.0.json",
+        "docs/checks/phase-17-access-live.json",
+        "docs/checks/phase-17-candidate.json",
+        "docs/checks/phase-17-dependencies.json",
+        "docs/checks/phase-17-private-material.json",
+        "docs/checks/phase-17-rust-1.89.0-all.json",
+        "docs/checks/phase-17-rust-1.89.0-default.json",
+        "docs/checks/phase-17-rust-1.89.0-minimal.json",
+        "docs/checks/phase-17-rust-1.99.0-all.json",
+        "docs/checks/phase-17-rust-1.99.0-default-tracing.json",
+        "docs/checks/phase-17-rust-1.99.0-default.json",
+        "docs/checks/phase-17-rust-1.99.0-gateway-json-unification.json",
+        "docs/checks/phase-17-rust-1.99.0-gateway.json",
+        "docs/checks/phase-17-rust-1.99.0-minimal.json",
+        "docs/checks/phase-17.json",
+        "crates/scm-sdk/Cargo.toml",
+        "docs/RELEASE.md",
+        "docs/STABILITY.md",
+        "docs/DEVELOPMENT.md",
+        "tools/test_release_020.py",
+        "docs/checks/release-registry-0.2.1.json",
+        "docs/checks/phase-17-prepublication.json",
+        "docs/checks/phase-17-private-material-postpublication.json",
+        "docs/checks/phase-17-private-material-prepublication.json"
       ],
       "final_in_sequence": true,
       "delivery": {
-        "status": "preparing_candidate",
+        "status": "published_remote_delivery_pending",
         "advance_requires": [
           "actual Claude >=9/10",
           "verified registry 0.2.1",
@@ -3516,7 +3539,100 @@
         "token_exchanges": 1,
         "cleanup": "not_needed",
         "limitation": "One scan query HTTP200 lacked complete correlated evidence; three Red Team reads403 and two owned provisioning attempts400 remain explicit. New access policies not attempted."
-      }
+      },
+      "registry_publication": {
+        "status": "published_and_verified",
+        "version": "0.2.1",
+        "source_commit": "80baf80f0f6d90f9b382e8895083ca30fa5e8997",
+        "evidence": "docs/checks/release-registry-0.2.1.json"
+      },
+      "review_findings_disposition": [
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 0,
+          "disposition": "Scope evidence expanded with all current phase reports and release inputs. Generic inventory assertion deferred as tooling follow-up."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 1,
+          "disposition": "Registry publication recorded; actual registry, tag and exact terminal CI receipts will be checked before advancement. Generalized automated advancement guard deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 2,
+          "disposition": "Privacy receipt binds the same source fingerprint; headCommit is historical scan provenance before candidate commit. Current gate verified that fingerprint. Requiring HEAD equality would invalidate metadata-only delivery commits; a generalized source/provenance rule is deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 3,
+          "disposition": "Long literal test formatting remains a low-priority readability follow-up; executable coverage passes."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 4,
+          "disposition": "Historical publication authorization prose remains; current explicit authorization and procedures are in the accepted 0.2.1 plan. Consolidated release prose deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 5,
+          "disposition": "Unused constant cleanup and negative protected-input unit coverage deferred; actual archive and every protected input were checked successfully."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 6,
+          "disposition": "Direct same-body response-mode comparison deferred; the new response family has no default insertion path, with independent schema and native response preservation checks passed."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 7,
+          "disposition": "Group ANY restriction is documented in the accepted plan and independently exercised in fixtures; feature-document cross-reference improvement deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-01.json",
+          "finding_index": 8,
+          "disposition": "Both clean proofs were generated sequentially to ignored .local/checks/release-0.2.1-package-{toolchain}.json paths and then copied byte-for-byte to docs/checks before the full phase gate. Source commit and archives were verified by the executed candidate guard. A generalized promotion-provenance verifier is deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 0,
+          "disposition": "Actual registry/tag/terminal-CI assertions will execute before advance using the delivery verification script; generalized regression guard deferred. Delivery remains pending."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 1,
+          "disposition": "Current release authorization is explicit in the accepted 0.2.1 plan; consolidated historical procedure prose deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 2,
+          "disposition": "Tag receipt will be created from actual remote refs in this delivery."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 3,
+          "disposition": "Unused constants and negative verifier unit coverage deferred; actual protected bytes and archive identity were verified."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 4,
+          "disposition": "All new methods remain explicitly not_attempted and runtime-bound receipt is current; generalized ledger live-classification guard deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 5,
+          "disposition": "Prose-derived ANY restriction is in the plan and independently tested; feature-guide wording follow-up deferred."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 6,
+          "disposition": "Long test literal formatting deferred as readability only."
+        },
+        {
+          "review": "docs/reviews/phase-17-attempt-02.json",
+          "finding_index": 7,
+          "disposition": "All retained phase17 check reports added to scope_evidence; generic inventory assertion deferred."
+        }
+      ]
     }
   ],
   "active_followup_plan": "docs/portkey-access-policies-plan.md"
