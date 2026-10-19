@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-19T09:55:48.617927+00:00",
+  "remote": "ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git",
+  "tag": "v0.2.2",
+  "tagObject": "90f3a9f09f603ad3fcaea31b508ff1135a3a5cda",
+  "sourceCommit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
+  "remoteRefs": {
+    "refs/heads/main": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+    "refs/tags/v0.2.2": "90f3a9f09f603ad3fcaea31b508ff1135a3a5cda",
+    "refs/tags/v0.2.2^{}": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824"
+  },
+  "cleanPackageProofs": [
+    "docs/checks/phase-20-release-package-1.89.0.json",
+    "docs/checks/phase-20-release-package-1.99.0.json"
+  ],
+  "sourceReview": "docs/reviews/phase-20-attempt-03.json",
+  "registryReceipt": "docs/checks/release-registry-0.2.2.json",
+  "passed": true,
+  "executionProvenance": {
+    "command": [
+      "/usr/bin/python3",
+      ".local/record-tag-022.py",
+      "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+      "docs/reviews/phase-20-attempt-03.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"tag\": \"v0.2.2\", \"sourceCommit\": \"0716cfdcdbd522bb8fa63072d944e8fc15ba1824\", \"remoteMain\": \"42bcbe006d02c07d59d46d9b31b9307f39f415ff\"}\n",
+    "stderr": "",
+    "producerSha256": "d10c23b453f7d091e837cfd9a0eeb99b6a8aed1bf3c62edf46accfe4932cde2e",
+    "producerSource": "import datetime,json,re,subprocess,sys\nfrom pathlib import Path\nci,review=sys.argv[1:]\nassert re.fullmatch('[0-9a-f]{40}',ci)\nregistry=json.loads(Path('docs/checks/release-registry-0.2.2.json').read_text())\nsource=registry['sourceCommit'];tag='v0.2.2'\nassert subprocess.check_output(['git','cat-file','-t','refs/tags/'+tag],text=True).strip()=='tag'\nobj=subprocess.check_output(['git','rev-parse','refs/tags/'+tag],text=True).strip()\nassert subprocess.check_output(['git','rev-parse','refs/tags/'+tag+'^{}'],text=True).strip()==source\nremote='ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git'\nssh='ssh -F /dev/null -i /home/cdot/.ssh/forgejo -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes'\nlines=subprocess.check_output(['git','-c','core.sshCommand='+ssh,'ls-remote',remote,'refs/heads/main','refs/tags/'+tag,'refs/tags/'+tag+'^{}'],text=True).splitlines()\nrefs={line.split('\\t')[1]:line.split('\\t')[0] for line in lines}\nassert refs=={'refs/heads/main':ci,'refs/tags/'+tag:obj,'refs/tags/'+tag+'^{}':source}\nr={'schemaVersion':1,'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'remote':remote,'tag':tag,'tagObject':obj,'sourceCommit':source,'remoteRefs':refs,'cleanPackageProofs':['docs/checks/phase-20-release-package-'+v+'.json' for v in ['1.89.0','1.99.0']],'sourceReview':review,'registryReceipt':'docs/checks/release-registry-0.2.2.json','passed':True}\nPath('docs/checks/release-tag-v0.2.2.json').write_text(json.dumps(r,indent=2)+'\\n')\nprint(json.dumps({'passed':True,'tag':tag,'sourceCommit':source,'remoteMain':ci}))\n"
+  }
+}

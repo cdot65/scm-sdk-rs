@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 20,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -4246,8 +4246,10 @@
     {
       "id": 20,
       "name": "G25 0.2.2 qualification and delivery",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-20-attempt-05.json"
+      ],
       "plan": "docs/g25-response-compatibility-plan.md",
       "scope_evidence": [
         "docs/g25-response-compatibility-plan.md",
@@ -4273,7 +4275,13 @@
         "tools/test_g25_report.py",
         "crates/scm-sdk/tests/g25_response_compatibility.rs",
         "contracts/compatibility/g25/projections.json",
-        "docs/SECURITY.md"
+        "docs/SECURITY.md",
+        "docs/checks/phase-20-delivery-evidence-private.json",
+        "docs/checks/phase-20-document-activation.json",
+        "docs/checks/phase-20-delivery-guard.json",
+        "docs/checks/phase-20-remote-ci-run-22.json",
+        "docs/checks/release-tag-v0.2.2.json",
+        "docs/checks/release-registry-0.2.2.json"
       ],
       "final_in_sequence": true,
       "chunks": [
@@ -4331,16 +4339,39 @@
         },
         {
           "id": "registry-and-remote-delivery",
-          "status": "pending",
-          "attempts": [],
+          "status": "accepted",
+          "attempts": [
+            "docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-01.json",
+            "docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-02.json"
+          ],
           "scope_evidence": [
             "tools/release_delivery.py",
             "scripts/verify-publication.py",
             "docs/checks/release-registry-0.2.2.json",
             "docs/checks/release-tag-v0.2.2.json",
             "tools/test_ci.py",
-            "docs/checks/phase-20-published-document-guard.json"
-          ]
+            "docs/checks/phase-20-published-document-guard.json",
+            "docs/checks/phase-20-remote-ci-run-22.json",
+            "docs/checks/phase-20-prepush-private.json",
+            "tools/test_release_delivery.py",
+            "README.md",
+            "CHANGELOG.md",
+            "docs/RELEASE.md",
+            "docs/STABILITY.md",
+            "docs/checks/phase-20-delivery-guard.json",
+            "docs/checks/phase-20-document-activation.json"
+          ],
+          "accepted_total": 45,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 9,
+            "supportability": 9,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-02.json",
+          "accepted_source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+          "review_decision": "accepted"
         }
       ],
       "qualification_attempts": [
@@ -4424,14 +4455,16 @@
         {
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
           "finding": 3,
-          "disposition": "candidate_scan_refreshed_final_scan_pending",
           "evidence": [
             "docs/SECURITY.md",
             "docs/checks/phase-20-private-material.json",
             "docs/checks/phase-20-release-package-1.89.0.json",
             "docs/checks/phase-20-release-package-1.99.0.json"
           ],
-          "resolution": "Private scan executed successfully at clean candidate d64d9dc7f71d95eaa1e7849e661c252660970914; headCommit equals both qualified package proofs. SECURITY.md documents source-based --check semantics. A final bookkeeping scan remains pending until final evidence exists."
+          "historical_disposition": "candidate_scan_refreshed_final_scan_pending",
+          "historical_resolution": "Private scan executed successfully at clean candidate d64d9dc7f71d95eaa1e7849e661c252660970914; headCommit equals both qualified package proofs. SECURITY.md documents source-based --check semantics. A final bookkeeping scan remains pending until final evidence exists.",
+          "disposition": "completed_by_actual_delivery_evidence",
+          "resolution": "Superseded prepublication observation. Current registry, document activation, remote tag, terminal CI and delivery-evidence privacy receipts discharge the obligation; see current_delivery_status."
         },
         {
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
@@ -4442,13 +4475,15 @@
         {
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
           "finding": 5,
-          "disposition": "required_delivery_action_pending",
-          "resolution": "The final guard proves canonical registry/tag content, but does not activate the current-version documentation test. The separate planned_registry_publication transition above is mandatory after actual registry verification. It will record registry_publication and execute test_ci.py before delivery, activating receipt-link assertions. This work remains pending; it is not claimed enforced by release_delivery.py.",
           "evidence": [
             "tools/release_delivery.py",
             "tools/test_release_delivery.py",
             "tools/test_ci.py"
-          ]
+          ],
+          "historical_disposition": "required_delivery_action_pending",
+          "historical_resolution": "The final guard proves canonical registry/tag content, but does not activate the current-version documentation test. The separate planned_registry_publication transition above is mandatory after actual registry verification. It will record registry_publication and execute test_ci.py before delivery, activating receipt-link assertions. This work remains pending; it is not claimed enforced by release_delivery.py.",
+          "disposition": "completed_by_actual_delivery_evidence",
+          "resolution": "Superseded prepublication observation. Current registry, document activation, remote tag, terminal CI and delivery-evidence privacy receipts discharge the obligation; see current_delivery_status."
         },
         {
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
@@ -4489,8 +4524,10 @@
         {
           "review": "docs/reviews/phase-20-attempt-01.json",
           "finding": 1,
-          "disposition": "corrected_prepublication_obligation_pending_actual_delivery",
-          "resolution": "Removed the overstatement that the final guard activates current-version document checks. planned_registry_publication records the exact version/evidence/source transition and mandatory actual test_ci.py execution after registry verification. No publication entry is fabricated before publication. The final review must confirm this completed action; a general guard assertion is deferred as suggested by the reviewer."
+          "historical_disposition": "corrected_prepublication_obligation_pending_actual_delivery",
+          "historical_resolution": "Removed the overstatement that the final guard activates current-version document checks. planned_registry_publication records the exact version/evidence/source transition and mandatory actual test_ci.py execution after registry verification. No publication entry is fabricated before publication. The final review must confirm this completed action; a general guard assertion is deferred as suggested by the reviewer.",
+          "disposition": "completed_by_actual_delivery_evidence",
+          "resolution": "Superseded prepublication observation. Current registry, document activation, remote tag, terminal CI and delivery-evidence privacy receipts discharge the obligation; see current_delivery_status."
         },
         {
           "review": "docs/reviews/phase-20-attempt-01.json",
@@ -4528,7 +4565,13 @@
         "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
         "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
         "evidence": "docs/checks/phase-20-private-material.json",
-        "final_bookkeeping_scan": "pending"
+        "final_bookkeeping_scan": {
+          "status": "passed",
+          "evidence": "docs/checks/phase-20-final-private.json",
+          "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+          "head_commit": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+          "scope": "Actual scan after final review and phase advancement, before evidence-only commit; this scan receipt and its metadata link are appended afterward. No additional source change."
+        }
       },
       "delivery_execution_constraints": {
         "ci_commit_message": "Must not contain [skip ci] or another skip marker. Push the receipt-bearing delivery commit to main to trigger the exact 49-job workflow.",
@@ -4576,7 +4619,7 @@
         "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
         "required_transition": "Only after verify-publication.py succeeds, create phase 20 registry_publication with status published_and_verified, this version, this canonical evidence STRING and the actual source_commit. Then run tools/test_ci.py and preserve its actual output before committing and pushing the delivery commit. Do not insert registry_publication or claim published status while the registry receipt is absent.",
         "completion_requirement": "Final delivery review must inspect the actual registry_publication entry, executed current-version document guard, registry/tag receipts and exact terminal 49-job CI. Missing entry or failed document guard is unfinished delivery.",
-        "enforcement_boundary": "tools/release_delivery.py now enforces actual phase20 registry_publication metadata; scripts/verify-publication.py requires accepted current-source readiness and binds it into the registry receipt. Actual publication and current-version document test remain pending delivery obligations."
+        "enforcement_boundary": "Completed: registry receipt binds accepted readiness and published bytes; registry_publication activates current-version checks; actual full test_ci suite and traced receipt-specific assertions passed. Final delivery guard verifies publication metadata, readiness, source/tag/CI identities and ancestry. No publication or document-check obligation remains pending."
       },
       "release_readiness_attempts": [
         {
@@ -4615,13 +4658,11 @@
         }
       ],
       "in_flight_review": {
-        "scope": "release_readiness",
-        "attempt": 3,
-        "status": "completed_accepted46",
-        "prompt": "docs/reviews/phase-20-attempt-03.prompt.md",
-        "checks": "docs/reviews/phase-20-attempt-03.checks.json",
-        "explanation": "Started concurrently with qualification chunk03 after all59 commands passed; prompt/checks exist while actual Claude process completes. This is not an abandoned attempt; preserve its result under attempt03.",
-        "result": "docs/reviews/phase-20-attempt-03.json"
+        "scope": "phase",
+        "attempt": 5,
+        "status": "completed",
+        "result": "docs/reviews/phase-20-attempt-05.json",
+        "decision": "accepted_with_deficiencies"
       },
       "qualification_chunk03_dispositions": [
         {
@@ -4631,8 +4672,8 @@
         },
         {
           "finding": 2,
-          "status": "required_delivery_action_pending",
-          "resolution": "Record actual registry_publication and execute current-version document guard before delivery commit; final guard now enforces metadata and readiness receipt."
+          "status": "completed",
+          "resolution": "Actual registry_publication recorded; test_ci suite and receipt-specific runtime branch re-executed successfully. See phase-20-published-document-guard.json and phase-20-document-activation.json."
         },
         {
           "finding": 3,
@@ -4683,6 +4724,295 @@
       "published_document_guard": {
         "status": "passed",
         "evidence": "docs/checks/phase-20-published-document-guard.json"
+      },
+      "remote_ci": {
+        "status": "success",
+        "run": 22,
+        "expected_jobs": 49,
+        "passed_jobs": 49,
+        "source_commit": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+        "evidence": [
+          "docs/checks/phase-20-remote-ci-run-22.json"
+        ]
+      },
+      "tag_publication": {
+        "status": "verified_remote_annotated_tag",
+        "evidence": "docs/checks/release-tag-v0.2.2.json",
+        "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824"
+      },
+      "delivery": {
+        "status": "complete",
+        "source_commit": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+        "registry_receipt": "docs/checks/release-registry-0.2.2.json",
+        "tag_receipt": "docs/checks/release-tag-v0.2.2.json",
+        "ci_receipt": "docs/checks/phase-20-remote-ci-run-22.json"
+      },
+      "milestones": {
+        "remote_delivery": {
+          "status": "passed",
+          "evidence": [
+            "docs/checks/phase-20-remote-ci-run-22.json"
+          ],
+          "source_commit": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+          "reviewed_source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3"
+        },
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-20-attempt-05.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/reviews/phase-20-attempt-05.checks.json"
+          ],
+          "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 8.5,
+          "evidence": [
+            "docs/reviews/phase-20-attempt-05.json"
+          ]
+        }
+      },
+      "delivery_guard": {
+        "status": "passed",
+        "evidence": "docs/checks/phase-20-delivery-guard.json"
+      },
+      "delivery_chunk01_dispositions": [
+        {
+          "finding": 1,
+          "status": "resolved_actual_runtime_branch_observation",
+          "evidence": "docs/checks/phase-20-document-activation.json",
+          "resolution": "Re-executed the actual unittest guard with line/return tracing. Assertions require executed receipt-specific locals, matching workspace/publication/receipt 0.2.2 and matching actual source commit. Retained actual producer source/digest and executed lines."
+        },
+        {
+          "finding": 2,
+          "status": "resolved",
+          "evidence": "docs/checks/phase-20-delivery-guard.json",
+          "resolution": "Re-executed verify(root, explicit reviewed fingerprint); receipt now retains source fingerprint, exact producer source/digest, command, verifier digest and exit status."
+        },
+        {
+          "finding": 3,
+          "status": "resolved_executed_producer_provenance",
+          "resolution": "Fresh authenticated Forgejo status/run read and SSH ls-remote verification executed; actual sanitized commands, output, producer sources and digests are embedded in tag/CI receipts. Earlier receipts were program-produced, not hand-authored; producers were ignored maintainer helpers and were not visible in initial review."
+        },
+        {
+          "finding": 4,
+          "status": "deferred_procedure_cross_reference",
+          "resolution": "Current G25 plan contains explicit owner authorization; this session separately grants autonomous publication. Historical authorization paragraph can be expanded in a future qualified documentation change."
+        },
+        {
+          "finding": 5,
+          "status": "deferred_immutable_readme_navigation",
+          "resolution": "Absolute receipt links and current-version foregrounding belong to a future published README; current repository receipts and final user delivery links remain accessible."
+        },
+        {
+          "finding": 6,
+          "status": "resolved_download_rehash_path_conventions_retained",
+          "evidence": "docs/checks/phase-20-delivery-guard.json",
+          "resolution": "Retained registry download now rehashed against exact archive digest/size during actual final evidence verification. Existing absolute package and relative registry path conventions retained to avoid changing immutable source; both safely resolved before use."
+        }
+      ],
+      "delivery_chunk02_dispositions": {
+        "review": "docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-02.json",
+        "decision": "accepted",
+        "total": 45,
+        "resolved": "Actual runtime document-guard activation and exact executed producer provenance accepted; latest delivery-evidence private scan is now linked explicitly.",
+        "remaining_followups": [
+          "Promote retained maintainer producer scripts into documented repository tooling in a future qualified change.",
+          "Make document-guard activation and retained registry rehash standard tool output in a future release.",
+          "Expand historical authorization paragraph and use absolute receipt links in the next published README."
+        ],
+        "limitations": "These are recorded supportability/documentation follow-ups. Exact executed producer source and outputs are retained in current receipts; no blocker or high finding."
+      },
+      "current_delivery_status": {
+        "status": "published_verified_tagged_and_terminal_ci_passed",
+        "version": "0.2.2",
+        "source_commit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
+        "ci_commit": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+        "ci_jobs": 49,
+        "registry": "docs/checks/release-registry-0.2.2.json",
+        "tag": "docs/checks/release-tag-v0.2.2.json",
+        "ci": "docs/checks/phase-20-remote-ci-run-22.json",
+        "document_suite": "docs/checks/phase-20-published-document-guard.json",
+        "document_activation": "docs/checks/phase-20-document-activation.json",
+        "private_scan": "docs/checks/phase-20-delivery-evidence-private.json",
+        "phase_completion": "Complete under the accepted fifth-attempt review; publication, source tag, terminal CI and all implementation phases are complete. Completion records retain the accepted deficiencies."
+      },
+      "delivery_chunk02_findings_complete_dispositions": [
+        {
+          "finding": 1,
+          "status": "resolved_by_phase_scope",
+          "resolution": "Delivery-evidence scan is recorded with actual source/head fingerprints and added to enclosing phase scope. Accepted chunk02 scope remains immutable and is not relabelled."
+        },
+        {
+          "finding": 2,
+          "status": "resolved_for_this_release_future_tooling_followup",
+          "evidence": "docs/checks/phase-20-document-activation.json",
+          "resolution": "Actual executed branch and matching workspace/publication/receipt values asserted and retained; ordinary-tool reporting can be standardized in a future qualified release."
+        },
+        {
+          "finding": 3,
+          "status": "executed_evidence_retained_future_tooling_followup",
+          "evidence": "docs/checks/phase-20-delivery-guard.json",
+          "resolution": "Actual explicit-source verification and registry-download rehash passed. Integrating them into the standard verifier is a future qualified tooling change."
+        },
+        {
+          "finding": 4,
+          "status": "retained_reproducible_producer_sources_future_tooling_followup",
+          "resolution": "Exact executed producer commands/source/digests are retained in receipts. Promoting them to standard tracked tools and release instructions is deferred; immutable published and CI source remain bound to accepted review."
+        },
+        {
+          "finding": 5,
+          "status": "deferred_historical_authorization_paragraph",
+          "resolution": "0.2.1 and0.2.2 authority is explicitly documented in portkey-access-policies-plan.md and g25-response-compatibility-plan.md, plus maintainer session authorization. Broader historical procedure prose can be corrected in a future qualified source change."
+        },
+        {
+          "finding": 6,
+          "status": "deferred_immutable_packaged_readme",
+          "resolution": "Use absolute links and foreground current version in a future published README. Current final report supplies direct registry/repository links; existing archive cannot be edited."
+        },
+        {
+          "finding": 7,
+          "status": "explicitly_retained_nonsecret_execution_path",
+          "resolution": "The /home/cdot/.ssh/forgejo identity filename is an execution path, not private-key bytes or credential material. Exact producer source is retained to preserve its recorded digest and reproducibility; actual private-material scans passed. Future producer tooling should accept an identity environment variable. No key contents were retained."
+        },
+        {
+          "finding": 8,
+          "status": "resolved_current_acceptance",
+          "resolution": "Current accepted_review is delivery chunk02, total45, with matching declared scope and current source. Chunk01 remains historical evidence."
+        }
+      ],
+      "final_phase_review_attempts": [
+        {
+          "review": "docs/reviews/phase-20-attempt-04.json",
+          "decision": "rejected",
+          "total": 44,
+          "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+          "reason": "Low-severity supportability/documentation residue and contradictory prepublication bookkeeping; no blocker/high or implementation defect."
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-05.json",
+          "decision": "accepted_with_deficiencies",
+          "total": 44,
+          "categories": {
+            "implementation": 9,
+            "code_quality": 9,
+            "supportability": 8,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3"
+        }
+      ],
+      "final_phase04_dispositions": [
+        {
+          "finding": 1,
+          "status": "resolved",
+          "resolution": "Superseded pending dispositions now explicitly historical; authoritative current_delivery_status and publication enforcement boundary state completed actual delivery and reference executed evidence."
+        },
+        {
+          "finding": 2,
+          "status": "deferred_documentation_followup",
+          "resolution": "Current G25 and Portkey plans document authority. Updating the historical paragraph changes the immutable reviewed source fingerprint and belongs to a subsequent qualified documentation change."
+        },
+        {
+          "finding": 3,
+          "status": "deferred_tooling_followup",
+          "resolution": "Exact producer source/digest/commands/output retained and independently accepted; promotion into normal tracked tested tools is a future qualified change."
+        },
+        {
+          "finding": 4,
+          "status": "resolved_explicit_disposition",
+          "resolution": "Chunk02 finding7 now explicitly records retention of nonsecret identity path with rationale and passing scans."
+        },
+        {
+          "finding": 5,
+          "status": "resolved_phase_scope_added",
+          "resolution": "Delivery-evidence privacy scan added to phase scope; accepted chunk02 declaration is retained unchanged."
+        },
+        {
+          "finding": 6,
+          "status": "deferred_immutable_readme",
+          "resolution": "Published archive immutable. Current registry/repository links supplied in delivery report; future qualified README uses absolute URLs."
+        },
+        {
+          "finding": 7,
+          "status": "actual_rehash_completed_future_tooling_followup",
+          "resolution": "Retained registry download was actually rehashed with explicit-source delivery verification; source integration deferred without claiming it already exists."
+        }
+      ],
+      "final_review_outcome": {
+        "review": "docs/reviews/phase-20-attempt-05.json",
+        "total": 44,
+        "normal_phase_threshold": 46,
+        "accepted_under": "Maintainer-authorized fifth-attempt exception: total strictly above40, every category at least8, no blocker/high, all remaining deficiencies explicitly recorded.",
+        "remaining_findings": [
+          {
+            "severity": "low",
+            "path": "docs/RELEASE.md",
+            "line": 157,
+            "description": "The publication authorization and provenance paragraph still states \"Maintainer authorization covers 0.1.1 and the subsequent 0.2.0 delivery recorded in the release plan.\" Versions 0.2.1 and 0.2.2 have since been published. Authorization for 0.2.2 is real and recorded in docs/g25-response-compatibility-plan.md:3, but the procedure document a maintainer consults before publishing is now inaccurate about which deliveries are authorized. Raised as chunk-02 finding 5, delivery_chunk01 finding 4 and phase attempt-04 finding 2, and deferred each time (final_phase04_dispositions finding 2).",
+            "required_fix": "In the next qualified source change, extend the authorization paragraph to name the 0.2.1 (portkey-access-policies-plan.md) and 0.2.2 (g25-response-compatibility-plan.md) deliveries and their authorizing plans. This cannot be done inside phase 20 without breaking the registry readiness and CI source binding, so it must be scheduled explicitly rather than left as an open deferral."
+          },
+          {
+            "severity": "low",
+            "path": "docs/checks/phase-20-remote-ci-run-22.json",
+            "line": 365,
+            "description": "The terminal CI receipt, the tag receipt (docs/checks/release-tag-v0.2.2.json:20-32) and the delivery guard receipt (docs/checks/phase-20-delivery-guard.json:5-10) were produced by .local/read-delivery-ci-022.py, .local/record-release-022-delivery.py, .local/record-tag-022.py and .local/strengthen-delivery-evidence.py. Their exact source and digests are embedded in the receipts, which is adequate provenance, but three of the four delivery observations have no in-repo tooling home and no unit tests, unlike scripts/verify-publication.py. docs/RELEASE.md documents the registry verification command (39-43) and the clean-package sequence (116-133) but not the tag, CI or delivery-guard steps, so the next delivery cannot be reproduced from the documented procedure without reconstructing scripts from JSON string literals.",
+            "required_fix": "Land the tag and CI observation producers and the delivery-guard driver as tracked repository tooling (for example tools/record_release_tag.py, tools/record_delivery_ci.py) with unit tests alongside scripts/verify-publication.py, and add the executed command sequence to docs/RELEASE.md."
+          },
+          {
+            "severity": "low",
+            "path": "tools/release_delivery.py",
+            "line": 180,
+            "description": "verify() rehashes and re-extracts each clean package proof's retainedArchive (178-190) but never reads registry['retainedArchive'] (.local/artifacts/scm-sdk-0.2.2-registry-c908cad8b27863d0.crate). Registry archiveSha256 equals the proof archive_sha256 at line 86, so the published bytes remain transitively bound and this is defence-in-depth rather than a correctness gap, but the retained registry download itself was rehashed only once, by the one-off producer embedded in docs/checks/phase-20-delivery-guard.json:10. A later re-run of verify() will not reconfirm it. The path conventions also differ: check-package proofs store an absolute retainedArchive while scripts/verify-publication.py:246 stores a repository-relative one.",
+            "required_fix": "Fold the registry retainedArchive rehash against registry.archiveSha256/archiveBytes into release_delivery.verify(), normalise the absolute/relative retainedArchive convention across scripts/check-package.py and scripts/verify-publication.py, and have the CLI print or require the source fingerprint it resolved."
+          },
+          {
+            "severity": "low",
+            "path": "tools/test_ci.py",
+            "line": 346,
+            "description": "The release-document guard returns silently when the workspace version differs from the recorded publication version, so an ordinary in-tree run cannot distinguish \"receipt assertions activated and passed\" from \"skipped\". For this release activation is proven only by an external traced execution (docs/checks/phase-20-document-activation.json, executedGuardLines 348-366 with 347 absent) produced by the untracked .local/strengthen-delivery-evidence.py. The substance is verified for 0.2.2, but the next release will need the same ad-hoc tracer rather than tracked machine-evident output.",
+            "required_fix": "Have the guard report the resolved workspace and publication versions and fail, rather than return, when a published_and_verified publication matches the workspace version but the receipt-specific block was not exercised; or assert that the retained published-document-guard receipt records the same version and source commit as phase-status registry_publication."
+          },
+          {
+            "severity": "low",
+            "path": "README.md",
+            "line": 40,
+            "description": "The packaged README links the 0.2.2 registry and tag receipts as repository-relative paths (docs/checks/release-registry-0.2.2.json, docs/checks/release-tag-v0.2.2.json). README.md ships verbatim in the published archive (it appears in the 132-file registry inventory), so these links are dead for anyone reading the crate on crates.io, which is exactly the audience the surrounding sentence addresses. Recorded as deferred in readiness03_dispositions finding 4, delivery_chunk01 finding 5 and final_phase04_dispositions finding 6. The published archive is immutable, so this is permanent for 0.2.2.",
+            "required_fix": "In the next qualified source change, use absolute repository URLs for receipt links in README.md so the published crate page resolves them, and foreground the current published version."
+          },
+          {
+            "severity": "low",
+            "path": "docs/phase-status.json",
+            "line": 4571,
+            "description": "candidate_private_scan.final_bookkeeping_scan correctly records the executed delivery-evidence scan (passed, 42bcbe0, 1815 files, zero matches) but its scope states \"A separate final completion-record scan will cover the last review and advancement output.\" That scan is a genuine outstanding obligation at completion time and is not yet evidenced; in_flight_review and current_delivery_status.phase_completion likewise still read \"awaiting final fifth review and completion-record scan/push\". These statements are accurate today, but completion must not be recorded until the final scan exists, or the file will again contain a pending obligation alongside a complete status.",
+            "required_fix": "Execute scripts/check-private-material.py over the final completion record before marking phase 20 complete, link its receipt from current_delivery_status, and update the final_bookkeeping_scan scope text so no completed phase carries a pending-scan statement."
+          }
+        ],
+        "scope": "Implementation, publication, registry/tag verification and49-job CI completed. Remaining findings are supportability/documentation improvements for a subsequent qualified source change."
+      },
+      "accepted_source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+      "accepted_score": 8.5,
+      "accepted_total": 44,
+      "accepted_categories": {
+        "implementation": 9,
+        "code_quality": 9,
+        "supportability": 8,
+        "architecture": 9,
+        "feature_delivery": 9
+      },
+      "review_decision": "accepted_with_deficiencies",
+      "final_private_scan": {
+        "status": "passed",
+        "evidence": "docs/checks/phase-20-final-private.json",
+        "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+        "head_commit": "42bcbe006d02c07d59d46d9b31b9307f39f415ff",
+        "scope": "Actual scan after final review and phase advancement, before evidence-only commit; this scan receipt and its metadata link are appended afterward. No additional source change."
       }
     }
   ],

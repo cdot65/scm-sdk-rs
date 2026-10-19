@@ -1,0 +1,109 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 20,
+  "attempt": 4,
+  "reviewed_at": "2026-10-19T10:15:27.845668+00:00",
+  "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+  "source_unchanged": true,
+  "checks_sha256": "b75e9709dca7e70c9b54392d47586cfa67a37931137b3fabb7850a8f10228a82",
+  "prompt_sha256": "4bac8f48daaac06ec045c6b6c5f25ae8a3141786cdd9cb5de9587d84f753ebb5",
+  "cli_output_sha256": "bda925b607100d7a6bf8c3b42a43f325a4335357283512806a6a8ddbe662a5d1",
+  "gate_passed": false,
+  "review": {
+    "score": 8.5,
+    "summary": "Phase 20 (G25 0.2.2 qualification and delivery) is substantively complete and the evidence holds up to independent inspection. The 59-command gate passed at the reviewed source 519219d6 with every exit code 0 (docs/reviews/phase-20-attempt-04.checks.json), and the command list is mechanically derived rather than transcribed (tools/check_phase.py:70-87), with review_phase.check_evidence re-deriving it at verification time. Delivery is real and cross-checked: crates.io 0.2.2 is published and verified by downloading and rehashing the archive, comparing all 132 packaged files, VCS metadata, owner and non-yanked state against two clean-archive proofs (scripts/verify-publication.py:83-125); the annotated tag v0.2.2 was observed by an actual SSH ls-remote; and workflow run 22 at 42bcbe0 passed exactly the 49 configured contexts, with the matrix re-derived from .forgejo/workflows/ci.yml rather than asserted (tools/release_delivery.py:55-114). tools/release_delivery.py re-validates every receipt offline, recomputes the published and CI commit fingerprints against the reviewed source, checks ancestry, and is invoked before any status change (tools/review_phase.py:390-392); tools/test_release_delivery.py exercises its failure paths adversarially. The prepublication readiness review is cryptographically bound into the registry receipt and required before registry access. Critically, the one guard whose behavior changes after publication was re-executed post-publication: the whole 34-test test_ci.py suite passed at 09:13 (docs/checks/phase-20-published-document-guard.json) and the receipt-specific branch was proven executed by Python line tracing with observed runtime locals (docs/checks/phase-20-document-activation.json), so the pre-publication timing of the bound gate snapshot does not leave the activated assertions unexecuted. The cumulative SDK change matches the accepted plan precisely: src/validation.rs:1221-1229 bypasses only the eight named string formats plus request-only bounds in response modes while unknown check kinds still fail closed, and ZodResponseCompatibility (src/validation.rs:542-555) selects the frozen TypeScript floor exclusively for responses. Documentation is unusually honest and machine-checked: CHANGELOG separates loosened from deliberately retained rules, G25_COMPATIBILITY.md links all 47 operations to their actual response contracts, SECURITY.md states the relaxation explicitly, LIVE_ACCEPTANCE.md reports the 403/400 failures without spin, and test_ci.py asserts the documented 59/41/49 counts against the real command and matrix definitions. The packaged response_compatibility example reproduces the exact reported bug cases offline and was executed from the archive on both compilers. What keeps this below the phase bar is an accumulation of low-severity residue in the delivered artifacts and the source-of-truth file: docs/phase-status.json still carries \"pending\" prose for obligations that are now complete, docs/RELEASE.md's authorization paragraph names only 0.1.1 and 0.2.0 while 0.2.1 and 0.2.2 are published, the three remote delivery observations were produced by untracked .local scripts with no in-repo tooling home, the tag receipt retains an absolute SSH identity path with no recorded disposition for the finding that raised it, the delivery-evidence privacy scan is in no declared review scope despite a chunk finding requiring it, and the published README's receipt links are repository-relative and therefore broken on crates.io. None of these is a blocker or high finding, and all but one are explicitly recorded as deferrals, but together they are a real supportability cost on an immutable shipped release.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 4606,
+        "description": "planned_registry_publication.enforcement_boundary still states \"Actual publication and current-version document test remain pending delivery obligations\", and review_findings_disposition entries at 4469 and 4658 repeat the same pending framing. Both obligations are complete: registry_publication is recorded at 4701-4706 and the current-version document guard was executed at docs/checks/phase-20-published-document-guard.json and docs/checks/phase-20-document-activation.json. The progress source of truth therefore contains contradictory statements about whether delivery finished.",
+        "required_fix": "Update planned_registry_publication.enforcement_boundary (and mark the superseded disposition entries explicitly historical) so docs/phase-status.json states one unambiguous delivery status, naming the executed receipts that discharged each obligation."
+      },
+      {
+        "severity": "low",
+        "path": "docs/RELEASE.md",
+        "line": 157,
+        "description": "The publication authorization and provenance section states \"Maintainer authorization covers 0.1.1 and the subsequent 0.2.0 delivery recorded in the release plan.\" Versions 0.2.1 and 0.2.2 have both been published since. Authorization for 0.2.2 exists in docs/g25-response-compatibility-plan.md:3, but the release procedure document a maintainer would consult is now inaccurate about which deliveries are authorized. This was raised as chunk-02 finding 5 and phase-20 delivery_chunk01 finding 4 and deferred twice.",
+        "required_fix": "Extend the authorization paragraph to name the 0.2.1 (portkey-access-policies-plan.md) and 0.2.2 (g25-response-compatibility-plan.md) deliveries and their authorizing plans."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/phase-20-remote-ci-run-22.json",
+        "line": 369,
+        "description": "The terminal CI receipt and the tag receipt (docs/checks/release-tag-v0.2.2.json:23) were produced by .local/read-delivery-ci-022.py, .local/record-release-022-delivery.py and .local/record-tag-022.py, which are untracked maintainer scripts. Their source and digests are embedded in the receipts, which is good provenance, but the online observation half of the delivery pipeline has no in-repo home or unit tests, unlike scripts/verify-publication.py. Repeating or auditing this step for the next release requires reconstructing scripts from JSON string literals.",
+        "required_fix": "Land the tag and CI observation producers as tracked repository tooling (for example tools/record_release_tag.py and tools/record_delivery_ci.py) with unit tests, alongside scripts/verify-publication.py, and reference them from docs/RELEASE.md."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/release-tag-v0.2.2.json",
+        "line": 31,
+        "description": "The retained producer source embeds the absolute local identity path \"-i /home/cdot/.ssh/forgejo\". This is a path, not key material, and the private-material scan passed, but chunk review docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-02.json finding 7 explicitly asked for it to be sanitized and that finding has no entry in delivery_chunk02_dispositions.remaining_followups or anywhere else in docs/phase-status.json.",
+        "required_fix": "Either sanitize the identity path in retained provenance (reference an environment variable or redact it, keeping the command shape and remote URL) or record an explicit disposition for chunk-02 finding 7 in docs/phase-status.json so no accepted finding is left unaddressed."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 4339,
+        "description": "The registry-and-remote-delivery chunk scope_evidence (4339-4355) and the phase scope_evidence (4252-4277) both omit docs/checks/phase-20-delivery-evidence-private.json, the privacy scan executed at the final delivery head 42bcbe0. Chunk-02 finding 1 required adding that path to the declared scope. The chunk declaration is now frozen by review_phase.matches_declared_scope against the accepted attempt-02 record, so the omission cannot be fixed there, and the phase-level list was not extended either; the post-delivery privacy artifact is in no declared review scope.",
+        "required_fix": "Add docs/checks/phase-20-delivery-evidence-private.json to the phase scope_evidence list and note in the chunk disposition that the chunk declaration is immutable because it is bound to the accepted attempt-02 review."
+      },
+      {
+        "severity": "low",
+        "path": "README.md",
+        "line": 40,
+        "description": "The packaged README links the 0.2.2 registry and tag receipts as repository-relative paths (docs/checks/release-registry-0.2.2.json, docs/checks/release-tag-v0.2.2.json). README.md is shipped verbatim in the published archive (docs/checks/release-registry-0.2.2.json:53), so these links are dead for anyone reading the crate on crates.io, which is precisely the audience the surrounding sentence addresses. Recorded as deferred in readiness03_dispositions finding 4 and delivery_chunk01 finding 5.",
+        "required_fix": "In the next qualified source change, use absolute repository URLs for receipt links in README.md so the published crate page resolves them, and state the published 0.2.2 line explicitly alongside the historical 0.1.1/0.2.0 references."
+      },
+      {
+        "severity": "low",
+        "path": "tools/release_delivery.py",
+        "line": 170,
+        "description": "verify() rehashes each clean package proof's retainedArchive (178-190) but never rehashes registry['retainedArchive'] against registry archiveSha256/archiveBytes. The equality of registry.archiveSha256 and the proof archive_sha256 is checked at line 86, so the published bytes are still transitively bound, but the retained registry download itself is only rehashed by the one-off .local/strengthen-delivery-evidence.py run recorded in docs/checks/phase-20-delivery-guard.json. Chunk-02 finding 3 asked for this to move into verify().",
+        "required_fix": "Fold the registry retainedArchive rehash (and a consistent absolute/relative path convention shared with scripts/check-package.py) into release_delivery.verify(), so the repeatable guard performs the same check the ad-hoc script did."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-20-attempt-04.checks.json:1-6 records phase 20, source_sha256 519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3, source_unchanged true, passed true; the file contains 59 exit_code entries and a search for non-zero exit codes, failures or timeouts returns no matches",
+      "tools/check_phase.py:70-87 derives the phase 20 command set as commands_for(17) + commands_for(19) with prefix rewriting, plus generate_models --verify-fixtures and both native-export checks; tools/review_phase.py:174-190 re-derives that exact list and rejects any report whose commands, exit codes, source hash or source_unchanged flag differ",
+      "tools/check_phase.py:504-515 defines the CI contracts-only subset by removing check-rust/check-native-exports/check-package/check-access-release and generate_models --verify-fixtures, giving 41 of 59; tools/test_ci.py:130-145 asserts the documented 59/41 counts in docs/CI.md against len(commands_for(20)) and len(ci_commands_for(20)) rather than trusting prose",
+      ".forgejo/workflows/ci.yml:90-91 declares 2 toolchains x 24 features; tools/test_ci.py:111 asserts that product plus one equals 49, and the matrix includes the newly required red-team-json-unification combination on both compilers",
+      "docs/checks/phase-20-remote-ci-run-22.json:4-18 records run 5046 (index 22) at 42bcbe0 with status success, expectedJobCount 49, counts {success: 49}, contextsMatchConfiguredMatrix true; lines 280-292 show both red-team-json-unification jobs succeeded; executionProvenance at 365-391 retains the authenticated Forgejo API reader and the recorder, whose embedded source asserts set(latest) == expected contexts and fingerprint() == reviewed source before writing",
+      "docs/checks/release-registry-0.2.2.json:3-20 and 718-738 record crates.io scm-sdk 0.2.2, yanked false, owner cdot65, archive c908cad8... 1031520 bytes, sourceCommit 0716cfd, path_in_vcs crates/scm-sdk, a 132-entry file inventory, qualifiedToolchain 1.99.0 with identicalFileContentsQualifiedOnMsrv true, and a releaseReadiness block binding docs/reviews/phase-20-attempt-03.json and source 519219d6",
+      "scripts/verify-publication.py:83-105 downloads the artifact, requires record.checksum == sha(archive) == proof.archive_sha256 and len(archive) == proof.archive_bytes, re-extracts the archive, validates VCS and manifest identity, compares every file row against the clean proof, and verify_response_examples (74-80) requires response_defaults and response_compatibility to have been executed from the archive; require_release_readiness (56-71) refuses 0.2.2 without an accepted current-source readiness review",
+      "docs/checks/phase-20-release-package-1.99.0.json:2-20 shows schemaVersion 2, passed true, requireClean true, effectiveDirty false, releaseCommit 0716cfd, rustc 1.99.0, archive c908cad8...; commands at 723-930 include cargo package, lib tests with no-default-features and all-features, --examples check, doc tests, four example runs including response_compatibility at 871-882, and three clean consumer runs",
+      "tools/release_delivery.py:71-124 cross-checks both compiler proofs for identical files/VCS/commit, registry identity and ownership, registry-vs-proof equality on five keys, remote tag object and peeled ref against the published commit, remote main against the CI commit, exact CI context set against the workflow matrix, per-job success and unique job URLs; verify_source_commits (119-124) recomputes commit_fingerprint for both the published and CI commits against the reviewed source and enforces ancestry",
+      "tools/review_phase.py:390-392 imports release_delivery.verify and runs it against the current fingerprint before any phase-20 status change; tools/test_release_delivery.py defines 14 tests including test_phase20_cannot_advance_without_delivery_verification, test_latest_workflow_requires_exact_contexts, test_stale_sources_and_false_summary_fail and test_registry_cli_cannot_fetch_or_write_without_readiness",
+      "docs/checks/phase-20-document-activation.json:12-50 records testsRun 1, skipped 0 and executedGuardLines including 348-366, which is the receipt-specific block of tools/test_ci.py that line 347 would otherwise skip; observedRuntimeLocals at 51-65 show workspace_version, publication version and receipt version all 0.2.2 with matching source commit 0716cfd, asserted by the producer rather than supplied to it",
+      "docs/checks/phase-20-published-document-guard.json:19 retains the full post-publication unittest output: all 34 test_ci.py tests including test_verified_publication_is_consistent_in_current_release_documents ran OK at 09:13, after the 09:12 publication",
+      "crates/scm-sdk/src/validation.rs:1221-1229 skips only uuid/rfc3339/datetime/date/duration/email/url/regex and requestOnly min/max checks in response modes, with unknown kinds still failing closed at 1241; src/validation.rs:542-555 selects the frozen TypeScript response child only when mode.is_response(), keeping the strict vendor contract for requests",
+      "crates/scm-sdk/tests/g25_response_compatibility.rs:61-141 walks all 46 roots, asserts each base and union-branch witness is strict-valid first, checks strict and both response modes against the independent oracle (whose casesSha256 is verified against cases.json bytes), then asserts byte-exact wire preservation and typed round-trip; seven further tests cover SDK-wide format nodes, projection absence/null/unrepresentable values, typed-over-raw precedence, baseline collisions and large-number preservation",
+      "crates/scm-sdk/examples/response_compatibility.rs:9-141 reproduces the reported cases offline using only public API: job-1/p-1/map-1 opaque IDs, FUTURE_* enums, both reported timestamp forms (space-separated and offset-less), unknown nested data preservation, u64::MAX projection fallback, the three deliberately retained strict rejections, and Mode::Request still rejecting the same document",
+      "docs/G25_COMPATIBILITY.md:66-115 links all 47 operations to their actual frozen response contracts (36 paired, 11 vendor-only including the CSV operation), with retained-strictness quantification at 48-60 and the 76 retained caller UUID checks at 133-202; tools/test_g25_generation.py asserts 36 baselines, 46 roots with base witnesses, 55 projection bindings and fail-closed behavior for incomplete, ambiguous or unclassified mappings",
+      "docs/checks/phase-20-dependencies.json:4 and :1659 record passed true with cargo-audit reporting vulnerabilities found false, count 0 across 206 locked dependencies; docs/checks/phase-20-private-material.json:4-7 and docs/checks/phase-20-delivery-evidence-private.json:3-12 record passing privacy scans at the candidate commit 0716cfd and at the final delivery head 42bcbe0 with zero credential or registration matches over 1815 files",
+      "docs/LIVE_ACCEPTANCE.md:13-30 and docs/checks/phase-08-live-attempt-14.json:1-33 record the 0.2.2 live run (crateVersion 0.2.2, sanitized command template, cleanup not needed) and state plainly that three Red Team reads returned 403, that IAM scope creation and Gateway provisioning returned 400 with cause unestablished including a possible SDK request-shape defect, and that no consumer adoption is claimed",
+      "docs/phase-status.json:4279-4367 declares both chunks accepted at 45/50 with accepted_source_sha256 equal to the current 519219d6, and docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-02.json:113-129 carries a scope_evidence list that matches the declaration exactly, so tools/review_phase.py accepted_chunks takes the ordinary current-source path with no fifth-attempt follow-up exception needed"
+    ],
+    "limitations": [
+      "Read-only review: I could not execute commands, so recorded exit codes, digests and receipts were inspected rather than recomputed. I verified internal consistency (for example registry archiveSha256 equals both clean package proofs' archive_sha256, and the CI context list equals the workflow matrix I read) but could not independently rerun the 59-command gate or the clean archive builds.",
+      "I could not recompute SHA-256 digests with the available tools, so producerSha256, verifierSha256, guardSha256, checks_sha256 and prompt/CLI digests are accepted as recorded. A mismatch between a recorded digest and current file bytes would not have been detected by this review; the gate tooling does enforce several of these at --advance time.",
+      "No network access, so the crates.io publication, the Forgejo run status and the SSH ls-remote tag observation are accepted from retained receipts under the documented repository-writer trust boundary stated in docs/PHASES.md:7 and repeated in the receipts' own limitations.",
+      "The archives themselves (.local/artifacts/*.crate) and the .local producer scripts are outside the git tree and were not opened; their content is assessed only through the embedded producer source and digests in the receipts.",
+      "I did not read any credential, token or tenant-registration files, consistent with the review constraints, so claims that no secrets are present rest on the recorded private-material scans rather than my own inspection.",
+      "The bound check snapshot (09:02) predates publication (09:12), tag and CI (09:18-09:45). I treated this as adequately mitigated because the full test_ci.py suite was rerun at 09:13 and the activated guard branch was traced at 09:55, but no complete 59-command gate rerun exists against the final bookkeeping state, and the maintainer has deliberately frozen that snapshot because the candidate checker binds git HEAD.",
+      "I reviewed phase 20's acceptance criteria and the cumulative G25 changes it qualifies; I did not re-audit phases 1-17 historical infrastructure, and deferred items recorded as future work (generated projection rustdoc, broad unpaired-root diagnostics) were treated as explicitly out of this patch's scope rather than as missing deliverables."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "phase"
+}

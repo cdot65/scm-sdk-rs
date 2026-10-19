@@ -1,0 +1,130 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 20,
+  "attempt": 2,
+  "reviewed_at": "2026-10-19T10:04:11.024202+00:00",
+  "source_sha256": "519219d614183f53ed2d0e4daadfb5a09c1bf69b23d5ae45e08ea8ae7bb1aee3",
+  "source_unchanged": true,
+  "checks_sha256": "b75e9709dca7e70c9b54392d47586cfa67a37931137b3fabb7850a8f10228a82",
+  "prompt_sha256": "ce2cfa73a01899eecb493e62ccba83ec1684a97e6e8cafa7cd15b778f0962cf3",
+  "cli_output_sha256": "90e58ce4ea228cfab20ef2d4158dcc2d9b1c68ffb8ecf4a98f1be01e8badde28",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Attempt 2 of the registry-and-remote-delivery chunk closes the substantive evidentiary gaps attempt 1 raised, at the same reviewed source 519219d6 (no source change, so the three code/doc-level fixes attempt 1 suggested were answered with executed evidence instead). I re-derived the chain rather than trusting prose. Publication: docs/checks/release-registry-0.2.2.json records archiveSha256 c908cad8\u2026/1031520 bytes, sourceCommit 0716cfd, owner cdot65, yanked false, qualifiedToolchain 1.99.0 with identicalFileContentsQualifiedOnMsrv, verifierSha256, and releaseReadiness bound to docs/reviews/phase-20-attempt-03.json at the reviewed fingerprint; scripts/verify-publication.py:56-71,222,249-253 requires that readiness before any registry access and re-checks it before writing the receipt, and tools/test_release_delivery.py:281-319 proves the CLI refuses to fetch or write without it (fetch.assert_not_called). Tag: docs/checks/release-tag-v0.2.2.json now carries executionProvenance with the exact command, exit code, stdout, producer digest and full producer source, which runs git cat-file -t (annotated), rev-parse of refs/tags/v0.2.2^{} and git ls-remote against the authorized remote ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git, asserting refs equal {main: 42bcbe0, tag: 90f3a9f0, tag^{}: 0716cfd}. CI: docs/checks/phase-20-remote-ci-run-22.json contains exactly 49 contexts, all success (50 \"status\": \"success\" = 49 jobs + run), job URLs under runs/22, produced by an authenticated Forgejo statuses/runs read that rejects redirects and takes the token from the environment (no credential in evidence), then recorded only after exact configured-matrix equality; .forgejo/workflows/ci.yml:1,90-91 gives 24 features x 2 toolchains + contracts-and-package = exactly 49, matching tools/release_delivery.py:55-68. Document-guard activation, attempt 1's only medium, is now runtime-proven: docs/checks/phase-20-document-activation.json records a traced unittest run where executedGuardLines include 348-366 and exclude 347, i.e. the early return did not fire, with observed locals workspace_version = publication.version = receipt.version = 0.2.2 and receipt.sourceCommit = publication.source_commit = 0716cfd. The delivery-guard receipt is now self-describing (source_sha256, command, producerSha256, verifierSha256, exit_code, result) and records a rehash of the retained registry download against archiveSha256/archiveBytes. A fresh private-material scan executed after all new evidence (docs/checks/phase-20-delivery-evidence-private.json, 09:57:37, headCommit 42bcbe0, 1815 git-visible files, 0 credential and 0 new tenant matches) passes, and its field set is exactly what scripts/check-private-material.py:122-132 emits. The 59-command snapshot is real: 59 recorded checks, zero nonzero or null exit codes, source_unchanged true, including the 341-test tools suite with all 15 test_release_delivery cases green. Residuals are documentation and in-tree-tooling polish, not functionality: tools/test_ci.py:346-347 still returns silently so a future release needs the same ad-hoc tracer, release_delivery.verify still never rehashes the registry download itself, the tag/CI producers remain untracked .local scripts that docs/RELEASE.md does not describe, RELEASE.md's authorization paragraph still names only 0.1.1/0.2.0, README foregrounds 0.1.1/0.2.0 with repo-relative receipt links, and phase-status still calls the final bookkeeping scan \"pending\" while the executed 09:57 scan goes unreferenced. No blocker or high finding; I found no fabricated, inconsistent or overclaimed evidence.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "docs/phase-status.json",
+        "line": 4553,
+        "description": "candidate_private_scan.final_bookkeeping_scan is still \"pending\", but docs/checks/phase-20-delivery-evidence-private.json records an executed, passing scan at 09:57:37 over 1815 git-visible files at sourceSha256 519219d6 and headCommit 42bcbe0 \u2014 after every new 09:55 delivery receipt. That receipt is referenced nowhere in phase 20 bookkeeping, and the chunk's declared scope_evidence (lines 4338-4354) still cites the superseded pre-publication scan docs/checks/phase-20-prepush-private.json (09:13:35, 1804 files), which by its own limitation (line 33) does not certify later changes in excluded check/status bookkeeping. The strongest privacy evidence for this chunk is therefore both unrecorded and outside declared scope, while the record understates what was actually executed.",
+        "required_fix": "Record the executed delivery-evidence scan in phase 20 bookkeeping (replace final_bookkeeping_scan \"pending\" with status/evidence docs/checks/phase-20-delivery-evidence-private.json and its source/head fingerprints) and add that path to the chunk scope_evidence so the post-evidence scan is the declared, reviewable privacy artifact."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_ci.py",
+        "line": 346,
+        "description": "The release-document guard still returns silently when the workspace version differs from the recorded publication version, so an in-tree run cannot distinguish \"activated and passed\" from \"skipped\". Activation for this release is proven only by an external traced execution (docs/checks/phase-20-document-activation.json, executedGuardLines 348-366 with 347 absent) produced by the untracked .local/strengthen-delivery-evidence.py. The substance is verified, but the next release will again need an ad-hoc tracer rather than tracked machine-evident output.",
+        "required_fix": "Have the guard report the resolved workspace and publication versions, and fail rather than return when a published_and_verified publication matches the workspace version but the receipt-specific block was not exercised; alternatively assert that the retained published-document-guard receipt records the same version and source commit as phase-status registry_publication."
+      },
+      {
+        "severity": "low",
+        "path": "tools/release_delivery.py",
+        "line": 181,
+        "description": "The final guard re-hashes and re-extracts only the two package archives and requires an absolute retainedArchive for them, while the registry receipt stores a repository-relative path (scripts/verify-publication.py:246) that the guard never reads. The retained registry download .local/artifacts/scm-sdk-0.2.2-registry-c908cad8b27863d0.crate was rehashed for this release only by the one-off producer embedded in docs/checks/phase-20-delivery-guard.json:10, not by the tool, so a later re-run of verify() will not reconfirm the published bytes. The CLI path (lines 197-200) also accepts no --source-sha256 and prints no resolved fingerprint, so a standalone run still self-certifies its source binding.",
+        "required_fix": "Normalize the retainedArchive path convention across scripts/check-package.py and scripts/verify-publication.py, have verify() rehash registry.retainedArchive against registry.archiveSha256/archiveBytes when present, and either require an explicit --source-sha256 or print the fingerprint the CLI resolved."
+      },
+      {
+        "severity": "low",
+        "path": "docs/RELEASE.md",
+        "line": 26,
+        "description": "The procedure documents the registry verification command (lines 38-44) but not how the tag receipt, the Forgejo CI receipt or the final delivery guard were produced. Those three steps were executed by untracked .local scripts whose source survives only inside the receipts (docs/checks/release-tag-v0.2.2.json:31, docs/checks/phase-20-remote-ci-run-22.json:376,390, docs/checks/phase-20-delivery-guard.json:10). Provenance is now adequate, but the next delivery cannot be reproduced from the documented procedure.",
+        "required_fix": "Add the executed tag/CI/delivery-guard command sequence to docs/RELEASE.md (or land the producers as tracked tools under tools/) so the three remote observations have a documented, repeatable path like verify-publication.py."
+      },
+      {
+        "severity": "low",
+        "path": "docs/RELEASE.md",
+        "line": 157,
+        "description": "The publication-authorization paragraph still reads \"Maintainer authorization covers 0.1.1 and the subsequent 0.2.0 delivery recorded in the release plan\" although 0.2.1 and now 0.2.2 are published; authorization for 0.2.2 appears only in docs/g25-response-compatibility-plan.md. Phase 20 dispositions defer this (delivery_chunk01_dispositions finding 4), so the document readers are pointed to for release authorization remains stale after an actual publication.",
+        "required_fix": "Extend the authorization paragraph to name the 0.2.1 and 0.2.2 deliveries and their authorizing plans."
+      },
+      {
+        "severity": "low",
+        "path": "README.md",
+        "line": 27,
+        "description": "Lines 27-35 still present 0.1.1 and 0.2.0 as the installable published releases, and the 0.2.2 statements at lines 40-48 depend on repository-relative links (docs/checks/release-registry-0.2.2.json, docs/checks/release-tag-v0.2.2.json) that cannot resolve from crates.io or docs.rs, with conditional wording (\"establish publication only when present and verified\") that a reader of the published page can never satisfy. The README is packaged bytes for 0.2.2 and is immutable; phase-status readiness03_dispositions finding 4 defers this.",
+        "required_fix": "In the next qualified source change, use absolute repository/registry URLs for receipt links and state the published 0.2.2 line explicitly alongside the historical 0.1.1/0.2.0 references."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/release-tag-v0.2.2.json",
+        "line": 31,
+        "description": "The retained producer source embeds the operator's private-key file path (core.sshCommand with -i /home/cdot/.ssh/forgejo) in release evidence intended for the repository. No key material or token value is exposed, and the CI producer correctly reads its token from the environment, but AGENTS.md:9 asks for sanitized metadata and this path is unnecessary operator-environment detail in committed evidence.",
+        "required_fix": "Sanitize the key path in retained producer provenance (for example reference an environment variable or redact the identity path) while keeping the command shape and remote URL."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 4363,
+        "description": "The chunk still records accepted_review docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-01.json with accepted_total 44 while the declared scope_evidence has grown to 15 entries (lines 4338-4354). That record lists only 14 scope_evidence paths (attempt-01.json:98-113, missing docs/checks/phase-20-document-activation.json), so review_phase.matches_declared_scope now rejects it and the recorded acceptance is no longer machine-reverifiable. Only the highest-numbered attempt is checked by accepted_chunks, so this is transient bookkeeping rather than a gate failure.",
+        "required_fix": "Re-point accepted_review/accepted_total/accepted_categories at the attempt whose recorded scope_evidence matches the current declaration once this review is retained, and note the scope expansion so the superseded attempt is clearly historical."
+      }
+    ],
+    "evidence": [
+      "docs/checks/phase-20-document-activation.json:14-65 \u2014 traced unittest run of test_verified_publication_is_consistent_in_current_release_documents with testsRun 1, skipped 0, executedGuardLines 329-346 and 348-366 (347, the early return at tools/test_ci.py:347, absent), observed locals workspace_version/publication.version/receipt.version all 0.2.2 and receipt.sourceCommit = publication.source_commit = 0716cfd, plus guardSha256 pinning test_ci.py bytes: the activated receipt-specific assertions demonstrably executed at the reviewed source",
+      "tools/test_ci.py:328-369 \u2014 the guard reads the last registry_publication, rejects obsolete-publication phrases across README/CHANGELOG/docs/*.md, requires crates.io in CHANGELOG/STABILITY/SECURITY, then (versions equal) asserts canonical evidence path, no symlink, in-repo resolution, schemaVersion 1, registry crates.io, package scm-sdk, version equality, yanked false, owner cdot65, archive/commit/publishedAt shapes and the CHANGELOG receipt link; tools/test_ci.py:370-410 drives that path with fixtures and five tampering mutations plus link removal and receipt deletion",
+      "docs/checks/phase-20-delivery-guard.json:2-26 \u2014 passed true at source_sha256 519219d6, explicit command, producerSha256 868dd86f, verifierSha256 for tools/release_delivery.py, exit_code 0, result {0.2.2, sourceCommit 0716cfd, ciCommit 42bcbe0, jobs 49}, and retainedRegistryDownload rehashed against archiveSha256 c908cad8\u2026/1031520; the embedded producer asserts fingerprint == 519219d6 before calling verify(root, fp) with the explicit reviewed fingerprint",
+      "docs/checks/release-tag-v0.2.2.json:4-32 \u2014 annotated tagObject 90f3a9f0, refs/tags/v0.2.2^{} = 0716cfd, refs/heads/main = 42bcbe0, remote equals the authorized destination in AGENTS.md:13, with executionProvenance recording exit_code 0, stdout, producer digest and the full producer that runs git cat-file -t, rev-parse and git ls-remote and asserts the exact ref map",
+      "docs/checks/phase-20-remote-ci-run-22.json:1-18,365-391 \u2014 exactly 49 \"context\" entries and 50 \"status\": \"success\" occurrences (49 jobs + the run), run index_in_repo 22 with html_url /actions/runs/22, reviewedSourceSha256 519219d6, sourceCommit 42bcbe0, and two executed producers: an authenticated Forgejo statuses/runs read that rejects redirects, takes the token from the environment and persists its raw capture mode-0600 outside git, then a recorder that asserts configured-matrix equality and all-success before writing the receipt",
+      ".forgejo/workflows/ci.yml:1,90-91 \u2014 one workflow name, toolchain [1.89.0, 1.99.0] and 24 unique features = 48 rust jobs plus contracts-and-package = exactly the 49 contexts the receipt records and tools/release_delivery.py:55-68 derives with fail-closed matrix parsing",
+      "tools/release_delivery.py:71-124,127-153,191-194 \u2014 registry/clean-proof field-by-field equality (sourceCommit, archiveSha256, archiveBytes, files, vcs), both compiler qualifications, tag ref and annotated-object binding, reviewed-source equality, terminal run status, exact context-set equality with duplicate-identity rejection, per-job run-URL binding, summary-count agreement, mandatory phase20 registry_publication metadata, and readiness provenance rechecked through review_phase.verify_release_readiness",
+      "tools/test_release_delivery.py:49-343 \u2014 15 adversarial cases: missing/extra/duplicate/failed/pending jobs, wrong run, duplicated job URL, stale reviewed source, false counts/expectedJobCount/contextsMatchConfiguredMatrix, non-terminal run, tampered registry version/yank/owner/checksum/files/commit/MSRV flag, each tag ref, mismatched compiler proofs, fail-closed matrix parsing, bookkeeping-exclusion equivalence of commit_fingerprint vs fingerprint plus ancestry failure, publication-metadata omission/mutation, readiness provenance tampering, and CLI refusal to fetch or write without readiness",
+      "tools/review_phase.py:382-392 \u2014 phase 20 advancement imports release_delivery.verify and runs it against the current fingerprint before any status change, and tools/test_release_delivery.py:145-164 proves a raising guard leaves docs/phase-status.json byte-identical; tools/review_phase.py:239-251 additionally binds the chunk record's scope_evidence to the declaration and to the preserved prompt text",
+      "scripts/verify-publication.py:56-71,83-125,222,235-253 \u2014 0.2.2 receipt creation requires an accepted current-source release_readiness review (re-checked immediately before writing), compares registry checksum/length/manifest/file rows/VCS against the executed clean proof, requires the packaged response_defaults and response_compatibility examples to have been run from the archive, retains the downloaded artifact without overwrite, and embeds proof/MSRV/verifier digests",
+      "docs/checks/release-registry-0.2.2.json:2-20,725-739 \u2014 schemaVersion 1, publishedAt 2026-10-19T09:12:49Z, yanked false, owner cdot65, archiveSha256 c908cad8\u2026, archiveBytes 1031520, sourceCommit/vcs 0716cfd with path_in_vcs crates/scm-sdk, retainedArchive under .local/artifacts, and releaseReadiness {docs/reviews/phase-20-attempt-03.json, reviewSha256, sourceSha256 519219d6}",
+      "docs/checks/phase-20-delivery-evidence-private.json:3-18 \u2014 private-material scan executed at 09:57:37, after every new 09:55 receipt, at sourceSha256 519219d6 and headCommit 42bcbe0: 1815 git-visible files, 0 credential or package-registration matches, 0 new or changed tenant occurrences, passed; its exact field set matches scripts/check-private-material.py:122-132 and the set-equality validation at :138-145, so it is genuine tool output rather than hand-authored prose",
+      "docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-02.checks.json:2-6 and :124,985-1011 \u2014 phase 20, passed true, source_unchanged true, source_sha256 519219d6, 59 recorded checks with no nonzero or null exit_code, including the full tools suite (341 tests, 1 documented skip) with all 15 test_release_delivery cases and the 34 test_ci cases green; tools/review_phase.py:174-190 enforces exact command-set equality with tools/check_phase.py commands_for(20) and all-zero exits",
+      "docs/reviews/phase-20-chunk-registry-and-remote-delivery-attempt-02.prompt.md:1,19,36 \u2014 review_scope chunk, and Chunk scope artifacts exactly equal to the 15-entry declaration at docs/phase-status.json:4338-4354, satisfying the prompt-binding requirement in tools/review_phase.py:245-251",
+      "docs/g25-response-compatibility-plan.md:114-132 \u2014 the chunk's acceptance criteria (publish only the exact qualified archive, verify the downloaded artifact/owner/non-yanked/checksum/VCS/inventory, tag v0.2.2, ordinary push to the authorized remote, require actual registry+tag+terminal exact-49-job receipts, generalize release-document tests to verify linked receipts) are each matched by an executed artifact above",
+      "CHANGELOG.md:3-9, docs/STABILITY.md:3-4, crates/scm-sdk/Cargo.toml version 0.2.2 \u2014 current-version documents link the canonical registry and tag receipts and state that publication is established only by those receipts, which is exactly what the activated guard asserts"
+    ],
+    "limitations": [
+      "Read-only review with no execution: I could not run tools/check_phase.py, tools/release_delivery.py, tools/test_ci.py or any gate, so passing status for the 59-command snapshot, the delivery guard, the document-activation trace and the private scan rests on retained receipts plus the internal consistency I re-derived by reading files.",
+      "No hashing or git execution available: I could not recompute guardSha256, producerSha256, verifierSha256, the archive digests, the source fingerprint, or confirm that commit 42bcbe0 differs from 0716cfd only in fingerprint-excluded bookkeeping. Those equalities are attested by the passing delivery guard, which requires commit_fingerprint equality for both commits and merge-base ancestry.",
+      "No network access: crates.io publication/ownership, the remote refs and the Forgejo run were not independently observed. They are attested by docs/checks/release-registry-0.2.2.json, release-tag-v0.2.2.json and phase-20-remote-ci-run-22.json, whose producers are now recorded with command, stdout, source and digest, but which the offline guard cross-binds rather than authenticates. Repository writers remain trusted, as PHASES.md and release_delivery.py document.",
+      "I deliberately did not open any file under .local/ other than what the prompt permits, so the producer scripts .local/strengthen-delivery-evidence.py, .local/record-tag-022.py, .local/read-delivery-ci-022.py and .local/record-release-022-delivery.py were reviewed only through the sources embedded verbatim in the receipts; I could not confirm those embedded copies match the files on disk.",
+      "The git status snapshot in my context predates docs/checks/phase-20-delivery-evidence-private.json (09:57:37), so I could not determine whether that scan receipt is committed or still untracked; the final bookkeeping commit and its committed state were not reviewable.",
+      "The accepted 59-command snapshot was captured at 09:02:24, before publication (09:12:49) and before the 09:55 receipts, as delivery_execution_constraints.qualification_snapshot requires. I confirmed by grep that no tracked test hard-depends on the 0.2.2 receipts, so the snapshot is not invalidated, but no gate command re-validates the live delivery receipts; only release_delivery.verify does, on the advancement path and in the retained guard run.",
+      "I did not re-audit the qualification-and-package chunk, the G25 validation runtime, live acceptance, or historical release infrastructure beyond what this chunk's receipts depend on."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 45
+  },
+  "rubric": "five-category-v1",
+  "chunk": "registry-and-remote-delivery",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "tools/release_delivery.py",
+    "scripts/verify-publication.py",
+    "docs/checks/release-registry-0.2.2.json",
+    "docs/checks/release-tag-v0.2.2.json",
+    "tools/test_ci.py",
+    "docs/checks/phase-20-published-document-guard.json",
+    "docs/checks/phase-20-remote-ci-run-22.json",
+    "docs/checks/phase-20-prepush-private.json",
+    "tools/test_release_delivery.py",
+    "README.md",
+    "CHANGELOG.md",
+    "docs/RELEASE.md",
+    "docs/STABILITY.md",
+    "docs/checks/phase-20-delivery-guard.json",
+    "docs/checks/phase-20-document-activation.json"
+  ]
+}
