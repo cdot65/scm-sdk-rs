@@ -736,6 +736,58 @@ def ci_commands_for(phase):
             and command != ["python", "tools/generate_models.py", "--verify-fixtures"]]
 
 
+def checkpoint_bindings(command, root=None):
+    root = ROOT if root is None else root
+    bindings = {}
+    for argument in command:
+        if argument.startswith('docs/checks/') and argument.endswith('.json'):
+            path = root / argument
+            if path.is_symlink() or not path.is_file():
+                raise ValueError('Missing or nonregular checkpoint evidence: ' + argument)
+            bindings[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
+            report = json.loads(path.read_text())
+            if report.get('retainedArchive'):
+                archive = pathlib.Path(report['retainedArchive'])
+                if not archive.is_absolute():
+                    archive = root / archive
+                if archive.is_symlink() or not archive.is_file():
+                    raise ValueError('Checkpoint archive is missing or nonregular')
+                bindings[str(archive)] = hashlib.sha256(archive.read_bytes()).hexdigest()
+    return bindings
+
+
+def read_checkpoint(path, phase, source, commands):
+    if not path.exists():
+        return [], datetime.datetime.now(datetime.timezone.utc).isoformat()
+    if path.is_symlink():
+        raise ValueError('Checkpoint must be a regular file')
+    data = json.loads(path.read_text())
+    age = datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(data['started_at'])
+    if (data.get('schema_version') != 1 or data.get('phase') != phase
+            or data.get('source_sha256') != source or data.get('commands') != commands
+            or not datetime.timedelta(0) <= age <= datetime.timedelta(hours=8)):
+        raise ValueError('Checkpoint source, command plan or eight-hour freshness differs')
+    records = data['checks']
+    if (not isinstance(records, list) or len(records) > len(commands)
+            or [row.get('command') for row in records] != commands[:len(records)]
+            or any(row.get('exit_code') != 0 or row.get('timeout') is not False
+                   or row.get('source_unchanged') is not True for row in records)):
+        raise ValueError('Checkpoint is not an executed passing command prefix')
+    for row in records:
+        if row.get('checkpoint_bindings') != checkpoint_bindings(row['command']):
+            raise ValueError('Checkpoint evidence changed')
+    return records, data['started_at']
+
+
+def write_checkpoint(path, phase, source, commands, records, started_at):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix('.tmp')
+    temporary.write_text(json.dumps({'schema_version': 1, 'phase': phase,
+        'source_sha256': source, 'commands': commands, 'checks': records,
+        'started_at': started_at, 'complete': len(records) == len(commands)}, indent=2) + '\n')
+    temporary.replace(path)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--phase", required=True, type=int)
@@ -743,7 +795,11 @@ def main():
                         help="Rerun qualification in CI without changing phase status or requesting review")
     parser.add_argument("--contracts-only", action="store_true",
                         help="Selected phase CI contract subset; requires --verification-only and never qualifies a phase review")
+    parser.add_argument('--resume', action='store_true',
+                        help='Resume a source-bound passing prefix within eight hours (phases 23–25 only)')
     args = parser.parse_args()
+    if args.resume and (args.phase not in (23, 24, 25) or args.contracts_only or args.verification_only):
+        parser.error('--resume requires an active full phase 23–25 qualification')
     if args.contracts_only and (not args.verification_only or args.phase not in CONTRACT_CI_PHASES):
         parser.error("--contracts-only requires --phase 12 --verification-only (or another supported phase: 17, 20, 21–25)")
     status = json.loads((ROOT / "docs/phase-status.json").read_text())
@@ -752,12 +808,23 @@ def main():
     before = fingerprint(ROOT)
     commands = ci_commands_for(args.phase) if args.contracts_only else commands_for(args.phase)
     records = []
-    for command in commands:
+    checkpoint = ROOT / f'docs/checks/phase-{args.phase:02d}-partial.json'
+    if args.resume:
+        records, started_at = read_checkpoint(checkpoint, args.phase, before, commands)
+        print(json.dumps({'resumed_checks': len(records), 'source_sha256': before}), flush=True)
+    for command in commands[len(records):]:
         started = time.monotonic()
         invocation = [sys.executable, *command[1:]] if command[0] == "python" else command
         result = run_check(invocation)
         records.append({"command": command, "invocation": invocation, **result,
                         "duration_seconds": round(time.monotonic() - started, 3)})
+        if args.resume and result['exit_code'] == 0:
+            if fingerprint(ROOT) != before:
+                raise ValueError('Source changed during resumable qualification')
+            records[-1].update(source_unchanged=True,
+                               executed_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                               checkpoint_bindings=checkpoint_bindings(command))
+            write_checkpoint(checkpoint, args.phase, before, commands, records, started_at)
         print(json.dumps({"command": command, "exit_code": result["exit_code"],
                           "timeout": result["timeout"]}), flush=True)
         if result["exit_code"] != 0:

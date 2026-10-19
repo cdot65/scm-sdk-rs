@@ -322,3 +322,13 @@ python3 tools/qualification.py
 The Gateway proof includes the native operation ledger's digest. Refreshing it
 before that input leaves a stale proof even when every method's binding is
 unchanged. `--check` continues to reject that state.
+
+### Interrupted local qualification
+
+For active phases 23–25, `python3 tools/check_phase.py --phase N --resume`
+checkpoints each successfully executed command. A checkpoint is only a passing
+prefix, never phase acceptance. Resume requires the identical source fingerprint,
+exact command plan, passing completed records, unchanged receipt/archive bytes,
+and an age of at most eight hours. Failed or interrupted commands run again.
+The final receipt still requires every command; CI continues to run fresh checks.
+Archive the partial receipt before beginning a new source or expired run.
