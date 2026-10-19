@@ -227,6 +227,7 @@ def main():
               'publicConsumerSourceSha256': digest((ROOT / 'contracts/native-probes/src/main.rs').read_bytes()),
               'accessPolicyConsumerSourceSha256': digest(files['examples/access_policies.rs']) if 'examples/access_policies.rs' in files else None,
               'responseCompatibilityConsumerSourceSha256': digest(files['examples/response_compatibility.rs']) if 'examples/response_compatibility.rs' in files else None,
+              'extractedArchiveRoot': str(extracted), 'externalConsumerRoot': str(consumer),
               'externalExampleConsumers': consumer_sources,
               'externalConsumerManifest': consumer_manifest,
               'externalConsumerManifestSha256': digest(consumer_manifest.encode()),

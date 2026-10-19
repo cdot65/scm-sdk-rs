@@ -42,7 +42,25 @@
       "crates/scm-sdk/tests/gateway_runtime_contracts.rs::reserved_serde_protocol_objects_fail_closed_at_http_and_model_boundaries"
     ]
   },
-  "liveReceipt": null,
+  "liveReceipt": {
+    "reference": {
+      "path": "contracts/live-evidence.json",
+      "sha256": "45921c6451d776be4d4381f11d7430ebef022fc5e81a48437d149aa8da907849"
+    },
+    "report": {
+      "path": "docs/checks/phase-24-live-attempt-01.json",
+      "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19"
+    },
+    "verifier": {
+      "path": "tools/live_evidence.py",
+      "sha256": "512a2e31956051107e740c73f6bd9651803db1fe30d1f671a46e325aa3bba5e8"
+    },
+    "executedAt": "2026-10-19T21:39:42.507397+00:00",
+    "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+    "toolchain": "1.99.0",
+    "hostTarget": "x86_64-unknown-linux-musl",
+    "cleanupState": "not_needed"
+  },
   "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
   "requestHeaderContracts": {
     "gateway_realtime": {
@@ -66,7 +84,7 @@
     },
     "airs_api_defaults": {
       "service-name": "api",
-      "user-agent": "PAN-AIRS/0.2.2-rust-sdk",
+      "user-agent": "PAN-AIRS/0.2.3-rust-sdk",
       "scope": "API requests assembled by Client, including injected transports and streams; OAuth issuer exchange has its own headers.",
       "frozenUserAgent": "PAN-AIRS/0.34.0-typescript-sdk",
       "deliberateDifference": "Native crate version and rust-sdk suffix retain the PAN-AIRS vendor prefix.",
@@ -76,6 +94,10 @@
     }
   },
   "sourceBindings": [
+    {
+      "path": "contracts/live-evidence.json",
+      "sha256": "45921c6451d776be4d4381f11d7430ebef022fc5e81a48437d149aa8da907849"
+    },
     {
       "path": "contracts/native-operation-mappings/agentguard-oauth.json",
       "sha256": "9cc23596f14fd18cee17d86c5c0d06a2ea661f97b3ea47af4b1817218e5ad27a"
@@ -457,16 +479,20 @@
       "sha256": "0888a724815100e771cf088e55af5a7c6ab0a33407aab2e4db9e0859b5dca407"
     },
     {
+      "path": "docs/checks/phase-24-live-attempt-01.json",
+      "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19"
+    },
+    {
       "path": "tools/live_evidence.py",
-      "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
+      "sha256": "512a2e31956051107e740c73f6bd9651803db1fe30d1f671a46e325aa3bba5e8"
     }
   ],
   "summary": {
     "baselineConcreteMethods": 448,
     "implemented": 448,
     "pending": 0,
-    "liveVerified": 0,
-    "liveRecorded": 0,
+    "liveVerified": 1,
+    "liveRecorded": 2,
     "completeMethodOptionParity": 448,
     "partialMethodOptionParity": 0
   },
@@ -7294,7 +7320,7 @@
       "owningPhase": 4,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
       "rustMethods": [
         "scm_sdk::auth::OAuthProvider::get_token"
       ],
@@ -7314,7 +7340,27 @@
         "The native default buffer is min(30 seconds, 20% TTL); RefreshBuffer::Fixed explicitly selects source fixed millisecond semantics. Observer delivery is a bounded metadata channel with no SDK-owned workers or callbacks."
       ],
       "deliveredInPhase": 4,
-      "lastContractPhase": 4
+      "lastContractPhase": 4,
+      "liveEvidence": {
+        "path": "docs/checks/phase-24-live-attempt-01.json",
+        "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+        "probe": "oauth.get_token",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 0,
+            "operation": "oauth.get_token",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/management/oauth-client.ts:OAuthClient.getTokenInfo",
@@ -11498,7 +11544,7 @@
       "owningPhase": 5,
       "implementation": "implemented",
       "contractVerification": "offline_fixture_verified",
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "permission_prerequisite",
       "rustMethods": [
         "scm_sdk::airs::red_team::RedTeamTargetsClient::list"
       ],
@@ -11514,7 +11560,57 @@
         "Typed positive u32 limits and safe-integer skips, bounded control-free filters, query counts and URL limits are checked before credentials."
       ],
       "deliveredInPhase": 5,
-      "lastContractPhase": 5
+      "lastContractPhase": 5,
+      "liveEvidence": {
+        "path": "docs/checks/phase-24-live-attempt-01.json",
+        "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+        "probe": "red_team.targets.list.profiling_not_started",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 1,
+            "operation": "red_team.targets.list.profiling_not_started",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          },
+          {
+            "section": "probes",
+            "index": 2,
+            "operation": "red_team.targets.list.profiling_in_progress",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          },
+          {
+            "section": "probes",
+            "index": 3,
+            "operation": "red_team.targets.list.profiling_completed",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          },
+          {
+            "section": "probes",
+            "index": 4,
+            "operation": "red_team.targets.list.profiling_failed",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          }
+        ],
+        "reconciliationRequired": false
+      }
     },
     {
       "baselineId": "src/red-team/targets-client.ts:RedTeamTargetsClient.listAll",

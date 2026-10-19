@@ -1060,10 +1060,11 @@ def main():
             management_overlay.verify_model_names(generator)
         if args.only in {None, "red_team"}:
             for name, bound in [('TargetConnectionType', 'TargetCreateRequestConnectionType'), ('ResponseMode', 'TargetCreateRequestResponseMode')]:
-                rust[OUT / "generated.rs"] = management.replace_once(rust[OUT / "generated.rs"], 'pub enum ' + name + ' {',
+                declaration = '#[derive(Clone, PartialEq, Eq)]\n#[non_exhaustive]\npub enum ' + name + ' {'
+                rust[OUT / "generated.rs"] = management.replace_once(rust[OUT / "generated.rs"], declaration,
                     '/// Frozen TypeScript constant parity. Current management values are named on `' + bound + '`.\n'
                     '/// Unknown response strings remain represented by `Unknown(String)`.\n'
-                    'pub enum ' + name + ' {')
+                    + declaration)
         rust[OUT / "red_team_data_plane.rs"] = vendor_source
         rust[OUT / "red_team_management.rs"] = management_source
         rust[OUT / "mod.rs"] += "/// Additive current management model contracts.\npub mod red_team_management;\n"

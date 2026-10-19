@@ -19,6 +19,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 REMOTE = 'ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git'
 VERSION = '0.2.2'
 PHASE = 20
+RELEASES = {(20, '0.2.2'), (24, '0.2.3')}
 
 
 def require(condition, message):
@@ -68,7 +69,7 @@ def expected_contexts(workflow):
         for feature in matrix('features') for toolchain in matrix('toolchain')}
 
 
-def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256):
+def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256, version=VERSION):
     """Cross-check independently recorded observations; never trust summary flags alone."""
     require(len(proofs) == 2 and [p.get('toolchain') for p in proofs] == ['1.89.0', '1.99.0'],
             'Both compiler package proofs are required')
@@ -77,7 +78,7 @@ def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256):
                 p.get('files') == current.get('files') and p.get('vcs') == current.get('vcs')
                 for p in proofs), 'Compiler proofs must qualify identical files and source')
     require(registry.get('registry') == 'crates.io' and registry.get('package') == 'scm-sdk'
-            and registry.get('version') == VERSION and registry.get('yanked') is False
+            and registry.get('version') == version and registry.get('yanked') is False
             and 'cdot65' in registry.get('ownerLogins', []), 'Registry identity or ownership differs')
     require(registry.get('identicalFileContentsQualifiedOnMsrv') is True
             and registry.get('qualifiedToolchain') == '1.99.0', 'Registry lacks both compiler qualifications')
@@ -85,11 +86,11 @@ def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256):
                                    ('archiveBytes', 'archive_bytes'), ('files', 'files'), ('vcs', 'vcs')]:
         require(registry.get(receipt_key) == current.get(proof_key), 'Registry differs from clean package: ' + receipt_key)
     refs = tag.get('remoteRefs', {})
-    require(tag.get('passed') is True and tag.get('remote') == REMOTE and tag.get('tag') == 'v' + VERSION
+    require(tag.get('passed') is True and tag.get('remote') == REMOTE and tag.get('tag') == 'v' + version
             and tag.get('sourceCommit') == registry['sourceCommit']
-            and refs.get('refs/tags/v' + VERSION + '^{}') == registry['sourceCommit']
+            and refs.get('refs/tags/v' + version + '^{}') == registry['sourceCommit']
             and isinstance(tag.get('tagObject'), str) and re.fullmatch('[0-9a-f]{40}', tag['tagObject'])
-            and refs.get('refs/tags/v' + VERSION) == tag['tagObject'], 'Remote annotated tag does not match publication')
+            and refs.get('refs/tags/v' + version) == tag['tagObject'], 'Remote annotated tag does not match publication')
     run = ci.get('run', {})
     require(ci.get('reviewedSourceSha256') == source_sha256
             and run.get('status') == 'success' and run.get('commit_sha') == ci.get('sourceCommit')
@@ -112,7 +113,7 @@ def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256):
     require(len({job['target_url'] for job in jobs}) == len(jobs), 'CI job identities are duplicated')
     require(ci.get('expectedJobCount') == len(contexts) and ci.get('counts') == {'success': len(contexts)}
             and ci.get('contextsMatchConfiguredMatrix') is True, 'CI summary does not match verified jobs')
-    return {'version': VERSION, 'sourceCommit': registry['sourceCommit'],
+    return {'version': version, 'sourceCommit': registry['sourceCommit'],
             'ciCommit': ci['sourceCommit'], 'jobs': len(contexts), 'passed': True}
 
 
@@ -124,77 +125,101 @@ def verify_source_commits(root, result, source_sha256):
                    cwd=root, check=True)
 
 
-def verify_publication_metadata(phase, registry):
+def verify_publication_metadata(phase, registry, phase_id=PHASE, version=VERSION):
     """Do not let final delivery omit the metadata that activates release-doc checks."""
     publication = phase.get('registry_publication')
-    require(phase.get('id') == PHASE and isinstance(publication, dict),
-            'Phase20 must record registry_publication metadata')
+    require(phase.get('id') == phase_id and isinstance(publication, dict),
+            'Release phase must record registry_publication metadata')
     require(publication.get('status') == 'published_and_verified'
-            and publication.get('version') == VERSION
-            and publication.get('evidence') == f'docs/checks/release-registry-{VERSION}.json'
+            and publication.get('version') == version
+            and publication.get('evidence') == f'docs/checks/release-registry-{version}.json'
             and publication.get('source_commit') == registry.get('sourceCommit')
             and isinstance(publication.get('source_commit'), str)
             and re.fullmatch('[0-9a-f]{40}', publication['source_commit']),
-            'Phase20 publication metadata differs from verified registry delivery')
+            'Release phase publication metadata differs from verified registry delivery')
 
 
-def verify_registry_readiness(root, registry, source_sha256):
+def verify_registry_readiness(root, registry, source_sha256, phase=PHASE):
     readiness = registry.get('releaseReadiness')
     require(isinstance(readiness, dict), 'Registry receipt must retain releaseReadiness provenance')
     relative = readiness.get('review')
-    require(isinstance(relative, str) and re.fullmatch(r'docs/reviews/phase-20-attempt-\d+\.json', relative),
-            'Registry readiness must reference its actual phase20 review')
+    require(isinstance(relative, str) and re.fullmatch(rf'docs/reviews/phase-{phase}-attempt-\d+\.json', relative),
+            'Registry readiness must reference its actual release phase review')
     path = root / relative
     require(not path.is_symlink() and path.resolve().is_relative_to(root.resolve()),
             'Registry readiness must reference regular repository evidence')
     require(readiness.get('sourceSha256') == source_sha256
             and readiness.get('reviewSha256') == hashlib.sha256(path.read_bytes()).hexdigest()
-            and verify_release_readiness(root, path, source_sha256),
+            and (verify_release_readiness(root, path, source_sha256) if phase == 20 else
+                 verify_release_readiness(root, path, source_sha256, phase=phase)),
             'Registry readiness provenance differs from accepted current source')
 
 
-def verify(root, source_sha256=None):
+def verify_retained_registry(root, registry, publication):
+    relative = registry.get('retainedArchive')
+    require(isinstance(relative, str), 'Registry archive retention is required')
+    archive = root / relative
+    require(archive.resolve().is_relative_to(root / '.local/artifacts')
+            and not any(p.is_symlink() for p in (archive, *archive.parents)),
+            'Registry archive must be a regular retained artifact')
+    data = archive.read_bytes()
+    require(hashlib.sha256(data).hexdigest() == registry.get('archiveSha256')
+            and len(data) == registry.get('archiveBytes'), 'Retained registry archive changed')
+    files = publication.policy.inspect_archive(data, f"scm-sdk-{registry['version']}/")
+    require(publication.file_rows(files) == registry.get('files'), 'Registry retained file inventory differs')
+
+
+def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
+    require((phase, version) in RELEASES, "Unreviewed release phase/version pair")
+    phase_id = phase
     root = root.resolve()
     source_sha256 = source_sha256 or fingerprint(root)
     require(fingerprint(root) == source_sha256, 'Current source differs from reviewed source')
     status = read_record(root, 'docs/phase-status.json')
-    phase = next(item for item in status['phases'] if item['id'] == PHASE)
+    phase = next(item for item in status['phases'] if item['id'] == phase_id)
     delivery = phase.get('delivery', {})
-    registry_path = f'docs/checks/release-registry-{VERSION}.json'
-    tag_path = f'docs/checks/release-tag-v{VERSION}.json'
+    registry_path = f'docs/checks/release-registry-{version}.json'
+    tag_path = f'docs/checks/release-tag-v{version}.json'
     require(delivery.get('registry_receipt') == registry_path and delivery.get('tag_receipt') == tag_path,
             'Phase delivery must identify canonical registry and tag receipts')
     ci_path = delivery.get('ci_receipt', '')
-    require(isinstance(ci_path, str) and re.fullmatch(r'docs/checks/phase-20-remote-ci-run-\d+\.json', ci_path),
+    require(isinstance(ci_path, str) and re.fullmatch(rf'docs/checks/phase-{phase_id}-remote-ci-run-\d+\.json', ci_path),
             'Phase delivery must identify its terminal CI receipt')
     registry, tag, ci = [read_record(root, path) for path in (registry_path, tag_path, ci_path)]
-    verify_publication_metadata(phase, registry)
-    verify_registry_readiness(root, registry, source_sha256)
-    proofs = [read_record(root, f'docs/checks/phase-20-release-package-{compiler}.json')
+    verify_publication_metadata(phase, registry, phase_id, version)
+    verify_registry_readiness(root, registry, source_sha256, phase_id)
+    proofs = [read_record(root, f'docs/checks/phase-{phase_id}-release-package-{compiler}.json')
               for compiler in ('1.89.0', '1.99.0')]
     spec = importlib.util.spec_from_file_location('delivery_publication', root / 'scripts/verify-publication.py')
     publication = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(publication)
     for proof in proofs:
-        publication.require_proof(proof)
+        publication.require_proof(proof, schema_version=3) if phase_id == 24 else publication.require_proof(proof)
         archive = pathlib.Path(proof['retainedArchive'])
-        require(archive.is_absolute() and archive.parent == root / '.local/artifacts'
+        require(archive.is_absolute() and (archive.parent == root / '.local/artifacts' if phase_id != 24 else archive.resolve().is_relative_to((root / '.local/package-worktrees').resolve()))
                 and not any(path.is_symlink() for path in (archive, *archive.parents)),
                 'Retained archive must be a regular repository artifact')
         data = archive.read_bytes()
         require(hashlib.sha256(data).hexdigest() == proof['archive_sha256'] and len(data) == proof['archive_bytes'],
                 'Retained package differs from qualified archive')
-        files = publication.policy.inspect_archive(data, f'scm-sdk-{VERSION}/')
+        files = publication.policy.inspect_archive(data, f'scm-sdk-{version}/')
         require(publication.file_rows(files) == proof['files']
                 and publication.policy.validate_vcs(files, proof['releaseCommit'], True) == proof['vcs'],
                 'Retained archive files or VCS differ from clean proof')
+    if phase_id == 24:
+        publication.verify_management_proofs(
+            root / "docs/checks/phase-24-release-package-1.99.0.json",
+            root / "docs/checks/phase-24-release-package-1.89.0.json")
+        verify_retained_registry(root, registry, publication)
     result = validate_receipts(registry, tag, ci, proofs,
-                               expected_contexts((root / '.forgejo/workflows/ci.yml').read_text()), source_sha256)
+                               expected_contexts((root / '.forgejo/workflows/ci.yml').read_text()), source_sha256, version)
     verify_source_commits(root, result, source_sha256)
     return result
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
-    print(json.dumps(verify(ROOT)))
+    parser.add_argument("--phase", type=int, default=PHASE)
+    parser.add_argument("--version", default=VERSION)
+    args = parser.parse_args()
+    print(json.dumps(verify(ROOT, phase=args.phase, version=args.version)))

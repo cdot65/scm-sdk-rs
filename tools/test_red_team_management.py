@@ -324,10 +324,36 @@ class ManagementPlanTests(unittest.TestCase):
         self.assertNotIn('sourceLedgerSha256', result)
 
     def test_future_phase_cannot_pass_on_plan_artifacts(self):
-        for phase in range(24, 26):
+        for phase in range(25, 26):
             result = subprocess.run([sys.executable, str(subject.ROOT / 'tools/red_team_management.py'), '--check', '--require-through-phase', str(phase)], capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn('static plan evidence cannot advance', result.stderr)
+
+    def test_service_qualification_requires_read_only_source_bound_receipt(self):
+        import live_evidence
+        import native_operations
+        with patch.object(live_evidence, 'load', side_effect=ValueError('stale runtime')):
+            with self.assertRaisesRegex(ValueError, 'stale runtime'):
+                subject.verify_service_qualification()
+        with patch.object(live_evidence, 'load', return_value=({}, {'report': {'schemaVersion': 1}})):
+            with self.assertRaisesRegex(ValueError, 'fresh bounded read-only'):
+                subject.verify_service_qualification()
+        row = {'baselineId': 'known', 'implementation': 'implemented', 'liveAcceptance': 'verified',
+               'liveEvidence': {'source': 'current'}}
+        annotation = {'known': {'liveAcceptance': 'verified', 'liveEvidence': {'source': 'current'}}}
+        receipt = {'source': 'current'}
+        def ledger(name):
+            if name.endswith('native-exports.json'):
+                return {'liveReceipt': receipt, 'summary': {'liveVerified': 1},
+                        'capabilities': [dict(row, operationId='known')]}
+            return {'liveReceipt': receipt, 'summary': {'liveVerified': 1}, 'operations': [row]}
+        with patch.object(live_evidence, 'load', return_value=(annotation, {'report': {'schemaVersion': 2}})), \
+                patch.object(native_operations, 'live_projection', return_value=(annotation, set(), receipt)), \
+                patch.object(subject, 'load', side_effect=ledger):
+            subject.verify_service_qualification()
+            row['liveEvidence'] = {'source': 'historical'}
+            with self.assertRaisesRegex(ValueError, 'stale or unsupported'):
+                subject.verify_service_qualification()
 
     def test_cumulative_gate_rejects_stale_corpus_and_invalid_old_consumers(self):
         corpus = {'derived': 'fixture'}

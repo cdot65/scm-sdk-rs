@@ -27,7 +27,7 @@ def load_module(name, path):
     return module
 
 
-RELEASES = {(17, '0.2.1'), (20, '0.2.2')}
+RELEASES = {(17, '0.2.1'), (20, '0.2.2'), (24, '0.2.3')}
 
 
 def verify_offline_delivery(proof, files, version):
@@ -57,14 +57,23 @@ def verify(root, phase=17, version='0.2.1'):
         if path.is_symlink():
             raise ValueError("Proof must be a regular file")
         proof = json.loads(path.read_text())
-        publication.require_proof(proof)
+        publication.require_proof(proof, schema_version=3) if phase == 24 else publication.require_proof(proof)
+        if phase == 24:
+            wrapper = load_module("release_management_package", root / "scripts/check-management-package.py")
+            wrapper.verify_receipt(root, path, compiler)
+            sys.path.insert(0, str(root / "tools"))
+            from release_delivery import commit_fingerprint
+            from review_phase import fingerprint
+            if commit_fingerprint(root, proof["releaseCommit"]) != fingerprint(root):
+                raise ValueError("Package commit differs from current reviewed source")
+            subprocess.run(["git", "merge-base", "--is-ancestor", proof["releaseCommit"], "HEAD"], cwd=root, check=True)
         if proof["toolchain"] != compiler:
             raise ValueError("Compiler proof identity differs")
-        if proof["releaseCommit"] != git(root, "rev-parse", "HEAD").decode().strip():
+        if phase != 24 and proof["releaseCommit"] != git(root, "rev-parse", "HEAD").decode().strip():
             raise ValueError("Clean proof must qualify the current release commit")
         archive = pathlib.Path(proof["retainedArchive"])
         allowed = root / ".local/artifacts"
-        if (not archive.is_absolute() or archive.parent != allowed
+        if (not archive.is_absolute() or (archive.parent != allowed if phase != 24 else not archive.resolve().is_relative_to((root / ".local/package-worktrees").resolve()))
                 or any(p.is_symlink() for p in (archive, *archive.parents))):
             raise ValueError("Archive must be a regular retained repository artifact")
         data = archive.read_bytes()
@@ -95,7 +104,8 @@ def verify(root, phase=17, version='0.2.1'):
                 raise ValueError("Current packaged input differs: " + relative)
             if git(root, "show", proof["releaseCommit"] + ":" + relative) != content:
                 raise ValueError("Packaged input differs from release commit")
-        verify_offline_delivery(proof, files, version)
+        if phase != 24:
+            verify_offline_delivery(proof, files, version)
         if proof["publicConsumerSourceSha256"] != sha((root / "contracts/native-probes/src/main.rs").read_bytes()):
             raise ValueError("External consumer differs from executed proof")
         for relative in ("Cargo.toml", "Cargo.lock", "contracts/native-probes/Cargo.toml", "contracts/native-probes/Cargo.lock"):

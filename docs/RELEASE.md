@@ -1,20 +1,18 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.2**. [Phases 18–20](g25-response-compatibility-plan.md)
-qualify the G25 response compatibility correction. The
-[registry receipt](checks/release-registry-0.2.2.json) and
-[tag receipt](checks/release-tag-v0.2.2.json) establish actual publication and
+The workspace version is **0.2.3**. [Phase 24](red-team-management-0.86-plan.md)
+qualifies AIRS management 0.86.0 while preserving the published 0.2.2 API.
+The [registry receipt](checks/release-registry-0.2.3.json) and
+[tag receipt](checks/release-tag-v0.2.3.json) establish actual publication and
 remote source identity. A missing receipt means publication is not yet verified.
 
-CI currently runs `--phase 23 --verification-only --contracts-only` alongside 48 Rust jobs
-(24 feature sets on both reviewed compilers), including Red Team with JSON feature
-unification. Phase 23 verifies implementation and offline compatibility; it does not qualify
-a new release or current live workflows. Routing, CI documentation and tests move
-together for later phases; Phase 24 needs its own readiness and delivery guards.
-The historical complete local phase 20 gate additionally required both clean
-archive proofs, executed offline examples and external consumers, current live
-and native ledgers, dependency/privacy checks, and the full G25 regression corpus.
-Historical gates retain their accepted command sets.
+CI runs `--phase 24 --verification-only --contracts-only` alongside 48 Rust jobs
+(24 feature sets on both reviewed compilers). The complete local gate additionally
+executes both clean archives and external consumers, verifies the fresh bounded
+read-only tenant receipt, and checks the exact 0.2.3 release candidate. Provider
+prerequisites remain explicit; accepted target-list responses do not establish
+filter effectiveness or provider execution. Historical gates retain their
+accepted command sets and never qualify changed source.
 
 Independent review scores implementation, code quality, supportability,
 architecture and feature delivery out of ten each. Chunks require at least 42/50
@@ -23,8 +21,8 @@ attempts; the maintainer permits proceeding after attempt five only above 40/50,
 with remaining deficiencies recorded. Publication uses the owner-controlled
 external Cargo credential; CI receives no publishing credential.
 
-Commit the complete source before clean packaging. Write both proof outputs into
-ignored `.local/` paths, then retain them in `docs/checks/` after both runs finish.
+Commit the complete source before clean packaging. The clean-package wrapper creates a detached worktree and writes proofs to
+`docs/checks/phase-24-release-package-<compiler>.json` outside that worktree.
 Repackage at the exact qualified clean source, compare archive digest, publish,
 download and verify every file, create/push the immutable source tag, then require
 actual terminal success for all 49 configured CI jobs before phase completion.
@@ -35,15 +33,22 @@ only while retaining the exact successfully qualified source fingerprint.
 The linked registry receipt holds publication date/source/checksum; do not alter
 packaged source merely to embed those values after publication.
 
-After actual 0.2.2 publication, verify the registry artifact with the accepted
+Before publishing, run `scripts/check-prepublication.py --readiness-review
+<accepted-phase-24-review>` against the immutable candidate. It requires actual
+Claude readiness acceptance and both current-source clean archives. Use the
+owner-controlled Cargo credential outside the repository. After publication,
+`scripts/observe-release.py` records read-only remote tag and terminal CI evidence;
+`tools/release_delivery.py --phase 24 --version 0.2.3` verifies their consistency.
+
+After actual 0.2.3 publication, verify the registry artifact with the accepted
 current-source readiness review (replace `NN` with its retained attempt number):
 
 ```sh
-python3 scripts/verify-publication.py --version 0.2.2 \
-  --proof docs/checks/phase-20-release-package-1.99.0.json \
-  --msrv-proof docs/checks/phase-20-release-package-1.89.0.json \
-  --readiness-review docs/reviews/phase-20-attempt-NN.json \
-  --output docs/checks/release-registry-0.2.2.json
+python3 scripts/verify-publication.py --version 0.2.3 \
+  --proof docs/checks/phase-24-release-package-1.99.0.json \
+  --msrv-proof docs/checks/phase-24-release-package-1.89.0.json \
+  --readiness-review docs/reviews/phase-24-attempt-NN.json \
+  --output docs/checks/release-registry-0.2.3.json
 ```
 
 The verifier checks readiness before registry access and again before writing the

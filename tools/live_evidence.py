@@ -48,6 +48,14 @@ PROBE_BINDINGS = {
     "scan.query_async_results": "src/scan/scanner.ts:Scanner.queryByScanIds",
     "scan.query_report": "src/scan/scanner.ts:Scanner.queryByReportIds",
 }
+PROFILING_PROBES = (
+    "red_team.targets.list.profiling_not_started",
+    "red_team.targets.list.profiling_in_progress",
+    "red_team.targets.list.profiling_completed",
+    "red_team.targets.list.profiling_failed",
+)
+PROBE_BINDINGS.update({operation: "src/red-team/targets-client.ts:RedTeamTargetsClient.list"
+                       for operation in PROFILING_PROBES})
 AUXILIARY = {
     "iam.scopes.owned_fixture_preflight", "iam.scopes.verify_absent", "iam.scopes.reconcile",
     "gateway.provision.owned_fixture_preflight", "gateway.provision.recovery",
@@ -90,6 +98,18 @@ LIMITATIONS = [
     "Synthetic scans retain server audit records; the frozen scan API has no deletion method.",
     "Workspace deletion is archival; permanent deletion is unavailable in the frozen API.",
 ]
+
+READ_ONLY_LIMITATIONS = [
+    "Read-only qualification attempts OAuth and four single-page target lists with limit 1; all other workflows remain live-unqualified.",
+    "Filter acceptance means HTTP success and native typed decoding only; filtering effectiveness is not established, including for empty or ambiguous results.",
+    "Vertex AI, client_session and audio workflows remain experimental and live-unverified without provider credentials, fixtures and execution prerequisites.",
+]
+
+
+def command_template(read_only=False):
+    return ["live_qualification", "--config", "[external-registration]", "--expect-tsg",
+            "[verified-external-scope]", "--output", "[private-report]", "--recovery-output",
+            "[private-recovery]", "--read-only" if read_only else "--mutations"]
 
 
 def digest(path):
@@ -140,20 +160,22 @@ def validate_report(report, *, expected_version=None):
     require_keys(report, {"schemaVersion", "tenantScopeMatched", "client", "crateVersion",
         "automaticRetries", "maximumTransportAttempts", "perOperationTimeoutSeconds", "scanAuthentication",
         "mutationsEnabled", "cleanupState", "probes", "cleanup", "serviceRequests", "tokenExchanges", "limitations"})
-    if not (type(report["schemaVersion"]) is int and report["schemaVersion"] == 1 and report["tenantScopeMatched"] is True
+    read_only = report["schemaVersion"] == 2
+    budget = 5 if read_only else 80
+    if not (type(report["schemaVersion"]) is int and report["schemaVersion"] in (1, 2) and report["tenantScopeMatched"] is True
             and report["client"] == "native_scm_sdk" and report["crateVersion"] == expected_version
             and type(report["automaticRetries"]) is int and report["automaticRetries"] == 0
-            and type(report["maximumTransportAttempts"]) is int and report["maximumTransportAttempts"] == 80
+            and type(report["maximumTransportAttempts"]) is int and report["maximumTransportAttempts"] == budget
             and type(report["perOperationTimeoutSeconds"]) is int and report["perOperationTimeoutSeconds"] == 15
             and type(report["mutationsEnabled"]) is bool
             and report["cleanupState"] in {"not_needed", "confirmed_retired", "requires_reconciliation"}
             and report["scanAuthentication"] in {None, "api_key_hmac", "oauth_bearer"}
-            and report["limitations"] == LIMITATIONS):
+            and report["limitations"] == (READ_ONLY_LIMITATIONS if read_only else LIMITATIONS)):
         raise ValueError("Invalid qualification controls or unreviewed report vocabulary")
     for key in ("serviceRequests", "tokenExchanges"):
-        if type(report[key]) is not int or not 0 <= report[key] <= 80:
+        if type(report[key]) is not int or not 0 <= report[key] <= budget:
             raise ValueError("Invalid request count")
-    if report["serviceRequests"] + report["tokenExchanges"] > 80:
+    if report["serviceRequests"] + report["tokenExchanges"] > budget:
         raise ValueError("Qualification exceeded the transport budget")
     for key in ("probes", "cleanup"):
         if not isinstance(report[key], list) or len(report[key]) > 80:
@@ -210,6 +232,16 @@ def validate_report(report, *, expected_version=None):
             row["classification"] in {"retained_for_reconciliation", "archive_not_confirmed"}
             for row in report["cleanup"]):
         raise ValueError("Unresolved resource cleanup must remain explicit")
+    if read_only:
+        if (report["mutationsEnabled"] is not False or report["scanAuthentication"] is not None
+                or report["cleanupState"] != "not_needed" or report["cleanup"]
+                or [row["operation"] for row in report["probes"]] != ["oauth.get_token", *PROFILING_PROBES]):
+            raise ValueError("Read-only qualification requires exactly OAuth and four filter observations without mutation or cleanup")
+        accepted = sum(row["workflowAccepted"] for row in report["probes"][1:])
+        if accepted > report["serviceRequests"] or not 1 <= report["tokenExchanges"] <= budget:
+            raise ValueError("Read-only accepted probes require corresponding transport attempts")
+    elif any(row["operation"] in PROFILING_PROBES for row in report["probes"] + report["cleanup"]):
+        raise ValueError("Profiling observations require the bounded read-only qualification schema")
     return report
 
 
@@ -252,7 +284,7 @@ def load(root=ROOT, required=False):
     require_keys(reference, {"schemaVersion", "baselineCommit", "report", "reportSha256"})
     if type(reference["schemaVersion"]) is not int or reference["schemaVersion"] != 1 or reference["baselineCommit"] != BASELINE:
         raise ValueError("Qualification baseline mismatch")
-    if not re.fullmatch(r"docs/checks/phase-08-live-attempt-\d{2}\.json", reference["report"]):
+    if not re.fullmatch(r"docs/checks/phase-(?:08|24)-live-attempt-\d{2}\.json", reference["report"]):
         raise ValueError("Unexpected controlled report path")
     path = regular(root, reference["report"])
     if digest(path) != reference["reportSha256"]:
@@ -269,9 +301,10 @@ def load(root=ROOT, required=False):
     executed_at = datetime.datetime.fromisoformat(envelope["executedAt"])
     if executed_at.tzinfo is None or executed_at.utcoffset() != datetime.timedelta(0):
         raise ValueError("Receipt execution time must be explicit UTC")
-    if envelope["commandTemplate"] != ["live_qualification", "--config", "[external-registration]",
-            "--expect-tsg", "[verified-external-scope]", "--output", "[private-report]",
-            "--recovery-output", "[private-recovery]", "--mutations"]:
+    read_only = envelope["report"].get("schemaVersion") == 2
+    if reference["report"].startswith("docs/checks/phase-24-") != read_only:
+        raise ValueError("Controlled report phase and qualification mode differ")
+    if envelope["commandTemplate"] != command_template(read_only):
         raise ValueError("Unreviewed or credential-bearing invocation metadata")
     report = validate_report(envelope["report"], expected_version=crate_version(root))
     frozen_ids = {v["id"] for v in json.loads((root / "contracts/operations.json").read_text())["operations"]}
@@ -284,8 +317,9 @@ def load(root=ROOT, required=False):
 
 def run(args):
     """Only this explicitly selected mode performs service requests."""
-    if not args.config or not args.expect_tsg or not args.mutations or args.attempt < 1:
-        raise ValueError("Select an external config, expected nonproduction scope, --mutations and positive attempt")
+    read_only = getattr(args, "read_only", False)
+    if not args.config or not args.expect_tsg or args.mutations == read_only or not 1 <= args.attempt <= 99:
+        raise ValueError("Select an external config, expected nonproduction scope, exactly one of --mutations/--read-only and attempt 1–99")
     cargo = pathlib.Path.home() / ".cargo/bin/cargo"
     rustc = cargo.with_name("rustc")
     toolchain = "1.99.0"
@@ -293,7 +327,8 @@ def run(args):
     host = next(line[6:] for line in native.splitlines() if line.startswith("host: "))
     if host != "x86_64-unknown-linux-musl":
         raise ValueError("This controlled receipt currently qualifies the recorded musl host only")
-    report_path = ROOT / f"docs/checks/phase-08-live-attempt-{args.attempt:02d}.json"
+    phase = "24" if read_only else "08"
+    report_path = ROOT / f"docs/checks/phase-{phase}-live-attempt-{args.attempt:02d}.json"
     if report_path.exists():
         raise ValueError("Preserve previous attempts and select a new attempt number")
     env = {k: v for k, v in os.environ.items() if not k.startswith(("PANW_", "AIRS_", "SCM_"))}
@@ -311,7 +346,7 @@ def run(args):
     private = pathlib.Path(tempfile.mkdtemp(prefix="scm-sdk-native-live-"))
     raw_path = private / "report.json"
     command = [str(binary), "--config", str(args.config.resolve()), "--expect-tsg", args.expect_tsg,
-        "--output", str(raw_path), "--recovery-output", str(private / "recovery"), "--mutations"]
+        "--output", str(raw_path), "--recovery-output", str(private / "recovery"), "--read-only" if read_only else "--mutations"]
     try:
         execution = subprocess.run(command, cwd=ROOT, env=env, text=True, capture_output=True, timeout=650)
     except subprocess.TimeoutExpired:
@@ -328,8 +363,7 @@ def run(args):
         "executedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "runtimeInputsSha256": before, "binarySha256": digest(binary), "toolchain": toolchain,
         "hostTarget": host, "sourceUnchanged": before == runtime_fingerprint(), "exitCode": execution.returncode,
-        "commandTemplate": ["live_qualification", "--config", "[external-registration]", "--expect-tsg",
-            "[verified-external-scope]", "--output", "[private-report]", "--recovery-output", "[private-recovery]", "--mutations"],
+        "commandTemplate": command_template(read_only),
         "report": report}
     report_path.write_text(json.dumps(envelope, indent=2) + "\n")
     (ROOT / INPUT).write_text(json.dumps({"schemaVersion": 1, "baselineCommit": BASELINE,
@@ -346,7 +380,9 @@ def main():
     parser.add_argument("--run", action="store_true")
     parser.add_argument("--config", type=pathlib.Path)
     parser.add_argument("--expect-tsg")
-    parser.add_argument("--mutations", action="store_true")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--mutations", action="store_true")
+    mode.add_argument("--read-only", action="store_true")
     parser.add_argument("--attempt", type=int, default=1)
     args = parser.parse_args()
     if args.run and args.check:

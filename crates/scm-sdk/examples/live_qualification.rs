@@ -27,7 +27,7 @@ mod qualification {
                 ModelSecurityClient, ModelSecurityModelListOptions, ModelSecurityRuleListOptions,
                 ModelSecurityScanListOptions,
             },
-            red_team::RedTeamClient,
+            red_team::{RedTeamClient, TargetListOptions},
             scan::{Content, Region, Scanner, SyncScanOptions, models::*},
         },
         auth::{AuthContext, Authentication, OAuthProvider},
@@ -79,6 +79,7 @@ mod qualification {
         output: PathBuf,
         recovery: Option<PathBuf>,
         mutations: bool,
+        read_only: bool,
     }
     impl Args {
         fn parse() -> Result<Self> {
@@ -88,6 +89,7 @@ mod qualification {
             let mut output = None;
             let mut recovery = None;
             let mut mutations = false;
+            let mut read_only = false;
             while let Some(flag) = args.next() {
                 match flag.to_str() {
                     Some("--config") => registration = args.next().map(PathBuf::from),
@@ -97,6 +99,7 @@ mod qualification {
                     Some("--output") => output = args.next().map(PathBuf::from),
                     Some("--recovery-output") => recovery = args.next().map(PathBuf::from),
                     Some("--mutations") => mutations = true,
+                    Some("--read-only") => read_only = true,
                     _ => return Err(Error::new(ErrorKind::Configuration)),
                 }
             }
@@ -106,8 +109,10 @@ mod qualification {
                 output: output.ok_or_else(|| Error::new(ErrorKind::Configuration))?,
                 recovery,
                 mutations,
+                read_only,
             };
-            if config.expected_tsg.is_empty()
+            if config.mutations && config.read_only
+                || config.expected_tsg.is_empty()
                 || !config.expected_tsg.bytes().all(|b| b.is_ascii_digit())
                 || config.recovery.is_none()
                 || config
@@ -228,6 +233,7 @@ mod qualification {
         inner: ReqwestTransport,
         wire: WireLog,
         attempts: Arc<AtomicUsize>,
+        read_only: bool,
     }
     impl Transport for AuditTransport {
         fn send<'a>(
@@ -236,7 +242,14 @@ mod qualification {
         ) -> BoxFuture<'a, Result<TransportResponse>> {
             let token = request.url().host_str() == Some("auth.apps.paloaltonetworks.com");
             Box::pin(async move {
-                if self.attempts.fetch_add(1, Ordering::Relaxed) >= 80 {
+                if self.read_only
+                    && !read_only_request_allowed(request.method().as_str(), request.url())
+                {
+                    return Err(Error::new(ErrorKind::Configuration));
+                }
+                if self.attempts.fetch_add(1, Ordering::Relaxed)
+                    >= if self.read_only { 5 } else { 80 }
+                {
                     return Err(Error::new(ErrorKind::Limit));
                 }
                 let result = self.inner.send(request).await;
@@ -251,6 +264,43 @@ mod qualification {
                 result
             })
         }
+    }
+    fn read_only_request_allowed(method: &str, url: &url::Url) -> bool {
+        (url.as_str() == ISSUER && method == "POST")
+            || (url.scheme() == "https"
+                && url.host_str() == Some("api.sase.paloaltonetworks.com")
+                && url.port_or_known_default() == Some(443)
+                && url.path() == "/ai-red-teaming/mgmt/v1/target"
+                && method == "GET"
+                && url.query_pairs().count() == 2
+                && url
+                    .query_pairs()
+                    .any(|(key, value)| key == "limit" && value == "1")
+                && url.query_pairs().any(|(key, value)| {
+                    key == "profiling_status"
+                        && PROFILING_PROBES.iter().any(|(filter, _)| *filter == value)
+                }))
+    }
+    const PROFILING_PROBES: [(&str, &str); 4] = [
+        ("NOT_STARTED", "red_team.targets.list.profiling_not_started"),
+        ("IN_PROGRESS", "red_team.targets.list.profiling_in_progress"),
+        ("COMPLETED", "red_team.targets.list.profiling_completed"),
+        ("FAILED", "red_team.targets.list.profiling_failed"),
+    ];
+    const READ_ONLY_LIMITATIONS: [&str; 3] = [
+        "Read-only qualification attempts OAuth and four single-page target lists with limit 1; all other workflows remain live-unqualified.",
+        "Filter acceptance means HTTP success and native typed decoding only; filtering effectiveness is not established, including for empty or ambiguous results.",
+        "Vertex AI, client_session and audio workflows remain experimental and live-unverified without provider credentials, fixtures and execution prerequisites.",
+    ];
+    fn finish_read_only(args: &Args, audit: &AuditTransport, report: &mut Report) -> Result<()> {
+        let wire = audit
+            .wire
+            .lock()
+            .map_err(|_| Error::new(ErrorKind::Configuration))?;
+        report.token_exchanges = wire.iter().filter(|v| v.token_exchange).count();
+        report.service_requests = wire.iter().filter(|v| !v.token_exchange).count();
+        drop(wire);
+        write_private(&args.output, report)
     }
     impl AuditTransport {
         fn latest_status(&self) -> Option<u16> {
@@ -493,6 +543,7 @@ mod qualification {
             inner: ReqwestTransport::new()?,
             wire: Arc::new(Mutex::new(Vec::new())),
             attempts: Arc::new(AtomicUsize::new(0)),
+            read_only: args.read_only,
         };
         let session = Session::new();
         let provider = Arc::new(OAuthProvider::new(
@@ -521,12 +572,12 @@ mod qualification {
             .limits(limits)
             .build()?;
         let mut report = Report {
-            schema_version: 1,
+            schema_version: if args.read_only { 2 } else { 1 },
             tenant_scope_matched: true,
             client: "native_scm_sdk",
             crate_version: env!("CARGO_PKG_VERSION"),
             automatic_retries: 0,
-            maximum_transport_attempts: 80,
+            maximum_transport_attempts: if args.read_only { 5 } else { 80 },
             per_operation_timeout_seconds: 15,
             mutations_enabled: args.mutations,
             cleanup_state: "not_needed",
@@ -537,6 +588,9 @@ mod qualification {
             ],
             ..Report::default()
         };
+        if args.read_only {
+            report.limitations = READ_ONLY_LIMITATIONS.to_vec();
+        }
         let mut recovery = Recovery::default();
         let token = record(
             &mut report.probes,
@@ -544,6 +598,33 @@ mod qualification {
             "oauth.get_token",
             provider.get_token(Some(&options()?)).await,
         );
+        if args.read_only {
+            if token.is_none() {
+                for (_, operation) in PROFILING_PROBES {
+                    skipped(&mut report.probes, operation);
+                }
+            } else {
+                let red = RedTeamClient::new(
+                    client.with_endpoint(Endpoint::parse(RED_DATA)?)?,
+                    Endpoint::parse(RED_MANAGEMENT)?,
+                    Endpoint::parse(RED_BROKER)?,
+                )?;
+                for (filter, operation) in PROFILING_PROBES {
+                    let mut listing = TargetListOptions::default();
+                    listing.limit = Some(1);
+                    listing.profiling_status = Some(filter.to_owned());
+                    record(
+                        &mut report.probes,
+                        &audit,
+                        operation,
+                        red.targets()
+                            .list(&listing, Some(&options()?.without_response_defaults()))
+                            .await,
+                    );
+                }
+            }
+            return finish_read_only(&args, &audit, &mut report);
+        }
         if token.is_none() {
             let wire = audit
                 .wire
@@ -1325,6 +1406,46 @@ mod qualification {
     mod tests {
         use super::*;
         use serde_json::json;
+
+        #[test]
+        fn read_only_transport_rejects_mutations_and_unreviewed_routes() {
+            let token = url::Url::parse(ISSUER).unwrap();
+            let targets = url::Url::parse(&format!(
+                "{RED_MANAGEMENT}/v1/target?limit=1&profiling_status=FAILED"
+            ))
+            .unwrap();
+            assert!(read_only_request_allowed("POST", &token));
+            assert!(read_only_request_allowed("GET", &targets));
+            for query in [
+                "limit=10&profiling_status=FAILED",
+                "limit=1&profiling_status=UNKNOWN",
+                "limit=1&profiling_status=FAILED&skip=1",
+                "limit=1&limit=1",
+                "",
+            ] {
+                let mut changed = targets.clone();
+                changed.set_query(Some(query));
+                assert!(!read_only_request_allowed("GET", &changed));
+            }
+            for method in ["POST", "PUT", "PATCH", "DELETE"] {
+                assert!(!read_only_request_allowed(method, &targets));
+            }
+            for value in [
+                "https://example.invalid/v1/target",
+                "http://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt/v1/target",
+                "https://api.sase.paloaltonetworks.com:8443/ai-red-teaming/mgmt/v1/target",
+                "https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt/v1/target/other",
+                "https://auth.apps.paloaltonetworks.com/oauth2/other",
+            ] {
+                let url = url::Url::parse(value).unwrap();
+                assert!(!read_only_request_allowed("GET", &url));
+                assert!(!read_only_request_allowed("POST", &url));
+            }
+            assert_eq!(
+                PROFILING_PROBES.map(|row| row.0),
+                ["NOT_STARTED", "IN_PROGRESS", "COMPLETED", "FAILED"]
+            );
+        }
 
         #[test]
         fn rejection_details_never_publish_unreviewed_codes_or_problem_text() {

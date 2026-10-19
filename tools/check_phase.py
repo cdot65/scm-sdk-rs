@@ -25,6 +25,7 @@ COMMAND_TIMEOUT_SECONDS = 7 * 900 + 60
 # Every scoped contract JSON requires a declared verifying owner. Unknown artifacts
 # fail closed, including new files discovered under a directory scope.
 CONTRACT_LEDGER_OWNERS = {
+    'contracts/live-evidence.json': ('tools/live_evidence.py', '--check'),
     'contracts/compatibility/management-old-consumers.json': ('tools/management_consumers.py', '--check'),
     'contracts/native-fixtures/red-team-management.json': ('tools/management_fixtures.py', '--check'),
     'contracts/airs-active-sources.json': ('tools/red_team_management.py', '--check'),
@@ -189,6 +190,26 @@ def verify_planning_gateway_proof(root=ROOT):
 def management_commands(phase):
     """New phase gates retain historical checks and fail closed on later scope."""
     unit = lambda name: ["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+    if phase == 24:
+        commands = []
+        for original in management_commands(23):
+            if '--verify-package-receipts' in original:
+                continue
+            command = [value.replace('phase-23-', 'phase-24-') for value in original]
+            if '--require-through-phase' in command:
+                command[command.index('--require-through-phase') + 1] = '24'
+            if 'scripts/check-management-package.py' in command:
+                command = [value.replace('phase-24-package-', 'phase-24-release-package-')
+                           for value in command]
+            commands.append(command)
+        commands.extend([
+            ['python', 'tools/live_evidence.py', '--check'],
+            ['python', 'tools/red_team_management.py', '--check', '--require-through-phase', '24',
+             '--verify-package-receipts'],
+            ['python', 'scripts/check-access-release.py', '--phase', '24', '--version', '0.2.3',
+             '--output', 'docs/checks/phase-24-release-readiness.json'],
+        ])
+        return commands
     vendor_scope = ["--", ".", ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml"]
     common = [["git", "diff", "--check", *vendor_scope],
               ["git", "diff", "--cached", "--check", *vendor_scope],

@@ -113,6 +113,33 @@ class DependencyPolicyTests(unittest.TestCase):
                 self.assertNotIn('STDERR_START', diagnostic.getvalue())
                 self.assertEqual(failed[0].get('timeout', False), failure == 'metadata_timeout')
 
+    def test_resolved_feature_graph_records_actual_unified_features(self):
+        metadata = {'packages': [
+            {'id': 'json-1', 'name': 'serde_json', 'version': '1.0.0', 'source': 'registry'},
+            {'id': 'consumer', 'name': 'consumer', 'version': '0.0.0', 'source': None}],
+            'resolve': {'nodes': [
+                {'id': 'consumer', 'features': ['forwarded-json']},
+                {'id': 'json-1', 'features': ['std', 'raw_value', 'default']}]}}
+        ledger = policy.check_resolved_features(metadata)
+        self.assertEqual(ledger[1]['features'], ['default', 'raw_value', 'std'])
+        # Cargo resolve nodes unify direct and transitive feature requests.
+        changed = copy.deepcopy(metadata)
+        changed['resolve']['nodes'][1]['features'].append('preserve_order')
+        with self.assertRaisesRegex(ValueError, 'preserve_order'):
+            policy.check_resolved_features(changed)
+        changed = copy.deepcopy(metadata)
+        changed['packages'].append({'id': 'json-2', 'name': 'serde_json', 'version': '2.0.0', 'source': 'registry'})
+        changed['resolve']['nodes'].append({'id': 'json-2', 'features': ['preserve_order']})
+        with self.assertRaisesRegex(ValueError, 'preserve_order'):
+            policy.check_resolved_features(changed)
+        for resolution in (None, {}, {'nodes': []}, {'nodes': [{'id': 'consumer', 'features': []}]},
+                           {'nodes': [{'id': 'json-1', 'features': []}, {'id': 'json-1', 'features': []}]},
+                           {'nodes': [{'id': 'json-1', 'features': None}]}):
+            changed = copy.deepcopy(metadata)
+            changed['resolve'] = resolution
+            with self.assertRaises(ValueError):
+                policy.check_resolved_features(changed)
+
     def test_real_lock_and_policy_are_accepted(self):
         policy.check_lock(tomllib.loads((ROOT/'Cargo.lock').read_text()))
         policy.check_policy(tomllib.loads((ROOT/'deny.toml').read_text()))

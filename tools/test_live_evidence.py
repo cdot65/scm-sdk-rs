@@ -19,7 +19,65 @@ def specimen():
         "cleanup": [], "limitations": live.LIMITATIONS}
 
 
+def read_only_specimen():
+    report = specimen()
+    success = report['probes'][0]
+    report.update(schemaVersion=2, maximumTransportAttempts=5, mutationsEnabled=False,
+                  serviceRequests=4, limitations=live.READ_ONLY_LIMITATIONS,
+                  probes=[dict(success, operation=name) for name in ('oauth.get_token', *live.PROFILING_PROBES)])
+    return report
+
+
 class LiveEvidenceTests(unittest.TestCase):
+    def test_read_only_acceptance_is_bounded_and_does_not_promote_provider_features(self):
+        report = read_only_specimen()
+        live.validate_report(report)
+        annotations = self.annotations(report)
+        self.assertEqual(set(annotations), {live.PROBE_BINDINGS['oauth.get_token'], live.PROBE_BINDINGS[live.PROFILING_PROBES[0]]})
+        target = annotations[live.PROBE_BINDINGS[live.PROFILING_PROBES[0]]]
+        self.assertEqual(len(target['liveEvidence']['observations']), 4)
+        self.assertIn('filtering effectiveness is not established', report['limitations'][1])
+        self.assertIn('remain experimental and live-unverified', report['limitations'][2])
+        for field, value in [('mutationsEnabled', True), ('maximumTransportAttempts', 80),
+                             ('serviceRequests', 5), ('serviceRequests', 3), ('tokenExchanges', 0),
+                             ('cleanupState', 'requires_reconciliation'), ('scanAuthentication', 'oauth_bearer'),
+                             ('limitations', live.LIMITATIONS)]:
+            damaged = copy.deepcopy(report)
+            damaged[field] = value
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                live.validate_report(damaged)
+        for names in (live.PROFILING_PROBES[:-1], tuple(reversed(live.PROFILING_PROBES)),
+                      (*live.PROFILING_PROBES[:-1], live.PROFILING_PROBES[0])):
+            damaged = copy.deepcopy(report)
+            damaged['probes'] = [report['probes'][0], *[dict(report['probes'][1], operation=name) for name in names]]
+            with self.assertRaises(ValueError):
+                live.validate_report(damaged)
+        historical = specimen()
+        historical['probes'][0]['operation'] = live.PROFILING_PROBES[0]
+        with self.assertRaisesRegex(ValueError, 'bounded read-only'):
+            live.validate_report(historical)
+
+    def test_read_only_auth_failure_retains_explicit_unattempted_filters(self):
+        report = read_only_specimen()
+        report['serviceRequests'] = 0
+        report['probes'] = [self.failure('oauth.get_token', 'authentication_prerequisite', 401)]
+        report['probes'] += [dict(self.failure(name, 'not_attempted_missing_prerequisite', None),
+                                 errorKind=None, remoteOutcome=None) for name in live.PROFILING_PROBES]
+        annotations = self.annotations(report)
+        self.assertFalse(any(row['liveAcceptance'] == 'verified' for row in annotations.values()))
+        self.assertEqual(live.command_template(True)[-1], '--read-only')
+        self.assertEqual(live.command_template(False)[-1], '--mutations')
+
+    def test_execution_requires_explicit_exclusive_mode_before_any_build(self):
+        import types
+        for mutations, read_only in ((False, False), (True, True)):
+            args = types.SimpleNamespace(config=pathlib.Path('/synthetic/external.json'),
+                expect_tsg='123', mutations=mutations, read_only=read_only, attempt=1)
+            with mock.patch.object(live.subprocess, 'check_output') as process:
+                with self.assertRaisesRegex(ValueError, 'exactly one'):
+                    live.run(args)
+                process.assert_not_called()
+
     def test_report_version_is_bound_to_the_selected_crate_manifest(self):
         report = specimen()
         live.validate_report(report)
@@ -267,6 +325,22 @@ class LiveEvidenceTests(unittest.TestCase):
                     save(changed)
                     with self.assertRaisesRegex(ValueError, "stale or lacks execution"):
                         live.load(root, required=True)
+                read_only = copy.deepcopy(envelope)
+                read_only['report'] = read_only_specimen()
+                read_only['commandTemplate'] = live.command_template(True)
+                save(read_only)
+                with self.assertRaisesRegex(ValueError, 'phase and qualification mode'):
+                    live.load(root, required=True)
+                historical_path = report_path
+                report_path = root / 'docs/checks/phase-24-live-attempt-01.json'
+                save(read_only)
+                observations, _ = live.load(root, required=True)
+                self.assertEqual(len(observations), 2)
+                read_only['commandTemplate'] = live.command_template(False)
+                save(read_only)
+                with self.assertRaisesRegex(ValueError, 'invocation metadata'):
+                    live.load(root, required=True)
+                report_path = historical_path
                 save(envelope)
                 report_path.write_text(report_path.read_text() + " ")
                 with self.assertRaisesRegex(ValueError, "digest mismatch"):

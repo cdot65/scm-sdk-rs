@@ -84,10 +84,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     listing.limit = Some(25);
     let request =
         RequestOptions::with_timeout(Duration::from_secs(10))?.without_response_defaults();
-    assert_eq!(listing.profiling_status.as_deref(), Some("COMPLETED"));
+    // This shows option construction. Executable filtering and pagination proof
+    // is in tests/red_team_management_contracts.rs, using an injected transport.
+    let _listing = listing;
     assert!(!request.response_defaults());
     println!(
-        "Management models, raw fallback, filters and response default policies verified offline."
+        "Management models, raw fallback and response default policies verified offline; filter options constructed."
     );
     Ok(())
 }

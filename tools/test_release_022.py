@@ -28,7 +28,7 @@ class Release022Tests(unittest.TestCase):
 
     def test_historical_defaults_and_reviewed_release_pairs(self):
         self.assertEqual(candidate.verify.__defaults__, (17, '0.2.1'))
-        self.assertEqual(set(candidate.RELEASES), {(17, '0.2.1'), (20, '0.2.2')})
+        self.assertEqual(set(candidate.RELEASES), {(17, '0.2.1'), (20, '0.2.2'), (24, '0.2.3')})
         for phase, version in [(17, '0.2.2'), (20, '0.2.1'), (21, '0.2.3')]:
             with self.assertRaisesRegex(ValueError, 'Unreviewed release'):
                 candidate.verify(ROOT, phase, version)

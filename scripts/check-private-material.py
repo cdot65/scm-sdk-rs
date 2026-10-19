@@ -9,7 +9,8 @@ import sys
 import time
 import tomllib
 
-from evidence_common import (MAX_FILE_BYTES, MAX_FILES, MAX_TREE_BYTES, git_files, git_output, read_regular,
+from evidence_common import (EXCLUDED_DIRECTORIES, EXCLUDED_FILES, MAX_FILE_BYTES, MAX_FILES, MAX_TREE_BYTES,
+                             git_files, git_output, read_regular,
                              safe_parts, source_fingerprint, write_private)
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -132,6 +133,43 @@ def scan(root, config):
             "scope": SCOPE, "limits": LIMITS, "limitations": LIMITATIONS}
 
 
+
+def check_history_identity(root, scanned_head):
+    """Permit only bounded bookkeeping descendants of the actual scanned commit.
+
+    Committing the scan and review receipts necessarily changes HEAD. Rewriting
+    headCommit would invent private evidence, so retain it and inspect every
+    intervening commit instead. Only the same exclusions as source_fingerprint
+    may change; a source edit followed by a revert still fails. This proves the
+    committed source tree stayed identical while allowing credential-free CI to
+    verify committed evidence. It does not privately rescan later bookkeeping.
+    """
+    current = git_output(root, "rev-parse", "--verify", "HEAD").decode().strip()
+    if scanned_head == current:
+        return
+    try:
+        git_output(root, "merge-base", "--is-ancestor", scanned_head, current)
+        commits = git_output(root, "rev-list", "--max-count=101", scanned_head + ".." + current).decode().splitlines()
+    except ValueError:
+        raise ValueError("Receipt head identity mismatch") from None
+    if not commits or len(commits) > 100:
+        raise ValueError("Receipt head identity mismatch")
+    deadline = time.monotonic() + 30
+    for commit in commits:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise ValueError("Receipt head identity mismatch")
+        # -m checks every merge-parent comparison; --no-renames checks both
+        # sides of a move rather than letting an excluded destination hide it.
+        names = git_output(root, "diff-tree", "-r", "-m", "--no-commit-id", "--name-only",
+                           "--no-renames", "-z", commit, timeout=remaining).decode().split("\0")
+        if any(name and name not in EXCLUDED_FILES and not name.startswith(EXCLUDED_DIRECTORIES)
+               for name in names):
+            raise ValueError("Receipt head identity mismatch")
+    if current != git_output(root, "rev-parse", "--verify", "HEAD").decode().strip():
+        raise ValueError("Receipt head identity mismatch")
+
+
 def check_receipt(root, path):
     """Validate a successful receipt against current public inputs, without secrets."""
     report = json.loads(read_regular(path, 128 * 1024))
@@ -173,6 +211,7 @@ def check_receipt(root, path):
         raise ValueError("Receipt published candidate fingerprint mismatch")
     if not isinstance(report["headCommit"], str) or not re.fullmatch(r"[0-9a-f]{40,64}", report["headCommit"]):
         raise ValueError("Receipt head identity invalid")
+    check_history_identity(root, report["headCommit"])
     return report
 
 
@@ -191,6 +230,7 @@ def check_failure_code(error):
         "Receipt published candidate count mismatch": "published_candidate_count_changed",
         "Receipt published candidate fingerprint mismatch": "published_candidates_changed",
         "Receipt head identity invalid": "invalid_head_identity",
+        "Receipt head identity mismatch": "head_changed",
     }.get(str(error), "invalid_receipt")
 
 

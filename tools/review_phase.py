@@ -289,7 +289,7 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
             return False
     if phase in SCOPE_BOUND_PHASES:
         scope = record.get("review_scope")
-        allowed = {"chunk"} if chunk else ({"phase", "release_readiness"} if phase == 20 else {"phase"})
+        allowed = {"chunk"} if chunk else ({"phase", "release_readiness"} if phase in {20, 24} else {"phase"})
         if scope not in allowed or not path.with_suffix(".prompt.md").read_text().startswith(
                 f"Review scope: {scope}.\n"):
             return False
@@ -310,11 +310,12 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
     return sha256(checks) == record.get("checks_sha256")
 
 
-def verify_release_readiness(root, path, source_sha256):
+def verify_release_readiness(root, path, source_sha256, phase=20):
     """Publication helpers must require this accepted, current-source assessment."""
     record = json.loads(path.read_text())
     return (record.get("review_scope") == "release_readiness"
-            and verify_record(root, path, 20, source_sha256))
+            and phase in {20, 24}
+            and verify_record(root, path, phase, source_sha256))
 
 
 def accepted_chunks(root, phase, declared, source_sha256, phase_review=None):
@@ -407,7 +408,7 @@ def main(argv=None, root=None):
     parser.add_argument("--chunk", help="Named chunk review; cannot advance the phase")
     parser.add_argument("--scope-evidence", nargs="*", action="extend", default=[], help="Chunk artifact paths for the reviewer")
     parser.add_argument("--release-readiness", action="store_true",
-                        help="Phase 20 prepublication readiness review; cannot complete the phase")
+                        help="Phase 20 or 24 prepublication readiness review; cannot complete the phase")
     parser.add_argument("--verify", type=pathlib.Path)
     parser.add_argument("--advance", action="store_true",
                         help="Advance only after verifying an accepted current-source review")
@@ -418,8 +419,8 @@ def main(argv=None, root=None):
         raise ValueError("Unknown phase or invalid attempt")
     rubric = uses_rubric(args.phase)
     completed_prior = 0
-    if args.release_readiness and (args.phase != 20 or args.chunk or args.verify or args.advance):
-        raise ValueError("Release readiness requires a new phase 20 review without chunk, verify, or advance")
+    if args.release_readiness and (args.phase not in {20, 24} or args.chunk or args.verify or args.advance):
+        raise ValueError("Release readiness requires a new phase 20 or 24 review without chunk, verify, or advance")
     if args.chunk and (not rubric or args.advance):
         raise ValueError("Chunk reviews require the new rubric and cannot advance a phase")
     if rubric and not args.verify:
@@ -437,14 +438,14 @@ def main(argv=None, root=None):
         if valid and args.advance:
             if status["active_phase"] != args.phase:
                 raise ValueError("Only the active phase can advance")
-            if args.phase == 20 and json.loads(review_path.read_text()).get("review_scope") != "phase":
+            if args.phase in {20, 24} and json.loads(review_path.read_text()).get("review_scope") != "phase":
                 raise ValueError("Release readiness does not complete delivery; obtain a final phase review")
             if rubric:
                 phases[args.phase]["chunks"] = accepted_chunks(
                     root, args.phase, phases[args.phase].get("chunks"), before, phase_review=review_path)
-            if args.phase == 20:
+            if args.phase in {20, 24}:
                 from release_delivery import verify as verify_delivery
-                verify_delivery(root, before)
+                verify_delivery(root, before) if args.phase == 20 else verify_delivery(root, before, phase=24, version="0.2.3")
             phases[args.phase]["status"] = "complete"
             record = json.loads(review_path.read_text())
             phases[args.phase]["reviews"].append(str(review_path.relative_to(root)))
@@ -543,7 +544,7 @@ Assess implementation, code quality, supportability, architecture and feature de
 against the qualified package and readiness to publish. The phase threshold remains 46/50.
 Actual registry publication, remote tag and terminal CI are subsequent delivery obligations;
 identify them as pending limitations, not completed outcomes. This record cannot advance
-phase 20. A fresh complete-phase review after delivery and both accepted chunks is required.
+the phase. A fresh complete-phase review after delivery and both accepted chunks is required.
 """
     if args.phase in SCOPE_BOUND_PHASES:
         review_scope = "release_readiness" if args.release_readiness else ("chunk" if args.chunk else "phase")

@@ -52,7 +52,7 @@ class ManagementPackageTests(unittest.TestCase):
             for name in self.names[:-1]] + [{'path': 'contracts/native-probes/src/main.rs', 'sha256': 'c' * 64}]}
         self.vcs = {'git': {'sha1': self.commit}, 'path_in_vcs': 'crates/scm-sdk'}
         checks = []
-        def check(command, cwd='package'):
+        def check(command, cwd='archive/scm-sdk'):
             checks.append({'command': ['cargo', '+1.99.0', *command], 'exit_code': 0,
                            'cwd': str(self.root / cwd)})
             return len(checks) - 1
@@ -62,9 +62,9 @@ class ManagementPackageTests(unittest.TestCase):
         bindings = {}
         for name in self.names:
             check(['run', '--example', name, '--all-features', '--locked', '--offline', '--target', self.host])
-            index = check(['run', '--features', 'red-team', '--locked', '--offline', '--target', self.host], name + '/consumer')
+            index = check(['run', '--features', 'red-team', '--locked', '--offline', '--target', self.host], 'archive/consumer')
             bindings['examples/' + name + '.rs'] = {'sha256': digest(self.files['examples/' + name + '.rs']), 'checkIndex': index, 'selectedFeatures': ['red-team']}
-        probe_index = check(['run', '--locked', '--offline', '--target', self.host], 'probe/consumer')
+        probe_index = check(['run', '--locked', '--offline', '--target', self.host], 'archive/consumer')
         self.report = {'schemaVersion': 3, 'sourceSha256': self.source, 'toolchain': '1.99.0',
             'passed': True, 'requireClean': True, 'effectiveDirty': False,
             'packageScriptSha256': package.sha(self.root / 'scripts/check-package.py'),
@@ -74,6 +74,8 @@ class ManagementPackageTests(unittest.TestCase):
             'archive_bytes': self.archive.stat().st_size, 'releaseCommit': self.commit, 'vcs': self.vcs,
             'files': [{'path': name, 'sha256': digest(data), 'bytes': len(data)} for name, data in sorted(self.files.items())],
             'oldConsumerSources': {row['path']: row['sha256'] for row in self.manifest['consumers']},
+            'extractedArchiveRoot': str(self.root / 'archive/scm-sdk'),
+            'externalConsumerRoot': str(self.root / 'archive/consumer'),
             'checks': checks, 'hostTarget': self.host, 'rustcVersion': self.rustc_version,
             'externalExampleConsumers': bindings,
             'externalConsumerManifest': self.consumer_manifest,
@@ -155,6 +157,35 @@ class ManagementPackageTests(unittest.TestCase):
         report = copy.deepcopy(self.report)
         report['files'] = [row for row in report['files'] if row['path'] != 'src/lib.rs']
         with self.assertRaisesRegex(ValueError, 'source inventory'):
+            self.verify(report)
+
+    def test_relative_retained_archive_is_anchored_to_repository(self):
+        report = copy.deepcopy(self.report)
+        report['retainedArchive'] = 'archive.crate'
+        # The verifier runs outside this synthetic root, so cwd-relative lookup fails.
+        self.assertEqual(self.verify(report), report)
+        report['retainedArchive'] = '.'
+        with self.assertRaisesRegex(ValueError, 'Retained clean archive'):
+            self.verify(report)
+
+    def test_archive_checks_must_run_in_recorded_extracted_root(self):
+        for index, row in enumerate(self.report['checks']):
+            if pathlib.Path(row['cwd']).name != 'scm-sdk':
+                continue
+            with self.subTest(command=row['command']):
+                report = copy.deepcopy(self.report)
+                report['checks'][index]['cwd'] = str(self.root / 'crates/scm-sdk')
+                with self.assertRaises(ValueError):
+                    self.verify(report)
+        for extracted in (str(self.root), str(self.root / 'crates/scm-sdk'), 'relative/scm-sdk'):
+            report = copy.deepcopy(self.report)
+            report['extractedArchiveRoot'] = extracted
+            report['externalConsumerRoot'] = str(pathlib.Path(extracted).parent / 'consumer')
+            with self.assertRaisesRegex(ValueError, 'execution roots'):
+                self.verify(report)
+        report = copy.deepcopy(self.report)
+        report['externalConsumerRoot'] = '/elsewhere/consumer'
+        with self.assertRaisesRegex(ValueError, 'execution roots'):
             self.verify(report)
 
     def test_archive_or_receipt_symlink_rejected(self):

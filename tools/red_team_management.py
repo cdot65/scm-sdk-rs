@@ -763,7 +763,35 @@ def verify_offline_live_boundary():
                 raise ValueError('Historical live acceptance leaked into current ledger: ' + name)
 
 
-def verify_cumulative_qualification(*, package_receipts=False):
+def verify_service_qualification():
+    """Require current-source bounded read observations without promoting provider workflows."""
+    import live_evidence
+    import native_operations
+    reference = json.loads(checked_bytes(HISTORICAL_LIVE_REFERENCE, HISTORICAL_LIVE_SHA256))
+    checked_bytes(reference['report'], reference['reportSha256'])
+    _, envelope = live_evidence.load(ROOT, required=True)
+    if envelope['report']['schemaVersion'] != 2:
+        raise ValueError('Phase 24 requires fresh bounded read-only management qualification')
+    annotations, _, receipt = native_operations.live_projection(ROOT)
+    for name, key in (('native-operations', 'operations'), ('qualification', 'operations'),
+                      ('native-exports', 'capabilities')):
+        document = load('contracts/' + name + '.json')
+        if document.get('liveReceipt') != receipt:
+            raise ValueError('Current service ledger has a stale live receipt: ' + name)
+        rows = document[key]
+        if name != 'native-exports':
+            native_operations.verify_live_rows(rows, annotations)
+        else:
+            for row in rows:
+                expected = annotations.get(row.get('operationId'), {})
+                if (row.get('liveAcceptance') != expected.get('liveAcceptance', 'unverified')
+                        or row.get('liveEvidence') != expected.get('liveEvidence')):
+                    raise ValueError('Export live evidence exceeds the recorded workflow')
+        if document['summary'].get('liveVerified') != sum(row['liveAcceptance'] == 'verified' for row in rows):
+            raise ValueError('Current service ledger has an incorrect live count: ' + name)
+
+
+def verify_cumulative_qualification(*, package_receipts=False, phase=23):
     """Verify owned offline artifacts; final package checks require real receipts."""
     import management_fixtures
     import management_consumers
@@ -781,32 +809,36 @@ def verify_cumulative_qualification(*, package_receipts=False):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         for compiler in ('1.89.0', '1.99.0'):
-            module.verify_receipt(ROOT, ROOT / f'docs/checks/phase-23-package-{compiler}.json', compiler)
+            prefix = 'phase-24-release' if phase == 24 else 'phase-23'
+            module.verify_receipt(ROOT, ROOT / f'docs/checks/{prefix}-package-{compiler}.json', compiler)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
-    parser.add_argument('--verify-package-receipts', action='store_true', help='Phase 23 final gate only: verify both executed clean package receipts')
+    parser.add_argument('--verify-package-receipts', action='store_true', help='Phase 23/24 final gate: verify both executed clean package receipts')
     parser.add_argument('--verify-retention-origin', action='store_true', help='Phase 21 only: verify current source ledgers equal audited seed digests')
     parser.add_argument('--require-through-phase', type=int, choices=range(21, 26), default=21)
     args = parser.parse_args()
     try:
-        if args.verify_package_receipts and args.require_through_phase != 23:
-            raise ValueError('Package receipt verification requires phase 23')
-        if args.require_through_phase > 23:
-            raise ValueError('Phase 24–25 qualification evidence is not implemented; static plan evidence cannot advance these phases')
+        if args.verify_package_receipts and args.require_through_phase not in (23, 24):
+            raise ValueError('Package receipt verification requires phase 23 or 24')
+        if args.require_through_phase > 24:
+            raise ValueError('Phase 25 qualification evidence is not implemented; static plan evidence cannot advance this phase')
         if args.verify_retention_origin:
             verify_retention_origin()
         outputs = build()
-        if args.require_through_phase in (22, 23):
+        if args.require_through_phase in (22, 23, 24):
             source = next(row for row in load('contracts/manifest.json')['sources'] if row['id'] == SOURCE_ID)
             if source['usedForGeneration'] is not True:
                 raise ValueError('Management runtime adoption is not declared')
             verify_runtime_adoption()
-            verify_offline_live_boundary()
-        if args.require_through_phase == 23:
-            verify_cumulative_qualification(package_receipts=args.verify_package_receipts)
+            if args.require_through_phase == 24:
+                verify_service_qualification()
+            else:
+                verify_offline_live_boundary()
+        if args.require_through_phase in (23, 24):
+            verify_cumulative_qualification(package_receipts=args.verify_package_receipts, phase=args.require_through_phase)
         for path, value in outputs.items():
             content = encoded(value)
             if args.check:

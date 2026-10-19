@@ -202,6 +202,52 @@ class PrivateMaterialTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             private.check_receipt(self.root, destination)
 
+    def test_public_receipt_accepts_only_bookkeeping_descendants_without_rewriting_history(self):
+        report = self.receipt()
+        destination = self.root / "docs/checks/historical-receipt.json"
+        destination.parent.mkdir(parents=True)
+        original = json.dumps(report).encode()
+        destination.write_bytes(original)
+        self.git("add", "docs/checks/historical-receipt.json")
+        self.commit()
+        self.assertNotEqual(self.git("rev-parse", "HEAD").decode().strip(), report["headCommit"])
+        self.assertEqual(private.check_receipt(self.root, destination), report)
+        self.assertEqual(destination.read_bytes(), original)
+
+    def test_public_receipt_rejects_source_edit_and_revert_despite_matching_current_bytes(self):
+        report = self.receipt()
+        destination = self.directory / "historical-receipt.json"
+        original = json.dumps(report).encode()
+        destination.write_bytes(original)
+        source = self.root / "crates/scm-sdk/src/lib.rs"
+        previous = source.read_bytes()
+        source.write_text("// changed source\n")
+        self.git("add", "crates/scm-sdk/src/lib.rs")
+        self.commit()
+        source.write_bytes(previous)
+        self.git("add", "crates/scm-sdk/src/lib.rs")
+        self.commit()
+        self.assertEqual(report["sourceSha256"], self.receipt()["sourceSha256"])
+        with self.assertRaisesRegex(ValueError, "Receipt head identity mismatch") as caught:
+            private.check_receipt(self.root, destination)
+        self.assertEqual(private.check_failure_code(caught.exception), "head_changed")
+        self.assertEqual(destination.read_bytes(), original)
+        fresh = self.receipt()
+        destination = self.directory / "fresh-receipt.json"
+        destination.write_text(json.dumps(fresh))
+        self.assertEqual(private.check_receipt(self.root, destination), fresh)
+
+    def test_public_receipt_rejects_unrelated_history_with_identical_source(self):
+        report = self.receipt()
+        destination = self.directory / "receipt.json"
+        destination.write_text(json.dumps(report))
+        self.git("checkout", "--orphan", "unrelated")
+        self.git("-c", "user.name=Synthetic Test", "-c", "user.email=synthetic@example.invalid",
+                 "commit", "-qm", "Unrelated synthetic history")
+        self.assertEqual(report["sourceSha256"], self.receipt()["sourceSha256"])
+        with self.assertRaisesRegex(ValueError, "Receipt head identity mismatch"):
+            private.check_receipt(self.root, destination)
+
     def test_public_receipt_does_not_read_excluded_evidence_into_its_source_budget(self):
         report = self.receipt()
         destination = self.directory / "receipt.json"

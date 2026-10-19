@@ -162436,10 +162436,10 @@ impl fmt::Debug for ResponseDetectionDetailsToxicContentDetails {
     }
 }
 
-#[derive(Clone, PartialEq, Eq)]
-#[non_exhaustive]
 /// Frozen TypeScript constant parity. Current management values are named on `TargetCreateRequestResponseMode`.
 /// Unknown response strings remain represented by `Unknown(String)`.
+#[derive(Clone, PartialEq, Eq)]
+#[non_exhaustive]
 pub enum ResponseMode {
     REST,
     STREAMING,
@@ -174146,10 +174146,10 @@ impl fmt::Debug for TargetConnectionConfig {
     }
 }
 
-#[derive(Clone, PartialEq, Eq)]
-#[non_exhaustive]
 /// Frozen TypeScript constant parity. Current management values are named on `TargetCreateRequestConnectionType`.
 /// Unknown response strings remain represented by `Unknown(String)`.
+#[derive(Clone, PartialEq, Eq)]
+#[non_exhaustive]
 pub enum TargetConnectionType {
     DATABRICKS,
     BEDROCK,

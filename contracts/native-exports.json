@@ -31,21 +31,39 @@
       "crates/scm-sdk/tests/gateway_runtime_contracts.rs::reserved_serde_protocol_objects_fail_closed_at_http_and_model_boundaries"
     ]
   },
-  "liveReceipt": null,
+  "liveReceipt": {
+    "reference": {
+      "path": "contracts/live-evidence.json",
+      "sha256": "45921c6451d776be4d4381f11d7430ebef022fc5e81a48437d149aa8da907849"
+    },
+    "report": {
+      "path": "docs/checks/phase-24-live-attempt-01.json",
+      "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19"
+    },
+    "verifier": {
+      "path": "tools/live_evidence.py",
+      "sha256": "512a2e31956051107e740c73f6bd9651803db1fe30d1f671a46e325aa3bba5e8"
+    },
+    "executedAt": "2026-10-19T21:39:42.507397+00:00",
+    "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+    "toolchain": "1.99.0",
+    "hostTarget": "x86_64-unknown-linux-musl",
+    "cleanupState": "not_needed"
+  },
   "generatorSha256": "e95e0b4d47406edbc50cd872833002d40857dfb165efc0bf57181c5fb707592e",
   "summary": {
     "frozenRoots": 2630,
     "frozenCapabilities": 3820,
     "implemented": 3820,
     "unresolved": 0,
-    "liveVerified": 0,
-    "liveVerifiedOperations": 0,
-    "liveRecordedCapabilities": 0
+    "liveVerified": 1,
+    "liveVerifiedOperations": 1,
+    "liveRecordedCapabilities": 2
   },
   "sourceBindings": [
     {
       "path": "Cargo.lock",
-      "sha256": "785e16a52d7f6529db46c8afa240cce798342a2189535cd3e82e8e8a36102fc2"
+      "sha256": "ca63e197047c8257dcaff3bc60e521ad80dc8dd0330bc0a61c74c240cd7cf9a1"
     },
     {
       "path": "Cargo.toml",
@@ -54,6 +72,10 @@
     {
       "path": "contracts/export-classification.json",
       "sha256": "717811ce737dbe77d5e5af7138835f413cb9987cb46a9ccb568c1483fa44586e"
+    },
+    {
+      "path": "contracts/live-evidence.json",
+      "sha256": "45921c6451d776be4d4381f11d7430ebef022fc5e81a48437d149aa8da907849"
     },
     {
       "path": "contracts/native-capability-mappings/client-members.json",
@@ -77,11 +99,11 @@
     },
     {
       "path": "contracts/native-models.json",
-      "sha256": "f31b0a225e41bd09f55528a22ebc31cf926af89d46f72d705856d706b625286a"
+      "sha256": "2035597aa88cd19e5a1f0a084fe51093e52a303ec35121453f4504181089ff7a"
     },
     {
       "path": "contracts/native-operations.json",
-      "sha256": "d96cedf16b2fc68e19a715895134afb7cde875318f07cbb73f24ce58b9bb95af"
+      "sha256": "3c64b78f5533baa37525565201d1fde821d7cb0b760d7a41dc080ad2d28d13df"
     },
     {
       "path": "contracts/typescript.json",
@@ -89,7 +111,7 @@
     },
     {
       "path": "crates/scm-sdk/Cargo.toml",
-      "sha256": "e0e8b1175e51cce5f95f71c4de50b382c9e904edf8119b8529c73329bce95d42"
+      "sha256": "59790c85838ea3b341e7c0e0f44dc111b1d0bf33f9424b55c96906137d9bd15c"
     },
     {
       "path": "crates/scm-sdk/src/airs/agentguard/client.rs",
@@ -429,7 +451,7 @@
     },
     {
       "path": "crates/scm-sdk/src/models/generated.rs",
-      "sha256": "b829dbcec2b0f6e2ad38ecc5dcd1dee80fa28f992273cfc5aea427d41520eaf1"
+      "sha256": "4fd4120e258e2a673fb3d03d18a4bbec70ad870da26f6d616f59ebd3336d7c85"
     },
     {
       "path": "crates/scm-sdk/src/models/iam.rs",
@@ -636,16 +658,20 @@
       "sha256": "8d8fbadaa4c69150db67d739b609e9b5f01b7c9edd4642e69db6f6f5bb835db3"
     },
     {
+      "path": "docs/checks/phase-24-live-attempt-01.json",
+      "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19"
+    },
+    {
       "path": "scripts/check-native-exports.py",
       "sha256": "048ce50b10148822e0c0f98e5af08414a200e530fd468f68a35d18d5f5e06c42"
     },
     {
       "path": "tools/generate_models.py",
-      "sha256": "1bb0a799a4bed5215df43c7eb8fb9b59d76de9e8354cdb529bea0a9d2b64fd55"
+      "sha256": "cf181a0044a72f097d9c73a0ab88a4e04f18fc97263ff33c5d548590e296ea11"
     },
     {
       "path": "tools/live_evidence.py",
-      "sha256": "957176368291ab7e6e03aa859d30720af1891c91905536a96d8e148f02846297"
+      "sha256": "512a2e31956051107e740c73f6bd9651803db1fe30d1f671a46e325aa3bba5e8"
     },
     {
       "path": "tools/native_exports.py",
@@ -116474,7 +116500,27 @@
       "verification": "independent_native_contract",
       "operationId": "src/management/oauth-client.ts:OAuthClient.getToken",
       "probeIndex": 3094,
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "verified",
+      "liveEvidence": {
+        "path": "docs/checks/phase-24-live-attempt-01.json",
+        "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+        "probe": "oauth.get_token",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 0,
+            "operation": "oauth.get_token",
+            "classification": "verified",
+            "status": 200,
+            "errorKind": null,
+            "remoteOutcome": null,
+            "workflowAccepted": true
+          }
+        ],
+        "reconciliationRequired": false
+      },
       "requiredFeatures": []
     },
     {
@@ -130435,7 +130481,57 @@
       "verification": "independent_operation_contract",
       "operationId": "src/red-team/targets-client.ts:RedTeamTargetsClient.list",
       "probeIndex": 3458,
-      "liveAcceptance": "unverified",
+      "liveAcceptance": "permission_prerequisite",
+      "liveEvidence": {
+        "path": "docs/checks/phase-24-live-attempt-01.json",
+        "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19",
+        "scope": "controlled_nonproduction",
+        "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+        "probe": "red_team.targets.list.profiling_not_started",
+        "observations": [
+          {
+            "section": "probes",
+            "index": 1,
+            "operation": "red_team.targets.list.profiling_not_started",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          },
+          {
+            "section": "probes",
+            "index": 2,
+            "operation": "red_team.targets.list.profiling_in_progress",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          },
+          {
+            "section": "probes",
+            "index": 3,
+            "operation": "red_team.targets.list.profiling_completed",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          },
+          {
+            "section": "probes",
+            "index": 4,
+            "operation": "red_team.targets.list.profiling_failed",
+            "classification": "permission_prerequisite",
+            "status": 403,
+            "errorKind": "http",
+            "remoteOutcome": "rejected",
+            "workflowAccepted": false
+          }
+        ],
+        "reconciliationRequired": false
+      },
       "requiredFeatures": [
         "red-team"
       ]
@@ -143937,7 +144033,7 @@
       },
       {
         "path": "Cargo.lock",
-        "sha256": "e5e1646c0e56035cc9c203efd4088de0988beb7809f248abc34b87a620747fe8"
+        "sha256": "75168b1263465b84c4a71fe6ca5fc7a4c558e636d2a908a9853120ca5cad2222"
       },
       {
         "path": "src/main.rs",

@@ -147,7 +147,7 @@ their actual artifacts and checks exist. Registering commands is not completion.
 
 `--contracts-only --verification-only` has a separate receipt for each new phase;
 it can never substitute for the complete phase check list. The current workflow
-routes to phase 23 contracts. Update routing, tests and documentation together
+routes to phase 24 contracts. Update routing, tests and documentation together
 when moving to phases 22 and 23. Phase 24 must align delivery-context verification
 with that workflow, select the actual release version and implement its own
 readiness/delivery guards. No existing 0.2.2-specific publication helper is reused
@@ -180,7 +180,7 @@ from a timeout, score, elapsed time or the general instruction to continue work.
 Until authorization exists, keep the exhausted scope incomplete and continue
 only independent work that does not depend on its acceptance.
 
-The current workflow routes to phase 23 contracts and preserves its independent
+The current workflow routes to phase 24 contracts and preserves its independent
 48-job Rust matrix. The contracts job checks planning provenance and frozen
 runtime inputs, not current live acceptance or release readiness. Local passing
 records do not prove the workflow ran remotely: retain an actual terminal run
@@ -252,3 +252,14 @@ receipt check follows execution and rejects stale or incomplete package evidence
 CI runs only the contracts subset alongside the independent Rust matrix.
 Historical live acceptance remains archived and is not attributed to this source.
 Fresh tenant acceptance and publication belong to Phase 24.
+
+### Phase 24 publication boundary
+
+The local gate reuses the full phase-23 compatibility matrix with fresh phase-24
+receipts, native read-only tenant qualification, both schema-3 clean package
+proofs, and a version-specific 0.2.3 candidate check. The release-readiness chunk
+and a full release-readiness Claude review must pass before publication. A
+readiness review cannot complete the phase. The delivery chunk and final phase
+review additionally require verified registry bytes, remote annotated tag and
+terminal successful CI on the matching source. Ordinary CI verifies sanitized
+service receipts without loading credentials or making tenant requests.

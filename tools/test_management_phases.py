@@ -179,7 +179,10 @@ class ManagementPhaseTests(unittest.TestCase):
         active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
         scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
         verify_scoped_ledger_owners(scope, commands_for(active['id']))
-        verify_scoped_ledger_owners(list(CONTRACT_LEDGER_OWNERS), commands_for(23))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json'], commands_for(23))
+        verify_scoped_ledger_owners(list(CONTRACT_LEDGER_OWNERS), commands_for(24))
+        with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
+            verify_scoped_ledger_owners(['contracts/live-evidence.json'], commands_for(23))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
             verify_scoped_ledger_owners(['contracts/native-models.json'], [])
         with tempfile.TemporaryDirectory() as directory:
@@ -214,18 +217,33 @@ class ManagementPhaseTests(unittest.TestCase):
             self.assertIn(["python", "tools/red_team_management.py", "--check",
                            "--require-through-phase", str(phase)], commands)
             self.assertTrue(any("scripts/check-rust.py" in c for c in commands))
-            self.assertFalse(any("scripts/check-access-release.py" in c for c in commands))
+            self.assertEqual(any("scripts/check-access-release.py" in c for c in commands), phase == 24)
             self.assertFalse(any("0.2.2" in value for command in commands for value in command))
             for command in commands:
                 for value in command:
                     self.assertNotIn("docs/checks/phase-19-", value)
                     self.assertNotIn("docs/checks/phase-20-", value)
 
+    def test_phase24_reuses_compatibility_and_requires_current_release_proofs(self):
+        commands = commands_for(24)
+        candidate = ['python', 'scripts/check-access-release.py', '--phase', '24',
+                     '--version', '0.2.3', '--output', 'docs/checks/phase-24-release-readiness.json']
+        self.assertEqual(commands[-1], candidate)
+        self.assertIn(['python', 'tools/live_evidence.py', '--check'], commands)
+        for compiler in ('1.89.0', '1.99.0'):
+            package = ['python', 'scripts/check-management-package.py', '--toolchain', compiler,
+                       '--output', f'docs/checks/phase-24-release-package-{compiler}.json']
+            self.assertLess(commands.index(package), commands.index(candidate))
+        self.assertFalse(any('scripts/check-package.py' in command for command in commands))
+        self.assertNotIn(candidate, ci_commands_for(24))
+        self.assertFalse(any('--run' in command or '--mutations' in command for command in commands))
+
     def test_qualification_has_both_packaged_compilers(self):
         for phase in range(23, 26):
+            release_prefix = "release-" if phase == 24 else ""
             for compiler in ("1.89.0", "1.99.0"):
-                self.assertIn(["python", "scripts/check-management-package.py" if phase == 23 else "scripts/check-package.py", "--toolchain", compiler,
-                               "--output", f"docs/checks/phase-{phase}-package-{compiler}.json"], commands_for(phase))
+                self.assertIn(["python", "scripts/check-management-package.py" if phase in (23, 24) else "scripts/check-package.py", "--toolchain", compiler,
+                               "--output", f"docs/checks/phase-{phase}-{release_prefix}package-{compiler}.json"], commands_for(phase))
 
     def test_ci_subsets_cannot_replace_full_reports(self):
         for phase in range(21, 26):

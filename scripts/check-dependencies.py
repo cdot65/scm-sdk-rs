@@ -54,6 +54,31 @@ def check_policy(policy):
         raise ValueError('Only crates.io is authorized')
 
 
+
+def check_resolved_features(metadata):
+    """Check Cargo's unified feature graph, including transitive activations."""
+    packages = {package['id']: package for package in metadata['packages']}
+    resolution = metadata.get('resolve')
+    nodes = resolution.get('nodes', []) if isinstance(resolution, dict) else []
+    if not nodes or len({node['id'] for node in nodes}) != len(nodes):
+        raise ValueError('Resolved dependency feature graph is missing or ambiguous')
+    ledger = []
+    for node in nodes:
+        package = packages.get(node['id'])
+        features = node.get('features')
+        if (package is None or not isinstance(features, list)
+                or any(not isinstance(feature, str) for feature in features)):
+            raise ValueError('Resolved dependency feature node is invalid')
+        if package['name'] == 'serde_json' and 'preserve_order' in features:
+            raise ValueError('serde_json/preserve_order is forbidden in the resolved dependency graph')
+        ledger.append({'name': package['name'], 'version': package['version'],
+                       'source': package.get('source'), 'features': sorted(set(features))})
+    serde_ids = {key for key, package in packages.items() if package['name'] == 'serde_json'}
+    if not serde_ids or not serde_ids <= {node['id'] for node in nodes}:
+        raise ValueError('Resolved serde_json feature evidence is missing')
+    return sorted(ledger, key=lambda row: (row['name'], row['version'], row['source'] or ''))
+
+
 def output_text(value):
     if isinstance(value, bytes):
         return value.decode('utf-8', errors='replace')
@@ -176,7 +201,9 @@ def qualify(args, checks):
     metadata=run([cargo,'+1.99.0','metadata','--all-features','--locked','--offline','--format-version','1'])
     if metadata.returncode:
         raise ValueError('Unable to resolve locked all-feature dependency metadata')
-    packages=json.loads(metadata.stdout)['packages']
+    metadata_json = json.loads(metadata.stdout)
+    packages = metadata_json['packages']
+    resolved_features = check_resolved_features(metadata_json)
     checks.pop()  # Store compact package evidence instead of huge absolute source paths.
     deny=run([tools['cargo-deny'],'--all-features','--locked','--offline','--format','json','check','bans','licenses','sources','--deny','warnings'])
     unchanged=before==sha(lock_path)
@@ -190,7 +217,8 @@ def qualify(args, checks):
             'tools':[{'name':name,'version':VERSIONS[name],'binarySha256':sha(path)} for name,path in tools.items()],
             'audit':audit_json,'packages':[{'name':p['name'],'version':p['version'],'license':p['license'],'source':p['source'],
                 'rustVersion':p.get('rust_version')} for p in sorted(packages,key=lambda p:(p['name'],p['version']))],
-            'resolvedPackages':len(packages),'checks':checks,
+            'resolvedPackages':len(packages), 'resolvedFeatures': resolved_features,
+            'serdeJsonPreserveOrderEnabled': False, 'checks':checks,
             'limitations':['RustSec covers published known advisories at the recorded revision, not all possible flaws.',
                            'License/source policy checks package metadata and detected license files; downstream applications must audit their own resolved graphs.']}
     output = write_report(args, report)

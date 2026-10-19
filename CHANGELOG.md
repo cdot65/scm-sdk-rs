@@ -1,5 +1,66 @@
 # Changelog
 
+## 0.2.3 — AIRS management 0.86.0 compatibility
+
+Publication is established only by the verified
+[registry receipt](docs/checks/release-registry-0.2.3.json) and
+[tag receipt](docs/checks/release-tag-v0.2.3.json). Until those exist and verify,
+this entry describes the release candidate.
+
+### Added and changed
+
+- Reconciled all seven pinned Prisma AIRS specifications and 160 operations.
+  Management 0.86.0 updates 42 existing operations; no existing route or SDK-only
+  capability is removed. The other six audited specifications are unchanged.
+- Schema-bound `TargetCreateRequestConnectionType` names `VERTEX_AI` and `N8N`;
+  `TargetCreateRequestResponseMode` names `REALTIME`. Frozen TypeScript parity
+  enums `TargetConnectionType` and `ResponseMode` retain `Unknown(String)` for
+  these values. Existing names and wire values are unchanged.
+- Added `VertexAIConnectionParams`, `VertexAIConnectionRedactParams`, and
+  `MultiTurnClientSessionConfig`. The appended connection and multi-turn union
+  branches may decode previously `Unknown(JsonValue)` shapes into
+  `Variant5(VertexAIConnectionParams)` and `Variant3(MultiTurnClientSessionConfig)`.
+  Legacy branch order and precedence remain unchanged; see the precise
+  [union transition inventory](contracts/red-team-management-model-overlay.json).
+- Added optional typed `basic_username`/`basic_password` projections to
+  `BasicAuthAuthConfig` and `AuthConfigRequestVariant3`, and
+  `audio_request_json`/`audio_curl` to `RestConnectionParams`,
+  `StreamingConnectionParams`, `WebSocketConnectionParams`, and
+  `ConnectionParamsRequestVariant2`. Representable values now live in typed
+  fields instead of `extensions`; incompatible values remain losslessly in
+  extensions. Missing, null and value remain distinct, and serialization preserves
+  the wire document. An explicitly supplied typed field takes precedence over a
+  colliding extension value.
+- Added `TargetListOptions::profiling_status`, propagated through list, pages,
+  items and list_all. Accepted filters are `NOT_STARTED`, `IN_PROGRESS`,
+  `COMPLETED`, and `FAILED`; undeclared values fail before authentication or I/O.
+
+### Migration and deliberately retained behavior
+
+- The new vendor `status` domain is `DRAFT`/`ACTIVE`. The SDK continues to send
+  caller-provided legacy `status` values unchanged rather than silently dropping
+  or translating them. Migrate `FAILED`, `IN_PROGRESS`, and `COMPLETED` to
+  `profiling_status` explicitly. `QUEUED` and `PARTIALLY_COMPLETE` have no declared
+  replacement filter and may be rejected by the service. Response values such as
+  `INIT`, `QUEUED`, and `PARTIALLY_COMPLETE` remain preserved.
+- All 23 G10 default bindings remain unchanged. Default insertion is enabled
+  unless `without_response_defaults()` is selected; that option preserves absent
+  keys and explicit nulls without changing accepted documents.
+- G25 response format tolerance, unknown response enum strings and object keys
+  remain. Existing request formats, required fields/types, supported query options,
+  path UUID validation, security limits and operation names remain enforced.
+  Target error-log queries still accept only `limit`; `skip`/`search` are refused.
+- Existing `api.apps` endpoint defaults remain. No automatic `api.sase` migration,
+  dependency upgrade, MSRV change (Rust 1.89), default-feature change, or
+  `serde_json/preserve_order` enablement is introduced.
+- Offline fixtures and packaged consumers qualify implementation compatibility.
+  Fresh read-only tenant probes authenticated successfully; all four target-list
+  filter probes returned HTTP 403 and remain permission-blocked. These results
+  establish neither target-list acceptance nor filtering effectiveness. Vertex AI,
+  N8N, client-session, audio and realtime provider workflows remain experimental
+  and live-unverified where credentials or compatible provider fixtures are absent.
+  Historical 0.2.2 live results are not attributed to changed source.
+
 ## 0.2.2 — G25 response compatibility
 
 This patch corrects G25 response compatibility. Publication is established only by the verified

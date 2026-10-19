@@ -26,7 +26,7 @@ def package_module(root):
 
 
 def verify_receipt(root, path, toolchain, source_sha=None):
-    root, path = pathlib.Path(root), pathlib.Path(path)
+    root, path = pathlib.Path(root).absolute(), pathlib.Path(path)
     if any(part.is_symlink() for part in (path, *path.parents)):
         raise ValueError('Package receipt must have a regular path')
     report = json.loads(path.read_text())
@@ -41,7 +41,10 @@ def verify_receipt(root, path, toolchain, source_sha=None):
         if report.get(key) != sha(root / name):
             raise ValueError('Package receipt input differs: ' + name)
     archive = pathlib.Path(report['retainedArchive'])
-    if any(part.is_symlink() for part in (archive, *archive.parents)) or sha(archive) != report.get('archive_sha256'):
+    if not archive.is_absolute():
+        archive = root / archive
+    if (any(part.is_symlink() for part in (archive, *archive.parents)) or not archive.is_file()
+            or sha(archive) != report.get('archive_sha256')):
         raise ValueError('Retained clean archive differs')
     policy = package_module(root)
     _, rustc_version, actual_host = policy.compiler_identity(root, toolchain)
@@ -80,10 +83,21 @@ def verify_receipt(root, path, toolchain, source_sha=None):
         raise ValueError('Package commands are missing or failed')
     host = report['hostTarget']
     commands = [row['command'][2:] for row in checks]
+    extracted = pathlib.Path(report.get('extractedArchiveRoot', ''))
+    consumer_root = pathlib.Path(report.get('externalConsumerRoot', ''))
+    if (not extracted.is_absolute() or extracted.name != 'scm-sdk'
+            or extracted in (root, root / 'crates/scm-sdk')
+            or '..' in extracted.parts or consumer_root != extracted.parent / 'consumer'):
+        raise ValueError('Package execution roots differ from extracted archive layout')
+
+    def archive_command_executed(command):
+        matches = [row for row in checks if row['command'][2:] == command]
+        return bool(matches) and all(pathlib.Path(row['cwd']) == extracted for row in matches)
+
     required = [['test', '--lib', '--no-default-features'], ['test', '--lib', '--all-features'],
                 ['check', '--examples', '--all-features'], ['test', '--doc', '--all-features']]
     for command in required:
-        if command + ['--locked', '--offline', '--target', host] not in commands:
+        if not archive_command_executed(command + ['--locked', '--offline', '--target', host]):
             raise ValueError('Missing package verification command')
     executables = {row['command'][0] for row in checks if row.get('command')}
     if len(executables) != 1 or pathlib.Path(next(iter(executables))).name not in {'cargo', 'cargo.exe'}:
@@ -102,7 +116,7 @@ def verify_receipt(root, path, toolchain, source_sha=None):
     probe_index = report.get('frozenProbeCheckIndex')
     if (type(probe_index) is not int or not 0 <= probe_index < len(checks) or probe_index in indices
             or commands[probe_index] != ['run', '--locked', '--offline', '--target', host]
-            or pathlib.Path(checks[probe_index]['cwd']).name != 'consumer'):
+            or pathlib.Path(checks[probe_index]['cwd']) != consumer_root):
         raise ValueError('Frozen capability consumer execution is missing')
     for name in ('response_defaults', 'red_team_dataplane', 'response_compatibility', 'red_team_management'):
         key = f'examples/{name}.rs'
@@ -115,9 +129,9 @@ def verify_receipt(root, path, toolchain, source_sha=None):
                 or not 0 <= index < len(checks)
                 or binding.get('selectedFeatures') != ['red-team']
                 or commands[index] != ['run', '--features', 'red-team', '--locked', '--offline', '--target', host]
-                or pathlib.Path(checks[index]['cwd']).name != 'consumer'):
+                or pathlib.Path(checks[index]['cwd']) != consumer_root):
             raise ValueError('External consumer execution binding differs')
-        if ['run', '--example', name, '--all-features', '--locked', '--offline', '--target', host] not in commands:
+        if not archive_command_executed(['run', '--example', name, '--all-features', '--locked', '--offline', '--target', host]):
             raise ValueError('Packaged example did not execute')
     if report.get('managementConsumerSourceSha256') != sha(root / 'crates/scm-sdk/examples/red_team_management.rs'):
         raise ValueError('Management consumer binding differs')
