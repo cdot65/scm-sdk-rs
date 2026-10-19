@@ -14,6 +14,7 @@ env:
   CI_UV_VERSION: "0.13.1"
 
 jobs:
+  # Legacy job name: clean archive execution is a local release gate; this job runs contracts only.
   contracts-and-package:
     runs-on: ubuntu-latest
     timeout-minutes: 180

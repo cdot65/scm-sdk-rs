@@ -26,8 +26,26 @@ Repackage at the exact qualified clean source, compare archive digest, publish,
 download and verify every file, create/push the immutable source tag, then require
 actual terminal success for all 49 configured CI jobs before phase completion.
 Published source and a later evidence-only delivery commit remain distinct in receipts.
+The delivery commit selected for terminal CI qualification must not contain a
+`[skip ci]` or equivalent skip marker. Later evidence-only bookkeeping may skip CI
+only while retaining the exact successfully qualified source fingerprint.
 The linked registry receipt holds publication date/source/checksum; do not alter
 packaged source merely to embed those values after publication.
+
+After actual 0.2.2 publication, verify the registry artifact with the accepted
+current-source readiness review (replace `NN` with its retained attempt number):
+
+```sh
+python3 scripts/verify-publication.py --version 0.2.2 \
+  --proof docs/checks/phase-20-release-package-1.99.0.json \
+  --msrv-proof docs/checks/phase-20-release-package-1.89.0.json \
+  --readiness-review docs/reviews/phase-20-attempt-NN.json \
+  --output docs/checks/release-registry-0.2.2.json
+```
+
+The verifier checks readiness before registry access and again before writing the
+receipt. The receipt retains the accepted review path, digest and source fingerprint;
+final delivery verification rechecks that provenance.
 
 The prior [0.2.0 receipt](checks/release-registry-0.2.0.json) and
 [release plan](release-0.2.0-plan.md) remain historical.

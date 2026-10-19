@@ -9,9 +9,7 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-BASELINE = "a9b2e2658c72c0b86b3953e0046d5ba9fbc9611c"
-PROTECTED = ("Cargo.toml", "Cargo.lock", "LICENSE", "NOTICE", "crates/scm-sdk/Cargo.toml",
-             "crates/scm-sdk/src", "crates/scm-sdk/examples")
+
 
 
 def sha(data):
@@ -29,10 +27,7 @@ def load_module(name, path):
     return module
 
 
-RELEASES = {
-    (17, '0.2.1'): BASELINE,
-    (20, '0.2.2'): '80baf80f0f6d90f9b382e8895083ca30fa5e8997',
-}
+RELEASES = {(17, '0.2.1'), (20, '0.2.2')}
 
 
 def verify_offline_delivery(proof, files, version):
@@ -113,7 +108,7 @@ def verify(root, phase=17, version='0.2.1'):
         proofs.append(proof)
     if any(proofs[0][key] != proofs[1][key] for key in ("releaseCommit", "files", "vcs")):
         raise ValueError("Compiler proofs do not qualify identical source files")
-    return {"schemaVersion": 1, "passed": True, "version": version, "baselineCommit": RELEASES[(phase, version)],
+    return {"schemaVersion": 1, "passed": True, "version": version,
             "releaseCommit": proofs[0]["releaseCommit"], "protectedFiles": rows,
             "readmeSha256": sha((root / "README.md").read_bytes()),
             "archiveSha256": proofs[1]["archive_sha256"], "toolchains": [p["toolchain"] for p in proofs]}

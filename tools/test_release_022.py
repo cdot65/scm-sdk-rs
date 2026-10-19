@@ -8,6 +8,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('release_candidate', ROOT / 'scripts/check-access-release.py')
 candidate = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(candidate)
+spec = importlib.util.spec_from_file_location('registry_verifier_022', ROOT / 'scripts/verify-publication.py')
+publication = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(publication)
 
 
 class Release022Tests(unittest.TestCase):
@@ -54,6 +57,16 @@ class Release022Tests(unittest.TestCase):
         proof['checks'].pop()
         with self.assertRaisesRegex(ValueError, 'consumers must execute'):
             candidate.verify_offline_delivery(proof, files, '0.2.2')
+
+    def test_registry_verifier_requires_each_present_response_example(self):
+        proof, files = self.fixture()
+        publication.verify_response_examples(proof, files)
+        for example in ('response_defaults', 'response_compatibility'):
+            changed = copy.deepcopy(proof)
+            changed['checks'] = [row for row in changed['checks'] if example not in row['command']]
+            with self.subTest(example=example), self.assertRaisesRegex(ValueError, 'not executed'):
+                publication.verify_response_examples(changed, files)
+        publication.verify_response_examples({'checks': []}, {})
 
 
 if __name__ == '__main__':

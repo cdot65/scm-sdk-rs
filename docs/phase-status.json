@@ -4279,9 +4279,10 @@
       "chunks": [
         {
           "id": "qualification-and-package",
-          "status": "in_progress",
+          "status": "pending_fresh_source_review",
           "attempts": [
-            "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json"
+            "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
+            "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json"
           ],
           "scope_evidence": [
             "scripts/check-package.py",
@@ -4309,9 +4310,23 @@
             "tools/test_g25_report.py",
             "crates/scm-sdk/tests/g25_response_compatibility.rs",
             "contracts/compatibility/g25/projections.json",
-            "docs/SECURITY.md"
+            "docs/SECURITY.md",
+            "scripts/verify-publication.py",
+            "tools/test_ci.py",
+            ".forgejo/workflows/ci.yml"
           ],
-          "historical_accepted_total": 44
+          "historical_accepted_total": 44,
+          "accepted_total": 45,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 9,
+            "supportability": 9,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
+          "accepted_source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa",
+          "review_decision": "accepted"
         },
         {
           "id": "registry-and-remote-delivery",
@@ -4331,7 +4346,7 @@
           "status": "failed",
           "evidence": "docs/checks/phase-20-candidate-01/phase-20.json",
           "cause": "Gateway binding receipt generated before the live-updated native-operation ledger; generated input hash stale.",
-          "resolution": "Regenerated Gateway binding after native ledger. All 41 contract commands pass; clean compiler proofs rerun on corrected candidate 938adbef948e962a5d9b997fbcd078130a175522. Runtime source unchanged."
+          "resolution": "Gateway binding regenerated after the native ledger. Candidate 938adbe then passed all 59 commands and both clean archive proofs; its proofs are preserved but superseded under docs/checks/phase-20-candidate-02/. The final currently qualified candidate is d64d9dc7f71d95eaa1e7849e661c252660970914 after documentation/advisory corrections; all 59 commands and both clean proofs passed again."
         }
       ],
       "live_acceptance": {
@@ -4406,11 +4421,14 @@
         {
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
           "finding": 3,
-          "disposition": "refresh_at_candidate_and_final_bookkeeping",
+          "disposition": "candidate_scan_refreshed_final_scan_pending",
           "evidence": [
-            "docs/SECURITY.md"
+            "docs/SECURITY.md",
+            "docs/checks/phase-20-private-material.json",
+            "docs/checks/phase-20-release-package-1.89.0.json",
+            "docs/checks/phase-20-release-package-1.99.0.json"
           ],
-          "resolution": "Documented intentional source-based --check semantics. Private scan will run at the corrected clean candidate commit and after final bookkeeping; neither scan is claimed before execution."
+          "resolution": "Private scan executed successfully at clean candidate d64d9dc7f71d95eaa1e7849e661c252660970914; headCommit equals both qualified package proofs. SECURITY.md documents source-based --check semantics. A final bookkeeping scan remains pending until final evidence exists."
         },
         {
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
@@ -4421,8 +4439,8 @@
         {
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
           "finding": 5,
-          "disposition": "covered_by_final_delivery_guard",
-          "resolution": "The current-version publication assertions will execute after registry_publication is recorded. The final phase cannot advance without canonical registry/tag receipts matching the qualified archive and remote refs. No absent receipt is treated as valid.",
+          "disposition": "required_delivery_action_pending",
+          "resolution": "The final guard proves canonical registry/tag content, but does not activate the current-version documentation test. The separate planned_registry_publication transition above is mandatory after actual registry verification. It will record registry_publication and execute test_ci.py before delivery, activating receipt-link assertions. This work remains pending; it is not claimed enforced by release_delivery.py.",
           "evidence": [
             "tools/release_delivery.py",
             "tools/test_release_delivery.py",
@@ -4434,6 +4452,66 @@
           "finding": 6,
           "disposition": "accepted_as_is",
           "resolution": "Explicit known projection bindings fail closed; broad unpaired-root diagnostics are deferred as recorded in review_advisories."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
+          "finding": 1,
+          "disposition": "accepted_documentation_location",
+          "resolution": "The full response-format security policy is already explicit in VALIDATION.md, G25_COMPATIBILITY.md and CHANGELOG.md. SECURITY.md retains the rule that returned URLs are not trusted. A duplicate bullet is deferred; no security guarantee is claimed for ignored response formats."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
+          "finding": 2,
+          "disposition": "enforced_in_delivery_execution",
+          "resolution": "The delivery execution constraints above explicitly require a non-skipped main commit, and release_delivery verifies exact terminal CI at that source. The actual push will follow this rule."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
+          "finding": 3,
+          "disposition": "already_documented",
+          "resolution": "LIVE_ACCEPTANCE.md already states: Live execution attempts keep the original phase-08-live-attempt-NN.json naming convention and a single increasing counter across maintenance/vendor phases; the filename does not assert that a later execution happened during Phase 8."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
+          "finding": 4,
+          "disposition": "accepted_legacy_context_name",
+          "resolution": "The historical CI context name is retained. CI.md explicitly documents that its 41-command subset excludes native package execution, which is separately qualified. Renaming the existing required status is outside this patch."
+        },
+        {
+          "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-02.json",
+          "finding": 5,
+          "disposition": "accepted_documented_trust_model",
+          "resolution": "PHASES.md states the repository-writer trust boundary. The package proofs record actual clean executions, and the candidate gate independently rechecks the archive digest, inventory, VCS and every package byte. No cryptographic authentication of an execution receipt is claimed."
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-01.json",
+          "finding": 1,
+          "disposition": "corrected_prepublication_obligation_pending_actual_delivery",
+          "resolution": "Removed the overstatement that the final guard activates current-version document checks. planned_registry_publication records the exact version/evidence/source transition and mandatory actual test_ci.py execution after registry verification. No publication entry is fabricated before publication. The final review must confirm this completed action; a general guard assertion is deferred as suggested by the reviewer."
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-01.json",
+          "finding": 2,
+          "disposition": "corrected",
+          "resolution": "qualified_candidate names d64d9dc and its current proofs. Both superseded candidate snapshots are inventoried with original commits/source hashes; initial failure resolution now points to the current qualified candidate."
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-01.json",
+          "finding": 3,
+          "disposition": "deferred_to_next_qualified_source_change",
+          "resolution": "The 59/41 prose counts are currently correct and exact full-gate command equality is enforced. Direct prose-count assertions are a low-priority future maintenance improvement, as recommended by the review; no source change is claimed."
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-01.json",
+          "finding": 4,
+          "disposition": "deferred_to_next_qualified_source_change",
+          "resolution": "The retained time_order refinement is limited to AgentGuard schema s000196 from src/models/agentguard.ts:142; it does not affect the Red Team format fixes. More precise generated prose is deferred as recommended; the current rule is disclosed and no broader compatibility claim is made."
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-01.json",
+          "finding": 5,
+          "disposition": "final_markdown_only_for_this_release",
+          "resolution": "This release deliberately keeps precedence documentation in CHANGELOG and G25_COMPATIBILITY. Generated-field/Extensions rustdoc is not delivered and is deferred to a future qualified patch; typed replacement behavior is intentional, unchanged and tested."
         }
       ],
       "review_evidence_corrections": [
@@ -4441,7 +4519,84 @@
           "review": "docs/reviews/phase-20-chunk-qualification-and-package-attempt-01.json",
           "correction": "The reviewer prose says 56 commands; the immutable checks snapshot actually contains 59. The mechanical gate validates all 59 exact commands. Reviewer output is preserved unchanged."
         }
-      ]
+      ],
+      "candidate_private_scan": {
+        "status": "passed",
+        "evidence": "docs/checks/phase-20-private-material.json",
+        "head_commit": "d64d9dc7f71d95eaa1e7849e661c252660970914",
+        "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa",
+        "final_bookkeeping_scan": "pending_until_final_evidence_exists"
+      },
+      "delivery_execution_constraints": {
+        "ci_commit_message": "Must not contain [skip ci] or another skip marker. Push the receipt-bearing delivery commit to main to trigger the exact 49-job workflow.",
+        "final_bookkeeping_commit": "Only after terminal CI and final review, receipt-only changes may use [skip ci]; verify unchanged reviewed source and CI-commit ancestry.",
+        "qualification_snapshot": "Preserve the accepted 59-command snapshot; do not rerun the HEAD-bound candidate checker after receipt-only delivery commits."
+      },
+      "qualified_candidate": {
+        "source_commit": "d64d9dc7f71d95eaa1e7849e661c252660970914",
+        "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa",
+        "archive_sha256": "1e5085b7ce7659cd1c1436b6fd716d0f5a1161f403dc6df9fe0cb5de6c0fbd78",
+        "evidence": [
+          "docs/checks/phase-20.json",
+          "docs/checks/phase-20-release-package-1.89.0.json",
+          "docs/checks/phase-20-release-package-1.99.0.json",
+          "docs/checks/phase-20-private-material.json"
+        ]
+      },
+      "historical_supplementary_evidence": [
+        {
+          "directory": "docs/checks/phase-20-candidate-01",
+          "source_commit": "e4cabb0ee28c67959997c45312d89514befa999c",
+          "source_sha256": "500047554eba2e15c0a36b3b72724582f4e481ee4932faa371140de7b0b68fd5",
+          "status": "superseded",
+          "reason": "Clean archives passed; full gate stopped on the stale Gateway binding receipt."
+        },
+        {
+          "directory": "docs/checks/phase-20-candidate-02",
+          "source_commit": "938adbef948e962a5d9b997fbcd078130a175522",
+          "source_sha256": "bec9e52c4771d058026ad8e838fc9b376466ad02dbb214b17b08fdece1d98b42",
+          "status": "superseded",
+          "reason": "All 59 commands and both clean archives passed. Superseded by documentation/advisory corrections; current proofs bind d64d9dc."
+        },
+        {
+          "candidate": "d64d9dc7f71d95eaa1e7849e661c252660970914",
+          "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa",
+          "status": "superseded_after_readiness_review",
+          "evidence": "docs/checks/phase-20-candidate-03",
+          "reason": "Readiness02 requires tracked enforcement of publication metadata and readiness plus release tooling/documentation corrections; no SDK runtime defect."
+        }
+      ],
+      "planned_registry_publication": {
+        "status": "pending_actual_publication_and_registry_verification",
+        "version": "0.2.2",
+        "evidence": "docs/checks/release-registry-0.2.2.json",
+        "source_commit": "d64d9dc7f71d95eaa1e7849e661c252660970914",
+        "required_transition": "Only after verify-publication.py succeeds, create phase 20 registry_publication with status published_and_verified, this version, this canonical evidence STRING and the actual source_commit. Then run tools/test_ci.py and preserve its actual output before committing and pushing the delivery commit. Do not insert registry_publication or claim published status while the registry receipt is absent.",
+        "completion_requirement": "Final delivery review must inspect the actual registry_publication entry, executed current-version document guard, registry/tag receipts and exact terminal 49-job CI. Missing entry or failed document guard is unfinished delivery.",
+        "enforcement_boundary": "release_delivery.py validates canonical receipt contents but does not enforce registry_publication metadata. The explicit recorded delivery obligation plus executed current-version test closes this release; adding a metadata assertion to the general guard is deferred to a later qualified source change."
+      },
+      "release_readiness_attempts": [
+        {
+          "review": "docs/reviews/phase-20-attempt-01.json",
+          "total": 45,
+          "decision": "rejected",
+          "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa"
+        },
+        {
+          "review": "docs/reviews/phase-20-attempt-02.json",
+          "total": 45,
+          "decision": "rejected",
+          "source_sha256": "ee60edd531d651fb2583723f101eddd65d297a8c1dad030828092dbe4f267faa"
+        }
+      ],
+      "readiness_followup": {
+        "status": "implementing",
+        "review": "docs/reviews/phase-20-attempt-02.json",
+        "scope": "Enforce actual phase20 publication metadata in delivery guard, require accepted current-source readiness in registry receipt tooling, bind packaged compatibility example and documented CI counts, clarify security/delivery documentation. SDK runtime unchanged.",
+        "deferred": [
+          "Generated projection-field rustdoc remains documented in G25_COMPATIBILITY.md; later generated-code patch with its own qualification."
+        ]
+      }
     }
   ],
   "active_followup_plan": "docs/g25-response-compatibility-plan.md"

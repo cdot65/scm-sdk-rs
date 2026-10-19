@@ -2,6 +2,7 @@
 import contextlib
 import copy
 import io
+import importlib.util
 import json
 import pathlib
 import subprocess
@@ -9,7 +10,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from release_delivery import REMOTE, commit_fingerprint, expected_contexts, validate_receipts, verify_source_commits
+from release_delivery import REMOTE, commit_fingerprint, expected_contexts, validate_receipts, verify_source_commits, verify_publication_metadata, verify_registry_readiness
 from review_phase import fingerprint, main, verify_release_readiness, verify_record
 
 
@@ -252,3 +253,90 @@ class DeliveryTests(unittest.TestCase):
                 record['scope_evidence'] = ['source.rs']
                 path.write_text(json.dumps(record))
                 self.assertFalse(verify_record(root, path, 20, fingerprint(root), 'qualification'))
+
+
+    def test_phase20_publication_metadata_is_required_and_matches_registry(self):
+        publication = {'status': 'published_and_verified', 'version': '0.2.2',
+                       'evidence': 'docs/checks/release-registry-0.2.2.json',
+                       'source_commit': self.source}
+        phase = {'id': 20, 'registry_publication': publication}
+        verify_publication_metadata(phase, self.registry)
+        for invalid in ({'id': 20}, {'id': 20, 'registry_publication': None},
+                        {'id': 17, 'registry_publication': publication}):
+            with self.subTest(phase=invalid), self.assertRaises(ValueError):
+                verify_publication_metadata(invalid, self.registry)
+        for field, wrong in [('status', 'pending'), ('version', '0.2.1'),
+                             ('evidence', 'docs/checks/release-registry-0.2.1.json'),
+                             ('evidence', ['docs/checks/release-registry-0.2.2.json']),
+                             ('source_commit', 'e' * 40)]:
+            with self.subTest(field=field, wrong=wrong), self.assertRaises(ValueError):
+                verify_publication_metadata({'id': 20, 'registry_publication': dict(publication, **{field: wrong})},
+                                            self.registry)
+        for missing in publication:
+            incomplete = {key: value for key, value in publication.items() if key != missing}
+            with self.subTest(missing=missing), self.assertRaises(ValueError):
+                verify_publication_metadata({'id': 20, 'registry_publication': incomplete}, self.registry)
+
+
+    def test_registry_receipt_tool_requires_current_source_readiness_for_022(self):
+        root = pathlib.Path(__file__).resolve().parents[1]
+        spec = importlib.util.spec_from_file_location('publication_readiness_test', root / 'scripts/verify-publication.py')
+        publication = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(publication)
+        self.assertIsNone(publication.require_release_readiness('0.2.1', None))
+        with self.assertRaisesRegex(ValueError, 'requires --readiness-review'):
+            publication.require_release_readiness('0.2.2', None)
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = pathlib.Path(directory)
+            review = fixture / 'review.json'
+            review.write_text('Synthetic review receipt')
+            with patch.object(publication, 'ROOT', fixture), \
+                    patch('review_phase.fingerprint', return_value=self.digest), \
+                    patch('review_phase.verify_release_readiness', return_value=False) as gate:
+                with self.assertRaisesRegex(ValueError, 'accepted current-source'):
+                    publication.require_release_readiness('0.2.2', review)
+                gate.assert_called_once_with(fixture, review, self.digest)
+                gate.return_value = True
+                result = publication.require_release_readiness('0.2.2', review)
+                self.assertEqual(result['sourceSha256'], self.digest)
+                self.assertEqual(result['review'], 'review.json')
+                self.assertEqual(result['reviewSha256'], publication.sha(review.read_bytes()))
+
+    def test_registry_cli_cannot_fetch_or_write_without_readiness(self):
+        root = pathlib.Path(__file__).resolve().parents[1]
+        spec = importlib.util.spec_from_file_location('publication_cli_readiness_test', root / 'scripts/verify-publication.py')
+        publication = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(publication)
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = pathlib.Path(directory)
+            proof, output = fixture / 'proof.json', fixture / 'receipt.json'
+            proof.write_text('{}')
+            with patch('sys.argv', ['verify-publication.py', '--version', '0.2.2', '--proof', str(proof),
+                                    '--output', str(output)]), patch.object(publication, 'fetch') as fetch:
+                with self.assertRaisesRegex(ValueError, 'requires --readiness-review'):
+                    publication.main()
+                fetch.assert_not_called()
+                self.assertFalse(output.exists())
+
+
+    def test_final_delivery_retains_registry_readiness_provenance(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            path = root / 'docs/reviews/phase-20-attempt-03.json'
+            path.parent.mkdir(parents=True)
+            path.write_text('Synthetic retained readiness review')
+            import hashlib
+            readiness = {'review': str(path.relative_to(root)), 'sourceSha256': self.digest,
+                         'reviewSha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+            with patch('release_delivery.verify_release_readiness', return_value=True) as gate:
+                verify_registry_readiness(root, {'releaseReadiness': readiness}, self.digest)
+                gate.assert_called_once_with(root, path, self.digest)
+                for field, wrong in [('review', '../outside.json'), ('sourceSha256', 'changed'),
+                                     ('reviewSha256', 'changed')]:
+                    with self.subTest(field=field), self.assertRaises(ValueError):
+                        verify_registry_readiness(root, {'releaseReadiness': dict(readiness, **{field: wrong})}, self.digest)
+                with self.assertRaisesRegex(ValueError, 'must retain'):
+                    verify_registry_readiness(root, {}, self.digest)
+                gate.return_value = False
+                with self.assertRaisesRegex(ValueError, 'differs from accepted'):
+                    verify_registry_readiness(root, {'releaseReadiness': readiness}, self.digest)

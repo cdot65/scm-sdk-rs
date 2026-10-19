@@ -53,6 +53,33 @@ def require_proof(proof, clean=True):
         raise ValueError("Publication requires an executed passing clean-package proof")
 
 
+def require_release_readiness(version, review_path):
+    """Bind 0.2.2 registry receipt creation to actual current-source Claude approval."""
+    if version != "0.2.2":
+        return None
+    if review_path is None:
+        raise ValueError("0.2.2 requires --readiness-review before registry verification")
+    sys.path.insert(0, str(ROOT / "tools"))
+    from review_phase import fingerprint, verify_release_readiness
+    path = review_path if review_path.is_absolute() else ROOT / review_path
+    if path.is_symlink() or not path.resolve().is_relative_to(ROOT.resolve()):
+        raise ValueError("Readiness review must be retained inside the repository")
+    source = fingerprint(ROOT)
+    if not verify_release_readiness(ROOT, path, source):
+        raise ValueError("Publication requires an accepted current-source release-readiness review")
+    return {"review": path.relative_to(ROOT).as_posix(), "reviewSha256": sha(path.read_bytes()),
+            "sourceSha256": source}
+
+
+def verify_response_examples(proof, files):
+    for example in ("response_defaults", "response_compatibility"):
+        if f"examples/{example}.rs" in files and not any(
+            check["command"][2:6] == ["run", "--example", example, "--all-features"]
+            for check in proof["checks"]
+        ):
+            raise ValueError("The response policy example was not executed from the archive: " + example)
+
+
 def verify(version, proof, metadata, owners, archive, msrv_proof=None):
     require_proof(proof)
     if not (isinstance(metadata, dict) and isinstance(metadata.get("version"), dict)
@@ -75,11 +102,7 @@ def verify(version, proof, metadata, owners, archive, msrv_proof=None):
     rows = file_rows(files)
     if rows != proof["files"] or vcs != proof["vcs"]:
         raise ValueError("Published files or VCS metadata differ from the qualified archive")
-    if "examples/response_defaults.rs" in files and not any(
-        c["command"][2:6] == ["run", "--example", "response_defaults", "--all-features"]
-        for c in proof["checks"]
-    ):
-        raise ValueError("The new response policy example was not executed from the archive")
+    verify_response_examples(proof, files)
     if msrv_proof is not None:
         require_proof(msrv_proof)
         if not (msrv_proof["toolchain"] == "1.89.0"
@@ -187,6 +210,8 @@ def main():
     parser.add_argument("--version", required=True)
     parser.add_argument("--proof", type=pathlib.Path, required=True)
     parser.add_argument("--msrv-proof", type=pathlib.Path)
+    parser.add_argument("--readiness-review", type=pathlib.Path,
+                        help="Accepted current-source phase20 readiness review; required for 0.2.2")
     parser.add_argument("--output", type=pathlib.Path, required=True)
     parser.add_argument("--delta", action="store_true", help="Compare the qualified candidate with published 0.1.0")
     args = parser.parse_args()
@@ -194,6 +219,7 @@ def main():
         raise ValueError("Use an exact numeric release version")
     if args.output.exists() and not args.delta:
         raise ValueError("Preserve the existing publication receipt")
+    readiness = require_release_readiness(args.version, args.readiness_review)
     proof = json.loads(args.proof.read_text())
     if args.delta:
         return check_delta(args.version, proof, args.output)
@@ -220,6 +246,10 @@ def main():
         "retainedArchive": retained.relative_to(ROOT).as_posix(),
         "sources": [version_url, owners_url, download],
     })
+    if args.version == "0.2.2":
+        if require_release_readiness(args.version, args.readiness_review) != readiness:
+            raise ValueError("Readiness or reviewed source changed during registry verification")
+        report["releaseReadiness"] = readiness
     create_file(args.output, (json.dumps(report, indent=2) + "\n").encode())
     print(json.dumps({"version": args.version, "published": True,
                       "sourceCommit": report["sourceCommit"], "archiveSha256": report["archiveSha256"]}))

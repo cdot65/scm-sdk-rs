@@ -13,7 +13,7 @@ import pathlib
 import re
 import subprocess
 
-from review_phase import EXCLUDED_DIRECTORIES, EXCLUDED_FILES, fingerprint
+from review_phase import EXCLUDED_DIRECTORIES, EXCLUDED_FILES, fingerprint, verify_release_readiness
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 REMOTE = 'ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git'
@@ -124,6 +124,35 @@ def verify_source_commits(root, result, source_sha256):
                    cwd=root, check=True)
 
 
+def verify_publication_metadata(phase, registry):
+    """Do not let final delivery omit the metadata that activates release-doc checks."""
+    publication = phase.get('registry_publication')
+    require(phase.get('id') == PHASE and isinstance(publication, dict),
+            'Phase20 must record registry_publication metadata')
+    require(publication.get('status') == 'published_and_verified'
+            and publication.get('version') == VERSION
+            and publication.get('evidence') == f'docs/checks/release-registry-{VERSION}.json'
+            and publication.get('source_commit') == registry.get('sourceCommit')
+            and isinstance(publication.get('source_commit'), str)
+            and re.fullmatch('[0-9a-f]{40}', publication['source_commit']),
+            'Phase20 publication metadata differs from verified registry delivery')
+
+
+def verify_registry_readiness(root, registry, source_sha256):
+    readiness = registry.get('releaseReadiness')
+    require(isinstance(readiness, dict), 'Registry receipt must retain releaseReadiness provenance')
+    relative = readiness.get('review')
+    require(isinstance(relative, str) and re.fullmatch(r'docs/reviews/phase-20-attempt-\d+\.json', relative),
+            'Registry readiness must reference its actual phase20 review')
+    path = root / relative
+    require(not path.is_symlink() and path.resolve().is_relative_to(root.resolve()),
+            'Registry readiness must reference regular repository evidence')
+    require(readiness.get('sourceSha256') == source_sha256
+            and readiness.get('reviewSha256') == hashlib.sha256(path.read_bytes()).hexdigest()
+            and verify_release_readiness(root, path, source_sha256),
+            'Registry readiness provenance differs from accepted current source')
+
+
 def verify(root, source_sha256=None):
     root = root.resolve()
     source_sha256 = source_sha256 or fingerprint(root)
@@ -139,6 +168,8 @@ def verify(root, source_sha256=None):
     require(isinstance(ci_path, str) and re.fullmatch(r'docs/checks/phase-20-remote-ci-run-\d+\.json', ci_path),
             'Phase delivery must identify its terminal CI receipt')
     registry, tag, ci = [read_record(root, path) for path in (registry_path, tag_path, ci_path)]
+    verify_publication_metadata(phase, registry)
+    verify_registry_readiness(root, registry, source_sha256)
     proofs = [read_record(root, f'docs/checks/phase-20-release-package-{compiler}.json')
               for compiler in ('1.89.0', '1.99.0')]
     spec = importlib.util.spec_from_file_location('delivery_publication', root / 'scripts/verify-publication.py')

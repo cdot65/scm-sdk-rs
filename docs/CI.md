@@ -13,6 +13,10 @@ script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
 Phase 12, maintenance Phase 92 and access-policy Phase 17 gates remain historical.
 See [the G25 plan](g25-response-compatibility-plan.md).
 
+The delivery commit whose workflow establishes terminal release qualification must
+not use `[skip ci]` or equivalent skip markers. Later evidence-only commits may
+retain that qualified result only when the reviewed source fingerprint is unchanged.
+
 ## Required runner tools
 
 The normal ubuntu-latest label must supply a Linux x86_64 runner with Git,

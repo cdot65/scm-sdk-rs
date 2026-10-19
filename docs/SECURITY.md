@@ -30,6 +30,13 @@ customer resources to reproduce a report.
 - Destinations, path segments, headers, request bodies and typed schemas validate
   before authentication. Verified TLS and redirect rejection protect credential
   routing. Returned URLs and secret references remain data until explicitly used.
+- Response modes deliberately tolerate unknown enums and skip the `uuid`,
+  `rfc3339`, `datetime`, `date`, `duration`, `email`, `url` and `regex` string-format
+  assertions, plus vendor-only string-length assertions. String types, baseline
+  presence/type/bounds, finite JSON and resource limits remain enforced. Request
+  checks remain strict. Frozen refinements and transforms remain active, including
+  AgentGuard timestamp parsing in `time_order`;
+  [G25 compatibility](G25_COMPATIBILITY.md) lists the retained response constraints.
 - HTTP, decompression, JSON work, pagination, multipart, SSE and realtime have
   resource bounds. Explicit cancellation stops local work; uncertain remote
   outcomes remain visible, and mutations are not silently replayed.

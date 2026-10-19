@@ -127,6 +127,23 @@ class CiContractTests(unittest.TestCase):
         self.assertEqual(int(next(value for value in total_count.groups() if value is not None)), total_jobs)
         # Historical run observations may keep their original, smaller matrix.
 
+    def test_current_documented_gate_command_counts_match_selected_commands(self):
+        from check_phase import commands_for, ci_commands_for
+        phase = int(re.search(r"tools/check_phase\.py --phase (\d+) --verification-only", WORKFLOW).group(1))
+        document = (ROOT / "docs/CI.md").read_text()
+        full = re.search(r"The complete local Phase (\d+) gate has (\d+) commands", document)
+        subset = re.search(r"CI's (\d+)-command subset writes", document)
+        job = re.search(r"\| contracts-and-package \|([^\n]+)", document)
+        self.assertIsNotNone(full)
+        self.assertIsNotNone(subset)
+        self.assertIsNotNone(job)
+        job_count = re.search(r"Its (\d+) credential-free commands", job.group(1))
+        self.assertIsNotNone(job_count)
+        self.assertEqual(int(full.group(1)), phase)
+        self.assertEqual(int(full.group(2)), len(commands_for(phase)))
+        self.assertEqual(int(subset.group(1)), len(ci_commands_for(phase)))
+        self.assertEqual(int(job_count.group(1)), len(ci_commands_for(phase)))
+
     def test_native_workflow_is_dispatch_only_without_a_job_admission_condition(self):
         path = ROOT / ".forgejo/workflows/native-platforms.yml"
         self.assertTrue(path.is_file())
