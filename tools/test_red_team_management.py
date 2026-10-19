@@ -338,6 +338,9 @@ class ManagementPlanTests(unittest.TestCase):
         with patch.object(live_evidence, 'load', return_value=({}, {'report': {'schemaVersion': 1}})):
             with self.assertRaisesRegex(ValueError, 'fresh bounded read-only'):
                 subject.verify_service_qualification()
+        with patch.object(live_evidence, 'load', return_value=({}, {'report': {'schemaVersion': 2, 'limitations': live_evidence.HISTORICAL_READ_ONLY_LIMITATIONS}})):
+            with self.assertRaisesRegex(ValueError, 'endpoint profiles'):
+                subject.verify_service_qualification()
         row = {'baselineId': 'known', 'implementation': 'implemented', 'liveAcceptance': 'verified',
                'liveEvidence': {'source': 'current'}}
         annotation = {'known': {'liveAcceptance': 'verified', 'liveEvidence': {'source': 'current'}}}
@@ -347,7 +350,7 @@ class ManagementPlanTests(unittest.TestCase):
                 return {'liveReceipt': receipt, 'summary': {'liveVerified': 1},
                         'capabilities': [dict(row, operationId='known')]}
             return {'liveReceipt': receipt, 'summary': {'liveVerified': 1}, 'operations': [row]}
-        with patch.object(live_evidence, 'load', return_value=(annotation, {'report': {'schemaVersion': 2}})), \
+        with patch.object(live_evidence, 'load', return_value=(annotation, {'report': {'schemaVersion': 2, 'limitations': live_evidence.READ_ONLY_LIMITATIONS}})), \
                 patch.object(native_operations, 'live_projection', return_value=(annotation, set(), receipt)), \
                 patch.object(subject, 'load', side_effect=ledger):
             subject.verify_service_qualification()

@@ -34,18 +34,18 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "45921c6451d776be4d4381f11d7430ebef022fc5e81a48437d149aa8da907849"
+      "sha256": "4596e7ffa70d91e5464e5bf455245e19b146e8fe0e705f441870a4fefd7daa1f"
     },
     "report": {
-      "path": "docs/checks/phase-24-live-attempt-01.json",
-      "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19"
+      "path": "docs/checks/phase-24-live-attempt-02.json",
+      "sha256": "4af43447dc45a3554680391314b1b7bc83dd1eca60a20967925e549a928a4ca2"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
-      "sha256": "512a2e31956051107e740c73f6bd9651803db1fe30d1f671a46e325aa3bba5e8"
+      "sha256": "8a4fecf1988e6f32d5b3c9c5879ba327e28fd0053092a103f3a2f8bfe7cd14a1"
     },
-    "executedAt": "2026-10-19T21:39:42.507397+00:00",
-    "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+    "executedAt": "2026-10-19T23:05:25.813902+00:00",
+    "runtimeInputsSha256": "78abb0e5ae30ebe43d28d3d6639fcf5daa8c8513d433dea0827ff77f971f7b93",
     "toolchain": "1.99.0",
     "hostTarget": "x86_64-unknown-linux-musl",
     "cleanupState": "not_needed"
@@ -13637,10 +13637,10 @@
       "liveAcceptance": "verified",
       "liveReason": "The exact operation succeeded in the source-bound controlled native workflow.",
       "liveEvidence": {
-        "path": "docs/checks/phase-24-live-attempt-01.json",
-        "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19",
+        "path": "docs/checks/phase-24-live-attempt-02.json",
+        "sha256": "4af43447dc45a3554680391314b1b7bc83dd1eca60a20967925e549a928a4ca2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+        "runtimeInputsSha256": "78abb0e5ae30ebe43d28d3d6639fcf5daa8c8513d433dea0827ff77f971f7b93",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -21502,10 +21502,10 @@
       "liveAcceptance": "permission_prerequisite",
       "liveReason": "The recorded identity lacked the required service permission.",
       "liveEvidence": {
-        "path": "docs/checks/phase-24-live-attempt-01.json",
-        "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19",
+        "path": "docs/checks/phase-24-live-attempt-02.json",
+        "sha256": "4af43447dc45a3554680391314b1b7bc83dd1eca60a20967925e549a928a4ca2",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "82993f7ad7264f8317ce126bafdaca20c2040d6926cf93d04699ea18f36c59b5",
+        "runtimeInputsSha256": "78abb0e5ae30ebe43d28d3d6639fcf5daa8c8513d433dea0827ff77f971f7b93",
         "probe": "red_team.targets.list.profiling_not_started",
         "observations": [
           {
@@ -22018,15 +22018,15 @@
   "sourceBindings": [
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "45921c6451d776be4d4381f11d7430ebef022fc5e81a48437d149aa8da907849"
+      "sha256": "4596e7ffa70d91e5464e5bf455245e19b146e8fe0e705f441870a4fefd7daa1f"
     },
     {
       "path": "contracts/native-exports.json",
-      "sha256": "6ec01ed98d103b55cd7fed2edab3753d4e5fcc6af303d4028a2e714bfa5de400"
+      "sha256": "84921012e28e040f21ed01edd7601cc1becebe22d9bf48bd6e08bd5c2d2c8844"
     },
     {
       "path": "contracts/native-operations.json",
-      "sha256": "3c64b78f5533baa37525565201d1fde821d7cb0b760d7a41dc080ad2d28d13df"
+      "sha256": "85463785c35eaa6905043c9872b232c12f8a836c7926be02bd08d8ce2ad84447"
     },
     {
       "path": "contracts/operations.json",
@@ -22041,12 +22041,12 @@
       "sha256": "7313b68701b71af4d0450bea423832a307789990736c6929ba3fc3b895d5611d"
     },
     {
-      "path": "docs/checks/phase-24-live-attempt-01.json",
-      "sha256": "07784c6ed8be4b6a1925f1ad810b9c102c106965105b0ac0b398044fe4413c19"
+      "path": "docs/checks/phase-24-live-attempt-02.json",
+      "sha256": "4af43447dc45a3554680391314b1b7bc83dd1eca60a20967925e549a928a4ca2"
     },
     {
       "path": "tools/live_evidence.py",
-      "sha256": "512a2e31956051107e740c73f6bd9651803db1fe30d1f671a46e325aa3bba5e8"
+      "sha256": "8a4fecf1988e6f32d5b3c9c5879ba327e28fd0053092a103f3a2f8bfe7cd14a1"
     },
     {
       "path": "tools/native_exports.py",

@@ -56,7 +56,10 @@ this entry describes the release candidate.
 - Offline fixtures and packaged consumers qualify implementation compatibility.
   Fresh read-only tenant probes authenticated successfully; all four target-list
   filter probes returned HTTP 403 and remain permission-blocked. These results
-  establish neither target-list acceptance nor filtering effectiveness. Vertex AI,
+  establish neither target-list acceptance nor filtering effectiveness. The probed
+  profile was `https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt`; the SDK
+  default `https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane` was not
+  exercised by this receipt. Vertex AI,
   N8N, client-session, audio and realtime provider workflows remain experimental
   and live-unverified where credentials or compatible provider fixtures are absent.
   Historical 0.2.2 live results are not attributed to changed source.

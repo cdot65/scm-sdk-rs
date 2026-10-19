@@ -772,6 +772,8 @@ def verify_service_qualification():
     _, envelope = live_evidence.load(ROOT, required=True)
     if envelope['report']['schemaVersion'] != 2:
         raise ValueError('Phase 24 requires fresh bounded read-only management qualification')
+    if envelope['report'].get('limitations') != live_evidence.READ_ONLY_LIMITATIONS:
+        raise ValueError('Phase 24 requires explicit exercised and unexercised endpoint profiles')
     annotations, _, receipt = native_operations.live_projection(ROOT)
     for name, key in (('native-operations', 'operations'), ('qualification', 'operations'),
                       ('native-exports', 'capabilities')):

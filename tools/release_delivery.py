@@ -155,6 +155,23 @@ def verify_registry_readiness(root, registry, source_sha256, phase=PHASE):
             'Registry readiness provenance differs from accepted current source')
 
 
+def retained_package_archive(root, proof, phase):
+    """Bind management archives to their qualified commit's own worktree."""
+    archive = pathlib.Path(proof['retainedArchive'])
+    if phase == 24:
+        commit = proof.get('releaseCommit')
+        require(isinstance(commit, str) and re.fullmatch('[0-9a-f]{40}', commit),
+                'Retained archive requires an exact release commit')
+        worktree = root / '.local/package-worktrees' / commit
+        permitted_location = archive.resolve().is_relative_to(worktree.resolve())
+    else:
+        permitted_location = archive.parent == root / '.local/artifacts'
+    regular_path = not any(path.is_symlink() for path in (archive, *archive.parents))
+    require(archive.is_absolute() and permitted_location and regular_path,
+            'Retained archive must be a regular artifact in its qualified source location')
+    return archive
+
+
 def verify_retained_registry(root, registry, publication):
     relative = registry.get('retainedArchive')
     require(isinstance(relative, str), 'Registry archive retention is required')
@@ -194,11 +211,11 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
     publication = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(publication)
     for proof in proofs:
-        publication.require_proof(proof, schema_version=3) if phase_id == 24 else publication.require_proof(proof)
-        archive = pathlib.Path(proof['retainedArchive'])
-        require(archive.is_absolute() and (archive.parent == root / '.local/artifacts' if phase_id != 24 else archive.resolve().is_relative_to((root / '.local/package-worktrees').resolve()))
-                and not any(path.is_symlink() for path in (archive, *archive.parents)),
-                'Retained archive must be a regular repository artifact')
+        if phase_id == 24:
+            publication.require_proof(proof, schema_version=3)
+        else:
+            publication.require_proof(proof)
+        archive = retained_package_archive(root, proof, phase_id)
         data = archive.read_bytes()
         require(hashlib.sha256(data).hexdigest() == proof['archive_sha256'] and len(data) == proof['archive_bytes'],
                 'Retained package differs from qualified archive')

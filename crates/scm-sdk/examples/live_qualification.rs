@@ -287,10 +287,11 @@ mod qualification {
         ("COMPLETED", "red_team.targets.list.profiling_completed"),
         ("FAILED", "red_team.targets.list.profiling_failed"),
     ];
-    const READ_ONLY_LIMITATIONS: [&str; 3] = [
+    const READ_ONLY_LIMITATIONS: [&str; 4] = [
         "Read-only qualification attempts OAuth and four single-page target lists with limit 1; all other workflows remain live-unqualified.",
         "Filter acceptance means HTTP success and native typed decoding only; filtering effectiveness is not established, including for empty or ambiguous results.",
         "Vertex AI, client_session and audio workflows remain experimental and live-unverified without provider credentials, fixtures and execution prerequisites.",
+        "Endpoint profile exercised: https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt. The SDK default https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane was not exercised; no default endpoint migration or alias equivalence is established.",
     ];
     fn finish_read_only(args: &Args, audit: &AuditTransport, report: &mut Report) -> Result<()> {
         let wire = audit

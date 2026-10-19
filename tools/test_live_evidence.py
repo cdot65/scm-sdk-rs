@@ -57,6 +57,22 @@ class LiveEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'bounded read-only'):
             live.validate_report(historical)
 
+    def test_read_only_endpoint_profiles_preserve_history_and_reject_unknown_profiles(self):
+        report = read_only_specimen()
+        live.validate_report(report)
+        self.assertIn('https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt.', report['limitations'][-1])
+        self.assertIn('https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane was not exercised', report['limitations'][-1])
+        report['limitations'] = live.HISTORICAL_READ_ONLY_LIMITATIONS
+        live.validate_report(report)
+        for limitation in ('Endpoint profile exercised: https://example.invalid',
+                           live.READ_ONLY_ENDPOINT_LIMITATION.replace('was not exercised', 'was exercised')):
+            report['limitations'] = [*live.HISTORICAL_READ_ONLY_LIMITATIONS, limitation]
+            with self.assertRaisesRegex(ValueError, 'unreviewed report vocabulary'):
+                live.validate_report(report)
+        historical = json.loads((live.ROOT / 'docs/checks/phase-24-live-attempt-01.json').read_text())['report']
+        self.assertEqual(historical['limitations'], live.HISTORICAL_READ_ONLY_LIMITATIONS)
+        live.validate_report(historical, expected_version=historical['crateVersion'])
+
     def test_read_only_auth_failure_retains_explicit_unattempted_filters(self):
         report = read_only_specimen()
         report['serviceRequests'] = 0

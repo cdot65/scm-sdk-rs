@@ -49,6 +49,12 @@ def verify_offline_delivery(proof, files, version):
 def verify(root, phase=17, version='0.2.1'):
     if (phase, version) not in RELEASES:
         raise ValueError('Unreviewed release phase/version pair')
+    sys.path.insert(0, str(root / "tools"))
+    from release_delivery import commit_fingerprint, retained_package_archive
+    from review_phase import fingerprint
+    wrapper = None
+    if phase == 24:
+        wrapper = load_module("release_management_package", root / "scripts/check-management-package.py")
     rows = []
     publication = load_module("release_publication", root / "scripts/verify-publication.py")
     proofs = []
@@ -57,25 +63,19 @@ def verify(root, phase=17, version='0.2.1'):
         if path.is_symlink():
             raise ValueError("Proof must be a regular file")
         proof = json.loads(path.read_text())
-        publication.require_proof(proof, schema_version=3) if phase == 24 else publication.require_proof(proof)
         if phase == 24:
-            wrapper = load_module("release_management_package", root / "scripts/check-management-package.py")
+            publication.require_proof(proof, schema_version=3)
             wrapper.verify_receipt(root, path, compiler)
-            sys.path.insert(0, str(root / "tools"))
-            from release_delivery import commit_fingerprint
-            from review_phase import fingerprint
             if commit_fingerprint(root, proof["releaseCommit"]) != fingerprint(root):
                 raise ValueError("Package commit differs from current reviewed source")
             subprocess.run(["git", "merge-base", "--is-ancestor", proof["releaseCommit"], "HEAD"], cwd=root, check=True)
+        else:
+            publication.require_proof(proof)
         if proof["toolchain"] != compiler:
             raise ValueError("Compiler proof identity differs")
         if phase != 24 and proof["releaseCommit"] != git(root, "rev-parse", "HEAD").decode().strip():
             raise ValueError("Clean proof must qualify the current release commit")
-        archive = pathlib.Path(proof["retainedArchive"])
-        allowed = root / ".local/artifacts"
-        if (not archive.is_absolute() or (archive.parent != allowed if phase != 24 else not archive.resolve().is_relative_to((root / ".local/package-worktrees").resolve()))
-                or any(p.is_symlink() for p in (archive, *archive.parents))):
-            raise ValueError("Archive must be a regular retained repository artifact")
+        archive = retained_package_archive(root, proof, phase)
         data = archive.read_bytes()
         if sha(data) != proof["archive_sha256"] or len(data) != proof["archive_bytes"]:
             raise ValueError("Retained archive differs from executed proof")

@@ -10,7 +10,30 @@ Each unqualified method has a reason. The [current receipt reference](../contrac
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
-The current **0.2.2** run is [attempt 14](checks/phase-08-live-attempt-14.json).
+## Current 0.2.3 read-only qualification
+
+The current run is [phase 24 attempt 02](checks/phase-24-live-attempt-02.json).
+It verified **1 exact native method**, OAuth token exchange. All four single-page
+Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
+returned **HTTP 403 permission prerequisites**. These responses establish neither
+filter acceptance nor effectiveness. The run made four service requests and one
+token exchange, performed no mutations, and recorded `cleanupState: not_needed`.
+
+The selected endpoint profile was
+`https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt`. The SDK default
+`https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane` was not exercised
+by this receipt and remains unchanged. Vertex AI, N8N, client-session, audio and
+realtime provider workflows remain live-unqualified. Offline fixture and consumer
+checks establish implementation compatibility separately from these service results.
+
+Attempt 01 recorded the same bounded probe outcomes. Attempt 02 names the endpoint
+profile explicitly and binds the updated qualification application. Neither attempt
+promotes the 17 historical successes to the current runtime.
+
+## Historical qualification
+
+The archived **0.2.2** run is [attempt 14](checks/phase-08-live-attempt-14.json),
+retained through the [historical receipt reference](../contracts/historical/0.2.2-live-evidence.json).
 It verified **17 exact native methods** from 24 service requests and one token
 exchange. The synchronous scan-ID query and async lookup both returned complete,
 correlated results in this run. Three Red Team reads returned **403 permission
@@ -47,12 +70,28 @@ not needed, but the wrapper rejected its version because it was hardcoded to
 preserves that failure. The manifest-bound parser now rejects receipts for a
 different SDK version. No earlier failure was promoted.
 
-Live execution attempts keep the original `phase-08-live-attempt-NN.json` naming
-convention and a single increasing counter across maintenance/vendor phases.
+Historical mutation-mode executions keep the original `phase-08-live-attempt-NN.json`
+naming convention and increasing counter. Read-only management executions use
+`phase-24-live-attempt-NN.json` with their own preserved attempts.
 The owning phase records the exact receipt reference and current runtime fingerprint;
 the filename does not assert that a later execution happened during Phase 8.
 
-## What the controlled run covers
+## Current read-only mode
+
+The current mode selects an explicit external registration and independently supplied
+expected TSG before authentication. The native transport allows only OAuth plus
+four exact target-list requests, with one profiling filter and `limit=1` each.
+It refuses mutations, other routes, extra query parameters and more than five
+transport attempts. Automatic retries are disabled; operations have a 15-second
+budget and bounded bodies. It returns before historical mutation workflows.
+
+```sh
+python tools/live_evidence.py --run --read-only \
+  --config /absolute/path/to/nonproduction-registration.json \
+  --expect-tsg EXPECTED_NONPRODUCTION_TSG --attempt NEXT_UNUSED_NUMBER
+```
+
+## Historical controlled mutation mode
 
 The qualification application uses the native crate for OAuth, AIRS scan HMAC,
 management, DLP, Model Security, Red Team, AgentGuard, Gateway configuration, and
@@ -91,7 +130,7 @@ remain on the server because the frozen scan API has no deletion method.
 
 ## Reproduce a controlled run
 
-Only this explicit mode performs external requests:
+The separate mutation mode also requires explicit selection:
 
 ```sh
 python tools/live_evidence.py --run \
@@ -146,7 +185,7 @@ certify later changed runtime sources.
 Gateway runtime inference, SSE provider execution, and realtime provider readiness
 need an explicitly selected runtime origin, runtime credential, and compatible
 provider fixture. Those prerequisites are not established by SCM OAuth or a
-WebSocket upgrade. The current run therefore leaves them live-unqualified; their
+WebSocket upgrade. The current read-only run therefore leaves them live-unqualified; their
 independent transport/parser/contract checks remain recorded. Red Team permissions
 and DLP service deployment are similarly assessed from actual receipts without
 assuming that management-console access grants product permissions.

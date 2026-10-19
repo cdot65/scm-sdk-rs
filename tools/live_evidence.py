@@ -99,11 +99,14 @@ LIMITATIONS = [
     "Workspace deletion is archival; permanent deletion is unavailable in the frozen API.",
 ]
 
-READ_ONLY_LIMITATIONS = [
+HISTORICAL_READ_ONLY_LIMITATIONS = [
     "Read-only qualification attempts OAuth and four single-page target lists with limit 1; all other workflows remain live-unqualified.",
     "Filter acceptance means HTTP success and native typed decoding only; filtering effectiveness is not established, including for empty or ambiguous results.",
     "Vertex AI, client_session and audio workflows remain experimental and live-unverified without provider credentials, fixtures and execution prerequisites.",
 ]
+
+READ_ONLY_ENDPOINT_LIMITATION = 'Endpoint profile exercised: https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt. The SDK default https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane was not exercised; no default endpoint migration or alias equivalence is established.'
+READ_ONLY_LIMITATIONS = [*HISTORICAL_READ_ONLY_LIMITATIONS, READ_ONLY_ENDPOINT_LIMITATION]
 
 
 def command_template(read_only=False):
@@ -170,7 +173,7 @@ def validate_report(report, *, expected_version=None):
             and type(report["mutationsEnabled"]) is bool
             and report["cleanupState"] in {"not_needed", "confirmed_retired", "requires_reconciliation"}
             and report["scanAuthentication"] in {None, "api_key_hmac", "oauth_bearer"}
-            and report["limitations"] == (READ_ONLY_LIMITATIONS if read_only else LIMITATIONS)):
+            and report["limitations"] in ((HISTORICAL_READ_ONLY_LIMITATIONS, READ_ONLY_LIMITATIONS) if read_only else (LIMITATIONS,))):
         raise ValueError("Invalid qualification controls or unreviewed report vocabulary")
     for key in ("serviceRequests", "tokenExchanges"):
         if type(report[key]) is not int or not 0 <= report[key] <= budget:

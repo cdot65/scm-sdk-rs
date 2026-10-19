@@ -31,6 +31,30 @@ prepublish = load('prepublish023', 'check-prepublication.py')
 
 
 class ManagementDeliveryTests(unittest.TestCase):
+    def test_archive_location_binds_exact_commit_even_with_identical_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            commit = 'a' * 40
+            expected = root / '.local/package-worktrees' / commit / '.local/artifacts/package.crate'
+            other = root / '.local/package-worktrees' / ('b' * 40) / '.local/artifacts/package.crate'
+            historical = root / '.local/artifacts/package.crate'
+            for path in (expected, other, historical):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b'identical qualified archive bytes')
+            proof = {'releaseCommit': commit, 'retainedArchive': str(expected),
+                     'archive_sha256': hashlib.sha256(expected.read_bytes()).hexdigest()}
+            self.assertEqual(release_delivery.retained_package_archive(root, proof, 24), expected)
+            for path in (other, historical):
+                changed = dict(proof, retainedArchive=str(path))
+                self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), proof['archive_sha256'])
+                with self.assertRaisesRegex(ValueError, 'qualified source location'):
+                    release_delivery.retained_package_archive(root, changed, 24)
+            old_proof = dict(proof, retainedArchive=str(historical))
+            for phase in (17, 20):
+                self.assertEqual(release_delivery.retained_package_archive(root, old_proof, phase), historical)
+                with self.assertRaises(ValueError):
+                    release_delivery.retained_package_archive(root, proof, phase)
+
     def test_current_context_and_historical_rejection(self):
         fixture = test_release_delivery.DeliveryTests()
         fixture.setUp()
