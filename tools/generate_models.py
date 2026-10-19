@@ -468,16 +468,42 @@ class Generator:
                 base = f"Box<{base}>"
             typed = f"{'Patch' if nullable else 'Optional'}<{base}>" if optional else f"Nullable<{base}>" if nullable else base
             fields.append((wire, field, typed, optional))
-        body = f"#[derive(Clone, PartialEq, Deserialize)]\n#[non_exhaustive]\npub struct {name} {{\n"
+        projections = {wire for wire, entry in properties.items() if entry.get("vendorProjection")}
+        if any(not optional for wire, _, _, optional in fields if wire in projections):
+            raise ValueError("Vendor response projections must remain optional")
+        body = f"#[derive(Clone, PartialEq" + ("" if projections else ", Deserialize") + f")]\n#[non_exhaustive]\npub struct {name} {{\n"
         for wire, field, typed, optional in fields:
-            body += f"#[serde(rename={quoted(wire)}" + (",default" if optional else "") + f")]\npub {field}:{typed},\n"
-        body += f"#[serde(flatten)]\npub extensions:Extensions<{extension_type}>,\n}}\n"
+            if not projections:
+                body += f"#[serde(rename={quoted(wire)}" + (",default" if optional else "") + ")]\n"
+            body += f"pub {field}:{typed},\n"
+        if not projections:
+            body += "#[serde(flatten)]\n"
+        body += f"pub extensions:Extensions<{extension_type}>,\n}}\n"
+        if projections:
+            # Fields added after the baseline are optional typed views of passthrough
+            # data. Preserve a value that cannot inhabit that view as an extension.
+            body += f"impl<'de> Deserialize<'de> for {name} {{fn deserialize<D:serde::Deserializer<'de>>(d:D)->std::result::Result<Self,D::Error>{{\n"
+            body += "let mut raw=serde_json::Map::<String,serde_json::Value>::deserialize(d)?;\n"
+            for wire, field, typed, _ in fields:
+                if wire in projections:
+                    body += f"let mut {field}:{typed}=Default::default();if let Some(value)=raw.remove({quoted(wire)}){{match crate::json_decode::from_value::<{typed}>(value.clone()){{Ok(value)=>{field}=value,Err(_)=>{{raw.insert({quoted(wire)}.into(),value);}}}}}}\n"
+            body += "#[derive(Deserialize)]struct BaselineWire{\n"
+            for wire, field, typed, optional in fields:
+                if wire not in projections:
+                    body += f"#[serde(rename={quoted(wire)}" + (",default" if optional else "") + f")] {field}:{typed},\n"
+            body += f"#[serde(flatten)]extensions:Extensions<{extension_type}>}}\n"
+            body += "let baseline:BaselineWire=crate::json_decode::from_value(serde_json::Value::Object(raw)).map_err(|_|serde::de::Error::custom(\"baseline response model mismatch\"))?;\n"
+            body += "Ok(Self{" + "".join((field if wire in projections else f"{field}:baseline.{field}") + "," for wire,field,_,_ in fields) + "extensions:baseline.extensions})}}\n"
         body += f"impl Serialize for {name} {{fn serialize<S:serde::Serializer>(&self,serializer:S)->std::result::Result<S::Ok,S::Error>{{\n"
-        body += "const KNOWN:&[&str]=&[" + ",".join(quoted(wire) for wire, _, _, _ in fields) + "];\n"
+        body += "const KNOWN:&[&str]=&[" + ",".join(quoted(wire) for wire, _, _, _ in fields if wire not in projections) + "];\n"
         body += "if self.extensions.keys().any(|key|KNOWN.contains(&key.as_str())){return Err(serde::ser::Error::custom(\"extension collides with a known model field\"));}\nlet mut map=serializer.serialize_map(None)?;\n"
         for wire, field, _, optional in fields:
             body += (f"if !self.{field}.is_unset(){{" if optional else "") + f"map.serialize_entry({quoted(wire)},&self.{field})?;" + ("}" if optional else "") + "\n"
-        body += "for(key,value)in self.extensions.iter(){map.serialize_entry(key,value)?;}map.end()}}\n"
+        body += "for(key,value)in self.extensions.iter(){"
+        for wire, field, _, _ in fields:
+            if wire in projections:
+                body += f"if key=={quoted(wire)}&&!self.{field}.is_unset(){{continue;}}"
+        body += "map.serialize_entry(key,value)?;}map.end()}}\n"
         builder = name + "Builder"
         self.used.add(builder)
         body += f"impl {name} {{pub fn builder()->{builder}{{{builder}::default()}}\n"

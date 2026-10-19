@@ -611,7 +611,7 @@
   "provenance": {
     "inventorySha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
     "manifestSha256": "69606473681ba0744b6310eef942fb7b04aa072125ddf267f6718b8935e84251",
-    "generatorSha256": "6be71297918870dcbf6e7a26265f2ed42f7b4af08171386759a8f81bec4ed93d",
+    "generatorSha256": "c81f053f8d7b9653e0625f149cce6bcaf6263466bde7b3083508267dbf5a1a42",
     "tooling": [
       {
         "file": "tools/package.json",
@@ -626,7 +626,7 @@
   },
   "policies": {
     "request": "Original frozen Zod safeParse; no Rust implementation is invoked.",
-    "response": "Actual Zod execution with explicit Rust adaptations: preserve unknown object fields; widen enum/string-literal-union vocabularies; preserve required types, individual literals, catchalls, refinements, defaults and transforms.",
+    "response": "Actual Zod execution with explicit Rust adaptations: preserve unknown object fields; widen enum/string-literal-union vocabularies; bypass string-format checks uuid, rfc3339, datetime, date, duration, email, url and regex while retaining frozen min/max bounds; preserve required types, individual literals, catchalls, refinements, defaults and transforms.",
     "native": "Native descriptors report real JS inputs and safeParse observations. They are not JSON conformance passes; Rust typed boundary equivalents must be tested separately."
   },
   "counts": {
@@ -5429,15 +5429,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": ""
+            }
           }
         },
         {
@@ -5457,15 +5452,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": " "
+            }
           }
         },
         {
@@ -5485,15 +5475,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": "__future_enum__"
+            }
           }
         },
         {
@@ -11781,15 +11766,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": ""
+            }
           }
         },
         {
@@ -11809,15 +11789,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": " "
+            }
           }
         },
         {
@@ -11837,15 +11812,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": "__future_enum__"
+            }
           }
         },
         {
@@ -15731,15 +15701,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": ""
+            }
           }
         },
         {
@@ -15759,15 +15724,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": " "
+            }
           }
         },
         {
@@ -15787,15 +15747,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": "__future_enum__"
+            }
           }
         },
         {
@@ -19940,15 +19895,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": ""
+            }
           }
         },
         {
@@ -19968,15 +19918,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": " "
+            }
           }
         },
         {
@@ -19996,15 +19941,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceSlug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceSlug": "__future_enum__"
+            }
           }
         },
         {
@@ -67024,15 +66964,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "start_time"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "start_time": ""
+            }
           }
         },
         {
@@ -67052,15 +66987,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "start_time"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "start_time": " "
+            }
           }
         },
         {
@@ -67080,15 +67010,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "start_time"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "start_time": "__future_enum__"
+            }
           }
         },
         {
@@ -67276,15 +67201,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "end_time"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "end_time": ""
+            }
           }
         },
         {
@@ -67304,15 +67224,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "end_time"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "end_time": " "
+            }
           }
         },
         {
@@ -67332,15 +67247,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "end_time"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "end_time": "__future_enum__"
+            }
           }
         },
         {
@@ -69023,15 +68933,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": ""
+            }
           }
         },
         {
@@ -69052,15 +68958,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": " "
+            }
           }
         },
         {
@@ -69081,15 +68983,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": "__future_enum__"
+            }
           }
         },
         {
@@ -69284,15 +69182,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": ""
+            }
           }
         },
         {
@@ -69313,15 +69207,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": " "
+            }
           }
         },
         {
@@ -69342,15 +69232,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "__future_enum__"
+            }
           }
         },
         {
@@ -112570,15 +112456,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceId"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceId": ""
+            }
           }
         },
         {
@@ -112598,15 +112479,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceId"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceId": " "
+            }
           }
         },
         {
@@ -112626,15 +112502,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspaceId"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspaceId": "__future_enum__"
+            }
           }
         },
         {
@@ -128491,16 +128362,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "mcp_servers",
-                  "fixture"
-                ]
+            "success": true,
+            "output": {
+              "mcp_servers": {
+                "fixture": {
+                  "run_on": [
+                    "input"
+                  ],
+                  "mcp_integration_capability_ids": [
+                    "550e8400-e29b-41d4-a716-446655440000"
+                  ]
+                }
               }
-            ]
+            }
           }
         },
         {
@@ -149436,12 +149310,6 @@
                 "path": [
                   "slug"
                 ]
-              },
-              {
-                "code": "invalid_string",
-                "path": [
-                  "slug"
-                ]
               }
             ]
           }
@@ -149475,12 +149343,6 @@
             "issues": [
               {
                 "code": "too_small",
-                "path": [
-                  "slug"
-                ]
-              },
-              {
-                "code": "invalid_string",
                 "path": [
                   "slug"
                 ]
@@ -257888,15 +257750,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "slug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "slug": "",
+              "manager_type": "aws_sm",
+              "auth_config": {
+                "aws_auth_type": "accessKey",
+                "aws_access_key_id": "fixture",
+                "aws_secret_access_key": "fixture",
+                "aws_region": "fixture"
+              },
+              "secret_path": "fixture"
+            }
           }
         },
         {
@@ -257925,15 +257791,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "slug"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "slug": " ",
+              "manager_type": "aws_sm",
+              "auth_config": {
+                "aws_auth_type": "accessKey",
+                "aws_access_key_id": "fixture",
+                "aws_secret_access_key": "fixture",
+                "aws_region": "fixture"
+              },
+              "secret_path": "fixture"
+            }
           }
         },
         {
@@ -781023,13 +780893,8 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": []
-              }
-            ]
+            "success": true,
+            "output": ""
           }
         },
         {
@@ -781045,13 +780910,8 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": []
-              }
-            ]
+            "success": true,
+            "output": "fixture"
           }
         },
         {
@@ -781290,13 +781150,8 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": []
-              }
-            ]
+            "success": true,
+            "output": ""
           }
         },
         {
@@ -781312,13 +781167,8 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": []
-              }
-            ]
+            "success": true,
+            "output": "fixture"
           }
         },
         {
@@ -781557,13 +781407,8 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": []
-              }
-            ]
+            "success": true,
+            "output": ""
           }
         },
         {
@@ -781802,13 +781647,8 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": []
-              }
-            ]
+            "success": true,
+            "output": ""
           }
         },
         {
@@ -781824,13 +781664,8 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": []
-              }
-            ]
+            "success": true,
+            "output": "fixture"
           }
         },
         {
@@ -785449,15 +785284,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_usage_reset_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "credit_limit": 0,
+              "next_usage_reset_at": ""
+            }
           }
         },
         {
@@ -785478,15 +785309,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_usage_reset_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "credit_limit": 0,
+              "next_usage_reset_at": " "
+            }
           }
         },
         {
@@ -785507,15 +785334,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_usage_reset_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "credit_limit": 0,
+              "next_usage_reset_at": "__future_enum__"
+            }
           }
         },
         {
@@ -787913,15 +787736,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_usage_reset_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "credit_limit": 0,
+              "type": "cost",
+              "alert_threshold": 0,
+              "periodic_reset": "monthly",
+              "periodic_reset_days": 1,
+              "next_usage_reset_at": ""
+            }
           }
         },
         {
@@ -787946,15 +787769,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_usage_reset_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "credit_limit": 0,
+              "type": "cost",
+              "alert_threshold": 0,
+              "periodic_reset": "monthly",
+              "periodic_reset_days": 1,
+              "next_usage_reset_at": " "
+            }
           }
         },
         {
@@ -787979,15 +787802,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_usage_reset_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "credit_limit": 0,
+              "type": "cost",
+              "alert_threshold": 0,
+              "periodic_reset": "monthly",
+              "periodic_reset_days": 1,
+              "next_usage_reset_at": "__future_enum__"
+            }
           }
         },
         {
@@ -792115,15 +791938,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "id": "",
+              "enabled": false
+            }
           }
         },
         {
@@ -792144,15 +791963,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "id": " ",
+              "enabled": false
+            }
           }
         },
         {
@@ -792173,15 +791988,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "id": "__future_enum__",
+              "enabled": false
+            }
           }
         },
         {
@@ -799113,15 +798924,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": "",
+              "config": {}
+            }
           }
         },
         {
@@ -799143,15 +798951,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": " ",
+              "config": {}
+            }
           }
         },
         {
@@ -799173,15 +798978,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": "__future_enum__",
+              "config": {}
+            }
           }
         },
         {
@@ -806083,15 +805885,35 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": "",
+              "config": {
+                "retry": {
+                  "attempts": 0,
+                  "on_status_codes": [
+                    100
+                  ]
+                },
+                "cache": {
+                  "mode": "fixture",
+                  "max_age": 0
+                },
+                "strategy": {
+                  "mode": "fixture"
+                },
+                "targets": [
+                  {
+                    "provider": "fixture",
+                    "virtual_key": "fixture"
+                  }
+                ],
+                "provider": "fixture",
+                "virtual_key": "fixture"
+              },
+              "status": "fixture"
+            }
           }
         },
         {
@@ -806136,15 +805958,35 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": " ",
+              "config": {
+                "retry": {
+                  "attempts": 0,
+                  "on_status_codes": [
+                    100
+                  ]
+                },
+                "cache": {
+                  "mode": "fixture",
+                  "max_age": 0
+                },
+                "strategy": {
+                  "mode": "fixture"
+                },
+                "targets": [
+                  {
+                    "provider": "fixture",
+                    "virtual_key": "fixture"
+                  }
+                ],
+                "provider": "fixture",
+                "virtual_key": "fixture"
+              },
+              "status": "fixture"
+            }
           }
         },
         {
@@ -806189,15 +806031,35 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "workspace_id": "__future_enum__",
+              "config": {
+                "retry": {
+                  "attempts": 0,
+                  "on_status_codes": [
+                    100
+                  ]
+                },
+                "cache": {
+                  "mode": "fixture",
+                  "max_age": 0
+                },
+                "strategy": {
+                  "mode": "fixture"
+                },
+                "targets": [
+                  {
+                    "provider": "fixture",
+                    "virtual_key": "fixture"
+                  }
+                ],
+                "provider": "fixture",
+                "virtual_key": "fixture"
+              },
+              "status": "fixture"
+            }
           }
         },
         {
@@ -808376,15 +808238,49 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
+            "success": true,
+            "output": {
+              "workspace_id": "",
+              "organisation_id": "1",
+              "name": "fixture",
+              "target": "llm",
+              "checks": [
+                {
+                  "id": "fixture",
+                  "parameters": {
+                    "jwksUri": "fixture",
+                    "headerKey": "fixture",
+                    "cacheMaxAge": 0,
+                    "clockTolerance": 0,
+                    "maxTokenAge": "fixture",
+                    "algorithms": [
+                      "fixture"
+                    ],
+                    "fixture_key": "fixture"
+                  },
+                  "is_enabled": false,
+                  "name": "fixture"
+                }
+              ],
+              "actions": {
+                "deny": false,
+                "async": false,
+                "on_success": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                },
+                "on_fail": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                }
               }
-            ]
+            }
           }
         },
         {
@@ -808443,15 +808339,49 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
+            "success": true,
+            "output": {
+              "workspace_id": " ",
+              "organisation_id": "1",
+              "name": "fixture",
+              "target": "llm",
+              "checks": [
+                {
+                  "id": "fixture",
+                  "parameters": {
+                    "jwksUri": "fixture",
+                    "headerKey": "fixture",
+                    "cacheMaxAge": 0,
+                    "clockTolerance": 0,
+                    "maxTokenAge": "fixture",
+                    "algorithms": [
+                      "fixture"
+                    ],
+                    "fixture_key": "fixture"
+                  },
+                  "is_enabled": false,
+                  "name": "fixture"
+                }
+              ],
+              "actions": {
+                "deny": false,
+                "async": false,
+                "on_success": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                },
+                "on_fail": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                }
               }
-            ]
+            }
           }
         },
         {
@@ -808510,15 +808440,49 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
+            "success": true,
+            "output": {
+              "workspace_id": "__future_enum__",
+              "organisation_id": "1",
+              "name": "fixture",
+              "target": "llm",
+              "checks": [
+                {
+                  "id": "fixture",
+                  "parameters": {
+                    "jwksUri": "fixture",
+                    "headerKey": "fixture",
+                    "cacheMaxAge": 0,
+                    "clockTolerance": 0,
+                    "maxTokenAge": "fixture",
+                    "algorithms": [
+                      "fixture"
+                    ],
+                    "fixture_key": "fixture"
+                  },
+                  "is_enabled": false,
+                  "name": "fixture"
+                }
+              ],
+              "actions": {
+                "deny": false,
+                "async": false,
+                "on_success": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                },
+                "on_fail": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                }
               }
-            ]
+            }
           }
         },
         {
@@ -809111,15 +809075,49 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "organisation_id": "",
+              "name": "fixture",
+              "target": "llm",
+              "checks": [
+                {
+                  "id": "fixture",
+                  "parameters": {
+                    "jwksUri": "fixture",
+                    "headerKey": "fixture",
+                    "cacheMaxAge": 0,
+                    "clockTolerance": 0,
+                    "maxTokenAge": "fixture",
+                    "algorithms": [
+                      "fixture"
+                    ],
+                    "fixture_key": "fixture"
+                  },
+                  "is_enabled": false,
+                  "name": "fixture"
+                }
+              ],
+              "actions": {
+                "deny": false,
+                "async": false,
+                "on_success": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                },
+                "on_fail": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                }
               }
-            ]
+            }
           }
         },
         {
@@ -809178,15 +809176,49 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "organisation_id": " ",
+              "name": "fixture",
+              "target": "llm",
+              "checks": [
+                {
+                  "id": "fixture",
+                  "parameters": {
+                    "jwksUri": "fixture",
+                    "headerKey": "fixture",
+                    "cacheMaxAge": 0,
+                    "clockTolerance": 0,
+                    "maxTokenAge": "fixture",
+                    "algorithms": [
+                      "fixture"
+                    ],
+                    "fixture_key": "fixture"
+                  },
+                  "is_enabled": false,
+                  "name": "fixture"
+                }
+              ],
+              "actions": {
+                "deny": false,
+                "async": false,
+                "on_success": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                },
+                "on_fail": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                }
               }
-            ]
+            }
           }
         },
         {
@@ -809245,15 +809277,49 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "organisation_id": "__future_enum__",
+              "name": "fixture",
+              "target": "llm",
+              "checks": [
+                {
+                  "id": "fixture",
+                  "parameters": {
+                    "jwksUri": "fixture",
+                    "headerKey": "fixture",
+                    "cacheMaxAge": 0,
+                    "clockTolerance": 0,
+                    "maxTokenAge": "fixture",
+                    "algorithms": [
+                      "fixture"
+                    ],
+                    "fixture_key": "fixture"
+                  },
+                  "is_enabled": false,
+                  "name": "fixture"
+                }
+              ],
+              "actions": {
+                "deny": false,
+                "async": false,
+                "on_success": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                },
+                "on_fail": {
+                  "feedback": {
+                    "value": 0,
+                    "weight": 0,
+                    "metadata": "fixture"
+                  }
+                }
               }
-            ]
+            }
           }
         },
         {
@@ -815103,15 +815169,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -815135,15 +815200,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": " ",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -815167,15 +815231,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "__future_enum__",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -815422,15 +815485,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "ai_provider_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -815454,15 +815516,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "ai_provider_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": " ",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -815486,15 +815547,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "ai_provider_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "__future_enum__",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -816056,15 +816116,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "integration_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -816088,15 +816147,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "integration_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": " ",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -816120,15 +816178,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "integration_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "__future_enum__",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -817584,15 +817641,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture",
+              "expires_at": ""
+            }
           }
         },
         {
@@ -817617,15 +817674,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture",
+              "expires_at": " "
+            }
           }
         },
         {
@@ -817650,15 +817707,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "slug": "fixture",
+              "expires_at": "__future_enum__"
+            }
           }
         },
         {
@@ -819298,15 +819355,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "expires_at": ""
+            }
           }
         },
         {
@@ -819327,15 +819380,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "expires_at": " "
+            }
           }
         },
         {
@@ -819356,15 +819405,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "expires_at": "__future_enum__"
+            }
           }
         },
         {
@@ -820377,15 +820422,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_rotation_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "rotation_period": null,
+              "next_rotation_at": ""
+            }
           }
         },
         {
@@ -820406,15 +820447,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_rotation_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "rotation_period": null,
+              "next_rotation_at": " "
+            }
           }
         },
         {
@@ -820435,15 +820472,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_rotation_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "rotation_period": null,
+              "next_rotation_at": "__future_enum__"
+            }
           }
         },
         {
@@ -821615,15 +821648,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_rotation_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "rotation_period": "monthly",
+              "next_rotation_at": "",
+              "key_transition_period_ms": 1800000
+            }
           }
         },
         {
@@ -821645,15 +821675,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_rotation_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "rotation_period": "monthly",
+              "next_rotation_at": " ",
+              "key_transition_period_ms": 1800000
+            }
           }
         },
         {
@@ -821675,15 +821702,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "next_rotation_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "rotation_period": "monthly",
+              "next_rotation_at": "__future_enum__",
+              "key_transition_period_ms": 1800000
+            }
           }
         },
         {
@@ -824995,15 +825019,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "expires_at": "",
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -825030,15 +825056,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "expires_at": " ",
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -825065,15 +825093,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "expires_at": "__future_enum__",
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -825658,15 +825688,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -825692,15 +825723,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": " ",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -825726,15 +825758,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "__future_enum__",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -825997,15 +826030,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": "",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -826031,15 +826065,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": " ",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -826065,15 +826100,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": "__future_enum__",
+              "type": "fixture"
+            }
           }
         },
         {
@@ -829747,15 +829783,18 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "expires_at": "",
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -829783,15 +829822,18 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "expires_at": " ",
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -829819,15 +829861,18 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "expires_at": "__future_enum__",
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -830431,15 +830476,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -830466,15 +830513,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": " ",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -830501,15 +830550,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "__future_enum__",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -830780,15 +830831,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": "",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -830815,15 +830868,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": " ",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -830850,15 +830905,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": "__future_enum__",
+              "type": "fixture",
+              "user_id": "550e8400-e29b-41d4-a716-446655440000"
+            }
           }
         },
         {
@@ -831486,15 +831543,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": ""
+            }
           }
         },
         {
@@ -831521,15 +831580,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": " "
+            }
           }
         },
         {
@@ -831556,15 +831617,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "scopes": [
+                "fixture"
+              ],
+              "organisation_id": "1",
+              "workspace_id": "550e8400-e29b-41d4-a716-446655440000",
+              "type": "fixture",
+              "user_id": "__future_enum__"
+            }
           }
         },
         {
@@ -834803,15 +834866,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "expires_at": ""
+            }
           }
         },
         {
@@ -834832,15 +834891,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "expires_at": " "
+            }
           }
         },
         {
@@ -834861,15 +834916,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "expires_at"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "expires_at": "__future_enum__"
+            }
           }
         },
         {
@@ -836450,15 +836501,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -836481,15 +836530,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": " ",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -836512,15 +836559,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "__future_enum__",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -836733,15 +836778,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "workspace_id": "",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -836765,15 +836809,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "workspace_id": " ",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -836797,15 +836840,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "workspace_id": "__future_enum__",
+              "ai_provider_id": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -837047,15 +837089,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "ai_provider_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "ai_provider_id": "",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -837078,15 +837118,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "ai_provider_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "ai_provider_id": " ",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -837109,15 +837147,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "ai_provider_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "ai_provider_id": "__future_enum__",
+              "name": "fixture",
+              "slug": "fixture"
+            }
           }
         },
         {
@@ -847983,15 +848019,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "",
+              "slug": "fixture",
+              "url": "https://example.invalid/resource",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -848016,15 +848052,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": " ",
+              "slug": "fixture",
+              "url": "https://example.invalid/resource",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -848049,15 +848085,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "__future_enum__",
+              "slug": "fixture",
+              "url": "https://example.invalid/resource",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -848284,15 +848320,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "1",
+              "workspace_id": "",
+              "slug": "fixture",
+              "url": "https://example.invalid/resource",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -848318,15 +848355,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "1",
+              "workspace_id": " ",
+              "slug": "fixture",
+              "url": "https://example.invalid/resource",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -848352,15 +848390,16 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "workspace_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "1",
+              "workspace_id": "__future_enum__",
+              "slug": "fixture",
+              "url": "https://example.invalid/resource",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -848947,15 +848986,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "1",
+              "slug": "fixture",
+              "url": "",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -848980,15 +849019,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "1",
+              "slug": "fixture",
+              "url": " ",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -849013,15 +849052,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "organisation_id": "1",
+              "slug": "fixture",
+              "url": "__future_enum__",
+              "auth_type": "fixture",
+              "transport": "fixture"
+            }
           }
         },
         {
@@ -853646,15 +853685,27 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "description": "fixture",
+              "configurations": {
+                "custom_headers": {},
+                "passthrough_header": {},
+                "fixture_key": "fixture"
+              },
+              "url": "",
+              "auth_type": "fixture",
+              "transport": "fixture",
+              "secret_mappings": [
+                {
+                  "target_field": "fixture",
+                  "secret_reference_id": "fixture",
+                  "secret_key": "fixture",
+                  "value_format": "json"
+                }
+              ]
+            }
           }
         },
         {
@@ -853691,15 +853742,27 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "description": "fixture",
+              "configurations": {
+                "custom_headers": {},
+                "passthrough_header": {},
+                "fixture_key": "fixture"
+              },
+              "url": " ",
+              "auth_type": "fixture",
+              "transport": "fixture",
+              "secret_mappings": [
+                {
+                  "target_field": "fixture",
+                  "secret_reference_id": "fixture",
+                  "secret_key": "fixture",
+                  "value_format": "json"
+                }
+              ]
+            }
           }
         },
         {
@@ -853736,15 +853799,27 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "description": "fixture",
+              "configurations": {
+                "custom_headers": {},
+                "passthrough_header": {},
+                "fixture_key": "fixture"
+              },
+              "url": "__future_enum__",
+              "auth_type": "fixture",
+              "transport": "fixture",
+              "secret_mappings": [
+                {
+                  "target_field": "fixture",
+                  "secret_reference_id": "fixture",
+                  "secret_key": "fixture",
+                  "value_format": "json"
+                }
+              ]
+            }
           }
         },
         {
@@ -859312,15 +859387,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "gateway_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "gateway_base_url": ""
+            }
           }
         },
         {
@@ -859340,15 +859410,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "gateway_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "gateway_base_url": " "
+            }
           }
         },
         {
@@ -859368,15 +859433,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "gateway_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "gateway_base_url": "__future_enum__"
+            }
           }
         },
         {
@@ -859564,15 +859624,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "mcp_gateway_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "mcp_gateway_base_url": ""
+            }
           }
         },
         {
@@ -859592,15 +859647,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "mcp_gateway_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "mcp_gateway_base_url": " "
+            }
           }
         },
         {
@@ -859620,15 +859670,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "mcp_gateway_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "mcp_gateway_base_url": "__future_enum__"
+            }
           }
         },
         {
@@ -862834,15 +862879,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "type": "non_production",
+              "organisation_id": ""
+            }
           }
         },
         {
@@ -862864,15 +862906,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "type": "non_production",
+              "organisation_id": " "
+            }
           }
         },
         {
@@ -862894,15 +862933,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "type": "non_production",
+              "organisation_id": "__future_enum__"
+            }
           }
         },
         {
@@ -872538,15 +872574,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
+            "success": true,
+            "output": {
+              "organisation_id": "",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "credentials": {
+                "type": "fixture.event"
               }
-            ]
+            }
           }
         },
         {
@@ -872570,15 +872605,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
+            "success": true,
+            "output": {
+              "organisation_id": " ",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "credentials": {
+                "type": "fixture.event"
               }
-            ]
+            }
           }
         },
         {
@@ -872602,15 +872636,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "organisation_id"
-                ]
+            "success": true,
+            "output": {
+              "organisation_id": "__future_enum__",
+              "integration_id": "550e8400-e29b-41d4-a716-446655440000",
+              "credentials": {
+                "type": "fixture.event"
               }
-            ]
+            }
           }
         },
         {
@@ -872857,15 +872890,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "integration_id"
-                ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "integration_id": "",
+              "credentials": {
+                "type": "fixture.event"
               }
-            ]
+            }
           }
         },
         {
@@ -872889,15 +872921,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "integration_id"
-                ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "integration_id": " ",
+              "credentials": {
+                "type": "fixture.event"
               }
-            ]
+            }
           }
         },
         {
@@ -872921,15 +872952,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "integration_id"
-                ]
+            "success": true,
+            "output": {
+              "organisation_id": "1",
+              "integration_id": "__future_enum__",
+              "credentials": {
+                "type": "fixture.event"
               }
-            ]
+            }
           }
         },
         {
@@ -889329,15 +889359,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "azure_foundry_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "azure_auth_mode": "default",
+              "azure_foundry_url": ""
+            }
           }
         },
         {
@@ -889358,15 +889384,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "azure_foundry_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "azure_auth_mode": "default",
+              "azure_foundry_url": " "
+            }
           }
         },
         {
@@ -889387,15 +889409,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "azure_foundry_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "azure_auth_mode": "default",
+              "azure_foundry_url": "__future_enum__"
+            }
           }
         },
         {
@@ -891997,15 +892015,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "huggingface_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "huggingface_base_url": ""
+            }
           }
         },
         {
@@ -892025,15 +892038,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "huggingface_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "huggingface_base_url": " "
+            }
           }
         },
         {
@@ -892053,15 +892061,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "huggingface_base_url"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "huggingface_base_url": "__future_enum__"
+            }
           }
         },
         {
@@ -893085,15 +893088,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "custom_host"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "custom_host": ""
+            }
           }
         },
         {
@@ -893113,15 +893111,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "custom_host"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "custom_host": " "
+            }
           }
         },
         {
@@ -893141,15 +893134,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "custom_host"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "custom_host": "__future_enum__"
+            }
           }
         },
         {
@@ -1122542,15 +1122530,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "profile_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "profile_id": "",
+              "profile_name": "fixture"
+            }
           }
         },
         {
@@ -1122571,15 +1122555,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "profile_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "profile_id": " ",
+              "profile_name": "fixture"
+            }
           }
         },
         {
@@ -1122600,15 +1122580,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "profile_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "profile_id": "__future_enum__",
+              "profile_name": "fixture"
+            }
           }
         },
         {
@@ -1278068,15 +1278044,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "last_modified_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "topic_name": "fixture",
+              "last_modified_ts": ""
+            }
           }
         },
         {
@@ -1278097,15 +1278069,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "last_modified_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "topic_name": "fixture",
+              "last_modified_ts": " "
+            }
           }
         },
         {
@@ -1278126,15 +1278094,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "last_modified_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "topic_name": "fixture",
+              "last_modified_ts": "__future_enum__"
+            }
           }
         },
         {
@@ -1278329,15 +1278293,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "topic_name": "fixture",
+              "created_ts": ""
+            }
           }
         },
         {
@@ -1278358,15 +1278318,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "topic_name": "fixture",
+              "created_ts": " "
+            }
           }
         },
         {
@@ -1278387,15 +1278343,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "topic_name": "fixture",
+              "created_ts": "__future_enum__"
+            }
           }
         },
         {
@@ -1406203,15 +1406155,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "last_modified_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "profile_name": "fixture",
+              "policy": {},
+              "last_modified_ts": ""
+            }
           }
         },
         {
@@ -1406233,15 +1406182,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "last_modified_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "profile_name": "fixture",
+              "policy": {},
+              "last_modified_ts": " "
+            }
           }
         },
         {
@@ -1406263,15 +1406209,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "last_modified_ts"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "profile_name": "fixture",
+              "policy": {},
+              "last_modified_ts": "__future_enum__"
+            }
           }
         },
         {
@@ -1412472,15 +1412415,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "rule_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "type": "rule_result",
+              "rule_uuid": "",
+              "operator": "equals",
+              "value": "PASSED"
+            }
           }
         },
         {
@@ -1412503,15 +1412444,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "rule_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "type": "rule_result",
+              "rule_uuid": " ",
+              "operator": "equals",
+              "value": "PASSED"
+            }
           }
         },
         {
@@ -1412534,15 +1412473,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "rule_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "type": "rule_result",
+              "rule_uuid": "__future_enum__",
+              "operator": "equals",
+              "value": "PASSED"
+            }
           }
         },
         {
@@ -1421167,15 +1421104,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": null
+            }
           }
         },
         {
@@ -1421204,15 +1421145,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": " ",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": null
+            }
           }
         },
         {
@@ -1421241,15 +1421186,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "__future_enum__",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": null
+            }
           }
         },
         {
@@ -1424525,15 +1424474,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": "",
+              "updated_by": null
+            }
           }
         },
         {
@@ -1424562,15 +1424515,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": " ",
+              "updated_by": null
+            }
           }
         },
         {
@@ -1424599,15 +1424556,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": "__future_enum__",
+              "updated_by": null
+            }
           }
         },
         {
@@ -1424857,15 +1424818,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": ""
+            }
           }
         },
         {
@@ -1424894,15 +1424859,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": " "
+            }
           }
         },
         {
@@ -1424931,15 +1424900,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": "__future_enum__"
+            }
           }
         },
         {
@@ -1426921,15 +1426894,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": null
+            }
           }
         },
         {
@@ -1426958,15 +1426935,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": " ",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": null
+            }
           }
         },
         {
@@ -1426995,15 +1426976,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "__future_enum__",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": null
+            }
           }
         },
         {
@@ -1430279,15 +1430264,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": "",
+              "updated_by": null
+            }
           }
         },
         {
@@ -1430316,15 +1430305,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": " ",
+              "updated_by": null
+            }
           }
         },
         {
@@ -1430353,15 +1430346,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": "__future_enum__",
+              "updated_by": null
+            }
           }
         },
         {
@@ -1430611,15 +1430608,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": ""
+            }
           }
         },
         {
@@ -1430648,15 +1430649,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": " "
+            }
           }
         },
         {
@@ -1430685,15 +1430690,19 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "description": "fixture",
+              "compatible_sources": [],
+              "violation_message": "fixture",
+              "remediation_message": null,
+              "is_archived": false,
+              "created_by": null,
+              "updated_by": "__future_enum__"
+            }
           }
         },
         {
@@ -1434466,15 +1434475,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "",
+              "name": "fixture",
+              "source_type": "fixture",
+              "rule_state": "fixture"
+            }
           }
         },
         {
@@ -1434497,15 +1434504,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": " ",
+              "name": "fixture",
+              "source_type": "fixture",
+              "rule_state": "fixture"
+            }
           }
         },
         {
@@ -1434528,15 +1434533,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "__future_enum__",
+              "name": "fixture",
+              "source_type": "fixture",
+              "rule_state": "fixture"
+            }
           }
         },
         {
@@ -1436926,15 +1436929,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "",
+              "state": "DISABLED"
+            }
           }
         },
         {
@@ -1436955,15 +1436954,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": " ",
+              "state": "DISABLED"
+            }
           }
         },
         {
@@ -1436984,15 +1436979,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "__future_enum__",
+              "state": "DISABLED"
+            }
           }
         },
         {
@@ -1438425,15 +1438416,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "",
+              "status": "fixture"
+            }
           }
         },
         {
@@ -1438454,15 +1438441,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": " ",
+              "status": "fixture"
+            }
           }
         },
         {
@@ -1438483,15 +1438466,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "__future_enum__",
+              "status": "fixture"
+            }
           }
         },
         {
@@ -1439195,15 +1439174,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "rule_instance_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "status": "fixture",
+              "rule_instance_uuid": ""
+            }
           }
         },
         {
@@ -1439225,15 +1439201,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "rule_instance_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "status": "fixture",
+              "rule_instance_uuid": " "
+            }
           }
         },
         {
@@ -1439255,15 +1439228,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "rule_instance_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "status": "fixture",
+              "rule_instance_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1453374,15 +1453344,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "time_started"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "scanner_version": "fixture",
+              "time_started": "",
+              "files": [],
+              "total_files_scanned": 0,
+              "total_files_skipped": 0,
+              "model_formats": [],
+              "model_size_bytes": 0,
+              "scan_duration_ms": 0
+            }
           }
         },
         {
@@ -1453409,15 +1453381,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "time_started"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "scanner_version": "fixture",
+              "time_started": " ",
+              "files": [],
+              "total_files_scanned": 0,
+              "total_files_skipped": 0,
+              "model_formats": [],
+              "model_size_bytes": 0,
+              "scan_duration_ms": 0
+            }
           }
         },
         {
@@ -1453444,15 +1453418,17 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "time_started"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "scanner_version": "fixture",
+              "time_started": "__future_enum__",
+              "files": [],
+              "total_files_scanned": 0,
+              "total_files_skipped": 0,
+              "model_formats": [],
+              "model_size_bytes": 0,
+              "scan_duration_ms": 0
+            }
           }
         },
         {
@@ -1457411,15 +1457387,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "model_uri": "fixture",
+              "security_group_uuid": ""
+            }
           }
         },
         {
@@ -1457440,15 +1457412,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "model_uri": "fixture",
+              "security_group_uuid": " "
+            }
           }
         },
         {
@@ -1457469,15 +1457437,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "model_uri": "fixture",
+              "security_group_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1523093,15 +1523057,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": ""
+            }
           }
         },
         {
@@ -1523121,15 +1523080,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": " "
+            }
           }
         },
         {
@@ -1523149,15 +1523103,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "security_group_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "security_group_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1544051,15 +1544000,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "target_uuid": ""
+            }
           }
         },
         {
@@ -1544082,15 +1544029,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "target_uuid": " "
+            }
           }
         },
         {
@@ -1544113,15 +1544058,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "target_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1544326,15 +1544269,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "token_json_uuid": ""
+            }
           }
         },
         {
@@ -1544357,15 +1544298,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "token_json_uuid": " "
+            }
           }
         },
         {
@@ -1544388,15 +1544327,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "token_json_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1545275,15 +1545212,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_url": "fixture",
+              "token_json_uuid": "",
+              "state": "fixture"
+            }
           }
         },
         {
@@ -1545305,15 +1545239,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_url": "fixture",
+              "token_json_uuid": " ",
+              "state": "fixture"
+            }
           }
         },
         {
@@ -1545335,15 +1545266,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_url": "fixture",
+              "token_json_uuid": "__future_enum__",
+              "state": "fixture"
+            }
           }
         },
         {
@@ -1546596,15 +1546524,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_response": {},
+              "token_json_uuid": "",
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture"
+            }
           }
         },
         {
@@ -1546628,15 +1546555,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_response": {},
+              "token_json_uuid": " ",
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture"
+            }
           }
         },
         {
@@ -1546660,15 +1546586,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_response": {},
+              "token_json_uuid": "__future_enum__",
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture"
+            }
           }
         },
         {
@@ -1547827,15 +1547752,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_response": {},
+              "token_json_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "target_uuid": ""
+            }
           }
         },
         {
@@ -1547860,15 +1547785,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_response": {},
+              "token_json_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "target_uuid": " "
+            }
           }
         },
         {
@@ -1547893,15 +1547818,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_response": {},
+              "token_json_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "client_id": "fixture",
+              "client_secret": "fixture",
+              "tenant_id": "fixture",
+              "target_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1548418,15 +1548343,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "token_json_uuid": ""
+            }
           }
         },
         {
@@ -1548446,15 +1548366,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "token_json_uuid": " "
+            }
           }
         },
         {
@@ -1548474,15 +1548389,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "token_json_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "token_json_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1596093,15 +1596003,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": ""
+            }
           }
         },
         {
@@ -1596121,15 +1596026,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": " "
+            }
           }
         },
         {
@@ -1596149,15 +1596049,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1773403,15 +1773298,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "job_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "job_id": ""
+            }
           }
         },
         {
@@ -1773431,15 +1773321,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "job_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "job_id": " "
+            }
           }
         },
         {
@@ -1773459,15 +1773344,10 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "job_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "job_id": "__future_enum__"
+            }
           }
         },
         {
@@ -1788037,15 +1787917,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1788068,15 +1787946,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": " ",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1788099,15 +1787975,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "__future_enum__",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1790165,15 +1790039,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1790196,15 +1790068,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": " ",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1790227,15 +1790097,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "__future_enum__",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1791555,15 +1791423,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture"
+            }
           }
         },
         {
@@ -1791587,15 +1791454,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": " ",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture"
+            }
           }
         },
         {
@@ -1791619,15 +1791485,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "__future_enum__",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture"
+            }
           }
         },
         {
@@ -1793396,15 +1793261,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "network_broker_channel_uuid": ""
+            }
           }
         },
         {
@@ -1793429,15 +1793294,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "network_broker_channel_uuid": " "
+            }
           }
         },
         {
@@ -1793462,15 +1793327,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "network_broker_channel_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1794881,15 +1794746,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "created_by_user_id": ""
+            }
           }
         },
         {
@@ -1794914,15 +1794779,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "created_by_user_id": " "
+            }
           }
         },
         {
@@ -1794947,15 +1794812,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "created_by_user_id": "__future_enum__"
+            }
           }
         },
         {
@@ -1795178,15 +1795043,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "updated_by_user_id": ""
+            }
           }
         },
         {
@@ -1795211,15 +1795076,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "updated_by_user_id": " "
+            }
           }
         },
         {
@@ -1795244,15 +1795109,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "updated_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "tsg_id": "fixture",
+              "name": "fixture",
+              "script_b64": "fixture",
+              "status": "fixture",
+              "updated_by_user_id": "__future_enum__"
+            }
           }
         },
         {
@@ -1795916,15 +1795781,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "",
+              "name": "fixture",
+              "status": "fixture",
+              "created_at": "fixture",
+              "updated_at": "fixture"
+            }
           }
         },
         {
@@ -1795948,15 +1795812,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": " ",
+              "name": "fixture",
+              "status": "fixture",
+              "created_at": "fixture",
+              "updated_at": "fixture"
+            }
           }
         },
         {
@@ -1795980,15 +1795843,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "__future_enum__",
+              "name": "fixture",
+              "status": "fixture",
+              "created_at": "fixture",
+              "updated_at": "fixture"
+            }
           }
         },
         {
@@ -1797460,15 +1797322,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "status": "fixture",
+              "created_at": "fixture",
+              "updated_at": "fixture",
+              "created_by_user_id": ""
+            }
           }
         },
         {
@@ -1797493,15 +1797355,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "status": "fixture",
+              "created_at": "fixture",
+              "updated_at": "fixture",
+              "created_by_user_id": " "
+            }
           }
         },
         {
@@ -1797526,15 +1797388,15 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "created_by_user_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "name": "fixture",
+              "status": "fixture",
+              "created_at": "fixture",
+              "updated_at": "fixture",
+              "created_by_user_id": "__future_enum__"
+            }
           }
         },
         {
@@ -1799693,15 +1799555,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1799723,15 +1799582,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": " ",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1799753,15 +1799609,12 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "__future_enum__",
+              "prompt": "fixture"
+            }
           }
         },
         {
@@ -1800519,15 +1800372,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "prompt": "fixture",
+              "adapter_uuid": ""
+            }
           }
         },
         {
@@ -1800550,15 +1800401,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "prompt": "fixture",
+              "adapter_uuid": " "
+            }
           }
         },
         {
@@ -1800581,15 +1800430,13 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "script_b64": "fixture",
+              "network_broker_channel_uuid": "550e8400-e29b-41d4-a716-446655440000",
+              "prompt": "fixture",
+              "adapter_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1806596,15 +1806443,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": ""
+            }
           }
         },
         {
@@ -1806625,15 +1806468,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": " "
+            }
           }
         },
         {
@@ -1806654,15 +1806493,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1806849,15 +1806684,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": ""
+            }
           }
         },
         {
@@ -1806878,15 +1806709,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": " "
+            }
           }
         },
         {
@@ -1806907,15 +1806734,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1811868,15 +1811691,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": ""
+            }
           }
         },
         {
@@ -1811897,15 +1811716,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": " "
+            }
           }
         },
         {
@@ -1811926,15 +1811741,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1812121,15 +1811932,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": ""
+            }
           }
         },
         {
@@ -1812150,15 +1811957,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": " "
+            }
           }
         },
         {
@@ -1812179,15 +1811982,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1840381,15 +1840180,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": ""
+            }
           }
         },
         {
@@ -1840410,15 +1840205,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": " "
+            }
           }
         },
         {
@@ -1840439,15 +1840230,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "network_broker_channel_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1840634,15 +1840421,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": ""
+            }
           }
         },
         {
@@ -1840663,15 +1840446,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": " "
+            }
           }
         },
         {
@@ -1840692,15 +1840471,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "adapter_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "adapter_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1841132,15 +1840907,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "uuid": ""
+            }
           }
         },
         {
@@ -1841161,15 +1840932,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "uuid": " "
+            }
           }
         },
         {
@@ -1841190,15 +1840957,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "name": "fixture",
+              "uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1842631,15 +1842394,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_type": "HEADERS",
+              "auth_config": {
+                "auth_header": {}
+              },
+              "target_id": ""
+            }
           }
         },
         {
@@ -1842663,15 +1842425,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_type": "HEADERS",
+              "auth_config": {
+                "auth_header": {}
+              },
+              "target_id": " "
+            }
           }
         },
         {
@@ -1842695,15 +1842456,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "target_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_type": "HEADERS",
+              "auth_config": {
+                "auth_header": {}
+              },
+              "target_id": "__future_enum__"
+            }
           }
         },
         {
@@ -1842917,15 +1842677,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_type": "HEADERS",
+              "auth_config": {
+                "auth_header": {}
+              },
+              "network_broker_channel_uuid": ""
+            }
           }
         },
         {
@@ -1842949,15 +1842708,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_type": "HEADERS",
+              "auth_config": {
+                "auth_header": {}
+              },
+              "network_broker_channel_uuid": " "
+            }
           }
         },
         {
@@ -1842981,15 +1842739,14 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "network_broker_channel_uuid"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "auth_type": "HEADERS",
+              "auth_config": {
+                "auth_header": {}
+              },
+              "network_broker_channel_uuid": "__future_enum__"
+            }
           }
         },
         {
@@ -1876656,15 +1876413,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "prompt_set_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "prompt": "fixture",
+              "prompt_set_id": ""
+            }
           }
         },
         {
@@ -1876685,15 +1876438,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "prompt_set_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "prompt": "fixture",
+              "prompt_set_id": " "
+            }
           }
         },
         {
@@ -1876714,15 +1876463,11 @@
             ]
           },
           "response": {
-            "success": false,
-            "issues": [
-              {
-                "code": "invalid_string",
-                "path": [
-                  "prompt_set_id"
-                ]
-              }
-            ]
+            "success": true,
+            "output": {
+              "prompt": "fixture",
+              "prompt_set_id": "__future_enum__"
+            }
           }
         },
         {

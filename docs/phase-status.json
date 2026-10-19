@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 19,
+  "active_phase": 20,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations)",
   "review_threshold": 9,
   "phases": [
@@ -3748,20 +3748,505 @@
     {
       "id": 19,
       "name": "G25 response compatibility implementation",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-19-attempt-03.json"
+      ],
       "plan": "docs/g25-response-compatibility-plan.md",
       "scope_evidence": [
         "docs/g25-response-compatibility-plan.md",
         "contracts/compatibility/g25/audit.json",
-        "tools/g25_audit.py"
+        "tools/g25_audit.py",
+        "crates/scm-sdk/src/validation.rs",
+        "tools/red_team_dataplane.py",
+        "tools/generate_models.py",
+        "crates/scm-sdk/tests/g25_response_compatibility.rs",
+        "crates/scm-sdk/tests/red_team_contracts.rs",
+        "tools/g25_fixtures.py",
+        "tools/g25-oracle.mts",
+        "docs/G25_COMPATIBILITY.md",
+        "contracts/compatibility/g25/comparison.json",
+        "tools/review_phase.py",
+        "tools/test_review_phase.py",
+        "docs/checks/phase-19-python-preflight.json",
+        "docs/checks/phase-19-rust-1.99.0-json-unification.json",
+        "scripts/check-rust.py",
+        "tools/test_g25_generation.py",
+        "tools/test_model_fixtures.py",
+        "docs/checks/phase-19-private-material.json",
+        "tools/test_g25_report.py",
+        "tools/test_ci.py",
+        "docs/checks/phase-19-rust-1.89.0-red-team-json-unification.json",
+        "docs/checks/phase-19-rust-1.99.0-red-team-json-unification.json",
+        "docs/VALIDATION.md",
+        "tools/test_g25_documentation.py",
+        "contracts/compatibility/g25/projection-bindings.json",
+        "crates/scm-sdk/src/validation/tests.rs",
+        "docs/PHASES.md",
+        "docs/checks/phase-19-rust-1.99.0-all-phase3.json"
       ],
-      "final_in_sequence": false
+      "final_in_sequence": false,
+      "chunks": [
+        {
+          "id": "validation-policy",
+          "status": "accepted",
+          "attempts": [
+            {
+              "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-01.json",
+              "total": 44,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 8,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-02.json",
+              "total": 45,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-03.json",
+              "total": 45,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-04.json",
+              "total": 45,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-05.json",
+              "total": 45,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            }
+          ],
+          "scope_evidence": [
+            "crates/scm-sdk/src/validation.rs",
+            "crates/scm-sdk/src/validation/tests.rs",
+            "tools/red_team_dataplane.py",
+            "tools/g25-oracle.mts",
+            "tools/schema-oracle.mts",
+            "docs/G25_COMPATIBILITY.md",
+            "tools/test_g25_generation.py"
+          ],
+          "phase_followup_review": "docs/reviews/phase-19-attempt-03.json",
+          "phase_followup_current_source_sha256": "99a0568b73ad2c8398197476666fc206fdb9bec1c70a4d0bce8a04e8df9db7d1",
+          "accepted_total": 45,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 9,
+            "supportability": 9,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-19-chunk-validation-policy-attempt-05.json",
+          "accepted_source_sha256": "22764b50395fbcb5e1c963ad1c3bf44253bb897bd74a5b2e13c175f84d2a0f4f",
+          "review_decision": "accepted"
+        },
+        {
+          "id": "typed-preservation",
+          "status": "accepted",
+          "attempts": [
+            {
+              "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-01.json",
+              "total": 39,
+              "categories": {
+                "implementation": 7,
+                "code_quality": 8,
+                "supportability": 8,
+                "architecture": 8,
+                "feature_delivery": 8
+              },
+              "accepted": false
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-02.json",
+              "total": 44,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 8,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-03.json",
+              "total": 44,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 8,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-04.json",
+              "total": 45,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-05.json",
+              "total": 44,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 8,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            }
+          ],
+          "scope_evidence": [
+            "tools/generate_models.py",
+            "crates/scm-sdk/src/models/generated.rs",
+            "crates/scm-sdk/tests/g25_response_compatibility.rs",
+            "crates/scm-sdk/tests/red_team_contracts.rs",
+            "tools/g25_fixtures.py",
+            "contracts/compatibility/g25/projections.json",
+            "scripts/check-rust.py",
+            ".forgejo/workflows/ci.yml",
+            "tools/test_ci.py",
+            "tools/check_phase.py"
+          ],
+          "phase_followup_review": "docs/reviews/phase-19-attempt-03.json",
+          "phase_followup_current_source_sha256": "99a0568b73ad2c8398197476666fc206fdb9bec1c70a4d0bce8a04e8df9db7d1",
+          "accepted_total": 44,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 9,
+            "supportability": 8,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-05.json",
+          "accepted_source_sha256": "22764b50395fbcb5e1c963ad1c3bf44253bb897bd74a5b2e13c175f84d2a0f4f",
+          "review_decision": "accepted"
+        },
+        {
+          "id": "regression-and-governance",
+          "status": "accepted",
+          "attempts": [
+            {
+              "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-01.json",
+              "total": 43,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 8,
+                "supportability": 8,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-02.json",
+              "total": 44,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 8,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-03.json",
+              "total": 44,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 8,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-04.json",
+              "total": 45,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 9,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            },
+            {
+              "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-05.json",
+              "total": 44,
+              "categories": {
+                "implementation": 9,
+                "code_quality": 8,
+                "supportability": 9,
+                "architecture": 9,
+                "feature_delivery": 9
+              },
+              "accepted": true
+            }
+          ],
+          "scope_evidence": [
+            "tools/review_phase.py",
+            "tools/test_review_phase.py",
+            "tools/g25_fixtures.py",
+            "tools/g25_report.py",
+            "tools/test_g25_report.py",
+            "tools/test_ci.py",
+            ".forgejo/workflows/ci.yml",
+            "docs/checks/phase-19-python-preflight.json",
+            "docs/checks/phase-19-private-material.json"
+          ],
+          "phase_followup_review": "docs/reviews/phase-19-attempt-03.json",
+          "phase_followup_current_source_sha256": "99a0568b73ad2c8398197476666fc206fdb9bec1c70a4d0bce8a04e8df9db7d1",
+          "accepted_total": 44,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 8,
+            "supportability": 9,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-05.json",
+          "accepted_source_sha256": "22764b50395fbcb5e1c963ad1c3bf44253bb897bd74a5b2e13c175f84d2a0f4f",
+          "review_decision": "accepted"
+        }
+      ],
+      "review_findings_disposition": [
+        {
+          "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-01.json",
+          "disposition": "Updating oracle policy provenance, all array/opaque wrapper guards, root-type mutations, native enum/discriminator oracle semantics, response-mode predicate, and measured residual baseline strictness."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-01.json",
+          "disposition": "Added chunk CLI/record/path orchestration tests, readable format counts, explicit null-branch accounting, and PATH-based rustfmt discovery."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-01.json",
+          "disposition": "Reproduced arbitrary_precision failure with a u128-range unknown value; routing all projection and baseline value decodes through json_decode. Added schema-derived conforming witnesses, nullable typed-state assertions and usage classification for all55fields. Keeping redacted baseline errors intentionally: raw serde error text can include response data. Retaining the bounded clone to preserve untouched fallback values without duplicating the JSON decoder; documented in comparison report. Existing json-unification gate now includes Red Team; the unchanged47-job matrix executes the new combination. Reproduced failing large-number test now passes. Typed states and nullability verified across all55fields."
+        },
+        {
+          "review": "phase19 chunk round2",
+          "disposition": "Bound oracle outcomes to exact corpus bytes and asserted binding in Rust/report; closed malformed string-unit response bypass; all projection tests now use public parse, with all-model u128 and nested union cases; latest current-source accepted chunk reviews now mandatory for advancement. Retained original core json-unification coverage and added red-team-json-unification on both compilers, making current CI49 jobs. This supersedes round1 statement that repurposed the original job. Expanded frozen-bound/structural and retained vendor numeric/array constraint evidence."
+        },
+        {
+          "review": "phase19 chunk round2 snapshot ordering",
+          "disposition": "Fixed orphan snapshot ordering: resolve scope evidence before creating immutable checks snapshot; tools/review_phase.py and tools/test_review_phase.py prove invalid scope leaves no snapshot."
+        },
+        {
+          "review": "phase19 chunk round3",
+          "disposition": "Consolidated round4 work: generated projection tests cover both response modes, generator/oracle readability, all response-floor negative guards and exact frozen-bound inventory, missing paired JSON root fails generation, reuse validated kind. Bind current CI docs to matrix, require declared reviewed chunks and accumulate repeated scope flags, include privacy freshness in gate. Historical all-feature receipt removed from current scope and labeled with its original Rust hash."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-04.json",
+          "disposition": "Round4 accepted with low findings only. Remaining documentation/qualification observations carried to phase20; no blocker or high finding. Preserve current-source acceptance; optional hardening remains recorded in the review."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-04.json",
+          "disposition": "Round4 accepted with low findings only. Remaining documentation/qualification observations carried to phase20; no blocker or high finding. Preserve current-source acceptance; optional hardening remains recorded in the review."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-04.json",
+          "disposition": "Round4 accepted with low findings only. Remaining documentation/qualification observations carried to phase20; no blocker or high finding. Preserve current-source acceptance; optional hardening remains recorded in the review."
+        },
+        {
+          "review": "docs/reviews/phase-19-attempt-01.json",
+          "disposition": "Addressing all nine findings: public mode docs, fail-closed malformed bounds, CI gate execution and guard, current CI overview, production decoder coverage, audit-to-floor binding, both-mode nested union, retained refinement/transform documentation."
+        },
+        {
+          "review": "docs/reviews/phase-19-attempt-01.json",
+          "disposition": "All nine findings implemented. Operation sweep now uses public parsing for38models and4elementarrays;3unconstrained JSON roots retain validatedValues. One explicit runtime-profile schema mismatch is tested through the actualpublicclient in bothmodes withu128, avoiding an inaccurate second standalone-schema validation. New nestedunionchecks bothmodes. Current privacy, fullPython, all-feature and27-command phase evidence regenerating before fifthchunkreviews."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-05.json",
+          "finding_index": 1,
+          "disposition": "Independently recomputed pre-G25 request-column digest from git baseline; explicit provenance retained in request_oracle_provenance."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-regression-and-governance-attempt-05.json",
+          "disposition": "Accepted44/50 with allcategories>=8; no fifth-attempt exception used. The exception-floor ambiguity and scope/snapshot metadata improvements are staged for phase20 release-tool qualification, where the floor will remain>=8. Source19 remains frozen after its final chunk iteration. Remaining readability/report refinements do not affect passing compatibility outcomes; strict witness assertions are also staged for phase20."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-05.json",
+          "finding_index": 0,
+          "disposition": "Generated graph metadata is valid and guarded; malformed regex metadata hardening staged for phase20 and its fresh compiler/live/package qualification. No current service-response incompatibility demonstrated."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-validation-policy-attempt-05.json",
+          "finding_index": 2,
+          "disposition": "Keep the accepted scope: unpaired operations have no TypeScript contract justifying wider numeric/cardinality domains; retain vendor numeric/array constraints and document out-of-domain rejection risk in phase20 changelog and plan. Do not broaden this patch beyond reviewed string compatibility."
+        },
+        {
+          "review": "docs/reviews/phase-19-chunk-typed-preservation-attempt-05.json",
+          "disposition": "Accepted44/50. Full machine-readable usage classifications and all55 projection tests exist; phase20 will correct the human report to derive allrequest-reachable/standalone model lists and pin the fullusagepartition. The historical phase17CI contract command list is intentionally unchanged until phase20 switches to completeG25contract checks. Retain redacted baseline errors to avoid service-data leakage; field-local diagnostic redesign deferred. Rustfmt currentlyruns through the installed pinnedrustup toolchain, as executed by allchecks. Unionoverlap tie hardening remains low-severity with rawfallbackpreservation; no new ambiguity demonstrated."
+        },
+        {
+          "review": "docs/reviews/phase-19-attempt-02.json",
+          "disposition": "Phase-level followup now corrects stale validation reference with explicit oracle/documentation guard, validates malformed regex metadata before response relaxation, and resolves prior report/usage-partition observations. Chunk iteration cap remains5; fresh overallphase review assesses currentcorrections against completegate. Reviewgovernance will retainoriginalchunksource andexplicitcurrentphasefollowupcoverage instead of claiming unchangedchunkcode."
+        },
+        {
+          "review": "phase19 phase-level followup",
+          "disposition": "Implemented allphase2findings plus retainedchunk observations: validation reference bound to actualoraclekeywordremovals; regexmetadata validated inallmodes; explicit55legacy/vendor projectiontriples pinned withtampertests; full55usagepartition guarded; reportrequestmodel lists derived, emptyresidualrendering handled; originalrequestoraclehashprovenance recorded. Nestedreviewbudgets preserveactualchunk5hashes while requiringindependentcurrentphasecoverage forfollowupcorrections; categoryfloors/snapshotpointers fixed andtested. No6thchunkiteration."
+        },
+        {
+          "review": "phase19 phase3 qualification",
+          "disposition": "The implemented phase-level corrections supersede earlier notes staging regexmetadata/projectiondocs/floor/snapshot fixes forphase20. Allare now included inphase19current-source gate andindependentphase3review. Phase20draft retains onlyrelease-readiness/scope/delivery additions andpackaging/docs/versionchanges."
+        },
+        {
+          "review": "docs/reviews/phase-19-attempt-03.json",
+          "disposition": "Accepted46/50. CI G25 command wiring belongs tophase20andisprepared. Explicitprojectionbindingledger alreadyfailschanged/missing55additions; unrelated no-addition pairing diagnostics remainlowpriority. Typed-over-rawprecedence isintentional, documented, andtested; no behaviorchange added afteracceptance."
+        }
+      ],
+      "historical_supplementary_evidence": [
+        {
+          "path": "docs/checks/phase-19-rust-1.99.0-all-round2.json",
+          "rustInputsSha256": "4662feb309b02f84a30a26eef98964a6e37a746c8f6fd58b247e1a4efa21f8f0",
+          "scope": "Superseded round2 observation, not qualification of round3/4. Phase20 owns fresh all/minimal/default checks on both compilers."
+        },
+        {
+          "path": "docs/checks/phase-19-round3",
+          "scope": "Preserved round3 check receipts before round4 replacement. Their own source hashes determine historical applicability."
+        },
+        {
+          "path": "docs/checks/phase-19-rust-1.99.0-all.json",
+          "scope": "Historical pre-round4 receipt, superseded by phase-19-rust-1.99.0-all-round4.json; not current qualification."
+        },
+        {
+          "path": "docs/checks/phase-19-round4",
+          "scope": "Preserved round4 receipts before final chunk iteration; use their own source hashes."
+        },
+        {
+          "path": "docs/checks/phase-19-rust-1.99.0-all-round4.json",
+          "scope": "Historical round4; final source receives all-feature evidence during phase20 qualification."
+        },
+        {
+          "path": "docs/checks/phase-19-final-chunks",
+          "scope": "Preserved exact fifthchunk-review source receipts before phase-level followup corrections. Chunk budgets remain closed; phase review must independently assess current corrected source."
+        }
+      ],
+      "supplementary_verification": {
+        "path": "docs/checks/phase-19-python-preflight.json",
+        "scope": "Separately source-bound full Python preflight; CI suite is also enforced directly by the phase19 gate.",
+        "source_sha256": "99a0568b73ad2c8398197476666fc206fdb9bec1c70a4d0bce8a04e8df9db7d1"
+      },
+      "review_attempts": [
+        {
+          "review": "docs/reviews/phase-19-attempt-01.json",
+          "total": 44,
+          "accepted": false
+        },
+        {
+          "review": "docs/reviews/phase-19-attempt-02.json",
+          "total": 44,
+          "accepted": false
+        }
+      ],
+      "request_oracle_provenance": {
+        "baseline_commit": "7f4a062310f0bac1e7b6a5f16009c4feec03a11e",
+        "baseline_file": "contracts/native-fixtures/schemas.json",
+        "baseline_file_sha256": "614120650ac53b5c9b518983631c7f099b89695f0476d8ec7d3ca91178a357a2",
+        "request_projection_sha256": "d9c02bbced1cf94a3ba0c219b62e38816e60518c034a8ee929aa6318fca47f0d",
+        "roots": 1127,
+        "cases": 60271,
+        "projection": "Preserve root metadata, remove only response key from each jsonCases record; canonical JSON sort_keys=True,separators=(comma,colon),ensure_ascii=False,UTF-8. Recomputed from git show baseline:file and matches current pinned request column."
+      },
+      "phase_followup_scope_evidence": [
+        "docs/VALIDATION.md",
+        "tools/test_g25_documentation.py",
+        "contracts/compatibility/g25/projection-bindings.json",
+        "crates/scm-sdk/src/validation/tests.rs",
+        "tools/test_g25_report.py",
+        "docs/PHASES.md",
+        "tools/review_phase.py",
+        "tools/test_review_phase.py",
+        "tools/g25_fixtures.py",
+        "tools/test_g25_generation.py",
+        "tools/g25_report.py",
+        "docs/G25_COMPATIBILITY.md"
+      ],
+      "accepted_source_sha256": "99a0568b73ad2c8398197476666fc206fdb9bec1c70a4d0bce8a04e8df9db7d1",
+      "accepted_score": 9,
+      "accepted_total": 46,
+      "accepted_categories": {
+        "implementation": 9,
+        "code_quality": 9,
+        "supportability": 9,
+        "architecture": 9,
+        "feature_delivery": 10
+      },
+      "review_decision": "accepted",
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-19-attempt-03.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/reviews/phase-19-attempt-03.checks.json"
+          ],
+          "source_sha256": "99a0568b73ad2c8398197476666fc206fdb9bec1c70a4d0bce8a04e8df9db7d1"
+        },
+        "claude_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-19-attempt-03.json"
+          ]
+        }
+      }
     },
     {
       "id": 20,
       "name": "G25 0.2.2 qualification and delivery",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": [],
       "plan": "docs/g25-response-compatibility-plan.md",
       "scope_evidence": [

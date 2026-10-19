@@ -19,6 +19,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 DEFAULT_COMMAND_TIMEOUT_SECONDS = 900
 FEATURES = {"default": [], "minimal": ["--no-default-features"], "all": ["--all-features"],
             "json-unification": ["--no-default-features", "--features", "serde_json/arbitrary_precision"],
+            "red-team-json-unification": ["--no-default-features", "--features", "red-team,serde_json/arbitrary_precision"],
             **{name: ["--no-default-features", "--features", name] for name in ("scan", "management", "gateway", "models", "dlp", "iam", "model-security", "red-team", "agentguard", "realtime", "ws-transport", "reqwest-transport", "tracing")},
             "default-tracing": ["--features", "tracing"],
             "realtime-tracing": ["--no-default-features", "--features", "realtime,tracing"],

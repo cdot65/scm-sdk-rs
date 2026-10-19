@@ -2,7 +2,7 @@
 
 Read `docs/PHASES.md` before implementation or review. Read `docs/implementation-plan.md` when changing public contracts, authentication, transport, generation, or acceptance criteria.
 
-Complete phases in order. Parallel work may cover independent milestones within the active phase. Run the phase's specified checks, request a fresh Claude Code review with a score from 1 to 10, address every blocking finding, and repeat until the score is at least 9. Record the review artifact, exact reviewed source state, checks, limitations, and phase outcome in `docs/reviews/` and `docs/phase-status.json` before advancing.
+Complete phases in order. Parallel work may cover independent milestones within the active phase. Run the phase's specified checks, request a fresh Claude Code review with a score from 1 to 10, address every blocking finding, and apply the current maintainer rubric in docs/PHASES.md (historical phases retain their original threshold). Record the review artifact, exact reviewed source state, checks, limitations, and phase outcome in `docs/reviews/` and `docs/phase-status.json` before advancing.
 
 Use the committed TypeScript baseline recorded in `contracts/manifest.json`; preserve export parity and document deliberate Rust differences. Report implementation, contract coverage, and live acceptance separately. Experimental or unavailable service workflows retain explicit status.
 

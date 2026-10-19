@@ -68,6 +68,27 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 19:
+        return [["git", "diff", "--check"],
+                ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-19-private-material.json"],
+                *[["python", "tools/" + tool, "--check"] for tool in
+                  ("g25_audit.py", "g25_fixtures.py", "g25_report.py", "generate_validation.py", "generate_models.py", "model_fixtures.py", "response_defaults.py")],
+                ["python", "tools/red_team_dataplane.py", "--check", "--require-complete"],
+                ["python", "tools/verify-contracts.py", "--baseline", ".local/typescript"],
+                ["node", "tools/make-red-team-fixtures.mjs", "--check"],
+                ["tools/node_modules/.bin/tsx", "tools/g25-oracle.mts", "--check"],
+                [".local/typescript/node_modules/.bin/tsx", "tools/schema-oracle.mts", "--check"],
+                ["tools/node_modules/.bin/tsc", "--noEmit", "--target", "ES2022", "--module", "NodeNext",
+                 "--moduleResolution", "NodeNext", "--strict", "--skipLibCheck", "--esModuleInterop",
+                 "--types", "node", "--typeRoots", ".local/typescript/node_modules/@types", "tools/g25-oracle.mts"],
+                *[["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"] for name in
+                  ("test_g25*.py", "test_review_phase.py", "test_ci.py", "test_model_generation.py", "test_red_team_dataplane.py", "test_model_fixtures.py", "test_g10_release.py")],
+                *[["python", "scripts/check-rust.py", "--toolchain", version, "--feature-set", "red-team",
+                   "--output", f"docs/checks/phase-19-rust-{version}-red-team.json"] for version in ("1.89.0", "1.99.0")],
+                ["python", "scripts/check-rust.py", "--toolchain", "1.99.0", "--feature-set", "json-unification",
+                 "--output", "docs/checks/phase-19-rust-1.99.0-json-unification.json"],
+                *[["python", "scripts/check-rust.py", "--toolchain", version, "--feature-set", "red-team-json-unification",
+                   "--output", f"docs/checks/phase-19-rust-{version}-red-team-json-unification.json"] for version in ("1.89.0", "1.99.0")]]
     if phase == 18:
         return [["git", "diff", "--check"],
                 ["git", "diff", "--exit-code", "7f4a062", "--", "crates/scm-sdk", "Cargo.toml", "Cargo.lock", "LICENSE", "NOTICE"],
@@ -464,7 +485,7 @@ def commands_for(phase):
 
 
 def ci_commands_for(phase):
-    """Fast current contracts complement the independent 46-job Rust matrix.
+    """Fast current contracts complement the independent 48-job Rust matrix.
 
     This subset cannot qualify a phase review: it writes a separate report and
     review_phase.check_evidence still requires the complete commands_for list.

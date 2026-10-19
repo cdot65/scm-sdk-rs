@@ -54,6 +54,9 @@ class CiContractTests(unittest.TestCase):
         for name in ["docs/CI.md", "docs/RELEASE.md"]:
             self.assertIn(f"--phase {phase}", (ROOT / name).read_text())
         document = (ROOT / "docs/CI.md").read_text()
+        overview = re.search(r"CI now executes the Phase (\d+) contracts gate", document)
+        self.assertIsNotNone(overview)
+        self.assertEqual(int(overview.group(1)), phase)
         section = document.split("## Scripts run by the current contracts gate\n", 1)[1].split("\n## ", 1)[0]
         documented = set(re.findall(r"`(scripts/check-[^`]+\.py)`", section))
         selected = ci_commands_for(phase) if "--contracts-only" in job else commands_for(phase)
@@ -105,7 +108,24 @@ class CiContractTests(unittest.TestCase):
         names = set(re.findall(r"^  ([a-z][a-z-]*):$", jobs, re.MULTILINE))
         self.assertEqual(names, {"contracts-and-package", "rust"})
         self.assertNotIn("native_platforms", WORKFLOW)
-        self.assertEqual(len(flow_list("toolchain")) * len(flow_list("features")) + 1, 47)
+        self.assertEqual(len(flow_list("toolchain")) * len(flow_list("features")) + 1, 49)
+
+    def test_current_documented_job_counts_match_the_configured_matrix(self):
+        rust_jobs = len(flow_list("toolchain")) * len(flow_list("features"))
+        total_jobs = rust_jobs + 1
+        ci = (ROOT / "docs/CI.md").read_text()
+        release = (ROOT / "docs/RELEASE.md").read_text().split("The prior [0.2.0 receipt]", 1)[0]
+        self.assertIn(f"Its {total_jobs} required jobs", ci)
+        ci_rust_count = re.search(r"The independent (\d+)-job\s+Rust matrix", ci)
+        self.assertIsNotNone(ci_rust_count)
+        self.assertEqual(int(ci_rust_count.group(1)), rust_jobs)
+        rust_count = re.search(r"(\d+)(?:-job)? Rust (?:feature/compiler matrix|jobs)", release)
+        self.assertIsNotNone(rust_count)
+        self.assertEqual(int(rust_count.group(1)), rust_jobs)
+        total_count = re.search(r"terminal (\d+)-job CI|all (\d+) configured CI jobs", release)
+        self.assertIsNotNone(total_count)
+        self.assertEqual(int(next(value for value in total_count.groups() if value is not None)), total_jobs)
+        # Historical run observations may keep their original, smaller matrix.
 
     def test_native_workflow_is_dispatch_only_without_a_job_admission_condition(self):
         path = ROOT / ".forgejo/workflows/native-platforms.yml"
@@ -372,6 +392,10 @@ class CiContractTests(unittest.TestCase):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         self.assertEqual(set(matrix), set(module.FEATURES))
+        self.assertEqual(module.FEATURES["json-unification"],
+                         ["--no-default-features", "--features", "serde_json/arbitrary_precision"])
+        self.assertEqual(module.FEATURES["red-team-json-unification"],
+                         ["--no-default-features", "--features", "red-team,serde_json/arbitrary_precision"])
         exports = json.loads((ROOT / "contracts/native-exports.json").read_text())
         expected = sorted({feature for row in exports["capabilities"] for feature in row["requiredFeatures"]})
         flags = module.FEATURES["native-probes"]

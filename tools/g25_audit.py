@@ -11,15 +11,18 @@ def read(path):
     READS.add(str(path));return json.loads((ROOT/path).read_text())
 def digest(path):return hashlib.sha256((ROOT/path).read_bytes()).hexdigest()
 def fields(nodes,sid,path='$',optional=False,nullable=False,active=()):
-    if sid in active:raise ValueError('Recursive audit requires explicit handling')
+    if sid in active:return [{'path':path,'node':sid,'kind':'RecursiveReference','optional':optional,'nullable':nullable}]
     n=nodes[sid];k=n['kind'];active=(*active,sid)
     if k in ('ZodOptional','ZodDefault','ZodNullable','ZodBranded'):
         return fields(nodes,n['inner']['$ref'],path,optional or k in ('ZodOptional','ZodDefault'),nullable or k=='ZodNullable',active)
+    if k=='ZodLazy':return fields(nodes,n['target']['$ref'],path,optional,nullable,active)
     if k=='ZodEffects':return fields(nodes,n['inner']['$ref'],path,optional,nullable,active)
     row={'path':path,'node':sid,'kind':k,'optional':optional,'nullable':nullable}
-    for key in ('checks','values','value','unknownKeys'):
+    for key in ('checks','values','value','unknownFields','catchall'):
         if key in n:row[key]=n[key]
     rows=[row]
+    if k=='ZodPipeline':
+        for key in ('input','output'):rows+=fields(nodes,n[key]['$ref'],path+'|'+key,optional,nullable,active)
     if k=='ZodCatch':rows+=fields(nodes,n['inner']['$ref'],path+'|catch',optional,nullable,active)
     if k=='ZodObject':
         for key,value in sorted(n['properties'].items()):rows+=fields(nodes,value['schema']['$ref'],path+'.'+key,active=active)
@@ -51,7 +54,7 @@ def audit():
             elif re.fullmatch(r'z.array\(\w+\)',expr):sid=graph['roots'][expr[8:-1]];array=True
             elif expr in ('z.object({}).passthrough()','z.unknown()'):opaque=True
             else:raise ValueError('Unclassified baseline response: '+expr)
-        current=fields(graph['nodes'],graph['roots'][root]) if root else []
+        current=fields(graph['nodes'],graph['roots'][root.removesuffix(':response')+':strict-response']) if root else []
         old_fields=fields(graph['nodes'],sid,'$[]' if array else '$') if sid else []
         if array:old_fields.insert(0,{'path':'$','node':None,'kind':'ZodArray','optional':False,'nullable':False})
         formats=[]

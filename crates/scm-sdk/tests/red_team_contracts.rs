@@ -2474,3 +2474,132 @@ async fn every_new_typed_vendor_route_rejects_contract_invalid_json_responses_af
         wire.done();
     }
 }
+
+#[tokio::test]
+async fn g25_typed_reads_preserve_opaque_ids_dates_and_unknown_enum_values() {
+    for without_defaults in [false, true] {
+        for (class, method) in [
+            ("RedTeamReportsClient", "list_attacks"),
+            ("RedTeamClient", "get_target_profile_error_logs"),
+        ] {
+            let mut case = vendor_fixture(class, method);
+            let row = &mut case["responseBody"]["data"][0];
+            row["future_number"] =
+                serde_json::from_str("340282366920938463463374607431768211455").unwrap();
+            if method == "list_attacks" {
+                row["job_id"] = json!("job-1");
+                row["prompt_id"] = json!("p-1");
+                row["prompt_mapping_id"] = json!("map-1");
+                row["sub_category"] = json!("FUTURE_SUB_CATEGORY");
+                row["category"] = json!("FUTURE_CATEGORY");
+                row["status"] = json!("FUTURE_STATUS");
+            } else {
+                row["job_id"] = json!("job-1");
+                row["created_at"] = json!("2026-01-05 00:00:00");
+                row["updated_at"] = json!("2026-01-05T00:00:00.123456");
+                row["error_type"] = json!("PROFILING");
+                row["error_source"] = json!("NEW_SOURCE");
+            }
+            let (client, wire, _) = clients(false);
+            arm_vendor(&wire, &case);
+            let mut options = RequestOptions::with_timeout(Duration::from_secs(5)).unwrap();
+            if without_defaults {
+                options = options.without_response_defaults();
+            }
+            let actual = call_vendor(&client, &case, Some(&options)).await.unwrap();
+            assert_eq!(actual, case["responseBody"]);
+            assert_eq!(wire.count(), 1);
+            wire.done();
+        }
+    }
+}
+
+#[tokio::test]
+async fn runtime_profile_decodes_vendor_documents_without_revalidating_legacy_model_schema() {
+    use scm_sdk::validation::{self, Mode};
+    const ROOT: &str = "vendor:red-team-dp:0.93.0:set_runtime_profile_v1_scan__job_id__runtime_profile_put:response";
+    let corpus: Value = serde_json::from_str(include_str!(
+        "../../../contracts/compatibility/g25/cases.json"
+    ))
+    .unwrap();
+    fn assign(document: &mut Value, path: &[Value], value: Value, omit: bool) {
+        if path.is_empty() {
+            *document = value;
+            return;
+        }
+        let mut at = document;
+        for key in &path[..path.len() - 1] {
+            at = if let Some(index) = key.as_u64() {
+                &mut at[index as usize]
+            } else {
+                &mut at[key.as_str().unwrap()]
+            };
+        }
+        let key = path.last().unwrap();
+        if let Some(index) = key.as_u64() {
+            at[index as usize] = value;
+        } else if omit {
+            at.as_object_mut().unwrap().remove(key.as_str().unwrap());
+        } else {
+            at[key.as_str().unwrap()] = value;
+        }
+    }
+    let root_index = corpus["roots"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .position(|row| row["root"] == ROOT)
+        .unwrap();
+    // Find a retained vendor-valid witness that the legacy model's standalone
+    // schema rejects. This establishes why the whole-corpus decoder exemption
+    // is necessary, then exercises the actual public operation decoder below.
+    let document = corpus["cases"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|case| case["root"] == root_index)
+        .find_map(|case| {
+            let mut document = corpus["roots"][root_index]["base"].clone();
+            for choice in case["choices"].as_array().unwrap() {
+                assign(
+                    &mut document,
+                    choice[0].as_array().unwrap(),
+                    choice[1].clone(),
+                    false,
+                );
+            }
+            assign(
+                &mut document,
+                case["path"].as_array().unwrap(),
+                case["value"].clone(),
+                case["omit"].as_bool().unwrap(),
+            );
+            (validation::parse(ROOT, document.clone(), Mode::ResponseWithoutDefaults).is_ok()
+                && scm_sdk::airs::red_team::models::JobResponse::parse(
+                    document.clone(),
+                    Mode::ResponseWithoutDefaults,
+                )
+                .is_err())
+            .then_some(document)
+        })
+        .expect("vendor versus standalone model schema witness");
+    for mode in [Mode::Response, Mode::ResponseWithoutDefaults] {
+        let mut case = vendor_fixture("RedTeamScansClient", "set_runtime_profile");
+        case["responseBody"] = document.clone();
+        case["responseBody"]["future_number"] =
+            serde_json::from_str("340282366920938463463374607431768211455").unwrap();
+        let expected = validation::parse(ROOT, case["responseBody"].clone(), mode).unwrap();
+        let (client, wire, _) = clients(false);
+        arm_vendor(&wire, &case);
+        let mut options = RequestOptions::with_timeout(Duration::from_secs(5)).unwrap();
+        if mode == Mode::ResponseWithoutDefaults {
+            options = options.without_response_defaults();
+        }
+        assert_eq!(
+            call_vendor(&client, &case, Some(&options)).await.unwrap(),
+            expected
+        );
+        assert_eq!(wire.count(), 1);
+        wire.done();
+    }
+}

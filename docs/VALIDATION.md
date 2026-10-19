@@ -10,7 +10,7 @@ The native validator interprets a compact, pinned schema graph as data. It does 
 
 Requests preserve the source's strict, strip, passthrough, and catchall behavior. Required fields, nullable fields, missing defaults, source ordering of effects, cross-field checks, and six output transforms are implemented natively. Present optional nonnull fields reject null. Patch fields distinguish omission, null, and replacement. Request validation belongs before authentication and network work.
 
-Responses preserve additional object fields and unfamiliar enum values while checking known required structure, nullability, scalar types, and constraints. This widening applies to `ZodEnum`, `ZodNativeEnum` with the correct scalar kind, and unions consisting entirely of string literals. Individual literals and structured-union discriminators remain strict; widening them could select a variant with the wrong required fields. Known catchall values still pass their declared validator. An unfamiliar security verdict remains an unfamiliar value; validation never maps it to allow or benign.
+Both response modes preserve additional object fields and unfamiliar enum values. They ignore string checks named `uuid`, `rfc3339`, `datetime`, `date`, `duration`, `email`, `url`, and `regex`, and vendor-only string length bounds. String types and frozen TypeScript string bounds remain enforced. Existing Red Team operations use their exact frozen TypeScript response contract exclusively, retaining its requiredness, nullability, types and constraints. Operations without a TypeScript counterpart retain vendor structure, types, numeric/integer and array bounds; no baseline establishes broader structural cardinality or numeric domains for them. Only the scoped string compatibility policy is relaxed, so unexpected out-of-domain responses can still fail. See [G25 compatibility](G25_COMPATIBILITY.md) for the operation comparison and retained risks. This widening applies to `ZodEnum`, `ZodNativeEnum` with the correct scalar kind, and unions consisting entirely of string literals. Individual literals and structured-union discriminators remain strict; widening them could select a variant with the wrong required fields. Known catchall values still pass their declared validator. An unfamiliar security verdict remains an unfamiliar value; validation never maps it to allow or benign.
 
 Rust object maps faithfully preserve response extension data, including keys that are ordinary data in Rust. Request object/record normalization retains Zod's omission of the `__proto__` merge key. The explicit Gateway finite-JSON schemas reject `__proto__`, `constructor`, and `prototype` recursively in both modes. These schemas also reject nonfinite and non-JSON runtime values; Rust JSON arrays are inherently dense and cannot contain JavaScript accessors, symbols, cycles, or inherited prototypes.
 
@@ -108,12 +108,27 @@ executes against the packaged crate on both qualified compilers.
 ## Current vendor response checks
 
 The 0.93.0 model corpus checks all 1,636 independent specimens under both response
-policies, including negative cases. Its AJV evolution oracle deliberately allows
-unknown response fields and string enum values while retaining types, requiredness,
-formats and bounds. Those specimens use strict component roots; four older-service
-presence waivers are tested separately on operation response roots. Client-boundary
-negative tests exercise invalid ASR values and missing required response fields on
-every new typed route, returning a redacted Decode error and unknown remote outcome.
+policies, including negative cases. Its AJV evolution oracle allows unknown response
+fields and string enum values. In response schemas it removes these string keywords:
+
+| Removed string keyword | Response policy |
+| --- | --- |
+| `enum` | Accept unfamiliar string vocabulary. |
+| `format` | Do not enforce string formats in either response mode. |
+| `minLength` | Do not enforce vendor-only string minimum length in either response mode. |
+| `maxLength` | Do not enforce vendor-only string maximum length in either response mode. |
+
+The component specimens retain vendor types, requiredness, nullability,
+numeric/integer checks and array bounds. Operation responses require a separate
+comparison: the G25 oracle selects the frozen TypeScript schema exclusively for
+paired operations, while unpaired operations retain those vendor structural and
+numeric constraints. Do not infer vendor requiredness for all existing operation
+responses from the component corpus. Frozen TypeScript string bounds, refinements
+and transforms remain; `time_order` can still reject timestamp content or ordering.
+The [G25 compatibility report](G25_COMPATIBILITY.md) records these distinctions,
+the retained vendor-only numeric/cardinality risk, and complete projection reachability.
+Client-boundary negative tests cover invalid ASR values and missing required fields
+on the new typed routes, returning a redacted Decode error and unknown remote outcome.
 
 The 47-row vendor ledger binds each native method's exact request/response schema
 literals; transposed override roots fail generation even when the schemas currently
@@ -123,9 +138,9 @@ query kinds and query roots; method/path/schema/status metadata stays in the
 coverage ledger. HTTP success handling retains the shared engine's 2xx policy;
 the pinned declared status is exercised by each independent positive wire fixture.
 
-The vendor tooling adds YAML/AJV development dependencies. The frozen Zod oracle
-was re-executed with those locked tools; only package/lock provenance digests
-changed in its schema, helper and Gateway artifacts. Every recorded observation
-is identical, and a regression pins the full schema corpus outside those two
-metadata rows. [The comparison receipt](checks/phase-12-oracle-provenance-refresh.json)
-retains the exact before/after artifact identities and unchanged-observation proof.
+The vendor tooling adds YAML/AJV development dependencies. The historical Phase 12
+refresh changed only package/lock provenance digests in the schema, helper and
+Gateway artifacts; its [comparison receipt](checks/phase-12-oracle-provenance-refresh.json)
+retains those unchanged-observation facts. G25 subsequently changes response
+observations under the explicit policy above. A separate regression pins the
+original frozen request observations, which remain unchanged.

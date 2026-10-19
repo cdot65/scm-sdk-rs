@@ -85,10 +85,38 @@ obtains final review >=9/10, publishes and verifies crates.io, tags and pushes,
 and waits for terminal 47-job CI before completion. Historical phase14 remains
 a final phase of its completed release; it is not reopened.
 
+## Current review rubric (maintainer instruction, 2026-10-19)
+
+For phase19 onward, score implementation, code quality, supportability, architecture,
+and feature delivery independently from 0 to 10. Chunk acceptance requires every
+category >=8 and total >=42/50 (target >=45). Phase acceptance requires >=46/50.
+Use actual independent Claude Code reviews and retain each attempt, evidence and
+fixes. Limit each chunk/phase loop to five attempts. After the fifth attempt only,
+a total strictly above40 may advance with every category still >=8 and every
+remaining deficiency explicitly recorded. Scores do not replace passing checks or publication evidence. Historical
+reviews keep their original rubric. This maintainer instruction supersedes the
+earlier 9/10 threshold for current work.
+
+### Nested review budgets and phase follow-up corrections
+
+Each chunk and its enclosing phase has its own five-attempt budget. Once a chunk
+has an accepted fifth review, corrections requested by the enclosing phase review
+do not start a sixth chunk iteration. Advancement may retain that chunk's original
+accepted source hash only when a fresh, current-source phase review scores at
+least46/50 (or satisfies the phase's fifth-attempt >40 exception with recorded
+deficiencies), every category remains >=8, and no blocker/high finding remains. The
+phase review covers the intervening corrections and all declared chunk scope.
+The gate verifies the original chunk's preserved review and checks, records its
+original source without rewriting it, and separately links the covering phase
+review and current source hash. A missing/rejected chunk, a chunk before attempt
+five, stale phase coverage, or readiness-only review cannot authorize this
+follow-up path. Ordinary unchanged chunks continue
+to require their own current-source acceptance.
+
 ## G25 response compatibility patch
 
 Follow [the G25 0.2.2 plan](g25-response-compatibility-plan.md): phase18 accepts the
 comparison and plan, phase19 implements and independently checks compatibility,
 and phase20 qualifies and publishes the immutable patch with terminal CI evidence.
-Each phase requires an actual Claude Code score >=9/10. Version 0.2.1 remains the
+Current phases use the review rubric above. Version 0.2.1 remains the
 already published Portkey release. Historical phase17 is not reopened.

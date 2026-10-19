@@ -1,16 +1,17 @@
 # Continuous qualification
 
 [.forgejo/workflows/ci.yml](../.forgejo/workflows/ci.yml) runs credential-free
-verification for pushes and pull requests. Its 47 required jobs use the ordinary
+verification for pushes and pull requests. Its 49 required jobs use the ordinary
 Linux runner. [The separate native workflow](../.forgejo/workflows/native-platforms.yml)
 runs only when explicitly dispatched after its three native runner labels are
 registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
-CI now executes the vendor-delivery Phase 12 gate, whose invocation and current
-script inventory are enforced by `tools/test_ci.py`. The initial Phase 8 and maintenance Phase 92 gates
-remain historical. See [the vendor plan](red-team-data-plane-0.93.0-plan.md).
+CI now executes the Phase 17 contracts gate, whose invocation and current
+script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
+Phase 12, and maintenance Phase 92 gates remain historical. See
+[the vendor plan](red-team-data-plane-0.93.0-plan.md).
 
 ## Required runner tools
 
@@ -126,7 +127,7 @@ The native runner inventory API was unavailable to the read token; no runner
 registration or internal scheduler behavior is asserted. Separating the manual
 workflow prevents those jobs from being created for pushes and pull requests.
 
-The matrix includes default, minimal, all, every isolated Cargo feature, both JSON
+The matrix includes default, minimal, all, every isolated Cargo feature, all three JSON
 arbitrary-precision combinations, tracing combinations, and the exact native
 export probe feature set plus its historical gate regression.
 [tools/test_ci.py](../tools/test_ci.py) guards MSRV, Node/Python, feature selections,
@@ -149,7 +150,7 @@ The complete local Phase 17 gate runs both compilers' default/minimal/all
 configurations plus Gateway/JSON-unification/tracing checks. Its candidate guard
 requires clean archives and both external consumers on each compiler. It writes
 `phase-17.json`, which the actual Claude review requires. CI's smaller scope writes
-`phase-17-contracts.json` and cannot replace that evidence. The independent 46-job
+`phase-17-contracts.json` and cannot replace that evidence. The independent 48-job
 Rust matrix continues to test every supported feature selection on both compilers.
 The immutable 0.1.1 payload comparison stays in historical gate 92.
 
@@ -169,7 +170,7 @@ redacted. A failed receipt replaces any earlier result at its output path.
 The qualification job fetches the complete locked dependency graph without a
 target filter, then resolves all-feature metadata offline before the phase gate.
 The current dependency audit inventories all targets, including packages that
-supported native builds do not use. Gate 12 performs no cross-target compilation
+supported native builds do not use. The Phase 17 contracts gate performs no cross-target compilation
 and installs no cross-target standard libraries. The retained Phase 8/91 cross
 checks compiled the transport-independent feature set for Linux GNU x86_64/ARM64,
 Apple Silicon and Windows MSVC x86_64. Those historical checks did not link or

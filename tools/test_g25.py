@@ -18,7 +18,7 @@ class G25AuditTests(unittest.TestCase):
         self.assertIn('target_id',r['requestUuidArguments'])
     def test_response_mode_policy_and_release_are_explicit(self):
         plan=(ROOT/'docs/g25-response-compatibility-plan.md').read_text()
-        for text in ['0.2.2','Mode::Request','category_display_name','tsg_id','sub_category','47-job']:
+        for text in ['0.2.2','Mode::Request','category_display_name','tsg_id','sub_category','49-job']:
             self.assertIn(text,plan)
         self.assertIn('immutable',plan)
     def test_uuid_inventory_and_nested_calls_are_complete(self):

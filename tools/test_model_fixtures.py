@@ -16,11 +16,19 @@ class ModelFixturesTests(unittest.TestCase):
         for row in rows:
             self.assertEqual(row['sha256'],fixture.sha(fixture.ROOT/row['file']))
 
-    def test_frozen_observations_remain_identical_when_only_tooling_provenance_changes(self):
+    def test_g25_format_tolerant_response_policy_and_observations_are_pinned(self):
         corpus=json.loads((fixture.ROOT/fixture.SOURCE).read_text())
         corpus['provenance'].pop('tooling')
         digest=hashlib.sha256(json.dumps(corpus,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
-        self.assertEqual(digest,'257ab78f13d4db9f3b932d15e79865e683da6decbe06add8d280023778e7cfbb')
+        self.assertEqual(digest,'ce15ed5d6326f9216060bd6f7bfca92b51d34920c319accb834b70d1ae3d79dd')
+
+    def test_original_frozen_request_observations_are_unchanged(self):
+        corpus=json.loads((fixture.ROOT/fixture.SOURCE).read_text())
+        request=[{**root, 'jsonCases': [
+            {key: value for key, value in case.items() if key != 'response'}
+            for case in root['jsonCases']]} for root in corpus['roots']]
+        digest=hashlib.sha256(json.dumps(request,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+        self.assertEqual(digest,'d9c02bbced1cf94a3ba0c219b62e38816e60518c034a8ee929aa6318fca47f0d')
 
     def test_all_eighteen_exact_zod_outputs_are_present(self):
         result = fixture.generate()

@@ -238,7 +238,7 @@ class Compiler:
                     checks.append({"kind": kind, "value": s[key], "inclusive": True})
             return self.node(pointer, {"kind": "ZodNumber", "checks": checks, "coerce": False})
         if typ == "string":
-            checks = [{"kind": kind, "value": s[key], "unit": "code_points"}
+            checks = [{"kind": kind, "value": s[key], "unit": "code_points", "requestOnly": True}
                       for key, kind in [("minLength", "min"), ("maxLength", "max")] if key in s]
             if "format" in s:
                 fmt = {"uuid": "uuid", "date-time": "rfc3339", "duration": "duration", "date": "date"}.get(s["format"])
@@ -251,6 +251,35 @@ class Compiler:
         if typ is None and not (set(s) - ANNOTATIONS):
             return self.node(pointer, {"kind": "ZodUnknown"})
         raise ValueError(f"Unimplemented schema type {typ!r} at {pointer}")
+
+
+def response_baselines(ops):
+    inventory = json.loads((ROOT / "contracts/typescript.json").read_text())
+    named = {r["name"]: r["schema"]["$ref"] for r in inventory["schemas"]["roots"]}
+    old = {r["id"]: r for r in json.loads((ROOT / "contracts/operations.json").read_text())["operations"]}
+    maps = []
+    for path in sorted((ROOT / "contracts/native-operation-mappings").glob("red-team*.json")):
+        maps += json.loads(path.read_text())["operations"]
+    native = bindings(ops)
+    result = {}
+    for method, path, op in ops:
+        _, cls, member = native[method + " " + path]
+        candidates = [old[m["baselineId"]] for m in maps if m["namespace"].split("::")[-1] == cls and member in m["methods"]]
+        if len(candidates) > 1:
+            raise ValueError("Ambiguous TypeScript response mapping")
+        if not candidates:
+            continue
+        expression = candidates[0]["directRequest"]["responseSchema"]["expression"]
+        array = bool(re.fullmatch(r"z.array\(\w+\)", expression))
+        opaque = expression in ("z.unknown()", "z.object({}).passthrough()")
+        name = expression[8:-1] if array else expression
+        if not opaque and name not in named:
+            raise ValueError("Unclassified TypeScript response expression: " + expression)
+        result[op["operationId"]] = {"baselineOperation": candidates[0]["id"], "expression": expression,
+                                     "root": named.get(name), "array": array, "opaque": opaque}
+    if len(result) != 36:
+        raise ValueError("TypeScript response operation coverage changed")
+    return result
 
 
 def contract():
@@ -289,6 +318,26 @@ def contract():
     roots = {PREFIX + name: sid for name, sid in request.roots.items() if not name.startswith(PREFIX)}
     roots.update({PREFIX + name + ":compatible": sid for name, sid in response.roots.items() if not name.startswith(PREFIX)})
     roots.update({key: sid for c in (request, response) for key, sid in c.roots.items() if key.startswith(PREFIX)})
+    # The frozen operation contract is the response compatibility floor. Requests
+    # still select the independently retained strict vendor schema.
+    baseline = response_baselines(ops)
+    for operation, row in baseline.items():
+        root = PREFIX + operation + ":response"
+        if root not in roots:
+            raise ValueError("Paired operation has no JSON response root: " + operation)
+        wrapper = "sdp_floor_" + sha(operation.encode())[:24]
+        response_sid = row["root"]
+        if row["array"]:
+            response_sid = wrapper + "_array"
+            nodes[response_sid] = {"kind": "ZodArray", "element": {"$ref": row["root"]}}
+        elif row["opaque"]:
+            response_sid = wrapper + "_opaque"
+            nodes[response_sid] = {"kind": "ZodUnknown"} if row["expression"] == "z.unknown()" else {"kind": "ZodObject", "properties": {}, "unknownFields": "passthrough", "catchall": {"$ref": wrapper + "_never"}}
+            nodes[wrapper + "_never"] = {"kind": "ZodNever"}
+        nodes[wrapper] = {"kind": "ZodResponseCompatibility",
+                          "request": {"$ref": roots[PREFIX + operation + ":strict-response"]},
+                          "response": {"$ref": response_sid}}
+        roots[root] = wrapper
     return pin, spec, ops, request, {"nodes": nodes, "roots": roots}, metadata
 
 
@@ -350,7 +399,7 @@ def augment_models(gen, compiler, vendor_gen):
                         optional = "sdp_model_" + sha((old + name).encode())[:24]
                         gen.nodes[optional] = {"kind": "ZodOptional", "inner": {"$ref": child}}
                         child = optional
-                    a["properties"][name] = {"schema": {"$ref": child}}
+                    a["properties"][name] = {"schema": {"$ref": child}, "vendorProjection": True}
                     additions.append({"legacySchema": old, "field": name, "vendorSchema": current})
         elif a["kind"] == b["kind"] == "ZodArray":
             pair(a["element"]["$ref"], b["element"]["$ref"])

@@ -113,15 +113,30 @@ JSON/tracing combinations, frozen export probes, dependency/privacy scans and
 both clean package consumers. Re-run the selected bounded nonproduction live
 qualification without broadening cost or policy mutations; report failures and
 missing privileges honestly. Rebuild source-bound ledgers from actual evidence.
-Wire the new regressions into the existing 47-job CI matrix, preserving historical
+Wire the new regressions into the expanded 49-job CI matrix, preserving historical
 gate command lists. Commit a clean release source, create both executed clean
 archive proofs and verify current packaged bytes against that source. Obtain final
 actual Claude review >=9 before publishing. Publish only the exact qualified
 archive via the existing external Cargo credential, verify the downloaded registry
 artifact, owner, non-yanked state, checksum, VCS and file inventory. Tag v0.2.2 and
 ordinary-push to the authorized Forgejo remote. Require actual registry, tag and
-terminal exact 47-job CI receipts before completion. Post-publication provenance
+terminal exact 49-job CI receipts before completion. Post-publication provenance
 edits require current review; excluded evidence-only bookkeeping does not alter SDK
 source. Generalize release documentation tests to verify linked receipts rather
 than require self-referential archive hashes in packaged files. Never republish a
 version or claim consumer adoption without its own evidence.
+
+## Maintainer review update — 2026-10-19
+
+Phase18 was accepted before the new instruction. Remaining chunks and phases use
+the five-category rubric in docs/PHASES.md. Phase19 chunks are shared validation
+and operation selection; typed projection preservation; and independent regression
+coverage plus comparison documentation. Phase20 chunks are qualification/package
+proofs and registry/remote delivery. Each chunk and phase receives a fresh actual
+Claude Code review with all five scores and retained deficiencies.
+
+Review round two refined CI coverage: retain the historical bare-core
+`json-unification` combination and add distinct `red-team-json-unification`
+checks on both compilers. This expands the delivery matrix from47 to49 jobs.
+It preserves prior coverage while executing the new projection-number regression;
+the phase19 gate checks both combinations before the next review.

@@ -87,7 +87,7 @@ jobs:
       fail-fast: false
       matrix:
         toolchain: ["1.89.0", "1.99.0"]
-        features: ["default", "minimal", "all", "json-unification", "gateway-json-unification", "models", "reqwest-transport", "scan", "management", "dlp", "iam", "model-security", "red-team", "gateway", "agentguard", "realtime", "ws-transport", "tracing", "default-tracing", "realtime-tracing", "ws-tracing", "native-probes", "probe-base"]
+        features: ["default", "minimal", "all", "json-unification", "red-team-json-unification", "gateway-json-unification", "models", "reqwest-transport", "scan", "management", "dlp", "iam", "model-security", "red-team", "gateway", "agentguard", "realtime", "ws-transport", "tracing", "default-tracing", "realtime-tracing", "ws-tracing", "native-probes", "probe-base"]
     steps:
       - name: Check out the reviewed source
         uses: https://github.com/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1, Node 20

@@ -1,0 +1,990 @@
+[
+  {
+    "schema": "s011302",
+    "field": "threat_details",
+    "rustType": "AttackDetailResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "prompt": "example",
+      "prompt_mapping_id": "example",
+      "prompt_id": "example",
+      "category": "example",
+      "sub_category": "example",
+      "category_display_name": "example",
+      "sub_category_display_name": "example",
+      "compliance_frameworks": [
+        {
+          "id": "example",
+          "display_name": "example",
+          "description": "example",
+          "active": false,
+          "version": "example",
+          "link": "example",
+          "techniques": [
+            {
+              "id": "example",
+              "display_name": "example",
+              "compliance_id": "example",
+              "description": "example",
+              "link": "example",
+              "version": "example",
+              "active": false
+            }
+          ]
+        }
+      ],
+      "goal": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011206",
+    "field": "response_audio",
+    "rustType": "AttackOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example"
+    },
+    "conforming": {
+      "audio_name": "example"
+    },
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011206",
+    "field": "transcript",
+    "rustType": "AttackOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example"
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011206",
+    "field": "transcript_source",
+    "rustType": "AttackOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example"
+    },
+    "conforming": "TARGET",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011206",
+    "field": "threat_details",
+    "rustType": "AttackOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011206",
+    "field": "judge_reasoning",
+    "rustType": "AttackOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example"
+    },
+    "conforming": "example",
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011302",
+    "field": "audio",
+    "rustType": "AttackDetailResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "prompt": "example",
+      "prompt_mapping_id": "example",
+      "prompt_id": "example",
+      "category": "example",
+      "sub_category": "example",
+      "category_display_name": "example",
+      "sub_category_display_name": "example",
+      "compliance_frameworks": [
+        {
+          "id": "example",
+          "display_name": "example",
+          "description": "example",
+          "active": false,
+          "version": "example",
+          "link": "example",
+          "techniques": [
+            {
+              "id": "example",
+              "display_name": "example",
+              "compliance_id": "example",
+              "description": "example",
+              "link": "example",
+              "version": "example",
+              "active": false
+            }
+          ]
+        }
+      ],
+      "goal": "example"
+    },
+    "conforming": {
+      "audio_name": "example"
+    },
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011302",
+    "field": "audio_technique",
+    "rustType": "AttackDetailResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "prompt": "example",
+      "prompt_mapping_id": "example",
+      "prompt_id": "example",
+      "category": "example",
+      "sub_category": "example",
+      "category_display_name": "example",
+      "sub_category_display_name": "example",
+      "compliance_frameworks": [
+        {
+          "id": "example",
+          "display_name": "example",
+          "description": "example",
+          "active": false,
+          "version": "example",
+          "link": "example",
+          "techniques": [
+            {
+              "id": "example",
+              "display_name": "example",
+              "compliance_id": "example",
+              "description": "example",
+              "link": "example",
+              "version": "example",
+              "active": false
+            }
+          ]
+        }
+      ],
+      "goal": "example"
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011361",
+    "field": "threat_details",
+    "rustType": "AttackMultiTurnDetailResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "prompt": "example",
+      "prompt_mapping_id": "example",
+      "prompt_id": "example",
+      "category": "example",
+      "sub_category": "example",
+      "category_display_name": "example",
+      "sub_category_display_name": "example",
+      "compliance_frameworks": [
+        {
+          "id": "example",
+          "display_name": "example",
+          "description": "example",
+          "active": false,
+          "version": "example",
+          "link": "example",
+          "techniques": [
+            {
+              "id": "example",
+              "display_name": "example",
+              "compliance_id": "example",
+              "description": "example",
+              "link": "example",
+              "version": "example",
+              "active": false
+            }
+          ]
+        }
+      ],
+      "goal": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011361",
+    "field": "audio",
+    "rustType": "AttackMultiTurnDetailResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "prompt": "example",
+      "prompt_mapping_id": "example",
+      "prompt_id": "example",
+      "category": "example",
+      "sub_category": "example",
+      "category_display_name": "example",
+      "sub_category_display_name": "example",
+      "compliance_frameworks": [
+        {
+          "id": "example",
+          "display_name": "example",
+          "description": "example",
+          "active": false,
+          "version": "example",
+          "link": "example",
+          "techniques": [
+            {
+              "id": "example",
+              "display_name": "example",
+              "compliance_id": "example",
+              "description": "example",
+              "link": "example",
+              "version": "example",
+              "active": false
+            }
+          ]
+        }
+      ],
+      "goal": "example"
+    },
+    "conforming": {
+      "audio_name": "example"
+    },
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011361",
+    "field": "audio_technique",
+    "rustType": "AttackMultiTurnDetailResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "prompt": "example",
+      "prompt_mapping_id": "example",
+      "prompt_id": "example",
+      "category": "example",
+      "sub_category": "example",
+      "category_display_name": "example",
+      "sub_category_display_name": "example",
+      "compliance_frameworks": [
+        {
+          "id": "example",
+          "display_name": "example",
+          "description": "example",
+          "active": false,
+          "version": "example",
+          "link": "example",
+          "techniques": [
+            {
+              "id": "example",
+              "display_name": "example",
+              "compliance_id": "example",
+              "description": "example",
+              "link": "example",
+              "version": "example",
+              "active": false
+            }
+          ]
+        }
+      ],
+      "goal": "example"
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011228",
+    "field": "response_audio",
+    "rustType": "AttackMultiTurnOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example",
+      "prompt": "example",
+      "turn": 0
+    },
+    "conforming": {
+      "audio_name": "example"
+    },
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011228",
+    "field": "transcript",
+    "rustType": "AttackMultiTurnOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example",
+      "prompt": "example",
+      "turn": 0
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011228",
+    "field": "transcript_source",
+    "rustType": "AttackMultiTurnOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example",
+      "prompt": "example",
+      "turn": 0
+    },
+    "conforming": "TARGET",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011228",
+    "field": "threat_details",
+    "rustType": "AttackMultiTurnOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example",
+      "prompt": "example",
+      "turn": 0
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011228",
+    "field": "judge_reasoning",
+    "rustType": "AttackMultiTurnOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example",
+      "prompt": "example",
+      "turn": 0
+    },
+    "conforming": "example",
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011184",
+    "field": "audio_supported",
+    "rustType": "SubCategoryModel",
+    "base": {
+      "id": "example",
+      "display_name": "example",
+      "description": "example"
+    },
+    "conforming": false,
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011423",
+    "field": "audio_supported",
+    "rustType": "SubCategoryStats",
+    "base": {
+      "id": "example",
+      "display_name": "example",
+      "description": "example",
+      "successful": 0,
+      "failed": 0
+    },
+    "conforming": false,
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011742",
+    "field": "judge_reasoning",
+    "rustType": "CustomAttackOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "custom_attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example"
+    },
+    "conforming": "example",
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011742",
+    "field": "threat_details",
+    "rustType": "CustomAttackOutput",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "custom_attack_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "output": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011779",
+    "field": "errored_attacks",
+    "rustType": "PromptSetSummary",
+    "base": {
+      "prompt_set_id": "example",
+      "prompt_set_name": "example",
+      "total_prompts": 0,
+      "total_attacks": 0,
+      "total_threats": 0,
+      "failed_attacks": 0,
+      "threat_rate": 0
+    },
+    "conforming": 0,
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011779",
+    "field": "has_errors",
+    "rustType": "PromptSetSummary",
+    "base": {
+      "prompt_set_id": "example",
+      "prompt_set_name": "example",
+      "total_prompts": 0,
+      "total_attacks": 0,
+      "total_threats": 0,
+      "failed_attacks": 0,
+      "threat_rate": 0
+    },
+    "conforming": false,
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011813",
+    "field": "threat_details",
+    "rustType": "PromptDetailResponse",
+    "base": {
+      "prompt_id": "example",
+      "prompt_text": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010953",
+    "field": "runtime_profile_id",
+    "rustType": "CustomJobMetadata",
+    "base": {
+      "custom_prompt_sets": [
+        "example"
+      ]
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010895",
+    "field": "runtime_profile_id",
+    "rustType": "DynamicJobMetadata",
+    "base": {},
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010895",
+    "field": "multi_turn_enabled",
+    "rustType": "DynamicJobMetadata",
+    "base": {},
+    "conforming": false,
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011592",
+    "field": "goal_subtype",
+    "rustType": "Goal",
+    "base": {
+      "goal": "example",
+      "safe_response": "example",
+      "jailbroken_response": "example",
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example"
+    },
+    "conforming": "MASS_DATA_LEAKAGE",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011592",
+    "field": "goal_english",
+    "rustType": "Goal",
+    "base": {
+      "goal": "example",
+      "safe_response": "example",
+      "jailbroken_response": "example",
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example"
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010608",
+    "field": "input",
+    "rustType": "ValidationError",
+    "base": {
+      "loc": [
+        "example"
+      ],
+      "msg": "example",
+      "type": "example"
+    },
+    "conforming": {
+      "future": true
+    },
+    "nullable": true,
+    "usage": "standalone-schema"
+  },
+  {
+    "schema": "s010608",
+    "field": "ctx",
+    "rustType": "ValidationError",
+    "base": {
+      "loc": [
+        "example"
+      ],
+      "msg": "example",
+      "type": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "standalone-schema"
+  },
+  {
+    "schema": "s011004",
+    "field": "runtime_profile_id",
+    "rustType": "JobCreateRequestJobMetadataVariant1",
+    "base": {
+      "categories": {}
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "request-only"
+  },
+  {
+    "schema": "s011004",
+    "field": "include_audio_attacks",
+    "rustType": "JobCreateRequestJobMetadataVariant1",
+    "base": {
+      "categories": {}
+    },
+    "conforming": false,
+    "nullable": false,
+    "usage": "request-only"
+  },
+  {
+    "schema": "s011004",
+    "field": "include_text_attacks",
+    "rustType": "JobCreateRequestJobMetadataVariant1",
+    "base": {
+      "categories": {}
+    },
+    "conforming": false,
+    "nullable": false,
+    "usage": "request-only"
+  },
+  {
+    "schema": "s011008",
+    "field": "runtime_profile_id",
+    "rustType": "JobCreateRequestJobMetadataVariant2",
+    "base": {},
+    "conforming": "example",
+    "nullable": true,
+    "usage": "request-only"
+  },
+  {
+    "schema": "s011008",
+    "field": "multi_turn_enabled",
+    "rustType": "JobCreateRequestJobMetadataVariant2",
+    "base": {},
+    "conforming": false,
+    "nullable": true,
+    "usage": "request-only"
+  },
+  {
+    "schema": "s011012",
+    "field": "runtime_profile_id",
+    "rustType": "JobCreateRequestJobMetadataVariant3",
+    "base": {
+      "custom_prompt_sets": [
+        "example"
+      ]
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "request-only"
+  },
+  {
+    "schema": "s010657",
+    "field": "audio_probe_passed",
+    "rustType": "TargetMetadata",
+    "base": {},
+    "conforming": false,
+    "nullable": true,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s010657",
+    "field": "audio_probe_error",
+    "rustType": "TargetMetadata",
+    "base": {},
+    "conforming": "example",
+    "nullable": true,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s010657",
+    "field": "audio_multi_turn_probe_passed",
+    "rustType": "TargetMetadata",
+    "base": {},
+    "conforming": false,
+    "nullable": true,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s010657",
+    "field": "audio_multi_turn_probe_error",
+    "rustType": "TargetMetadata",
+    "base": {},
+    "conforming": "example",
+    "nullable": true,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s010657",
+    "field": "supports_audio",
+    "rustType": "TargetMetadata",
+    "base": {},
+    "conforming": false,
+    "nullable": false,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s010657",
+    "field": "audio_format",
+    "rustType": "TargetMetadata",
+    "base": {},
+    "conforming": "WAV",
+    "nullable": true,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s010657",
+    "field": "supports_text",
+    "rustType": "TargetMetadata",
+    "base": {},
+    "conforming": false,
+    "nullable": false,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s010852",
+    "field": "runtime_profile_id",
+    "rustType": "StaticJobMetadata",
+    "base": {
+      "categories": {}
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010852",
+    "field": "include_audio_attacks",
+    "rustType": "StaticJobMetadata",
+    "base": {
+      "categories": {}
+    },
+    "conforming": false,
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010852",
+    "field": "include_text_attacks",
+    "rustType": "StaticJobMetadata",
+    "base": {
+      "categories": {}
+    },
+    "conforming": false,
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011119",
+    "field": "runtime_metrics",
+    "rustType": "JobResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "name": "example",
+      "target": {
+        "uuid": "example",
+        "tsg_id": "example",
+        "name": "example",
+        "status": "example",
+        "active": false,
+        "validated": false,
+        "created_at": "example",
+        "updated_at": "example"
+      },
+      "job_type": "example",
+      "job_metadata": {
+        "categories": {}
+      },
+      "target_id": "example",
+      "target_type": "example"
+    },
+    "conforming": {
+      "error_count": 0,
+      "error_percentage": 0,
+      "eta_state": "calculating",
+      "attempts_completed": 0,
+      "attempts_total": 0,
+      "attempts_unit": "attacks"
+    },
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011119",
+    "field": "progress",
+    "rustType": "JobResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "name": "example",
+      "target": {
+        "uuid": "example",
+        "tsg_id": "example",
+        "name": "example",
+        "status": "example",
+        "active": false,
+        "validated": false,
+        "created_at": "example",
+        "updated_at": "example"
+      },
+      "job_type": "example",
+      "job_metadata": {
+        "categories": {}
+      },
+      "target_id": "example",
+      "target_type": "example"
+    },
+    "conforming": {},
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011874",
+    "field": "iso_labels",
+    "rustType": "ScoreTrendResponse",
+    "base": {
+      "labels": [
+        "example"
+      ],
+      "series": [
+        {
+          "label": "example",
+          "data": [
+            0
+          ]
+        }
+      ]
+    },
+    "conforming": [
+      "example"
+    ],
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011632",
+    "field": "judge_explanation",
+    "rustType": "StreamIterationData",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "stream_id": "example",
+      "goal_id": "example",
+      "iteration": 0,
+      "prompt": "example",
+      "techniques": "example",
+      "improvement": "example",
+      "prompts_objective": "example",
+      "summary": "example"
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011686",
+    "field": "threat_details",
+    "rustType": "StreamDetailResponse",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "target_id": "example",
+      "goal_id": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s011632",
+    "field": "threat_details",
+    "rustType": "StreamIterationData",
+    "base": {
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example",
+      "stream_id": "example",
+      "goal_id": "example",
+      "iteration": 0,
+      "prompt": "example",
+      "techniques": "example",
+      "improvement": "example",
+      "prompts_objective": "example",
+      "summary": "example"
+    },
+    "conforming": {},
+    "nullable": false,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010423",
+    "field": "goal_subtype",
+    "rustType": "StreamDetailResponseGoalVariant2",
+    "base": {
+      "goal": "example",
+      "safe_response": "example",
+      "jailbroken_response": "example",
+      "uuid": "example",
+      "tsg_id": "example",
+      "job_id": "example"
+    },
+    "conforming": "MASS_DATA_LEAKAGE",
+    "nullable": true,
+    "usage": "response-only"
+  },
+  {
+    "schema": "s010857",
+    "field": "country_code",
+    "rustType": "LanguageOption",
+    "base": {
+      "code": "example",
+      "name": "example"
+    },
+    "conforming": "example",
+    "nullable": true,
+    "usage": "request-and-response"
+  },
+  {
+    "schema": "s011570",
+    "field": "categories",
+    "rustType": "RemediationDetail",
+    "base": {
+      "remediation": "example",
+      "description": "example"
+    },
+    "conforming": [
+      {
+        "category": "example",
+        "display_name": "example",
+        "description": "example"
+      }
+    ],
+    "nullable": false,
+    "usage": "response-only"
+  }
+]

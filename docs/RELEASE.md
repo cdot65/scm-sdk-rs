@@ -6,15 +6,15 @@ The [registry receipt](checks/release-registry-0.2.1.json) and
 [tag receipt](checks/release-tag-v0.2.1.json) establish actual publication and
 remote source identity. A missing receipt means publication is not yet verified.
 
-CI runs `--phase 17 --verification-only --contracts-only` with the unchanged
-46-job Rust feature/compiler matrix. The complete local phase17 gate additionally
+CI runs `--phase 17 --verification-only --contracts-only` with the expanded
+48-job Rust feature/compiler matrix. The complete local phase17 gate additionally
 requires both clean archive proofs, the new offline example and external consumer,
 all relevant compiler checks, current live-ledger freshness, dependency/privacy
 checks and actual Claude review >=9/10 before publication. Historical gates retain
 their accepted command sets. Publication uses the owner-controlled external
 Cargo credential; CI receives no publishing credential. Repackage at the exact
 qualified clean source, compare archive digest, publish, download and verify every
-file, create/push the immutable source tag, then wait for terminal 47-job CI.
+file, create/push the immutable source tag, then wait for terminal 49-job CI.
 
 The prior [0.2.0 receipt](checks/release-registry-0.2.0.json) and
 [release plan](release-0.2.0-plan.md) remain historical.

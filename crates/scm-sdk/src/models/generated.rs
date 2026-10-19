@@ -5965,69 +5965,168 @@ impl fmt::Debug for AsyncScanResponse {
 }
 
 /// Native typed contract for frozen schema `s011302`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct AttackDetailResponse {
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "attack_modality", default)]
     pub attack_modality: Optional<String>,
-    #[serde(rename = "file", default)]
     pub file: Patch<AttackDetailResponseFile>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "target_id")]
     pub target_id: String,
-    #[serde(rename = "prompt")]
     pub prompt: String,
-    #[serde(rename = "prompt_mapping_id")]
     pub prompt_mapping_id: String,
-    #[serde(rename = "prompt_id")]
     pub prompt_id: String,
-    #[serde(rename = "category")]
     pub category: String,
-    #[serde(rename = "sub_category")]
     pub sub_category: String,
-    #[serde(rename = "category_display_name")]
     pub category_display_name: String,
-    #[serde(rename = "sub_category_display_name")]
     pub sub_category_display_name: String,
-    #[serde(rename = "compliance_frameworks")]
     pub compliance_frameworks: Vec<ComplianceFramework>,
-    #[serde(rename = "goal")]
     pub goal: Nullable<String>,
-    #[serde(rename = "status", default)]
     pub status: Optional<String>,
-    #[serde(rename = "marked_safe", default)]
     pub marked_safe: Patch<bool>,
-    #[serde(rename = "extra_info", default)]
     pub extra_info: Optional<TypedMap<JsonValue>>,
-    #[serde(rename = "threat", default)]
     pub threat: Patch<bool>,
-    #[serde(rename = "attack_type", default)]
     pub attack_type: Optional<String>,
-    #[serde(rename = "multi_turn", default)]
     pub multi_turn: Optional<bool>,
-    #[serde(rename = "asr", default)]
     pub asr: Patch<FiniteNumber>,
-    #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
-    #[serde(rename = "severity", default)]
     pub severity: Optional<String>,
-    #[serde(rename = "outputs", default)]
     pub outputs: Optional<Vec<AttackOutput>>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(rename = "audio", default)]
     pub audio: Patch<super::red_team_data_plane::AttackAudio>,
-    #[serde(rename = "audio_technique", default)]
     pub audio_technique: Patch<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for AttackDetailResponse {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        let mut audio: Patch<super::red_team_data_plane::AttackAudio> = Default::default();
+        if let Some(value) = raw.remove("audio") {
+            match crate::json_decode::from_value::<Patch<super::red_team_data_plane::AttackAudio>>(
+                value.clone(),
+            ) {
+                Ok(value) => audio = value,
+                Err(_) => {
+                    raw.insert("audio".into(), value);
+                }
+            }
+        }
+        let mut audio_technique: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_technique") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_technique = value,
+                Err(_) => {
+                    raw.insert("audio_technique".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "attack_modality", default)]
+            attack_modality: Optional<String>,
+            #[serde(rename = "file", default)]
+            file: Patch<AttackDetailResponseFile>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "target_id")]
+            target_id: String,
+            #[serde(rename = "prompt")]
+            prompt: String,
+            #[serde(rename = "prompt_mapping_id")]
+            prompt_mapping_id: String,
+            #[serde(rename = "prompt_id")]
+            prompt_id: String,
+            #[serde(rename = "category")]
+            category: String,
+            #[serde(rename = "sub_category")]
+            sub_category: String,
+            #[serde(rename = "category_display_name")]
+            category_display_name: String,
+            #[serde(rename = "sub_category_display_name")]
+            sub_category_display_name: String,
+            #[serde(rename = "compliance_frameworks")]
+            compliance_frameworks: Vec<ComplianceFramework>,
+            #[serde(rename = "goal")]
+            goal: Nullable<String>,
+            #[serde(rename = "status", default)]
+            status: Optional<String>,
+            #[serde(rename = "marked_safe", default)]
+            marked_safe: Patch<bool>,
+            #[serde(rename = "extra_info", default)]
+            extra_info: Optional<TypedMap<JsonValue>>,
+            #[serde(rename = "threat", default)]
+            threat: Patch<bool>,
+            #[serde(rename = "attack_type", default)]
+            attack_type: Optional<String>,
+            #[serde(rename = "multi_turn", default)]
+            multi_turn: Optional<bool>,
+            #[serde(rename = "asr", default)]
+            asr: Patch<FiniteNumber>,
+            #[serde(rename = "version", default)]
+            version: Patch<FiniteNumber>,
+            #[serde(rename = "severity", default)]
+            severity: Optional<String>,
+            #[serde(rename = "outputs", default)]
+            outputs: Optional<Vec<AttackOutput>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            error: baseline.error,
+            attack_modality: baseline.attack_modality,
+            file: baseline.file,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            job_id: baseline.job_id,
+            target_id: baseline.target_id,
+            prompt: baseline.prompt,
+            prompt_mapping_id: baseline.prompt_mapping_id,
+            prompt_id: baseline.prompt_id,
+            category: baseline.category,
+            sub_category: baseline.sub_category,
+            category_display_name: baseline.category_display_name,
+            sub_category_display_name: baseline.sub_category_display_name,
+            compliance_frameworks: baseline.compliance_frameworks,
+            goal: baseline.goal,
+            status: baseline.status,
+            marked_safe: baseline.marked_safe,
+            extra_info: baseline.extra_info,
+            threat: baseline.threat,
+            attack_type: baseline.attack_type,
+            multi_turn: baseline.multi_turn,
+            asr: baseline.asr,
+            version: baseline.version,
+            severity: baseline.severity,
+            outputs: baseline.outputs,
+            threat_details,
+            audio,
+            audio_technique,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for AttackDetailResponse {
     fn serialize<S: serde::Serializer>(
@@ -6061,9 +6160,6 @@ impl Serialize for AttackDetailResponse {
             "version",
             "severity",
             "outputs",
-            "threat_details",
-            "audio",
-            "audio_technique",
         ];
         if self
             .extensions
@@ -6137,6 +6233,15 @@ impl Serialize for AttackDetailResponse {
             map.serialize_entry("audio_technique", &self.audio_technique)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
+            if key == "audio" && !self.audio.is_unset() {
+                continue;
+            }
+            if key == "audio_technique" && !self.audio_technique.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -6922,69 +7027,168 @@ impl fmt::Debug for AttackListResponse {
 }
 
 /// Native typed contract for frozen schema `s011361`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct AttackMultiTurnDetailResponse {
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "attack_modality", default)]
     pub attack_modality: Optional<String>,
-    #[serde(rename = "file", default)]
     pub file: Patch<AttackMultiTurnDetailResponseFile>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "target_id")]
     pub target_id: String,
-    #[serde(rename = "prompt")]
     pub prompt: String,
-    #[serde(rename = "prompt_mapping_id")]
     pub prompt_mapping_id: String,
-    #[serde(rename = "prompt_id")]
     pub prompt_id: String,
-    #[serde(rename = "category")]
     pub category: String,
-    #[serde(rename = "sub_category")]
     pub sub_category: String,
-    #[serde(rename = "category_display_name")]
     pub category_display_name: String,
-    #[serde(rename = "sub_category_display_name")]
     pub sub_category_display_name: String,
-    #[serde(rename = "compliance_frameworks")]
     pub compliance_frameworks: Vec<ComplianceFramework>,
-    #[serde(rename = "goal")]
     pub goal: Nullable<String>,
-    #[serde(rename = "status", default)]
     pub status: Optional<String>,
-    #[serde(rename = "marked_safe", default)]
     pub marked_safe: Patch<bool>,
-    #[serde(rename = "extra_info", default)]
     pub extra_info: Optional<TypedMap<JsonValue>>,
-    #[serde(rename = "threat", default)]
     pub threat: Patch<bool>,
-    #[serde(rename = "attack_type", default)]
     pub attack_type: Optional<String>,
-    #[serde(rename = "multi_turn", default)]
     pub multi_turn: Optional<bool>,
-    #[serde(rename = "asr", default)]
     pub asr: Patch<FiniteNumber>,
-    #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
-    #[serde(rename = "severity", default)]
     pub severity: Optional<String>,
-    #[serde(rename = "outputs", default)]
     pub outputs: Optional<AttackMultiTurnDetailResponseOutputs>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(rename = "audio", default)]
     pub audio: Patch<super::red_team_data_plane::AttackAudio>,
-    #[serde(rename = "audio_technique", default)]
     pub audio_technique: Patch<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for AttackMultiTurnDetailResponse {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        let mut audio: Patch<super::red_team_data_plane::AttackAudio> = Default::default();
+        if let Some(value) = raw.remove("audio") {
+            match crate::json_decode::from_value::<Patch<super::red_team_data_plane::AttackAudio>>(
+                value.clone(),
+            ) {
+                Ok(value) => audio = value,
+                Err(_) => {
+                    raw.insert("audio".into(), value);
+                }
+            }
+        }
+        let mut audio_technique: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_technique") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_technique = value,
+                Err(_) => {
+                    raw.insert("audio_technique".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "attack_modality", default)]
+            attack_modality: Optional<String>,
+            #[serde(rename = "file", default)]
+            file: Patch<AttackMultiTurnDetailResponseFile>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "target_id")]
+            target_id: String,
+            #[serde(rename = "prompt")]
+            prompt: String,
+            #[serde(rename = "prompt_mapping_id")]
+            prompt_mapping_id: String,
+            #[serde(rename = "prompt_id")]
+            prompt_id: String,
+            #[serde(rename = "category")]
+            category: String,
+            #[serde(rename = "sub_category")]
+            sub_category: String,
+            #[serde(rename = "category_display_name")]
+            category_display_name: String,
+            #[serde(rename = "sub_category_display_name")]
+            sub_category_display_name: String,
+            #[serde(rename = "compliance_frameworks")]
+            compliance_frameworks: Vec<ComplianceFramework>,
+            #[serde(rename = "goal")]
+            goal: Nullable<String>,
+            #[serde(rename = "status", default)]
+            status: Optional<String>,
+            #[serde(rename = "marked_safe", default)]
+            marked_safe: Patch<bool>,
+            #[serde(rename = "extra_info", default)]
+            extra_info: Optional<TypedMap<JsonValue>>,
+            #[serde(rename = "threat", default)]
+            threat: Patch<bool>,
+            #[serde(rename = "attack_type", default)]
+            attack_type: Optional<String>,
+            #[serde(rename = "multi_turn", default)]
+            multi_turn: Optional<bool>,
+            #[serde(rename = "asr", default)]
+            asr: Patch<FiniteNumber>,
+            #[serde(rename = "version", default)]
+            version: Patch<FiniteNumber>,
+            #[serde(rename = "severity", default)]
+            severity: Optional<String>,
+            #[serde(rename = "outputs", default)]
+            outputs: Optional<AttackMultiTurnDetailResponseOutputs>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            error: baseline.error,
+            attack_modality: baseline.attack_modality,
+            file: baseline.file,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            job_id: baseline.job_id,
+            target_id: baseline.target_id,
+            prompt: baseline.prompt,
+            prompt_mapping_id: baseline.prompt_mapping_id,
+            prompt_id: baseline.prompt_id,
+            category: baseline.category,
+            sub_category: baseline.sub_category,
+            category_display_name: baseline.category_display_name,
+            sub_category_display_name: baseline.sub_category_display_name,
+            compliance_frameworks: baseline.compliance_frameworks,
+            goal: baseline.goal,
+            status: baseline.status,
+            marked_safe: baseline.marked_safe,
+            extra_info: baseline.extra_info,
+            threat: baseline.threat,
+            attack_type: baseline.attack_type,
+            multi_turn: baseline.multi_turn,
+            asr: baseline.asr,
+            version: baseline.version,
+            severity: baseline.severity,
+            outputs: baseline.outputs,
+            threat_details,
+            audio,
+            audio_technique,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for AttackMultiTurnDetailResponse {
     fn serialize<S: serde::Serializer>(
@@ -7018,9 +7222,6 @@ impl Serialize for AttackMultiTurnDetailResponse {
             "version",
             "severity",
             "outputs",
-            "threat_details",
-            "audio",
-            "audio_technique",
         ];
         if self
             .extensions
@@ -7094,6 +7295,15 @@ impl Serialize for AttackMultiTurnDetailResponse {
             map.serialize_entry("audio_technique", &self.audio_technique)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
+            if key == "audio" && !self.audio.is_unset() {
+                continue;
+            }
+            if key == "audio_technique" && !self.audio_technique.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -7466,50 +7676,148 @@ impl fmt::Debug for AttackMultiTurnDetailResponseOutputs {
 }
 
 /// Native typed contract for frozen schema `s011228`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct AttackMultiTurnOutput {
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "error_message", default)]
     pub error_message: Patch<String>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "attack_id")]
     pub attack_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "target_id")]
     pub target_id: String,
-    #[serde(rename = "output")]
     pub output: String,
-    #[serde(rename = "prompt")]
     pub prompt: String,
-    #[serde(rename = "turn")]
     pub turn: FiniteNumber,
-    #[serde(rename = "threat", default)]
     pub threat: Patch<bool>,
-    #[serde(rename = "marked_safe", default)]
     pub marked_safe: Patch<bool>,
-    #[serde(rename = "generation", default)]
     pub generation: Optional<FiniteNumber>,
-    #[serde(rename = "multi_turn", default)]
     pub multi_turn: Optional<bool>,
-    #[serde(rename = "response_audio", default)]
     pub response_audio: Patch<super::red_team_data_plane::AttackAudio>,
-    #[serde(rename = "transcript", default)]
     pub transcript: Patch<String>,
-    #[serde(rename = "transcript_source", default)]
     pub transcript_source:
         Patch<super::red_team_data_plane::AttackMultiTurnOutputResponseTranscriptSource>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(rename = "judge_reasoning", default)]
     pub judge_reasoning: Optional<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for AttackMultiTurnOutput {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut response_audio: Patch<super::red_team_data_plane::AttackAudio> = Default::default();
+        if let Some(value) = raw.remove("response_audio") {
+            match crate::json_decode::from_value::<Patch<super::red_team_data_plane::AttackAudio>>(
+                value.clone(),
+            ) {
+                Ok(value) => response_audio = value,
+                Err(_) => {
+                    raw.insert("response_audio".into(), value);
+                }
+            }
+        }
+        let mut transcript: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("transcript") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => transcript = value,
+                Err(_) => {
+                    raw.insert("transcript".into(), value);
+                }
+            }
+        }
+        let mut transcript_source: Patch<
+            super::red_team_data_plane::AttackMultiTurnOutputResponseTranscriptSource,
+        > = Default::default();
+        if let Some(value) = raw.remove("transcript_source") {
+            match crate::json_decode::from_value::<
+                Patch<super::red_team_data_plane::AttackMultiTurnOutputResponseTranscriptSource>,
+            >(value.clone())
+            {
+                Ok(value) => transcript_source = value,
+                Err(_) => {
+                    raw.insert("transcript_source".into(), value);
+                }
+            }
+        }
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        let mut judge_reasoning: Optional<String> = Default::default();
+        if let Some(value) = raw.remove("judge_reasoning") {
+            match crate::json_decode::from_value::<Optional<String>>(value.clone()) {
+                Ok(value) => judge_reasoning = value,
+                Err(_) => {
+                    raw.insert("judge_reasoning".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "error_message", default)]
+            error_message: Patch<String>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "attack_id")]
+            attack_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "target_id")]
+            target_id: String,
+            #[serde(rename = "output")]
+            output: String,
+            #[serde(rename = "prompt")]
+            prompt: String,
+            #[serde(rename = "turn")]
+            turn: FiniteNumber,
+            #[serde(rename = "threat", default)]
+            threat: Patch<bool>,
+            #[serde(rename = "marked_safe", default)]
+            marked_safe: Patch<bool>,
+            #[serde(rename = "generation", default)]
+            generation: Optional<FiniteNumber>,
+            #[serde(rename = "multi_turn", default)]
+            multi_turn: Optional<bool>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            error: baseline.error,
+            error_message: baseline.error_message,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            attack_id: baseline.attack_id,
+            job_id: baseline.job_id,
+            target_id: baseline.target_id,
+            output: baseline.output,
+            prompt: baseline.prompt,
+            turn: baseline.turn,
+            threat: baseline.threat,
+            marked_safe: baseline.marked_safe,
+            generation: baseline.generation,
+            multi_turn: baseline.multi_turn,
+            response_audio,
+            transcript,
+            transcript_source,
+            threat_details,
+            judge_reasoning,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for AttackMultiTurnOutput {
     fn serialize<S: serde::Serializer>(
@@ -7531,11 +7839,6 @@ impl Serialize for AttackMultiTurnOutput {
             "marked_safe",
             "generation",
             "multi_turn",
-            "response_audio",
-            "transcript",
-            "transcript_source",
-            "threat_details",
-            "judge_reasoning",
         ];
         if self
             .extensions
@@ -7589,6 +7892,21 @@ impl Serialize for AttackMultiTurnOutput {
             map.serialize_entry("judge_reasoning", &self.judge_reasoning)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "response_audio" && !self.response_audio.is_unset() {
+                continue;
+            }
+            if key == "transcript" && !self.transcript.is_unset() {
+                continue;
+            }
+            if key == "transcript_source" && !self.transcript_source.is_unset() {
+                continue;
+            }
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
+            if key == "judge_reasoning" && !self.judge_reasoning.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -7775,41 +8093,131 @@ impl fmt::Debug for AttackMultiTurnOutput {
 }
 
 /// Native typed contract for frozen schema `s011206`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct AttackOutput {
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "error_message", default)]
     pub error_message: Patch<String>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "attack_id")]
     pub attack_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "target_id")]
     pub target_id: String,
-    #[serde(rename = "output")]
     pub output: String,
-    #[serde(rename = "threat", default)]
     pub threat: Patch<bool>,
-    #[serde(rename = "marked_safe", default)]
     pub marked_safe: Patch<bool>,
-    #[serde(rename = "response_audio", default)]
     pub response_audio: Patch<super::red_team_data_plane::AttackAudio>,
-    #[serde(rename = "transcript", default)]
     pub transcript: Patch<String>,
-    #[serde(rename = "transcript_source", default)]
     pub transcript_source: Patch<super::red_team_data_plane::AttackOutputResponseTranscriptSource>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(rename = "judge_reasoning", default)]
     pub judge_reasoning: Optional<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for AttackOutput {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut response_audio: Patch<super::red_team_data_plane::AttackAudio> = Default::default();
+        if let Some(value) = raw.remove("response_audio") {
+            match crate::json_decode::from_value::<Patch<super::red_team_data_plane::AttackAudio>>(
+                value.clone(),
+            ) {
+                Ok(value) => response_audio = value,
+                Err(_) => {
+                    raw.insert("response_audio".into(), value);
+                }
+            }
+        }
+        let mut transcript: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("transcript") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => transcript = value,
+                Err(_) => {
+                    raw.insert("transcript".into(), value);
+                }
+            }
+        }
+        let mut transcript_source: Patch<
+            super::red_team_data_plane::AttackOutputResponseTranscriptSource,
+        > = Default::default();
+        if let Some(value) = raw.remove("transcript_source") {
+            match crate::json_decode::from_value::<
+                Patch<super::red_team_data_plane::AttackOutputResponseTranscriptSource>,
+            >(value.clone())
+            {
+                Ok(value) => transcript_source = value,
+                Err(_) => {
+                    raw.insert("transcript_source".into(), value);
+                }
+            }
+        }
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        let mut judge_reasoning: Optional<String> = Default::default();
+        if let Some(value) = raw.remove("judge_reasoning") {
+            match crate::json_decode::from_value::<Optional<String>>(value.clone()) {
+                Ok(value) => judge_reasoning = value,
+                Err(_) => {
+                    raw.insert("judge_reasoning".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "error_message", default)]
+            error_message: Patch<String>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "attack_id")]
+            attack_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "target_id")]
+            target_id: String,
+            #[serde(rename = "output")]
+            output: String,
+            #[serde(rename = "threat", default)]
+            threat: Patch<bool>,
+            #[serde(rename = "marked_safe", default)]
+            marked_safe: Patch<bool>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            error: baseline.error,
+            error_message: baseline.error_message,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            attack_id: baseline.attack_id,
+            job_id: baseline.job_id,
+            target_id: baseline.target_id,
+            output: baseline.output,
+            threat: baseline.threat,
+            marked_safe: baseline.marked_safe,
+            response_audio,
+            transcript,
+            transcript_source,
+            threat_details,
+            judge_reasoning,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for AttackOutput {
     fn serialize<S: serde::Serializer>(
@@ -7827,11 +8235,6 @@ impl Serialize for AttackOutput {
             "output",
             "threat",
             "marked_safe",
-            "response_audio",
-            "transcript",
-            "transcript_source",
-            "threat_details",
-            "judge_reasoning",
         ];
         if self
             .extensions
@@ -7877,6 +8280,21 @@ impl Serialize for AttackOutput {
             map.serialize_entry("judge_reasoning", &self.judge_reasoning)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "response_audio" && !self.response_audio.is_unset() {
+                continue;
+            }
+            if key == "transcript" && !self.transcript.is_unset() {
+                continue;
+            }
+            if key == "transcript_source" && !self.transcript_source.is_unset() {
+                continue;
+            }
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
+            if key == "judge_reasoning" && !self.judge_reasoning.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -13841,35 +14259,91 @@ impl fmt::Debug for CursorPagination {
 }
 
 /// Native typed contract for frozen schema `s011742`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct CustomAttackOutput {
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "error_message", default)]
     pub error_message: Patch<String>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "custom_attack_id")]
     pub custom_attack_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "target_id")]
     pub target_id: String,
-    #[serde(rename = "output")]
     pub output: String,
-    #[serde(rename = "threat", default)]
     pub threat: Patch<bool>,
-    #[serde(rename = "marked_safe", default)]
     pub marked_safe: Patch<bool>,
-    #[serde(rename = "judge_reasoning", default)]
     pub judge_reasoning: Optional<String>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for CustomAttackOutput {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut judge_reasoning: Optional<String> = Default::default();
+        if let Some(value) = raw.remove("judge_reasoning") {
+            match crate::json_decode::from_value::<Optional<String>>(value.clone()) {
+                Ok(value) => judge_reasoning = value,
+                Err(_) => {
+                    raw.insert("judge_reasoning".into(), value);
+                }
+            }
+        }
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "error_message", default)]
+            error_message: Patch<String>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "custom_attack_id")]
+            custom_attack_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "target_id")]
+            target_id: String,
+            #[serde(rename = "output")]
+            output: String,
+            #[serde(rename = "threat", default)]
+            threat: Patch<bool>,
+            #[serde(rename = "marked_safe", default)]
+            marked_safe: Patch<bool>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            error: baseline.error,
+            error_message: baseline.error_message,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            custom_attack_id: baseline.custom_attack_id,
+            job_id: baseline.job_id,
+            target_id: baseline.target_id,
+            output: baseline.output,
+            threat: baseline.threat,
+            marked_safe: baseline.marked_safe,
+            judge_reasoning,
+            threat_details,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for CustomAttackOutput {
     fn serialize<S: serde::Serializer>(
@@ -13887,8 +14361,6 @@ impl Serialize for CustomAttackOutput {
             "output",
             "threat",
             "marked_safe",
-            "judge_reasoning",
-            "threat_details",
         ];
         if self
             .extensions
@@ -13925,6 +14397,12 @@ impl Serialize for CustomAttackOutput {
             map.serialize_entry("threat_details", &self.threat_details)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "judge_reasoning" && !self.judge_reasoning.is_unset() {
+                continue;
+            }
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -14346,35 +14824,80 @@ impl fmt::Debug for CustomAttacksListResponse {
 }
 
 /// Native typed contract for frozen schema `s010953`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct CustomJobMetadata {
-    #[serde(rename = "language", default)]
     pub language: Patch<LanguageOption>,
-    #[serde(rename = "custom_prompt_sets")]
     pub custom_prompt_sets: Vec<String>,
-    #[serde(rename = "rate_limit_enabled", default)]
     pub rate_limit_enabled: Optional<bool>,
-    #[serde(rename = "rate_limit", default)]
     pub rate_limit: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_code", default)]
     pub rate_limit_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_message", default)]
     pub rate_limit_error_message: Patch<String>,
-    #[serde(rename = "rate_limit_error_json", default)]
     pub rate_limit_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "content_filter_enabled", default)]
     pub content_filter_enabled: Optional<bool>,
-    #[serde(rename = "content_filter_error_code", default)]
     pub content_filter_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "content_filter_error_message", default)]
     pub content_filter_error_message: Patch<String>,
-    #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "runtime_profile_id", default)]
     pub runtime_profile_id: Patch<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for CustomJobMetadata {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut runtime_profile_id: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("runtime_profile_id") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => runtime_profile_id = value,
+                Err(_) => {
+                    raw.insert("runtime_profile_id".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "language", default)]
+            language: Patch<LanguageOption>,
+            #[serde(rename = "custom_prompt_sets")]
+            custom_prompt_sets: Vec<String>,
+            #[serde(rename = "rate_limit_enabled", default)]
+            rate_limit_enabled: Optional<bool>,
+            #[serde(rename = "rate_limit", default)]
+            rate_limit: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_code", default)]
+            rate_limit_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_message", default)]
+            rate_limit_error_message: Patch<String>,
+            #[serde(rename = "rate_limit_error_json", default)]
+            rate_limit_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "content_filter_enabled", default)]
+            content_filter_enabled: Optional<bool>,
+            #[serde(rename = "content_filter_error_code", default)]
+            content_filter_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "content_filter_error_message", default)]
+            content_filter_error_message: Patch<String>,
+            #[serde(rename = "content_filter_error_json", default)]
+            content_filter_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            language: baseline.language,
+            custom_prompt_sets: baseline.custom_prompt_sets,
+            rate_limit_enabled: baseline.rate_limit_enabled,
+            rate_limit: baseline.rate_limit,
+            rate_limit_error_code: baseline.rate_limit_error_code,
+            rate_limit_error_message: baseline.rate_limit_error_message,
+            rate_limit_error_json: baseline.rate_limit_error_json,
+            content_filter_enabled: baseline.content_filter_enabled,
+            content_filter_error_code: baseline.content_filter_error_code,
+            content_filter_error_message: baseline.content_filter_error_message,
+            content_filter_error_json: baseline.content_filter_error_json,
+            runtime_profile_id,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for CustomJobMetadata {
     fn serialize<S: serde::Serializer>(
@@ -14393,7 +14916,6 @@ impl Serialize for CustomJobMetadata {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
-            "runtime_profile_id",
         ];
         if self
             .extensions
@@ -14443,6 +14965,9 @@ impl Serialize for CustomJobMetadata {
             map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "runtime_profile_id" && !self.runtime_profile_id.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -31601,53 +32126,123 @@ impl fmt::Debug for DlpRule {
 }
 
 /// Native typed contract for frozen schema `s010895`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct DynamicJobMetadata {
-    #[serde(rename = "language", default)]
     pub language: Patch<LanguageOption>,
-    #[serde(rename = "goal_categories", default)]
     pub goal_categories: Patch<Vec<String>>,
-    #[serde(rename = "rate_limit_enabled", default)]
     pub rate_limit_enabled: Optional<bool>,
-    #[serde(rename = "rate_limit", default)]
     pub rate_limit: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_code", default)]
     pub rate_limit_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_message", default)]
     pub rate_limit_error_message: Patch<String>,
-    #[serde(rename = "rate_limit_error_json", default)]
     pub rate_limit_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "content_filter_enabled", default)]
     pub content_filter_enabled: Optional<bool>,
-    #[serde(rename = "content_filter_error_code", default)]
     pub content_filter_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "content_filter_error_message", default)]
     pub content_filter_error_message: Patch<String>,
-    #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "stream_breadth", default)]
     pub stream_breadth: Optional<FiniteNumber>,
-    #[serde(rename = "stream_depth", default)]
     pub stream_depth: Optional<FiniteNumber>,
-    #[serde(rename = "max_tokens", default)]
     pub max_tokens: Optional<FiniteNumber>,
-    #[serde(rename = "context_size", default)]
     pub context_size: Optional<FiniteNumber>,
-    #[serde(rename = "attack_goals", default)]
     pub attack_goals: Optional<Vec<String>>,
-    #[serde(rename = "base_model", default)]
     pub base_model: Patch<String>,
-    #[serde(rename = "use_case", default)]
     pub use_case: Patch<String>,
-    #[serde(rename = "system_prompt", default)]
     pub system_prompt: Patch<String>,
-    #[serde(rename = "runtime_profile_id", default)]
     pub runtime_profile_id: Patch<String>,
-    #[serde(rename = "multi_turn_enabled", default)]
     pub multi_turn_enabled: Patch<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for DynamicJobMetadata {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut runtime_profile_id: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("runtime_profile_id") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => runtime_profile_id = value,
+                Err(_) => {
+                    raw.insert("runtime_profile_id".into(), value);
+                }
+            }
+        }
+        let mut multi_turn_enabled: Patch<bool> = Default::default();
+        if let Some(value) = raw.remove("multi_turn_enabled") {
+            match crate::json_decode::from_value::<Patch<bool>>(value.clone()) {
+                Ok(value) => multi_turn_enabled = value,
+                Err(_) => {
+                    raw.insert("multi_turn_enabled".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "language", default)]
+            language: Patch<LanguageOption>,
+            #[serde(rename = "goal_categories", default)]
+            goal_categories: Patch<Vec<String>>,
+            #[serde(rename = "rate_limit_enabled", default)]
+            rate_limit_enabled: Optional<bool>,
+            #[serde(rename = "rate_limit", default)]
+            rate_limit: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_code", default)]
+            rate_limit_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_message", default)]
+            rate_limit_error_message: Patch<String>,
+            #[serde(rename = "rate_limit_error_json", default)]
+            rate_limit_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "content_filter_enabled", default)]
+            content_filter_enabled: Optional<bool>,
+            #[serde(rename = "content_filter_error_code", default)]
+            content_filter_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "content_filter_error_message", default)]
+            content_filter_error_message: Patch<String>,
+            #[serde(rename = "content_filter_error_json", default)]
+            content_filter_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "stream_breadth", default)]
+            stream_breadth: Optional<FiniteNumber>,
+            #[serde(rename = "stream_depth", default)]
+            stream_depth: Optional<FiniteNumber>,
+            #[serde(rename = "max_tokens", default)]
+            max_tokens: Optional<FiniteNumber>,
+            #[serde(rename = "context_size", default)]
+            context_size: Optional<FiniteNumber>,
+            #[serde(rename = "attack_goals", default)]
+            attack_goals: Optional<Vec<String>>,
+            #[serde(rename = "base_model", default)]
+            base_model: Patch<String>,
+            #[serde(rename = "use_case", default)]
+            use_case: Patch<String>,
+            #[serde(rename = "system_prompt", default)]
+            system_prompt: Patch<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            language: baseline.language,
+            goal_categories: baseline.goal_categories,
+            rate_limit_enabled: baseline.rate_limit_enabled,
+            rate_limit: baseline.rate_limit,
+            rate_limit_error_code: baseline.rate_limit_error_code,
+            rate_limit_error_message: baseline.rate_limit_error_message,
+            rate_limit_error_json: baseline.rate_limit_error_json,
+            content_filter_enabled: baseline.content_filter_enabled,
+            content_filter_error_code: baseline.content_filter_error_code,
+            content_filter_error_message: baseline.content_filter_error_message,
+            content_filter_error_json: baseline.content_filter_error_json,
+            stream_breadth: baseline.stream_breadth,
+            stream_depth: baseline.stream_depth,
+            max_tokens: baseline.max_tokens,
+            context_size: baseline.context_size,
+            attack_goals: baseline.attack_goals,
+            base_model: baseline.base_model,
+            use_case: baseline.use_case,
+            system_prompt: baseline.system_prompt,
+            runtime_profile_id,
+            multi_turn_enabled,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for DynamicJobMetadata {
     fn serialize<S: serde::Serializer>(
@@ -31674,8 +32269,6 @@ impl Serialize for DynamicJobMetadata {
             "base_model",
             "use_case",
             "system_prompt",
-            "runtime_profile_id",
-            "multi_turn_enabled",
         ];
         if self
             .extensions
@@ -31754,6 +32347,12 @@ impl Serialize for DynamicJobMetadata {
             map.serialize_entry("multi_turn_enabled", &self.multi_turn_enabled)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "runtime_profile_id" && !self.runtime_profile_id.is_unset() {
+                continue;
+            }
+            if key == "multi_turn_enabled" && !self.multi_turn_enabled.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -140650,45 +141249,111 @@ impl fmt::Debug for GatewayWriteResponse {
 }
 
 /// Native typed contract for frozen schema `s011592`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct Goal {
-    #[serde(rename = "goal_category", default)]
     pub goal_category: Patch<String>,
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "goal")]
     pub goal: String,
-    #[serde(rename = "safe_response")]
     pub safe_response: String,
-    #[serde(rename = "jailbroken_response")]
     pub jailbroken_response: String,
-    #[serde(rename = "goal_metadata", default)]
     pub goal_metadata: Optional<TypedMap<JsonValue>>,
-    #[serde(rename = "custom_goal", default)]
     pub custom_goal: Optional<bool>,
-    #[serde(rename = "goal_type", default)]
     pub goal_type: Optional<String>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "goal_to_show", default)]
     pub goal_to_show: Patch<String>,
-    #[serde(rename = "threat", default)]
     pub threat: Optional<bool>,
-    #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
-    #[serde(rename = "extra_info", default)]
     pub extra_info: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "goal_subtype", default)]
     pub goal_subtype: Patch<super::red_team_data_plane::GoalResponseGoalSubtype>,
-    #[serde(rename = "goal_english", default)]
     pub goal_english: Patch<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for Goal {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut goal_subtype: Patch<super::red_team_data_plane::GoalResponseGoalSubtype> =
+            Default::default();
+        if let Some(value) = raw.remove("goal_subtype") {
+            match crate::json_decode::from_value::<
+                Patch<super::red_team_data_plane::GoalResponseGoalSubtype>,
+            >(value.clone())
+            {
+                Ok(value) => goal_subtype = value,
+                Err(_) => {
+                    raw.insert("goal_subtype".into(), value);
+                }
+            }
+        }
+        let mut goal_english: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("goal_english") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => goal_english = value,
+                Err(_) => {
+                    raw.insert("goal_english".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "goal_category", default)]
+            goal_category: Patch<String>,
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "goal")]
+            goal: String,
+            #[serde(rename = "safe_response")]
+            safe_response: String,
+            #[serde(rename = "jailbroken_response")]
+            jailbroken_response: String,
+            #[serde(rename = "goal_metadata", default)]
+            goal_metadata: Optional<TypedMap<JsonValue>>,
+            #[serde(rename = "custom_goal", default)]
+            custom_goal: Optional<bool>,
+            #[serde(rename = "goal_type", default)]
+            goal_type: Optional<String>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "goal_to_show", default)]
+            goal_to_show: Patch<String>,
+            #[serde(rename = "threat", default)]
+            threat: Optional<bool>,
+            #[serde(rename = "version", default)]
+            version: Patch<FiniteNumber>,
+            #[serde(rename = "extra_info", default)]
+            extra_info: Patch<TypedMap<JsonValue>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            goal_category: baseline.goal_category,
+            error: baseline.error,
+            goal: baseline.goal,
+            safe_response: baseline.safe_response,
+            jailbroken_response: baseline.jailbroken_response,
+            goal_metadata: baseline.goal_metadata,
+            custom_goal: baseline.custom_goal,
+            goal_type: baseline.goal_type,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            job_id: baseline.job_id,
+            goal_to_show: baseline.goal_to_show,
+            threat: baseline.threat,
+            version: baseline.version,
+            extra_info: baseline.extra_info,
+            goal_subtype,
+            goal_english,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for Goal {
     fn serialize<S: serde::Serializer>(
@@ -140711,8 +141376,6 @@ impl Serialize for Goal {
             "threat",
             "version",
             "extra_info",
-            "goal_subtype",
-            "goal_english",
         ];
         if self
             .extensions
@@ -140764,6 +141427,12 @@ impl Serialize for Goal {
             map.serialize_entry("goal_english", &self.goal_english)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "goal_subtype" && !self.goal_subtype.is_unset() {
+                continue;
+            }
+            if key == "goal_english" && !self.goal_english.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -143793,41 +144462,106 @@ impl fmt::Debug for JobCreateRequestJobMetadata {
 }
 
 /// Native typed contract for frozen schema `s011004`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct JobCreateRequestJobMetadataVariant1 {
-    #[serde(rename = "language", default)]
     pub language: Patch<LanguageOption>,
-    #[serde(rename = "include_file_attacks", default)]
     pub include_file_attacks: Optional<bool>,
-    #[serde(rename = "categories")]
     pub categories: TypedMap<JsonValue>,
-    #[serde(rename = "rate_limit_enabled", default)]
     pub rate_limit_enabled: Optional<bool>,
-    #[serde(rename = "rate_limit", default)]
     pub rate_limit: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_code", default)]
     pub rate_limit_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_message", default)]
     pub rate_limit_error_message: Patch<String>,
-    #[serde(rename = "rate_limit_error_json", default)]
     pub rate_limit_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "content_filter_enabled", default)]
     pub content_filter_enabled: Optional<bool>,
-    #[serde(rename = "content_filter_error_code", default)]
     pub content_filter_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "content_filter_error_message", default)]
     pub content_filter_error_message: Patch<String>,
-    #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "runtime_profile_id", default)]
     pub runtime_profile_id: Patch<String>,
-    #[serde(rename = "include_audio_attacks", default)]
     pub include_audio_attacks: Optional<bool>,
-    #[serde(rename = "include_text_attacks", default)]
     pub include_text_attacks: Optional<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for JobCreateRequestJobMetadataVariant1 {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut runtime_profile_id: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("runtime_profile_id") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => runtime_profile_id = value,
+                Err(_) => {
+                    raw.insert("runtime_profile_id".into(), value);
+                }
+            }
+        }
+        let mut include_audio_attacks: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("include_audio_attacks") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => include_audio_attacks = value,
+                Err(_) => {
+                    raw.insert("include_audio_attacks".into(), value);
+                }
+            }
+        }
+        let mut include_text_attacks: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("include_text_attacks") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => include_text_attacks = value,
+                Err(_) => {
+                    raw.insert("include_text_attacks".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "language", default)]
+            language: Patch<LanguageOption>,
+            #[serde(rename = "include_file_attacks", default)]
+            include_file_attacks: Optional<bool>,
+            #[serde(rename = "categories")]
+            categories: TypedMap<JsonValue>,
+            #[serde(rename = "rate_limit_enabled", default)]
+            rate_limit_enabled: Optional<bool>,
+            #[serde(rename = "rate_limit", default)]
+            rate_limit: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_code", default)]
+            rate_limit_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_message", default)]
+            rate_limit_error_message: Patch<String>,
+            #[serde(rename = "rate_limit_error_json", default)]
+            rate_limit_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "content_filter_enabled", default)]
+            content_filter_enabled: Optional<bool>,
+            #[serde(rename = "content_filter_error_code", default)]
+            content_filter_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "content_filter_error_message", default)]
+            content_filter_error_message: Patch<String>,
+            #[serde(rename = "content_filter_error_json", default)]
+            content_filter_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            language: baseline.language,
+            include_file_attacks: baseline.include_file_attacks,
+            categories: baseline.categories,
+            rate_limit_enabled: baseline.rate_limit_enabled,
+            rate_limit: baseline.rate_limit,
+            rate_limit_error_code: baseline.rate_limit_error_code,
+            rate_limit_error_message: baseline.rate_limit_error_message,
+            rate_limit_error_json: baseline.rate_limit_error_json,
+            content_filter_enabled: baseline.content_filter_enabled,
+            content_filter_error_code: baseline.content_filter_error_code,
+            content_filter_error_message: baseline.content_filter_error_message,
+            content_filter_error_json: baseline.content_filter_error_json,
+            runtime_profile_id,
+            include_audio_attacks,
+            include_text_attacks,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for JobCreateRequestJobMetadataVariant1 {
     fn serialize<S: serde::Serializer>(
@@ -143847,9 +144581,6 @@ impl Serialize for JobCreateRequestJobMetadataVariant1 {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
-            "runtime_profile_id",
-            "include_audio_attacks",
-            "include_text_attacks",
         ];
         if self
             .extensions
@@ -143908,6 +144639,15 @@ impl Serialize for JobCreateRequestJobMetadataVariant1 {
             map.serialize_entry("include_text_attacks", &self.include_text_attacks)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "runtime_profile_id" && !self.runtime_profile_id.is_unset() {
+                continue;
+            }
+            if key == "include_audio_attacks" && !self.include_audio_attacks.is_unset() {
+                continue;
+            }
+            if key == "include_text_attacks" && !self.include_text_attacks.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -144049,53 +144789,123 @@ impl fmt::Debug for JobCreateRequestJobMetadataVariant1 {
 }
 
 /// Native typed contract for frozen schema `s011008`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct JobCreateRequestJobMetadataVariant2 {
-    #[serde(rename = "language", default)]
     pub language: Patch<LanguageOption>,
-    #[serde(rename = "goal_categories", default)]
     pub goal_categories: Patch<Vec<String>>,
-    #[serde(rename = "rate_limit_enabled", default)]
     pub rate_limit_enabled: Optional<bool>,
-    #[serde(rename = "rate_limit", default)]
     pub rate_limit: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_code", default)]
     pub rate_limit_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_message", default)]
     pub rate_limit_error_message: Patch<String>,
-    #[serde(rename = "rate_limit_error_json", default)]
     pub rate_limit_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "content_filter_enabled", default)]
     pub content_filter_enabled: Optional<bool>,
-    #[serde(rename = "content_filter_error_code", default)]
     pub content_filter_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "content_filter_error_message", default)]
     pub content_filter_error_message: Patch<String>,
-    #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "stream_breadth", default)]
     pub stream_breadth: Optional<FiniteNumber>,
-    #[serde(rename = "stream_depth", default)]
     pub stream_depth: Optional<FiniteNumber>,
-    #[serde(rename = "max_tokens", default)]
     pub max_tokens: Optional<FiniteNumber>,
-    #[serde(rename = "context_size", default)]
     pub context_size: Optional<FiniteNumber>,
-    #[serde(rename = "attack_goals", default)]
     pub attack_goals: Optional<Vec<String>>,
-    #[serde(rename = "base_model", default)]
     pub base_model: Patch<String>,
-    #[serde(rename = "use_case", default)]
     pub use_case: Patch<String>,
-    #[serde(rename = "system_prompt", default)]
     pub system_prompt: Patch<String>,
-    #[serde(rename = "runtime_profile_id", default)]
     pub runtime_profile_id: Patch<String>,
-    #[serde(rename = "multi_turn_enabled", default)]
     pub multi_turn_enabled: Patch<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for JobCreateRequestJobMetadataVariant2 {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut runtime_profile_id: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("runtime_profile_id") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => runtime_profile_id = value,
+                Err(_) => {
+                    raw.insert("runtime_profile_id".into(), value);
+                }
+            }
+        }
+        let mut multi_turn_enabled: Patch<bool> = Default::default();
+        if let Some(value) = raw.remove("multi_turn_enabled") {
+            match crate::json_decode::from_value::<Patch<bool>>(value.clone()) {
+                Ok(value) => multi_turn_enabled = value,
+                Err(_) => {
+                    raw.insert("multi_turn_enabled".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "language", default)]
+            language: Patch<LanguageOption>,
+            #[serde(rename = "goal_categories", default)]
+            goal_categories: Patch<Vec<String>>,
+            #[serde(rename = "rate_limit_enabled", default)]
+            rate_limit_enabled: Optional<bool>,
+            #[serde(rename = "rate_limit", default)]
+            rate_limit: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_code", default)]
+            rate_limit_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_message", default)]
+            rate_limit_error_message: Patch<String>,
+            #[serde(rename = "rate_limit_error_json", default)]
+            rate_limit_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "content_filter_enabled", default)]
+            content_filter_enabled: Optional<bool>,
+            #[serde(rename = "content_filter_error_code", default)]
+            content_filter_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "content_filter_error_message", default)]
+            content_filter_error_message: Patch<String>,
+            #[serde(rename = "content_filter_error_json", default)]
+            content_filter_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "stream_breadth", default)]
+            stream_breadth: Optional<FiniteNumber>,
+            #[serde(rename = "stream_depth", default)]
+            stream_depth: Optional<FiniteNumber>,
+            #[serde(rename = "max_tokens", default)]
+            max_tokens: Optional<FiniteNumber>,
+            #[serde(rename = "context_size", default)]
+            context_size: Optional<FiniteNumber>,
+            #[serde(rename = "attack_goals", default)]
+            attack_goals: Optional<Vec<String>>,
+            #[serde(rename = "base_model", default)]
+            base_model: Patch<String>,
+            #[serde(rename = "use_case", default)]
+            use_case: Patch<String>,
+            #[serde(rename = "system_prompt", default)]
+            system_prompt: Patch<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            language: baseline.language,
+            goal_categories: baseline.goal_categories,
+            rate_limit_enabled: baseline.rate_limit_enabled,
+            rate_limit: baseline.rate_limit,
+            rate_limit_error_code: baseline.rate_limit_error_code,
+            rate_limit_error_message: baseline.rate_limit_error_message,
+            rate_limit_error_json: baseline.rate_limit_error_json,
+            content_filter_enabled: baseline.content_filter_enabled,
+            content_filter_error_code: baseline.content_filter_error_code,
+            content_filter_error_message: baseline.content_filter_error_message,
+            content_filter_error_json: baseline.content_filter_error_json,
+            stream_breadth: baseline.stream_breadth,
+            stream_depth: baseline.stream_depth,
+            max_tokens: baseline.max_tokens,
+            context_size: baseline.context_size,
+            attack_goals: baseline.attack_goals,
+            base_model: baseline.base_model,
+            use_case: baseline.use_case,
+            system_prompt: baseline.system_prompt,
+            runtime_profile_id,
+            multi_turn_enabled,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for JobCreateRequestJobMetadataVariant2 {
     fn serialize<S: serde::Serializer>(
@@ -144122,8 +144932,6 @@ impl Serialize for JobCreateRequestJobMetadataVariant2 {
             "base_model",
             "use_case",
             "system_prompt",
-            "runtime_profile_id",
-            "multi_turn_enabled",
         ];
         if self
             .extensions
@@ -144202,6 +145010,12 @@ impl Serialize for JobCreateRequestJobMetadataVariant2 {
             map.serialize_entry("multi_turn_enabled", &self.multi_turn_enabled)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "runtime_profile_id" && !self.runtime_profile_id.is_unset() {
+                continue;
+            }
+            if key == "multi_turn_enabled" && !self.multi_turn_enabled.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -144377,35 +145191,80 @@ impl fmt::Debug for JobCreateRequestJobMetadataVariant2 {
 }
 
 /// Native typed contract for frozen schema `s011012`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct JobCreateRequestJobMetadataVariant3 {
-    #[serde(rename = "language", default)]
     pub language: Patch<LanguageOption>,
-    #[serde(rename = "custom_prompt_sets")]
     pub custom_prompt_sets: Vec<String>,
-    #[serde(rename = "rate_limit_enabled", default)]
     pub rate_limit_enabled: Optional<bool>,
-    #[serde(rename = "rate_limit", default)]
     pub rate_limit: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_code", default)]
     pub rate_limit_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_message", default)]
     pub rate_limit_error_message: Patch<String>,
-    #[serde(rename = "rate_limit_error_json", default)]
     pub rate_limit_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "content_filter_enabled", default)]
     pub content_filter_enabled: Optional<bool>,
-    #[serde(rename = "content_filter_error_code", default)]
     pub content_filter_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "content_filter_error_message", default)]
     pub content_filter_error_message: Patch<String>,
-    #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "runtime_profile_id", default)]
     pub runtime_profile_id: Patch<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for JobCreateRequestJobMetadataVariant3 {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut runtime_profile_id: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("runtime_profile_id") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => runtime_profile_id = value,
+                Err(_) => {
+                    raw.insert("runtime_profile_id".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "language", default)]
+            language: Patch<LanguageOption>,
+            #[serde(rename = "custom_prompt_sets")]
+            custom_prompt_sets: Vec<String>,
+            #[serde(rename = "rate_limit_enabled", default)]
+            rate_limit_enabled: Optional<bool>,
+            #[serde(rename = "rate_limit", default)]
+            rate_limit: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_code", default)]
+            rate_limit_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_message", default)]
+            rate_limit_error_message: Patch<String>,
+            #[serde(rename = "rate_limit_error_json", default)]
+            rate_limit_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "content_filter_enabled", default)]
+            content_filter_enabled: Optional<bool>,
+            #[serde(rename = "content_filter_error_code", default)]
+            content_filter_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "content_filter_error_message", default)]
+            content_filter_error_message: Patch<String>,
+            #[serde(rename = "content_filter_error_json", default)]
+            content_filter_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            language: baseline.language,
+            custom_prompt_sets: baseline.custom_prompt_sets,
+            rate_limit_enabled: baseline.rate_limit_enabled,
+            rate_limit: baseline.rate_limit,
+            rate_limit_error_code: baseline.rate_limit_error_code,
+            rate_limit_error_message: baseline.rate_limit_error_message,
+            rate_limit_error_json: baseline.rate_limit_error_json,
+            content_filter_enabled: baseline.content_filter_enabled,
+            content_filter_error_code: baseline.content_filter_error_code,
+            content_filter_error_message: baseline.content_filter_error_message,
+            content_filter_error_json: baseline.content_filter_error_json,
+            runtime_profile_id,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for JobCreateRequestJobMetadataVariant3 {
     fn serialize<S: serde::Serializer>(
@@ -144424,7 +145283,6 @@ impl Serialize for JobCreateRequestJobMetadataVariant3 {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
-            "runtime_profile_id",
         ];
         if self
             .extensions
@@ -144474,6 +145332,9 @@ impl Serialize for JobCreateRequestJobMetadataVariant3 {
             map.serialize_entry("runtime_profile_id", &self.runtime_profile_id)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "runtime_profile_id" && !self.runtime_profile_id.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -144732,61 +145593,147 @@ impl fmt::Debug for JobListResponse {
 }
 
 /// Native typed contract for frozen schema `s011119`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct JobResponse {
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "target")]
     pub target: TargetReference,
-    #[serde(rename = "job_type")]
     pub job_type: String,
-    #[serde(rename = "job_metadata")]
     pub job_metadata: JobResponseJobMetadata,
-    #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
-    #[serde(rename = "extra_info", default)]
     pub extra_info: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "target_id")]
     pub target_id: String,
-    #[serde(rename = "target_type")]
     pub target_type: String,
-    #[serde(rename = "total", default)]
     pub total: Patch<FiniteNumber>,
-    #[serde(rename = "completed", default)]
     pub completed: Patch<FiniteNumber>,
-    #[serde(rename = "status", default)]
     pub status: Optional<String>,
-    #[serde(rename = "score", default)]
     pub score: Patch<FiniteNumber>,
-    #[serde(rename = "asr", default)]
     pub asr: Patch<FiniteNumber>,
-    #[serde(rename = "time_record", default)]
     pub time_record: Patch<JobTimeRecord>,
-    #[serde(rename = "created_at", default)]
     pub created_at: Patch<String>,
-    #[serde(rename = "updated_at", default)]
     pub updated_at: Patch<String>,
-    #[serde(rename = "created_by_user_id", default)]
     pub created_by_user_id: Patch<String>,
-    #[serde(rename = "report_stats", default)]
     pub report_stats: Patch<JobResponseReportStats>,
-    #[serde(rename = "metering_quota_uuid", default)]
     pub metering_quota_uuid: Patch<String>,
-    #[serde(rename = "counted_towards_quota", default)]
     pub counted_towards_quota: Optional<String>,
-    #[serde(rename = "invocation_id", default)]
     pub invocation_id: Patch<String>,
-    #[serde(rename = "runtime_metrics", default)]
     pub runtime_metrics: Patch<super::red_team_data_plane::JobRuntimeMetrics>,
-    #[serde(rename = "progress", default)]
     pub progress: Patch<super::red_team_data_plane::JobResponseProgress>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for JobResponse {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut runtime_metrics: Patch<super::red_team_data_plane::JobRuntimeMetrics> =
+            Default::default();
+        if let Some(value) = raw.remove("runtime_metrics") {
+            match crate::json_decode::from_value::<
+                Patch<super::red_team_data_plane::JobRuntimeMetrics>,
+            >(value.clone())
+            {
+                Ok(value) => runtime_metrics = value,
+                Err(_) => {
+                    raw.insert("runtime_metrics".into(), value);
+                }
+            }
+        }
+        let mut progress: Patch<super::red_team_data_plane::JobResponseProgress> =
+            Default::default();
+        if let Some(value) = raw.remove("progress") {
+            match crate::json_decode::from_value::<
+                Patch<super::red_team_data_plane::JobResponseProgress>,
+            >(value.clone())
+            {
+                Ok(value) => progress = value,
+                Err(_) => {
+                    raw.insert("progress".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "name")]
+            name: String,
+            #[serde(rename = "target")]
+            target: TargetReference,
+            #[serde(rename = "job_type")]
+            job_type: String,
+            #[serde(rename = "job_metadata")]
+            job_metadata: JobResponseJobMetadata,
+            #[serde(rename = "version", default)]
+            version: Patch<FiniteNumber>,
+            #[serde(rename = "extra_info", default)]
+            extra_info: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "target_id")]
+            target_id: String,
+            #[serde(rename = "target_type")]
+            target_type: String,
+            #[serde(rename = "total", default)]
+            total: Patch<FiniteNumber>,
+            #[serde(rename = "completed", default)]
+            completed: Patch<FiniteNumber>,
+            #[serde(rename = "status", default)]
+            status: Optional<String>,
+            #[serde(rename = "score", default)]
+            score: Patch<FiniteNumber>,
+            #[serde(rename = "asr", default)]
+            asr: Patch<FiniteNumber>,
+            #[serde(rename = "time_record", default)]
+            time_record: Patch<JobTimeRecord>,
+            #[serde(rename = "created_at", default)]
+            created_at: Patch<String>,
+            #[serde(rename = "updated_at", default)]
+            updated_at: Patch<String>,
+            #[serde(rename = "created_by_user_id", default)]
+            created_by_user_id: Patch<String>,
+            #[serde(rename = "report_stats", default)]
+            report_stats: Patch<JobResponseReportStats>,
+            #[serde(rename = "metering_quota_uuid", default)]
+            metering_quota_uuid: Patch<String>,
+            #[serde(rename = "counted_towards_quota", default)]
+            counted_towards_quota: Optional<String>,
+            #[serde(rename = "invocation_id", default)]
+            invocation_id: Patch<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            name: baseline.name,
+            target: baseline.target,
+            job_type: baseline.job_type,
+            job_metadata: baseline.job_metadata,
+            version: baseline.version,
+            extra_info: baseline.extra_info,
+            target_id: baseline.target_id,
+            target_type: baseline.target_type,
+            total: baseline.total,
+            completed: baseline.completed,
+            status: baseline.status,
+            score: baseline.score,
+            asr: baseline.asr,
+            time_record: baseline.time_record,
+            created_at: baseline.created_at,
+            updated_at: baseline.updated_at,
+            created_by_user_id: baseline.created_by_user_id,
+            report_stats: baseline.report_stats,
+            metering_quota_uuid: baseline.metering_quota_uuid,
+            counted_towards_quota: baseline.counted_towards_quota,
+            invocation_id: baseline.invocation_id,
+            runtime_metrics,
+            progress,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for JobResponse {
     fn serialize<S: serde::Serializer>(
@@ -144817,8 +145764,6 @@ impl Serialize for JobResponse {
             "metering_quota_uuid",
             "counted_towards_quota",
             "invocation_id",
-            "runtime_metrics",
-            "progress",
         ];
         if self
             .extensions
@@ -144890,6 +145835,12 @@ impl Serialize for JobResponse {
             map.serialize_entry("progress", &self.progress)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "runtime_metrics" && !self.runtime_metrics.is_unset() {
+                continue;
+            }
+            if key == "progress" && !self.progress.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -146015,24 +146966,51 @@ impl fmt::Debug for LabelsResponse {
 }
 
 /// Native typed contract for frozen schema `s010857`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct LanguageOption {
-    #[serde(rename = "code")]
     pub code: String,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "country_code", default)]
     pub country_code: Patch<String>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for LanguageOption {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut country_code: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("country_code") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => country_code = value,
+                Err(_) => {
+                    raw.insert("country_code".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "code")]
+            code: String,
+            #[serde(rename = "name")]
+            name: String,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            code: baseline.code,
+            name: baseline.name,
+            country_code,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for LanguageOption {
     fn serialize<S: serde::Serializer>(
         &self,
         serializer: S,
     ) -> std::result::Result<S::Ok, S::Error> {
-        const KNOWN: &[&str] = &["code", "name", "country_code"];
+        const KNOWN: &[&str] = &["code", "name"];
         if self
             .extensions
             .keys()
@@ -146049,6 +147027,9 @@ impl Serialize for LanguageOption {
             map.serialize_entry("country_code", &self.country_code)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "country_code" && !self.country_code.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -157427,37 +158408,88 @@ impl fmt::Debug for ProfilingStatus {
 }
 
 /// Native typed contract for frozen schema `s011813`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct PromptDetailResponse {
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "prompt_id")]
     pub prompt_id: String,
-    #[serde(rename = "prompt_text")]
     pub prompt_text: String,
-    #[serde(rename = "goal", default)]
     pub goal: Patch<String>,
-    #[serde(rename = "user_defined_goal", default)]
     pub user_defined_goal: Optional<bool>,
-    #[serde(rename = "properties", default)]
     pub properties: Optional<Vec<PropertyAssignment>>,
-    #[serde(rename = "attack_id", default)]
     pub attack_id: Patch<String>,
-    #[serde(rename = "threat", default)]
     pub threat: Patch<bool>,
-    #[serde(rename = "attack_outputs", default)]
     pub attack_outputs: Optional<Vec<PromptDetailResponseAttackOutputsItem>>,
-    #[serde(rename = "asr", default)]
     pub asr: Patch<FiniteNumber>,
-    #[serde(rename = "prompt_set_id", default)]
     pub prompt_set_id: Patch<String>,
-    #[serde(rename = "prompt_set_name", default)]
     pub prompt_set_name: Patch<String>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for PromptDetailResponse {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "prompt_id")]
+            prompt_id: String,
+            #[serde(rename = "prompt_text")]
+            prompt_text: String,
+            #[serde(rename = "goal", default)]
+            goal: Patch<String>,
+            #[serde(rename = "user_defined_goal", default)]
+            user_defined_goal: Optional<bool>,
+            #[serde(rename = "properties", default)]
+            properties: Optional<Vec<PropertyAssignment>>,
+            #[serde(rename = "attack_id", default)]
+            attack_id: Patch<String>,
+            #[serde(rename = "threat", default)]
+            threat: Patch<bool>,
+            #[serde(rename = "attack_outputs", default)]
+            attack_outputs: Optional<Vec<PromptDetailResponseAttackOutputsItem>>,
+            #[serde(rename = "asr", default)]
+            asr: Patch<FiniteNumber>,
+            #[serde(rename = "prompt_set_id", default)]
+            prompt_set_id: Patch<String>,
+            #[serde(rename = "prompt_set_name", default)]
+            prompt_set_name: Patch<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            error: baseline.error,
+            prompt_id: baseline.prompt_id,
+            prompt_text: baseline.prompt_text,
+            goal: baseline.goal,
+            user_defined_goal: baseline.user_defined_goal,
+            properties: baseline.properties,
+            attack_id: baseline.attack_id,
+            threat: baseline.threat,
+            attack_outputs: baseline.attack_outputs,
+            asr: baseline.asr,
+            prompt_set_id: baseline.prompt_set_id,
+            prompt_set_name: baseline.prompt_set_name,
+            threat_details,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for PromptDetailResponse {
     fn serialize<S: serde::Serializer>(
@@ -157477,7 +158509,6 @@ impl Serialize for PromptDetailResponse {
             "asr",
             "prompt_set_id",
             "prompt_set_name",
-            "threat_details",
         ];
         if self
             .extensions
@@ -157525,6 +158556,9 @@ impl Serialize for PromptDetailResponse {
             map.serialize_entry("threat_details", &self.threat_details)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -158153,33 +159187,83 @@ impl fmt::Debug for PromptSetStats {
 }
 
 /// Native typed contract for frozen schema `s011779`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct PromptSetSummary {
-    #[serde(rename = "prompt_set_id")]
     pub prompt_set_id: String,
-    #[serde(rename = "prompt_set_name")]
     pub prompt_set_name: String,
-    #[serde(rename = "total_prompts")]
     pub total_prompts: FiniteNumber,
-    #[serde(rename = "total_attacks")]
     pub total_attacks: FiniteNumber,
-    #[serde(rename = "total_threats")]
     pub total_threats: FiniteNumber,
-    #[serde(rename = "failed_attacks")]
     pub failed_attacks: FiniteNumber,
-    #[serde(rename = "threat_rate")]
     pub threat_rate: FiniteNumber,
-    #[serde(rename = "property_names", default)]
     pub property_names: Optional<Vec<String>>,
-    #[serde(rename = "property_statistics", default)]
     pub property_statistics: Optional<Vec<PropertyStatistic>>,
-    #[serde(rename = "errored_attacks", default)]
     pub errored_attacks: Optional<FiniteNumber>,
-    #[serde(rename = "has_errors", default)]
     pub has_errors: Optional<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for PromptSetSummary {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut errored_attacks: Optional<FiniteNumber> = Default::default();
+        if let Some(value) = raw.remove("errored_attacks") {
+            match crate::json_decode::from_value::<Optional<FiniteNumber>>(value.clone()) {
+                Ok(value) => errored_attacks = value,
+                Err(_) => {
+                    raw.insert("errored_attacks".into(), value);
+                }
+            }
+        }
+        let mut has_errors: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("has_errors") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => has_errors = value,
+                Err(_) => {
+                    raw.insert("has_errors".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "prompt_set_id")]
+            prompt_set_id: String,
+            #[serde(rename = "prompt_set_name")]
+            prompt_set_name: String,
+            #[serde(rename = "total_prompts")]
+            total_prompts: FiniteNumber,
+            #[serde(rename = "total_attacks")]
+            total_attacks: FiniteNumber,
+            #[serde(rename = "total_threats")]
+            total_threats: FiniteNumber,
+            #[serde(rename = "failed_attacks")]
+            failed_attacks: FiniteNumber,
+            #[serde(rename = "threat_rate")]
+            threat_rate: FiniteNumber,
+            #[serde(rename = "property_names", default)]
+            property_names: Optional<Vec<String>>,
+            #[serde(rename = "property_statistics", default)]
+            property_statistics: Optional<Vec<PropertyStatistic>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            prompt_set_id: baseline.prompt_set_id,
+            prompt_set_name: baseline.prompt_set_name,
+            total_prompts: baseline.total_prompts,
+            total_attacks: baseline.total_attacks,
+            total_threats: baseline.total_threats,
+            failed_attacks: baseline.failed_attacks,
+            threat_rate: baseline.threat_rate,
+            property_names: baseline.property_names,
+            property_statistics: baseline.property_statistics,
+            errored_attacks,
+            has_errors,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for PromptSetSummary {
     fn serialize<S: serde::Serializer>(
@@ -158196,8 +159280,6 @@ impl Serialize for PromptSetSummary {
             "threat_rate",
             "property_names",
             "property_statistics",
-            "errored_attacks",
-            "has_errors",
         ];
         if self
             .extensions
@@ -158229,6 +159311,12 @@ impl Serialize for PromptSetSummary {
             map.serialize_entry("has_errors", &self.has_errors)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "errored_attacks" && !self.errored_attacks.is_unset() {
+                continue;
+            }
+            if key == "has_errors" && !self.has_errors.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -159976,25 +161064,64 @@ impl fmt::Debug for RegistryCredentials {
 }
 
 /// Native typed contract for frozen schema `s011570`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct RemediationDetail {
-    #[serde(rename = "remediation")]
     pub remediation: String,
-    #[serde(rename = "description")]
     pub description: String,
-    #[serde(rename = "resource_links", default)]
     pub resource_links: Optional<Vec<String>>,
-    #[serde(rename = "priority_level", default)]
     pub priority_level: Optional<String>,
-    #[serde(rename = "ease_of_implementation_level", default)]
     pub ease_of_implementation_level: Optional<String>,
-    #[serde(rename = "effectiveness_level", default)]
     pub effectiveness_level: Optional<String>,
-    #[serde(rename = "categories", default)]
     pub categories: Optional<Vec<super::red_team_data_plane::GoalCategoryDetail>>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for RemediationDetail {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut categories: Optional<Vec<super::red_team_data_plane::GoalCategoryDetail>> =
+            Default::default();
+        if let Some(value) = raw.remove("categories") {
+            match crate::json_decode::from_value::<
+                Optional<Vec<super::red_team_data_plane::GoalCategoryDetail>>,
+            >(value.clone())
+            {
+                Ok(value) => categories = value,
+                Err(_) => {
+                    raw.insert("categories".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "remediation")]
+            remediation: String,
+            #[serde(rename = "description")]
+            description: String,
+            #[serde(rename = "resource_links", default)]
+            resource_links: Optional<Vec<String>>,
+            #[serde(rename = "priority_level", default)]
+            priority_level: Optional<String>,
+            #[serde(rename = "ease_of_implementation_level", default)]
+            ease_of_implementation_level: Optional<String>,
+            #[serde(rename = "effectiveness_level", default)]
+            effectiveness_level: Optional<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            remediation: baseline.remediation,
+            description: baseline.description,
+            resource_links: baseline.resource_links,
+            priority_level: baseline.priority_level,
+            ease_of_implementation_level: baseline.ease_of_implementation_level,
+            effectiveness_level: baseline.effectiveness_level,
+            categories,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for RemediationDetail {
     fn serialize<S: serde::Serializer>(
@@ -160008,7 +161135,6 @@ impl Serialize for RemediationDetail {
             "priority_level",
             "ease_of_implementation_level",
             "effectiveness_level",
-            "categories",
         ];
         if self
             .extensions
@@ -160041,6 +161167,9 @@ impl Serialize for RemediationDetail {
             map.serialize_entry("categories", &self.categories)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "categories" && !self.categories.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -166287,24 +167416,51 @@ impl fmt::Debug for ScanSummary {
 }
 
 /// Native typed contract for frozen schema `s011874`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct ScoreTrendResponse {
-    #[serde(rename = "labels")]
     pub labels: Vec<String>,
-    #[serde(rename = "series")]
     pub series: Vec<ScoreTrendSeries>,
-    #[serde(rename = "iso_labels", default)]
     pub iso_labels: Optional<Vec<String>>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for ScoreTrendResponse {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut iso_labels: Optional<Vec<String>> = Default::default();
+        if let Some(value) = raw.remove("iso_labels") {
+            match crate::json_decode::from_value::<Optional<Vec<String>>>(value.clone()) {
+                Ok(value) => iso_labels = value,
+                Err(_) => {
+                    raw.insert("iso_labels".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "labels")]
+            labels: Vec<String>,
+            #[serde(rename = "series")]
+            series: Vec<ScoreTrendSeries>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            labels: baseline.labels,
+            series: baseline.series,
+            iso_labels,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for ScoreTrendResponse {
     fn serialize<S: serde::Serializer>(
         &self,
         serializer: S,
     ) -> std::result::Result<S::Ok, S::Error> {
-        const KNOWN: &[&str] = &["labels", "series", "iso_labels"];
+        const KNOWN: &[&str] = &["labels", "series"];
         if self
             .extensions
             .keys()
@@ -166321,6 +167477,9 @@ impl Serialize for ScoreTrendResponse {
             map.serialize_entry("iso_labels", &self.iso_labels)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "iso_labels" && !self.iso_labels.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -168119,41 +169278,106 @@ impl fmt::Debug for StartProfilingResponse {
 }
 
 /// Native typed contract for frozen schema `s010852`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct StaticJobMetadata {
-    #[serde(rename = "language", default)]
     pub language: Patch<LanguageOption>,
-    #[serde(rename = "include_file_attacks", default)]
     pub include_file_attacks: Optional<bool>,
-    #[serde(rename = "categories")]
     pub categories: TypedMap<JsonValue>,
-    #[serde(rename = "rate_limit_enabled", default)]
     pub rate_limit_enabled: Optional<bool>,
-    #[serde(rename = "rate_limit", default)]
     pub rate_limit: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_code", default)]
     pub rate_limit_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_message", default)]
     pub rate_limit_error_message: Patch<String>,
-    #[serde(rename = "rate_limit_error_json", default)]
     pub rate_limit_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "content_filter_enabled", default)]
     pub content_filter_enabled: Optional<bool>,
-    #[serde(rename = "content_filter_error_code", default)]
     pub content_filter_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "content_filter_error_message", default)]
     pub content_filter_error_message: Patch<String>,
-    #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "runtime_profile_id", default)]
     pub runtime_profile_id: Patch<String>,
-    #[serde(rename = "include_audio_attacks", default)]
     pub include_audio_attacks: Optional<bool>,
-    #[serde(rename = "include_text_attacks", default)]
     pub include_text_attacks: Optional<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for StaticJobMetadata {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut runtime_profile_id: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("runtime_profile_id") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => runtime_profile_id = value,
+                Err(_) => {
+                    raw.insert("runtime_profile_id".into(), value);
+                }
+            }
+        }
+        let mut include_audio_attacks: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("include_audio_attacks") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => include_audio_attacks = value,
+                Err(_) => {
+                    raw.insert("include_audio_attacks".into(), value);
+                }
+            }
+        }
+        let mut include_text_attacks: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("include_text_attacks") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => include_text_attacks = value,
+                Err(_) => {
+                    raw.insert("include_text_attacks".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "language", default)]
+            language: Patch<LanguageOption>,
+            #[serde(rename = "include_file_attacks", default)]
+            include_file_attacks: Optional<bool>,
+            #[serde(rename = "categories")]
+            categories: TypedMap<JsonValue>,
+            #[serde(rename = "rate_limit_enabled", default)]
+            rate_limit_enabled: Optional<bool>,
+            #[serde(rename = "rate_limit", default)]
+            rate_limit: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_code", default)]
+            rate_limit_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_message", default)]
+            rate_limit_error_message: Patch<String>,
+            #[serde(rename = "rate_limit_error_json", default)]
+            rate_limit_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "content_filter_enabled", default)]
+            content_filter_enabled: Optional<bool>,
+            #[serde(rename = "content_filter_error_code", default)]
+            content_filter_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "content_filter_error_message", default)]
+            content_filter_error_message: Patch<String>,
+            #[serde(rename = "content_filter_error_json", default)]
+            content_filter_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            language: baseline.language,
+            include_file_attacks: baseline.include_file_attacks,
+            categories: baseline.categories,
+            rate_limit_enabled: baseline.rate_limit_enabled,
+            rate_limit: baseline.rate_limit,
+            rate_limit_error_code: baseline.rate_limit_error_code,
+            rate_limit_error_message: baseline.rate_limit_error_message,
+            rate_limit_error_json: baseline.rate_limit_error_json,
+            content_filter_enabled: baseline.content_filter_enabled,
+            content_filter_error_code: baseline.content_filter_error_code,
+            content_filter_error_message: baseline.content_filter_error_message,
+            content_filter_error_json: baseline.content_filter_error_json,
+            runtime_profile_id,
+            include_audio_attacks,
+            include_text_attacks,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for StaticJobMetadata {
     fn serialize<S: serde::Serializer>(
@@ -168173,9 +169397,6 @@ impl Serialize for StaticJobMetadata {
             "content_filter_error_code",
             "content_filter_error_message",
             "content_filter_error_json",
-            "runtime_profile_id",
-            "include_audio_attacks",
-            "include_text_attacks",
         ];
         if self
             .extensions
@@ -168234,6 +169455,15 @@ impl Serialize for StaticJobMetadata {
             map.serialize_entry("include_text_attacks", &self.include_text_attacks)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "runtime_profile_id" && !self.runtime_profile_id.is_unset() {
+                continue;
+            }
+            if key == "include_audio_attacks" && !self.include_audio_attacks.is_unset() {
+                continue;
+            }
+            if key == "include_text_attacks" && !self.include_text_attacks.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -168998,55 +170228,124 @@ impl fmt::Debug for StatusQueryParam {
 }
 
 /// Native typed contract for frozen schema `s011686`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct StreamDetailResponse {
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "error_message", default)]
     pub error_message: Patch<String>,
-    #[serde(rename = "goal_category", default)]
     pub goal_category: Patch<String>,
-    #[serde(rename = "goal_metadata", default)]
     pub goal_metadata: Patch<StreamDetailResponseGoalMetadata>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "target_id")]
     pub target_id: String,
-    #[serde(rename = "goal_id")]
     pub goal_id: String,
-    #[serde(rename = "stream_idx", default)]
     pub stream_idx: Optional<FiniteNumber>,
-    #[serde(rename = "iteration", default)]
     pub iteration: Optional<FiniteNumber>,
-    #[serde(rename = "goal", default)]
     pub goal: Patch<StreamDetailResponseGoal>,
-    #[serde(rename = "marked_safe", default)]
     pub marked_safe: Optional<bool>,
-    #[serde(rename = "stream_type", default)]
     pub stream_type: Patch<String>,
-    #[serde(rename = "threat", default)]
     pub threat: Optional<bool>,
-    #[serde(rename = "first_threat_iteration", default)]
     pub first_threat_iteration: Patch<StreamIterationData>,
-    #[serde(rename = "created_at", default)]
     pub created_at: Patch<String>,
-    #[serde(rename = "updated_at", default)]
     pub updated_at: Patch<String>,
-    #[serde(rename = "extra_info", default)]
     pub extra_info: Optional<TypedMap<JsonValue>>,
-    #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
-    #[serde(rename = "iterations", default)]
     pub iterations: Optional<Vec<StreamIterationData>>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for StreamDetailResponse {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "error_message", default)]
+            error_message: Patch<String>,
+            #[serde(rename = "goal_category", default)]
+            goal_category: Patch<String>,
+            #[serde(rename = "goal_metadata", default)]
+            goal_metadata: Patch<StreamDetailResponseGoalMetadata>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "target_id")]
+            target_id: String,
+            #[serde(rename = "goal_id")]
+            goal_id: String,
+            #[serde(rename = "stream_idx", default)]
+            stream_idx: Optional<FiniteNumber>,
+            #[serde(rename = "iteration", default)]
+            iteration: Optional<FiniteNumber>,
+            #[serde(rename = "goal", default)]
+            goal: Patch<StreamDetailResponseGoal>,
+            #[serde(rename = "marked_safe", default)]
+            marked_safe: Optional<bool>,
+            #[serde(rename = "stream_type", default)]
+            stream_type: Patch<String>,
+            #[serde(rename = "threat", default)]
+            threat: Optional<bool>,
+            #[serde(rename = "first_threat_iteration", default)]
+            first_threat_iteration: Patch<StreamIterationData>,
+            #[serde(rename = "created_at", default)]
+            created_at: Patch<String>,
+            #[serde(rename = "updated_at", default)]
+            updated_at: Patch<String>,
+            #[serde(rename = "extra_info", default)]
+            extra_info: Optional<TypedMap<JsonValue>>,
+            #[serde(rename = "version", default)]
+            version: Patch<FiniteNumber>,
+            #[serde(rename = "iterations", default)]
+            iterations: Optional<Vec<StreamIterationData>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            error: baseline.error,
+            error_message: baseline.error_message,
+            goal_category: baseline.goal_category,
+            goal_metadata: baseline.goal_metadata,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            job_id: baseline.job_id,
+            target_id: baseline.target_id,
+            goal_id: baseline.goal_id,
+            stream_idx: baseline.stream_idx,
+            iteration: baseline.iteration,
+            goal: baseline.goal,
+            marked_safe: baseline.marked_safe,
+            stream_type: baseline.stream_type,
+            threat: baseline.threat,
+            first_threat_iteration: baseline.first_threat_iteration,
+            created_at: baseline.created_at,
+            updated_at: baseline.updated_at,
+            extra_info: baseline.extra_info,
+            version: baseline.version,
+            iterations: baseline.iterations,
+            threat_details,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for StreamDetailResponse {
     fn serialize<S: serde::Serializer>(
@@ -169075,7 +170374,6 @@ impl Serialize for StreamDetailResponse {
             "extra_info",
             "version",
             "iterations",
-            "threat_details",
         ];
         if self
             .extensions
@@ -169144,6 +170442,9 @@ impl Serialize for StreamDetailResponse {
             map.serialize_entry("threat_details", &self.threat_details)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -169425,45 +170726,103 @@ impl fmt::Debug for StreamDetailResponseGoalMetadata {
 }
 
 /// Native typed contract for frozen schema `s010423`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct StreamDetailResponseGoalVariant2 {
-    #[serde(rename = "goal")]
     pub goal: String,
-    #[serde(rename = "goal_english", default)]
     pub goal_english: Patch<String>,
-    #[serde(rename = "safe_response")]
     pub safe_response: String,
-    #[serde(rename = "jailbroken_response")]
     pub jailbroken_response: String,
-    #[serde(rename = "goal_metadata", default)]
     pub goal_metadata: Optional<TypedMap<JsonValue>>,
-    #[serde(rename = "custom_goal", default)]
     pub custom_goal: Optional<bool>,
-    #[serde(rename = "goal_type", default)]
     pub goal_type: Optional<String>,
-    #[serde(rename = "goal_category", default)]
     pub goal_category: Patch<String>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "goal_to_show", default)]
     pub goal_to_show: Patch<String>,
-    #[serde(rename = "threat", default)]
     pub threat: Optional<bool>,
-    #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
-    #[serde(rename = "extra_info", default)]
     pub extra_info: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "goal_subtype", default)]
     pub goal_subtype: Patch<super::red_team_data_plane::GoalGoalSubtype>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for StreamDetailResponseGoalVariant2 {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut goal_subtype: Patch<super::red_team_data_plane::GoalGoalSubtype> =
+            Default::default();
+        if let Some(value) = raw.remove("goal_subtype") {
+            match crate::json_decode::from_value::<Patch<super::red_team_data_plane::GoalGoalSubtype>>(
+                value.clone(),
+            ) {
+                Ok(value) => goal_subtype = value,
+                Err(_) => {
+                    raw.insert("goal_subtype".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "goal")]
+            goal: String,
+            #[serde(rename = "goal_english", default)]
+            goal_english: Patch<String>,
+            #[serde(rename = "safe_response")]
+            safe_response: String,
+            #[serde(rename = "jailbroken_response")]
+            jailbroken_response: String,
+            #[serde(rename = "goal_metadata", default)]
+            goal_metadata: Optional<TypedMap<JsonValue>>,
+            #[serde(rename = "custom_goal", default)]
+            custom_goal: Optional<bool>,
+            #[serde(rename = "goal_type", default)]
+            goal_type: Optional<String>,
+            #[serde(rename = "goal_category", default)]
+            goal_category: Patch<String>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "goal_to_show", default)]
+            goal_to_show: Patch<String>,
+            #[serde(rename = "threat", default)]
+            threat: Optional<bool>,
+            #[serde(rename = "version", default)]
+            version: Patch<FiniteNumber>,
+            #[serde(rename = "extra_info", default)]
+            extra_info: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            goal: baseline.goal,
+            goal_english: baseline.goal_english,
+            safe_response: baseline.safe_response,
+            jailbroken_response: baseline.jailbroken_response,
+            goal_metadata: baseline.goal_metadata,
+            custom_goal: baseline.custom_goal,
+            goal_type: baseline.goal_type,
+            goal_category: baseline.goal_category,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            job_id: baseline.job_id,
+            goal_to_show: baseline.goal_to_show,
+            threat: baseline.threat,
+            version: baseline.version,
+            extra_info: baseline.extra_info,
+            error: baseline.error,
+            goal_subtype,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for StreamDetailResponseGoalVariant2 {
     fn serialize<S: serde::Serializer>(
@@ -169487,7 +170846,6 @@ impl Serialize for StreamDetailResponseGoalVariant2 {
             "version",
             "extra_info",
             "error",
-            "goal_subtype",
         ];
         if self
             .extensions
@@ -169539,6 +170897,9 @@ impl Serialize for StreamDetailResponseGoalVariant2 {
             map.serialize_entry("goal_subtype", &self.goal_subtype)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "goal_subtype" && !self.goal_subtype.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -169726,61 +171087,143 @@ impl fmt::Debug for StreamGoal {
 }
 
 /// Native typed contract for frozen schema `s011632`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct StreamIterationData {
-    #[serde(rename = "prompt_english", default)]
     pub prompt_english: Patch<String>,
-    #[serde(rename = "output_english", default)]
     pub output_english: Patch<String>,
-    #[serde(rename = "error", default)]
     pub error: Patch<bool>,
-    #[serde(rename = "error_message", default)]
     pub error_message: Patch<String>,
-    #[serde(rename = "uuid")]
     pub uuid: String,
-    #[serde(rename = "tsg_id")]
     pub tsg_id: String,
-    #[serde(rename = "job_id")]
     pub job_id: String,
-    #[serde(rename = "stream_id")]
     pub stream_id: String,
-    #[serde(rename = "goal_id")]
     pub goal_id: String,
-    #[serde(rename = "iteration")]
     pub iteration: FiniteNumber,
-    #[serde(rename = "prompt")]
     pub prompt: String,
-    #[serde(rename = "techniques")]
     pub techniques: String,
-    #[serde(rename = "improvement")]
     pub improvement: String,
-    #[serde(rename = "prompts_objective")]
     pub prompts_objective: String,
-    #[serde(rename = "summary")]
     pub summary: String,
-    #[serde(rename = "output", default)]
     pub output: Patch<String>,
-    #[serde(rename = "score", default)]
     pub score: Patch<FiniteNumber>,
-    #[serde(rename = "judge_reasoning", default)]
     pub judge_reasoning: Patch<String>,
-    #[serde(rename = "threat", default)]
     pub threat: Optional<bool>,
-    #[serde(rename = "created_at", default)]
     pub created_at: Patch<String>,
-    #[serde(rename = "updated_at", default)]
     pub updated_at: Patch<String>,
-    #[serde(rename = "extra_info", default)]
     pub extra_info: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "version", default)]
     pub version: Patch<FiniteNumber>,
-    #[serde(rename = "judge_explanation", default)]
     pub judge_explanation: Patch<String>,
-    #[serde(rename = "threat_details", default)]
     pub threat_details: Optional<super::red_team_data_plane::ThreatDetails>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for StreamIterationData {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut judge_explanation: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("judge_explanation") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => judge_explanation = value,
+                Err(_) => {
+                    raw.insert("judge_explanation".into(), value);
+                }
+            }
+        }
+        let mut threat_details: Optional<super::red_team_data_plane::ThreatDetails> =
+            Default::default();
+        if let Some(value) = raw.remove("threat_details") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ThreatDetails>,
+            >(value.clone())
+            {
+                Ok(value) => threat_details = value,
+                Err(_) => {
+                    raw.insert("threat_details".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "prompt_english", default)]
+            prompt_english: Patch<String>,
+            #[serde(rename = "output_english", default)]
+            output_english: Patch<String>,
+            #[serde(rename = "error", default)]
+            error: Patch<bool>,
+            #[serde(rename = "error_message", default)]
+            error_message: Patch<String>,
+            #[serde(rename = "uuid")]
+            uuid: String,
+            #[serde(rename = "tsg_id")]
+            tsg_id: String,
+            #[serde(rename = "job_id")]
+            job_id: String,
+            #[serde(rename = "stream_id")]
+            stream_id: String,
+            #[serde(rename = "goal_id")]
+            goal_id: String,
+            #[serde(rename = "iteration")]
+            iteration: FiniteNumber,
+            #[serde(rename = "prompt")]
+            prompt: String,
+            #[serde(rename = "techniques")]
+            techniques: String,
+            #[serde(rename = "improvement")]
+            improvement: String,
+            #[serde(rename = "prompts_objective")]
+            prompts_objective: String,
+            #[serde(rename = "summary")]
+            summary: String,
+            #[serde(rename = "output", default)]
+            output: Patch<String>,
+            #[serde(rename = "score", default)]
+            score: Patch<FiniteNumber>,
+            #[serde(rename = "judge_reasoning", default)]
+            judge_reasoning: Patch<String>,
+            #[serde(rename = "threat", default)]
+            threat: Optional<bool>,
+            #[serde(rename = "created_at", default)]
+            created_at: Patch<String>,
+            #[serde(rename = "updated_at", default)]
+            updated_at: Patch<String>,
+            #[serde(rename = "extra_info", default)]
+            extra_info: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "version", default)]
+            version: Patch<FiniteNumber>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            prompt_english: baseline.prompt_english,
+            output_english: baseline.output_english,
+            error: baseline.error,
+            error_message: baseline.error_message,
+            uuid: baseline.uuid,
+            tsg_id: baseline.tsg_id,
+            job_id: baseline.job_id,
+            stream_id: baseline.stream_id,
+            goal_id: baseline.goal_id,
+            iteration: baseline.iteration,
+            prompt: baseline.prompt,
+            techniques: baseline.techniques,
+            improvement: baseline.improvement,
+            prompts_objective: baseline.prompts_objective,
+            summary: baseline.summary,
+            output: baseline.output,
+            score: baseline.score,
+            judge_reasoning: baseline.judge_reasoning,
+            threat: baseline.threat,
+            created_at: baseline.created_at,
+            updated_at: baseline.updated_at,
+            extra_info: baseline.extra_info,
+            version: baseline.version,
+            judge_explanation,
+            threat_details,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for StreamIterationData {
     fn serialize<S: serde::Serializer>(
@@ -169811,8 +171254,6 @@ impl Serialize for StreamIterationData {
             "updated_at",
             "extra_info",
             "version",
-            "judge_explanation",
-            "threat_details",
         ];
         if self
             .extensions
@@ -169878,6 +171319,12 @@ impl Serialize for StreamIterationData {
             map.serialize_entry("threat_details", &self.threat_details)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "judge_explanation" && !self.judge_explanation.is_unset() {
+                continue;
+            }
+            if key == "threat_details" && !self.threat_details.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -171276,27 +172723,64 @@ impl fmt::Debug for StreamingConnectionParamsTargetConnectionConfigVariant4 {
 }
 
 /// Native typed contract for frozen schema `s011184`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct SubCategoryModel {
-    #[serde(rename = "file_supported", default)]
     pub file_supported: Optional<bool>,
-    #[serde(rename = "id")]
     pub id: String,
-    #[serde(rename = "display_name")]
     pub display_name: String,
-    #[serde(rename = "description")]
     pub description: String,
-    #[serde(rename = "preselect", default)]
     pub preselect: Optional<bool>,
-    #[serde(rename = "prerequisites", default)]
     pub prerequisites: Patch<Vec<PrerequisiteModel>>,
-    #[serde(rename = "active", default)]
     pub active: Optional<bool>,
-    #[serde(rename = "audio_supported", default)]
     pub audio_supported: Optional<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for SubCategoryModel {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut audio_supported: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("audio_supported") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => audio_supported = value,
+                Err(_) => {
+                    raw.insert("audio_supported".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "file_supported", default)]
+            file_supported: Optional<bool>,
+            #[serde(rename = "id")]
+            id: String,
+            #[serde(rename = "display_name")]
+            display_name: String,
+            #[serde(rename = "description")]
+            description: String,
+            #[serde(rename = "preselect", default)]
+            preselect: Optional<bool>,
+            #[serde(rename = "prerequisites", default)]
+            prerequisites: Patch<Vec<PrerequisiteModel>>,
+            #[serde(rename = "active", default)]
+            active: Optional<bool>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            file_supported: baseline.file_supported,
+            id: baseline.id,
+            display_name: baseline.display_name,
+            description: baseline.description,
+            preselect: baseline.preselect,
+            prerequisites: baseline.prerequisites,
+            active: baseline.active,
+            audio_supported,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for SubCategoryModel {
     fn serialize<S: serde::Serializer>(
@@ -171311,7 +172795,6 @@ impl Serialize for SubCategoryModel {
             "preselect",
             "prerequisites",
             "active",
-            "audio_supported",
         ];
         if self
             .extensions
@@ -171342,6 +172825,9 @@ impl Serialize for SubCategoryModel {
             map.serialize_entry("audio_supported", &self.audio_supported)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "audio_supported" && !self.audio_supported.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -171442,33 +172928,76 @@ impl fmt::Debug for SubCategoryModel {
 }
 
 /// Native typed contract for frozen schema `s011423`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct SubCategoryStats {
-    #[serde(rename = "file_supported", default)]
     pub file_supported: Optional<bool>,
-    #[serde(rename = "id")]
     pub id: String,
-    #[serde(rename = "display_name")]
     pub display_name: String,
-    #[serde(rename = "description")]
     pub description: String,
-    #[serde(rename = "preselect", default)]
     pub preselect: Optional<bool>,
-    #[serde(rename = "prerequisites", default)]
     pub prerequisites: Patch<Vec<PrerequisiteModel>>,
-    #[serde(rename = "active", default)]
     pub active: Optional<bool>,
-    #[serde(rename = "successful")]
     pub successful: FiniteNumber,
-    #[serde(rename = "failed")]
     pub failed: FiniteNumber,
-    #[serde(rename = "total", default)]
     pub total: Optional<FiniteNumber>,
-    #[serde(rename = "audio_supported", default)]
     pub audio_supported: Optional<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for SubCategoryStats {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut audio_supported: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("audio_supported") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => audio_supported = value,
+                Err(_) => {
+                    raw.insert("audio_supported".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "file_supported", default)]
+            file_supported: Optional<bool>,
+            #[serde(rename = "id")]
+            id: String,
+            #[serde(rename = "display_name")]
+            display_name: String,
+            #[serde(rename = "description")]
+            description: String,
+            #[serde(rename = "preselect", default)]
+            preselect: Optional<bool>,
+            #[serde(rename = "prerequisites", default)]
+            prerequisites: Patch<Vec<PrerequisiteModel>>,
+            #[serde(rename = "active", default)]
+            active: Optional<bool>,
+            #[serde(rename = "successful")]
+            successful: FiniteNumber,
+            #[serde(rename = "failed")]
+            failed: FiniteNumber,
+            #[serde(rename = "total", default)]
+            total: Optional<FiniteNumber>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            file_supported: baseline.file_supported,
+            id: baseline.id,
+            display_name: baseline.display_name,
+            description: baseline.description,
+            preselect: baseline.preselect,
+            prerequisites: baseline.prerequisites,
+            active: baseline.active,
+            successful: baseline.successful,
+            failed: baseline.failed,
+            total: baseline.total,
+            audio_supported,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for SubCategoryStats {
     fn serialize<S: serde::Serializer>(
@@ -171486,7 +173015,6 @@ impl Serialize for SubCategoryStats {
             "successful",
             "failed",
             "total",
-            "audio_supported",
         ];
         if self
             .extensions
@@ -171522,6 +173050,9 @@ impl Serialize for SubCategoryStats {
             map.serialize_entry("audio_supported", &self.audio_supported)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "audio_supported" && !self.audio_supported.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -173460,55 +174991,167 @@ impl fmt::Debug for TargetListItem {
 }
 
 /// Native typed contract for frozen schema `s010657`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct TargetMetadata {
-    #[serde(rename = "supports_multimodal_files", default)]
     pub supports_multimodal_files: Optional<bool>,
-    #[serde(rename = "supports_multimodal_files_error_message", default)]
     pub supports_multimodal_files_error_message: Patch<String>,
-    #[serde(rename = "multi_turn", default)]
     pub multi_turn: Optional<bool>,
-    #[serde(rename = "multi_turn_error_message", default)]
     pub multi_turn_error_message: Patch<String>,
-    #[serde(rename = "rate_limit", default)]
     pub rate_limit: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_enabled", default)]
     pub rate_limit_enabled: Optional<bool>,
-    #[serde(rename = "rate_limit_error_code", default)]
     pub rate_limit_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "rate_limit_error_json", default)]
     pub rate_limit_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "rate_limit_error_message", default)]
     pub rate_limit_error_message: Patch<String>,
-    #[serde(rename = "content_filter_enabled", default)]
     pub content_filter_enabled: Optional<bool>,
-    #[serde(rename = "content_filter_error_code", default)]
     pub content_filter_error_code: Patch<FiniteNumber>,
-    #[serde(rename = "content_filter_error_json", default)]
     pub content_filter_error_json: Patch<TypedMap<JsonValue>>,
-    #[serde(rename = "content_filter_error_message", default)]
     pub content_filter_error_message: Patch<String>,
-    #[serde(rename = "probe_message", default)]
     pub probe_message: Optional<String>,
-    #[serde(rename = "request_timeout", default)]
     pub request_timeout: Optional<FiniteNumber>,
-    #[serde(rename = "audio_probe_passed", default)]
     pub audio_probe_passed: Patch<bool>,
-    #[serde(rename = "audio_probe_error", default)]
     pub audio_probe_error: Patch<String>,
-    #[serde(rename = "audio_multi_turn_probe_passed", default)]
     pub audio_multi_turn_probe_passed: Patch<bool>,
-    #[serde(rename = "audio_multi_turn_probe_error", default)]
     pub audio_multi_turn_probe_error: Patch<String>,
-    #[serde(rename = "supports_audio", default)]
     pub supports_audio: Optional<bool>,
-    #[serde(rename = "audio_format", default)]
     pub audio_format: Patch<super::red_team_data_plane::TargetMetadataAudioFormat>,
-    #[serde(rename = "supports_text", default)]
     pub supports_text: Optional<bool>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for TargetMetadata {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut audio_probe_passed: Patch<bool> = Default::default();
+        if let Some(value) = raw.remove("audio_probe_passed") {
+            match crate::json_decode::from_value::<Patch<bool>>(value.clone()) {
+                Ok(value) => audio_probe_passed = value,
+                Err(_) => {
+                    raw.insert("audio_probe_passed".into(), value);
+                }
+            }
+        }
+        let mut audio_probe_error: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_probe_error") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_probe_error = value,
+                Err(_) => {
+                    raw.insert("audio_probe_error".into(), value);
+                }
+            }
+        }
+        let mut audio_multi_turn_probe_passed: Patch<bool> = Default::default();
+        if let Some(value) = raw.remove("audio_multi_turn_probe_passed") {
+            match crate::json_decode::from_value::<Patch<bool>>(value.clone()) {
+                Ok(value) => audio_multi_turn_probe_passed = value,
+                Err(_) => {
+                    raw.insert("audio_multi_turn_probe_passed".into(), value);
+                }
+            }
+        }
+        let mut audio_multi_turn_probe_error: Patch<String> = Default::default();
+        if let Some(value) = raw.remove("audio_multi_turn_probe_error") {
+            match crate::json_decode::from_value::<Patch<String>>(value.clone()) {
+                Ok(value) => audio_multi_turn_probe_error = value,
+                Err(_) => {
+                    raw.insert("audio_multi_turn_probe_error".into(), value);
+                }
+            }
+        }
+        let mut supports_audio: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("supports_audio") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => supports_audio = value,
+                Err(_) => {
+                    raw.insert("supports_audio".into(), value);
+                }
+            }
+        }
+        let mut audio_format: Patch<super::red_team_data_plane::TargetMetadataAudioFormat> =
+            Default::default();
+        if let Some(value) = raw.remove("audio_format") {
+            match crate::json_decode::from_value::<
+                Patch<super::red_team_data_plane::TargetMetadataAudioFormat>,
+            >(value.clone())
+            {
+                Ok(value) => audio_format = value,
+                Err(_) => {
+                    raw.insert("audio_format".into(), value);
+                }
+            }
+        }
+        let mut supports_text: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("supports_text") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => supports_text = value,
+                Err(_) => {
+                    raw.insert("supports_text".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "supports_multimodal_files", default)]
+            supports_multimodal_files: Optional<bool>,
+            #[serde(rename = "supports_multimodal_files_error_message", default)]
+            supports_multimodal_files_error_message: Patch<String>,
+            #[serde(rename = "multi_turn", default)]
+            multi_turn: Optional<bool>,
+            #[serde(rename = "multi_turn_error_message", default)]
+            multi_turn_error_message: Patch<String>,
+            #[serde(rename = "rate_limit", default)]
+            rate_limit: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_enabled", default)]
+            rate_limit_enabled: Optional<bool>,
+            #[serde(rename = "rate_limit_error_code", default)]
+            rate_limit_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "rate_limit_error_json", default)]
+            rate_limit_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "rate_limit_error_message", default)]
+            rate_limit_error_message: Patch<String>,
+            #[serde(rename = "content_filter_enabled", default)]
+            content_filter_enabled: Optional<bool>,
+            #[serde(rename = "content_filter_error_code", default)]
+            content_filter_error_code: Patch<FiniteNumber>,
+            #[serde(rename = "content_filter_error_json", default)]
+            content_filter_error_json: Patch<TypedMap<JsonValue>>,
+            #[serde(rename = "content_filter_error_message", default)]
+            content_filter_error_message: Patch<String>,
+            #[serde(rename = "probe_message", default)]
+            probe_message: Optional<String>,
+            #[serde(rename = "request_timeout", default)]
+            request_timeout: Optional<FiniteNumber>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            supports_multimodal_files: baseline.supports_multimodal_files,
+            supports_multimodal_files_error_message: baseline
+                .supports_multimodal_files_error_message,
+            multi_turn: baseline.multi_turn,
+            multi_turn_error_message: baseline.multi_turn_error_message,
+            rate_limit: baseline.rate_limit,
+            rate_limit_enabled: baseline.rate_limit_enabled,
+            rate_limit_error_code: baseline.rate_limit_error_code,
+            rate_limit_error_json: baseline.rate_limit_error_json,
+            rate_limit_error_message: baseline.rate_limit_error_message,
+            content_filter_enabled: baseline.content_filter_enabled,
+            content_filter_error_code: baseline.content_filter_error_code,
+            content_filter_error_json: baseline.content_filter_error_json,
+            content_filter_error_message: baseline.content_filter_error_message,
+            probe_message: baseline.probe_message,
+            request_timeout: baseline.request_timeout,
+            audio_probe_passed,
+            audio_probe_error,
+            audio_multi_turn_probe_passed,
+            audio_multi_turn_probe_error,
+            supports_audio,
+            audio_format,
+            supports_text,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for TargetMetadata {
     fn serialize<S: serde::Serializer>(
@@ -173531,13 +175174,6 @@ impl Serialize for TargetMetadata {
             "content_filter_error_message",
             "probe_message",
             "request_timeout",
-            "audio_probe_passed",
-            "audio_probe_error",
-            "audio_multi_turn_probe_passed",
-            "audio_multi_turn_probe_error",
-            "supports_audio",
-            "audio_format",
-            "supports_text",
         ];
         if self
             .extensions
@@ -173628,6 +175264,31 @@ impl Serialize for TargetMetadata {
             map.serialize_entry("supports_text", &self.supports_text)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "audio_probe_passed" && !self.audio_probe_passed.is_unset() {
+                continue;
+            }
+            if key == "audio_probe_error" && !self.audio_probe_error.is_unset() {
+                continue;
+            }
+            if key == "audio_multi_turn_probe_passed"
+                && !self.audio_multi_turn_probe_passed.is_unset()
+            {
+                continue;
+            }
+            if key == "audio_multi_turn_probe_error"
+                && !self.audio_multi_turn_probe_error.is_unset()
+            {
+                continue;
+            }
+            if key == "supports_audio" && !self.supports_audio.is_unset() {
+                continue;
+            }
+            if key == "audio_format" && !self.audio_format.is_unset() {
+                continue;
+            }
+            if key == "supports_text" && !self.supports_text.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -181452,28 +183113,69 @@ impl fmt::Debug for UserTrendsResponseDataSummary {
 }
 
 /// Native typed contract for frozen schema `s010608`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct ValidationError {
-    #[serde(rename = "loc")]
     pub loc: Vec<ValidationErrorLocItem>,
-    #[serde(rename = "msg")]
     pub msg: String,
-    #[serde(rename = "type")]
     pub r#type: String,
-    #[serde(rename = "input", default)]
     pub input: Patch<JsonValue>,
-    #[serde(rename = "ctx", default)]
     pub ctx: Optional<super::red_team_data_plane::ValidationErrorCtx>,
-    #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for ValidationError {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut input: Patch<JsonValue> = Default::default();
+        if let Some(value) = raw.remove("input") {
+            match crate::json_decode::from_value::<Patch<JsonValue>>(value.clone()) {
+                Ok(value) => input = value,
+                Err(_) => {
+                    raw.insert("input".into(), value);
+                }
+            }
+        }
+        let mut ctx: Optional<super::red_team_data_plane::ValidationErrorCtx> = Default::default();
+        if let Some(value) = raw.remove("ctx") {
+            match crate::json_decode::from_value::<
+                Optional<super::red_team_data_plane::ValidationErrorCtx>,
+            >(value.clone())
+            {
+                Ok(value) => ctx = value,
+                Err(_) => {
+                    raw.insert("ctx".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "loc")]
+            loc: Vec<ValidationErrorLocItem>,
+            #[serde(rename = "msg")]
+            msg: String,
+            #[serde(rename = "type")]
+            r#type: String,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            loc: baseline.loc,
+            msg: baseline.msg,
+            r#type: baseline.r#type,
+            input,
+            ctx,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for ValidationError {
     fn serialize<S: serde::Serializer>(
         &self,
         serializer: S,
     ) -> std::result::Result<S::Ok, S::Error> {
-        const KNOWN: &[&str] = &["loc", "msg", "type", "input", "ctx"];
+        const KNOWN: &[&str] = &["loc", "msg", "type"];
         if self
             .extensions
             .keys()
@@ -181494,6 +183196,12 @@ impl Serialize for ValidationError {
             map.serialize_entry("ctx", &self.ctx)?;
         }
         for (key, value) in self.extensions.iter() {
+            if key == "input" && !self.input.is_unset() {
+                continue;
+            }
+            if key == "ctx" && !self.ctx.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()

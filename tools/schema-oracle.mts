@@ -228,7 +228,8 @@ function responseSchema(schema: ZodTypeAny): ZodTypeAny {
     const cloned = { ...def };
     // Lazy indirection breaks recursive identity before any children are visited.
     const placeholder = z.lazy(() => value); responseMemo.set(schema, placeholder);
-    if (kind === 'ZodObject') {
+    if (kind === 'ZodString') cloned.checks = def.checks.filter((check: any) => !['uuid','datetime','email','url','regex','date','duration','rfc3339'].includes(check.kind));
+    else if (kind === 'ZodObject') {
       cloned.unknownKeys = 'passthrough';
       cloned.shape = () => Object.fromEntries(Object.entries(def.shape()).map(([key, child]) => [key, responseSchema(child as ZodTypeAny)]));
       cloned.catchall = responseSchema(def.catchall);
@@ -373,7 +374,7 @@ const output = { schemaVersion: 1, baseline: inventory.baseline,
     generatorSha256: sha(await readFile(fileURLToPath(import.meta.url))), tooling: inputHashes,
     zod: JSON.parse(await readFile(path.join(baseline, 'node_modules/zod/package.json'), 'utf8')).version },
   policies: { request: 'Original frozen Zod safeParse; no Rust implementation is invoked.',
-    response: 'Actual Zod execution with explicit Rust adaptations: preserve unknown object fields; widen enum/string-literal-union vocabularies; preserve required types, individual literals, catchalls, refinements, defaults and transforms.',
+    response: 'Actual Zod execution with explicit Rust adaptations: preserve unknown object fields; widen enum/string-literal-union vocabularies; bypass string-format checks uuid, rfc3339, datetime, date, duration, email, url and regex while retaining frozen min/max bounds; preserve required types, individual literals, catchalls, refinements, defaults and transforms.',
     native: 'Native descriptors report real JS inputs and safeParse observations. They are not JSON conformance passes; Rust typed boundary equivalents must be tested separately.' }, counts,
   semanticBindings: inventory.schemas.manualSemantics.map((entry: any) => ({ sid: entry.schema, kind: entry.kind,
     expression: entry.originalExpression?.source ?? null, oracleSid: entry.schema })),

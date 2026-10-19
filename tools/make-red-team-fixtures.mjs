@@ -16,7 +16,7 @@ function responsePolicy(value){
   if(Array.isArray(value))return value.map(responsePolicy);
   if(value===null||typeof value!=='object')return value;
   const result=Object.fromEntries(Object.entries(value).map(([k,v])=>[k,responsePolicy(v)]));
-  if(result.type==='string'&&result.enum)delete result.enum;
+  if(result.type==='string'){delete result.enum;delete result.format;delete result.minLength;delete result.maxLength;}
   if(result.additionalProperties===false)result.additionalProperties=true;
   return result;
 }

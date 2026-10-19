@@ -563,3 +563,55 @@ fn typed_dates_cancellation_and_public_errors_are_safe() {
     let error = parse("AiProfileSchema", value, Mode::Request).unwrap_err();
     assert!(!format!("{error:?} {error}").contains("confidential"));
 }
+
+#[test]
+fn response_format_relaxation_keeps_malformed_units_fail_closed() {
+    for mode in [Mode::Request, Mode::Response, Mode::ResponseWithoutDefaults] {
+        for unit in [json!("unknown"), json!(false), Value::Null] {
+            for kind in ["uuid", "min"] {
+                assert!(
+                    check_string(
+                        "text",
+                        &[json!({"kind":kind,"value":3,"requestOnly":true,"unit":unit})],
+                        mode
+                    )
+                    .is_err()
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn response_length_relaxation_keeps_malformed_bounds_fail_closed() {
+    for mode in [Mode::Request, Mode::Response, Mode::ResponseWithoutDefaults] {
+        for kind in ["min", "max"] {
+            for value in [None, Some(json!("3")), Some(json!(-1)), Some(Value::Null)] {
+                let mut check = json!({"kind": kind, "requestOnly": true});
+                if let Some(value) = value {
+                    check["value"] = value;
+                }
+                assert!(check_string("text", &[check], mode).is_err());
+            }
+        }
+    }
+}
+
+#[test]
+fn response_format_relaxation_keeps_malformed_regex_metadata_fail_closed() {
+    for mode in [Mode::Request, Mode::Response, Mode::ResponseWithoutDefaults] {
+        for regex in [
+            None,
+            Some(Value::Null),
+            Some(json!({})),
+            Some(json!({"$regexp": 3})),
+            Some(json!({"$regexp": "unregistered-g25-pattern"})),
+        ] {
+            let mut check = json!({"kind": "regex"});
+            if let Some(regex) = regex {
+                check["regex"] = regex;
+            }
+            assert!(check_string("text", &[check], mode).is_err());
+        }
+    }
+}
