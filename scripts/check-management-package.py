@@ -54,6 +54,12 @@ def verify_receipt(root, path, toolchain, source_sha=None):
                     for name, data in sorted(files.items())]
     if report.get('files') != actual_files:
         raise ValueError('Archive member ledger differs')
+    actual_sources = {item.relative_to(root / 'crates/scm-sdk').as_posix()
+                      for directory in ('src', 'examples')
+                      for item in (root / 'crates/scm-sdk' / directory).rglob('*') if item.is_file()}
+    archived_sources = {name for name in files if name.startswith(('src/', 'examples/'))}
+    if actual_sources != archived_sources:
+        raise ValueError('Archive source inventory differs from reviewed source')
     for name, data in files.items():
         source_path = (root / 'crates/scm-sdk' / name) if name.startswith(('src/', 'examples/')) else None
         if name in {'LICENSE', 'NOTICE', 'README.md'}:

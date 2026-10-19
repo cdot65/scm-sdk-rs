@@ -117,6 +117,13 @@ class ManagementPackageTests(unittest.TestCase):
             else: report['files'][0]['sha256'] = '0' * 64
             with self.assertRaises(ValueError): self.verify(report)
 
+    def test_omitted_source_rejected_even_with_rehashed_member_ledger(self):
+        del self.files['src/lib.rs']
+        report = copy.deepcopy(self.report)
+        report['files'] = [row for row in report['files'] if row['path'] != 'src/lib.rs']
+        with self.assertRaisesRegex(ValueError, 'source inventory'):
+            self.verify(report)
+
     def test_archive_or_receipt_symlink_rejected(self):
         link = self.root / 'archive-link.crate'
         link.symlink_to(self.archive)
