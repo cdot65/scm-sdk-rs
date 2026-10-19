@@ -196,7 +196,7 @@ def management_commands(phase):
             if '--verify-package-receipts' in original:
                 continue
             command = [value.replace('phase-23-', 'phase-24-') for value in original]
-            if '--require-through-phase' in command:
+            if 'tools/red_team_management.py' in command and '--require-through-phase' in command:
                 command[command.index('--require-through-phase') + 1] = '24'
             if 'scripts/check-management-package.py' in command:
                 command = [value.replace('phase-24-package-', 'phase-24-release-package-')

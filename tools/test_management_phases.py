@@ -229,6 +229,10 @@ class ManagementPhaseTests(unittest.TestCase):
         candidate = ['python', 'scripts/check-access-release.py', '--phase', '24',
                      '--version', '0.2.3', '--output', 'docs/checks/phase-24-release-readiness.json']
         self.assertEqual(commands[-1], candidate)
+        self.assertIn(['python', 'tools/native_operations.py', '--check',
+                       '--require-through-phase', '8'], commands)
+        self.assertFalse(any('tools/native_operations.py' in command and '24' in command
+                             for command in commands))
         self.assertIn(['python', 'tools/live_evidence.py', '--check'], commands)
         for compiler in ('1.89.0', '1.99.0'):
             package = ['python', 'scripts/check-management-package.py', '--toolchain', compiler,
