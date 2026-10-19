@@ -179,8 +179,7 @@ class ManagementPhaseTests(unittest.TestCase):
         active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
         scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
         verify_scoped_ledger_owners(scope, commands_for(active['id']))
-        for phase in range(22, 26):
-            verify_scoped_ledger_owners(list(CONTRACT_LEDGER_OWNERS), commands_for(phase))
+        verify_scoped_ledger_owners(list(CONTRACT_LEDGER_OWNERS), commands_for(23))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
             verify_scoped_ledger_owners(['contracts/native-models.json'], [])
         with tempfile.TemporaryDirectory() as directory:
@@ -189,6 +188,25 @@ class ManagementPhaseTests(unittest.TestCase):
             (root / 'contracts/new/unowned.json').write_text('{}')
             with self.assertRaisesRegex(ValueError, 'No declared ledger owner'):
                 verify_scoped_ledger_owners(['contracts/new'], commands_for(22), root)
+
+    def test_cumulative_gate_orders_clean_packages_before_final_receipt_checks(self):
+        commands = commands_for(23)
+        final = ["python", "tools/red_team_management.py", "--check", "--require-through-phase", "23", "--verify-package-receipts"]
+        self.assertEqual(commands[-1], final)
+        for compiler in ('1.89.0', '1.99.0'):
+            package = ["python", "scripts/check-management-package.py", "--toolchain", compiler,
+                       "--output", f"docs/checks/phase-23-package-{compiler}.json"]
+            self.assertLess(commands.index(package), commands.index(final))
+        selected = ci_commands_for(23)
+        for phase in range(23, 26):
+            self.assertIn(['python', '-m', 'unittest', 'discover', '-s', 'tools', '-p',
+                           'test_management_package.py', '-v'], ci_commands_for(phase))
+        self.assertNotIn(final, selected)
+        self.assertFalse(any('scripts/check-management-package.py' in c for c in selected))
+        self.assertFalse(any('tools/live_evidence.py' in c for c in commands))
+        self.assertFalse(any('scripts/check-package.py' in c for c in commands))
+        for tool in ('tools/management_fixtures.py', 'tools/management_consumers.py'):
+            self.assertIn(['python', tool, '--check'], selected)
 
     def test_future_milestones_require_explicit_complete_artifacts(self):
         for phase in range(22, 26):
@@ -206,7 +224,7 @@ class ManagementPhaseTests(unittest.TestCase):
     def test_qualification_has_both_packaged_compilers(self):
         for phase in range(23, 26):
             for compiler in ("1.89.0", "1.99.0"):
-                self.assertIn(["python", "scripts/check-package.py", "--toolchain", compiler,
+                self.assertIn(["python", "scripts/check-management-package.py" if phase == 23 else "scripts/check-package.py", "--toolchain", compiler,
                                "--output", f"docs/checks/phase-{phase}-package-{compiler}.json"], commands_for(phase))
 
     def test_ci_subsets_cannot_replace_full_reports(self):

@@ -25,6 +25,8 @@ COMMAND_TIMEOUT_SECONDS = 7 * 900 + 60
 # Every scoped contract JSON requires a declared verifying owner. Unknown artifacts
 # fail closed, including new files discovered under a directory scope.
 CONTRACT_LEDGER_OWNERS = {
+    'contracts/compatibility/management-old-consumers.json': ('tools/management_consumers.py', '--check'),
+    'contracts/native-fixtures/red-team-management.json': ('tools/management_fixtures.py', '--check'),
     'contracts/airs-active-sources.json': ('tools/red_team_management.py', '--check'),
     'contracts/airs-operations.json': ('tools/red_team_management.py', '--check'),
     'contracts/airs-retained-capabilities.json': ('tools/red_team_management.py', '--check'),
@@ -247,11 +249,21 @@ def management_commands(phase):
         inherited = commands_for(19)
     else:
         inherited = commands_for(20)
+        if phase == 23:
+            commands += [
+                ["python", "tools/management_fixtures.py", "--check"],
+                ["python", "tools/management_consumers.py", "--check"],
+                unit("test_management_consumers.py"),
+                unit("test_management_fixtures.py"),
+                unit("test_red_team_management_models.py"),
+            ]
     for original in inherited:
         # Historical release proofs are immutable and version-specific. New
         # publication readiness/delivery belongs to the phase 24 milestone gate.
         if "scripts/check-access-release.py" in original:
             continue
+        if phase == 23 and "scripts/check-package.py" in original:
+            continue  # The source-matched clean wrapper owns package execution.
         if phase == 23 and original == ["python", "tools/live_evidence.py", "--check"]:
             continue  # Cumulative offline qualification; fresh live acceptance belongs to phase 24.
         command = [value.replace("phase-19-", f"phase-{phase}-").replace("phase-20-", f"phase-{phase}-")
@@ -264,9 +276,12 @@ def management_commands(phase):
         if command not in commands:
             commands.append(command)
     if phase >= 23:
+        commands.append(unit("test_management_package.py"))
         for compiler in ("1.89.0", "1.99.0"):
-            commands.append(["python", "scripts/check-package.py", "--toolchain", compiler,
-                             "--output", f"docs/checks/phase-{phase}-package-{compiler}.json"])
+            commands.append(["python", "scripts/check-management-package.py" if phase == 23 else "scripts/check-package.py",
+                             "--toolchain", compiler, "--output", f"docs/checks/phase-{phase}-package-{compiler}.json"])
+    if phase == 23:
+        commands.append(["python", "tools/red_team_management.py", "--check", "--require-through-phase", "23", "--verify-package-receipts"])
     return commands
 
 
@@ -714,9 +729,10 @@ def ci_commands_for(phase):
     """
     if phase not in CONTRACT_CI_PHASES:
         raise ValueError("The contracts-only scope is not defined for this phase")
-    native_scripts = {"scripts/check-rust.py", "scripts/check-native-exports.py", "scripts/check-package.py", "scripts/check-access-release.py"}
+    native_scripts = {"scripts/check-management-package.py", "scripts/check-rust.py", "scripts/check-native-exports.py", "scripts/check-package.py", "scripts/check-access-release.py"}
     return [command for command in commands_for(phase)
             if not native_scripts.intersection(command)
+            and "--verify-package-receipts" not in command
             and command != ["python", "tools/generate_models.py", "--verify-fixtures"]]
 
 

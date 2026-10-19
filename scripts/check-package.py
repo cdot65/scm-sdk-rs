@@ -153,6 +153,8 @@ def main():
             commands.append(['run', '--example', 'access_policies', '--all-features'])
         if 'examples/response_compatibility.rs' in files:
             commands.append(['run', '--example', 'response_compatibility', '--all-features'])
+        if 'examples/red_team_management.rs' in files:
+            commands.append(['run', '--example', 'red_team_management', '--all-features'])
         passed = True
         for command in commands:
             if not run(command + ['--locked', '--offline', '--target', host], extracted):
@@ -168,8 +170,10 @@ def main():
         (consumer / 'Cargo.toml').write_text(manifest)
         shutil.copyfile(original / 'Cargo.lock', consumer / 'Cargo.lock')
         shutil.copyfile(original / 'src/main.rs', consumer / 'src/main.rs')
+        frozen_probe_check_index = None
         if passed:
             passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+            frozen_probe_check_index = len(checks) - 1
         if passed and 'examples/access_policies.rs' in files:
             # Execute all five new public methods from a separate crate against
             # the extracted package, using the packaged offline transport example.
@@ -186,9 +190,13 @@ def main():
             (consumer / 'Cargo.lock').write_text(lock)
             (consumer / 'src/main.rs').write_bytes(files['examples/access_policies.rs'])
             passed = run(['run', '--locked', '--offline', '--target', host], consumer)
-        if passed and 'examples/response_compatibility.rs' in files:
-            (consumer / 'src/main.rs').write_bytes(files['examples/response_compatibility.rs'])
-            passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+        consumer_sources = {}
+        for name in ('response_defaults', 'red_team_dataplane', 'response_compatibility', 'red_team_management'):
+            key = f'examples/{name}.rs'
+            if passed and key in files:
+                (consumer / 'src/main.rs').write_bytes(files[key])
+                passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+                consumer_sources[key] = {'sha256': digest(files[key]), 'checkIndex': len(checks) - 1}
     if args.require_clean:
         current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         current_status = subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT, text=True)
@@ -203,6 +211,9 @@ def main():
               'publicConsumerSourceSha256': digest((ROOT / 'contracts/native-probes/src/main.rs').read_bytes()),
               'accessPolicyConsumerSourceSha256': digest(files['examples/access_policies.rs']) if 'examples/access_policies.rs' in files else None,
               'responseCompatibilityConsumerSourceSha256': digest(files['examples/response_compatibility.rs']) if 'examples/response_compatibility.rs' in files else None,
+              'externalExampleConsumers': consumer_sources,
+              'frozenProbeCheckIndex': frozen_probe_check_index,
+              'managementConsumerSourceSha256': digest(files['examples/red_team_management.rs']) if 'examples/red_team_management.rs' in files else None,
               'checks': checks, 'limitations': ['Only the recorded host executes code; examples compile without contacting services. The response_defaults example, when present, also executes offline.',
                   'The full development integration corpus remains repository-only; the archive runs its packaged unit/doctests and external public capability consumer.']}
     output = args.output or ROOT / f'.local/checks/package-{args.toolchain}.json'

@@ -92,8 +92,11 @@ existing nested-name shifts. New aliases point to stable existing public types.
 
 ### Connections and union resolution
 
-- Extend `TargetConnectionType` with `VERTEX_AI`, `N8N`; extend `ResponseMode`
-  with `REALTIME`. REALTIME is not a provider connection type.
+- Extend schema-bound `TargetCreateRequestConnectionType` with `VERTEX_AI`, `N8N`
+  and `TargetCreateRequestResponseMode` with `REALTIME`. The frozen TypeScript
+  parity constants `TargetConnectionType` and `ResponseMode` retain their old
+  named variants and represent these values through `Unknown(String)`. REALTIME
+  is not a provider connection type.
 - Add Vertex fields `project_id`, `location`, `engine_id`, `customer_sa_email`,
   including redacted provider forms. Extend the reviewed request regex allowlist
   for the three Vertex patterns; preserve response regex bypass.
@@ -234,7 +237,8 @@ phase 23 artifact gates; phase 21 static evidence never qualifies this phase.
 ### Phase 24 — reviewed delivery
 
 Choose patch 0.2.3 only after compatibility proof. Update changelog with every new
-variant/filter/projection, Unknown transition, retained validation rule and live
+variant/filter/projection, schema-bound versus frozen-parity enum names, Unknown
+transition, typed-field relocation out of extensions, retained validation rule and live
 limitation. Explicitly document the narrowed upstream `status` domain and all five
 affected legacy values listed above, with `profiling_status` migration guidance
 where supported and the unchanged-wire/upstream-rejection caveat. Run controlled read-only tenant qualification with explicit credential

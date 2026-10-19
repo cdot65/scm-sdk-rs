@@ -130,6 +130,13 @@ class ManagementModelTests(unittest.TestCase):
                 management.replace_once(source, 'match', 'new')
         self.assertEqual(management.replace_once('a match b', 'match', 'new'), 'a new b')
 
+    def test_object_additional_properties_requires_reviewed_passthrough(self):
+        for policy in (False, {"type": "string"}):
+            spec = copy.deepcopy(self.overlay.spec)
+            spec['components']['schemas']['VertexAIConnectionParams']['additionalProperties'] = policy
+            with self.assertRaisesRegex(ValueError, 'additionalProperties'):
+                management.Overlay(spec)
+
     def test_default_is_not_injected_into_client_session(self):
         sid = self.overlay.roots['MultiTurnClientSessionConfig']
         field = self.overlay.nodes[sid]['properties']['type']['schema']['$ref']

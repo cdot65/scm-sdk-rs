@@ -177,6 +177,8 @@ class Overlay:
                 key = self.node(pointer + '/key', {'kind': 'ZodString', 'checks': [], 'coerce': False})
                 value = self.node(pointer + '/value', {'kind': 'ZodUnknown'})
                 return self.node(pointer, {'kind': 'ZodRecord', 'key': {'$ref': key}, 'value': {'$ref': value}})
+            if 'additionalProperties' in schema and schema['additionalProperties'] is not True:
+                raise ValueError('Unreviewed management object additionalProperties policy')
             required = set(schema.get('required', []))
             if require_literal:
                 required.add('type')

@@ -1,0 +1,2084 @@
+{
+  "schemaVersion": 1,
+  "evidenceBoundary": "Offline vendor-derived shape and independent preservation witnesses only; no service acceptance or live provider execution is established.",
+  "sourceBindings": [
+    {
+      "path": "tools/management_fixtures.py",
+      "sha256": "2234c391c9a03e1e54a7944af04c0361ff1cd54309eb66e9ae59712a778b6062"
+    },
+    {
+      "path": "tools/test_management_fixtures.py",
+      "sha256": "c896f0649b03eb606ca2477397ed2317d0196e95a8d8fc80a1c28fa9facb40ed"
+    },
+    {
+      "path": "crates/scm-sdk/tests/red_team_management_fixtures.rs",
+      "sha256": "e7e71b57be9157a84172f9652c3f1d59305d1cdbda4692f37bd5c365a16da63b"
+    },
+    {
+      "path": "contracts/typescript.json",
+      "sha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0"
+    },
+    {
+      "path": "contracts/vendor/red-team-management/0.86.0/mp-openapi.yaml",
+      "sha256": "5fbb533bd5f0156bf85c0a549b962aaf2f96cf09d0b6d9d82ac2d2afe87509a0"
+    },
+    {
+      "path": "contracts/vendor/red-team-management/0.86.0/openapi.json",
+      "sha256": "4d8e6b2f55eb7a2b1fbdfd8de7642dcdd5ed925b799415c35eb28e888f1b3fd6"
+    }
+  ],
+  "projectionOccurrences": [
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "vendorPointer": "#/components/schemas/BasicAuthAuthConfig/properties/basic_username",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Basic Username",
+        "description": "Basic Auth username. Send with `basic_password` instead of encoding `basic_auth_header` yourself.",
+        "examples": [
+          "svc-redteam"
+        ]
+      }
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "vendorPointer": "#/components/schemas/BasicAuthAuthConfig/properties/basic_password",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Basic Password",
+        "description": "Basic Auth password. Masked on read — echo the masked value back unchanged to keep the stored credential."
+      }
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "vendorPointer": "#/components/schemas/BasicAuthAuthConfig/properties/basic_username",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Basic Username",
+        "description": "Basic Auth username. Send with `basic_password` instead of encoding `basic_auth_header` yourself.",
+        "examples": [
+          "svc-redteam"
+        ]
+      }
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "vendorPointer": "#/components/schemas/BasicAuthAuthConfig/properties/basic_password",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Basic Password",
+        "description": "Basic Auth password. Masked on read — echo the masked value back unchanged to keep the stored credential."
+      }
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "vendorPointer": "#/components/schemas/RestConnectionParamsBase/properties/audio_request_json",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Request Json",
+        "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+        "examples": [
+          {
+            "input": [
+              {
+                "content": [
+                  {
+                    "audio": "{AUDIO}",
+                    "type": "input_audio"
+                  }
+                ],
+                "role": "user"
+              }
+            ],
+            "model": "gpt-4o-audio-preview"
+          }
+        ]
+      }
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "vendorPointer": "#/components/schemas/RestConnectionParamsBase/properties/audio_curl",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Curl",
+        "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+        "examples": [
+          "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+        ]
+      }
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "vendorPointer": "#/components/schemas/StreamingConnectionParamsBase/properties/audio_request_json",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Request Json",
+        "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+        "examples": [
+          {
+            "input": [
+              {
+                "content": [
+                  {
+                    "audio": "{AUDIO}",
+                    "type": "input_audio"
+                  }
+                ],
+                "role": "user"
+              }
+            ],
+            "model": "gpt-4o-audio-preview"
+          }
+        ]
+      }
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "vendorPointer": "#/components/schemas/StreamingConnectionParamsBase/properties/audio_curl",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Curl",
+        "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+        "examples": [
+          "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+        ]
+      }
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "vendorPointer": "#/components/schemas/WebSocketConnectionParamsBase/properties/audio_request_json",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Request Json",
+        "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+        "examples": [
+          {
+            "input": [
+              {
+                "content": [
+                  {
+                    "audio": "{AUDIO}",
+                    "type": "input_audio"
+                  }
+                ],
+                "role": "user"
+              }
+            ],
+            "model": "gpt-4o-audio-preview"
+          }
+        ]
+      }
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "vendorPointer": "#/components/schemas/WebSocketConnectionParamsBase/properties/audio_curl",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Curl",
+        "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+        "examples": [
+          "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+        ]
+      }
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "vendorPointer": "#/components/schemas/WebSocketConnectionParamsBase/properties/audio_request_json",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Request Json",
+        "description": "Request JSON for audio attacks. Carries {AUDIO} and deliberately NO {INPUT}: an audio clip REPLACES the prompt, it does not accompany one.",
+        "examples": [
+          {
+            "input": [
+              {
+                "content": [
+                  {
+                    "audio": "{AUDIO}",
+                    "type": "input_audio"
+                  }
+                ],
+                "role": "user"
+              }
+            ],
+            "model": "gpt-4o-audio-preview"
+          }
+        ]
+      }
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "vendorPointer": "#/components/schemas/WebSocketConnectionParamsBase/properties/audio_curl",
+      "vendorSchema": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Audio Curl",
+        "description": "Generated cURL command for the audio request body, ready to use (redacted for security). Absent when the target has no audio body.",
+        "examples": [
+          "curl \"https://api.openai.com/v1/responses\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer ***\" --data '{\"model\":\"gpt-4o-audio-preview\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_audio\",\"audio\":\"{AUDIO}\"}]}]}'"
+        ]
+      }
+    }
+  ],
+  "projectionCases": [
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "case": "omitted",
+      "input": {},
+      "expected": {
+        "basic_auth_location": "HEADER"
+      },
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "case": "null",
+      "input": {
+        "basic_username": null
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_username": null
+      },
+      "withoutDefaults": {
+        "basic_username": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "case": "string",
+      "input": {
+        "basic_username": "synthetic-private-fixture"
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_username": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "basic_username": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "case": "number",
+      "input": {
+        "basic_username": 17
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_username": 17
+      },
+      "withoutDefaults": {
+        "basic_username": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "case": "boolean",
+      "input": {
+        "basic_username": true
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_username": true
+      },
+      "withoutDefaults": {
+        "basic_username": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "case": "array",
+      "input": {
+        "basic_username": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_username": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "basic_username": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_username",
+      "case": "object",
+      "input": {
+        "basic_username": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_username": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "basic_username": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "case": "omitted",
+      "input": {},
+      "expected": {
+        "basic_auth_location": "HEADER"
+      },
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "case": "null",
+      "input": {
+        "basic_password": null
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_password": null
+      },
+      "withoutDefaults": {
+        "basic_password": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "case": "string",
+      "input": {
+        "basic_password": "synthetic-private-fixture"
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_password": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "basic_password": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "case": "number",
+      "input": {
+        "basic_password": 17
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_password": 17
+      },
+      "withoutDefaults": {
+        "basic_password": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "case": "boolean",
+      "input": {
+        "basic_password": true
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_password": true
+      },
+      "withoutDefaults": {
+        "basic_password": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "case": "array",
+      "input": {
+        "basic_password": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_password": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "basic_password": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010721",
+      "rustType": "BasicAuthAuthConfig",
+      "field": "basic_password",
+      "case": "object",
+      "input": {
+        "basic_password": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "basic_auth_location": "HEADER",
+        "basic_password": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "basic_password": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "case": "omitted",
+      "input": {},
+      "expected": {},
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "case": "null",
+      "input": {
+        "basic_username": null
+      },
+      "expected": {
+        "basic_username": null
+      },
+      "withoutDefaults": {
+        "basic_username": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "case": "string",
+      "input": {
+        "basic_username": "synthetic-private-fixture"
+      },
+      "expected": {
+        "basic_username": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "basic_username": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "case": "number",
+      "input": {
+        "basic_username": 17
+      },
+      "expected": {
+        "basic_username": 17
+      },
+      "withoutDefaults": {
+        "basic_username": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "case": "boolean",
+      "input": {
+        "basic_username": true
+      },
+      "expected": {
+        "basic_username": true
+      },
+      "withoutDefaults": {
+        "basic_username": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "case": "array",
+      "input": {
+        "basic_username": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "basic_username": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "basic_username": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_username",
+      "case": "object",
+      "input": {
+        "basic_username": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "basic_username": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "basic_username": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "case": "omitted",
+      "input": {},
+      "expected": {},
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "case": "null",
+      "input": {
+        "basic_password": null
+      },
+      "expected": {
+        "basic_password": null
+      },
+      "withoutDefaults": {
+        "basic_password": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "case": "string",
+      "input": {
+        "basic_password": "synthetic-private-fixture"
+      },
+      "expected": {
+        "basic_password": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "basic_password": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "case": "number",
+      "input": {
+        "basic_password": 17
+      },
+      "expected": {
+        "basic_password": 17
+      },
+      "withoutDefaults": {
+        "basic_password": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "case": "boolean",
+      "input": {
+        "basic_password": true
+      },
+      "expected": {
+        "basic_password": true
+      },
+      "withoutDefaults": {
+        "basic_password": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "case": "array",
+      "input": {
+        "basic_password": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "basic_password": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "basic_password": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010755",
+      "rustType": "AuthConfigRequestVariant3",
+      "field": "basic_password",
+      "case": "object",
+      "input": {
+        "basic_password": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "basic_password": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "basic_password": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "case": "omitted",
+      "input": {},
+      "expected": {},
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "case": "null",
+      "input": {
+        "audio_request_json": null
+      },
+      "expected": {
+        "audio_request_json": null
+      },
+      "withoutDefaults": {
+        "audio_request_json": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "case": "string",
+      "input": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "expected": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "case": "number",
+      "input": {
+        "audio_request_json": 17
+      },
+      "expected": {
+        "audio_request_json": 17
+      },
+      "withoutDefaults": {
+        "audio_request_json": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "case": "boolean",
+      "input": {
+        "audio_request_json": true
+      },
+      "expected": {
+        "audio_request_json": true
+      },
+      "withoutDefaults": {
+        "audio_request_json": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "case": "array",
+      "input": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_request_json",
+      "case": "object",
+      "input": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "case": "omitted",
+      "input": {},
+      "expected": {},
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "case": "null",
+      "input": {
+        "audio_curl": null
+      },
+      "expected": {
+        "audio_curl": null
+      },
+      "withoutDefaults": {
+        "audio_curl": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "case": "string",
+      "input": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "expected": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "case": "number",
+      "input": {
+        "audio_curl": 17
+      },
+      "expected": {
+        "audio_curl": 17
+      },
+      "withoutDefaults": {
+        "audio_curl": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "case": "boolean",
+      "input": {
+        "audio_curl": true
+      },
+      "expected": {
+        "audio_curl": true
+      },
+      "withoutDefaults": {
+        "audio_curl": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "case": "array",
+      "input": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010789",
+      "rustType": "RestConnectionParams",
+      "field": "audio_curl",
+      "case": "object",
+      "input": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "case": "omitted",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes"
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes"
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes"
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "case": "null",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": null
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": null
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "case": "string",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "case": "number",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": 17
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": 17
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "case": "boolean",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": true
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": true
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "case": "array",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_request_json",
+      "case": "object",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "case": "omitted",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes"
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes"
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes"
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "case": "null",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": null
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": null
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "case": "string",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "case": "number",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": 17
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": 17
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "case": "boolean",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": true
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": true
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "case": "array",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010821",
+      "rustType": "StreamingConnectionParams",
+      "field": "audio_curl",
+      "case": "object",
+      "input": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "response_stop_key": "done",
+        "response_stop_value": "yes",
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "case": "omitted",
+      "input": {},
+      "expected": {
+        "ws_response_timeout": 110
+      },
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "case": "null",
+      "input": {
+        "audio_request_json": null
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_request_json": null
+      },
+      "withoutDefaults": {
+        "audio_request_json": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "case": "string",
+      "input": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "case": "number",
+      "input": {
+        "audio_request_json": 17
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_request_json": 17
+      },
+      "withoutDefaults": {
+        "audio_request_json": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "case": "boolean",
+      "input": {
+        "audio_request_json": true
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_request_json": true
+      },
+      "withoutDefaults": {
+        "audio_request_json": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "case": "array",
+      "input": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_request_json",
+      "case": "object",
+      "input": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "case": "omitted",
+      "input": {},
+      "expected": {
+        "ws_response_timeout": 110
+      },
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "case": "null",
+      "input": {
+        "audio_curl": null
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_curl": null
+      },
+      "withoutDefaults": {
+        "audio_curl": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "case": "string",
+      "input": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "case": "number",
+      "input": {
+        "audio_curl": 17
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_curl": 17
+      },
+      "withoutDefaults": {
+        "audio_curl": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "case": "boolean",
+      "input": {
+        "audio_curl": true
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_curl": true
+      },
+      "withoutDefaults": {
+        "audio_curl": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "case": "array",
+      "input": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010824",
+      "rustType": "WebSocketConnectionParams",
+      "field": "audio_curl",
+      "case": "object",
+      "input": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "ws_response_timeout": 110,
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "case": "omitted",
+      "input": {},
+      "expected": {},
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "case": "null",
+      "input": {
+        "audio_request_json": null
+      },
+      "expected": {
+        "audio_request_json": null
+      },
+      "withoutDefaults": {
+        "audio_request_json": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "case": "string",
+      "input": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "expected": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "audio_request_json": "synthetic-private-fixture"
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "case": "number",
+      "input": {
+        "audio_request_json": 17
+      },
+      "expected": {
+        "audio_request_json": 17
+      },
+      "withoutDefaults": {
+        "audio_request_json": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "case": "boolean",
+      "input": {
+        "audio_request_json": true
+      },
+      "expected": {
+        "audio_request_json": true
+      },
+      "withoutDefaults": {
+        "audio_request_json": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "case": "array",
+      "input": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "audio_request_json": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_request_json",
+      "case": "object",
+      "input": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "audio_request_json": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "case": "omitted",
+      "input": {},
+      "expected": {},
+      "withoutDefaults": {},
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "case": "null",
+      "input": {
+        "audio_curl": null
+      },
+      "expected": {
+        "audio_curl": null
+      },
+      "withoutDefaults": {
+        "audio_curl": null
+      },
+      "typedPresence": "null"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "case": "string",
+      "input": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "expected": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "withoutDefaults": {
+        "audio_curl": "synthetic-private-fixture"
+      },
+      "typedPresence": "value"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "case": "number",
+      "input": {
+        "audio_curl": 17
+      },
+      "expected": {
+        "audio_curl": 17
+      },
+      "withoutDefaults": {
+        "audio_curl": 17
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "case": "boolean",
+      "input": {
+        "audio_curl": true
+      },
+      "expected": {
+        "audio_curl": true
+      },
+      "withoutDefaults": {
+        "audio_curl": true
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "case": "array",
+      "input": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "expected": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "withoutDefaults": {
+        "audio_curl": [
+          "synthetic-private-fixture"
+        ]
+      },
+      "typedPresence": "unset"
+    },
+    {
+      "schema": "s010829",
+      "rustType": "ConnectionParamsRequestVariant2",
+      "field": "audio_curl",
+      "case": "object",
+      "input": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "expected": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "withoutDefaults": {
+        "audio_curl": {
+          "future": "synthetic-private-fixture"
+        }
+      },
+      "typedPresence": "unset"
+    }
+  ],
+  "unionTails": [
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "vendorComponent": "VertexAIConnectionParams"
+    },
+    {
+      "schema": "s010504",
+      "variant": 3,
+      "vendorComponent": "MultiTurnClientSessionConfig"
+    }
+  ],
+  "unionCases": [
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "valid",
+      "input": {
+        "project_id": "example-project",
+        "location": "us-central1",
+        "engine_id": "12345",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": true,
+      "responseAccepted": true
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "missing-project_id",
+      "input": {
+        "location": "us-central1",
+        "engine_id": "12345",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "wrong-type-project_id",
+      "input": {
+        "project_id": 17,
+        "location": "us-central1",
+        "engine_id": "12345",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "missing-location",
+      "input": {
+        "project_id": "example-project",
+        "engine_id": "12345",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "wrong-type-location",
+      "input": {
+        "project_id": "example-project",
+        "location": 17,
+        "engine_id": "12345",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "missing-engine_id",
+      "input": {
+        "project_id": "example-project",
+        "location": "us-central1",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "wrong-type-engine_id",
+      "input": {
+        "project_id": "example-project",
+        "location": "us-central1",
+        "engine_id": 17,
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "missing-customer_sa_email",
+      "input": {
+        "project_id": "example-project",
+        "location": "us-central1",
+        "engine_id": "12345"
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "wrong-type-customer_sa_email",
+      "input": {
+        "project_id": "example-project",
+        "location": "us-central1",
+        "engine_id": "12345",
+        "customer_sa_email": 17
+      },
+      "requestAccepted": false,
+      "responseAccepted": false
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "loose-format-project_id",
+      "input": {
+        "project_id": "UPPER / opaque",
+        "location": "us-central1",
+        "engine_id": "12345",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": true
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "loose-format-location",
+      "input": {
+        "project_id": "example-project",
+        "location": "UPPER / opaque",
+        "engine_id": "12345",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": true
+    },
+    {
+      "schema": "s010462",
+      "variant": 5,
+      "case": "loose-format-engine_id",
+      "input": {
+        "project_id": "example-project",
+        "location": "us-central1",
+        "engine_id": "UPPER / opaque",
+        "customer_sa_email": "service@example.invalid"
+      },
+      "requestAccepted": false,
+      "responseAccepted": true
+    },
+    {
+      "schema": "s010504",
+      "variant": 3,
+      "case": "explicit-client-session",
+      "input": {
+        "type": "client_session",
+        "future": null
+      },
+      "requestAccepted": true,
+      "responseAccepted": true
+    },
+    {
+      "schema": "s010504",
+      "variant": 2,
+      "case": "missing-tag-stateless",
+      "input": {},
+      "requestAccepted": true,
+      "responseAccepted": true
+    },
+    {
+      "schema": "s010504",
+      "variant": 1,
+      "case": "missing-tag-stateful",
+      "input": {
+        "request_id_field": "previous",
+        "response_id_field": "next"
+      },
+      "requestAccepted": true,
+      "responseAccepted": true
+    }
+  ],
+  "enumAdditions": [
+    {
+      "schema": "s012061",
+      "value": "VERTEX_AI"
+    },
+    {
+      "schema": "s012061",
+      "value": "N8N"
+    },
+    {
+      "schema": "s012067",
+      "value": "REALTIME"
+    }
+  ]
+}

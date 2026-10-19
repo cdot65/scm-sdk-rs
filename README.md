@@ -86,9 +86,10 @@ emits fixed metadata fields without installing a subscriber or logging payloads.
 The application owns credentials, runtime, transports and enforcement policy.
 
 Implementation and offline contract coverage do not imply universal live support.
-See [live acceptance](docs/LIVE_ACCEPTANCE.md), its current
-[receipt pointer](contracts/live-evidence.json), and the per-method operation
-matrix for actual successful, blocked and unverified workflows. [Platforms](docs/PLATFORMS.md)
+See [live acceptance](docs/LIVE_ACCEPTANCE.md), the archived
+[historical 0.2.2 receipt](contracts/historical/0.2.2-live-evidence.json), and the per-method operation
+matrix for actual successful, blocked and unverified workflows. The archived receipt
+does not qualify the current management changes; fresh live evidence belongs to release qualification. [Platforms](docs/PLATFORMS.md)
 separates Linux musl native execution from other targets' compile-only evidence.
 [Dependencies](docs/DEPENDENCIES.md) records advisory/license/source policy and
 native cryptography; [packaging](docs/PACKAGING.md) verifies the extracted archive

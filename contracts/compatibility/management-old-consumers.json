@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "package": "scm-sdk",
+  "version": "0.2.2",
+  "releaseCommit": "0716cfdcdbd522bb8fa63072d944e8fc15ba1824",
+  "registryArchiveSha256": "c908cad8b27863d0e2d3987f5554b196313877788ac8cfef35c16d589910db7c",
+  "registryArchiveBytes": 1031520,
+  "receipt": {
+    "path": "docs/checks/phase-20-release-package-1.99.0.json",
+    "sha256": "e8883dacedbb9a9c2cec9fbb3c96d62c5be7e9c8b4f36f06bce1feb6fb7a98fe"
+  },
+  "consumers": [
+    {
+      "name": "response_defaults",
+      "path": "crates/scm-sdk/examples/response_defaults.rs",
+      "frozenPath": "contracts/compatibility/management-old-consumers/0.2.2/response_defaults.rs",
+      "sha256": "89c8150110433b1e61e4ca1a4bfeb2b4d9aa22493128332ebaad57600a6a335e",
+      "bytes": 1496,
+      "origin": "published-registry-archive",
+      "archiveMember": "examples/response_defaults.rs"
+    },
+    {
+      "name": "response_compatibility",
+      "path": "crates/scm-sdk/examples/response_compatibility.rs",
+      "frozenPath": "contracts/compatibility/management-old-consumers/0.2.2/response_compatibility.rs",
+      "sha256": "d22faee50ff2b7c522ccca8bbb4c1de0385e2a9b3cd8267afa39ef401715f4b4",
+      "bytes": 5418,
+      "origin": "published-registry-archive",
+      "archiveMember": "examples/response_compatibility.rs"
+    },
+    {
+      "name": "red_team_dataplane",
+      "path": "crates/scm-sdk/examples/red_team_dataplane.rs",
+      "frozenPath": "contracts/compatibility/management-old-consumers/0.2.2/red_team_dataplane.rs",
+      "sha256": "2b746fb711bf773751eb01c5e04ca79a030035f70a07767907e773b367594730",
+      "bytes": 2154,
+      "origin": "published-registry-archive",
+      "archiveMember": "examples/red_team_dataplane.rs"
+    },
+    {
+      "name": "native-probes",
+      "path": "contracts/native-probes/src/main.rs",
+      "frozenPath": "contracts/compatibility/management-old-consumers/0.2.2/native-probes-main.rs",
+      "sha256": "7103682560a4cd8f9e77936bfaa41c2ed4eb44656d697797c6a1a4d6ba125359",
+      "bytes": 565509,
+      "origin": "published-release-package-receipt",
+      "receiptField": "publicConsumerSourceSha256"
+    }
+  ],
+  "evidenceBoundary": "Examples extracted byte-for-byte from the verified published registry archive. Native probe bytes match its recorded release package consumer hash; native probes are external consumers, not files in the registry archive. This inventory proves preserved source identity, not current execution; phase23 package receipts establish execution."
+}

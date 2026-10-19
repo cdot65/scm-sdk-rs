@@ -912,7 +912,7 @@ def validate_graph_contract(inventory, validator_source=None):
             if definition["kind"] in {"ZodEffects","ZodDefault","ZodPipeline","ZodCatch"} or definition.get("coerce"):
                 raise ValueError(f"Record key normalization needs an explicit native implementation: {sid}/{child}")
             pending.extend(ref for ref in refs(definition) if ref in nodes)
-    return {"stringChecks":sorted(STRING_CHECKS),"numberChecks":sorted(NUMBER_CHECKS),"regexSources":sorted(REGEX_SOURCES),"recordKeys":record_keys,"recordKeyPolicy":"No effects, defaults, pipelines, catches or coercion in record key graphs"}
+    return {"stringChecks":sorted(STRING_CHECKS),"numberChecks":sorted(NUMBER_CHECKS),"regexSources":sorted(REGEX_SOURCES),"managementRegexSources":sorted(MANAGEMENT_REGEX_SOURCES),"recordKeys":record_keys,"recordKeyPolicy":"No effects, defaults, pipelines, catches or coercion in record key graphs"}
 
 def union_contract(generator):
     return {"schemaVersion":1,"baselineCommit":generator.inventory["baseline"]["commit"],"unions":sorted(generator.union_rows,key=lambda row:row["rustType"])}
@@ -1101,6 +1101,7 @@ def main():
             "crates/scm-sdk/src/models/generated.rs", "crates/scm-sdk/src/models/red_team_management.rs",
             "crates/scm-sdk/tests/red_team_management_models.rs", "crates/scm-sdk/tests/red_team_management_contracts.rs",
             "tools/test_red_team_management_models.py", "NOTICE",
+            "crates/scm-sdk/examples/red_team_management.rs",
         ]
         management_ledger = management_overlay.ledger(generator)
         management_ledger["sourceBindings"] = []

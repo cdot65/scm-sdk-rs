@@ -257,9 +257,13 @@ def disposition(delta):
         return 'error_metadata', 'Retain sanitized shared error boundary; no arbitrary upstream body in diagnostics.'
     if name == 'TenantLanguagesResponseSchema':
         return 'component_alias', 'Bind LanguageDropdownOptionSchema to existing LanguageOption country_code projection.'
-    if name in {'ProfilingStatus', 'TargetStatusFilter', 'ProfilingStatusFilter', 'ResponseMode'}:
-        return 'compatibility_exception', 'Extend declared values; retain old response values and legacy status inputs; do not invent filter mappings.'
-    if name in {'TargetConnectionType', 'MultiTurnClientSessionConfig', 'VertexAIConnectionParams', 'VertexAIConnectionRedactParams'}:
+    if name in {'ProfilingStatus', 'TargetStatusFilter', 'ProfilingStatusFilter'}:
+        return 'compatibility_exception', 'Retain removed legacy response values and existing status inputs; new profiling filters accept only declared values, without automatic mappings.'
+    if name == 'ResponseMode':
+        return 'compatibility_exception', 'Add REALTIME to schema-bound TargetCreateRequestResponseMode; keep frozen TypeScript-parity ResponseMode unchanged with Unknown(String).'
+    if name == 'TargetConnectionType':
+        return 'new_behavior', 'Add VERTEX_AI and N8N to schema-bound TargetCreateRequestConnectionType; keep frozen TypeScript-parity TargetConnectionType unchanged with Unknown(String).'
+    if name in {'MultiTurnClientSessionConfig', 'VertexAIConnectionParams', 'VertexAIConnectionRedactParams'}:
         return 'new_behavior', 'Add declared request variants and precise nested response branches; preserve legacy branches/defaults.'
     if name in {base + suffix for base in ('NativeConnectionParams', 'RestConnectionParams', 'StreamingConnectionParams', 'WebSocketConnectionParams') for suffix in ('Base', 'Base-Input', 'Base-Output', 'RedactBase')} or name in {'TargetCreateRequestSchema', 'TargetProbeRequest', 'TargetSchema', 'TargetUpdateRequestSchema'}:
         return 'new_behavior_and_alias', 'Preserve old public names; reconcile input/output aliases and new union branches without narrowing frozen acceptance.'
@@ -680,6 +684,7 @@ def management_runtime_evidence():
         'contracts/red-team-management-model-overlay.json',
         'contracts/red-team-management-union-extensions.json',
         'crates/scm-sdk/src/airs/red_team/targets.rs',
+        'crates/scm-sdk/examples/red_team_management.rs',
         'crates/scm-sdk/tests/red_team_management_contracts.rs',
         'crates/scm-sdk/tests/red_team_management_models.rs',
         'tools/test_red_team_management_models.py',
@@ -738,7 +743,7 @@ def verify_offline_live_boundary():
     checked_bytes(reference['report'], reference['reportSha256'])
     current = ROOT / 'contracts/live-evidence.json'
     if current.exists() or current.is_symlink():
-        raise ValueError('Phase 22 offline scope cannot claim a current live receipt')
+        raise ValueError('Phase 22/23 offline scope cannot claim a current live receipt')
     for name, rows in (('native-operations', 'operations'), ('native-exports', 'capabilities'),
                        ('qualification', 'operations')):
         document = load('contracts/' + name + '.json')
@@ -749,24 +754,46 @@ def verify_offline_live_boundary():
                 raise ValueError('Historical live acceptance leaked into current ledger: ' + name)
 
 
+def verify_cumulative_qualification(*, package_receipts=False):
+    """Verify owned offline artifacts; final package checks require real receipts."""
+    import management_fixtures
+    import management_consumers
+    if load('contracts/native-fixtures/red-team-management.json') != management_fixtures.expected():
+        raise ValueError('Stale derived management fixture corpus')
+    management_consumers.verify(root=ROOT)
+    if package_receipts:
+        import importlib.util
+        path = ROOT / 'scripts/check-management-package.py'
+        spec = importlib.util.spec_from_file_location('management_package_verifier', path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        for compiler in ('1.89.0', '1.99.0'):
+            module.verify_receipt(ROOT, ROOT / f'docs/checks/phase-23-package-{compiler}.json', compiler)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--verify-package-receipts', action='store_true', help='Phase 23 final gate only: verify both executed clean package receipts')
     parser.add_argument('--verify-retention-origin', action='store_true', help='Phase 21 only: verify current source ledgers equal audited seed digests')
     parser.add_argument('--require-through-phase', type=int, choices=range(21, 26), default=21)
     args = parser.parse_args()
     try:
-        if args.require_through_phase > 22:
-            raise ValueError('Phase 23–25 qualification evidence is not implemented; static plan evidence cannot advance these phases')
+        if args.verify_package_receipts and args.require_through_phase != 23:
+            raise ValueError('Package receipt verification requires phase 23')
+        if args.require_through_phase > 23:
+            raise ValueError('Phase 24–25 qualification evidence is not implemented; static plan evidence cannot advance these phases')
         if args.verify_retention_origin:
             verify_retention_origin()
         outputs = build()
-        if args.require_through_phase == 22:
+        if args.require_through_phase in (22, 23):
             source = next(row for row in load('contracts/manifest.json')['sources'] if row['id'] == SOURCE_ID)
             if source['usedForGeneration'] is not True:
                 raise ValueError('Management runtime adoption is not declared')
             verify_runtime_adoption()
             verify_offline_live_boundary()
+        if args.require_through_phase == 23:
+            verify_cumulative_qualification(package_receipts=args.verify_package_receipts)
         for path, value in outputs.items():
             content = encoded(value)
             if args.check:

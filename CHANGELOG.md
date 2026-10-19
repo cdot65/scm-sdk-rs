@@ -62,7 +62,7 @@ source, archive checksum and publication date.
   decode errors remain redacted to avoid exposing response data.
 
 See [the operation and field comparison](docs/G25_COMPATIBILITY.md),
-[qualification status](docs/phase-status.json), and [live evidence](contracts/live-evidence.json).
+[qualification status](docs/phase-status.json), and [live evidence](contracts/historical/0.2.2-live-evidence.json).
 The reported airs-cli-rs loopback suite on worf has not been run here, and consumer
 adoption is not claimed. Offline compatibility coverage does not imply additional
 live privileges or service acceptance.
@@ -236,7 +236,7 @@ Rust minimum: **1.89**. Current pinned verification also uses **1.99.0**.
 [Phase records](docs/phase-status.json) retain actual Claude Code scores, accepted
 source fingerprints, and passing checks. [Release evidence](docs/RELEASE.md)
 separately identifies the clean-commit archive proof.
-Live acceptance uses the current [receipt](contracts/live-evidence.json) and
+Historical 0.2.2 live acceptance uses its archived [receipt](contracts/historical/0.2.2-live-evidence.json) and
 [per-method matrix](contracts/native-operations.json); full implementation is
 separate from actual service qualification.
 

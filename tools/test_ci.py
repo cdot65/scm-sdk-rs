@@ -525,9 +525,9 @@ class CiContractTests(unittest.TestCase):
         for script in ('scripts/check-rust.py','scripts/check-native-exports.py','scripts/check-package.py'):
             self.assertTrue(any(script in command for command in full))
             self.assertFalse(any(script in command for command in fast))
-        self.assertIn('--phase 22 --verification-only --contracts-only',WORKFLOW)
-        self.assertIn('docs/checks/phase-22-contracts.json',WORKFLOW)
-        self.assertNotIn('docs/checks/phase-22.json',WORKFLOW)
+        self.assertIn('--phase 23 --verification-only --contracts-only',WORKFLOW)
+        self.assertIn('docs/checks/phase-23-contracts.json',WORKFLOW)
+        self.assertNotIn('docs/checks/phase-23.json',WORKFLOW)
         current, selected = commands_for(17), ci_commands_for(17)
         self.assertTrue(all(c in current for c in selected))
         self.assertIn(['node', 'tools/portkey-access.mjs', '--check'], selected)

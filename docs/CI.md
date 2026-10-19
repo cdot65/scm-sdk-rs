@@ -8,7 +8,7 @@ registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
-CI now executes the Phase 22 contracts gate, whose invocation and current
+CI now executes the Phase 23 contracts gate, whose invocation and current
 script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
 Phase 12, maintenance Phase 92 and access-policy Phase 17 gates remain historical.
 See [the G25 plan](g25-response-compatibility-plan.md).
@@ -107,7 +107,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 22 --verification-only --contracts-only. Its 37 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-22-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current ledgers explicitly remain live-unverified. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 23 --verification-only --contracts-only. Its 51 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-23-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current ledgers explicitly remain live-unverified. |
 | rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -142,7 +142,7 @@ The retained Phase 17 release-range whitespace check excludes the two byte-pinne
 upstream Portkey YAML files; the historical Phase 12 range excludes its original
 `dp-openapi.yaml`. Phase 20 retains these exclusions for the reused checks.
 Original upstream whitespace remains part of each reviewed digest.
-The current Phase 22 gate excludes the three byte-pinned vendor YAML corpora
+The current Phase 23 gate excludes the three byte-pinned vendor YAML corpora
 (management, data plane and Portkey) from whitespace style while retaining their
 exact source hashes. Worktree, index and committed baseline-to-HEAD checks cover
 owned source changes. The Phase 21 planning receipt's committed range was empty
@@ -156,15 +156,18 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 22 gate has 42 commands.
-CI's 37-command subset writes `phase-22-contracts.json`. The full local gate
-additionally executes five compiler/feature combinations covering Red Team on
-both compilers, arbitrary-precision JSON, and their combined feature sets.
+The complete local Phase 23 gate has 71 commands.
+CI's 51-command subset writes `phase-23-contracts.json`. The full local gate
+additionally executes fourteen compiler/feature combinations, native export probes,
+generated model fixture compilation, and two source-matched clean package checks.
+The final gate verifies both package receipts after those checks execute.
+The contracts subset verifies the derived management corpus and immutable published
+0.2.2 consumer sources; it does not claim clean package execution or live acceptance.
 Both new integration suites are included by the Red Team cargo test commands.
 The Red Team and combined Red Team/JSON runner selections also execute the offline
 `red_team_management` example with `cargo run` on both 1.89.0 and 1.99.0;
 `cargo test --examples` alone only compiles its main function.
-Only a complete source-bound `phase-22.json` receipt can qualify review; the
+Only a complete source-bound `phase-23.json` receipt can qualify review; the
 contracts-only scope marker cannot substitute for it. Full Git history supplies
 the frozen baseline used by the committed hygiene check.
 The independent 48-job Rust matrix remains unchanged: 24 feature selections on both

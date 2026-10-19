@@ -12,8 +12,9 @@ const PATH: &str = "/v1/target";
 // -> Record s012087 (unconstrained string key s012088, unknown value s012089).
 const METADATA_SCHEMA: &str = "s012087";
 
-/// Target query options. Invalid values fail before authentication or dispatch,
-/// so their validation errors do not carry a dispatched operation name.
+/// Target query options. Invalid values return [`crate::ErrorKind::Validation`]
+/// before authentication or dispatch, without echoing inputs or carrying a
+/// dispatched operation name.
 #[derive(Clone, Default)]
 #[non_exhaustive]
 pub struct TargetListOptions {
@@ -36,8 +37,12 @@ pub struct TargetListOptions {
     /// The value is preserved on every page of a paginated collection.
     /// Unsupported values fail validation before authentication or dispatch.
     /// Responses may contain `INIT`, `QUEUED`, or `PARTIALLY_COMPLETE`, but the vendor
-    /// declares no filter for these values. None is mapped to `NOT_STARTED`
-    /// or any other filter automatically.
+    /// declares no filter for these values. These response values are not mapped
+    /// to `NOT_STARTED` or any other filter automatically. Leaving this option
+    /// unset omits the query parameter.
+    ///
+    /// The accepted values come from the pinned
+    /// [management 0.86.0 ProfilingStatusFilter schema](https://github.com/PaloAltoNetworks/pan.dev/blob/582e30543bf2adfd8b0ee457170d22b5c380dfbe/openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml).
     pub profiling_status: Option<String>,
 }
 crate::redaction::redacted_debug!(TargetListOptions);

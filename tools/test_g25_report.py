@@ -130,8 +130,12 @@ class ComparisonReportTests(unittest.TestCase):
         self.assertEqual(actual_dataplane | actual_management,
                          {row['rustType'] for row in projections} | expected_management)
         self.assertIn('explicit null, supersedes', report)
-        self.assertIn('data-plane vendor contract is Red Team 0.93.0', report)
-        self.assertIn('management projection addendum covers Red Team management 0.86.0', report)
+        sources = load('contracts/airs-active-sources.json')['sources']
+        for suffix, label in [('data-plane/dp-openapi.yaml', 'data-plane vendor contract is Red Team'),
+                              ('management/mp-openapi.yaml', 'management projection addendum covers Red Team management')]:
+            version = next(row['version'] for row in sources if row['upstreamPath'].endswith('prisma-airs-redteam/' + suffix))
+            self.assertIn(f'{label} {version}', report)
+        self.assertIn('is removed from extensions', report)
         self.assertIn('historical `projection-bindings.json` owns only that data-plane corpus', report)
         with self.assertRaisesRegex(ValueError, 'Duplicate management projection'):
             management_projection_section(management + [management[0]])

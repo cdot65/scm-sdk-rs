@@ -4,6 +4,7 @@ import subprocess
 import sys
 import json
 import tempfile
+import types
 import unittest
 from unittest.mock import patch
 
@@ -323,10 +324,37 @@ class ManagementPlanTests(unittest.TestCase):
         self.assertNotIn('sourceLedgerSha256', result)
 
     def test_future_phase_cannot_pass_on_plan_artifacts(self):
-        for phase in range(23, 26):
+        for phase in range(24, 26):
             result = subprocess.run([sys.executable, str(subject.ROOT / 'tools/red_team_management.py'), '--check', '--require-through-phase', str(phase)], capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn('static plan evidence cannot advance', result.stderr)
+
+    def test_cumulative_gate_rejects_stale_corpus_and_invalid_old_consumers(self):
+        corpus = {'derived': 'fixture'}
+        fixtures = types.SimpleNamespace(expected=lambda: corpus)
+        consumers = types.SimpleNamespace(verify=lambda **kwargs: None)
+        with patch.dict(sys.modules, management_fixtures=fixtures, management_consumers=consumers):
+            with patch.object(subject, 'load', return_value={'derived': 'stale'}):
+                with self.assertRaisesRegex(ValueError, 'Stale derived management'):
+                    subject.verify_cumulative_qualification()
+            with patch.object(subject, 'load', return_value=corpus):
+                with patch.object(consumers, 'verify', side_effect=ValueError('Invalid immutable consumer')):
+                    with self.assertRaisesRegex(ValueError, 'Invalid immutable consumer'):
+                        subject.verify_cumulative_qualification()
+
+    def test_runtime_evidence_binds_the_delivered_example(self):
+        paths = {row['path'] for row in subject.management_runtime_evidence()['sourceBindings']}
+        self.assertIn('crates/scm-sdk/examples/red_team_management.rs', paths)
+
+    def test_enum_decisions_distinguish_retained_and_schema_bound_types(self):
+        decisions = self.outputs[subject.VENDOR / 'compatibility-decisions.json']['deltas']
+        for name, expected in [('ResponseMode', 'TargetCreateRequestResponseMode'),
+                               ('TargetConnectionType', 'TargetCreateRequestConnectionType'),
+                               ('ProfilingStatus', 'Retain removed legacy')]:
+            rows = [row for row in decisions if row['path'][:3] == ['components', 'schemas', name]
+                    and row['path'][-1] == 'enum']
+            self.assertEqual(len(rows), 1)
+            self.assertIn(expected, rows[0]['decision'])
 
     def test_runtime_adoption_rejects_unbound_or_stale_overlay_sources(self):
         original_load = subject.load

@@ -698,7 +698,7 @@
         "update_target_profile_v1_target__target_uuid__profile_put"
       ],
       "category": "compatibility_exception",
-      "decision": "Extend declared values; retain old response values and legacy status inputs; do not invent filter mappings.",
+      "decision": "Retain removed legacy response values and existing status inputs; new profiling filters accept only declared values, without automatic mappings.",
       "kind": "changed",
       "new": [
         "NOT_STARTED",
@@ -727,7 +727,7 @@
         "list_targets_v1_target_get"
       ],
       "category": "compatibility_exception",
-      "decision": "Extend declared values; retain old response values and legacy status inputs; do not invent filter mappings.",
+      "decision": "Retain removed legacy response values and existing status inputs; new profiling filters accept only declared values, without automatic mappings.",
       "kind": "added",
       "new": {
         "description": "Profiling values accepted by the list-targets ``profiling_status`` filter.\n\nMatches the ``target.profiling_status`` column only.\n",
@@ -756,7 +756,7 @@
         "update_target_profile_v1_target__target_uuid__profile_put"
       ],
       "category": "compatibility_exception",
-      "decision": "Extend declared values; retain old response values and legacy status inputs; do not invent filter mappings.",
+      "decision": "Add REALTIME to schema-bound TargetCreateRequestResponseMode; keep frozen TypeScript-parity ResponseMode unchanged with Unknown(String).",
       "kind": "changed",
       "new": [
         "REST",
@@ -2304,7 +2304,7 @@
         "update_target_profile_v1_target__target_uuid__profile_put"
       ],
       "category": "new_behavior",
-      "decision": "Add declared request variants and precise nested response branches; preserve legacy branches/defaults.",
+      "decision": "Add VERTEX_AI and N8N to schema-bound TargetCreateRequestConnectionType; keep frozen TypeScript-parity TargetConnectionType unchanged with Unknown(String).",
       "kind": "changed",
       "new": [
         "DATABRICKS",
@@ -2860,7 +2860,7 @@
         "list_targets_v1_target_get"
       ],
       "category": "compatibility_exception",
-      "decision": "Extend declared values; retain old response values and legacy status inputs; do not invent filter mappings.",
+      "decision": "Retain removed legacy response values and existing status inputs; new profiling filters accept only declared values, without automatic mappings.",
       "kind": "changed",
       "new": [
         "DRAFT",

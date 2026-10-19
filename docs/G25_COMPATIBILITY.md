@@ -29,7 +29,7 @@ Baseline decoding errors remain generic and redacted to avoid exposing service v
 
 ### Management 0.86.0 projection addendum
 
-The separate management overlay adds the following optional typed projections. They use the same typed-over-raw precedence: a supplied typed value, including explicit null, supersedes a same-key extension. Leaving the typed field unset preserves the raw extension. Wrong-type values remain in extension storage; these conveniences do not narrow the frozen request or response validators.
+The separate management overlay adds the following optional typed projections. They use the same typed-over-raw precedence: a supplied typed value, including explicit null, supersedes a same-key extension. Leaving the typed field unset preserves the raw extension. A representable value now populates its typed Patch field and is removed from extensions; callers reading extensions must use the typed field for such values. Wrong-type values remain in extension storage; these conveniences do not narrow the frozen request or response validators.
 
 These pairings and generated Rust names are recorded in [the management overlay ledger](../contracts/red-team-management-model-overlay.json), whose generator checks baseline identities and completeness. They are additional to the 55 data-plane projection field occurrences above; the historical `projection-bindings.json` owns only that data-plane corpus.
 

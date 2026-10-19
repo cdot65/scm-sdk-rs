@@ -100,6 +100,18 @@ def projection_usage(rows):
             for key, group in groups.items()}
 
 
+def active_red_team_versions():
+    rows = json.loads((ROOT / 'contracts/airs-active-sources.json').read_text())['sources']
+    result = {}
+    for kind, suffix in [('data-plane', 'prisma-airs-redteam/data-plane/dp-openapi.yaml'),
+                         ('management', 'prisma-airs-redteam/management/mp-openapi.yaml')]:
+        matches = [row['version'] for row in rows if row['upstreamPath'] == 'openapi-specs/' + suffix]
+        if len(matches) != 1 or not isinstance(matches[0], str) or not matches[0]:
+            raise ValueError('Ambiguous active Red Team version: ' + kind)
+        result[kind] = matches[0]
+    return result
+
+
 def management_projection_section(projections):
     """Document the separately pinned management projections without merging corpora."""
     groups = collections.defaultdict(list)
@@ -111,11 +123,13 @@ def management_projection_section(projections):
         seen.add(identity)
         groups[(row['rustType'], row['legacySchema'])].append(row['field'])
     return [
-        '### Management 0.86.0 projection addendum', '',
+        f"### Management {active_red_team_versions()['management']} projection addendum", '',
         'The separate management overlay adds the following optional typed projections. '
         'They use the same typed-over-raw precedence: a supplied typed value, including '
         'explicit null, supersedes a same-key extension. Leaving the typed field unset '
-        'preserves the raw extension. Wrong-type values remain in extension storage; '
+        'preserves the raw extension. A representable value now populates its typed Patch '
+        'field and is removed from extensions; callers reading extensions must use the '
+        'typed field for such values. Wrong-type values remain in extension storage; '
         'these conveniences do not narrow the frozen request or response validators.', '',
         'These pairings and generated Rust names are recorded in '
         '[the management overlay ledger](../contracts/red-team-management-model-overlay.json), '
@@ -146,8 +160,8 @@ def render(audit, comparison, projections, management_projections=()):
         '## Scope and decision', '',
         f"The audit covers **{s['operations']} operations, {s['jsonResponseRoots']} JSON response roots, "
         f"and {s['matchedTypeScriptOperations']} TypeScript counterparts**. The baseline is TypeScript "
-        f"0.34.0 at `{audit['baselineCommit']}`; the data-plane vendor contract is Red Team 0.93.0. "
-        "The management projection addendum covers Red Team management 0.86.0.", '',
+        f"0.34.0 at `{audit['baselineCommit']}`; the data-plane vendor contract is Red Team {active_red_team_versions()['data-plane']}. "
+        f"The management projection addendum covers Red Team management {active_red_team_versions()['management']}.", '',
         'For existing operations, response validation uses the actual TypeScript operation schema, '
         'with the shared response policy below. Eleven operations have no TypeScript counterpart; '
         'ten have JSON responses and one returns CSV bytes. Their vendor structure remains authoritative. '

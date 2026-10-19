@@ -132,10 +132,18 @@ fn unknown_discriminators_and_required_vertex_types_stay_validated() {
     ] {
         let doc = configured(vertex(), multi.clone(), false);
         for mode in [Mode::Request, Mode::Response, Mode::ResponseWithoutDefaults] {
-            let result = validation::parse("TargetResponseSchema", doc.clone(), mode);
+            let (schema, input) = if mode == Mode::Request {
+                (
+                    "TargetCreateRequestSchema",
+                    json!({"name":"synthetic-target","target_type":"APPLICATION","connection_params":{"target_connection_config":vertex(),"multi_turn_config":multi}}),
+                )
+            } else {
+                ("TargetResponseSchema", doc.clone())
+            };
+            let result = validation::parse(schema, input, mode);
             if multi["type"] == "future_session" {
                 assert!(result.is_err());
-            } else if mode != Mode::Request {
+            } else {
                 assert!(result.is_ok());
             }
         }
@@ -411,10 +419,16 @@ async fn all_five_operations_preserve_declared_sensitive_response_shapes() {
                 ];
                 for (actual, expected) in actual.into_iter().zip(responses) {
                     assert!(!format!("{actual:?}").contains(SECRET));
-                    assert_eq!(
-                        serde_json::to_value(actual).unwrap(),
-                        validation::parse("TargetResponseSchema", expected, mode).unwrap()
-                    );
+                    let wire_value = serde_json::to_value(actual).unwrap();
+                    if mode == Mode::ResponseWithoutDefaults {
+                        // Independent server bytes, not validator-normalized expected data.
+                        assert_eq!(wire_value, expected);
+                    } else {
+                        assert_eq!(
+                            wire_value,
+                            validation::parse("TargetResponseSchema", expected, mode).unwrap()
+                        );
+                    }
                 }
                 let requests = wire.requests.lock().unwrap();
                 let names: Vec<_> = requests.iter().map(TransportRequest::operation).collect();
