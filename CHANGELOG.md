@@ -1,5 +1,72 @@
 # Changelog
 
+## 0.2.2 — G25 response compatibility
+
+This patch corrects G25 response compatibility. Publication is established only by the verified
+[crates.io registry receipt](docs/checks/release-registry-0.2.2.json) and
+[remote tag receipt](docs/checks/release-tag-v0.2.2.json); missing receipts mean
+publication has not yet been verified. The receipts carry the exact published
+source, archive checksum and publication date.
+
+### Changed
+
+- Both response modes now preserve strings without enforcing `uuid`, `rfc3339`,
+  `datetime`, `date`, `duration`, `email`, `url`, or `regex` format checks across
+  every SDK schema. String type checks remain. Request format checks are unchanged.
+- Existing Red Team operations select their actual frozen TypeScript response
+  schemas, retaining that baseline's presence, nullability, types and string
+  bounds. Vendor-only string min/max bounds are request-only. New operations
+  without a TypeScript counterpart retain vendor structure and types with the
+  shared relaxed response formats and string bounds.
+- Vendor-added optional typed projections preserve values they cannot represent
+  in extension storage, including explicit null and unknown nested data. Omitted
+  fields remain omitted. An explicit typed projection takes precedence over a raw
+  extension with the same key, including every request-reachable projection model
+  derived from the projection inventory in the
+  [compatibility report](docs/G25_COMPATIBILITY.md). This includes `TargetMetadata`,
+  `LanguageOption` and all three `JobCreateRequestJobMetadataVariant` models;
+  standalone schema projections are documented separately.
+
+### Deliberately retained
+
+- Unknown response enum strings and object keys were already accepted; they stay
+  accepted. This correction addresses formats and structural compatibility, not
+  a closed response enum bug.
+- The TypeScript baseline still rejects missing `category_display_name`, numeric
+  `tsg_id`, and null `sub_category`. Its schema is selected exclusively rather
+  than unioned with the vendor schema; vendor-permitted but TypeScript-invalid
+  documents can still fail. The generated report quantifies these cases.
+- Default insertion remains enabled unless callers opt into
+  `RequestOptions::without_response_defaults()`. Both response modes accept the
+  same documents. Required baseline fields/types/bounds, finite JSON and resource
+  limits, request validation, authentication, destination admission and safe path
+  encoding remain enforced. Vendor-only operations retain vendor requiredness,
+  nullability, numeric/integer checks and array bounds. Frozen individual literals,
+  discriminator dispatch, refinements and transforms remain as defined by the
+  selected contract; only the listed string formats and vendor-only string bounds
+  are relaxed. For operations without a TypeScript counterpart, no baseline
+  establishes broader accepted structures or numeric domains. Structural
+  cardinality and numeric domain constraints therefore remain as specified in
+  the accepted plan; only the scoped string compatibility policy is relaxed.
+  An unexpected out-of-domain response can still be rejected.
+- All [76 caller-supplied UUID checks](docs/G25_COMPATIBILITY.md#retained-caller-uuid-checks)
+  remain strict. The report lists every method and argument; accepting opaque IDs
+  in responses does not make opaque request path IDs valid.
+- `get_target_profile_error_logs` continues to allow only `limit`. Supplied `skip`
+  and `search` are rejected, never silently dropped. CLI consumers must treat
+  `--offset` and `--search` as usage errors for that call. No populated live error
+  logs establish service support for these options. Other rejected query options
+  are unchanged and listed in the report.
+- Public API names/types, dependencies, feature defaults, Rust 1.89 minimum and
+  G10 behavior remain. `serde_json/preserve_order` is not enabled. Generic model
+  decode errors remain redacted to avoid exposing response data.
+
+See [the operation and field comparison](docs/G25_COMPATIBILITY.md),
+[qualification status](docs/phase-status.json), and [live evidence](contracts/live-evidence.json).
+The reported airs-cli-rs loopback suite on worf has not been run here, and consumer
+adoption is not claimed. Offline compatibility coverage does not imply additional
+live privileges or service acceptance.
+
 ## 0.2.1 — 2026-10-18
 
 Published 2026-10-18 from `80baf80f0f6d90f9b382e8895083ca30fa5e8997`.

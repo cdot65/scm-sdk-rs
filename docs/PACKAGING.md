@@ -78,3 +78,21 @@ Phase17 requires clean archive qualification on both compilers. In addition to
 the G10 and Red Team examples, execute `access_policies` inside the extracted
 package and from a separate consumer crate with exact already-locked dependency
 versions. Both consumers run offline. The new constructor rustdoc also compiles.
+
+## G25 release 0.2.2
+
+Phase 20 requires clean proofs on Rust 1.89.0 and 1.99.0 for identical extracted
+package file contents. It adds offline G25 response-policy and typed-projection
+checks against the extracted crate and an external consumer, alongside the
+existing export, G10, Red Team and access-policy checks. Repository-only integration
+fixtures are not redistributed; the packaged checks independently exercise the
+new behavior without tenant credentials or network service calls.
+
+Write both clean proof outputs under ignored `.local/` paths. Copy them to
+`docs/checks/phase-20-release-package-<compiler>.json` only after both runs finish:
+`--require-clean` checks repository cleanliness again at the end of each run.
+Compiler archives may differ in container metadata; qualification compares their
+extracted files, while registry verification compares exact published bytes with
+the development-compiler proof. Publication requires the phase20 review and
+candidate guard; completion additionally requires registry, tag and terminal
+49-job CI receipts. Package checks alone do not establish publication or live acceptance.

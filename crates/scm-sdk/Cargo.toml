@@ -1,6 +1,6 @@
 [package]
 name = "scm-sdk"
-version = "0.2.1"
+version = "0.2.2"
 description = "Native async Strata Cloud Manager SDK, beginning with Prisma AIRS"
 edition.workspace = true
 rust-version.workspace = true
@@ -71,3 +71,7 @@ required-features = ["red-team"]
 [[example]]
 name = "access_policies"
 required-features = ["gateway"]
+
+[[example]]
+name = "response_compatibility"
+required-features = ["red-team"]

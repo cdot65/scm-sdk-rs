@@ -328,11 +328,69 @@ class CiContractTests(unittest.TestCase):
         workspace_version = tomllib.loads((ROOT / "crates/scm-sdk/Cargo.toml").read_text())["package"]["version"]
         if workspace_version != publication["version"]:
             return  # Only receipt-specific assertions depend on the development version.
-        receipt = json.loads((ROOT / publication["evidence"]).read_text())
+        evidence = publication["evidence"]
+        self.assertEqual(evidence, f"docs/checks/release-registry-{workspace_version}.json")
+        receipt_path = ROOT / evidence
+        self.assertFalse(receipt_path.is_symlink())
+        self.assertTrue(receipt_path.resolve().is_relative_to(ROOT.resolve()))
+        receipt = json.loads(receipt_path.read_text())
+        self.assertEqual(receipt["schemaVersion"], 1)
+        self.assertEqual(receipt["registry"], "crates.io")
+        self.assertEqual(receipt["package"], "scm-sdk")
         self.assertEqual(publication["version"], receipt["version"])
+        self.assertIs(receipt["yanked"], False)
+        self.assertIn("cdot65", receipt["ownerLogins"])
+        self.assertRegex(receipt["archiveSha256"], r"^[a-f0-9]{64}$")
+        self.assertRegex(receipt["sourceCommit"], r"^[a-f0-9]{40}$")
+        self.assertRegex(receipt["publishedAt"], r"^\d{4}-\d{2}-\d{2}T")
+        if "source_commit" in publication:
+            self.assertEqual(publication["source_commit"], receipt["sourceCommit"])
         changelog = (ROOT / "CHANGELOG.md").read_text()
-        for value in (receipt["archiveSha256"], receipt["sourceCommit"], receipt["publishedAt"].split("T")[0]):
-            self.assertIn(value, changelog)
+        self.assertIn("](" + evidence + ")", changelog)
+        # The exact registry artifact is independently checked by verify-publication.py.
+        # Linking that receipt avoids mutating release source after its archive exists.
+
+    def test_release_documents_require_a_valid_linked_registry_receipt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            evidence = "docs/checks/release-registry-0.2.2.json"
+            receipt = {"schemaVersion": 1, "registry": "crates.io", "package": "scm-sdk",
+                       "version": "0.2.2", "yanked": False, "ownerLogins": ["cdot65"],
+                       "archiveSha256": "a" * 64, "sourceCommit": "b" * 40,
+                       "publishedAt": "2026-10-19T12:00:00Z"}
+            publication = {"status": "published_and_verified", "version": "0.2.2",
+                           "source_commit": "b" * 40, "evidence": evidence}
+            fixtures = {
+                "docs/phase-status.json": json.dumps({"phases": [{"registry_publication": publication}]}),
+                "crates/scm-sdk/Cargo.toml": '[package]\nversion = "0.2.2"\n',
+                "README.md": "Release documentation",
+                "CHANGELOG.md": "See crates.io [registry receipt](" + evidence + ")",
+                "docs/STABILITY.md": "See crates.io", "docs/SECURITY.md": "See crates.io",
+                evidence: json.dumps(receipt),
+            }
+            for name, content in fixtures.items():
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content)
+
+            def run_guard():
+                result = unittest.TestResult()
+                with mock.patch.object(sys.modules[__name__], "ROOT", root):
+                    CiContractTests("test_verified_publication_is_consistent_in_current_release_documents").run(result)
+                return result
+
+            self.assertTrue(run_guard().wasSuccessful())
+            for change in ({"archiveSha256": "invalid"}, {"sourceCommit": "c" * 40},
+                           {"version": "0.2.1"}, {"yanked": True}, {"ownerLogins": []}):
+                with self.subTest(change=change):
+                    (root / evidence).write_text(json.dumps(receipt | change))
+                    self.assertFalse(run_guard().wasSuccessful())
+            (root / evidence).write_text(fixtures[evidence])
+            (root / "CHANGELOG.md").write_text("See crates.io " + evidence)
+            self.assertFalse(run_guard().wasSuccessful())
+            (root / "CHANGELOG.md").write_text(fixtures["CHANGELOG.md"])
+            (root / evidence).unlink()
+            self.assertFalse(run_guard().wasSuccessful())
 
     def test_every_job_installs_pinned_node_before_selecting_uv(self):
         action = "https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020"
@@ -426,14 +484,22 @@ class CiContractTests(unittest.TestCase):
         for script in ('scripts/check-rust.py','scripts/check-native-exports.py','scripts/check-package.py'):
             self.assertTrue(any(script in command for command in full))
             self.assertFalse(any(script in command for command in fast))
-        self.assertIn('--phase 17 --verification-only --contracts-only',WORKFLOW)
-        self.assertIn('docs/checks/phase-17-contracts.json',WORKFLOW)
-        self.assertNotIn('docs/checks/phase-17.json',WORKFLOW)
+        self.assertIn('--phase 20 --verification-only --contracts-only',WORKFLOW)
+        self.assertIn('docs/checks/phase-20-contracts.json',WORKFLOW)
+        self.assertNotIn('docs/checks/phase-20.json',WORKFLOW)
         current, selected = commands_for(17), ci_commands_for(17)
         self.assertTrue(all(c in current for c in selected))
         self.assertIn(['node', 'tools/portkey-access.mjs', '--check'], selected)
         self.assertFalse(any('scripts/check-access-release.py' in c for c in selected))
         self.assertGreater(len(current), len(selected))
+        current_g25, selected_g25 = commands_for(20), ci_commands_for(20)
+        self.assertTrue(all(command in current_g25 for command in selected_g25))
+        for tool in ('tools/g25_audit.py', 'tools/g25_fixtures.py', 'tools/g25_report.py',
+                     'tools/g25-oracle.mts'):
+            self.assertTrue(any(tool in command for command in selected_g25))
+        self.assertFalse(any('scripts/check-access-release.py' in command for command in selected_g25))
+        self.assertFalse(any('scripts/check-rust.py' in command for command in selected_g25))
+        self.assertTrue(any('scripts/check-native-exports.py' in command for command in current_g25))
         invalid=subprocess.run([sys.executable,'tools/check_phase.py','--phase','12','--contracts-only'],cwd=ROOT,capture_output=True,text=True)
         self.assertEqual(invalid.returncode,2)
         self.assertIn('requires --phase 12 --verification-only',invalid.stderr)

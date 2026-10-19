@@ -68,6 +68,23 @@ def run_check(command):
 
 
 def commands_for(phase):
+    if phase == 20:
+        # Reuse complete prior qualification and G25 regressions without changing
+        # their historical command lists or overwriting historical check reports.
+        combined = commands_for(17) + commands_for(19)
+        commands = []
+        for original in combined:
+            command = [value.replace("phase-17-", "phase-20-").replace("phase-19-", "phase-20-")
+                       for value in original]
+            if "scripts/check-access-release.py" in command:
+                command += ["--phase", "20", "--version", "0.2.2"]
+            if command not in commands:
+                commands.append(command)
+        commands.append(["python", "tools/generate_models.py", "--verify-fixtures"])
+        commands += [["python", "scripts/check-native-exports.py", "--toolchain", compiler,
+                      "--output", f"docs/checks/phase-20-native-exports-{compiler}.json"]
+                     for compiler in ("1.89.0", "1.99.0")]
+        return commands
     if phase == 19:
         return [["git", "diff", "--check"],
                 ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-19-private-material.json"],
@@ -485,13 +502,13 @@ def commands_for(phase):
 
 
 def ci_commands_for(phase):
-    """Fast current contracts complement the independent 48-job Rust matrix.
+    """Fast current contracts complement the independent Rust matrix.
 
     This subset cannot qualify a phase review: it writes a separate report and
     review_phase.check_evidence still requires the complete commands_for list.
     """
-    if phase not in (12, 17):
-        raise ValueError("The contracts-only scope is defined only for phases 12 and 17")
+    if phase not in (12, 17, 20):
+        raise ValueError("The contracts-only scope is defined only for phases 12, 17 and 20")
     native_scripts = {"scripts/check-rust.py", "scripts/check-native-exports.py", "scripts/check-package.py", "scripts/check-access-release.py"}
     return [command for command in commands_for(phase)
             if not native_scripts.intersection(command)
@@ -504,10 +521,10 @@ def main():
     parser.add_argument("--verification-only", action="store_true",
                         help="Rerun qualification in CI without changing phase status or requesting review")
     parser.add_argument("--contracts-only", action="store_true",
-                        help="Phase12 CI contract subset; separate report, never qualifies a phase review")
+                        help="Selected phase CI contract subset; requires --verification-only and never qualifies a phase review")
     args = parser.parse_args()
-    if args.contracts_only and (not args.verification_only or args.phase not in (12, 17)):
-        parser.error("--contracts-only requires --phase 12 --verification-only or --phase 17 --verification-only")
+    if args.contracts_only and (not args.verification_only or args.phase not in (12, 17, 20)):
+        parser.error("--contracts-only requires --phase 12 --verification-only or --phase 17 --verification-only or --phase 20 --verification-only")
     status = json.loads((ROOT / "docs/phase-status.json").read_text())
     if status["active_phase"] != args.phase and not args.verification_only:
         raise ValueError("Run the active phase's checks")

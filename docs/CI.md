@@ -8,10 +8,10 @@ registered. No external mirror, registry publication,
 release token, service registration, or live service workflow is configured.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
-CI now executes the Phase 17 contracts gate, whose invocation and current
+CI now executes the Phase 20 contracts gate, whose invocation and current
 script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
-Phase 12, and maintenance Phase 92 gates remain historical. See
-[the vendor plan](red-team-data-plane-0.93.0-plan.md).
+Phase 12, maintenance Phase 92 and access-policy Phase 17 gates remain historical.
+See [the G25 plan](g25-response-compatibility-plan.md).
 
 ## Required runner tools
 
@@ -103,8 +103,8 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 17 --verification-only --contracts-only. This credential-free subset checks the five Portkey additions, 47 exact Red Team vendor bindings, independent model/wire specimens, frozen contracts/oracles, all Python guard suites, generated ledgers, fresh dependency policy and source privacy. It checks live-receipt freshness without executing service calls. Its separate phase-17-contracts.json cannot qualify or advance a phase review. |
-| rust | Rust 1.89.0 and 1.99.0 each run the complete feature-selection matrix through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 20 --verification-only --contracts-only. Its 41 credential-free commands check the five Portkey additions, 47 exact Red Team vendor bindings, independent model/wire specimens, frozen contracts/oracles, every G25 audit/generation/oracle check, all Python guard suites, generated ledgers, fresh dependency policy and source privacy. It checks live-receipt freshness without executing service calls. Its separate phase-20-contracts.json cannot qualify or advance a phase review. |
+| rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
 The published 0.1.1 source is `7efd1372806bd1969663993de3083d393b20cc62`.
@@ -134,8 +134,9 @@ export probe feature set plus its historical gate regression.
 action pinning, setup ordering, this document's action inventory and setup effects,
 credential configuration, and additional target admission.
 
-The current release range excludes the two byte-pinned upstream Portkey YAML
-files; the historical phase12 range excludes its original `dp-openapi.yaml`.
+The retained Phase 17 release-range whitespace check excludes the two byte-pinned
+upstream Portkey YAML files; the historical Phase 12 range excludes its original
+`dp-openapi.yaml`. Phase 20 retains these exclusions for the reused checks.
 Original upstream whitespace remains part of each reviewed digest.
 Every owned source file retains the whitespace check; source-pin verification
 still rejects any byte change to that vendor input.
@@ -146,13 +147,30 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 17 gate runs both compilers' default/minimal/all
-configurations plus Gateway/JSON-unification/tracing checks. Its candidate guard
-requires clean archives and both external consumers on each compiler. It writes
-`phase-17.json`, which the actual Claude review requires. CI's smaller scope writes
-`phase-17-contracts.json` and cannot replace that evidence. The independent 48-job
-Rust matrix continues to test every supported feature selection on both compilers.
-The immutable 0.1.1 payload comparison stays in historical gate 92.
+The complete local Phase 20 gate has 59 commands. It combines the relevant
+Phase 17 release checks and Phase 19 G25 checks, runs both compilers' native-export
+probes, and executes `tools/generate_models.py --verify-fixtures`. It covers both
+compilers' default/minimal/all configurations plus Red Team, JSON-unification and
+tracing checks. Its candidate guard requires clean archives and executed external
+consumers on each compiler. It writes `phase-20.json`, which the actual independent
+phase review requires.
+
+CI's 41-command subset writes `phase-20-contracts.json` and cannot replace that
+complete evidence. It excludes Rust checks, package execution, native-export probe
+execution, the local candidate guard and `generate_models.py --verify-fixtures`.
+Every G25 audit, generation and oracle check and the Python guard suites remain in
+the subset. The independent 48-job Rust matrix tests all 24 configured feature
+selections on both compilers. Together they form 49 required jobs. The immutable
+0.1.1 payload comparison stays in historical gate 92.
+
+### Historical 0.2.1 delivery
+
+[Run 21](checks/phase-17-remote-ci-run-21.json) records terminal success for all
+47 jobs configured at the time: 46 Rust matrix jobs and the contracts job, on
+source `3eeed47f3b1d91509ad68d683dafe925f9be0a75`. That retained Phase 17 result
+qualifies the recorded 0.2.1 delivery state; it is not evidence that the expanded
+49-job Phase 20 workflow has run. Current delivery must retain its own terminal
+run and exact per-job context set.
 
 ## Dependency and target evidence
 
@@ -170,7 +188,7 @@ redacted. A failed receipt replaces any earlier result at its output path.
 The qualification job fetches the complete locked dependency graph without a
 target filter, then resolves all-feature metadata offline before the phase gate.
 The current dependency audit inventories all targets, including packages that
-supported native builds do not use. The Phase 17 contracts gate performs no cross-target compilation
+supported native builds do not use. The current contracts gate performs no cross-target compilation
 and installs no cross-target standard libraries. The retained Phase 8/91 cross
 checks compiled the transport-independent feature set for Linux GNU x86_64/ARM64,
 Apple Silicon and Windows MSVC x86_64. Those historical checks did not link or

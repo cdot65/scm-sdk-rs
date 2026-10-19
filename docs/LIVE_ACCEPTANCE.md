@@ -10,7 +10,7 @@ Each unqualified method has a reason. The [current receipt reference](../contrac
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
-The current 0.2.1 run (attempt 13) verified 16 exact native methods
+The historical 0.2.1 run (attempt 13) verified 16 exact native methods
 from 24 service requests and one token exchange. Its synchronous scan-ID query
 returned HTTP 200 without a complete correlated receipt and remains unqualified.
 The async lookup completed with correlated results. Three Red Team reads returned 403 permission rejections;
@@ -18,8 +18,10 @@ IAM scope creation and Gateway provisioning returned 400 rejecting the submitted
 requests. The cause of these two 400s remains unestablished, including whether a
 native request-shape defect contributed. Both creations were rejected before
 ownership, so cleanup was not needed. Those methods remain live-unqualified.
-The receipt binds this candidate's full runtime fingerprint, including its
-current vendor validators and typed model additions.
+That receipt binds its own recorded runtime fingerprint, including the vendor
+validators and typed model additions at that source. It does not qualify later
+G25 runtime changes; the current receipt reference above identifies the applicable
+source and execution outcomes.
 
 The published 0.1.1 source had a separate run (attempt 08) verifying 16 methods.
 Its synchronous scan-ID lookup was incomplete or uncorrelated while the async

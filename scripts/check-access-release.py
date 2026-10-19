@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bind the additive 0.2.1 release to its executed clean archives and exact current payload."""
+"""Bind a selected release to its executed clean archives and exact current payload."""
 import argparse
 import hashlib
 import importlib.util
@@ -29,12 +29,36 @@ def load_module(name, path):
     return module
 
 
-def verify(root):
+RELEASES = {
+    (17, '0.2.1'): BASELINE,
+    (20, '0.2.2'): '80baf80f0f6d90f9b382e8895083ca30fa5e8997',
+}
+
+
+def verify_offline_delivery(proof, files, version):
+    examples = ['response_defaults', 'red_team_dataplane', 'access_policies']
+    if version == '0.2.2':
+        examples.append('response_compatibility')
+    for example in examples:
+        if not any(c['command'][2:6] == ['run', '--example', example, '--all-features'] for c in proof['checks']):
+            raise ValueError('Offline example was not executed: ' + example)
+    for field, example in [('accessPolicyConsumerSourceSha256', 'access_policies')]+(
+            [('responseCompatibilityConsumerSourceSha256', 'response_compatibility')] if version == '0.2.2' else []):
+        if proof.get(field) != sha(files['examples/' + example + '.rs']):
+            raise ValueError('External example consumer differs from qualified source: ' + example)
+    expected = 3 if version == '0.2.2' else 2
+    if sum(c['command'][2:4] == ['run', '--locked'] for c in proof['checks']) != expected:
+        raise ValueError('All packaged external consumers must execute')
+
+
+def verify(root, phase=17, version='0.2.1'):
+    if (phase, version) not in RELEASES:
+        raise ValueError('Unreviewed release phase/version pair')
     rows = []
     publication = load_module("release_publication", root / "scripts/verify-publication.py")
     proofs = []
     for compiler in ("1.89.0", "1.99.0"):
-        path = root / f"docs/checks/phase-17-release-package-{compiler}.json"
+        path = root / f"docs/checks/phase-{phase:02d}-release-package-{compiler}.json"
         if path.is_symlink():
             raise ValueError("Proof must be a regular file")
         proof = json.loads(path.read_text())
@@ -51,7 +75,7 @@ def verify(root):
         data = archive.read_bytes()
         if sha(data) != proof["archive_sha256"] or len(data) != proof["archive_bytes"]:
             raise ValueError("Retained archive differs from executed proof")
-        files = publication.policy.inspect_archive(data, "scm-sdk-0.2.1/")
+        files = publication.policy.inspect_archive(data, f"scm-sdk-{version}/")
         if publication.file_rows(files) != proof["files"]:
             raise ValueError("Archive file inventory differs from proof")
         if publication.policy.validate_vcs(files, proof["releaseCommit"], True) != proof["vcs"]:
@@ -76,16 +100,9 @@ def verify(root):
                 raise ValueError("Current packaged input differs: " + relative)
             if git(root, "show", proof["releaseCommit"] + ":" + relative) != content:
                 raise ValueError("Packaged input differs from release commit")
-        for example in ("response_defaults", "red_team_dataplane", "access_policies"):
-            if not any(c["command"][2:6] == ["run", "--example", example, "--all-features"]
-                       for c in proof["checks"]):
-                raise ValueError("Offline example was not executed: " + example)
+        verify_offline_delivery(proof, files, version)
         if proof["publicConsumerSourceSha256"] != sha((root / "contracts/native-probes/src/main.rs").read_bytes()):
             raise ValueError("External consumer differs from executed proof")
-        if proof.get("accessPolicyConsumerSourceSha256") != sha(files["examples/access_policies.rs"]):
-            raise ValueError("Access-policy consumer differs from qualified source")
-        if sum(c["command"][2:4] == ["run", "--locked"] for c in proof["checks"]) != 2:
-            raise ValueError("Both packaged external consumers must execute")
         for relative in ("Cargo.toml", "Cargo.lock", "contracts/native-probes/Cargo.toml", "contracts/native-probes/Cargo.lock"):
             if (root / relative).read_bytes() != git(root, "show", proof["releaseCommit"] + ":" + relative):
                 raise ValueError("Qualification input changed: " + relative)
@@ -96,7 +113,7 @@ def verify(root):
         proofs.append(proof)
     if any(proofs[0][key] != proofs[1][key] for key in ("releaseCommit", "files", "vcs")):
         raise ValueError("Compiler proofs do not qualify identical source files")
-    return {"schemaVersion": 1, "passed": True, "version": "0.2.1", "baselineCommit": BASELINE,
+    return {"schemaVersion": 1, "passed": True, "version": version, "baselineCommit": RELEASES[(phase, version)],
             "releaseCommit": proofs[0]["releaseCommit"], "protectedFiles": rows,
             "readmeSha256": sha((root / "README.md").read_bytes()),
             "archiveSha256": proofs[1]["archive_sha256"], "toolchains": [p["toolchain"] for p in proofs]}
@@ -105,8 +122,10 @@ def verify(root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=pathlib.Path, required=True)
+    parser.add_argument("--phase", type=int, default=17)
+    parser.add_argument("--version", default="0.2.1")
     args = parser.parse_args()
-    result = verify(ROOT)
+    result = verify(ROOT, args.phase, args.version)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k != "protectedFiles"}))

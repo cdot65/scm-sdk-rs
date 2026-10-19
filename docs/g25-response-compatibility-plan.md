@@ -49,7 +49,12 @@ required regardless of access to the consumer checkout.
    rule and admits baseline fields the vendor restricts. Vendor-only string length
    checks have no TypeScript justification and are request-only. New operations
    retain vendor structure/types with open responses and relaxed string formats
-   and lengths; they must not be labeled TypeScript-parity operations.
+   and lengths; they must not be labeled TypeScript-parity operations. For these
+   unpaired operations, no TypeScript contract establishes broader structural
+   cardinality or numeric domains. Retain the vendor numeric/integer and array
+   bounds as the accepted structural contract; only the scoped string compatibility
+   policy is relaxed. An unexpected out-of-domain service response can still be
+   rejected. This retained risk must be disclosed without extending behavior.
 3. Baseline passthrough means new vendor fields cannot make an old operation fail.
    Audit the typed decoder as well as validation. Existing public field types must
    remain unchanged. Where an optional vendor-added field cannot decode into its

@@ -4251,10 +4251,75 @@
       "plan": "docs/g25-response-compatibility-plan.md",
       "scope_evidence": [
         "docs/g25-response-compatibility-plan.md",
-        "contracts/compatibility/g25/audit.json",
-        "tools/g25_audit.py"
+        "docs/G25_COMPATIBILITY.md",
+        "CHANGELOG.md",
+        "docs/RELEASE.md",
+        "docs/PACKAGING.md",
+        "docs/CI.md",
+        "docs/LIVE_ACCEPTANCE.md",
+        "tools/check_phase.py",
+        "tools/review_phase.py",
+        "tools/release_delivery.py",
+        "tools/test_release_delivery.py",
+        "scripts/check-package.py",
+        "scripts/check-access-release.py",
+        "tools/test_release_022.py",
+        "crates/scm-sdk/examples/response_compatibility.rs",
+        "crates/scm-sdk/src/validation.rs",
+        "crates/scm-sdk/src/validation/tests.rs",
+        "tools/g25_fixtures.py",
+        "tools/test_g25_generation.py",
+        "tools/g25_report.py",
+        "tools/test_g25_report.py",
+        "crates/scm-sdk/tests/g25_response_compatibility.rs",
+        "contracts/compatibility/g25/projections.json"
       ],
-      "final_in_sequence": true
+      "final_in_sequence": true,
+      "chunks": [
+        {
+          "id": "qualification-and-package",
+          "status": "in_progress",
+          "attempts": [],
+          "scope_evidence": [
+            "scripts/check-package.py",
+            "scripts/check-access-release.py",
+            "tools/test_release_022.py",
+            "tools/check_phase.py",
+            "tools/review_phase.py",
+            "tools/test_review_phase.py",
+            "tools/release_delivery.py",
+            "tools/test_release_delivery.py",
+            "crates/scm-sdk/examples/response_compatibility.rs",
+            "CHANGELOG.md",
+            "docs/G25_COMPATIBILITY.md",
+            "docs/RELEASE.md",
+            "docs/PACKAGING.md",
+            "docs/CI.md",
+            "docs/LIVE_ACCEPTANCE.md",
+            "docs/checks/phase-20-release-package-1.89.0.json",
+            "docs/checks/phase-20-release-package-1.99.0.json",
+            "crates/scm-sdk/src/validation.rs",
+            "crates/scm-sdk/src/validation/tests.rs",
+            "tools/g25_fixtures.py",
+            "tools/test_g25_generation.py",
+            "tools/g25_report.py",
+            "tools/test_g25_report.py",
+            "crates/scm-sdk/tests/g25_response_compatibility.rs",
+            "contracts/compatibility/g25/projections.json"
+          ]
+        },
+        {
+          "id": "registry-and-remote-delivery",
+          "status": "pending",
+          "attempts": [],
+          "scope_evidence": [
+            "tools/release_delivery.py",
+            "scripts/verify-publication.py",
+            "docs/checks/release-registry-0.2.2.json",
+            "docs/checks/release-tag-v0.2.2.json"
+          ]
+        }
+      ]
     }
   ],
   "active_followup_plan": "docs/g25-response-compatibility-plan.md"

@@ -1,20 +1,33 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.1**. [Phases15–17](portkey-access-policies-plan.md)
-qualify the additive Portkey access-policy delta after completed 0.2.0 delivery.
-The [registry receipt](checks/release-registry-0.2.1.json) and
-[tag receipt](checks/release-tag-v0.2.1.json) establish actual publication and
+The workspace version is **0.2.2**. [Phases18–20](g25-response-compatibility-plan.md)
+qualify the G25 response compatibility correction. The
+[registry receipt](checks/release-registry-0.2.2.json) and
+[tag receipt](checks/release-tag-v0.2.2.json) establish actual publication and
 remote source identity. A missing receipt means publication is not yet verified.
 
-CI runs `--phase 17 --verification-only --contracts-only` with the expanded
-48-job Rust feature/compiler matrix. The complete local phase17 gate additionally
-requires both clean archive proofs, the new offline example and external consumer,
-all relevant compiler checks, current live-ledger freshness, dependency/privacy
-checks and actual Claude review >=9/10 before publication. Historical gates retain
-their accepted command sets. Publication uses the owner-controlled external
-Cargo credential; CI receives no publishing credential. Repackage at the exact
-qualified clean source, compare archive digest, publish, download and verify every
-file, create/push the immutable source tag, then wait for terminal 49-job CI.
+CI runs `--phase 20 --verification-only --contracts-only` alongside 48 Rust jobs
+(24 feature sets on both reviewed compilers), including Red Team with JSON feature
+unification. The complete local phase20 gate additionally requires both clean
+archive proofs, executed offline examples and external consumers, current live
+and native ledgers, dependency/privacy checks, and the full G25 regression corpus.
+Historical gates retain their accepted command sets.
+
+Independent review scores implementation, code quality, supportability,
+architecture and feature delivery out of ten each. Chunks require at least 42/50
+(aim 45), phases 46/50, with every category at least 8. Each loop has at most five
+attempts; the maintainer permits proceeding after attempt five only above 40/50,
+with remaining deficiencies recorded. Publication uses the owner-controlled
+external Cargo credential; CI receives no publishing credential.
+
+Commit the complete source before clean packaging. Write both proof outputs into
+ignored `.local/` paths, then retain them in `docs/checks/` after both runs finish.
+Repackage at the exact qualified clean source, compare archive digest, publish,
+download and verify every file, create/push the immutable source tag, then require
+actual terminal success for all 49 configured CI jobs before phase completion.
+Published source and a later evidence-only delivery commit remain distinct in receipts.
+The linked registry receipt holds publication date/source/checksum; do not alter
+packaged source merely to embed those values after publication.
 
 The prior [0.2.0 receipt](checks/release-registry-0.2.0.json) and
 [release plan](release-0.2.0-plan.md) remain historical.

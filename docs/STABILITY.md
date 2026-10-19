@@ -1,7 +1,7 @@
 # Compatibility and support status
 
-The current Rust crate version is **0.2.1**, an additive access-policy update.
-The [registry receipt](checks/release-registry-0.2.1.json) establishes publication
+The current Rust crate version is **0.2.2**, the [G25 response compatibility patch](G25_COMPATIBILITY.md).
+The [registry receipt](checks/release-registry-0.2.2.json) establishes publication
 only when present and verified. A missing receipt means publication is not yet verified.
 The [access-policy family](ACCESS_POLICIES.md) remains experimental/live-unverified;
 its Portkey key/control-plane contract is separate from SCM OAuth.

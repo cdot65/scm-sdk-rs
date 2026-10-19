@@ -11,11 +11,14 @@ and 1,190 public members; methods are part of that inventory. Native adaptations
 and exact public paths are recorded in the [operation matrix](contracts/native-operations.json)
 and [export ledger](contracts/native-exports.json).
 
-The baseline implementation phases and maintenance releases require actual Claude
-Code review of at least 9/10. [Phase status](docs/phase-status.json) records the
+Historical phases used actual Claude Code review of at least 9/10. Current phases
+use five independent review categories: chunks require at least 42/50 and phases
+at least 46/50, with each category at least 8/10. The five-attempt exception and
+recorded deficiencies follow the maintainer’s review policy. [Phase status](docs/phase-status.json) records the
 accepted reviews and exact source evidence.
 
-Crate version: **0.2.1**. It adds five experimental
+Crate version: **0.2.2**, the [G25 response-compatibility correction](docs/G25_COMPATIBILITY.md).
+It retains five experimental
 [Portkey access-policy APIs](docs/ACCESS_POLICIES.md) and retains full
 [Red Team dataplane 0.93.0 coverage](docs/RED_TEAM.md): **47 operations**, including
 11 new calls, with a separately pinned vendor ledger. See the
@@ -34,19 +37,20 @@ See [CI](docs/CI.md) and the [release procedure](docs/RELEASE.md).
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
 
-The 0.2.1 [registry receipt](docs/checks/release-registry-0.2.1.json) and
-[tag receipt](docs/checks/release-tag-v0.2.1.json) establish publication only when
+The 0.2.2 [registry receipt](docs/checks/release-registry-0.2.2.json) and
+[tag receipt](docs/checks/release-tag-v0.2.2.json) establish publication only when
 present and verified; missing receipts mean that publication is not yet verified.
 The access-policy client requires explicit compatible control-plane key credentials
 and remains live-unverified. Existing 0.2.0 APIs and G10 behavior are retained.
 
 ## Start here
 
-Add the published crate, optionally using the shorter dependency alias:
+After verifying the 0.2.2 registry receipt above, pin that release using the shorter
+dependency alias. Until publication is verified, retain your existing released pin:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.1" }
+scm = { package = "scm-sdk", version = "=0.2.2" }
 ```
 
 The alias exposes `scm::airs::scan`, `scm::airs::management`, and the other product
@@ -97,7 +101,8 @@ Follow [development](docs/DEVELOPMENT.md), the [accepted design](docs/implementa
 and sequential [phase gates](docs/PHASES.md). Development-only frozen TypeScript
 and Zod tooling provide independent contract evidence; Cargo consumers build the
 packaged Rust sources. Preserve failed review/check attempts and require an actual
-Claude Code score of at least 9 before advancing a phase.
+independent five-category review meeting the current phase threshold before advancing.
+Phase 20 CI comprises 49 jobs: 24 feature sets on two compilers and the contract gate.
 
 Maintained by `cdot65`. Project-owned code is Apache-2.0 with retained notices.
 This is not an official Palo Alto Networks SDK. See [CHANGELOG.md](CHANGELOG.md).

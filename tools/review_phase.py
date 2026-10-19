@@ -190,6 +190,25 @@ def check_evidence(root, phase, source_sha256, path=None):
     return path
 
 
+def declared_chunk_scope(root, phase, name):
+    status = json.loads((root / "docs/phase-status.json").read_text())
+    phases = [item for item in status["phases"] if item["id"] == phase]
+    declarations = [item for item in phases[0].get("chunks", []) if item.get("id") == name] if len(phases) == 1 else []
+    if len(declarations) != 1:
+        raise ValueError("Chunk review needs exactly one matching declaration")
+    scope = declarations[0].get("scope_evidence")
+    if (not isinstance(scope, list) or not scope or not all(isinstance(path, str) and path for path in scope)
+            or len(set(scope)) != len(scope)):
+        raise ValueError("Chunk declaration needs nonempty, unique scope_evidence paths")
+    return scope
+
+
+def matches_declared_scope(root, phase, name, scope):
+    declared = declared_chunk_scope(root, phase, name)
+    return (isinstance(scope, list) and all(isinstance(path, str) for path in scope)
+            and len(scope) == len(declared) and set(scope) == set(declared))
+
+
 def verify_record(root, path, phase, source_sha256, chunk=None):
     """Bind the score to the preserved prompt, actual CLI result, and passing checks."""
     path = path.resolve()
@@ -217,6 +236,19 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
         evidence = path.with_suffix(suffix)
         if not evidence.is_file() or evidence.is_symlink() or sha256(evidence) != record.get(key):
             return False
+    if phase == 20:
+        scope = record.get("review_scope")
+        allowed = {"chunk"} if chunk else {"phase", "release_readiness"}
+        if scope not in allowed or not path.with_suffix(".prompt.md").read_text().startswith(
+                f"Review scope: {scope}.\n"):
+            return False
+        if chunk:
+            evidence_scope = record.get("scope_evidence")
+            if not matches_declared_scope(root, phase, chunk, evidence_scope):
+                return False
+            prompt_scope = "Chunk scope artifacts: " + json.dumps(evidence_scope) + "."
+            if prompt_scope not in path.with_suffix(".prompt.md").read_text():
+                return False
     envelope = json.loads(path.with_suffix(".cli.json").read_text())
     output = envelope.get("structured_output")
     if output is None:
@@ -225,6 +257,13 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
         return False
     checks = check_evidence(root, phase, source_sha256, path.with_suffix(".checks.json") if rubric else None)
     return sha256(checks) == record.get("checks_sha256")
+
+
+def verify_release_readiness(root, path, source_sha256):
+    """Publication helpers must require this accepted, current-source assessment."""
+    record = json.loads(path.read_text())
+    return (record.get("review_scope") == "release_readiness"
+            and verify_record(root, path, 20, source_sha256))
 
 
 def accepted_chunks(root, phase, declared, source_sha256, phase_review=None):
@@ -313,6 +352,8 @@ def main(argv=None, root=None):
     parser.add_argument("--attempt", type=int, default=1)
     parser.add_argument("--chunk", help="Named chunk review; cannot advance the phase")
     parser.add_argument("--scope-evidence", nargs="*", action="extend", default=[], help="Chunk artifact paths for the reviewer")
+    parser.add_argument("--release-readiness", action="store_true",
+                        help="Phase20 prepublication readiness review; cannot complete the phase")
     parser.add_argument("--verify", type=pathlib.Path)
     parser.add_argument("--advance", action="store_true",
                         help="Advance only after verifying an accepted current-source review")
@@ -322,6 +363,8 @@ def main(argv=None, root=None):
     if args.phase not in phases or args.attempt < 1:
         raise ValueError("Unknown phase or invalid attempt")
     rubric = uses_rubric(args.phase)
+    if args.release_readiness and (args.phase != 20 or args.chunk or args.verify or args.advance):
+        raise ValueError("Release readiness requires a new phase20 review without chunk, verify, or advance")
     if args.chunk and (not rubric or args.advance):
         raise ValueError("Chunk reviews require the new rubric and cannot advance a phase")
     if rubric and not args.verify:
@@ -339,9 +382,14 @@ def main(argv=None, root=None):
         if valid and args.advance:
             if status["active_phase"] != args.phase:
                 raise ValueError("Only the active phase can advance")
+            if args.phase == 20 and json.loads(review_path.read_text()).get("review_scope") != "phase":
+                raise ValueError("Release readiness does not complete delivery; obtain a final phase review")
             if rubric:
                 phases[args.phase]["chunks"] = accepted_chunks(
                     root, args.phase, phases[args.phase].get("chunks"), before, phase_review=review_path)
+            if args.phase == 20:
+                from release_delivery import verify as verify_delivery
+                verify_delivery(root, before)
             phases[args.phase]["status"] = "complete"
             record = json.loads(review_path.read_text())
             phases[args.phase]["reviews"].append(str(review_path.relative_to(root)))
@@ -378,6 +426,9 @@ def main(argv=None, root=None):
         raise ValueError("Review attempt already exists; preserve it and use a new attempt")
     if args.chunk and not args.scope_evidence:
         raise ValueError("Chunk reviews require --scope-evidence with scoped artifact paths")
+    if args.phase == 20 and args.chunk and not matches_declared_scope(
+            root, args.phase, args.chunk, args.scope_evidence):
+        raise ValueError("Supplied chunk scope differs from its declared scope_evidence")
     if rubric:
         snapshot = destination.with_suffix(".checks.json")
         snapshot.parent.mkdir(parents=True, exist_ok=True)
@@ -429,6 +480,18 @@ review predates phase-requested corrections, explicitly assess those corrections
 and their regressions against the complete current phase. The original chunk
 review remains historical evidence; this phase review must cover current source.
 """
+    if args.release_readiness:
+        prompt += """
+This is the prepublication RELEASE READINESS assessment, not phase completion.
+Assess implementation, code quality, supportability, architecture and feature delivery
+against the qualified package and readiness to publish. The phase threshold remains46/50.
+Actual registry publication, remote tag and terminal CI are subsequent delivery obligations;
+identify them as pending limitations, not completed outcomes. This record cannot advance
+phase20. A fresh complete-phase review after delivery and both accepted chunks is required.
+"""
+    if args.phase == 20:
+        review_scope = "release_readiness" if args.release_readiness else ("chunk" if args.chunk else "phase")
+        prompt = f"Review scope: {review_scope}.\n" + prompt
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.with_suffix(".prompt.md").write_text(prompt)
     local = root / ".local/reviews"
@@ -472,6 +535,10 @@ review remains historical evidence; this phase review must cover current source.
     if rubric:
         record.update({"rubric": "five-category-v1", "chunk": args.chunk,
                        "decision": gate_decision(review, rubric=True, chunk=bool(args.chunk), attempt=args.attempt)})
+    if args.phase == 20:
+        record["review_scope"] = "release_readiness" if args.release_readiness else ("chunk" if args.chunk else "phase")
+        if args.chunk:
+            record["scope_evidence"] = args.scope_evidence
     destination.write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps({"phase": args.phase, "score": review["score"], "total": review.get("total"), "gate_passed": record["gate_passed"],
                       "review": str(destination.relative_to(root)), "summary": review["summary"]}))

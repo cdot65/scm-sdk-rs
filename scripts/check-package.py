@@ -151,6 +151,8 @@ def main():
             commands.append(['run', '--example', 'red_team_dataplane', '--all-features'])
         if 'examples/access_policies.rs' in files:
             commands.append(['run', '--example', 'access_policies', '--all-features'])
+        if 'examples/response_compatibility.rs' in files:
+            commands.append(['run', '--example', 'response_compatibility', '--all-features'])
         passed = True
         for command in commands:
             if not run(command + ['--locked', '--offline', '--target', host], extracted):
@@ -184,6 +186,9 @@ def main():
             (consumer / 'Cargo.lock').write_text(lock)
             (consumer / 'src/main.rs').write_bytes(files['examples/access_policies.rs'])
             passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+        if passed and 'examples/response_compatibility.rs' in files:
+            (consumer / 'src/main.rs').write_bytes(files['examples/response_compatibility.rs'])
+            passed = run(['run', '--locked', '--offline', '--target', host], consumer)
     if args.require_clean:
         current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         current_status = subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT, text=True)
@@ -197,6 +202,7 @@ def main():
               'files': [{'path': name, 'sha256': digest(data), 'bytes': len(data)} for name, data in sorted(files.items())],
               'publicConsumerSourceSha256': digest((ROOT / 'contracts/native-probes/src/main.rs').read_bytes()),
               'accessPolicyConsumerSourceSha256': digest(files['examples/access_policies.rs']) if 'examples/access_policies.rs' in files else None,
+              'responseCompatibilityConsumerSourceSha256': digest(files['examples/response_compatibility.rs']) if 'examples/response_compatibility.rs' in files else None,
               'checks': checks, 'limitations': ['Only the recorded host executes code; examples compile without contacting services. The response_defaults example, when present, also executes offline.',
                   'The full development integration corpus remains repository-only; the archive runs its packaged unit/doctests and external public capability consumer.']}
     output = args.output or ROOT / f'.local/checks/package-{args.toolchain}.json'
