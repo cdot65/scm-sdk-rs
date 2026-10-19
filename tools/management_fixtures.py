@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Derive independent management compatibility specimens from pinned vendor schemas.
 
-This is an offline compatibility oracle, not evidence of service acceptance.
+This is an offline compatibility corpus, not evidence of service acceptance.
+Union acceptance expectations are reviewed authored values derived from vendor
+schemas, not outputs from an independent validator oracle.
 It deliberately does not import the management model compiler or its ledgers.
 """
 import argparse
@@ -94,6 +96,7 @@ def expected():
         'contracts/vendor/red-team-management/0.86.0/mp-openapi.yaml',
         'contracts/vendor/red-team-management/0.86.0/openapi.json']
     return {'schemaVersion': 1, 'evidenceBoundary': 'Offline vendor-derived shape and independent preservation witnesses only; no service acceptance or live provider execution is established.',
+        'expectationsOrigin': 'Union acceptance expectations are reviewed, vendor-schema-derived authored values, not independent validator-oracle outputs. Raw preservation and default expectations are explicit witnesses independent of SDK parsing.',
         'sourceBindings': [{'path': path, 'sha256': digest((ROOT / path).read_bytes())} for path in sources],
         'projectionOccurrences': occurrences, 'projectionCases': cases,
         'unionTails': [{'schema': 's010462', 'variant': 5, 'vendorComponent': 'VertexAIConnectionParams'},

@@ -27,6 +27,8 @@ class ManagementPackageTests(unittest.TestCase):
         self.commit = 'b' * 40
         self.host = 'x86_64-unknown-linux-musl'
         self.version = '0.2.2'
+        self.rustc_version = 'rustc 1.99.0\nhost: ' + self.host + '\n'
+        self.consumer_manifest = '[features]\nred-team = ["scm-sdk/red-team"]\n'
         self.files = {}
         self.names = ('response_defaults', 'red_team_dataplane', 'response_compatibility', 'red_team_management')
         for name in self.names:
@@ -60,8 +62,8 @@ class ManagementPackageTests(unittest.TestCase):
         bindings = {}
         for name in self.names:
             check(['run', '--example', name, '--all-features', '--locked', '--offline', '--target', self.host])
-            index = check(['run', '--locked', '--offline', '--target', self.host], name + '/consumer')
-            bindings['examples/' + name + '.rs'] = {'sha256': digest(self.files['examples/' + name + '.rs']), 'checkIndex': index}
+            index = check(['run', '--features', 'red-team', '--locked', '--offline', '--target', self.host], name + '/consumer')
+            bindings['examples/' + name + '.rs'] = {'sha256': digest(self.files['examples/' + name + '.rs']), 'checkIndex': index, 'selectedFeatures': ['red-team']}
         probe_index = check(['run', '--locked', '--offline', '--target', self.host], 'probe/consumer')
         self.report = {'schemaVersion': 3, 'sourceSha256': self.source, 'toolchain': '1.99.0',
             'passed': True, 'requireClean': True, 'effectiveDirty': False,
@@ -72,11 +74,15 @@ class ManagementPackageTests(unittest.TestCase):
             'archive_bytes': self.archive.stat().st_size, 'releaseCommit': self.commit, 'vcs': self.vcs,
             'files': [{'path': name, 'sha256': digest(data), 'bytes': len(data)} for name, data in sorted(self.files.items())],
             'oldConsumerSources': {row['path']: row['sha256'] for row in self.manifest['consumers']},
-            'checks': checks, 'hostTarget': self.host, 'externalExampleConsumers': bindings,
+            'checks': checks, 'hostTarget': self.host, 'rustcVersion': self.rustc_version,
+            'externalExampleConsumers': bindings,
+            'externalConsumerManifest': self.consumer_manifest,
+            'externalConsumerManifestSha256': digest(self.consumer_manifest.encode()),
             'frozenProbeCheckIndex': probe_index,
             'managementConsumerSourceSha256': digest(self.files['examples/red_team_management.rs']),
             'publicConsumerSourceSha256': 'c' * 64}
-        policy = types.SimpleNamespace(inspect_archive=lambda data, prefix: copy.deepcopy(self.files),
+        policy = types.SimpleNamespace(compiler_identity=lambda root, toolchain: (pathlib.Path('cargo'), self.rustc_version, self.host),
+                                       inspect_archive=lambda data, prefix: copy.deepcopy(self.files),
                                        validate_vcs=lambda files, commit, clean: copy.deepcopy(self.vcs))
         self.addCleanup(mock.patch.stopall)
         mock.patch.object(package, 'fingerprint', return_value=self.source).start()
@@ -103,6 +109,33 @@ class ManagementPackageTests(unittest.TestCase):
                 report = copy.deepcopy(self.report)
                 report[key] = value
                 with self.assertRaises(ValueError): self.verify(report)
+
+    def test_compiler_host_and_version_must_match_local_toolchain(self):
+        for key, value in [('hostTarget', 'another-host'), ('rustcVersion', 'rustc 1.89.0')]:
+            with self.subTest(key=key):
+                report = copy.deepcopy(self.report)
+                report[key] = value
+                with self.assertRaisesRegex(ValueError, 'compiler host or version'):
+                    self.verify(report)
+
+    def test_external_example_requires_enabled_cfg_and_manifest_binding(self):
+        for mutation in ('features', 'command', 'manifest-hash', 'manifest-absent', 'manifest-no-forwarding'):
+            with self.subTest(mutation=mutation):
+                report = copy.deepcopy(self.report)
+                binding = report['externalExampleConsumers']['examples/red_team_dataplane.rs']
+                if mutation == 'features':
+                    binding['selectedFeatures'] = []
+                elif mutation == 'command':
+                    report['checks'][binding['checkIndex']]['command'].remove('--features')
+                    report['checks'][binding['checkIndex']]['command'].remove('red-team')
+                elif mutation == 'manifest-hash':
+                    report['externalConsumerManifestSha256'] = '0' * 64
+                else:
+                    text = '' if mutation == 'manifest-absent' else '[features]\nred-team = []\n'
+                    report['externalConsumerManifest'] = text
+                    report['externalConsumerManifestSha256'] = digest(text.encode())
+                with self.assertRaisesRegex(ValueError, 'External consumer'):
+                    self.verify(report)
 
     def test_receipt_input_archive_and_member_tampering_rejected(self):
         for key in ('packageScriptSha256', 'wrapperSha256', 'oldConsumerManifestSha256', 'archive_sha256'):

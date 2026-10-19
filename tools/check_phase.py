@@ -773,10 +773,15 @@ def read_checkpoint(path, phase, source, commands):
             or any(row.get('exit_code') != 0 or row.get('timeout') is not False
                    or row.get('source_unchanged') is not True for row in records)):
         raise ValueError('Checkpoint is not an executed passing command prefix')
-    for row in records:
-        if row.get('checkpoint_bindings') != checkpoint_bindings(row['command']):
-            raise ValueError('Checkpoint evidence changed')
+    verify_checkpoint_bindings(records)
     return records, data['started_at']
+
+
+def verify_checkpoint_bindings(records, root=None):
+    """Recheck every receipt and archive, including earlier commands' outputs."""
+    for row in records:
+        if row.get('checkpoint_bindings') != checkpoint_bindings(row['command'], root):
+            raise ValueError('Checkpoint evidence changed')
 
 
 def write_checkpoint(path, phase, source, commands, records, started_at):
@@ -818,13 +823,14 @@ def main():
         result = run_check(invocation)
         records.append({"command": command, "invocation": invocation, **result,
                         "duration_seconds": round(time.monotonic() - started, 3)})
-        if args.resume and result['exit_code'] == 0:
+        if args.phase in (23, 24, 25) and result['exit_code'] == 0:
             if fingerprint(ROOT) != before:
                 raise ValueError('Source changed during resumable qualification')
             records[-1].update(source_unchanged=True,
                                executed_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                                checkpoint_bindings=checkpoint_bindings(command))
-            write_checkpoint(checkpoint, args.phase, before, commands, records, started_at)
+            if args.resume:
+                write_checkpoint(checkpoint, args.phase, before, commands, records, started_at)
         print(json.dumps({"command": command, "exit_code": result["exit_code"],
                           "timeout": result["timeout"]}), flush=True)
         if result["exit_code"] != 0:
@@ -836,6 +842,8 @@ def main():
                               "stderr_tail": result["stderr"][-16384:]}), file=sys.stderr, flush=True)
             break
     unchanged = before == fingerprint(ROOT)
+    if args.phase in (23, 24, 25):
+        verify_checkpoint_bindings([row for row in records if row['exit_code'] == 0])
     report = {"phase": args.phase, "source_sha256": before, "source_unchanged": unchanged,
               "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "passed": unchanged and len(records) == len(commands)

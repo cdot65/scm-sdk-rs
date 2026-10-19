@@ -33,6 +33,9 @@ The separate management overlay adds the following optional typed projections. T
 
 These pairings and generated Rust names are recorded in [the management overlay ledger](../contracts/red-team-management-model-overlay.json), whose generator checks baseline identities and completeness. They are additional to the 55 data-plane projection field occurrences above; the historical `projection-bindings.json` owns only that data-plane corpus.
 
+Observable decode transition for `StreamingConnectionParamsTargetConnectionConfig` (`s010462`): previously `Unknown(JsonValue)`, now `Variant5(VertexAIConnectionParams)`. Previously unknown shape: An object with string project_id, location, engine_id and customer_sa_email, and no matching legacy provider shape. Legacy branch order and precedence remain unchanged; payloads matching an earlier branch still select it.
+Observable decode transition for `StreamingConnectionParamsMultiTurnConfig` (`s010504`): previously `Unknown(JsonValue)`, now `Variant3(MultiTurnClientSessionConfig)`. Previously unknown shape: An object with explicit type: "client_session". Legacy branch order and precedence remain unchanged; payloads matching an earlier branch still select it.
+
 | Management projection model | Frozen schema | Added fields |
 | --- | --- | --- |
 | `AuthConfigRequestVariant3` | `s010755` | `basic_password`, `basic_username` |

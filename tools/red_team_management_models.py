@@ -235,11 +235,12 @@ class Overlay:
         source = replace_once(source, 'use crate::data::{Optional,Nullable,Patch,FiniteNumber,JsonValue,JsonObject};', 'use crate::data::JsonValue;')
         source = replace_once(source, '//! Generated native models. Regenerate with tools/generate_models.py.',
             '//! Management 0.86.0 additive models derived from the MIT pan.dev specification.\n//! Regenerate with tools/generate_models.py; see NOTICE.')
-        source = replace_once(source, 'pub struct VertexAIConnectionRedactParams {',
+        declaration = '#[derive(Clone, PartialEq, Deserialize)]\n#[non_exhaustive]\npub struct VertexAIConnectionRedactParams {'
+        source = replace_once(source, declaration,
             '/// Declaration-only typed view of the vendor masked shape. Target GET responses\n'
             '/// use the shared `VertexAIConnectionParams` union branch; response validation\n'
             '/// preserves masked strings and does not enforce request patterns.\n'
-            'pub struct VertexAIConnectionRedactParams {')
+            + declaration)
         values = self.spec['components']['schemas']['ProfilingStatusFilter']['enum']
         if not values or len(values) != len(set(values)) or not all(isinstance(v, str) for v in values):
             raise ValueError('Invalid profiling filter vocabulary')
@@ -299,6 +300,14 @@ class Overlay:
             'sharedRedactBranch': {'declarationOnlyModel': 'VertexAIConnectionRedactParams',
                 'targetResponseBranch': 'VertexAIConnectionParams', 'reason': 'Frozen shared union retained; masked response strings bypass request patterns.'},
             'runtimeUnionExtensions': self.extension_ledger()['extensions'],
+            'unionDecodeTransitions': [
+                {'schema': sid, 'rustType': BASELINE_NAMES[sid],
+                 'previousVariant': 'Unknown(JsonValue)',
+                 'currentVariant': 'Variant' + str(count + 1) + '(' + component + ')',
+                 'previouslyUnknownShape': ('An object with string project_id, location, engine_id and customer_sa_email, and no matching legacy provider shape.'
+                    if component == 'VertexAIConnectionParams' else 'An object with explicit type: "client_session".'),
+                 'precedence': 'Legacy branch order and precedence remain unchanged; payloads matching an earlier branch still select it.'}
+                for sid, (component, count) in UNION_BRANCHES.items()],
             'modelOnlyProjections': [{**row, 'rustType': gen.names[row['legacySchema']] if gen else BASELINE_NAMES[row['legacySchema']]} for row in self.projections], 'publicModels': self.roots,
             'defaultPolicy': 'No added default nodes; frozen default bindings unchanged; client_session requires explicit tag.',
             'responsePolicy': 'Frozen roots retained; new patterns request-only; passthrough fields remain unvalidated optional typed projections.'}

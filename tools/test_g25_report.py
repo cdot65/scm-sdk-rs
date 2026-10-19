@@ -110,14 +110,20 @@ class ComparisonReportTests(unittest.TestCase):
         root = pathlib.Path(__file__).resolve().parents[1]
         load = lambda path: json.loads((root / path).read_text())
         projections = load('contracts/compatibility/g25/projections.json')
-        management = load('contracts/red-team-management-model-overlay.json')['modelOnlyProjections']
+        overlay = load('contracts/red-team-management-model-overlay.json')
+        management = overlay['modelOnlyProjections']
         self.assertEqual(len(management), 12)
         expected_management = {'BasicAuthAuthConfig', 'AuthConfigRequestVariant3',
                               'RestConnectionParams', 'StreamingConnectionParams',
                               'WebSocketConnectionParams', 'ConnectionParamsRequestVariant2'}
         self.assertEqual({row['rustType'] for row in management}, expected_management)
         report = render(load('contracts/compatibility/g25/audit.json'),
-                        load('contracts/compatibility/g25/comparison.json'), projections, management)
+                        load('contracts/compatibility/g25/comparison.json'), projections, management, overlay['unionDecodeTransitions'])
+        for transition in overlay['unionDecodeTransitions']:
+            self.assertIn(f"Observable decode transition for `{transition['rustType']}`", report)
+            self.assertIn(f"previously `{transition['previousVariant']}`, now `{transition['currentVariant']}`", report)
+            self.assertIn(transition['previouslyUnknownShape'], report)
+            self.assertIn(transition['precedence'], report)
         table = report.split('| Management projection model |', 1)[1].split('### Rules deliberately retained', 1)[0]
         actual_management = set(re.findall(r'^\| `([^`]+)` \|', table, re.MULTILINE))
         self.assertEqual(actual_management, expected_management)

@@ -5,6 +5,8 @@ import json
 import pathlib
 import tarfile
 import unittest
+from unittest import mock
+import types
 
 spec = importlib.util.spec_from_file_location('package_policy', pathlib.Path(__file__).resolve().parents[1] / 'scripts/check-package.py')
 policy = importlib.util.module_from_spec(spec)
@@ -32,6 +34,42 @@ class PackagePolicyTests(unittest.TestCase):
                            ('pkg/src/control\x01.rs',tarfile.REGTYPE), ('pkg/src/control\x7f.rs',tarfile.REGTYPE)]:
             with self.assertRaises(ValueError):
                 policy.inspect_archive(self.archive([(name,kind)]), 'pkg/')
+
+    def test_development_prefix_and_credential_suffix_guards_are_reachable(self):
+        for name in ('.local/secret', 'contracts/source.json', 'tools/check.py', 'node_modules/a.js',
+                     'src/credential.pem', 'examples/credential.key'):
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(ValueError, 'Development/credential input'):
+                    policy.inspect_archive(self.archive([('pkg/' + name, tarfile.REGTYPE)]), 'pkg/')
+
+    def test_external_consumer_manifest_enables_frozen_cfg_without_modifying_source(self):
+        original = '[package]\nname = "consumer"\n[dependencies]\nscm-sdk = { path = "../../crates/scm-sdk" }\n'
+        manifest = policy.external_consumer_manifest(original)
+        parsed = policy.tomllib.loads(manifest)
+        self.assertEqual(parsed['features'], {'red-team': ['scm-sdk/red-team']})
+        self.assertEqual(parsed['dependencies']['scm-sdk']['path'], '../scm-sdk')
+        # Dependencies added for later examples remain in the dependencies table.
+        extended = policy.tomllib.loads(manifest + 'bytes = "=1.0.0"\n')
+        self.assertEqual(extended['dependencies']['bytes'], '=1.0.0')
+        self.assertNotIn('[features]', original)
+        for malformed in (original.replace('[dependencies]', ''), original.replace('../../crates/scm-sdk', 'other'),
+                          original + '[features]\nred-team = []\n'):
+            with self.assertRaises(ValueError):
+                policy.external_consumer_manifest(malformed)
+
+    def test_compiler_identity_queries_requested_rustup_toolchain(self):
+        compiler = pathlib.Path('/toolchain/bin/cargo')
+        helper = types.SimpleNamespace(cargo_path=lambda: compiler)
+        loader = mock.Mock()
+        version = 'rustc 1.99.0\nhost: x86_64-unknown-linux-gnu\n'
+        with mock.patch.object(policy.importlib.util, 'spec_from_file_location', return_value=types.SimpleNamespace(loader=loader)), \
+             mock.patch.object(policy.importlib.util, 'module_from_spec', return_value=helper), \
+             mock.patch.object(policy.subprocess, 'check_output', return_value=version) as run:
+            self.assertEqual(policy.compiler_identity(pathlib.Path('/repo'), '1.99.0'),
+                             (compiler, version, 'x86_64-unknown-linux-gnu'))
+            command = run.call_args.args[0]
+            self.assertEqual(command[1:], ['+1.99.0', '-vV'])
+            self.assertIn(pathlib.Path(command[0]).name, ('rustc', 'rustc.exe'))
 
     def test_duplicate_members_rejected(self):
         with self.assertRaisesRegex(ValueError,'duplicate'):

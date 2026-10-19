@@ -3347,11 +3347,16 @@
     }
   ],
   "runtimeEvidence": {
+    "fixtureTestBindings": [
+      "all_twelve_projection_occurrences_preserve_independent_raw_oracles",
+      "vendor_union_required_types_formats_and_legacy_order_are_independent",
+      "all_vendor_enum_additions_and_unknown_response_values_roundtrip"
+    ],
     "scope": "Source-bound implementation and test bindings; execution is established only by separate phase checks, never live acceptance.",
     "sourceBindings": [
       {
         "path": "contracts/red-team-management-model-overlay.json",
-        "sha256": "25ce83cb9ebc44f26e9b327db3a02c7a35c5d303239edb92fac218afe40a2be1"
+        "sha256": "6e1f2c6f22399f43d114b1934a8dee2c72295677d695939576cf0f9e5a570ade"
       },
       {
         "path": "contracts/red-team-management-union-extensions.json",
@@ -3374,8 +3379,12 @@
         "sha256": "a56e5a6ac517870076fc1aa386aa564095c5ad4fa7c26b560a076fb96cffee14"
       },
       {
+        "path": "crates/scm-sdk/tests/red_team_management_fixtures.rs",
+        "sha256": "e7e71b57be9157a84172f9652c3f1d59305d1cdbda4692f37bd5c365a16da63b"
+      },
+      {
         "path": "tools/test_red_team_management_models.py",
-        "sha256": "3c5e67417c2bf7da18052446c2bdad29e313e831f75f28c440f98b18e47fc883"
+        "sha256": "0b25ce1369cf25ffcaf000824678d2f88e86803fb1f67fd86784b3286811a5f5"
       }
     ],
     "wireTestBindings": [

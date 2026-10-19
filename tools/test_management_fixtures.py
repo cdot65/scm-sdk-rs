@@ -1,5 +1,4 @@
 """Independent coverage and source integrity checks for management specimens."""
-import copy
 import unittest
 from unittest import mock
 import management_fixtures as fixtures
@@ -18,6 +17,8 @@ class ManagementFixtures(unittest.TestCase):
         self.assertEqual(len(corpus['unionTails']), 2)
         self.assertEqual({row['value'] for row in corpus['enumAdditions']}, {'VERTEX_AI','N8N','REALTIME'})
         self.assertIn('no service acceptance', corpus['evidenceBoundary'])
+        self.assertIn('reviewed, vendor-schema-derived authored values', corpus['expectationsOrigin'])
+        self.assertIn('not independent validator-oracle outputs', corpus['expectationsOrigin'])
 
     def test_pinned_vendor_tamper_fails(self):
         with mock.patch.object(fixtures.Path, 'read_bytes', return_value=b'changed'):

@@ -238,11 +238,11 @@ impl fmt::Debug for VertexAIConnectionParams {
 }
 
 /// Native typed contract for frozen schema `smp_4bcd2c718055eb4ea89dcd95`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
-#[non_exhaustive]
 /// Declaration-only typed view of the vendor masked shape. Target GET responses
 /// use the shared `VertexAIConnectionParams` union branch; response validation
 /// preserves masked strings and does not enforce request patterns.
+#[derive(Clone, PartialEq, Deserialize)]
+#[non_exhaustive]
 pub struct VertexAIConnectionRedactParams {
     #[serde(rename = "project_id")]
     pub project_id: String,

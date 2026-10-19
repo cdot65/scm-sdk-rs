@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceSha256": "5fbb533bd5f0156bf85c0a549b962aaf2f96cf09d0b6d9d82ac2d2afe87509a0",
   "generator": "tools/red_team_management_models.py",
-  "generatorSha256": "fa7404c2efab4d48d3b311fd2e2a61d8de3b6692b24615cac7707fdad599dd5a",
+  "generatorSha256": "7bdbf06308c6644fa5f444f200065b28bcbcca52886fed9555eaabb851176af7",
   "runtimeEnumExtensions": {
     "s012061": [
       "VERTEX_AI",
@@ -43,6 +43,24 @@
       "appendedSchema": "smp_32d526d72ac63585e587daf7",
       "rustType": "super::red_team_management::MultiTurnClientSessionConfig",
       "rustVariant": "Variant3"
+    }
+  ],
+  "unionDecodeTransitions": [
+    {
+      "schema": "s010462",
+      "rustType": "StreamingConnectionParamsTargetConnectionConfig",
+      "previousVariant": "Unknown(JsonValue)",
+      "currentVariant": "Variant5(VertexAIConnectionParams)",
+      "previouslyUnknownShape": "An object with string project_id, location, engine_id and customer_sa_email, and no matching legacy provider shape.",
+      "precedence": "Legacy branch order and precedence remain unchanged; payloads matching an earlier branch still select it."
+    },
+    {
+      "schema": "s010504",
+      "rustType": "StreamingConnectionParamsMultiTurnConfig",
+      "previousVariant": "Unknown(JsonValue)",
+      "currentVariant": "Variant3(MultiTurnClientSessionConfig)",
+      "previouslyUnknownShape": "An object with explicit type: \"client_session\".",
+      "precedence": "Legacy branch order and precedence remain unchanged; payloads matching an earlier branch still select it."
     }
   ],
   "modelOnlyProjections": [
@@ -129,7 +147,7 @@
   "sourceBindings": [
     {
       "path": "tools/red_team_management_models.py",
-      "sha256": "fa7404c2efab4d48d3b311fd2e2a61d8de3b6692b24615cac7707fdad599dd5a"
+      "sha256": "7bdbf06308c6644fa5f444f200065b28bcbcca52886fed9555eaabb851176af7"
     },
     {
       "path": "tools/generate_models.py",
@@ -157,7 +175,7 @@
     },
     {
       "path": "crates/scm-sdk/src/models/red_team_management.rs",
-      "sha256": "9e0ea49cb6a14138d762984cd65d568b1248913ef9e65fd319aa98ef979426a3"
+      "sha256": "8d8c4c529eb1306b892ce7f8f3f2a9fb99d9f7b9191f8107fc4075814102eacb"
     },
     {
       "path": "crates/scm-sdk/tests/red_team_management_models.rs",
@@ -169,7 +187,7 @@
     },
     {
       "path": "tools/test_red_team_management_models.py",
-      "sha256": "3c5e67417c2bf7da18052446c2bdad29e313e831f75f28c440f98b18e47fc883"
+      "sha256": "0b25ce1369cf25ffcaf000824678d2f88e86803fb1f67fd86784b3286811a5f5"
     },
     {
       "path": "NOTICE",

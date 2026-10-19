@@ -112,7 +112,7 @@ def active_red_team_versions():
     return result
 
 
-def management_projection_section(projections):
+def management_projection_section(projections, union_transitions=()):
     """Document the separately pinned management projections without merging corpora."""
     groups = collections.defaultdict(list)
     seen = set()
@@ -136,6 +136,10 @@ def management_projection_section(projections):
         'whose generator checks baseline identities and completeness. They are additional '
         'to the 55 data-plane projection field occurrences above; the historical '
         '`projection-bindings.json` owns only that data-plane corpus.', '',
+        *[f"Observable decode transition for `{row['rustType']}` (`{row['schema']}`): "
+          f"previously `{row['previousVariant']}`, now `{row['currentVariant']}`. "
+          f"Previously unknown shape: {row['previouslyUnknownShape']} {row['precedence']}"
+          for row in union_transitions], '',
         '| Management projection model | Frozen schema | Added fields |',
         '| --- | --- | --- |',
         *[f'| `{model}` | `{schema}` | ' + ', '.join(f'`{field}`' for field in sorted(fields)) + ' |'
@@ -143,7 +147,7 @@ def management_projection_section(projections):
     ]
 
 
-def render(audit, comparison, projections, management_projections=()):
+def render(audit, comparison, projections, management_projections=(), management_union_transitions=()):
     s = audit['summary']
     usage = projection_usage(projections)
     requests = sorted(set(usage['request-only']['models']) | set(usage['request-and-response']['models']))
@@ -194,7 +198,7 @@ def render(audit, comparison, projections, management_projections=()):
         'Baseline decoding errors remain generic and redacted to avoid exposing service values '
         'through serde diagnostics. Projection decoding retains a value copy for lossless fallback; '
         'public-client responses remain subject to the existing body and validation resource limits.', '',
-        *(management_projection_section(management_projections) if management_projections else []),
+        *(management_projection_section(management_projections, management_union_transitions) if management_projections else []),
         '### Rules deliberately retained', '',
         '- Unknown response enum strings and unknown object keys were already supported. They remain supported.',
         '- String type checks, baseline presence/type/bounds checks, resource limits and finite JSON '
@@ -317,7 +321,8 @@ def main():
     comparison = ledger(audit, corpus, oracle)
     outputs = {LEDGER: json.dumps(comparison, indent=2, ensure_ascii=False) + '\n',
                REPORT: render(audit, comparison, json.loads(PROJECTIONS.read_text()),
-                              json.loads(MANAGEMENT_OVERLAY.read_text())['modelOnlyProjections'])}
+                              json.loads(MANAGEMENT_OVERLAY.read_text())['modelOnlyProjections'],
+                              json.loads(MANAGEMENT_OVERLAY.read_text())['unionDecodeTransitions'])}
     stale = []
     for path, text in outputs.items():
         if args.check:

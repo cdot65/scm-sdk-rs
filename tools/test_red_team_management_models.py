@@ -14,6 +14,20 @@ class ManagementModelTests(unittest.TestCase):
         cls.overlay = management.Overlay()
         cls.inventory = json.loads(models.SOURCE.read_text())
 
+    def test_decode_transitions_and_masked_model_documentation(self):
+        transitions = self.overlay.ledger()['unionDecodeTransitions']
+        self.assertEqual({row['schema'] for row in transitions}, set(management.UNION_BRANCHES))
+        for row in transitions:
+            component, count = management.UNION_BRANCHES[row['schema']]
+            self.assertEqual(row['rustType'], management.BASELINE_NAMES[row['schema']])
+            self.assertEqual(row['previousVariant'], 'Unknown(JsonValue)')
+            self.assertEqual(row['currentVariant'], f'Variant{count + 1}({component})')
+            self.assertIn('Legacy branch order and precedence remain unchanged', row['precedence'])
+        source, _ = self.overlay.model_outputs(models.Generator)
+        self.assertIn('/// preserves masked strings and does not enforce request patterns.\n'
+                      '#[derive(Clone, PartialEq, Deserialize)]\n#[non_exhaustive]\n'
+                      'pub struct VertexAIConnectionRedactParams {', source)
+
     def test_runtime_changes_are_only_reviewed_nodes_and_two_unions(self):
         graph = models.compact_graph(self.inventory)
         changed = self.overlay.extend_graph(graph)

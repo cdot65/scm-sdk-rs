@@ -41,10 +41,10 @@ def inspect_archive(content, prefix):
             if not name or relative.is_absolute() or str(relative) != name or name in files:
                 raise ValueError('Invalid or duplicate archive path')
             root_files = {'Cargo.toml', 'Cargo.toml.orig', 'Cargo.lock', 'README.md', 'LICENSE', 'NOTICE', '.cargo_vcs_info.json'}
-            if name not in root_files and not name.startswith(('src/', 'examples/')):
-                raise ValueError('Unexpected file outside published source/include policy')
             if name.startswith(('.local/', 'contracts/', 'tools/', 'node_modules/')) or name.endswith(('.pem', '.key', '.env', '.ts', '.mts', '.js', '.yaml', '.yml')):
                 raise ValueError('Development/credential input in published archive')
+            if name not in root_files and not name.startswith(('src/', 'examples/')):
+                raise ValueError('Unexpected file outside published source/include policy')
             total += member.size
             if member.size > 16 * 1024 * 1024 or total > 64 * 1024 * 1024 or len(files) >= 2048:
                 raise ValueError('Archive resource limit exceeded')
@@ -84,6 +84,29 @@ def validate_vcs(files, commit, require_clean):
     return vcs
 
 
+def compiler_identity(root, toolchain):
+    """Resolve the requested compiler locally instead of trusting receipt metadata."""
+    helper_spec = importlib.util.spec_from_file_location('export_runner', root / 'scripts/check-native-exports.py')
+    helper = importlib.util.module_from_spec(helper_spec)
+    helper_spec.loader.exec_module(helper)
+    cargo = helper.cargo_path()
+    rustc = cargo.with_name('rustc.exe' if os.name == 'nt' else 'rustc')
+    env = {key: value for key, value in os.environ.items() if not key.startswith(('PANW_', 'AIRS_', 'SCM_'))}
+    version = subprocess.check_output([str(rustc), '+' + toolchain, '-vV'], env=env, text=True)
+    host = next(line[6:] for line in version.splitlines() if line.startswith('host: '))
+    return cargo, version, host
+
+
+def external_consumer_manifest(manifest):
+    """Enable the frozen example's cfg without changing its published source."""
+    manifest = manifest.replace('path = "../../crates/scm-sdk"', 'path = "../scm-sdk"')
+    if 'path = "../scm-sdk"' not in manifest or manifest.count('[dependencies]') != 1:
+        raise ValueError('External probe manifest path adapter is missing or ambiguous')
+    if 'features' in tomllib.loads(manifest):
+        raise ValueError('External probe feature adapter requires an unambiguous manifest')
+    return manifest.replace('[dependencies]', '[features]\nred-team = ["scm-sdk/red-team"]\n\n[dependencies]')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--toolchain', default='1.99.0')
@@ -92,15 +115,9 @@ def main():
     args = parser.parse_args()
     if not re.fullmatch(r'\d+\.\d+\.\d+', args.toolchain):
         parser.error('Use an exact Rust toolchain release')
-    helper_spec = importlib.util.spec_from_file_location('export_runner', ROOT / 'scripts/check-native-exports.py')
-    helper = importlib.util.module_from_spec(helper_spec)
-    helper_spec.loader.exec_module(helper)
-    cargo = helper.cargo_path()
+    cargo, version, host = compiler_identity(ROOT, args.toolchain)
     env = {k: v for k, v in os.environ.items() if not k.startswith(('PANW_', 'AIRS_', 'SCM_'))}
     env['CARGO_TERM_COLOR'] = 'never'
-    rustc = cargo.with_name('rustc.exe' if os.name == 'nt' else 'rustc')
-    version = subprocess.check_output([str(rustc), '+' + args.toolchain, '-vV'], env=env, text=True)
-    host = next(line[6:] for line in version.splitlines() if line.startswith('host: '))
     if env.get('CARGO_BUILD_TARGET') and env['CARGO_BUILD_TARGET'] != host:
         raise ValueError('Package execution requires the actual compiler host target')
     base = [str(cargo), '+' + args.toolchain]
@@ -163,10 +180,7 @@ def main():
         consumer = directory / 'consumer'
         (consumer / 'src').mkdir(parents=True)
         original = ROOT / 'contracts/native-probes'
-        manifest = (original / 'Cargo.toml').read_text()
-        manifest = manifest.replace('path = "../../crates/scm-sdk"', 'path = "../scm-sdk"')
-        if 'path = "../scm-sdk"' not in manifest:
-            raise ValueError('External probe manifest path adapter is missing')
+        manifest = external_consumer_manifest((original / 'Cargo.toml').read_text())
         (consumer / 'Cargo.toml').write_text(manifest)
         shutil.copyfile(original / 'Cargo.lock', consumer / 'Cargo.lock')
         shutil.copyfile(original / 'src/main.rs', consumer / 'src/main.rs')
@@ -190,13 +204,15 @@ def main():
             (consumer / 'Cargo.lock').write_text(lock)
             (consumer / 'src/main.rs').write_bytes(files['examples/access_policies.rs'])
             passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+        consumer_manifest = (consumer / 'Cargo.toml').read_text()
         consumer_sources = {}
         for name in ('response_defaults', 'red_team_dataplane', 'response_compatibility', 'red_team_management'):
             key = f'examples/{name}.rs'
             if passed and key in files:
                 (consumer / 'src/main.rs').write_bytes(files[key])
-                passed = run(['run', '--locked', '--offline', '--target', host], consumer)
-                consumer_sources[key] = {'sha256': digest(files[key]), 'checkIndex': len(checks) - 1}
+                passed = run(['run', '--features', 'red-team', '--locked', '--offline', '--target', host], consumer)
+                consumer_sources[key] = {'sha256': digest(files[key]), 'checkIndex': len(checks) - 1,
+                                         'selectedFeatures': ['red-team']}
     if args.require_clean:
         current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         current_status = subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT, text=True)
@@ -212,6 +228,8 @@ def main():
               'accessPolicyConsumerSourceSha256': digest(files['examples/access_policies.rs']) if 'examples/access_policies.rs' in files else None,
               'responseCompatibilityConsumerSourceSha256': digest(files['examples/response_compatibility.rs']) if 'examples/response_compatibility.rs' in files else None,
               'externalExampleConsumers': consumer_sources,
+              'externalConsumerManifest': consumer_manifest,
+              'externalConsumerManifestSha256': digest(consumer_manifest.encode()),
               'frozenProbeCheckIndex': frozen_probe_check_index,
               'managementConsumerSourceSha256': digest(files['examples/red_team_management.rs']) if 'examples/red_team_management.rs' in files else None,
               'checks': checks, 'limitations': ['Only the recorded host executes code; examples compile without contacting services. The response_defaults example, when present, also executes offline.',

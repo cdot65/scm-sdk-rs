@@ -44,6 +44,9 @@ def verify_receipt(root, path, toolchain, source_sha=None):
     if any(part.is_symlink() for part in (archive, *archive.parents)) or sha(archive) != report.get('archive_sha256'):
         raise ValueError('Retained clean archive differs')
     policy = package_module(root)
+    _, rustc_version, actual_host = policy.compiler_identity(root, toolchain)
+    if report.get('hostTarget') != actual_host or report.get('rustcVersion') != rustc_version:
+        raise ValueError('Package receipt compiler host or version differs from local toolchain')
     import tomllib
     version = tomllib.loads((root / 'crates/scm-sdk/Cargo.toml').read_text())['package']['version']
     files = policy.inspect_archive(archive.read_bytes(), f'scm-sdk-{version}/')
@@ -88,6 +91,10 @@ def verify_receipt(root, path, toolchain, source_sha=None):
     for row in checks:
         if len(row['command']) < 3 or row['command'][1] != '+' + toolchain:
             raise ValueError('Package command compiler differs')
+    manifest_text = report.get('externalConsumerManifest', '')
+    if (hashlib.sha256(manifest_text.encode()).hexdigest() != report.get('externalConsumerManifestSha256')
+            or tomllib.loads(manifest_text).get('features') != {'red-team': ['scm-sdk/red-team']}):
+        raise ValueError('External consumer feature manifest differs')
     consumers = report.get('externalExampleConsumers', {})
     indices = [entry.get('checkIndex') for entry in consumers.values()]
     if len(indices) != 4 or any(type(index) is not int for index in indices) or len(set(indices)) != 4:
@@ -106,7 +113,8 @@ def verify_receipt(root, path, toolchain, source_sha=None):
         index = binding.get('checkIndex')
         if (binding.get('sha256') != digest or type(index) is not int
                 or not 0 <= index < len(checks)
-                or commands[index] != ['run', '--locked', '--offline', '--target', host]
+                or binding.get('selectedFeatures') != ['red-team']
+                or commands[index] != ['run', '--features', 'red-team', '--locked', '--offline', '--target', host]
                 or pathlib.Path(checks[index]['cwd']).name != 'consumer'):
             raise ValueError('External consumer execution binding differs')
         if ['run', '--example', name, '--all-features', '--locked', '--offline', '--target', host] not in commands:

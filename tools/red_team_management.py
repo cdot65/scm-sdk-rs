@@ -629,6 +629,13 @@ MANAGEMENT_WIRE_TESTS = (
 )
 
 
+MANAGEMENT_FIXTURE_TESTS = (
+    'all_twelve_projection_occurrences_preserve_independent_raw_oracles',
+    'vendor_union_required_types_formats_and_legacy_order_are_independent',
+    'all_vendor_enum_additions_and_unknown_response_values_roundtrip',
+)
+
+
 TARGET_RESPONSE_DECLARATIONS = (
     ('POST', '/v1/target', 'TargetResponseSchema'),
     ('GET', '/v1/target/{target_uuid}', 'TargetRedactSchema'),
@@ -687,11 +694,13 @@ def management_runtime_evidence():
         'crates/scm-sdk/examples/red_team_management.rs',
         'crates/scm-sdk/tests/red_team_management_contracts.rs',
         'crates/scm-sdk/tests/red_team_management_models.rs',
+        'crates/scm-sdk/tests/red_team_management_fixtures.rs',
         'tools/test_red_team_management_models.py',
     ]
     return {'scope': 'Source-bound implementation and test bindings; execution is established only by separate phase checks, never live acceptance.',
             'sourceBindings': [{'path': path, 'sha256': sha(safe_path(path).read_bytes())} for path in paths],
-            'wireTestBindings': list(MANAGEMENT_WIRE_TESTS)}
+            'wireTestBindings': list(MANAGEMENT_WIRE_TESTS),
+            'fixtureTestBindings': list(MANAGEMENT_FIXTURE_TESTS)}
 
 
 def management_adoption_tokens(adopted):
@@ -760,6 +769,10 @@ def verify_cumulative_qualification(*, package_receipts=False):
     import management_consumers
     if load('contracts/native-fixtures/red-team-management.json') != management_fixtures.expected():
         raise ValueError('Stale derived management fixture corpus')
+    tokens = rust_code_tokens(safe_path('crates/scm-sdk/tests/red_team_management_fixtures.rs').read_text())
+    for name in MANAGEMENT_FIXTURE_TESTS:
+        if not re.search(r'\bfn\s+' + re.escape(name) + r'\s*\(', tokens):
+            raise ValueError('Missing management fixture test binding: ' + name)
     management_consumers.verify(root=ROOT)
     if package_receipts:
         import importlib.util

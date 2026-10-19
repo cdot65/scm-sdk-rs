@@ -331,4 +331,8 @@ prefix, never phase acceptance. Resume requires the identical source fingerprint
 exact command plan, passing completed records, unchanged receipt/archive bytes,
 and an age of at most eight hours. Failed or interrupted commands run again.
 The final receipt still requires every command; CI continues to run fresh checks.
+Receipt and retained archive hashes are checked again before writing a passing
+full report and before accepting a review of the current source. Historical
+accepted review snapshots retain their original hashes and are not rebound to
+later runs' output files.
 Archive the partial receipt before beginning a new source or expired run.

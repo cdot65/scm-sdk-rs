@@ -342,6 +342,20 @@ class ManagementPlanTests(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, 'Invalid immutable consumer'):
                         subject.verify_cumulative_qualification()
 
+    def test_cumulative_gate_rejects_each_missing_fixture_test(self):
+        import management_fixtures
+        relative = 'crates/scm-sdk/tests/red_team_management_fixtures.rs'
+        original_path = subject.safe_path
+        text = original_path(relative).read_text()
+        for name in subject.MANAGEMENT_FIXTURE_TESTS:
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as temporary:
+                changed = subject.Path(temporary) / 'fixtures.rs'
+                changed.write_text(text.replace('fn ' + name, 'fn removed_fixture', 1))
+                with patch.object(subject, 'safe_path', side_effect=lambda path: changed if str(path) == relative else original_path(path)), \
+                        patch.object(subject, 'load', return_value=management_fixtures.expected()):
+                    with self.assertRaisesRegex(ValueError, 'Missing management fixture test binding'):
+                        subject.verify_cumulative_qualification()
+
     def test_runtime_evidence_binds_the_delivered_example(self):
         paths = {row['path'] for row in subject.management_runtime_evidence()['sourceBindings']}
         self.assertIn('crates/scm-sdk/examples/red_team_management.rs', paths)

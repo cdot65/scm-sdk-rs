@@ -200,7 +200,7 @@ def sha256(path):
 
 def check_evidence(root, phase, source_sha256, path=None):
     """Accept the complete command set only when checked against unchanged inputs."""
-    from check_phase import commands_for
+    from check_phase import commands_for, verify_checkpoint_bindings
 
     path = path if path is not None else root / f"docs/checks/phase-{phase:02d}.json"
     if path.is_symlink():
@@ -215,6 +215,10 @@ def check_evidence(root, phase, source_sha256, path=None):
             and [item.get("command") for item in checks] == commands_for(phase)
             and all(type(item.get("exit_code")) is int and item["exit_code"] == 0 for item in checks)):
         raise ValueError("Phase checks are incomplete, stale, or failing; rerun tools/check_phase.py")
+    # Historical accepted snapshots retain their own evidence hashes. Current
+    # qualification must additionally prove the referenced files still match.
+    if phase in (23, 24, 25) and source_sha256 == fingerprint(root):
+        verify_checkpoint_bindings(checks, root)
     return path
 
 
