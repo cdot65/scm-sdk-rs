@@ -1,0 +1,56 @@
+{
+  "review": "docs-site logo update (user-supplied SCM SDK PNG)",
+  "scope": [
+    "docs-site/static/img/brand-logo.png",
+    "docs-site/DESIGN_SOURCE.json",
+    "docs-site/src/pages/index.tsx (reference only)",
+    "docs-site/docusaurus.config.ts (references only)",
+    "docs/reviews/github-pages/logo/source.json",
+    "docs/reviews/github-pages/logo/checks.json"
+  ],
+  "scores": {
+    "implementation": 9,
+    "code_quality": 10,
+    "supportability": 9,
+    "architecture": 9,
+    "delivery": 9
+  },
+  "total": 46,
+  "total_max": 50,
+  "overall": 9,
+  "overall_max": 10,
+  "blockers": [],
+  "readiness": {
+    "thresholds_met": true,
+    "criteria": "total>=46, each>=8, no blockers",
+    "deployment_claimed": false,
+    "pending_before_deployment_claim": [
+      "successful post-review Pages workflow run",
+      "HTTP fetch of published /img/brand-logo.png and byte/sha256 comparison against 7b4ef48798f9f14d848a77de223d01a07134e1337489edcc7b8732422d4f78a4"
+    ]
+  },
+  "verified": [
+    "brand-logo.png renders as the described asset: dark shield, cyan chevron, prism spectrum, 'SCM SDK' wordmark; matches homepage alt text 'SCM SDK for Rust shield and prism spectrum'",
+    "image is square, consistent with the declared 1254x1254 and with index.tsx width/height=1254 (explicit intrinsic size, no CLS risk)",
+    "all four consumers already point at the same path: index.tsx:12 via useBaseUrl('/img/brand-logo.png'), docusaurus.config.ts:8 favicon, :62 themeConfig.image, :73 navbar.logo.src; no reference edits were needed and none were made",
+    "DESIGN_SOURCE.json is well-formed; 'preserved' retains logo.svg and social-card.png and no longer lists brand-logo.png, consistent with the asset now being user-owned rather than upstream-derived",
+    "DESIGN_SOURCE.logo records source/provenance, date, file path, sha256, dimensions, and the four usages; 'changes' string updated to mention the replacement",
+    "sha256 in DESIGN_SOURCE.json matches logo/source.json and logo/checks.json (7b4ef487...)",
+    "checks.json records build exit_code 0, user_attachment_byte_match true, build_asset_byte_match true",
+    "no image editing evidence in-tree; change is confined to the two stated files"
+  ],
+  "limitations": [
+    "read-only review: sha256 values, byte-for-byte copy, and the 1254x1254 pixel dimension could not be independently recomputed; checks.json and source.json are self-reported and were taken at face value",
+    "could not run git diff, so 'brand-logo.png was previously in preserved' and 'only these two files changed since 5ed5420' are accepted from the brief plus the current file state, not verified",
+    "file byte size not observable with read tools; the same full-size PNG serves favicon (~16-32px) and navbar (~24-32px), so page weight on every route is unmeasured",
+    "themeConfig.image uses a 1:1 square for Open Graph/Twitter cards, where 1.91:1 is conventional; the unused upstream static/img/social-card.png remains preserved. Pre-existing config decision, out of this change's scope",
+    "provenance 'sharedReference' is an external chatgpt.com share URL that may become unreachable or non-public; the checksum and in-repo evidence are the durable record",
+    "DESIGN_SOURCE.logo records no byte size and no checksum of the replaced asset, so rollback identity is not captured",
+    "source.json's recorded hash for DESIGN_SOURCE.json (88a5f78a...) is self-referential evidence and unverifiable here"
+  ],
+  "recommendations_non_blocking": [
+    "after the next Pages run, fetch the published asset over HTTP and record the response sha256 and content-length alongside checks.json before claiming deployment",
+    "consider a separate downscaled favicon/navbar asset and a 1200x630 social card in a later change; explicitly out of scope for this logo-only swap"
+  ],
+  "note": "No redesign, optimization, or re-encoding of the user-provided image was performed or is proposed."
+}
