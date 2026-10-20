@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-10-20T00:37:16.115096+00:00",
+  "registry": "crates.io",
+  "version": "0.2.3",
+  "toolchain": "1.89.0",
+  "command": [
+    "/home/cdot/.cargo/bin/cargo",
+    "+1.89.0",
+    "run",
+    "--target",
+    "x86_64-unknown-linux-musl"
+  ],
+  "consumerSourceSha256": "7c790e86774d8bc8aada7d3be371c0a28a7088f13b4bc403052cc5f744f09a20",
+  "consumerManifest": "[package]\nname = \"scm-registry-consumer-023\"\nversion = \"0.0.0\"\nedition = \"2024\"\nrust-version = \"1.89\"\n[workspace]\n[dependencies]\nscm-sdk = { version = \"=0.2.3\", features = [\"red-team\"] }\nserde_json = \"1.0\"\n",
+  "exit_code": 0,
+  "passed": true,
+  "limitations": [
+    "One offline example; no tenant request or new platform acceptance."
+  ],
+  "resolvedPackage": {
+    "name": "scm-sdk",
+    "version": "0.2.3",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "checksum": "80a58b7b287d24261c869cf0fda7d77b177f2442db3a173634c527d6fa73e809",
+    "dependencies": [
+      "base64 0.22.1",
+      "bytes",
+      "futures-util",
+      "hmac",
+      "http",
+      "httpdate",
+      "mime",
+      "regex",
+      "reqwest",
+      "ryu-js",
+      "serde",
+      "serde_json",
+      "sha2",
+      "time",
+      "tokio",
+      "tokio-util",
+      "url",
+      "zeroize"
+    ]
+  }
+}
