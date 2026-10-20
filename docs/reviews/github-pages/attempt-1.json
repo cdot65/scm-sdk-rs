@@ -1,0 +1,101 @@
+{
+  "scope": "Independent GitHub mirror + Rust documentation delivery (docs/scm-github-pages). Not phase 25; no phase budget consumed. Gates publication of the documentation branch only.",
+  "implementation": 9,
+  "code_quality": 9,
+  "supportability": 8,
+  "architecture": 9,
+  "delivery": 8,
+  "total": 43,
+  "total_possible": 50,
+  "overall": 8.6,
+  "accepted": false,
+  "acceptance_rule": "Every category >=8 (satisfied) and total >=46/50 (not satisfied: 43/50). Two blocking findings remain.",
+  "blocking_findings": [
+    {
+      "path": "docs-site/docs/developer/contributing.md:225-228",
+      "finding": "The published contributor page states the review gate as \"request a fresh actual Claude Code review, improve findings and repeat until at least 9/10\" and routes phase checks with `python3 tools/check_phase.py --phase 8`. Both contradict docs/PHASES.md: the \"Current review rubric (maintainer instruction, 2026-10-19)\" supersedes the 9/10 threshold with five independent categories (each >=8, chunk >=42/50, phase >=46/50), and PHASES.md states \"The current workflow routes to phase 24 contracts\". Publishing this makes the public site misdescribe the project's own active process. Text is inherited verbatim from docs/DEVELOPMENT.md:225-228.",
+      "fix": "Rewrite the \"Phase acceptance and live evidence\" paragraph to reference the current five-category rubric and the active phase routing (or state the gate generically as \"the current maintainer rubric in docs/PHASES.md\"), and apply the same correction to docs/DEVELOPMENT.md:225-228 in the same change so the duplicated copies do not diverge further."
+    },
+    {
+      "path": "docs-site/docs/about/release-notes.md:9-12,49-57",
+      "finding": "The page opens with \"These notes summarize consumer-facing changes in published `scm-sdk` releases\" but covers only 0.2.3, 0.2.2, 0.2.1 and 0.1.1. Published versions 0.2.0 (CHANGELOG.md:154) and 0.1.0 (CHANGELOG.md:267) are absent, so the page runs 0.2.1 -> 0.1.1 and implies 0.2.0 was never released. 0.2.0 is the baseline registry release referenced elsewhere on the site (docs-site/docs/developer/platforms.md:34 \"The 0.2.0 update records fresh Phase 12 native checks\").",
+      "fix": "Add 0.2.0 and 0.1.0 sections in the existing format with their crates.io links, or scope the page explicitly (e.g. \"notes from 0.1.1 onward\") and link the full CHANGELOG.md at the pinned commit as is done elsewhere."
+    }
+  ],
+  "nonblocking_findings": [
+    {
+      "path": "docs-site/docs/airs/scanning.md vs docs/SCANNING.md (pattern across ~30 pages); docs/GITHUB_MIRROR.md:26-33; docs-site/DESIGN_SOURCE.json",
+      "finding": "Most site pages are verbatim copies of the repository guides (verified: docs-site/docs/airs/scanning.md is byte-equivalent to docs/SCANNING.md apart from front matter and one relativized link; same for developer/contributing.md vs docs/DEVELOPMENT.md). Neither GITHUB_MIRROR.md nor DESIGN_SOURCE.json states which copy is authoritative or how edits propagate. Blocking finding 1 is already an instance of resulting drift.",
+      "fix": "Record the source-of-truth rule and update procedure (single owner plus a copy step, or a generation/check script) in docs/GITHUB_MIRROR.md, and add a `derivedFrom` field per topic in docs-site/DESIGN_SOURCE.json."
+    },
+    {
+      "path": "docs-site/docs/developer/contributing.md:70,188,234; docs-site/docs/core/transport.md:154",
+      "finding": "Link labels still name repository files (\"REALTIME.md\", \"OBSERVABILITY.md\", \"PLATFORMS.md\", \"LIVE_ACCEPTANCE.md\", \"VALIDATION.md\") while the hrefs point to site routes such as /airs/realtime and /core/validation#responses-without-inserted-defaults. The anchors and routes themselves are correct (verified against docs-site/docs/core/validation.md:19 and docs-site/docs/core/models.md:66).",
+      "fix": "Relabel to the page titles (e.g. \"Realtime\", \"Observability\", \"Platform Support\", \"Live Qualification\", \"Validation\")."
+    },
+    {
+      "path": ".node-version:1 (22.23.2) and docs-site/.node-version:1 (24.22.0); docs-site/docs/developer/contributing.md:133-135; docs/GITHUB_MIRROR.md:35-38",
+      "finding": "Two same-named Node pins now coexist with different values and purposes, while contributing.md tells contributors to \"Use the pinned development Node/tooling versions in `.node-version`\" without qualifying which file.",
+      "fix": "Qualify both references: root `.node-version` pins the contract/oracle tooling, `docs-site/.node-version` pins the site build consumed by setup-node in the deploy workflow."
+    },
+    {
+      "path": "docs/reviews/github-pages/checks.json:2; docs-site/package.json:15,35-41; docs-site/package-lock.json:7-31",
+      "finding": "Recorded evidence is only `npm run build --prefix docs-site`. The workflow's gating first step is `npm ci` (.github/workflows/docs-deploy.yml:38), which was not exercised in a clean tree, and the lockfile's root package entry does not carry the `overrides` block declared in package.json (the resolved qs 6.16.0 / serialize-javascript 7.1.1 do reflect the overrides, so this is a verification gap rather than a demonstrated mismatch). `npm run typecheck` is defined but never run, although src/theme/DocItem/Layout/index.tsx swizzles internal theme types.",
+      "fix": "Run `npm ci` in a clone with no node_modules plus `npm run typecheck`, record both in checks.json, and consider adding a typecheck step to the build job."
+    },
+    {
+      "path": ".github/workflows/docs-deploy.yml:42,60; docs/GITHUB_MIRROR.md:61-64",
+      "finding": "Pin comments and the mirror document label two actions with floating majors (`# v3`, `# v4`) while the SHAs correspond to specific patch releases, which weakens the audit trail for a dated pin resolution.",
+      "fix": "Record the exact resolved tags next to the SHAs and in GITHUB_MIRROR.md (upload-pages-artifact 56afc609e74202658d3ffba0e8f6dda462b719fa and deploy-pages d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e appear to be v3.0.1 and v4.0.5; re-resolve with network access before recording)."
+    },
+    {
+      "path": "docs/reviews/github-pages/mirrored-tags.json",
+      "finding": "The file records tag objects and peeled commits for v0.1.0 through v0.2.2 with no provenance or status fields (source remote, capture time, pushed/not-pushed) and no mention of 0.2.3. The filename alone could later be read as proof that these tags were already mirrored, which GITHUB_MIRROR.md:80-83 explicitly requires to be verified per tag. It is also outside source.json, so it is not hash-bound to this review.",
+      "fix": "Add explicit `source`, `capturedAt` and `pushed: false` fields (or rename to forgejo-tags-observed.json) and state where the 0.2.3 release tag sits relative to the mirrored main history."
+    },
+    {
+      "path": "docs-site/docs/getting-started/configuration.md:64-69",
+      "finding": "`AuthContext::new` is called with an unexplained literal `1` for its third parameter, which is `credential_generation: u64` (crates/scm-sdk/src/auth.rs:101-106). Readers cannot infer its meaning from the sample.",
+      "fix": "Bind it to a named variable or add a short comment describing the rotation semantics."
+    },
+    {
+      "path": "docs-site/docs/getting-started/installation.md:57",
+      "finding": "The feature table describes `realtime` as \"Experimental realtime interfaces with a caller-supplied connector\" but omits that `realtime = [\"gateway\"]` (crates/scm-sdk/Cargo.toml:26) also enables `gateway` and transitively `iam`. The same table does state the implication for `management`, `gateway` and `ws-transport`, so the omission is inconsistent. docs-site/docs/developer/contributing.md:65 states it correctly.",
+      "fix": "Append \"also enables `gateway`\" to the `realtime` row."
+    },
+    {
+      "path": "docs-site/docs/reference/api/index.md:9; docs-site/docs/getting-started/installation.md:18-27",
+      "finding": "Crate-path convention is split: newly authored pages use the `scm::` alias (15 occurrences across installation, configuration, environment-variables, quick-start, products/overview) while ported pages use `scm_sdk::` (21 occurrences across core/*, airs/*, reference/api/*). Both are correct, but the alias explanation lives only on the installation page.",
+      "fix": "Add a one-line note on the API reference index that paths are shown as `scm_sdk::` and map to `scm::` when the dependency alias from the installation page is used."
+    },
+    {
+      "path": "docs-site/sidebars.ts:9-10; docs-site/docs/developer/examples.md:9-20",
+      "finding": "\"NGFW \u00b7 Planned\" and \"SASE \u00b7 Planned\" are collapsible categories each wrapping a single document, which reads awkwardly next to the real multi-page categories. Separately, the examples page lists 12 of the 13 files in crates/scm-sdk/examples/ (live_qualification.rs is omitted) and gives no per-example feature requirements, although crates/scm-sdk/Cargo.toml:66-82 declares required-features for four of them.",
+      "fix": "Use labeled doc entries for the two planned products, and on the examples page state the omission rule for the qualification harness plus each example's required Cargo features."
+    },
+    {
+      "path": "docs-site/src/css/custom.css:2",
+      "finding": "The preserved stylesheet imports Inter and JetBrains Mono from fonts.googleapis.com, so the public site issues third-party font requests on every visit. This is deliberate byte-identical style preservation (verified identical to .local/typescript-github/docs-site/src/css/custom.css) and matches the requested style parity, but it is a property of the public deployment worth recording.",
+      "fix": "Record it as an accepted inherited property in docs/GITHUB_MIRROR.md, or self-host the two families later as a reviewed style change applied to both sites."
+    }
+  ],
+  "verified_positives": [
+    "Style/asset parity: docs-site/src/css/custom.css, src/css/prism-airs.ts, src/pages/index.module.css, src/theme/DocItem/Layout/index.tsx and .../styles.module.css are character-for-character identical to .local/typescript-github/docs-site equivalents; palette, dark-only color mode, navbar/footer structure, layout swizzle and both font families are preserved.",
+    "Config correctness: url/baseUrl give the project-site path /scm-sdk-rs/, onBrokenLinks and onBrokenMarkdownLinks both throw, editUrl targets the documentation branch, and Rust/TOML were added to prism additionalLanguages (the only substantive deltas from upstream are naming, destination and navigation).",
+    "Workflow safety: branch+repository+server-scoped `if` guards on both jobs, path-filtered push trigger plus manual dispatch, top-level contents:read with pages/id-token write confined to deploy, persist-credentials:false, no secrets or registry/tenant credentials, github-pages concurrency without cancelling an in-flight deployment, timeouts on both jobs, and action-input paths (node-version-file, cache-dependency-path, artifact path) correctly expressed relative to the workspace rather than the run default working-directory.",
+    "Link integrity: every one of the ~70 repository permalinks resolves to a path that exists at the pinned commit efe9de04d9f60d48e6ba8528d1a07e86376d706d (checked by enumeration), the CHANGELOG anchor #changed--migration-from-01x matches \"### Changed \u2014 migration from 0.1.x\", and both intra-site anchors exist. The docs.rs module links are consistent with a default-feature build because airs/management, airs/gateway, airs/model_security, airs/red_team, dlp and shared/iam are declared as ungated `pub mod` with only their items feature-gated, so the pages exist and the accompanying \"hosted rustdoc omits optional client signatures\" wording is precise.",
+    "Content accuracy against source: version 0.2.3 and MSRV 1.89 (Cargo.toml), the full feature table (one omission noted above), Scanner::for_region/sync_scan signatures and Region variants, Content::builder().prompt().build(), AiProfile build_validated(Mode::Request), SCAN_ENVIRONMENT_NAMES, init_from_environment and the two different client_builder arities, InitOptions public fields with the correct #[non_exhaustive] usage, num_retries 0-5 defaulting to 5, the US scan default endpoint, 2 MiB text / 100 MiB context limits, `service-name: api`, `PAN-AIRS/<version>-rust-sdk`, the min(30s, 20% TTL) refresh buffer, Error::remote_outcome and the 448-method / 3,820-capability denominators all match the code.",
+    "Navigation requirement: SCM is the umbrella, Prisma AIRS is presented as implemented with shared DLP/IAM/OAuth, and NGFW/SASE are marked planned peers (not nested under AIRS) consistently in sidebars.ts, docs/index.md, products/overview.md, products/ngfw.md, products/sase.md and the landing page.",
+    "Manifest completeness: source.json's 70 entries correspond exactly to the 70 tracked candidate files under .github/, docs/GITHUB_MIRROR.md and docs-site/ once ignored node_modules/, .docusaurus/ and build/ are excluded; no extra or missing file. node_modules is ignored at the root and /.local/ stays unpublished.",
+    "No overclaiming: no 'production ready' / 'generally available' language, experimental and live-unverified status is retained throughout, no credentials or tenant identifiers appear in site content, and no deployment is asserted anywhere."
+  ],
+  "evidence_limitations": [
+    "Read-only tools only: no git, npm, cargo, hashing or network access. The build result, the Forgejo main commit 0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e, remote branch states, and all GitHub-side repository/Pages/environment configuration are taken as reported and remain unverified here.",
+    "source.json's SHA-256 values could not be recomputed; file-set completeness was checked by enumeration instead. The byte-identical claim in checks.json was confirmed by full-text comparison for the five text assets but NOT for static/img/brand-logo.png, logo.svg and social-card.png, which cannot be hashed with read tools.",
+    "The four pinned action commit SHAs could not be resolved to their tags offline; the maintainer should re-resolve them before publication.",
+    "docs.rs pages for 0.2.3 were not fetched; the module-link conclusion is derived from the crate's own cfg structure in this worktree.",
+    "Rust API claims were checked against the source in this worktree (the 0.2.3-line development state), not against the extracted published 0.2.3 crate archive.",
+    "Page-level review was exhaustive for configuration, workflow, navigation and the getting-started/products/reference/about/developer sets, and sampled (not line-by-line) for the airs/* and core/* guides; those pages are verbatim copies of already-reviewed repository guides, which is itself the basis of nonblocking finding 1."
+  ],
+  "delivery_note": "The branch is close to publishable: the workflow is correctly scoped and least-privileged, the manifest is complete, the published tree contains nothing sensitive, and no deployment is claimed. After the two blocking content fixes, publication readiness still depends on three unverified items that only publication can settle - a clean `npm ci` from the committed lockfile, re-resolution of the four action SHAs, and GitHub-side setup (public repo created, Pages source set to GitHub Actions, github-pages environment permitting docs/scm-github-pages). The ~70 permalinks, the navbar/GitHub/edit links and the crates.io links will only resolve once the repository exists and the documentation branch is pushed with the commit efe9de0 reachable. Actual deployment verification - inspecting the workflow run and the live https://cdot65.github.io/scm-sdk-rs/ URL - necessarily follows this review and is not asserted by it."
+}

@@ -1,0 +1,49 @@
+{
+  "build": "npm run build --prefix docs-site: exit 0",
+  "assets_byte_identical": [
+    "src/css/custom.css",
+    "src/css/prism-airs.ts",
+    "src/pages/index.module.css",
+    "src/theme/DocItem/Layout/index.tsx",
+    "src/theme/DocItem/Layout/styles.module.css",
+    "static/img/brand-logo.png",
+    "static/img/logo.svg",
+    "static/img/social-card.png"
+  ],
+  "sdk_tests": "Not run for documentation-only scope",
+  "typecheck": "npm run typecheck --prefix docs-site: exit 0",
+  "clean_install_build": [
+    {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": ".local/github-pages/clean-site",
+      "exit_code": 0,
+      "log_sha256": "c3e7f36c8cb2199d9b1de5d6b90b6262f28a1536397042a052d9c281291fbe4e"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": ".local/github-pages/clean-site",
+      "exit_code": 0,
+      "log_sha256": "3f2f8a909ae57fd064aed179d7b34c741536e8156022ec1b16052c63a6f9083d"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": ".local/github-pages/clean-site",
+      "exit_code": 0,
+      "log_sha256": "a153e27a05058693aed425334be50915361e1c26fd6154b394d378b7bfc7cb4d"
+    }
+  ],
+  "clean_directory_initial_state": "Copied site sources only; no node_modules, build or .docusaurus directory"
+}

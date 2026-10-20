@@ -1,0 +1,204 @@
+---
+title: Live Qualification
+---
+
+The [live acceptance policy](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/LIVE_ACCEPTANCE_POLICY.md) governs tenant selection,
+owned fixtures, cost limits, promotion, and cleanup.
+
+The source of truth is [the exhaustive qualification matrix](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/contracts/qualification.json),
+with one row for each of the 448 frozen methods. Implementation, independent
+contract verification, and successful service execution have separate fields.
+Each unqualified method has a reason. The [current receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/contracts/live-evidence.json)
+binds an allowlisted native execution report to the SDK source, dependencies,
+compiled executable, Rust version, host target, and execution time.
+
+## Current 0.2.3 read-only qualification
+
+The current run is [phase 24 attempt 02](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-24-live-attempt-02.json).
+It verified **1 exact native method**, OAuth token exchange. All four single-page
+Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
+returned **HTTP 403 permission prerequisites**. These responses establish neither
+filter acceptance nor effectiveness. The run made four service requests and one
+token exchange, performed no mutations, and recorded `cleanupState: not_needed`.
+
+The selected endpoint profile was
+`https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt`. The SDK default
+`https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane` was not exercised
+by this receipt and remains unchanged. Vertex AI, N8N, client-session, audio and
+realtime provider workflows remain live-unqualified. Offline fixture and consumer
+checks establish implementation compatibility separately from these service results.
+
+Attempt 01 recorded the same bounded probe outcomes. Attempt 02 names the endpoint
+profile explicitly and binds the updated qualification application. Neither attempt
+promotes the 17 historical successes to the current runtime.
+
+## Historical qualification
+
+The archived **0.2.2** run is [attempt 14](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-08-live-attempt-14.json),
+retained through the [historical receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/contracts/historical/0.2.2-live-evidence.json).
+It verified **17 exact native methods** from 24 service requests and one token
+exchange. The synchronous scan-ID query and async lookup both returned complete,
+correlated results in this run. Three Red Team reads returned **403 permission
+prerequisites**. IAM scope creation and Gateway provisioning returned **400 service
+contract rejections**; their cause remains unestablished, and an SDK request-shape
+defect is not excluded. Both creations were rejected before ownership, so
+`cleanupState` is `not_needed`; these mutation/cleanup chains remain live-unqualified.
+This receipt binds the 0.2.2 runtime fingerprint and does not establish consumer
+adoption or additional live privileges.
+
+The historical 0.2.1 run (attempt 13) verified 16 exact native methods
+from 24 service requests and one token exchange. Its synchronous scan-ID query
+returned HTTP 200 without a complete correlated receipt and was unqualified
+in that historical receipt; attempt 14 supersedes that observation for 0.2.2.
+The async lookup completed with correlated results. Three Red Team reads returned 403 permission rejections;
+IAM scope creation and Gateway provisioning returned 400 rejecting the submitted
+requests. The cause of these two 400s remains unestablished, including whether a
+native request-shape defect contributed. Both creations were rejected before
+ownership, so cleanup was not needed. Those methods remain live-unqualified.
+That receipt binds its own recorded runtime fingerprint, including the vendor
+validators and typed model additions at that source. It does not qualify later
+G25 runtime changes; the current receipt reference above identifies the applicable
+source and execution outcomes.
+
+The published 0.1.1 source had a separate run (attempt 08) verifying 16 methods.
+Its synchronous scan-ID lookup was incomplete or uncorrelated while the async
+lookup succeeded, leaving that canonical method unqualified in that receipt.
+Attempts 09–13 are new executions; their results do not rewrite the publication's
+historical observations. Earlier 0.1.0 receipts also verified 17 methods.
+
+The first 0.1.1 execution (attempt 07) completed 24 service requests with cleanup
+not needed, but the wrapper rejected its version because it was hardcoded to
+0.1.0. The [parser-attempt record](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-91-live-refresh-attempt-07.json)
+preserves that failure. The manifest-bound parser now rejects receipts for a
+different SDK version. No earlier failure was promoted.
+
+Historical mutation-mode executions keep the original `phase-08-live-attempt-NN.json`
+naming convention and increasing counter. Read-only management executions use
+`phase-24-live-attempt-NN.json` with their own preserved attempts.
+The owning phase records the exact receipt reference and current runtime fingerprint;
+the filename does not assert that a later execution happened during Phase 8.
+
+## Current read-only mode
+
+The current mode selects an explicit external registration and independently supplied
+expected TSG before authentication. The native transport allows only OAuth plus
+four exact target-list requests, with one profiling filter and `limit=1` each.
+It refuses mutations, other routes, extra query parameters and more than five
+transport attempts. Automatic retries are disabled; operations have a 15-second
+budget and bounded bodies. It returns before historical mutation workflows.
+
+```sh
+python tools/live_evidence.py --run --read-only \
+  --config /absolute/path/to/nonproduction-registration.json \
+  --expect-tsg EXPECTED_NONPRODUCTION_TSG --attempt NEXT_UNUSED_NUMBER
+```
+
+## Historical controlled mutation mode
+
+The qualification application uses the native crate for OAuth, AIRS scan HMAC,
+management, DLP, Model Security, Red Team, AgentGuard, Gateway configuration, and
+shared IAM. It selects one explicitly supplied nonproduction registration and
+checks its TSG against a separately supplied expected scope before authentication.
+It uses a returned scan key only when that key explicitly belongs to the selected
+tenant; otherwise it explicitly selects the obtained OAuth token for scanning.
+
+Read probes use bounded lists. Synthetic scanning submits one short prompt and
+one single-item async batch. Result acceptance requires correlated scan/report
+identities and completed non-error scan data; an empty, pending, or unrelated
+typed response does not establish completion. Unknown verdict values stay unknown.
+The run does not accept a Red Team EULA or start a model, agent, or attack job.
+
+Mutation probes create a fresh IAM scope, read/update it, delete it, and verify
+absence. A second fresh scope and workspace exercise the native provisioning and
+binding workflow. All fixture names include 128 bits of locally generated entropy.
+The preflight uses the unpaginated IAM listing only when its count accounts for
+every returned item. This is a collision check; the upstream API offers no atomic
+reservation. Known creation rejections grant no cleanup ownership. Subsequent
+scope mutations require the confirmed identity, retain unrelated bindings and
+extension data, and delete only an empty owned scope.
+
+Workspace DELETE is archival. Cleanup requires the exact owned workspace to
+appear in the archived listing before its owned binding is removed. Other
+bindings are retained. Ambiguous initial writes retain dependencies for
+reconciliation; an immediate missing listing cannot prove that an uncertain
+create will never complete. Local cancellation does not undo server writes.
+
+The application has no automatic retries, at most 80 transport attempts, a
+15-second budget per operation, bounded bodies, and a ten-minute overall limit.
+Private recovery snapshots record intent before each creation and preserve known
+resource IDs and uncertainty. Snapshots and diagnostics remain in a newly owned
+private directory outside git and published packages. Synthetic scan audit records
+remain on the server because the frozen scan API has no deletion method.
+
+## Reproduce a controlled run
+
+The separate mutation mode also requires explicit selection:
+
+```sh
+python tools/live_evidence.py --run \
+  --config /absolute/path/to/nonproduction-registration.json \
+  --expect-tsg EXPECTED_NONPRODUCTION_TSG \
+  --mutations --attempt NEXT_UNUSED_NUMBER
+```
+
+The registration has exactly `mgmtClientId`, `mgmtClientSecret`, and `mgmtTsgId`.
+Keep it outside the checkout. Each attempt preserves its earlier public receipt
+and private recovery snapshots. An interruption reports the private recovery
+location. Reconcile any uncertain writes before rerunning. Never select production
+or repurpose an existing resource for these disposable-fixture probes.
+
+Ordinary verification has no service access:
+
+```sh
+python tools/live_evidence.py --check
+python tools/native_operations.py --check --require-through-phase 8
+python tools/native_exports.py --check
+python tools/qualification.py --check
+```
+
+The verifier rejects stale runtime inputs, tampered receipt hashes, failed native
+execution, arbitrary output fields, unreviewed classifications, failed operations
+marked successful, and hidden cleanup uncertainty. Digests detect inconsistency;
+repository writers and the actual qualification process remain trusted.
+
+Rejected-request rows may include `rejectionDetails` with a closed-vocabulary
+service code and up to 20 distinct, already-allowlisted problem field names.
+Titles, reasons, messages, values and unknown codes are withheld. A null code or
+empty field list supplies no additional cause evidence; it does not establish a
+service defect or exclude an SDK defect. Historical receipts without this field
+retain their original observations.
+
+Every observation of a method is retained, including cleanup and reconciliation.
+A success combined with a failure cannot qualify the method: the receipt marks
+the conflict for reviewed reconciliation and the matrix conservatively keeps it
+live-unqualified. A new source-bound receipt after reconciliation is required to
+establish success; an earlier successful probe cannot mask a later failure.
+
+## Scope of the evidence
+
+Only workflows recorded as successful in the current receipt are live-verified.
+Neither a list call nor a constructor certifies other operations in its family.
+403 responses retain a permission prerequisite; unavailable routes, rate limits,
+network failures, service contract rejections, and SDK validation/decoding failures
+have distinct classifications. A failed native operation is never promoted by
+offline parity evidence. Previous attempts remain historical evidence and do not
+certify later changed runtime sources.
+
+Gateway runtime inference, SSE provider execution, and realtime provider readiness
+need an explicitly selected runtime origin, runtime credential, and compatible
+provider fixture. Those prerequisites are not established by SCM OAuth or a
+WebSocket upgrade. The current read-only run therefore leaves them live-unqualified; their
+independent transport/parser/contract checks remain recorded. Red Team permissions
+and DLP service deployment are similarly assessed from actual receipts without
+assuming that management-console access grants product permissions.
+
+Native execution currently covers Linux x86_64 musl. See [platform evidence](/developer/platforms)
+for the separately labeled compile checks and [phase status](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/phase-status.json)
+for retained remote Forgejo qualification. The [registry publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/release-registry-0.1.0.json)
+separately records the published artifact and its exact source; publication does
+not expand live or native platform acceptance.
+
+The new Portkey access-policy methods were not called: the selected registration
+contains SCM OAuth credentials only. Their separate prerequisite/status is in
+[the access-policy live record](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-17-access-live.json). No access-policy
+authorization mutation was performed.

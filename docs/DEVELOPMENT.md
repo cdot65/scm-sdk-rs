@@ -128,8 +128,8 @@ CARGO_TARGET_DIR=.local/target-msrv python3 scripts/check-rust.py --toolchain 1.
 ## Frozen contracts and native probes
 
 The baseline is TypeScript **0.34.0** commit
-`4a80dbdb3dc14365e1c25d838ac0bd139485d48c`. Use the pinned development Node/tooling
-versions in `.node-version` and `tools/package-lock.json`; do not regenerate from
+`4a80dbdb3dc14365e1c25d838ac0bd139485d48c`. Use the repository-root contract/oracle tooling pins
+in `.node-version` and `tools/package-lock.json`; do not regenerate from
 uncommitted changes in another checkout.
 
 ```sh
@@ -222,10 +222,16 @@ qualification. Local native and cross reports remain independently retained.
 
 ## Phase acceptance and live evidence
 
-Run `python3 tools/check_phase.py --phase 8`, request a fresh actual Claude Code
-review, improve findings and repeat until at least 9/10. CI can rerun checks with
-`--verification-only` without advancing status or requesting review. The source
-fingerprint and exact reports bind each accepted phase; preserve prior attempts.
+Use the active phase and current maintainer rubric in [Implementation phases](PHASES.md).
+Run `python3 tools/check_phase.py --phase N` with that phase number and request
+a fresh actual Claude Code review. Each of implementation, code quality,
+supportability, architecture and delivery is scored out of 10: every category
+must reach 8, chunks require 42/50 (aim for 45), and phases require 46/50.
+At most five attempts are allowed; the documented fifth-attempt exception
+requires a total strictly above 40, every category still at least 8, and every
+blocking finding resolved. Preserve every attempt and its limitations.
+CI can rerun checks with `--verification-only` without advancing status or
+requesting review. Source fingerprints and exact reports bind accepted phases.
 
 Ordinary checks do not contact service APIs. Live qualification selects external
 registration and expected scope explicitly, bounds operations/cost, and records
@@ -234,3 +240,6 @@ cleanup/recovery. Follow [LIVE_ACCEPTANCE.md](LIVE_ACCEPTANCE.md) and the curren
 permissions and unverified methods remain separate from implemented parity.
 Registry publication, a clean final commit/artifact and retained remote CI
 execution require their own actual proof.
+
+The documentation build uses its own Node pin, `docs-site/.node-version`,
+independently of the repository-root contract/oracle tooling pin.

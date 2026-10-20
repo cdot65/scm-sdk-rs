@@ -1,0 +1,62 @@
+name: Publish Rust SDK documentation
+
+on:
+  push:
+    branches: ["docs/scm-github-pages"]
+    paths:
+      - "docs-site/**"
+      - ".github/workflows/docs-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.server_url == 'https://github.com' && github.repository == 'cdot65/scm-sdk-rs' && github.ref == 'refs/heads/docs/scm-github-pages'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: docs-site
+    steps:
+      - name: Check out documentation source
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      - name: Install pinned Node 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: docs-site/.node-version
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+      - name: Install locked documentation dependencies
+        run: npm ci
+      - name: Check documentation types
+        run: npm run typecheck
+      - name: Build Docusaurus site
+        run: npm run build
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: docs-site/build
+
+  deploy:
+    if: github.server_url == 'https://github.com' && github.repository == 'cdot65/scm-sdk-rs' && github.ref == 'refs/heads/docs/scm-github-pages'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
