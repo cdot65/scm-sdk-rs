@@ -6682,7 +6682,22 @@
       "review_findings_disposition": {
         "phase23": "Low follow-ups addressed in phase24: enum documentation placement, honest example claims, archive command working directories, archive path rooting, resolved serde_json feature policy and bounded privacy receipt HEAD ancestry. Actual phase24 readiness chunk attempt1 accepted46/50.",
         "readiness_attempt1": "All four findings addressed by a5e1a74; see docs/reviews/phase-24-readiness-attempt-01-followups.md. Original review remains bound to its original source. Fresh full qualification and readiness chunk attempt2 pending; publication and remote delivery remain pending.",
-        "readiness_attempt2": "Accepted45/50; three low findings addressed before fullreadiness: explicit access-policy archive/consumer assertions, plain unpublishedreceipt locators with live-reference tests, and required release CLI identity. Fresh qualification/review pending."
+        "readiness_attempt2": "Accepted45/50; all three low findings addressed by 14a6754 and verified by the complete 73-command gate and actual readiness chunk attempt3.",
+        "readiness_attempt3": "Accepted46/50, every category >=9, no high/blocker. Three low findings retained for full-phase readiness assessment: README current live-receipt discoverability (current outcome documented in LIVE_ACCEPTANCE and CHANGELOG); per-method qualification references omit new management suites (independent management fixture ledger and full gate bind them); historical offline-delivery helper has legacy consumer counts (phase24 uses the schema3 wrapper instead). No SDK behavior or executed check is missing. Publication and remote delivery remain pending.",
+        "full_readiness_attempt1": "Accepted46/50 with no high/blocker. Retained medium limitation: probes used /ai-red-teaming/mgmt, outside declared endpoint profiles; HTTP403 cannot establish permissions as the sole blocker. All four reads remain live-unqualified. Low follow-ups (README receipt discoverability, per-method links to management suites, historical helper naming, stricter generic future receipt limitation policy) remain visible in the actual review. Current release gate independently requires endpoint disclosure. Publication does not expand live coverage. Follow-ups will not rewrite immutable published source."
+      },
+      "registry_publication": {
+        "status": "published_and_verified",
+        "version": "0.2.3",
+        "evidence": "docs/checks/release-registry-0.2.3.json",
+        "source_commit": "14a67541f5a57d411c4c4a64c91ced5ba170dafd"
+      },
+      "release_readiness": {
+        "status": "accepted",
+        "review": "docs/reviews/phase-24-attempt-01.json",
+        "total": 46,
+        "source_sha256": "726ed2c973d3b59cfefec63fa1de921bda31cf275c9397c2d4d16c65a880e313",
+        "phase_completion": false
       }
     },
     {

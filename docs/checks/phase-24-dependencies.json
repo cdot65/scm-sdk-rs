@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-10-19T23:15:48.699258+00:00",
+  "checkedAt": "2026-10-19T23:54:57.839102+00:00",
   "passed": true,
   "lockfileSha256": "ca63e197047c8257dcaff3bc60e521ad80dc8dd0330bc0a61c74c240cd7cf9a1",
   "lockfileUnchanged": true,
@@ -3314,7 +3314,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.04
+      "durationSeconds": 0.003
     },
     {
       "command": [
@@ -3327,7 +3327,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.007
+      "durationSeconds": 0.001
     },
     {
       "command": [
@@ -3344,7 +3344,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.001
+      "durationSeconds": 0.002
     },
     {
       "command": [
@@ -3362,7 +3362,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.316
+      "durationSeconds": 0.272
     },
     {
       "command": [
@@ -3378,7 +3378,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.001
+      "durationSeconds": 0.002
     },
     {
       "command": [
@@ -3387,11 +3387,11 @@
         "--shared",
         "--no-checkout",
         "/home/cdot/development/cdot65/scm-sdk-rs/.local/security/advisory-db.git",
-        "/tmp/scm-rustsec-6j0m_29f/advisory-db"
+        "/tmp/scm-rustsec-668l8scz/advisory-db"
       ],
       "exit_code": 0,
       "stdout": "",
-      "stderr": "Cloning into '/tmp/scm-rustsec-6j0m_29f/advisory-db'...\ndone.\n",
+      "stderr": "Cloning into '/tmp/scm-rustsec-668l8scz/advisory-db'...\ndone.\n",
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
@@ -3401,7 +3401,7 @@
       "command": [
         "git",
         "-C",
-        "/tmp/scm-rustsec-6j0m_29f/advisory-db",
+        "/tmp/scm-rustsec-668l8scz/advisory-db",
         "checkout",
         "--detach",
         "999ec89d5d3f10f20be14750ec8c2d8b44e0ac9b"
@@ -3412,13 +3412,13 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.116
+      "durationSeconds": 0.077
     },
     {
       "command": [
         "git",
         "-C",
-        "/tmp/scm-rustsec-6j0m_29f/advisory-db",
+        "/tmp/scm-rustsec-668l8scz/advisory-db",
         "rev-parse",
         "HEAD"
       ],
@@ -3428,13 +3428,13 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.001
+      "durationSeconds": 0.002
     },
     {
       "command": [
         "git",
         "-C",
-        "/tmp/scm-rustsec-6j0m_29f/advisory-db",
+        "/tmp/scm-rustsec-668l8scz/advisory-db",
         "show",
         "-s",
         "--format=%cI",
@@ -3446,7 +3446,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.003
+      "durationSeconds": 0.002
     },
     {
       "command": [
@@ -3455,7 +3455,7 @@
         "--file",
         "/home/cdot/development/cdot65/scm-sdk-rs/Cargo.lock",
         "--db",
-        "/tmp/scm-rustsec-6j0m_29f/advisory-db",
+        "/tmp/scm-rustsec-668l8scz/advisory-db",
         "--no-fetch",
         "--json",
         "--deny",
@@ -3467,7 +3467,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.156
+      "durationSeconds": 0.16
     },
     {
       "command": [
@@ -3490,7 +3490,7 @@
       "stdout_truncated": false,
       "stderr_truncated": false,
       "timeout": false,
-      "durationSeconds": 0.389
+      "durationSeconds": 0.374
     }
   ],
   "limitations": [
