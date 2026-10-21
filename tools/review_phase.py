@@ -14,7 +14,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 EXCLUDED_DIRECTORIES = ("docs/reviews/", "docs/checks/")
 EXCLUDED_FILES = {"docs/phase-status.json"}
-SCOPE_BOUND_PHASES = frozenset({20, 21, 22, 23, 24, 25})
+SCOPE_BOUND_PHASES = frozenset({20, 21, 22, 23, 24, 25, 26, 27, 28})
 SCHEMA = {
     "type": "object",
     "required": ["score", "summary", "findings", "evidence", "limitations"],
@@ -97,7 +97,7 @@ def verify_attempt_sequence(root, phase, attempt, chunk=None):
             if (failure.is_symlink() or record.get("phase") != phase
                     or record.get("attempt") != previous or record.get("chunk") != chunk
                     or record.get("reviewer") != "Claude Code" or record.get("status") != "invocation_failed"
-                    or record.get("reason") not in {"timeout", "process_error", "invalid_output", "launch_error"}):
+                    or record.get("reason") not in {"timeout", "process_error", "invalid_output", "launch_error", "interrupted"}):
                 raise ValueError("Previous failed invocation is invalid")
             for key, suffix in (("prompt_sha256", ".prompt.md"), ("checks_sha256", ".checks.json")):
                 evidence = path.with_suffix(suffix)
@@ -382,6 +382,26 @@ def accepted_chunks(root, phase, declared, source_sha256, phase_review=None):
 
 
 def validate_predecessors(root, status, phase):
+    # Independently authorized 0.35.0 maintenance; never reset phase 24/25 gates.
+    maintenance_dependencies = {26: [23], 27: [26], 28: [27]}
+    if phase in maintenance_dependencies:
+        rows = {item["id"]: item for item in status["phases"]}
+        expected = maintenance_dependencies[phase]
+        if rows.get(phase, {}).get("depends_on") != expected:
+            raise ValueError("Maintenance phase dependency declaration differs from reviewed graph")
+        receipt = json.loads((root / "docs/checks/release-registry-0.2.3.json").read_text())
+        if (receipt.get("version") != "0.2.3"
+                or receipt.get("sourceCommit") != "14a67541f5a57d411c4c4a64c91ced5ba170dafd"
+                or receipt.get("archiveSha256") != "80a58b7b287d24261c869cf0fda7d77b177f2442db3a173634c527d6fa73e809"):
+            raise ValueError("Maintenance baseline publication evidence changed")
+        for dependency in expected:
+            validate_predecessors(root, status, dependency)
+            item = rows.get(dependency, {})
+            if item.get("status") != "complete" or not item.get("reviews"):
+                raise ValueError("Maintenance predecessor has not passed its gate")
+            if not verify_record(root, root / item["reviews"][-1], dependency, item.get("accepted_source_sha256")):
+                raise ValueError("Maintenance predecessor review evidence is invalid")
+        return
     for item in status["phases"]:
         if item["id"] >= phase:
             continue
@@ -501,8 +521,8 @@ meet it. Report concrete required fixes with paths and lines. Judge this phase's
 acceptance criteria, not unimplemented later phases. Verify evidence rather than
 trusting completion prose. You have read-only Read/Glob/Grep tools: inspect recorded
 checks and distinguish unexecuted checks. Do not read any credential/tenant-registration
-files or anything outside this repository. .local/typescript is a frozen nonsecret source
-reference and may be inspected. Do not modify files or perform network calls.
+files or anything outside this repository. Use the pinned source artifacts declared
+in this phase’s plan; an optional .local/typescript checkout is not required. Do not modify files or perform network calls.
 {focus}
 Reviewed source SHA256: {before}.
 Passing check evidence: {checks.relative_to(root)}, SHA256 {sha256(checks)}.
@@ -514,6 +534,9 @@ marked planned are not a missing deliverable of the contracts/models phase. Hist
 release evidence does not establish new-source acceptance; avoid re-auditing unrelated
 historical infrastructure when evaluating this scoped change.
 Return the requested structured review with score, summary, findings, evidence, limitations.
+Keep the summary under 150 words and findings concise. For a follow-up, focus on
+changed artifacts and disposition of prior findings; avoid repeating resolved
+technical explanations. Include enough concrete evidence to justify each score.
 """
     if rubric:
         prompt += f"""
@@ -576,6 +599,9 @@ the phase. A fresh complete-phase review after delivery and both accepted chunks
         diagnostics(error.stdout, error.stderr)
         failed_invocation("timeout")
         raise RuntimeError("Claude Code review timed out; prompt and private diagnostics preserved") from None
+    except KeyboardInterrupt:
+        failed_invocation("interrupted")
+        raise
     except OSError:
         failed_invocation("launch_error")
         raise

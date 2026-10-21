@@ -181,3 +181,11 @@ requires source compatibility proof; an unavoidable public break requires a
 minor release and migration guidance. Static contract coverage, executable
 qualification and live tenant acceptance remain separate evidence. Actual Claude
 reviews and the current five-category rubric gate implementation and delivery.
+
+
+### TypeScript 0.35.0 additive maintenance
+
+The separately authorized directional-profile follow-up is specified in
+[typescript-035-parity-plan.md](typescript-035-parity-plan.md), phases 26–28.
+The 0.34.0 frozen inventory remains authoritative for historical parity claims;
+0.35.0 additions receive separate provenance, validation roots and counts.

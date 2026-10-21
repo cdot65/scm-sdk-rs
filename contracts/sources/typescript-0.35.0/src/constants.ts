@@ -1,0 +1,299 @@
+// src/constants.ts — mirrors Python SDK constants/base.py
+
+export const HEADER_API_KEY = 'x-pan-token';
+export const HEADER_AUTH_TOKEN = 'Authorization';
+export const PAYLOAD_HASH = 'x-payload-hash';
+export const BEARER = 'Bearer ';
+
+export const DEFAULT_ENDPOINT = 'https://service.api.aisecurity.paloaltonetworks.com';
+
+/** Regional AIRS API endpoints. */
+export const AIRS_ENDPOINTS = {
+  US: 'https://service.api.aisecurity.paloaltonetworks.com',
+  EU: 'https://service-de.api.aisecurity.paloaltonetworks.com',
+  INDIA: 'https://service-in.api.aisecurity.paloaltonetworks.com',
+  SINGAPORE: 'https://service-sg.api.aisecurity.paloaltonetworks.com',
+} as const;
+
+// Environment variable names
+export const AI_SEC_API_KEY = 'PANW_AI_SEC_API_KEY';
+export const AI_SEC_API_TOKEN = 'PANW_AI_SEC_API_TOKEN';
+export const AI_SEC_API_ENDPOINT = 'PANW_AI_SEC_API_ENDPOINT';
+
+// Content length limits (bytes)
+export const MAX_CONTENT_PROMPT_LENGTH = 2 * 1024 * 1024; // 2 MB
+export const MAX_CONTENT_RESPONSE_LENGTH = 2 * 1024 * 1024; // 2 MB
+export const MAX_CONTENT_CONTEXT_LENGTH = 100 * 1024 * 1024; // 100 MB
+
+// Auth limits
+export const MAX_API_KEY_LENGTH = 2048;
+export const MAX_TOKEN_LENGTH = 2048;
+
+// String length limits
+export const MAX_TRANSACTION_ID_STR_LENGTH = 100;
+export const MAX_SESSION_ID_STR_LENGTH = 100;
+export const MAX_SCAN_ID_STR_LENGTH = 36;
+export const MAX_REPORT_ID_STR_LENGTH = 40;
+export const MAX_AI_PROFILE_NAME_LENGTH = 100;
+
+// Batch / query limits
+export const MAX_NUMBER_OF_SCAN_IDS = 5;
+export const MAX_NUMBER_OF_REPORT_IDS = 5;
+export const MAX_NUMBER_OF_BATCH_SCAN_OBJECTS = 20;
+
+// HTTP / retry
+export const MAX_CONNECTION_POOL_SIZE = 100;
+export const MAX_NUMBER_OF_RETRIES = 5;
+export const HTTP_FORCE_RETRY_STATUS_CODES = [500, 502, 503, 504];
+
+// User-Agent (version injected at build time or read from package.json)
+export const SDK_VERSION = '0.35.0';
+export const USER_AGENT = `PAN-AIRS/${SDK_VERSION}-typescript-sdk`;
+
+// Management API defaults
+/**
+ * Every management-plane product (management, Red Team, Model Security, AgentGuard,
+ * AI Gateway, SCM IAM) defaults to `api.apps.paloaltonetworks.com`, verified live on
+ * 2026-09-12 with read-only list calls per product. `api.sase.paloaltonetworks.com`
+ * still serves the same paths for egress allowlists that already name it. DLP is the
+ * one holdout on its own host (see `DEFAULT_DLP_ENDPOINT`).
+ */
+export const DEFAULT_MGMT_ENDPOINT = 'https://api.apps.paloaltonetworks.com/aisec';
+export const DEFAULT_TOKEN_ENDPOINT = 'https://auth.apps.paloaltonetworks.com/oauth2/access_token';
+
+// Management env vars
+export const MGMT_CLIENT_ID = 'PANW_MGMT_CLIENT_ID';
+export const MGMT_CLIENT_SECRET = 'PANW_MGMT_CLIENT_SECRET';
+export const MGMT_TSG_ID = 'PANW_MGMT_TSG_ID';
+export const MGMT_ENDPOINT = 'PANW_MGMT_ENDPOINT';
+export const MGMT_TOKEN_ENDPOINT = 'PANW_MGMT_TOKEN_ENDPOINT';
+
+// API paths — scan
+export const SYNC_SCAN_PATH = '/v1/scan/sync/request';
+export const ASYNC_SCAN_PATH = '/v1/scan/async/request';
+export const SCAN_RESULTS_PATH = '/v1/scan/results';
+export const SCAN_REPORTS_PATH = '/v1/scan/reports';
+
+// API paths — management
+export const MGMT_PROFILE_PATH = '/v1/mgmt/profile';
+export const MGMT_PROFILES_TSG_PATH = '/v1/mgmt/profiles/tsg';
+export const MGMT_TOPIC_PATH = '/v1/mgmt/topic';
+export const MGMT_TOPICS_TSG_PATH = '/v1/mgmt/topics/tsg';
+export const MGMT_TOPIC_FORCE_PATH = '/v1/mgmt/topic/force';
+export const MGMT_API_KEY_PATH = '/v1/mgmt/apikey';
+export const MGMT_API_KEYS_TSG_PATH = '/v1/mgmt/apikeys/tsg';
+export const MGMT_DLP_PROFILES_PATH = '/v1/mgmt/dlpprofiles';
+export const MGMT_DEPLOYMENT_PROFILES_PATH = '/v1/mgmt/deploymentprofiles';
+export const MGMT_SCAN_LOGS_PATH = '/v1/mgmt/scanlogs';
+export const MGMT_CUSTOMER_APP_PATH = '/v1/mgmt/customerapp';
+export const MGMT_CUSTOMER_APPS_TSG_PATH = '/v1/mgmt/customerapp/tsg';
+export const MGMT_OAUTH_INVALIDATE_PATH = '/v1/mgmt/oauth/invalidateToken';
+export const MGMT_OAUTH_TOKEN_PATH = '/v1/mgmt/oauth/client_credential/accesstoken';
+
+// API paths — management dashboard (SCM AI Security > Runtime > API Applications panel)
+export const MGMT_DASHBOARD_APPLICATION_PATH = '/v1/mgmt/dashboard/v2/apps/application';
+export const MGMT_DASHBOARD_APPLICATION_VIOLATION_BREAKDOWN_PATH =
+  '/v1/mgmt/dashboard/v2/apps/applicationviolationbreakdown';
+export const MGMT_DASHBOARD_APPLICATIONS_OVERVIEW_PATH =
+  '/v1/mgmt/dashboard/v2/apps/applicationsoverview';
+export const MGMT_DASHBOARD_TOP_APPLICATIONS_VIOLATIONS_PATH =
+  '/v1/mgmt/dashboard/v2/apps/topapplicationsviolations';
+export const MGMT_DASHBOARD_APPLICATIONS_VIOLATIONS_TREND_PATH =
+  '/v1/mgmt/dashboard/v2/apps/applicationsviolationstrend';
+export const MGMT_DASHBOARD_APPS_LIST_PATH = '/v1/mgmt/dashboard/v2/apps/appslist';
+export const MGMT_DASHBOARD_SESSIONS_CHART_PATH = '/v1/mgmt/dashboard/v2/sessions/sessionschart';
+export const MGMT_DASHBOARD_SESSIONS_OVERVIEW_PATH =
+  '/v1/mgmt/dashboard/v2/sessions/sessionsoverview';
+export const MGMT_DASHBOARD_SESSION_PATH = '/v1/mgmt/dashboard/v2/sessions/session';
+export const MGMT_DASHBOARD_SESSION_TRANSACTION_PATH =
+  '/v1/mgmt/dashboard/v2/sessions/sessiontransaction';
+export const MGMT_REPORT_SCAN_CONTENT_PATH = '/v1/mgmt/reports/scancontent';
+
+// DLP (Data Loss Prevention) API defaults
+export const DEFAULT_DLP_ENDPOINT = 'https://api.dlp.paloaltonetworks.com';
+
+// DLP API paths
+export const DLP_DATA_FILTERING_PROFILES_PATH = '/v2/api/data-filtering-profiles';
+export const DLP_DATA_PATTERNS_PATH = '/v2/api/data-patterns';
+export const DLP_DICTIONARIES_PATH = '/v2/api/dictionaries';
+export const DLP_DATA_PROFILES_PATH = '/v2/api/data-profiles';
+
+// Model Security API defaults
+export const DEFAULT_MODEL_SEC_DATA_ENDPOINT = 'https://api.apps.paloaltonetworks.com/aims/data';
+export const DEFAULT_MODEL_SEC_MGMT_ENDPOINT = 'https://api.apps.paloaltonetworks.com/aims/mgmt';
+
+// Model Security env vars
+export const MODEL_SEC_CLIENT_ID = 'PANW_MODEL_SEC_CLIENT_ID';
+export const MODEL_SEC_CLIENT_SECRET = 'PANW_MODEL_SEC_CLIENT_SECRET';
+export const MODEL_SEC_TSG_ID = 'PANW_MODEL_SEC_TSG_ID';
+export const MODEL_SEC_DATA_ENDPOINT = 'PANW_MODEL_SEC_DATA_ENDPOINT';
+export const MODEL_SEC_MGMT_ENDPOINT = 'PANW_MODEL_SEC_MGMT_ENDPOINT';
+export const MODEL_SEC_TOKEN_ENDPOINT = 'PANW_MODEL_SEC_TOKEN_ENDPOINT';
+
+// API paths — model security data plane
+export const MODEL_SEC_SCANS_PATH = '/v1/scans';
+export const MODEL_SEC_EVALUATIONS_PATH = '/v1/evaluations';
+export const MODEL_SEC_VIOLATIONS_PATH = '/v1/violations';
+export const MODEL_SEC_MODELS_PATH = '/v1/models';
+export const MODEL_SEC_MODEL_VERSIONS_PATH = '/v1/model-versions';
+
+// API paths — model security management
+export const MODEL_SEC_SECURITY_GROUPS_PATH = '/v1/security-groups';
+export const MODEL_SEC_SECURITY_RULES_PATH = '/v1/security-rules';
+export const MODEL_SEC_PYPI_AUTH_PATH = '/v1/pypi/authenticate';
+
+// Red Team API defaults
+export const DEFAULT_RED_TEAM_DATA_ENDPOINT =
+  'https://api.apps.paloaltonetworks.com/ai-red-teaming/data-plane';
+export const DEFAULT_RED_TEAM_MGMT_ENDPOINT =
+  'https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane';
+export const DEFAULT_RED_TEAM_NETWORK_BROKER_ENDPOINT =
+  'https://api.apps.paloaltonetworks.com/ai-red-teaming/data-plane/network-broker';
+
+// Red Team env vars
+export const RED_TEAM_CLIENT_ID = 'PANW_RED_TEAM_CLIENT_ID';
+export const RED_TEAM_CLIENT_SECRET = 'PANW_RED_TEAM_CLIENT_SECRET';
+export const RED_TEAM_TSG_ID = 'PANW_RED_TEAM_TSG_ID';
+export const RED_TEAM_DATA_ENDPOINT = 'PANW_RED_TEAM_DATA_ENDPOINT';
+export const RED_TEAM_MGMT_ENDPOINT = 'PANW_RED_TEAM_MGMT_ENDPOINT';
+export const RED_TEAM_TOKEN_ENDPOINT = 'PANW_RED_TEAM_TOKEN_ENDPOINT';
+export const RED_TEAM_NETWORK_BROKER_ENDPOINT = 'PANW_RED_TEAM_NETWORK_BROKER_ENDPOINT';
+
+// API paths — red team data plane
+export const RED_TEAM_SCAN_PATH = '/v1/scan';
+export const RED_TEAM_CATEGORIES_PATH = '/v1/categories';
+export const RED_TEAM_REPORT_STATIC_PATH = '/v1/report/static';
+export const RED_TEAM_REPORT_DYNAMIC_PATH = '/v1/report/dynamic';
+export const RED_TEAM_REPORT_PATH = '/v1/report';
+export const RED_TEAM_CUSTOM_ATTACKS_REPORT_PATH = '/v1/custom-attacks';
+export const RED_TEAM_DASHBOARD_PATH = '/v1/dashboard';
+export const RED_TEAM_QUOTA_PATH = '/v1/metering/quota';
+export const RED_TEAM_ERROR_LOG_PATH = '/v1/error-log/job';
+export const RED_TEAM_SENTIMENT_PATH = '/v1/sentiment';
+export const RED_TEAM_LANGUAGES_PATH = '/v1/languages';
+export const RED_TEAM_ERROR_LOG_TARGET_PROFILE_PATH = '/v1/error-log/target-profile';
+
+// API paths — red team management plane
+export const RED_TEAM_TARGET_PATH = '/v1/target';
+export const RED_TEAM_TARGET_VALIDATE_AUTH_PATH = '/v1/target/validate-auth';
+export const RED_TEAM_ADAPTER_PATH = '/v1/adapters';
+export const RED_TEAM_ADAPTER_VALIDATE_PATH = '/v1/adapters/validate';
+export const RED_TEAM_TEMPLATE_PATH = '/v1/template';
+export const RED_TEAM_EULA_PATH = '/v1/eula';
+export const RED_TEAM_INSTANCES_PATH = '/v1/instances';
+export const RED_TEAM_REGISTRY_CREDENTIALS_PATH = '/v1/registry-credentials';
+export const RED_TEAM_CUSTOM_ATTACK_PATH = '/v1/custom-attack';
+export const RED_TEAM_MGMT_DASHBOARD_PATH = '/v1/dashboard/overview';
+
+// API paths — red team network broker (distinct data-plane base URL)
+export const RED_TEAM_CHANNELS_PATH = '/v1/channels';
+export const RED_TEAM_CHANNELS_STATS_PATH = '/v1/channels/stats';
+
+// ---------------------------------------------------------------------------
+// AI Gateway
+// ---------------------------------------------------------------------------
+
+/**
+ * Default AI Gateway data-plane endpoint (telemetry + workspace-scoped config).
+ *
+ * `api.apps.paloaltonetworks.com` and `api.sase.paloaltonetworks.com` resolve to the same
+ * host and behave identically — one API gateway routing by path prefix. `api.apps` is the
+ * documented name and the default for every product; override with
+ * `PANW_AI_GW_DATA_ENDPOINT` to reuse an existing `api.sase` egress allowlist.
+ */
+export const DEFAULT_AI_GW_DATA_ENDPOINT = 'https://api.apps.paloaltonetworks.com/ai_gw/v2';
+/** Default AI Gateway admin-plane (organisation-scoped config) endpoint. */
+export const DEFAULT_AI_GW_ADMIN_ENDPOINT = 'https://api.apps.paloaltonetworks.com/ai_gw/admin/v2';
+
+export const AI_GW_DATA_ENDPOINT = 'PANW_AI_GW_DATA_ENDPOINT';
+export const AI_GW_ADMIN_ENDPOINT = 'PANW_AI_GW_ADMIN_ENDPOINT';
+// No AI_GW_TOKEN_ENDPOINT constant: resolveOAuthConfig() builds `${primaryEnvPrefix}_TOKEN_ENDPOINT`
+// dynamically from 'PANW_AI_GW', so a static export here would be dead code (see oauth-config.ts).
+
+/**
+ * Default SCM IAM endpoint. Workspace-scoped AI Gateway access is granted through IAM *scopes*
+ * (`/iam/v1/scopes`); a workspace's `scope_name` must exist here before the workspace is created.
+ */
+export const DEFAULT_IAM_ENDPOINT = 'https://api.apps.paloaltonetworks.com/iam/v1';
+export const IAM_ENDPOINT = 'PANW_IAM_ENDPOINT';
+/** SCM IAM scopes collection. Element paths are `/scopes/{name}` — keyed by name, not UUID. */
+export const IAM_SCOPES_PATH = '/scopes';
+
+/** Mandatory on every AI Gateway request; omitting it yields a 403 OPA denial. */
+export const TSG_ID_HEADER = 'x-tsg-id';
+
+// Data plane
+export const AI_GW_WORKSPACES_PATH = '/workspaces';
+export const AI_GW_CONFIGS_PATH = '/configs';
+export const AI_GW_GUARDRAILS_PATH = '/guardrails';
+export const AI_GW_PROVIDERS_PATH = '/providers';
+export const AI_GW_API_KEYS_SERVICE_PATH = '/api-keys/service';
+export const AI_GW_API_KEYS_USER_PATH = '/api-keys/user';
+export const AI_GW_LOGS_PATH = '/logs';
+export const AI_GW_CHARTS_PATH = '/logs/charts';
+export const AI_GW_GROUPS_PATH = '/logs/groups';
+
+// Admin plane
+export const AI_GW_INTEGRATIONS_PATH = '/integrations';
+/** Static catalog of provider families an integration can bind to (id, slug, name). */
+export const AI_GW_PROVIDER_CATALOG_PATH = '/utils/static-resources/ai-providers';
+export const AI_GW_MCP_INTEGRATIONS_PATH = '/mcp-integrations';
+export const AI_GW_DEPLOYMENTS_PATH = '/deployments';
+export const AI_GW_PLUGINS_PATH = '/plugins';
+export const AI_GW_ORGANISATIONS_SELF_PATH = '/organisations/self';
+export const AI_GW_AUDIT_LOGS_PATH = '/audit-logs';
+
+/**
+ * @internal
+ * Build the `/organisations/{tsgId}/auth-settings` path. Validate `tsgId` before calling.
+ */
+export function aiGwOrganisationsAuthSettingsPath(tsgId: string): string {
+  return `/organisations/${tsgId}/auth-settings`;
+}
+
+/**
+ * Chart metric slugs. Bespoke and unguessable — plural vs singular is load-bearing
+ * (`user-trends` works, `user-trend` 404s). Verified live 2026-07-27; do not derive.
+ */
+export const AI_GW_CHART_METRICS = [
+  'cost',
+  'requests',
+  'latency',
+  'tokens',
+  'errors',
+  'users',
+  'cache-summary',
+  'cache-hit-trend',
+  'user-trends',
+  'error-trends',
+  'error-category-trends',
+  'grouped-errors',
+  'rescued-retries',
+  'feedback-trend',
+  'feedback-weighted',
+  'feedback-score-distribution',
+  'feedback-models',
+] as const;
+
+/** Valid `logs/groups/{dimension}` values. Underscore names only; hyphen/camel variants 400. */
+export const AI_GW_GROUP_DIMENSIONS = ['ai_service', 'model', 'api_key', 'provider'] as const;
+
+/** Valid `&columns=` values for `logs/groups/*`. Invalid names are silently dropped. */
+export const AI_GW_GROUP_COLUMNS = [
+  'cost',
+  'avg_latency',
+  'avg_tokens',
+  'total_tokens',
+  'success_rate',
+  'last_seen',
+] as const;
+/** Experimental AgentGuard browser API data endpoint. */
+export const AGENT_GUARD_DATA_ENDPOINT = 'https://api.apps.paloaltonetworks.com/aiag/data';
+/** Experimental AgentGuard browser API management endpoint. */
+export const AGENT_GUARD_MGMT_ENDPOINT = 'https://api.apps.paloaltonetworks.com/aiag/mgmt';
+/** AgentGuard scan inventory path. */
+export const AGENT_GUARD_SCANS_PATH = '/v1/scans';
+/** AgentGuard scan statistics path. */
+export const AGENT_GUARD_STATS_PATH = '/v1/stats/scans';
+/** AgentGuard rule catalog path. */
+export const AGENT_GUARD_RULES_PATH = '/v1/rules';

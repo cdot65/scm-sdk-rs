@@ -25,6 +25,10 @@ COMMAND_TIMEOUT_SECONDS = 7 * 900 + 60
 # Every scoped contract JSON requires a declared verifying owner. Unknown artifacts
 # fail closed, including new files discovered under a directory scope.
 CONTRACT_LEDGER_OWNERS = {
+    'contracts/sources/typescript-0.35.0/manifest.json': ("tools/verify_typescript035_source.py", "--check"),
+    'contracts/sources/typescript-0.35.0/git-tree.json': ("tools/verify_typescript035_source.py", "--check"),
+    'contracts/sources/typescript-0.35.0/package.json': ("tools/verify_typescript035_source.py", "--check"),
+    'contracts/sources/typescript-0.35.0/test/models/fixtures/directional-security-profile.json': ("tools/verify_typescript035_source.py", "--check"),
     'contracts/live-evidence.json': ('tools/live_evidence.py', '--check'),
     'contracts/compatibility/management-old-consumers.json': ('tools/management_consumers.py', '--check'),
     'contracts/native-fixtures/red-team-management.json': ('tools/management_fixtures.py', '--check'),
@@ -307,6 +311,17 @@ def management_commands(phase):
 
 
 def commands_for(phase):
+    if phase == 26:
+        return [["git", "diff", "--exit-code", "578f2e6", "--", "crates/scm-sdk"],
+                ["python", "-c", "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk']), 'Unexpected SDK implementation file before plan acceptance'"],
+                ["git", "diff", "--check"],
+                ["git", "diff", "--check", "578f2e6..HEAD"],
+                ["git", "diff", "--cached", "--check"],
+                ["python", "tools/verify_typescript035_source.py", "--check"],
+                ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-26-private-material.json"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_typescript035_governance.py", "-v"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_management_phases.py", "-v"]]
     if phase in MANAGEMENT_PHASES:
         return management_commands(phase)
     if phase == 20:

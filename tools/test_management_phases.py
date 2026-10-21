@@ -165,6 +165,7 @@ class ManagementPhaseTests(unittest.TestCase):
                         readers.add(path.relative_to(ROOT).as_posix())
         selected = {argument for command in commands_for(21) for argument in command}
         exemptions = {
+            "tools/verify_typescript035_source.py": "Owns independent phase 26 source provenance and is executed there; does not alter historical phase 21 inputs or command set.",
             "tools/bootstrap_reference.py": "Executed before the CI gate; restores verified frozen inputs and installed oracle dependencies.",
             "tools/check_phase.py": "This is the executing phase driver; its hash guards bind current manifest provenance.",
             "tools/extract-operations.mts": "Reads frozen baseline, references and fixtures only; verify-contracts checks their unchanged hashes. New vendor sources are not extraction inputs.",
@@ -179,8 +180,8 @@ class ManagementPhaseTests(unittest.TestCase):
         active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
         scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
         verify_scoped_ledger_owners(scope, commands_for(active['id']))
-        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json'], commands_for(23))
-        verify_scoped_ledger_owners(list(CONTRACT_LEDGER_OWNERS), commands_for(24))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json' and not p.startswith('contracts/sources/typescript-0.35.0/')], commands_for(23))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not p.startswith('contracts/sources/typescript-0.35.0/')], commands_for(24))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
             verify_scoped_ledger_owners(['contracts/live-evidence.json'], commands_for(23))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
@@ -348,7 +349,7 @@ class ManagementPhaseTests(unittest.TestCase):
             self.assertFalse(verify_record(root, path, 21, "fixed", "scope"))
 
     def test_failed_invocation_consumes_attempt_without_dead_end(self):
-        for reason in ("timeout", "process_error", "invalid_output", "launch_error"):
+        for reason in ("timeout", "process_error", "invalid_output", "launch_error", "interrupted"):
             with self.subTest(reason=reason), tempfile.TemporaryDirectory() as temporary:
                 root = pathlib.Path(temporary)
                 path, record = self.complete_record(root)
@@ -357,13 +358,14 @@ class ManagementPhaseTests(unittest.TestCase):
                     item.unlink()
                 (root / "checks.json").write_bytes(checks)
                 failure = {"timeout": subprocess.TimeoutExpired("claude", 1),
-                           "launch_error": OSError("test launch error")}.get(reason)
+                           "launch_error": OSError("test launch error"),
+                           "interrupted": KeyboardInterrupt()}.get(reason)
                 outcome = subprocess.CompletedProcess(["claude"], 1 if reason == "process_error" else 0,
                                                       "invalid JSON", "")
                 with patch("review_phase.fingerprint", return_value="fixed"), \
                         patch("review_phase.check_evidence", return_value=root / "checks.json"), \
                         patch("review_phase.subprocess.run", side_effect=failure, return_value=outcome):
-                    with self.assertRaises((RuntimeError, ValueError, OSError)):
+                    with self.assertRaises((RuntimeError, ValueError, OSError, KeyboardInterrupt)):
                         main(["--phase", "21"], root)
                 self.assertFalse(path.exists())
                 failed = json.loads(path.with_suffix(".failed.json").read_text())

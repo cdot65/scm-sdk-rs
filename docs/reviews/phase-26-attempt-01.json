@@ -1,0 +1,107 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 26,
+  "attempt": 1,
+  "reviewed_at": "2026-10-21T23:05:27.535485+00:00",
+  "source_sha256": "3cd6cf618253f77e4e77af2581bf7475e2c16d1bdfef73f2429dd6bda1f39dae",
+  "source_unchanged": true,
+  "checks_sha256": "f870cdb696858b5ad3c7672baf060c4377d7fcf47ee5d67eaef90bf1e68db725",
+  "prompt_sha256": "0a8e22cdb306c83a66c4034067ec07f77bc733d6876ca78fea3c728dded823ea",
+  "cli_output_sha256": "f0bc3d104e6230e9836709cf8c18bc2ffc5fe3edbe1d385e4aec7c17cedade20",
+  "gate_passed": false,
+  "review": {
+    "score": 7,
+    "summary": "Phase 26 (plan-and-provenance for the TypeScript 0.35.0 directional-profile follow-up) delivers a substantially accurate, code-grounded plan plus real, executed governance tooling. I independently confirmed the plan's load-bearing technical claims against actual code: the four new upstream exports exist in the pinned index.ts:132-135; ModelConfiguration/AiSecurityProfile keep s009588/s009599 (contracts/native-models.json:7448,336); profiles.rs has exactly two request-schema arguments to repoint (:91,:214); the projection serializer really is typed-wins (generate_models.py:498,505), so existing .extension() callers do not break; and the 0.34.0 baseline already required `policy` and `last_modified_ts` datetime, so \"preexisting known-field constraints stay identical\" holds. The two blockers from plan-attempt-2 are verifiably fixed: depends_on [23] exact-checked with the immutable 0.2.3 receipt (review_phase.py:386-404), list-form chunks with scope_revisions, 26-28 in SCOPE_BOUND_PHASES, phase-26 scope_evidence that makes the pinned-source ledger owners enforceable, and strict argparse in the verifier. docs/checks/phase-26.json is a genuine source-bound receipt whose command list equals commands_for(26) with all four groups exit 0. However, acceptance fails. The phase's only declared chunk is dead-ended: attempt-01 has a tool-generated prompt and checks snapshot but no review record and no failure receipt, so accepted_chunks blocks completion, attempt 1 cannot be rerun and attempt 2 fails the attempt-sequence check. The generated phase-26 prompts cite the wrong governing plan (phases 26-28 declare no \"plan\" key, so review_phase.py:513 falls back to the phase-25 management plan). The phase gate also omits every freeze/hygiene/private-material guard its own artifact table promises (\"compare with parent 578f2e6\"), and the 0.35.0 pin records only sha256/bytes \u2014 no gitBlobSha1, tree ledger or commit object \u2014 so nothing corroborates the declared upstream commit, unlike the 0.34.0 baseline convention the repo already implements. A newly committed tenant-derived fixture carries an unexplained realistic dlp_tenant_id with no tenant scan executed.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "docs/reviews/phase-26-chunk-plan-and-provenance-attempt-01.prompt.md",
+        "line": 1,
+        "description": "The phase's only declared chunk is dead-ended. The tool-generated chunk prompt and its checks snapshot exist at the reviewed source SHA (3cd6cf6...), but there is no docs/reviews/phase-26-chunk-plan-and-provenance-attempt-01.json record and no .failed.json receipt, and .local/reviews/ is empty (no diagnostics were written). Consequences: tools/review_phase.py:353-354 raises 'Missing accepted chunk review: plan-and-provenance' on --advance, so the phase can never complete; attempt 1 cannot be rerun because review_phase.py:501-502 rejects an existing prompt; attempt 2 cannot start because verify_attempt_sequence (review_phase.py:107-108) raises 'Previous review evidence has changed' with neither a record nor a conforming failure receipt. PHASES.md:111-113 also forbids the phase-follow-up path for a missing chunk review. review_phase.py only writes a failure receipt for TimeoutExpired/OSError/invalid output, so an interrupted invocation (SIGINT/kill after the prompt is written) permanently blocks the scope, which test_management_phases.test_failed_invocation_consumes_attempt_without_dead_end does not cover.",
+        "required_fix": "Record the sanitized outcome for chunk attempt 01 without rewriting preserved artifacts: either the actual review record, or a docs/reviews/phase-26-chunk-plan-and-provenance-attempt-01.failed.json conforming to review_phase.py:97-105 (reviewer 'Claude Code', phase 26, attempt 1, chunk 'plan-and-provenance', status invocation_failed, an allowed reason, and the preserved prompt_sha256/checks_sha256), then run chunk attempt 2 and obtain its acceptance before any phase advancement. Separately harden tools/review_phase.py so an interrupted invocation still writes the receipt (wrap the subprocess call to call failed_invocation on BaseException/KeyboardInterrupt) and add an explicit 'interrupted' reason to the allowed set plus a regression test."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/phase-status.json",
+        "line": 6745,
+        "description": "Phases 26-28 declare no \"plan\" key, so tools/review_phase.py:513 falls back to status['active_followup_plan'] = docs/red-team-management-0.86-plan.md. Both generated phase-26 prompts therefore instruct the independent reviewer to treat the phase-21-25 management plan as the 'Active follow-up plan'; that document contains no mention of 0.35.0 or phases 26-28. Every phase 1-25 row declares both \"plan\" (e.g. phase 24 at :6671) and \"milestones\"; phase 26 declares neither, so the governing plan is reachable only incidentally via scope_evidence.",
+        "required_fix": "Add \"plan\": \"docs/typescript-035-parity-plan.md\" to the phase 26, 27 and 28 rows in docs/phase-status.json (and/or make the review_phase.py:513 fallback phase-aware), and add a regression asserting the generated prompt for the active phase names that phase's own plan."
+      },
+      {
+        "severity": "medium",
+        "path": "tools/check_phase.py",
+        "line": 313,
+        "description": "commands_for(26) registers only four commands (source verifier, new governance suite, test_review_phase.py, test_management_phases.py). Nothing executed in this phase enforces the artifact boundary the plan itself declares at docs/typescript-035-parity-plan.md:86-87 ('Byte-frozen 0.34.0 inputs; compare with parent 578f2e6' and 'Preserve frozen specimens and existing metadata bytes'): there is no git diff --exit-code against 578f2e6 for contracts/typescript.json, contracts/operations.json, contracts/export-classification.json, contracts/manifest.json, contracts/native-union-variants.json, contracts/native-fixtures/schemas.json or crates/scm-sdk/src/fixtures/model-regressions.json, no guard that no SDK/generated Rust file changed before plan acceptance, no git diff --check hygiene command and no private-material scan. The analogous plan gate commands_for(21) (check_phase.py:232-244) contains all of these. tools/test_typescript035_governance.py:61-63 only proves phase-status rows for 1-25 are byte-equal to 578f2e6.",
+        "required_fix": "Extend commands_for(26) with the phase-21-style freeze guards (git diff --exit-code 578f2e6 over the frozen contract/fixture/SDK paths plus the git ls-files --others guard), the git diff --check hygiene commands with the existing vendor-yaml exclusions, and scripts/check-private-material.py with a phase-26 output path; regenerate docs/checks/phase-26.json so check_evidence binds the complete set before the next review attempt."
+      },
+      {
+        "severity": "medium",
+        "path": "contracts/sources/typescript-0.35.0/manifest.json",
+        "line": 5,
+        "description": "The new pin's provenance is weaker than this repository's own established convention and cannot be tied to the upstream commit it declares. Each entry records only upstreamPath/sha256/bytes; there is no gitBlobSha1 (contrast contracts/manifest.json:15), no tree ledger and no raw commit object (contrast contracts/sources/typescript/git-tree.json:8 and contracts/sources/typescript/commit.txt:1, which together let the 0.34.0 baseline commit be verified offline). tools/verify_typescript035_source.py:10 hardcodes MANIFEST_SHA256, which is self-asserted in the same change, so the verifier proves only that the bytes have not changed since they were committed, never that commit 780c985cac90144ea1884fe6cffa58b5deec9ac4 contains them. That is precisely the risk the plan's rule 'Never read uncommitted TypeScript files as authoritative input' (docs/typescript-035-parity-plan.md:12-13) exists to exclude, and tools/verify-contracts.py:44,68-69,102-129 already provides reusable git_hash/git_tree_hash helpers.",
+        "required_fix": "Add gitBlobSha1 per pinned file and commit/tree evidence for 0.35.0 mirroring contracts/sources/typescript (commit object text plus a tree ledger, or the blob ids of the enclosing trees), and verify blob hashes and the commit->tree binding in tools/verify_typescript035_source.py by reusing the verify-contracts.py helpers rather than a second sha256-only mechanism; add tamper cases for the new fields."
+      },
+      {
+        "severity": "medium",
+        "path": "contracts/sources/typescript-0.35.0/test/models/fixtures/directional-security-profile.json",
+        "line": 5,
+        "description": "This phase newly commits a vendor fixture described in the pinned spec (test/models/directional-security-profile.spec.ts:16) as a 'Sanitized complete POST response supplied on 2026-10-09'. Every other identifier in it is an obvious placeholder (created_by/updated_by fixture@example.invalid, csp_id 123456, tsg_id 100, profile_id the canonical example UUID 550e8400-...), but dlp_tenant_id is \"8259670718644550000\", a realistic 19-digit tenant identifier whose trailing zeros look like a real value that lost precision. AGENTS.md:9 requires tenant registrations to stay out of git and published packages, and scripts/check-private-material.py:26 states 'no new tenant occurrences are accepted'; phase 26 runs no private-material/tenant scan at all, and that script only scans the selected mgmtTsgId, so it would not cover this identifier even if executed.",
+        "required_fix": "Record explicit sanitization provenance for dlp_tenant_id in the 0.35.0 manifest or plan (or re-pin an upstream commit where the value is an evident placeholder), and extend the phase-26 gate to scan newly pinned vendor sources for tenant identifiers, including the DLP tenant id class, not only the selected mgmt TSG id."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_typescript035_governance.py",
+        "line": 46,
+        "description": "The new fail-closed branch in tools/review_phase.py:392-396 (immutable published 0.2.3 receipt: version, sourceCommit, archiveSha256) has no regression coverage. test_independent_dependency_checks_and_original_gate_remain exercises depends_on tampering and verify_record returning False but never mutates docs/checks/release-registry-0.2.3.json, so a silent change to that guard or the receipt would pass the phase's own governance suite while the plan (docs/typescript-035-parity-plan.md:162-164) makes that receipt part of the dependency relation.",
+        "required_fix": "Add a case that copies the status and receipt into a temporary root and asserts validate_predecessors(\u2026, 26) raises 'Maintenance baseline publication evidence changed' for each mutated field."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 6781,
+        "description": "Phases 26-28 omit the \"milestones\" object that every phase 1-25 declares, and phase 26 records no acceptance criteria or sequence equivalent to phase 24's \"release_sequence\" (:6673-6681). docs/PHASES.md:268-277 likewise gives the new sequence ten lines and defers all acceptance detail to the plan document, so a reviewer told by AGENTS.md:3 to judge 'this phase's acceptance criteria' has no declared criteria to judge in either governance file.",
+        "required_fix": "Add the standard milestones object to phases 26-28 and record phase 26's explicit acceptance criteria (source verification passing, governance/regression suites passing, accepted plan-and-provenance chunk review, accepted phase review >=46/50) in docs/phase-status.json and docs/PHASES.md."
+      },
+      {
+        "severity": "low",
+        "path": "tools/verify_typescript035_source.py",
+        "line": 31,
+        "description": "The inventory check rejects symlinked files (:26) and extra files (:31-33) but never rejects a symlinked directory: a replaced 'src' or 'test' directory that points outside the pinned tree is traversed by rglob, and its files individually pass is_symlink() checks. Byte hashes still have to match, so this is hardening rather than a bypass, but the tamper tests (test_typescript035_governance.py:30-44) only cover a symlinked file.",
+        "required_fix": "Reject any symlinked path component under contracts/sources/typescript-0.35.0 (walk directories explicitly or check each parent for is_symlink) and add a directory-symlink tamper case."
+      }
+    ],
+    "evidence": [
+      "docs/checks/phase-26.json is a real, source-bound passing receipt: phase 26, source_sha256 3cd6cf618253f77e4e77af2581bf7475e2c16d1bdfef73f2429dd6bda1f39dae (matching this review's reviewed source), source_unchanged true, no 'scope' key, four commands whose list equals tools/check_phase.py commands_for(26) (:313-317), all exit_code 0 with captured output: verifier printed 'Verified TypeScript 0.35.0 source inputs', test_typescript035_governance 4 tests OK, test_review_phase 51 tests OK, test_management_phases 26 tests OK. tools/review_phase.py:210-217 binds exactly this command list, so the evidence is executed rather than asserted.",
+      "Pinned source inventory is complete and consistent with the manifest: contracts/sources/typescript-0.35.0 contains exactly the six manifest files plus manifest.json (src/models/mgmt-security-profile.ts, src/models/index.ts, test/models/directional-security-profile.spec.ts, test/models/fixtures/directional-security-profile.json, LICENSE, package.json); package.json:3 is version 0.35.0 of @cdot65/prisma-airs-sdk with zod ^3.24.0 as its only dependency, and mgmt-security-profile.ts:1 imports only 'zod', so the plan's isolated-oracle executability claim holds.",
+      "Contract delta matches the plan exactly: ContentTypeConfigurationSchema/ContentTypeConfiguration (mgmt-security-profile.ts:239-249), ContentTypeConfigurations/Schema (:252-269), 'content-type-mode' and 'content-type-configurations' on AiSecurityProfileSchema (:288-289), 'enable-full-conversation-inspection' on ModelConfigurationSchema (:276), dlp_tenant_id on SecurityProfile (:318,:334) and CreateSecurityProfileRequest (:350,:368); all four new exports are re-exported at src/models/index.ts:132-135. That is the plan's 'four added exports, five field occurrences' (plan:95-97).",
+      "The plan's projection claim is accurate against actual code: tools/generate_models.py:498 excludes vendorProjection wires from KNOWN so the collision error at :499 cannot fire for the four new keys, and :502-506 skips a same-key extension only when the typed field is set. Existing .extension(...) callers therefore keep working, which corrects the mis-description that plan-attempt-1 flagged as blocker 4.",
+      "Repoint target is exactly as the plan describes: crates/scm-sdk/src/airs/management/profiles.rs passes \"CreateSecurityProfileRequestSchema\" at :91 (create) and :214 (update), with response roots \"SecurityProfileSchema\"/\"SecurityProfileListResponseSchema\" separate \u2014 two request arguments, no invented UpdateSecurityProfileRequest.",
+      "Type identities the plan promises to preserve exist today: contracts/native-models.json:336 maps AiSecurityProfileSchema to s009599 and :7448 maps ModelConfigurationSchema to s009588.",
+      "The plan's 'preexisting known-field constraints stay identical' claim is supported: the frozen 0.34.0 extraction in contracts/typescript.json already contains 'policy: PolicySchema,' (required, 3 occurrences) and 'last_modified_ts: z.string().datetime' (6 occurrences), matching the pinned 0.35.0 request root at mgmt-security-profile.ts:371,374, so the only new tightening concerns the newly modeled fields.",
+      "plan-attempt-2 blockers are verifiably resolved: docs/phase-status.json:6783-6785 declares depends_on [23] and tools/review_phase.py:386-404 exact-checks it plus the immutable 0.2.3 receipt and the predecessor's verified review; chunks are list-form with scope_revisions (:6749-6780); SCOPE_BOUND_PHASES includes 26-28 (review_phase.py:17); phase 26 declares scope_evidence covering contracts/sources/typescript-0.35.0 so check_phase.verify_scoped_ledger_owners (:62-79) reaches all three pinned JSONs registered at check_phase.py:28-30; tools/verify_typescript035_source.py:37-39 now has real argparse with required --check.",
+      "Provenance tampering is genuinely tested and passing: tools/test_typescript035_governance.py:19-44 mutates manifest.json and the model file and adds an extra file and a symlink in disposable copies, each expecting ValueError; :61-73 proves phases 1-25 in docs/phase-status.json are byte-equal to parent 578f2e6 and that next_phase yields 26->27->28 while phase 25 stays final_in_sequence.",
+      "The pre-implementation plan approval required by the plan (docs/typescript-035-parity-plan.md:64) is not yet obtained: docs/reviews/typescript-035/plan-attempt-1.json scored 33/50 with seven blockers, plan-attempt-2.json scored 37/50 with two blockers (accepted false in both), and attempt 3 has only a prompt \u2014 .local/ts035-plan-review-3.json and .stderr are both empty, so no third outcome exists.",
+      "The 0.34.0 baseline shows the provenance convention the new pin does not follow: contracts/sources/typescript/commit.txt:1-6 preserves the raw commit object and contracts/sources/typescript/git-tree.json records mode+gitBlobSha1+bytes for every path (mgmt-security-profile.ts at 13926 bytes, vs 15715 bytes in the 0.35.0 pin, consistent with an additive delta), and tools/verify-contracts.py:44,68-69,102-129 already verifies blob and reconstructed tree hashes."
+    ],
+    "limitations": [
+      "Read-only Read/Glob/Grep only: I could not execute tools/check_phase.py, the unit suites, or any verifier, and could not recompute SHA-256 values. I verified docs/checks/phase-26.json's internal bindings and content by reading it, and compared the recorded command list against commands_for(26) by inspection; I accepted the prompt-supplied hashes for docs/reviews/phase-26-attempt-01.checks.json as given.",
+      ".local/typescript does not exist in this worktree (only .local/*.json review artifacts and .local/register-ts035.py), so I could not compare the pinned 0.35.0 files against any frozen upstream checkout; the provenance finding reflects what committed artifacts can and cannot corroborate, not a claim that the bytes are wrong.",
+      "I did not read credential or tenant-registration files, so I could not evaluate which identifiers scripts/check-private-material.py selects at runtime; my assessment of the dlp_tenant_id value is based on its form relative to the other, obviously synthetic identifiers in the same fixture.",
+      "I cannot distinguish an abandoned/interrupted chunk review attempt 01 from one still running concurrently with this phase review. If a record for that attempt is written later at the same source hash, the high finding's recovery steps collapse to the tooling hardening alone; as of the reviewed source state, no record or failure receipt exists.",
+      "Phase 27/28 command sets, the typescript035_profiles/oracle ledger owners, the 0.2.4 readiness and delivery guards in review_phase.py, and all generated Rust/schema-graph work are declared future deliverables (plan:140-180) and were not assessed as missing here. The 12-node ancestor-closure count and the deterministic-regeneration claims (plan:104-105,54-55) are arithmetic/assertions that only phase 27 execution can confirm.",
+      "The pinned spec (test/models/directional-security-profile.spec.ts) imports ../../src/index.js and ManagementClient, so its client-level assertions cannot run in the planned zod-only oracle workspace; the plan does not state that the spec is reference-only. I treated this as a disclosure gap rather than a finding because the planned oracle executes the pinned schema file itself."
+    ],
+    "categories": {
+      "implementation": 8,
+      "code_quality": 8,
+      "supportability": 6,
+      "architecture": 8,
+      "feature_delivery": 7
+    },
+    "total": 37
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "phase"
+}

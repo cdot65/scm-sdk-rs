@@ -1,0 +1,104 @@
+{
+  "name": "@cdot65/prisma-airs-sdk",
+  "version": "0.35.0",
+  "description": "TypeScript SDK for Palo Alto Networks Prisma AIRS — scanning, management, model security, red teaming, and AI Gateway APIs",
+  "author": "Calvin Remsburg <cremsburg.dev@gmail.com>",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://git.cdot.io/cdot/prisma-airs-sdk.git"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "ai runtime security",
+    "palo alto networks",
+    "airs",
+    "security",
+    "typescript"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "typecheck:tooling": "tsc --project tsconfig.tooling.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "docs:api": "typedoc",
+    "docs:serve": "npm run docs:api && npm --prefix docs-site start",
+    "docs:build": "npm run docs:api && npm --prefix docs-site run build",
+    "docs:check": "tsx scripts/check-example-coverage.ts",
+    "docs:check:warn": "tsx scripts/check-example-coverage.ts --warn-only",
+    "e2e:ai-gateway": "tsx scripts/e2e-ai-gateway.ts",
+    "e2e:ai-gateway:writes": "tsx scripts/e2e-ai-gateway-writes.ts",
+    "preflight": "npm run openapi:check",
+    "preflight:legacy": "tsx scripts/preflight-schemas.ts",
+    "openapi:check": "vitest run test/openapi",
+    "openapi:audit": "tsx scripts/openapi/audit.ts",
+    "openapi:acceptance": "tsx scripts/openapi/audit.ts --require-full-coverage",
+    "e2e:scan": "tsx scripts/e2e-scan.ts",
+    "e2e:management": "tsx scripts/e2e-management.ts",
+    "e2e:model-security": "tsx scripts/e2e-model-security.ts",
+    "e2e:red-team": "tsx scripts/e2e-red-team.ts",
+    "e2e:gateway:read": "tsx scripts/e2e-gateway-config.ts",
+    "e2e:gateway:extensions": "tsx scripts/e2e-gateway-extensions.ts",
+    "preflight:warn": "tsx scripts/preflight-schemas.ts --warn-only",
+    "probe:ai-gateway": "tsx scripts/ai-gateway-probe.ts",
+    "smoke:ai-gateway": "tsx scripts/smoke-ai-gateway.ts",
+    "prepare": "git config core.hooksPath .githooks && npm run build",
+    "prepublishOnly": "npm run lint && npm run test"
+  },
+  "dependencies": {
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@types/node": "^25.3.3",
+    "@types/ws": "8.18.1",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vitest/coverage-v8": "^3.2.4",
+    "ajv": "^6.15.0",
+    "eslint": "^9.17.0",
+    "prettier": "^3.8.1",
+    "tsup": "^8.3.0",
+    "tsx": "^4.21.0",
+    "typedoc": "^0.28.19",
+    "typedoc-plugin-markdown": "^4.11.0",
+    "typescript": "^5.3.3",
+    "vitest": "^3.0.0",
+    "ws": "8.21.3",
+    "yaml": "^2.9.0",
+    "zod-to-json-schema": "^3.25.2"
+  },
+  "bugs": {
+    "url": "https://git.cdot.io/cdot/prisma-airs-sdk/issues"
+  }
+}

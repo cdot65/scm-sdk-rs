@@ -1,0 +1,43 @@
+{
+  "scope": "docs/typescript-035-parity-plan.md plan review (TS 0.35.0 directional security-profile parity follow-up); no implementation exists or is claimed",
+  "scores": {
+    "implementation": 7,
+    "code_quality": 7,
+    "supportability": 6,
+    "architecture": 8,
+    "delivery": 5
+  },
+  "total": "33/50",
+  "overall": "6/10",
+  "accepted": false,
+  "acceptance_rule": ">=46/50, each >=8, no blockers",
+  "verified_strengths": [
+    "Contract scope exactly matches the pinned upstream delta: 4 new exports (ContentTypeConfiguration(s) + schemas, confirmed contracts/sources/typescript-0.35.0/src/models/index.ts:132-135), content-type-mode, content-type-configurations, enable-full-conversation-inspection, dlp_tenant_id on SecurityProfile and CreateSecurityProfileRequest. Nothing in the pinned source is omitted.",
+    "Reused mechanisms are real: additive model-only projection (tools/red_team_management_models.py:250-258, vendorProjection/modelOnlyProjections), namespaced versioned roots (vendor:red-team-mp:0.86.0:* in validation/schema_graph.json, resolved at validation.rs:152-163), baseline type-identity guard verify_model_names/BASELINE_NAMES, Zod oracle precedent tools/g25-oracle.mts.",
+    "Request validation genuinely precedes auth/I-O: engine.rs:554-573 prepare_model -> validated_json, then send_contract.",
+    "Response path stays lossless as described: engine.rs:702-734 normalizes against the frozen passthrough root then typed-decodes, so new typed fields are projections over preserved values.",
+    "Factual claims hold: 3,820 capabilities scoped to 0.34.0 (README.md:7, docs/phase-status.json:427); twelve Red Team unsupported query bindings already fail pre-credential (docs/STABILITY.md:12, docs/RED_TEAM.md:97); 0.2.4 is the next unused version (0.2.3 published in c7999e9).",
+    "Honest boundaries: no phase-25 budget reset, no phase-24 completion claim, no live inference from a model change, Forgejo limits retained."
+  ],
+  "blockers": [
+    "No phase or chunk identity. AGENTS.md:5 and PHASES.md:141-146 require a declared phase, named chunks in docs/phase-status.json, and a bound command set via tools/check_phase.py --phase N. The plan declares none and adds no routing (check_phase.py:126 MANAGEMENT_PHASES ends at 25), so it cannot be gated or accepted as written.",
+    "Shared-source collision with open phase 25. The plan edits models/generated.rs, validation/schema_graph.json and ledgers whose SHA-256 binds phase 24/25 artifacts; PHASES.md:5 requires a fresh current-source review for any source change, and phase 25's budget is exhausted with approval cleared (578f2e6) and no authorized new identity. The plan must state that phase-25 records are not rebound, --require-through-phase stays fail-closed, and no phase-25 coverage is claimed.",
+    "Frozen-vs-regenerated ledger boundary unspecified. The affected schema names are bound in contracts/operations.json, contracts/typescript.json, contracts/native-models.json, contracts/native-exports.json, contracts/native-fixtures/schemas.json, contracts/export-classification.json, contracts/native-probes/src/main.rs, crates/scm-sdk/tests/native_export_probes.rs, crates/scm-sdk/src/fixtures/model-regressions.json and contracts/response-defaults.json. The plan names none and defines no byte-exact rebind exception (PHASES.md:192-218 precedent); gates fail closed.",
+    "'A typed value deliberately takes precedence over a same-key extension' contradicts the code. generated.rs:4474-4483 and 153282-153298 make Serialize ERROR on collision ('extension collides with a known model field'). Precedence applies only on decode. Making these four keys typed turns today's working .extension(...) callers into serialization failures - a retained-functionality break the plan asserts away and then lists as a passing test.",
+    "Zod-oracle input unbound and possibly unexecutable. g25-oracle.mts:227-231 imports from uncommitted .local/typescript/<file>, while the plan forbids uncommitted TypeScript as authoritative input; the vendored 0.35.0 subset is a partial tree with no lockfile and cannot compile standalone. 'Compare with the pinned actual TypeScript schemas' has no reproducible mechanism until the oracle input is named and hash-bound.",
+    "The vendored pin is unowned. contracts/sources/typescript-0.35.0/ appears in no tool, not in contracts/manifest.json and not in contracts/airs-active-sources.json, yet AGENTS.md:6 requires the committed TypeScript baseline recorded in contracts/manifest.json and the phase-21 pattern requires provenance-tampering rejection. No owner, verifier or tampering test is named.",
+    "0.2.4 release scope has no gate design. PHASES.md:150-154 forbids reusing a version-specific publication helper for another version and phase 24's readiness guard is pinned to 0.2.3 (check_phase.py:209-210). Publication needs its own readiness/delivery guard, check_phase routing and exact CI contexts; AGENTS.md:13 also ties pushes to the corresponding phase gate."
+  ],
+  "recommendations": [
+    "Declare the phase identity and named chunks (contract/implementation, qualification, delivery); register them in PHASES.md, docs/implementation-plan.md and docs/phase-status.json, and add check_phase.py routing with the exact command set.",
+    "Add an explicit artifact table - regenerate / byte-frozen / narrow-rebind - for each of the ten ledgers above, with the additive parity ledger counted separately from 3,820.",
+    "Resolve extension-collision semantics explicitly: either keep the collision error and ship a migration note (precedent: docs/STABILITY.md:12, twelve query options failing before credentials), or specify typed-wins serialization as a deliberate mechanism change with tests. Stop describing current behavior as precedence.",
+    "Name the client repoint: crates/scm-sdk/src/airs/management/profiles.rs:91,214 move to the 0.35.0 request root while response roots stay frozen. Note that no client currently uses a versioned root, so this is a new pattern needing its own review.",
+    "Enumerate the root closure to register (Policy, AiSecurityProfile, ModelConfiguration, SecurityProfile, CreateSecurityProfileRequest, SecurityProfileListResponse) and the naming convention, e.g. typescript:0.35.0:<Name>.",
+    "Prove the new request root is a strict superset of the frozen root for every pre-existing key with a diff table: upstream requires policy and last_modified_ts datetime({offset:true}), and previously-passthrough wrong-typed dlp_tenant_id/content-type-mode now reject. Record that tightening in CHANGELOG and STABILITY.",
+    "State that upstream ModelConfigurationSchema is ContentTypeConfigurationSchema.extend(...) while Rust keeps two distinct types, with s009588/s009599 identity held by verify_model_names and no duplicate protection types minted.",
+    "Designate the committed oracle corpus (vendored test/models/directional-security-profile.spec.ts + fixtures/directional-security-profile.json) and require every oracle input's SHA-256 to match contracts/sources/typescript-0.35.0/manifest.json before use.",
+    "Register the 0.2.4 readiness/delivery guard and its CI contexts, and keep live acceptance for directional profiles explicitly unverified."
+  ],
+  "notes": "Plan direction, provenance discipline and architectural fit are sound; the gaps are governance registration, ledger-boundary specification, and one factual mis-description of the extension/serialize mechanism. Fixing the seven blockers is document-level work, not a redesign."
+}

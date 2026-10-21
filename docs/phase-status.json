@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 24,
+  "active_phase": 26,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations); additive Prisma AIRS OpenAPI reconciliation at pan.dev 582e30543bf2adfd8b0ee457170d22b5c380dfbe with retained SDK capabilities",
   "review_threshold": 9,
   "phases": [
@@ -6740,6 +6740,211 @@
       },
       "final_in_sequence": true,
       "plan": "docs/red-team-management-0.86-plan.md"
+    },
+    {
+      "id": 26,
+      "name": "TypeScript 0.35.0 parity plan",
+      "status": "in_progress",
+      "reviews": [],
+      "chunks": [
+        {
+          "id": "plan-and-provenance",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/typescript-035-parity-plan.md",
+            "docs/PHASES.md",
+            "docs/implementation-plan.md",
+            "tools/verify_typescript035_source.py",
+            "tools/check_phase.py",
+            "tools/review_phase.py",
+            "tools/test_typescript035_governance.py",
+            "tools/test_management_phases.py",
+            "contracts/sources/typescript-0.35.0"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/typescript-035-parity-plan.md",
+                "docs/PHASES.md",
+                "docs/implementation-plan.md",
+                "tools/verify_typescript035_source.py",
+                "tools/check_phase.py",
+                "tools/review_phase.py",
+                "tools/test_typescript035_governance.py",
+                "tools/test_management_phases.py",
+                "contracts/sources/typescript-0.35.0"
+              ]
+            }
+          ]
+        }
+      ],
+      "authorization": "User explicitly requested FIX IT NOW after the 0.35.0 parity audit; independent maintenance scope. Existing phase24/25 records remain incomplete and are not rebound.",
+      "depends_on": [
+        23
+      ],
+      "scope_evidence": [
+        "docs/typescript-035-parity-plan.md",
+        "docs/PHASES.md",
+        "docs/implementation-plan.md",
+        "tools/verify_typescript035_source.py",
+        "tools/check_phase.py",
+        "tools/review_phase.py",
+        "tools/test_typescript035_governance.py",
+        "tools/test_management_phases.py",
+        "contracts/sources/typescript-0.35.0"
+      ],
+      "final_in_sequence": false,
+      "plan": "docs/typescript-035-parity-plan.md",
+      "milestones": {
+        "implemented_scope": {
+          "status": "pending"
+        },
+        "independent_verification": {
+          "status": "pending"
+        },
+        "claude_review": {
+          "status": "pending"
+        }
+      },
+      "acceptance_criteria": [
+        "All phase checks pass for the reviewed source",
+        "Every declared chunk accepted by actual Claude review",
+        "Complete-phase review at least 46/50 with each category at least 8"
+      ],
+      "review_findings_disposition": [
+        "Prior chunk and complete-phase invocations both terminated with actual rejected records and CLI output; the apparent orphan was still running. All originals preserved.",
+        "Commit object, full Git tree ledger, blob hashes and exact runtime delta now verified with the existing Git object reconstruction helpers, including self-consistent manifest tamper tests.",
+        "Canonical Forgejo and GitHub mirror explicitly recorded; each phase has its own plan, milestones and acceptance criteria.",
+        "Frozen contracts and SDK bytes, untracked SDK guard and whitespace checks now execute in phase 26. Actual private scan passed over 2,212 files with zero credential or package matches; source-bound check included.",
+        "Public fixture identifiers are enumerated against commit-bound source. Upstream sanitation label is attributed, not independently asserted. Oracle uses explicit placeholder 100 and never live registrations.",
+        "Real predecessor review plus publication-tamper and symlink-directory tests pass; KeyboardInterrupt creates a retained failure receipt and is regression tested.",
+        "Phases 27/28 artifact scopes and command/release guards remain later deliverables; no implementation or release completion is claimed.",
+        "Attempt 2 accepted the chunk at 44/50. Its residual findings are corrected: hash-bound baseline ledger and tamper test, committed-history whitespace guard, full SDK path-set comparison, locked Zod compatibility test, explicit response divergence documentation, and corrected prose spacing. Original accepted review remains preserved; a fresh review covers these changes.",
+        "Chunk attempt 3 is a running Claude invocation on the current unchanged source, not an orphan. Complete-phase attempt 2 may independently assess this same snapshot concurrently; advancement remains blocked until both terminal accepted records exist. All earlier attempts have actual retained terminal records. Do not infer invocation failure from an in-flight prompt/checks pair."
+      ]
+    },
+    {
+      "id": 27,
+      "name": "Directional profile implementation and qualification",
+      "status": "pending",
+      "reviews": [],
+      "chunks": [
+        {
+          "id": "models-and-validation",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/typescript-035-parity-plan.md"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/typescript-035-parity-plan.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "wire-and-compatibility",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/typescript-035-parity-plan.md"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/typescript-035-parity-plan.md"
+              ]
+            }
+          ]
+        }
+      ],
+      "authorization": "User explicitly requested FIX IT NOW after the 0.35.0 parity audit; independent maintenance scope. Existing phase24/25 records remain incomplete and are not rebound.",
+      "depends_on": [
+        26
+      ],
+      "scope_evidence": [],
+      "final_in_sequence": false,
+      "plan": "docs/typescript-035-parity-plan.md",
+      "milestones": {
+        "implemented_scope": {
+          "status": "pending"
+        },
+        "independent_verification": {
+          "status": "pending"
+        },
+        "claude_review": {
+          "status": "pending"
+        }
+      },
+      "acceptance_criteria": [
+        "All phase checks pass for the reviewed source",
+        "Every declared chunk accepted by actual Claude review",
+        "Complete-phase review at least 46/50 with each category at least 8"
+      ]
+    },
+    {
+      "id": 28,
+      "name": "Directional profile release and delivery",
+      "status": "pending",
+      "reviews": [],
+      "chunks": [
+        {
+          "id": "release-readiness",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/typescript-035-parity-plan.md"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/typescript-035-parity-plan.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "remote-delivery",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/typescript-035-parity-plan.md"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/typescript-035-parity-plan.md"
+              ]
+            }
+          ]
+        }
+      ],
+      "authorization": "User explicitly requested FIX IT NOW after the 0.35.0 parity audit; independent maintenance scope. Existing phase24/25 records remain incomplete and are not rebound.",
+      "depends_on": [
+        27
+      ],
+      "scope_evidence": [],
+      "final_in_sequence": true,
+      "plan": "docs/typescript-035-parity-plan.md",
+      "milestones": {
+        "implemented_scope": {
+          "status": "pending"
+        },
+        "independent_verification": {
+          "status": "pending"
+        },
+        "claude_review": {
+          "status": "pending"
+        }
+      },
+      "acceptance_criteria": [
+        "All phase checks pass for the reviewed source",
+        "Every declared chunk accepted by actual Claude review",
+        "Complete-phase review at least 46/50 with each category at least 8"
+      ]
     }
   ],
   "active_followup_plan": "docs/red-team-management-0.86-plan.md"

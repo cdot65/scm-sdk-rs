@@ -263,3 +263,23 @@ readiness review cannot complete the phase. The delivery chunk and final phase
 review additionally require verified registry bytes, remote annotated tag and
 terminal successful CI on the matching source. Ordinary CI verifies sanitized
 service receipts without loading credentials or making tenant requests.
+
+
+## Independent TypeScript 0.35.0 maintenance follow-up (phases 26–28)
+
+The user's explicit parity-fix instruction prioritizes this isolated maintenance
+branch. Phase 26 gates its plan/provenance, phase 27 its model/wire qualification,
+and phase 28 its release and delivery. It neither completes nor resets phases
+24–25. Their historical fingerprints, failed attempts and fail-closed acceptance
+requirements remain unchanged. See docs/typescript-035-parity-plan.md for exact
+artifact boundaries, command sets and named chunks in phase-status.json. Every
+chunk/phase retains the five-category rubric and five-attempt budget.
+
+Phase 26 acceptance requires origin-verified pinned inputs, frozen baseline/SDK
+bytes, hygiene and governance regressions, accepted plan-and-provenance chunk,
+and a complete-phase Claude review of at least 46/50 (every category at least 8).
+The per-phase plan and milestone entries are explicit in phase-status.json.
+
+After phase 28, explicitly reselect phase 24 to resume its existing delivery gate,
+then phase 25, preserving their original review attempts and acceptance rules.
+This maintenance sequence does not implicitly reactivate or complete them.

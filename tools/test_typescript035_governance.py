@@ -1,0 +1,171 @@
+"""Focused checks for the separately authorized directional-profile maintenance."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+import unittest
+from unittest.mock import patch
+import review_phase
+from check_phase import commands_for
+from verify_typescript035_source import SOURCE, baseline_ledger, verify, verify_zod_versions
+
+ROOT = Path(__file__).resolve().parents[1]
+
+class DirectionalGovernanceTests(unittest.TestCase):
+    def setUp(self):
+        self.status = json.loads((ROOT / 'docs/phase-status.json').read_text())
+
+    def test_phase26_driver_freezes_sdk_independently_of_status(self):
+        commands = commands_for(26)
+        self.assertIn(['git', 'diff', '--exit-code', '578f2e6', '--', 'crates/scm-sdk'], commands)
+        self.assertIn(['git', 'diff', '--check', '578f2e6..HEAD'], commands)
+        guards = [c for c in commands if c[:2] == ['python', '-c']]
+        self.assertTrue(any("'--others', '--exclude-standard', '--', 'crates/scm-sdk'" in c[2] for c in guards))
+        self.assertIn(self.status['active_phase'], (24, 25, 26, 27, 28, None))
+
+    def test_baseline_ledger_tamper_and_oracle_dependency(self):
+        baseline_ledger()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name in ('contracts/manifest.json', 'contracts/sources/typescript/git-tree.json'):
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, path)
+            path = root / 'contracts/sources/typescript/git-tree.json'
+            path.write_bytes(path.read_bytes() + b' ')
+            with self.assertRaisesRegex(ValueError, 'baseline tree ledger'):
+                baseline_ledger(root)
+        package = json.loads((SOURCE / 'package.json').read_text())
+        lock = json.loads((ROOT / 'tools/package-lock.json').read_text())
+        verify_zod_versions(package, lock)
+        for version in ('3.23.0', '4.0.0'):
+            lock['packages']['node_modules/zod']['version'] = version
+            with self.assertRaises(ValueError):
+                verify_zod_versions(package, lock)
+
+    def test_source_and_manifest_tampering_fail(self):
+        verify()
+        for target in ['manifest.json', 'src/models/mgmt-security-profile.ts', 'commit.txt', 'git-tree.json']:
+            with tempfile.TemporaryDirectory() as tmp:
+                source = Path(tmp) / 'source'
+                shutil.copytree(SOURCE, source)
+                path = source / target
+                path.write_bytes(path.read_bytes() + b' ')
+                with self.assertRaises(ValueError):
+                    verify(source)
+
+    def test_self_consistent_manifest_cannot_forge_git_origin(self):
+        for target in ('commit.txt', 'git-tree.json', 'blob', 'delta'):
+            with tempfile.TemporaryDirectory() as tmp:
+                source = Path(tmp) / 'source'
+                shutil.copytree(SOURCE, source)
+                path = source / 'manifest.json'
+                manifest = json.loads(path.read_text())
+                if target in ('commit.txt', 'git-tree.json'):
+                    proof = source / target
+                    if target == 'commit.txt':
+                        proof.write_bytes(proof.read_bytes() + b'changed')
+                    else:
+                        tree = json.loads(proof.read_text())
+                        tree['files'].pop()
+                        proof.write_text(json.dumps(tree))
+                    next(r for r in manifest['proofFiles'] if r['path'] == target)['sha256'] = hashlib.sha256(proof.read_bytes()).hexdigest()
+                elif target == 'blob':
+                    manifest['files'][0]['gitBlobSha1'] = '0' * 40
+                else:
+                    manifest['changedRuntimeSources'] = []
+                path.write_text(json.dumps(manifest))
+                with patch('verify_typescript035_source.MANIFEST_SHA256', hashlib.sha256(path.read_bytes()).hexdigest()):
+                    with self.assertRaises(ValueError):
+                        verify(source)
+
+    def test_added_file_and_symlink_fail(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / 'source'
+            shutil.copytree(SOURCE, source)
+            extra = source / 'extra'
+            extra.write_text('unexpected')
+            with self.assertRaises(ValueError):
+                verify(source)
+            extra.unlink()
+            target = source / 'LICENSE'
+            saved = Path(tmp) / 'license'
+            target.rename(saved)
+            target.symlink_to(saved)
+            with self.assertRaises(ValueError):
+                verify(source)
+
+    def test_independent_dependency_checks_and_original_gate_remain(self):
+        with patch.object(review_phase, 'verify_record', return_value=True):
+            review_phase.validate_predecessors(ROOT, self.status, 26)
+            with self.assertRaisesRegex(ValueError, 'Earlier phases'):
+                review_phase.validate_predecessors(ROOT, self.status, 25)
+            with self.assertRaisesRegex(ValueError, 'Maintenance predecessor'):
+                review_phase.validate_predecessors(ROOT, self.status, 27)
+        with patch.object(review_phase, 'verify_record', return_value=False):
+            with self.assertRaises(ValueError):
+                review_phase.validate_predecessors(ROOT, self.status, 26)
+        changed = copy.deepcopy(self.status)
+        next(p for p in changed['phases'] if p['id'] == 26)['depends_on'] = []
+        with self.assertRaisesRegex(ValueError, 'dependency declaration'):
+            review_phase.validate_predecessors(ROOT, changed, 26)
+
+    def test_real_predecessor_evidence_and_publication_tamper(self):
+        review_phase.validate_predecessors(ROOT, self.status, 26)
+        original = json.loads((ROOT / 'docs/checks/release-registry-0.2.3.json').read_text())
+        for field in ('version', 'sourceCommit', 'archiveSha256'):
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                path = root / 'docs/checks/release-registry-0.2.3.json'
+                path.parent.mkdir(parents=True)
+                changed = dict(original, **{field: 'invalid'})
+                path.write_text(json.dumps(changed))
+                with self.assertRaisesRegex(ValueError, 'Maintenance baseline publication evidence changed'):
+                    review_phase.validate_predecessors(root, self.status, 26)
+
+    def test_pinned_directory_symlink_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / 'source'
+            shutil.copytree(SOURCE, source)
+            saved = Path(tmp) / 'src'
+            (source / 'src').rename(saved)
+            (source / 'src').symlink_to(saved, target_is_directory=True)
+            with self.assertRaises(ValueError):
+                verify(source)
+
+    def test_frozen_contracts_and_planning_sdk_bytes(self):
+        paths = ['contracts/typescript.json', 'contracts/operations.json',
+                 'contracts/export-classification.json', 'contracts/manifest.json',
+                 'contracts/native-union-variants.json', 'contracts/native-fixtures/schemas.json',
+                 'contracts/sources/typescript/git-tree.json', 'contracts/sources/typescript/commit.txt',
+                 'crates/scm-sdk/src/fixtures/model-regressions.json']
+        if self.status['active_phase'] == 26:
+            sdk = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', '578f2e6', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()
+            actual = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()
+            self.assertEqual(set(actual), set(sdk))
+            paths += sdk
+            self.assertEqual(subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk'], cwd=ROOT), b'')
+        for path in paths:
+            expected = subprocess.check_output(['git', 'show', '578f2e6:' + path], cwd=ROOT)
+            self.assertEqual((ROOT / path).read_bytes(), expected, path)
+
+    def test_old_phase_records_preserved_and_new_chunks_bound(self):
+        old = json.loads(subprocess.check_output(['git', 'show', '578f2e6:docs/phase-status.json'], cwd=ROOT))
+        self.assertEqual(old['phases'], [p for p in self.status['phases'] if p['id'] not in {26, 27, 28}])
+        for phase in [26, 27, 28]:
+            row = next(p for p in self.status['phases'] if p['id'] == phase)
+            self.assertIn(phase, review_phase.SCOPE_BOUND_PHASES)
+            self.assertEqual(row['plan'], 'docs/typescript-035-parity-plan.md')
+            for chunk in row['chunks']:
+                self.assertTrue(review_phase.declared_chunk_scope(ROOT, phase, chunk['id'], 1))
+        rows = {p['id']: p for p in self.status['phases']}
+        self.assertEqual(review_phase.next_phase(rows, 26), 27)
+        self.assertEqual(review_phase.next_phase(rows, 27), 28)
+        self.assertIsNone(review_phase.next_phase(rows, 25))
+        self.assertIsNone(review_phase.next_phase(rows, 28))
+
+if __name__ == '__main__':
+    unittest.main()

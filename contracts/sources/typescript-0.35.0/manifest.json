@@ -1,0 +1,66 @@
+{
+  "repository": "https://git.cdot.io/cdot/prisma-airs-sdk",
+  "version": "0.35.0",
+  "commit": "780c985cac90144ea1884fe6cffa58b5deec9ac4",
+  "files": [
+    {
+      "upstreamPath": "src/models/mgmt-security-profile.ts",
+      "sha256": "1d2fb2e9eef85e77cf6b8a5c7f7a5271808e3214c6c09ae921b0333040cefa7e",
+      "bytes": 15715,
+      "gitBlobSha1": "3391620ec00e3778e24d6641020b2e1dd7f4c3cf"
+    },
+    {
+      "upstreamPath": "src/models/index.ts",
+      "sha256": "eb225d76dd03a45f24792a6a69ccf48e7c4b424689f5fbc666008f42fd2b27fb",
+      "bytes": 12669,
+      "gitBlobSha1": "92476d3182fa48a63697e6ddd4d56caee9620fca"
+    },
+    {
+      "upstreamPath": "test/models/directional-security-profile.spec.ts",
+      "sha256": "caca0fe4ae257f5fcca0c5d95ce1dcb41984cb66c79858d6fed835495c3b8e6d",
+      "bytes": 7173,
+      "gitBlobSha1": "63b5bd2546bb1bc11dcbc1812abe000a2dd1285f"
+    },
+    {
+      "upstreamPath": "test/models/fixtures/directional-security-profile.json",
+      "sha256": "681aeb3e5dcb5cc61687118328f5b75527a9ee7d6dc9b1e94da7be4d2349622b",
+      "bytes": 8604,
+      "gitBlobSha1": "a2294232db3bb4a39879ce33d41d813d2f9b3323"
+    },
+    {
+      "upstreamPath": "LICENSE",
+      "sha256": "8bbb3b541bc1ab282fdeb89f0578ca1d604ac9046aacc0ef267bd33cb9799f74",
+      "bytes": 10935,
+      "gitBlobSha1": "66a17fa6223c97abc3e0450498907cea7b40c3e3"
+    },
+    {
+      "upstreamPath": "package.json",
+      "sha256": "8c537f31cc4b168e655c5e1a971c32f9a99253a9e925df38cd9b12ac008ee0fb",
+      "bytes": 3453,
+      "gitBlobSha1": "f029669fd392e57f30d3236a38a5288e42edc29b"
+    },
+    {
+      "upstreamPath": "src/constants.ts",
+      "sha256": "76de6802dd5e52e214d8ec8a92b62a77e4adaba160d1feca49b7e8359828575e",
+      "bytes": 14035,
+      "gitBlobSha1": "1f802be1a2a6906277736a0f0963b83352f7d5c3"
+    }
+  ],
+  "mirror": "https://github.com/cdot65/prisma-airs-sdk",
+  "proofFiles": [
+    {
+      "path": "commit.txt",
+      "sha256": "a46058bf41ebedc2d072e6dc21b560c50dedb7a642f44439deff8e6383070ab2"
+    },
+    {
+      "path": "git-tree.json",
+      "sha256": "e78dfd6e4be8f100f0eb7fa95dcc0a04eed533375484845f167125a6329da5d8"
+    }
+  ],
+  "changedRuntimeSources": [
+    "src/constants.ts",
+    "src/models/index.ts",
+    "src/models/mgmt-security-profile.ts"
+  ],
+  "fixtureProvenance": "Exact public upstream regression fixture; upstream test labels it sanitized. Its identifiers are not local tenant registrations and are not used for live calls. Oracle-generated examples replace the DLP tenant identifier with the explicit placeholder 100. No independent assertion about original tenant ownership."
+}
