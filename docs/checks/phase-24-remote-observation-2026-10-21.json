@@ -1,0 +1,126 @@
+{
+  "observedAt": "2026-10-21T22:18:12.561704+00:00",
+  "permissions": {
+    "admin": false,
+    "push": false,
+    "pull": true
+  },
+  "pr": {
+    "number": 1,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "html_url": "https://git.cdot.io/cdot/scm-sdk-rs/pulls/1"
+  },
+  "run26": [
+    {
+      "id": 5117,
+      "index_in_repo": 26,
+      "status": "failure",
+      "need_approval": false,
+      "commit_sha": "c7999e979f11eb5007dc227583252e78b4c3630b",
+      "html_url": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/26"
+    }
+  ],
+  "ci": {
+    "commit": "c7999e979f11eb5007dc227583252e78b4c3630b",
+    "contexts": 49,
+    "counts": {
+      "failure": 15,
+      "success": 34
+    },
+    "failures": [
+      {
+        "context": "Credential-free SDK qualification / rust (tracing, 1.99.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/44"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (ws-transport, 1.99.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/48"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (ws-tracing, 1.99.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/46"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (ws-transport, 1.89.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/47"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (ws-tracing, 1.89.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/45"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (scan, 1.99.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/42"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (tracing, 1.89.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/43"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (scan, 1.89.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/41"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (reqwest-transport, 1.89.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/39"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (reqwest-transport, 1.99.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/40"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (red-team-json-unification, 1.99.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/38"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (red-team, 1.89.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/35"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (red-team-json-unification, 1.89.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/37"
+      },
+      {
+        "context": "Credential-free SDK qualification / rust (red-team, 1.99.0) (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/36"
+      },
+      {
+        "context": "Credential-free SDK qualification / contracts-and-package (pull_request)",
+        "status": "failure",
+        "target_url": "/cdot/scm-sdk-rs/actions/runs/26/jobs/0"
+      }
+    ],
+    "runs": [
+      {
+        "id": 5117,
+        "index_in_repo": 26,
+        "commit_sha": "c7999e979f11eb5007dc227583252e78b4c3630b",
+        "prettyref": "#1",
+        "status": "failure",
+        "html_url": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/26"
+      }
+    ]
+  },
+  "log_access": "API token reads run/commit statuses; web job-log endpoint redirects to browser authentication",
+  "remaining_requirements": [
+    "Diagnose and resolve 15 failed CI contexts using actual logs",
+    "Source-bound successful CI, remote merge/tag, final phase-24 delivery review",
+    "Explicit phase-25 recovery review budget, accepted chunk and phase reviews, remote delivery"
+  ]
+}
