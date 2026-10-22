@@ -226,7 +226,16 @@ python3 scripts/verify-publication.py --version 0.2.4 \
   --output docs/checks/release-registry-0.2.4.json
 ```
 
-Create and push the annotated `v0.2.4` tag at `RELEASE_SOURCE`; push the delivery
+Create the annotated `v0.2.4` tag at `RELEASE_SOURCE` and push that same tag
+object to both authorized remotes; never recreate or force-replace an existing tag:
+
+```sh
+git push ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git refs/tags/v0.2.4:refs/tags/v0.2.4
+git push git@github.com:cdot65/scm-sdk-rs.git refs/tags/v0.2.4:refs/tags/v0.2.4
+```
+
+The GitHub tag makes the packaged README's versioned source links resolvable.
+Push the delivery
 commit and wait for all 49 configured CI contexts to succeed. Record the remote
 observations explicitly with the 0.2.4 version (the observer's default remains
 historical 0.2.3):
@@ -234,6 +243,8 @@ historical 0.2.3):
 ```sh
 python3 scripts/observe-release.py tag --version 0.2.4 \
   --source "$RELEASE_SOURCE" --output docs/checks/release-tag-v0.2.4.json
+python3 scripts/observe-release.py tag --version 0.2.4 --tag-remote github \
+  --source "$RELEASE_SOURCE" --output docs/checks/release-tag-github-v0.2.4.json
 python3 scripts/observe-release.py ci --version 0.2.4 \
   --source "$DELIVERY_SOURCE" --run "$RUN_NUMBER" \
   --output "docs/checks/phase-28-remote-ci-run-$RUN_NUMBER.json"
@@ -242,8 +253,10 @@ python3 scripts/observe-release.py ci --version 0.2.4 \
 In phase 28's `docs/phase-status.json` entry, record `registry_publication` with
 `status: published_and_verified`, `version: 0.2.4`, the registry receipt path in
 `evidence`, and its exact `sourceCommit` in `source_commit`. Record `delivery`
-with `registry_receipt`, `tag_receipt`, and `ci_receipt` pointing to the three
-verified files above. Then run the offline delivery guard:
+with `registry_receipt`, `tag_receipt`, `github_tag_receipt`, and `ci_receipt`
+pointing to the four verified files above. The phase-28 guard requires the
+GitHub mirror to contain the identical annotated tag object and peeled release
+commit; historical phases keep their original canonical-only requirement. Then run the offline delivery guard:
 
 ```sh
 python3 tools/release_delivery.py --phase 28 --version 0.2.4

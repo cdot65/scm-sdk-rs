@@ -17,6 +17,7 @@ from review_phase import EXCLUDED_DIRECTORIES, EXCLUDED_FILES, fingerprint, veri
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 REMOTE = 'ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git'
+GITHUB_REMOTE = 'https://github.com/cdot65/scm-sdk-rs.git'
 VERSION = '0.2.2'
 PHASE = 20
 RELEASES = {(20, '0.2.2'), (24, '0.2.3'), (28, '0.2.4')}
@@ -186,6 +187,27 @@ def verify_retained_registry(root, registry, publication):
     require(publication.file_rows(files) == registry.get('files'), 'Registry retained file inventory differs')
 
 
+def verify_github_tag(root, delivery, canonical, phase, version):
+    """Require the public source-link mirror only for the 0.2.4 delivery."""
+    if phase != 28:
+        return
+    require(version == '0.2.4', 'Unreviewed GitHub mirror release')
+    path = 'docs/checks/release-tag-github-v0.2.4.json'
+    require(delivery.get('github_tag_receipt') == path,
+            'Phase 28 must identify its GitHub mirror tag receipt')
+    mirror = read_record(root, path)
+    refs = mirror.get('remoteRefs', {})
+    require(mirror.get('passed') is True and mirror.get('remote') == GITHUB_REMOTE
+            and mirror.get('tag') == canonical.get('tag') == 'v0.2.4'
+            and mirror.get('sourceCommit') == canonical.get('sourceCommit')
+            and mirror.get('tagObject') == canonical.get('tagObject')
+            and isinstance(mirror.get('tagObject'), str)
+            and re.fullmatch('[0-9a-f]{40}', mirror['tagObject'])
+            and refs.get('refs/tags/v0.2.4') == mirror['tagObject']
+            and refs.get('refs/tags/v0.2.4^{}') == mirror['sourceCommit'],
+            'GitHub annotated tag differs from qualified canonical release')
+
+
 def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
     require((phase, version) in RELEASES, "Unreviewed release phase/version pair")
     phase_id = phase
@@ -231,6 +253,7 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
         verify_retained_registry(root, registry, publication)
     result = validate_receipts(registry, tag, ci, proofs,
                                expected_contexts((root / '.forgejo/workflows/ci.yml').read_text()), source_sha256, version)
+    verify_github_tag(root, delivery, tag, phase_id, version)
     verify_source_commits(root, result, source_sha256)
     return result
 

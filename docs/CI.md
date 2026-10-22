@@ -4,8 +4,11 @@
 verification for pushes and pull requests. Its 49 required jobs use the ordinary
 Linux runner. [The separate native workflow](../.forgejo/workflows/native-platforms.yml)
 runs only when explicitly dispatched after its three native runner labels are
-registered. No external mirror, registry publication,
-release token, service registration, or live service workflow is configured.
+registered. A public source mirror exists at
+[GitHub](https://github.com/cdot65/scm-sdk-rs). Phase 28 requires its annotated
+release tag to match the qualified canonical tag and source. Registry publication,
+release tokens, service registration, and live service workflows are not configured
+in this credential-free CI workflow.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
 CI now executes the Phase 28 contracts gate, whose invocation and current

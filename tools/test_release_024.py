@@ -25,6 +25,55 @@ candidate = load('candidate024', 'check-access-release.py')
 
 
 class Release024Tests(unittest.TestCase):
+    def test_mirror_tag_observer_is_bounded_and_preserves_default(self):
+        source = 'a' * 40
+        stdout = f"{'b' * 40}\trefs/tags/v0.2.4\n{source}\trefs/tags/v0.2.4^{{}}\n{source}\trefs/heads/main\n"
+        with tempfile.TemporaryDirectory() as temporary:
+            output = pathlib.Path(temporary) / 'github.json'
+            with patch.object(observer.subprocess, 'run', return_value=Mock(stdout=stdout)) as run:
+                observer.remote_tag(source, output, '0.2.4', 'github')
+                self.assertEqual(run.call_args.args[0][2], release_delivery.GITHUB_REMOTE)
+            receipt = json.loads(output.read_text())
+            self.assertEqual(receipt['remote'], release_delivery.GITHUB_REMOTE)
+            self.assertEqual(receipt['sourceCommit'], source)
+            with patch.object(observer.subprocess, 'run') as run:
+                with self.assertRaises(ValueError):
+                    observer.remote_tag(source, output, '0.2.4', 'https://untrusted.invalid')
+                run.assert_not_called()
+        self.assertEqual(observer.remote_tag.__defaults__, ('0.2.3', 'canonical'))
+
+    def test_phase28_requires_identical_github_annotated_tag(self):
+        canonical = {'tag': 'v0.2.4', 'sourceCommit': 'a' * 40, 'tagObject': 'b' * 40}
+        mirror = dict(canonical, passed=True, remote=release_delivery.GITHUB_REMOTE,
+                      remoteRefs={'refs/tags/v0.2.4': 'b' * 40,
+                                  'refs/tags/v0.2.4^{}': 'a' * 40})
+        relative = 'docs/checks/release-tag-github-v0.2.4.json'
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            path = root / relative
+            path.parent.mkdir(parents=True)
+            delivery = {'github_tag_receipt': relative}
+            def verify():
+                return release_delivery.verify_github_tag(root, delivery, canonical, 28, '0.2.4')
+            with self.assertRaises(OSError):
+                verify()
+            path.write_text(json.dumps(mirror))
+            verify()
+            for key, value in [('remote', release_delivery.REMOTE), ('passed', False),
+                               ('sourceCommit', 'c' * 40), ('tagObject', 'c' * 40),
+                               ('tag', 'v0.2.3'), ('remoteRefs', {})]:
+                with self.subTest(key=key):
+                    path.write_text(json.dumps(dict(mirror, **{key: value})))
+                    with self.assertRaises(ValueError):
+                        verify()
+            path.write_text(json.dumps(mirror))
+            delivery['github_tag_receipt'] = '../arbitrary.json'
+            with self.assertRaises(ValueError):
+                verify()
+            release_delivery.verify_github_tag(root, {}, {}, 24, '0.2.3')
+        source = pathlib.Path(release_delivery.__file__).read_text()
+        self.assertIn('verify_github_tag(root, delivery, tag, phase_id, version)', source)
+
     def test_release_documentation_matches_candidate_and_delivery_guards(self):
         root = pathlib.Path(__file__).resolve().parents[1]
         readme = (root / 'README.md').read_text()
@@ -242,8 +291,7 @@ class Release024Tests(unittest.TestCase):
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
         member = 'examples/directional_profiles.rs'
-        marker = 'Directional typed models and lossless response compatibility verified offline.'
-        content = ('fn main() { println!(\"' + marker + '\"); }\n').encode()
+        content = b'fn main() { /* directional consumer */ }\n'
         fixture.files[member] = content
         fixture.write('crates/scm-sdk/' + member, content)
         fixture.report['files'] = [{'path': name, 'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)}
@@ -252,8 +300,14 @@ class Release024Tests(unittest.TestCase):
         checks.append({'command': ['cargo', '+1.99.0', 'run', '--example', 'directional_profiles', '--all-features', '--locked', '--offline', '--target', fixture.host],
                        'cwd': str(fixture.root / 'archive/scm-sdk'), 'exit_code': 0})
         checks.append({'command': ['cargo', '+1.99.0', 'run', '--locked', '--offline', '--target', fixture.host],
-                       'cwd': str(fixture.root / 'archive/consumer'), 'exit_code': 0, 'stdout': marker + '\n'})
+                       'cwd': str(fixture.root / 'archive/consumer'), 'exit_code': 0})
         fixture.report['externalExampleConsumers'][member] = {'sha256': hashlib.sha256(content).hexdigest(), 'checkIndex': len(checks)-1, 'selectedFeatures': []}
+        identities = [(fixture.report['frozenProbeCheckIndex'], fixture.report['publicConsumerSourceSha256']),
+                      (fixture.report['frozenProbeCheckIndex'] + 1, fixture.report['accessPolicyConsumerSourceSha256'])]
+        identities += [(entry['checkIndex'], entry['sha256'])
+                       for entry in fixture.report['externalExampleConsumers'].values()]
+        for index, digest in identities:
+            checks[index].update(consumerSourceSha256=digest, consumerSourceUnchanged=True)
         def verify(report):
             fixture.receipt.write_text(json.dumps(report))
             return package_fixture.package.verify_receipt(fixture.root, fixture.receipt, '1.99.0', require_directional=True)
@@ -263,15 +317,23 @@ class Release024Tests(unittest.TestCase):
             changed['externalExampleConsumers'][member][field] = wrong
             with self.subTest(field=field), self.assertRaises(ValueError):
                 verify(changed)
-        for stdout in (None, '', 'Access-policy consumer passed.\n', marker + '\n' + marker):
-            changed = copy.deepcopy(fixture.report)
-            changed['checks'][-1]['stdout'] = stdout
-            with self.subTest(stdout=stdout), self.assertRaisesRegex(ValueError, 'success output'):
-                verify(changed)
-        # Identical command/cwd cannot substitute a different consumer's row.
+        for index, digest in identities:
+            for field, wrong in [('consumerSourceSha256', None), ('consumerSourceSha256', '0' * 64),
+                                 ('consumerSourceUnchanged', None), ('consumerSourceUnchanged', False)]:
+                changed = copy.deepcopy(fixture.report)
+                changed['checks'][index][field] = wrong
+                with self.subTest(index=index, field=field, wrong=wrong), self.assertRaisesRegex(ValueError, 'executed-source'):
+                    verify(changed)
+        # Identical command/cwd cannot substitute a different consumer's source.
         changed = copy.deepcopy(fixture.report)
-        changed['checks'].insert(len(changed['checks']) - 1, dict(changed['checks'][-1], stdout='Other consumer.'))
-        with self.assertRaisesRegex(ValueError, 'success output'):
+        changed['checks'].insert(len(changed['checks']) - 1,
+                                 dict(changed['checks'][-1], consumerSourceSha256='0' * 64))
+        with self.assertRaisesRegex(ValueError, 'executed-source'):
+            verify(changed)
+        changed = copy.deepcopy(fixture.report)
+        access = fixture.report['frozenProbeCheckIndex'] + 1
+        changed['checks'][access], changed['checks'][-1] = changed['checks'][-1], changed['checks'][access]
+        with self.assertRaisesRegex(ValueError, 'executed-source'):
             verify(changed)
         changed = copy.deepcopy(fixture.report)
         changed['externalExampleConsumers'].pop(member)

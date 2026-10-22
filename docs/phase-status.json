@@ -8208,6 +8208,7 @@
             "tools/review_phase.py",
             "tools/test_ci.py",
             "tools/test_management_package.py",
+            "tools/test_package_policy.py",
             "tools/test_release_023.py",
             "tools/test_release_024.py",
             "tools/test_release_delivery.py"
@@ -8237,6 +8238,7 @@
                 "tools/review_phase.py",
                 "tools/test_ci.py",
                 "tools/test_management_package.py",
+                "tools/test_package_policy.py",
                 "tools/test_release_023.py",
                 "tools/test_release_024.py",
                 "tools/test_release_delivery.py"
@@ -8669,6 +8671,10 @@
         {
           "review": "docs/reviews/phase-28-attempt-02.json",
           "disposition": "Documented dual-lockfile advisory audit and explicit SDK-only checksum/source/license scope for the separate local development harness; refreshed dependency snapshot and both-lockfile TLS changelog; verified unique directional external-consumer success output with missing/duplicate/wrong-run negative cases; linked the tagged directional guide and new model types in packaged README with pre-I/O request-tightening note; replaced categorical publication statements with receipt-conditional wording throughout release documents."
+        },
+        {
+          "review": "docs/reviews/phase-28-attempt-03.json",
+          "disposition": "Explicitly require identical canonical and GitHub annotated v0.2.4 tags with independent bounded receipts, preserving historical defaults and the public packaged guide link. All seven external package consumer runs now record the executed main.rs digest and before/after unchanged status; verifier binds each run to its frozen or archived source rather than stdout markers. Negative regressions reject missing/wrong hashes, swapped identical-command rows, source mutation/deletion, and absent/tampered mirror receipts. SDK runtime inputs remain unchanged."
         }
       ]
     }

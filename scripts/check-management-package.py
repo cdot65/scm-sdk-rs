@@ -162,12 +162,16 @@ def verify_receipt(root, path, toolchain, source_sha=None, *, require_directiona
                 or not archive_command_executed(['run', '--example', 'directional_profiles', '--all-features',
                                                 '--locked', '--offline', '--target', host])):
             raise ValueError('Directional profile consumer execution binding differs')
-        # The command and cwd are shared with other consumer runs. Require this
-        # example's distinct success output so its bound row identifies the run.
-        stdout = checks[index].get('stdout')
-        marker = 'Directional typed models and lossless response compatibility verified offline.'
-        if not isinstance(stdout, str) or stdout.splitlines().count(marker) != 1:
-            raise ValueError('Directional profile consumer success output is missing or ambiguous')
+        # All external runs identify the source bytes actually present during
+        # execution; identical commands and cwd cannot substitute another run.
+        identities = [(probe_index, expected_old['contracts/native-probes/src/main.rs']),
+                      (access_index, report['accessPolicyConsumerSourceSha256'])]
+        identities += [(entry['checkIndex'], entry['sha256']) for entry in consumers.values()]
+        for check_index, expected_digest in identities:
+            row = checks[check_index]
+            if (row.get('consumerSourceSha256') != expected_digest
+                    or row.get('consumerSourceUnchanged') is not True):
+                raise ValueError('External consumer executed-source binding differs')
     if report.get('managementConsumerSourceSha256') != sha(root / 'crates/scm-sdk/examples/red_team_management.rs'):
         raise ValueError('Management consumer binding differs')
     if report.get('publicConsumerSourceSha256') != expected_old['contracts/native-probes/src/main.rs']:

@@ -24,6 +24,29 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def execute_package_check(command, cwd, env, timeout=600, consumer_main=None):
+    """Bind an external run to the main.rs bytes present during execution."""
+    source = pathlib.Path(consumer_main) if consumer_main is not None else None
+    if source is not None and (source.is_symlink() or not source.is_file()):
+        raise ValueError('Consumer source must be a regular file')
+    before = digest(source.read_bytes()) if source is not None else None
+    start = time.monotonic()
+    completed = subprocess.run(command, cwd=cwd, env=env, text=True,
+                               capture_output=True, timeout=timeout)
+    row = {'command': command, 'cwd': str(cwd), 'exit_code': completed.returncode,
+           'stdout': completed.stdout, 'stderr': completed.stderr,
+           'durationSeconds': round(time.monotonic() - start, 3)}
+    unchanged = True
+    if source is not None:
+        try:
+            unchanged = not source.is_symlink() and digest(source.read_bytes()) == before
+        except OSError:
+            unchanged = False
+        row.update(consumerSourceSha256=before, consumerSourceUnchanged=unchanged)
+    row['passed'] = completed.returncode == 0 and unchanged
+    return row
+
+
 def inspect_archive(content, prefix):
     """Accept only bounded unique ordinary files under the exact crate directory."""
     files = {}
@@ -126,14 +149,11 @@ def main():
     if args.require_clean and status_before:
         raise ValueError('--require-clean requires a committed, clean repository including untracked files')
     checks = []
-    def run(arguments, cwd, timeout=600):
+    def run(arguments, cwd, timeout=600, consumer_main=None):
         command = base + arguments
-        start = time.monotonic()
-        completed = subprocess.run(command, cwd=cwd, env=env, text=True, capture_output=True, timeout=timeout)
-        checks.append({'command': command, 'cwd': str(cwd), 'exit_code': completed.returncode,
-                       'stdout': completed.stdout, 'stderr': completed.stderr,
-                       'durationSeconds': round(time.monotonic() - start, 3)})
-        return completed.returncode == 0
+        row = execute_package_check(command, cwd, env, timeout, consumer_main)
+        checks.append(row)
+        return row['passed']
     package_args = ['package', '-p', 'scm-sdk', '--locked', '--offline', '--no-verify', '--target', host]
     if not args.require_clean:
         package_args.append('--allow-dirty')
@@ -188,7 +208,7 @@ def main():
         shutil.copyfile(original / 'src/main.rs', consumer / 'src/main.rs')
         frozen_probe_check_index = None
         if passed:
-            passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+            passed = run(['run', '--locked', '--offline', '--target', host], consumer, consumer_main=consumer / 'src/main.rs')
             frozen_probe_check_index = len(checks) - 1
         if passed and 'examples/access_policies.rs' in files:
             # Execute all five new public methods from a separate crate against
@@ -205,20 +225,20 @@ def main():
             lock = lock.replace(marker, marker + ' "bytes",\n "http",\n "tokio",\n')
             (consumer / 'Cargo.lock').write_text(lock)
             (consumer / 'src/main.rs').write_bytes(files['examples/access_policies.rs'])
-            passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+            passed = run(['run', '--locked', '--offline', '--target', host], consumer, consumer_main=consumer / 'src/main.rs')
         consumer_manifest = (consumer / 'Cargo.toml').read_text()
         consumer_sources = {}
         for name in ('response_defaults', 'red_team_dataplane', 'response_compatibility', 'red_team_management'):
             key = f'examples/{name}.rs'
             if passed and key in files:
                 (consumer / 'src/main.rs').write_bytes(files[key])
-                passed = run(['run', '--features', 'red-team', '--locked', '--offline', '--target', host], consumer)
+                passed = run(['run', '--features', 'red-team', '--locked', '--offline', '--target', host], consumer, consumer_main=consumer / 'src/main.rs')
                 consumer_sources[key] = {'sha256': digest(files[key]), 'checkIndex': len(checks) - 1,
                                          'selectedFeatures': ['red-team']}
         key = 'examples/directional_profiles.rs'
         if passed and key in files:
             (consumer / 'src/main.rs').write_bytes(files[key])
-            passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+            passed = run(['run', '--locked', '--offline', '--target', host], consumer, consumer_main=consumer / 'src/main.rs')
             consumer_sources[key] = {'sha256': digest(files[key]), 'checkIndex': len(checks) - 1,
                                      'selectedFeatures': []}
     if args.require_clean:
