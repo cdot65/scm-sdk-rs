@@ -199,8 +199,14 @@ run and exact per-job context set.
 Dependency tools are installed with their own lockfiles at exact versions:
 cargo-audit 0.22.2 and cargo-deny 0.20.2. The phase gate invokes
 scripts/check-dependencies.py; it refreshes and records official RustSec
-provenance, audits the complete Cargo lock with warnings denied, and checks
-all-feature license/source/ban policy. Public registry, source, npm, and advisory
+provenance and independently audits both the root and native-probe Cargo
+lockfiles with warnings denied. Both lockfile digests and unchanged-input checks
+are retained in `lockfileAudits`. Registry checksum/source checks, resolved
+feature evidence and the all-feature license/source/bans policy cover only the
+root SDK graph. The probe graph is deliberately excluded from those latter
+checks because its local harness requires a separately defined source policy;
+its advisory result is not license/source approval. See
+[DEPENDENCIES.md](DEPENDENCIES.md) for this release's exact boundary. Public registry, source, npm, and advisory
 downloads are allowed; these checks need no service credentials.
 Failed dependency commands retain bounded stdout/stderr tails in a failed
 partial receipt and in the job log, including early version/provenance errors and

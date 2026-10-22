@@ -28,11 +28,11 @@ class Release024Tests(unittest.TestCase):
     def test_release_documentation_matches_candidate_and_delivery_guards(self):
         root = pathlib.Path(__file__).resolve().parents[1]
         readme = (root / 'README.md').read_text()
-        self.assertIn('current verified published version is [0.2.3]', readme)
+        self.assertIn('verified earlier release is [0.2.3]', readme)
         self.assertIn('docs/checks/release-registry-0.2.3.json', readme)
         self.assertIn('Crate version: **0.2.4**', readme)
-        self.assertIn('candidate, not yet published', readme)
-        self.assertIn('Until publication is verified, retain your existing released pin', readme)
+        self.assertIn('Publication and delivery are established only by verified', readme)
+        self.assertIn('If publication is unverified, retain your existing released pin', readme)
         phases = (root / 'docs/PHASES.md').read_text()
         self.assertIn('Phase 28 acceptance requires both named chunks', phases)
         self.assertIn('`release-readiness` and\n`remote-delivery`', phases)
@@ -242,7 +242,8 @@ class Release024Tests(unittest.TestCase):
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
         member = 'examples/directional_profiles.rs'
-        content = b'fn main() {}\n'
+        marker = 'Directional typed models and lossless response compatibility verified offline.'
+        content = ('fn main() { println!(\"' + marker + '\"); }\n').encode()
         fixture.files[member] = content
         fixture.write('crates/scm-sdk/' + member, content)
         fixture.report['files'] = [{'path': name, 'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)}
@@ -251,7 +252,7 @@ class Release024Tests(unittest.TestCase):
         checks.append({'command': ['cargo', '+1.99.0', 'run', '--example', 'directional_profiles', '--all-features', '--locked', '--offline', '--target', fixture.host],
                        'cwd': str(fixture.root / 'archive/scm-sdk'), 'exit_code': 0})
         checks.append({'command': ['cargo', '+1.99.0', 'run', '--locked', '--offline', '--target', fixture.host],
-                       'cwd': str(fixture.root / 'archive/consumer'), 'exit_code': 0})
+                       'cwd': str(fixture.root / 'archive/consumer'), 'exit_code': 0, 'stdout': marker + '\n'})
         fixture.report['externalExampleConsumers'][member] = {'sha256': hashlib.sha256(content).hexdigest(), 'checkIndex': len(checks)-1, 'selectedFeatures': []}
         def verify(report):
             fixture.receipt.write_text(json.dumps(report))
@@ -262,6 +263,16 @@ class Release024Tests(unittest.TestCase):
             changed['externalExampleConsumers'][member][field] = wrong
             with self.subTest(field=field), self.assertRaises(ValueError):
                 verify(changed)
+        for stdout in (None, '', 'Access-policy consumer passed.\n', marker + '\n' + marker):
+            changed = copy.deepcopy(fixture.report)
+            changed['checks'][-1]['stdout'] = stdout
+            with self.subTest(stdout=stdout), self.assertRaisesRegex(ValueError, 'success output'):
+                verify(changed)
+        # Identical command/cwd cannot substitute a different consumer's row.
+        changed = copy.deepcopy(fixture.report)
+        changed['checks'].insert(len(changed['checks']) - 1, dict(changed['checks'][-1], stdout='Other consumer.'))
+        with self.assertRaisesRegex(ValueError, 'success output'):
+            verify(changed)
         changed = copy.deepcopy(fixture.report)
         changed['externalExampleConsumers'].pop(member)
         with self.assertRaises(ValueError):

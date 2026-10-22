@@ -1,10 +1,6 @@
 # Compatibility and support status
 
-Publication statements below record the source qualification snapshot and remain
-in the immutable archive after release. Check [scm-sdk 0.2.4 on crates.io](https://crates.io/crates/scm-sdk/0.2.4) and the repository's version-specific
-registry receipt for current availability.
-
-The current Rust crate version is **0.2.4**, the [directional-profile release candidate](DIRECTIONAL_PROFILES.md), not yet published.
+The current Rust crate version is **0.2.4**, the [directional-profile update](DIRECTIONAL_PROFILES.md). Publication and delivery require verified version-specific receipts.
 The `checks/release-registry-0.2.4.json` establishes publication
 only when present and verified. A missing receipt means publication is not yet verified.
 The [access-policy family](ACCESS_POLICIES.md) remains experimental/live-unverified;
@@ -29,13 +25,13 @@ baseline is TypeScript SDK **0.34.0** at
 exported capabilities have implemented native mappings. [EXPORTS.md](EXPORTS.md)
 explains the independent validation, behavior and public-consumer evidence.
 
-## Directional profile release candidate
+## Directional profile release
 
 The [TypeScript 0.35.0 directional profile addition](DIRECTIONAL_PROFILES.md) is
 separate from the published 0.2.3 source. It adds two model types and two named
 schemas, plus five typed field occurrences on existing profile models. This is
 an additive maintenance delta; the historical 3,820 capabilities and 448 methods
-remain the TypeScript 0.34.0 baseline. No 0.2.4 publication or delivery is claimed.
+remain the TypeScript 0.34.0 baseline. Publication and delivery are established by the version-specific verified receipts.
 
 Create/update requests use the versioned current root and intentionally reject
 newly known null/wrong-type values, including raw extensions that the historical

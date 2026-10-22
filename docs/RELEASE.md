@@ -1,10 +1,7 @@
 # Release and delivery procedure
 
-Publication statements below record the source qualification snapshot and remain
-in the immutable archive after release. Check [scm-sdk 0.2.4 on crates.io](https://crates.io/crates/scm-sdk/0.2.4) and the repository's version-specific
-registry receipt for current availability.
-
-The workspace version is **0.2.4**, a release candidate that is not yet published.
+The workspace version is **0.2.4**. Its publication and delivery are established
+only by verified version-specific receipts.
 Phase 28 qualifies the TypeScript 0.35.0 directional-profile delta, preserves the
 existing APIs, and requires its own registry, annotated-tag, and CI receipts.
 The lockfiles include rustls-webpki 0.103.16 and webpki-root-certs 1.0.10 for

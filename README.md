@@ -17,12 +17,9 @@ at least 46/50, with each category at least 8/10. The five-attempt exception and
 recorded deficiencies follow the maintainer’s review policy. [Phase status](docs/phase-status.json) records the
 accepted reviews and exact source evidence.
 
-Publication statements below record the source qualification snapshot and remain
-in the immutable archive after release. Check [scm-sdk 0.2.4 on crates.io](https://crates.io/crates/scm-sdk/0.2.4) and the repository's version-specific
-registry receipt for current availability.
-
-Crate version: **0.2.4**, the TypeScript 0.35.0 directional-profile release
-candidate, not yet published. It retains AIRS management 0.86.0 and the
+Crate version: **0.2.4**, the TypeScript 0.35.0 directional-profile update.
+Publication and delivery are established only by verified version-specific
+registry, annotated-tag and CI receipts. It retains AIRS management 0.86.0 and the
 [G25 response-compatibility correction](docs/G25_COMPATIBILITY.md).
 It retains five experimental
 [Portkey access-policy APIs](docs/ACCESS_POLICIES.md) and retains full
@@ -30,9 +27,13 @@ It retains five experimental
 11 new calls, with a separately pinned vendor ledger. See the
 [migration notes](CHANGELOG.md) before adopting the stricter query contract.
 
-The current verified published version is [0.2.3](https://crates.io/crates/scm-sdk/0.2.3),
+Directional profiles add `ContentTypeConfiguration` and
+`ContentTypeConfigurations`; see the [directional-profile guide](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.4/docs/DIRECTIONAL_PROFILES.md).
+Create/update requests now reject invalid newly modeled settings before I/O;
+profile responses retain tolerant parsing and preserve unknown or null values.
+
+A verified earlier release is [0.2.3](https://crates.io/crates/scm-sdk/0.2.3),
 with a verified [registry receipt](docs/checks/release-registry-0.2.3.json).
-The 0.2.4 candidate below remains unpublished.
 
 The earlier maintenance release is [0.1.1](https://crates.io/crates/scm-sdk/0.1.1),
 with [published API docs](https://docs.rs/scm-sdk/0.1.1/scm_sdk/) and a verified
@@ -56,9 +57,9 @@ and remains live-unverified. Existing 0.2.0 APIs and G10 behavior are retained.
 
 ## Start here
 
-After 0.2.4 is published and its registry receipt above verifies, pin that release using the shorter
-dependency alias. Until publication is verified, retain your existing released pin;
-0.2.3 is the current verified published version:
+After the 0.2.4 registry receipt above verifies, pin that release using the shorter
+dependency alias. If publication is unverified, retain your existing released pin;
+the earlier 0.2.3 registry receipt remains available above:
 
 ```toml
 [dependencies]
