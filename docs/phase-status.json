@@ -8676,7 +8676,14 @@
           "review": "docs/reviews/phase-28-attempt-03.json",
           "disposition": "Explicitly require identical canonical and GitHub annotated v0.2.4 tags with independent bounded receipts, preserving historical defaults and the public packaged guide link. All seven external package consumer runs now record the executed main.rs digest and before/after unchanged status; verifier binds each run to its frozen or archived source rather than stdout markers. Negative regressions reject missing/wrong hashes, swapped identical-command rows, source mutation/deletion, and absent/tampered mirror receipts. SDK runtime inputs remain unchanged."
         }
-      ]
+      ],
+      "release_preflight": {
+        "status": "preparing_remote_observations_before_registry_publication",
+        "mirror_authorization": "Maintainer explicitly requested the GitHub mirror and authorized end-to-end publication in this session; the existing docs/GITHUB_MIRROR.md and independent_documentation_delivery record govern the public mirror. Canonical AGENTS.md push destination is retained.",
+        "mirror_remote": "https://github.com/cdot65/scm-sdk-rs.git",
+        "publication_order": "Observe identical annotated release tags on both remotes before irreversible crates.io publication; obtain the accepted phase-level readiness record and successful CI before upload.",
+        "disclosure": "Ordinary mirror pushes expose full reachable repository history, including contracts/sources and docs/reviews. Current selected-credential scan found no credential matches; the three tenant-identifier source files are unchanged pinned public upstream fixtures, not selected tenant registrations."
+      }
     }
   ],
   "active_followup_plan": "docs/red-team-management-0.86-plan.md"
