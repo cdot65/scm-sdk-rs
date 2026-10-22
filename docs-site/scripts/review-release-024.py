@@ -49,7 +49,6 @@ REFERENCES = (
     'docs/DIRECTIONAL_PROFILES.md', 'docs/STABILITY.md', 'docs/SECURITY.md', 'CHANGELOG.md',
     'docs/checks/release-registry-0.2.4.json',
     'docs/reviews/github-pages/release-0.2.4/remote-branches-before-deployment.json',
-    'docs/reviews/github-pages/release-0.2.4/attempt-01.disposition.json',
 )
 
 
@@ -68,9 +67,40 @@ def read(relative):
     return path.read_bytes()
 
 
+def phase28(status):
+    phases = status.get('phases') if isinstance(status, dict) else None
+    if not isinstance(phases, list) or any(not isinstance(p, dict) for p in phases):
+        raise ValueError('phase-status phases is missing or malformed')
+    phase = next((p for p in phases if p.get('id') == 28), None)
+    if phase is None:
+        raise ValueError('phase-status phases lacks phase28')
+    return phase
+
+
+def prior_review_name(number):
+    stem = f'attempt-{number:02d}'
+    return stem + ('.failed.json' if (SCOPE / (stem + '.failed.json')).is_file() else '.json')
+
+
+def prior_review_sources(attempt):
+    prefix = 'docs/reviews/github-pages/release-0.2.4/'
+    return [prefix + name for number in range(1, attempt)
+            for name in (prior_review_name(number), f'attempt-{number:02d}.disposition.json')]
+
+
+def render_prompt(attempt):
+    current = f'attempt-{attempt:02d}'
+    prior = f'attempt-{attempt - 1:02d}'
+    paragraphs = TEMPLATE.read_text().split('\n\n')
+    if attempt == 1:
+        paragraphs = [paragraph for paragraph in paragraphs if '{prior}' not in paragraph]
+    return ('\n\n'.join(paragraphs).replace('{current}', current)
+            .replace('{prior_review}', prior_review_name(attempt - 1)).replace('{prior}', prior))
+
+
 def delivery_records():
     status = json.loads(read('docs/phase-status.json'))
-    phase = next((p for p in status['phases'] if p['id'] == 28), {})
+    phase = phase28(status)
     registry = json.loads(read('docs/checks/release-registry-0.2.4.json'))
     delivery = phase.get('delivery', {})
     canonical_ci = delivery.get('ci_receipt')
@@ -107,7 +137,7 @@ def verify_release_delivery(release_repo, qualified_release_repo=None):
     if primary_status_path.is_symlink() or not primary_status_path.is_file():
         raise ValueError('Primary phase evidence is not a regular source file')
     primary_status = json.loads(primary_status_path.read_bytes())
-    primary_phase = next((p for p in primary_status['phases'] if p['id'] == 28), {})
+    primary_phase = phase28(primary_status)
     if phase != primary_phase:
         raise ValueError('Merged phase28 records differ from primary records; do not fabricate completion')
     digests = {}
@@ -130,8 +160,13 @@ def verify_release_delivery(release_repo, qualified_release_repo=None):
     if result.returncode:
         raise ValueError('Primary actual release_delivery.verify has not passed')
     verified = json.loads(result.stdout)
+    if not isinstance(verified, dict):
+        raise ValueError('Primary guard result is not an object')
     governance = None
     registry = json.loads(read('docs/checks/release-registry-0.2.4.json'))
+    published_source = registry.get('sourceCommit') if isinstance(registry, dict) else None
+    if not isinstance(published_source, str) or not published_source:
+        raise ValueError('Registry sourceCommit is missing or malformed')
     if qualified_release_repo is not None:
         governance = verified
         if (governance.get('scope') != 'post_publication_governance'
@@ -140,7 +175,10 @@ def verify_release_delivery(release_repo, qualified_release_repo=None):
                 or governance.get('source_sha256') in (governance.get('qualifiedSourceSha256'), registry.get('archiveSha256'))
                 or governance.get('qualifiedReleaseRoot') != str(qualified_release_repo.resolve())):
             raise ValueError('Governance delivery proof lacks distinct source bindings')
-        verified = governance.get('canonicalGuard', {}).get('result', {})
+        canonical = governance.get('canonicalGuard')
+        verified = canonical.get('result') if isinstance(canonical, dict) else None
+        if not isinstance(verified, dict):
+            raise ValueError('Governance canonicalGuard result is missing or malformed')
         if governance.get('publishedSourceCommit') != verified.get('sourceCommit'):
             raise ValueError('Governance published source differs from qualified guard')
         for name, digest in governance.get('tagObservations', {}).items():
@@ -148,10 +186,13 @@ def verify_release_delivery(release_repo, qualified_release_repo=None):
                 raise ValueError('Governance tag observation is not bound to merged evidence')
         if digests.get(governance.get('currentCiPath')) != governance.get('currentCiSha256'):
             raise ValueError('Governance CI observation is not bound to merged evidence')
+    for field in ('sourceCommit', 'ciCommit'):
+        if not isinstance(verified.get(field), str) or not verified.get(field):
+            raise ValueError('Primary guard ' + field + ' is missing or malformed')
     if (verified.get('passed') is not True or verified.get('version') != '0.2.4'
-            or verified.get('jobs') != 49 or verified.get('sourceCommit') != registry['sourceCommit']):
+            or verified.get('jobs') != 49 or verified.get('sourceCommit') != published_source):
         raise ValueError('Primary delivery guard lacks exact publication and terminal49-CI proof')
-    for commit in (verified['sourceCommit'], verified['ciCommit']):
+    for commit in (verified.get('sourceCommit'), verified.get('ciCommit')):
         subprocess.run(['git', 'merge-base', '--is-ancestor', commit, 'HEAD'], cwd=ROOT, check=True)
     return {'guard': verified, 'governanceGuard': governance, 'evidenceSha256': digests,
             'sdkPhase28Status': phase.get('status'),
@@ -174,10 +215,10 @@ def append_documentation_update(status, expected_sha, update):
     status['independent_documentation_delivery'].setdefault('release_updates', []).append(update)
 
 
-def snapshot():
+def snapshot(attempt=1):
     listed = git('ls-files', '--cached', '--others', '--exclude-standard', '-z', '--', 'docs-site').decode().split('\0')
     phase, evidence = delivery_records()
-    files = sorted(set(listed) - {''} | set(REFERENCES) | set(evidence) | {'.github/workflows/docs-deploy.yml'})
+    files = sorted(set(listed) - {''} | set(REFERENCES) | set(evidence) | set(prior_review_sources(attempt)) | {'.github/workflows/docs-deploy.yml'})
     digests = {name: sha(read(name)) for name in files}
     sdk_phase_sha = sha(json.dumps(phase, sort_keys=True, separators=(',', ':')).encode())
     docs_sha = documentation_metadata_sha(json.loads(read('docs/phase-status.json')))
@@ -209,7 +250,7 @@ def prerequisites():
             or binding.get('sourceSha256') != sha(git('show', commit + ':docs/DIRECTIONAL_PROFILES.md'))):
         raise ValueError('Receipt-bound directional guide provenance is missing or stale')
     status = json.loads(read('docs/phase-status.json'))
-    phase = next((p for p in status['phases'] if p['id'] == 28), {})
+    phase = phase28(status)
     if not phase or not status.get('independent_documentation_delivery'):
         raise ValueError('Actual phase28 records and historical docs delivery must both be merged')
     documentation_metadata_sha(status)
@@ -323,7 +364,7 @@ def main():
     validate_attempt(args.attempt)
     receipt = prerequisites()
     verified_delivery = verify_release_delivery(args.release_repo, args.qualified_release_repo)
-    before = snapshot()
+    before = snapshot(args.attempt)
     preserved = {}
     for name in ASSETS:
         actual = read(name)
@@ -350,7 +391,7 @@ def main():
         checks.append({'command': command, 'exitCode': result.returncode, 'logSha256': sha(log.read_bytes())})
         if result.returncode:
             raise ValueError('Documentation check failed; no Claude invocation consumed')
-    if (snapshot()['sourceSha256'] != before['sourceSha256']
+    if (snapshot(args.attempt)['sourceSha256'] != before['sourceSha256']
             or verify_release_delivery(args.release_repo, args.qualified_release_repo) != verified_delivery):
         raise ValueError('Source changed while checking; no Claude invocation consumed')
     SCOPE.mkdir(parents=True, exist_ok=True)
@@ -360,7 +401,7 @@ def main():
     write_json(checks_path, {'sourceSha256': before['sourceSha256'], 'priorDocumentationMetadataSha256': before['priorDocumentationMetadataSha256'], 'checks': checks, 'helperUnitTestCount': unit_test_count, 'preservedAssets': preserved, 'verifiedReleaseDelivery': verified_delivery,
                             'sdkTests': 'Not rerun for documentation-only scope; qualified runtime is reference evidence.',
                             'deployment': 'Not performed by this review helper.'})
-    prompt = TEMPLATE.read_text().replace('attempt-01', stem)
+    prompt = render_prompt(args.attempt)
     prompt += '\nReturn categories inside a categories object and conform exactly to the supplied JSON schema.\n'
     prompt_path = SCOPE / (stem + '.prompt.md')
     with prompt_path.open('x') as stream:
@@ -390,7 +431,7 @@ def main():
         exception = fifth_attempt_exception(review, args.attempt)
         accepted = accepted or exception is not None
         reason = 'source_changed'
-        if (snapshot()['sourceSha256'] != before['sourceSha256']
+        if (snapshot(args.attempt)['sourceSha256'] != before['sourceSha256']
                 or verify_release_delivery(args.release_repo, args.qualified_release_repo) != verified_delivery):
             raise ValueError('Source changed during review')
         cli = {'exitCode': 0, 'stdoutSha256': sha(result.stdout.encode()), 'stderrSha256': sha(result.stderr.encode())}

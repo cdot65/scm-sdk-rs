@@ -1,0 +1,25 @@
+{
+  "review": "docs/reviews/github-pages/release-0.2.4/attempt-02.json",
+  "decision": "rejected",
+  "total": 44,
+  "original_artifacts_preserved": true,
+  "corrections": [
+    {
+      "finding": 1,
+      "change": "Targeted current/prior prompt placeholders render the current source/check manifests and actual prior terminal/disposition records; attempt1 omits follow-up. Regression covers attempts1,2,3,5 and failed prior invocation."
+    },
+    {
+      "finding": 2,
+      "change": "Snapshot now binds every actual previous terminal receipt and disposition from the current attempt number. Mutation of prior2 disposition changes attempt3 source fingerprint."
+    },
+    {
+      "finding": 3,
+      "change": "Named phase-status phases validation and registry/guard sourceCommit/ciCommit validation precede indexing and ancestry checks. Missing/malformed cases are regressed."
+    },
+    {
+      "finding": 4,
+      "change": "All sibling example links now point to the exact published0.2.4 source6f18529."
+    }
+  ],
+  "protected_scope": "No SDK runtime/governance changes. Ten logo/theme/config/workflow assets remain exact. Existing workflow path-filter follow-up remains separate."
+}

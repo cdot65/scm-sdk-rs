@@ -44,6 +44,89 @@ class Tests(unittest.TestCase):
         ):
             with self.assertRaises(ValueError): r.parse_envelope(envelope)
 
+    def test_prompt_names_current_source_and_actual_prior_review(self):
+        first = r.render_prompt(1)
+        self.assertIn('attempt-01.source.json and attempt-01.checks.json', first)
+        self.assertNotIn('For this follow-up', first)
+        self.assertNotIn('attempt-00', first)
+        for attempt in (2, 3, 5):
+            prompt = r.render_prompt(attempt)
+            self.assertIn(f'attempt-{attempt:02d}.source.json and attempt-{attempt:02d}.checks.json', prompt)
+            self.assertIn(f'attempt-{attempt-1:02d}.json and attempt-{attempt-1:02d}.disposition.json', prompt)
+            self.assertNotIn('{current}', prompt)
+            self.assertNotIn('{prior}', prompt)
+
+    def test_failed_prior_invocation_retains_actual_terminal_reference(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(r, 'SCOPE', Path(tmp)):
+            (Path(tmp) / 'attempt-01.failed.json').write_text('{}')
+            prompt = r.render_prompt(2)
+            self.assertIn('attempt-01.failed.json and attempt-01.disposition.json', prompt)
+            self.assertIn('docs/reviews/github-pages/release-0.2.4/attempt-01.failed.json', r.prior_review_sources(2))
+            self.assertNotIn('docs/reviews/github-pages/release-0.2.4/attempt-01.json', r.prior_review_sources(2))
+
+    def test_snapshot_binds_each_actual_prior_disposition(self):
+        state = {'independent_documentation_delivery': {'score': 46}}
+        values = {}
+        def read(name):
+            return json.dumps(state).encode() if name == 'docs/phase-status.json' else values.get(name, b'fixed')
+        with mock.patch.object(r, 'git', side_effect=lambda *args: b'' if args[0] == 'ls-files' else b'head'), \
+             mock.patch.object(r, 'delivery_records', return_value=({'id': 28, 'status': 'pending'}, [])), \
+             mock.patch.object(r, 'read', side_effect=read):
+            before = r.snapshot(3)
+            for prior in (1, 2):
+                for suffix in ('.json', '.disposition.json'):
+                    self.assertIn(f'docs/reviews/github-pages/release-0.2.4/attempt-{prior:02d}{suffix}', before['files'])
+            values['docs/reviews/github-pages/release-0.2.4/attempt-02.disposition.json'] = b'changed'
+            self.assertNotEqual(r.snapshot(3)['sourceSha256'], before['sourceSha256'])
+
+    def test_missing_or_malformed_phases_is_named(self):
+        for status in ({}, {'phases': None}, {'phases': {}}, {'phases': [None]}):
+            with mock.patch.object(r, 'read', return_value=json.dumps(status).encode()):
+                with self.assertRaisesRegex(ValueError, 'phase-status phases'):
+                    r.delivery_records()
+
+    def test_missing_guard_commits_are_named(self):
+        phase = {'id': 28, 'status': 'pending'}
+        name = 'docs/checks/release-registry-0.2.4.json'
+        raw = json.dumps({'sourceCommit': 'published'}).encode()
+        valid = {'passed': True, 'version': '0.2.4', 'jobs': 49,
+                 'sourceCommit': 'published', 'ciCommit': 'ci'}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'docs/checks').mkdir(parents=True)
+            (root / name).write_bytes(raw)
+            (root / 'docs/phase-status.json').write_text(json.dumps({'phases': [phase]}))
+            with mock.patch.object(r, 'delivery_records', return_value=(phase, [name])), \
+                 mock.patch.object(r, 'read', return_value=raw), \
+                 mock.patch.object(r.subprocess, 'run') as run:
+                for field in ('sourceCommit', 'ciCommit'):
+                    for value in (None, '', 31):
+                        invalid = dict(valid)
+                        if value is None:
+                            invalid.pop(field)
+                        else:
+                            invalid[field] = value
+                        run.return_value = mock.Mock(returncode=0, stdout=json.dumps(invalid))
+                        with self.assertRaisesRegex(ValueError, 'Primary guard ' + field):
+                            r.verify_release_delivery(root)
+
+    def test_missing_registry_source_commit_is_named(self):
+        phase = {'id': 28, 'status': 'pending'}
+        name = 'docs/checks/release-registry-0.2.4.json'
+        raw = b'{}'
+        verified = {'passed': True, 'version': '0.2.4', 'jobs': 49,
+                    'sourceCommit': 'published', 'ciCommit': 'ci'}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'docs/checks').mkdir(parents=True)
+            (root / name).write_bytes(raw)
+            (root / 'docs/phase-status.json').write_text(json.dumps({'phases': [phase]}))
+            with mock.patch.object(r, 'delivery_records', return_value=(phase, [name])), \
+                 mock.patch.object(r, 'read', return_value=raw), \
+                 mock.patch.object(r.subprocess, 'run', return_value=mock.Mock(returncode=0, stdout=json.dumps(verified))):
+                with self.assertRaisesRegex(ValueError, 'Registry sourceCommit'):
+                    r.verify_release_delivery(root)
+
     def test_threshold_and_findings(self):
         bad = self.review(); bad['categories']['delivery'] = 9; bad['total'] = 45
         self.assertFalse(r.validate_review(bad))
