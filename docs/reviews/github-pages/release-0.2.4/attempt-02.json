@@ -1,0 +1,70 @@
+{
+  "reviewer": "Claude Code",
+  "scope": "independent-docs-release-0.2.4",
+  "attempt": 2,
+  "reviewedAt": "2026-10-22T21:54:21.144606+00:00",
+  "sourceSha256": "0f2d20e36b6c703dd24626722b671e53f7c3e3a1df4c32c21d340f46bc7493d1",
+  "sourceManifestSha256": "67a83c565eca577a14e37fb16728c9b23dc498caf4591ea692467547c8bbd15c",
+  "checksSha256": "9674cc85d8e46929e2b576dc489302a099ad2b0a9502009550ff5f98b90e7712",
+  "promptSha256": "7013ed0be3f970ceb43a01ff8cb403ca5a9b60411506bed2969906970c12c622",
+  "releaseSourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+  "runnerSha256": "82c87ff52144ba3dd02d8fbfd71ce0bece53d01f5387df3180f5eeb9effa41e7",
+  "templateSha256": "9bac7c970a8094688c6b723b8f58412f1a205b62f5a38c8e0fb03f3e0057191e",
+  "sourceUnchanged": true,
+  "decision": "rejected",
+  "review": {
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8,
+      "supportability": 9,
+      "architecture": 9,
+      "delivery": 9
+    },
+    "total": 44,
+    "overall": 9,
+    "blocking_findings": [],
+    "nonblocking_findings": [
+      {
+        "severity": "medium",
+        "path": "docs-site/scripts/review-release-024.py",
+        "line": 363,
+        "description": "The prompt is built with a blanket `TEMPLATE.read_text().replace('attempt-01', stem)`. Template line 3 ('attempt-01.source.json and attempt-01.checks.json') must be rewritten to the current attempt, but template line 19 ('inspect the retained independent documentation attempt-01.json and attempt-01.disposition.json') refers to the PRIOR retained review and must not be. The recorded prompt at docs/reviews/github-pages/release-0.2.4/attempt-02.prompt.md:19 therefore instructs this attempt to inspect attempt-02.json and attempt-02.disposition.json, which cannot exist (attempt-02.json is written only after the review returns; only attempt-01.json and attempt-01.disposition.json exist in SCOPE). A reviewer following the prompt literally never reaches the prior review's findings or its correction record, which defeats the stated purpose of the follow-up attempt, and the defect recurs identically for attempts 3-5.",
+        "required_fix": "Replace the blanket substitution with targeted placeholders: put '{current}' and '{prior}' in docs-site/scripts/review-release-024.prompt.md and format them with f'attempt-{args.attempt:02d}' and f'attempt-{args.attempt-1:02d}' respectively (omitting the follow-up paragraph when attempt == 1), and add a unit case in docs-site/scripts/test_review_release_024.py asserting that the rendered prompt for attempt 2 names attempt-02.source.json/checks.json and attempt-01.json/attempt-01.disposition.json."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/scripts/review-release-024.py",
+        "line": 52,
+        "description": "REFERENCES hardcodes 'docs/reviews/github-pages/release-0.2.4/attempt-01.disposition.json'. The prior-attempt disposition is therefore bound into snapshot()'s source fingerprint only for attempt 2; on attempts 3-5 the then-current prior disposition (attempt-02.disposition.json and later) is neither bound in the source manifest nor guaranteed present, so the record the reviewer is asked to confirm fixes against is unprotected against mid-review change.",
+        "required_fix": "Derive the prior-disposition reference from the attempt number (e.g. append f'docs/reviews/github-pages/release-0.2.4/attempt-{attempt-1:02d}.disposition.json' to the reference set when attempt > 1 and the file exists) so each attempt's manifest binds the disposition it is reviewing."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/scripts/review-release-024.py",
+        "line": 72,
+        "description": "After the attempt-01 fix, ci_receipt is validated with .get() plus a named ValueError, but neighbouring lookups still index directly: delivery_records() uses status['phases'] (line 72) and verify_release_delivery() uses registry['sourceCommit'] (line 152) and verified['sourceCommit']/['ciCommit'] (line 154). These run before the inner try at line 378 that catches KeyError, and the outer handler at line 438 catches only (ValueError, OSError, subprocess.SubprocessError), so a malformed phase-status.json or guard stdout aborts the runner with a traceback instead of the intended single-line failure message.",
+        "required_fix": "Read 'phases', 'sourceCommit' and 'ciCommit' with .get(), raise ValueError naming the failing predicate when absent or malformed, and add a regression case for a phase-status.json without 'phases' and for guard stdout missing sourceCommit/ciCommit."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/docs/developer/examples.md",
+        "line": 11,
+        "description": "The new 0.2.4 entry (line 10) is pinned to the published release commit 6f18529a47cc273feca1000af6e4fc0d96da757e, while every sibling example on this page (lines 9 and 11-21) remains pinned to the pre-0.2.4 content-source commit efe9de04d9f60d48e6ba8528d1a07e86376d706d. The page presents all of them as 'included with the crate source' for the current 0.2.4 release, and docs/checks/release-registry-0.2.4.json:57-126 shows these example files shipping in the 0.2.4 archive, so readers following the older links may see sources that differ from the release they installed without any label saying the link is a historical content snapshot.",
+        "required_fix": "Either repoint the example permalinks on docs-site/docs/developer/examples.md:9,11-21 to 6f18529a47cc273feca1000af6e4fc0d96da757e, or state once on the page that non-0.2.4 entries are pinned to the DESIGN_SOURCE contentSourceCommit snapshot (docs-site/DESIGN_SOURCE.json:12) and are not the released 0.2.4 file state."
+      }
+    ],
+    "evidence_limitations": [
+      "Read/Glob/Grep only: I executed nothing. The four recorded checks in docs/reviews/github-pages/release-0.2.4/attempt-02.checks.json (helper unittest discovery, `npm --prefix docs-site run build`, `npm --prefix docs-site run typecheck`, and `git diff --check 382d9a0876c569c8349cd0db0096635f2494389b -- docs-site docs/SECURITY.md docs/GITHUB_MIRROR.md .github/workflows/docs-deploy.yml`) are accepted from their recorded exitCode 0 and log digests, not re-executed. The whitespace log digest 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b is the sha256 of a single newline, consistent with empty output from the now-ranged command.",
+      "I cannot compute sha256, so every digest is accepted as recorded: attempt-02.source.json/checks.json file digests, preservedAssets equality with baseline 382d9a0876c569c8349cd0db0096635f2494389b for the ten protected logo/theme/style/config/workflow files, docs-site/DESIGN_SOURCE.json provenance digests, and the merged-versus-primary byte comparisons in verify_release_delivery().",
+      "The prompt for this attempt (docs/reviews/github-pages/release-0.2.4/attempt-02.prompt.md:19) directs inspection of attempt-02.json and attempt-02.disposition.json, which do not exist; I reviewed the actual retained prior review docs/reviews/github-pages/release-0.2.4/attempt-01.json and attempt-01.disposition.json instead (see the medium finding).",
+      "The primary release checkout /home/cdot/development/cdot65/scm-sdk-rs-ts035 and the governance worktree /home/cdot/development/cdot65/scm-sdk-rs-delivery-governance are outside this worktree and were not inspected. The release_delivery.py guard result (version 0.2.4, sourceCommit 6f18529a, ciCommit 56a88d25, jobs 49, passed true), the post_publication_governance proof with its distinct source_sha256 ea692797 / qualifiedSourceSha256 f9cebee5 / archiveSha256 533294fe, the 49 terminal CI contexts, both 1.89.0/1.99.0 package receipts and the retained .crate archive are reference evidence only.",
+      "No network access: crates.io, docs.rs, GitHub and Forgejo were not contacted. Publication, archive, tag and remote-ref facts rest on the retained receipts docs/checks/release-registry-0.2.4.json, release-tag-v0.2.4(-observation-07).json, release-tag-github-v0.2.4(-observation-07).json and docs/reviews/github-pages/release-0.2.4/remote-branches-before-deployment.json.",
+      "Git history was not queryable, so I verified current-tree content only. I could not confirm that docs/DIRECTIONAL_PROFILES.md, docs/STABILITY.md, docs/RESPONSE_DEFAULTS.md, docs/LIVE_ACCEPTANCE.md or docs/SECURITY.md at commit 6f18529a match the sourceSha256 values recorded in docs-site/DESIGN_SOURCE.json:65-101, nor that the permalinked files (phase-28-live-attempt-01.json, DEPENDENCIES.md, RELEASE.md) exist at the commits they are pinned to.",
+      "Rust was not compiled or executed. API claims were checked by reading this worktree's sources: crates/scm-sdk/src/models/management.rs:9-10, generated.rs:4459-4466, 13373-13537, 153645-153735, 14530-14638, 168377-168487, src/airs/management/profiles.rs:91,214, src/validation/schema_graph.json (six typescript:0.35.0 roots, two unprefixed content-type schema names, s_ts035_s009653 alias) and examples/directional_profiles.rs. The patched TLS versions were confirmed in this tree's Cargo.lock:1122-1123 and 1772-1773, not in the published archive's Cargo.lock.",
+      "The anchor /developer/security#024-tls-dependency-patches (used at docs-site/docs/airs/directional-profiles.md:142 and about/release-notes.md:32) was validated by deriving the slug from the heading at docs-site/docs/developer/security.md:79; docusaurus.config.ts:20,32 throws on broken links and broken markdown links but leaves onBrokenAnchors at its default warning level, so the recorded passing build does not by itself prove the anchor resolves.",
+      "No Pages deployment, workflow run or published-URL HTTP evidence exists or was observed. This review covers readiness only; the post-review workflow run for docs/scm-github-pages and verification of https://cdot65.github.io/scm-sdk-rs/ must still be recorded. docs/phase-status.json:9241-9248 still shows deployment_status 'not_deployed', and phase 28 remains in_progress with readiness attempt 5 rejected, budget_exhausted true, and the readiness recovery authorization pending."
+    ]
+  },
+  "fifthAttemptException": null,
+  "cliSha256": "0f918b0b4aacbd9810fb71c789e2d0bc08182fec2f6c85a079c57df549093f9b"
+}
