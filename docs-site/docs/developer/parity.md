@@ -15,6 +15,14 @@ adapters remain errors. Source-proposed features are retained separately from
 actual native features: shared validation is available in the core, model contracts
 through `models`, and product clients through their named features.
 
+## TypeScript 0.35.0 profile addition
+
+The 0.2.4 release adds two directional-profile types, two named schemas and five
+typed field occurrences through a [separate additive ledger](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/contracts/typescript-035-parity.json).
+The historical **3,820 capabilities and 448 methods** remain scoped to TypeScript
+0.34.0. See [directional profiles](/airs/directional-profiles) for current request
+validation, tolerant Rust responses and the unverified directional service scope.
+
 ## Three kinds of proof
 
 | Evidence | What it establishes |

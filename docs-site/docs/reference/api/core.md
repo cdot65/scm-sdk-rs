@@ -38,8 +38,8 @@ Errors and transport failures on writes may leave the remote outcome uncertain.
 
 ## Generated reference
 
-- [Client](https://docs.rs/scm-sdk/0.2.3/scm_sdk/struct.Client.html)
-- [Configuration](https://docs.rs/scm-sdk/0.2.3/scm_sdk/config/index.html)
-- [Authentication](https://docs.rs/scm-sdk/0.2.3/scm_sdk/auth/index.html)
-- [Transport](https://docs.rs/scm-sdk/0.2.3/scm_sdk/transport/index.html)
-- [Pagination](https://docs.rs/scm-sdk/0.2.3/scm_sdk/pagination/index.html)
+- [Client](https://docs.rs/scm-sdk/0.2.4/scm_sdk/struct.Client.html)
+- [Configuration](https://docs.rs/scm-sdk/0.2.4/scm_sdk/config/index.html)
+- [Authentication](https://docs.rs/scm-sdk/0.2.4/scm_sdk/auth/index.html)
+- [Transport](https://docs.rs/scm-sdk/0.2.4/scm_sdk/transport/index.html)
+- [Pagination](https://docs.rs/scm-sdk/0.2.4/scm_sdk/pagination/index.html)

@@ -6,7 +6,7 @@ applications can use those services directly.
 
 The crate is community-maintained and is not an official Palo Alto Networks SDK.
 
-## Available in 0.2.3
+## Available in 0.2.4
 
 | Area | Rust module | Cargo feature | Start here |
 | --- | --- | --- | --- |
@@ -43,8 +43,8 @@ qualification limitations.
 
 | Product family | SDK status |
 | --- | --- |
-| [NGFW](/products/ngfw) | Planned; no dedicated NGFW client or Cargo feature in 0.2.3. |
-| [SASE](/products/sase) | Planned; no dedicated SASE client or Cargo feature in 0.2.3. |
+| [NGFW](/products/ngfw) | Planned; no dedicated NGFW client or Cargo feature in 0.2.4. |
+| [SASE](/products/sase) | Planned; no dedicated SASE client or Cargo feature in 0.2.4. |
 
 These are sibling product families under the SCM scope. They are not nested
 under AIRS. Future client names, resource boundaries, and delivery dates remain

@@ -7,7 +7,7 @@ slug: /reference/api/
 # Rust API reference
 
 `scm-sdk` exposes native async Rust clients under the crate name `scm_sdk`.
-This reference covers **0.2.3**, with Rust **1.89** as the minimum supported compiler.
+This reference covers **0.2.4**, with Rust **1.89** as the minimum supported compiler.
 
 | Area | Module | Feature |
 | --- | --- | --- |
@@ -24,10 +24,10 @@ Paths here use `scm_sdk::`; with the dependency alias from the [installation gui
 ## Choose the reference you need
 
 These pages explain client entry points, feature selection and behavior that
-matters when integrating the SDK. The [generated Rust documentation](https://docs.rs/scm-sdk/0.2.3/scm_sdk/)
+matters when integrating the SDK. The [generated Rust documentation](https://docs.rs/scm-sdk/0.2.4/scm_sdk/)
 provides signatures and type definitions for the features built by docs.rs.
 
-The hosted **0.2.3** documentation uses default features. Optional family client
+The hosted **0.2.4** documentation uses default features. Optional family client
 signatures are available by generating documentation from the SDK source checkout:
 
 ```sh
@@ -40,7 +40,7 @@ The SDK uses your application's async runtime.
 
 ```toml
 [dependencies]
-scm-sdk = { version = "=0.2.3", features = ["management", "model-security", "red-team", "gateway"] }
+scm-sdk = { version = "=0.2.4", features = ["management", "model-security", "red-team", "gateway"] }
 ```
 
 Availability of an API method does not establish tenant permission or live

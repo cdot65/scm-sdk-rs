@@ -27,7 +27,7 @@ configuration is separate from the endpoints used for OAuth management APIs.
 
 ## Generated reference
 
-- [Scanner and its method signatures](https://docs.rs/scm-sdk/0.2.3/scm_sdk/airs/scan/struct.Scanner.html)
-- [Scan module and model namespace](https://docs.rs/scm-sdk/0.2.3/scm_sdk/airs/scan/index.html)
+- [Scanner and its method signatures](https://docs.rs/scm-sdk/0.2.4/scm_sdk/airs/scan/struct.Scanner.html)
+- [Scan module and model namespace](https://docs.rs/scm-sdk/0.2.4/scm_sdk/airs/scan/index.html)
 
 See [Core client](./core.md) for request policies, errors and transport injection.

@@ -1,0 +1,135 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 2,
+  "reviewed_at": "2026-10-22T18:21:07.297534+00:00",
+  "source_sha256": "be67c5c3dbde2ab07caba96fa6cb2c313e9a5884fcc5a3cdb8205af0c745a366",
+  "source_unchanged": true,
+  "checks_sha256": "6ffded11a4386ced0616fe985a1ae3707bbe9b439b53e251e8c445edd2481c60",
+  "prompt_sha256": "37039235542c0f82e1c9165920fafc3778468577fff8a3738b75df4e6ec0ee9c",
+  "cli_output_sha256": "50f0bfdd6431c9e1bbea1a28f531f90a0351c71a61279cbf9e0d4221dce927c9",
+  "gate_passed": true,
+  "review": {
+    "score": 8.5,
+    "summary": "Both attempt-1 highs are genuinely fixed on changed source. scripts/observe-release.py now selects max(created_at,id) across bounded pages, retains a digest-bound status snapshot and producer hash, with real negative regressions (newer failure/pending, equal-time, across-pages, order independence). The composed delivery guard was actually executed (exit 0, 49 jobs) and is re-executed and bound inside tools/postdelivery.py's governance report; the portable route re-downloaded the published 0.2.4 archive and matched its checksum. Fresh post-publication tag observations on both remotes, run-30/31 documentation, mirror governing text and README-link regressions are implemented and asserted. Residual issues: phase-status delivery.ci_receipt now names an observation file that release_delivery.py's own regex rejects, so the canonical guard is unusable in this tree; an orphan composed-delivery receipt; a governance allowlist superset; and dense, inconsistent style in tools/test_postdelivery.py.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/release_delivery.py",
+        "line": 225,
+        "description": "verify() requires delivery.ci_receipt to match `docs/checks/phase-28-remote-ci-run-\\d+\\.json`, but docs/phase-status.json:8914 now points ci_receipt at `phase-28-remote-ci-run-31-observation-02.json`. Tag receipts gained separate `tag_observation`/`github_tag_observation` keys (8915-8916) while the CI observation replaced its original key in place, so `python3 tools/release_delivery.py --phase 28 --version 0.2.4` as documented in docs/RELEASE.md:276 now fails in this checkout, and the non-budget advance path at tools/review_phase.py:582 would fail for an ordinary phase-28 review rather than reject for a stated reason. Nothing in phase-status references the original run-31 receipt any more.",
+        "required_fix": "Model the CI observation like the tags: add a distinct `ci_observation` key, restore `ci_receipt` to docs/checks/phase-28-remote-ci-run-31.json, and read the fresh observation from the new key in tools/postdelivery.py:186; or widen the regex to accept observation receipts and assert both namings in tools/test_release_delivery.py. Note the governance-mode-only invocation in docs/RELEASE.md near line 276."
+      },
+      {
+        "severity": "low",
+        "path": "tools/postdelivery.py",
+        "line": 23,
+        "description": "GOVERNANCE_PATHS is a superset of the actual governance change set: `tools/test_postdelivery_review.py` does not exist in the repository, and `tools/test_phase_checkpoint.py` is exempted from byte identity yet is never executed by commands_for() (tools/postdelivery.py:212), so a change to it would carry no execution evidence in the current-source report.",
+        "required_fix": "Drop the nonexistent `tools/test_postdelivery_review.py` entry, and either remove `tools/test_phase_checkpoint.py` from the allowlist or add it to commands_for() so every mutable governance file is covered by an executed suite; assert the allowlist/suite relationship in tools/test_postdelivery.py."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/phase-28-composed-delivery-F.json",
+        "line": 1,
+        "description": "This retained guard execution receipt is referenced by no tool, test or document (only the chunk scope list and the review prompt). Its schemaVersion/stdoutSha256 fields are never validated, so it is decorative; the machine-validated equivalent is the canonicalGuard block produced inside docs/checks/phase-28-postdelivery.json.",
+        "required_fix": "Either bind this receipt (path and digest) from tools/postdelivery.py and docs/post-publication-governance.md with a regression in tools/test_postdelivery.py, or remove it and rely solely on the canonicalGuard record."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/observe-release.py",
+        "line": 174,
+        "description": "terminal_ci pages /statuses/{sha} until a short page and verifies only its own captured snapshot. The retained snapshot shows pagination instability (id 343 appears at docs/checks/phase-28-remote-ci-run-31-observation-02.json:37 and :1488), so a concurrently inserted row could shift pages and be missed; a newer failure added after capture is also undetectable. Run-level `status == 'success'` (line 166) is the only independent corroboration.",
+        "required_fix": "Record the observation window and either re-observe and compare two snapshots, or page by a stable key and assert the per-context row count is monotonic across the two passes; document the point-in-time limitation in docs/post-publication-governance.md."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 8888,
+        "description": "`prior_failed_ci_observation`/`prior_failed_ci_run` (run 30) are still read by no tool; the guards accept a successful run for the commit without requiring the preserved earlier-failure record or asserting that no later non-success run exists for it. The failure is documented honestly in docs/CI.md:374-385 but only by prose.",
+        "required_fix": "Have tools/postdelivery.py (or release_delivery.verify) require the retained prior-failure receipt for the delivery commit and reject a later non-success run for the same commit, with a regression in tools/test_release_024.py."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_postdelivery.py",
+        "line": 23,
+        "description": "The new suite is written in a dense semicolon/one-line style with no spaces around assignment (e.g. :26, :34, :44, :103) that diverges sharply from sibling suites such as tools/test_final_delivery_review.py and tools/test_release_024.py; tools/test_release_023.py:222-224 also gained compound one-line statements. This raises the cost of auditing fail-closed governance assertions.",
+        "required_fix": "Reformat tools/test_postdelivery.py and the new tools/test_release_023.py branches to the surrounding one-statement-per-line style, keeping the same assertions."
+      }
+    ],
+    "evidence": [
+      "Prior high #1 fixed in-fingerprint: scripts/observe-release.py:92-109 selects max((created_at,id)) per context, rejects naive timestamps (:100-102) and conflicting equal-key rows (:105-106); :112-129 verify_status_snapshot rebinds producer, statusSelection, observerSha256 and snapshotSha256 and requires the complete success matrix; a `verify-ci` CLI mode exists (:216, :231-236). Regressions in tools/test_release_023.py:208-253 add new-failure, new-pending, equal-time and across-pages modes plus snapshot tampering, and :255-266 assert order independence and naive-timestamp rejection.",
+      "The fix is load-bearing on real data: docs/checks/phase-28-remote-ci-run-31-observation-02.json:16-21 shows ws-tracing/1.89.0 id 341 = pending ahead of id 340 = success in API order, while the selected row is id 343 = success (:37-41). The receipt ends with expectedJobCount 49, counts {success: 49}, contextsMatchConfiguredMatrix true (:1516-1520) and binds reviewedSourceSha256 f9cebee5 plus governanceSourceSha256 be67c5c3 (:1521-1523).",
+      "Prior high #2 fixed with executed evidence: docs/checks/phase-28-composed-delivery-F.json:4-22 records the guard run in the qualified root with exit 0 and jobs 49, and tools/postdelivery.py:178-182 re-executes that exact command inside verify_composed, so docs/reviews/phase-28-chunk-remote-delivery-attempt-02.checks.json:45-63 carries a machine-validated canonicalGuard (sourceCommit 6f18529, ciCommit 56a88d2, jobs 49). The chunk's eight check rows all exit 0 (13+6+14+52+12+17+38 tests).",
+      "Published payload separation is byte-exact and tested: tools/postdelivery.py:54-92 compares mode and blob identity of every tracked/untracked path against the 6f18529 tree, allows only GOVERNANCE_PATHS, and permits exactly two workflow byte substitutions (:70-78); tools/test_postdelivery.py:23-49 proves source, new-file, symlink and non-allowlisted changes are rejected.",
+      "Post-publication observations are fresh and ordered: docs/checks/release-tag-v0.2.4-observation-02.json and release-tag-github-v0.2.4-observation-02.json both record tagObject 2f7ad298 peeling to 6f18529 at 18:12:57-58, after publishedAt 17:49:15 (docs/checks/release-registry-0.2.4.json:7); tools/postdelivery.py:102-133 requires the new path to differ from the original, the same tagObject, the current observer digest and checkedAt >= publishedAt, with negative cases at tools/test_postdelivery.py:106-129.",
+      "Independent public re-verification actually ran: docs/checks/phase-28-postdelivery-contracts.json:2-7 records scope post_publication_governance_ci with registryArchiveSha256 533294fe..., produced by tools/postdelivery.py:289-298, which downloads static.crates.io with no redirects and a 32 MiB bound and compares bytes/length with the immutable registry receipt; the same file states it does not execute the external qualified checkout.",
+      "Findings 3-5 governing text and regressions are implemented, not just claimed: docs/PHASES.md:306-312, docs/typescript-035-parity-plan.md:160-166 and docs/RELEASE.md:225-240 record the mirror destination, fourth receipt, full-history disclosure and tag-before-publish order; docs/CI.md:374-395 documents run 30's deadline failure, the reproduction's explicit non-claim, run 31's selection and the (created_at, id) rule; tools/test_release_024.py:53-69 asserts the README v0.2.4 guide link, all four phrases in three governing documents, both tag commands preceding `cargo +1.99.0 publish`, and the CI.md phrases.",
+      "The separate final-delivery budget is tightly bounded: tools/review_phase.py:67-94 requires the single 2026-10-22 grant with the exact question id and answer and pins all twenty original readiness artifacts to FINAL_DELIVERY_ORIGINALS_SHA256; :99-101 isolates the phase-28-final-delivery-attempt-NN namespace; :121 denies the fifth-attempt exception when a budget is used; tools/test_final_delivery_review.py:81-173 drives real orchestration, grant/original tampering, namespace binding and consumed failed attempts.",
+      "Governance status is not overclaimed: docs/phase-status.json:7791-7792 and :8306 keep phase 28 in_progress with both chunks pending, :8918-8931 marks the attempt-1 corrections as pending re-review, and docs/post-publication-governance.md:69-81 records that run 31 establishes no scheduler root cause, that Pages deployment and directional live acceptance remain unverified, and that 0.2.4 publication does not complete phases 24/25."
+    ],
+    "limitations": [
+      "Read-only Read/Glob/Grep only: I executed no commands and made no network calls. I did not recompute the reviewed fingerprint be67c5c3, the checks digest 6ffded11, observerSha256 6b5e4345, snapshotSha256 ce1c7487, any receipt digest or the published archive checksum; I relied on the recorded reports and the tracked verifiers' logic.",
+      "I read nothing outside this repository, so the qualified release root /home/cdot/development/cdot65/scm-sdk-rs-ts035 and its 105-command report, package archives and phase-status were assessed only through docs/checks/phase-28-composed-delivery-F.json and the canonicalGuard/immutableEvidence bindings recorded by tools/postdelivery.py.",
+      "Scoped to the remote-delivery chunk: I did not re-audit the accepted readiness chunk, the phase-27 model/oracle work, or historical phase 20/24 release infrastructure, and I read release-registry-0.2.4.json, the original tag receipts and the package proofs only where delivery depends on them.",
+      "No remote CI run exists for the governance source be67c5c3; the modified contracts route (.forgejo/workflows/ci.yml:73) has only local execution evidence (docs/checks/phase-28-postdelivery-contracts.json). The 48-job Rust matrix is unchanged by the allowlisted workflow edit, and no document claims remote governance coverage.",
+      "Directional-profile live service acceptance remains unverified, and whether phase 28 completes depends on the final-delivery review under the separately authorized budget, which this chunk review cannot grant."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 43
+  },
+  "qualification_scope": "post_publication_governance",
+  "qualified_source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "qualified_release_root": "/home/cdot/development/cdot65/scm-sdk-rs-ts035",
+  "rubric": "five-category-v1",
+  "chunk": "remote-delivery",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    ".forgejo/workflows/ci.yml",
+    "CHANGELOG.md",
+    "README.md",
+    "docs/CI.md",
+    "docs/DIRECTIONAL_PROFILES.md",
+    "docs/PHASES.md",
+    "docs/RELEASE.md",
+    "docs/STABILITY.md",
+    "docs/checks/phase-28-composed-delivery-F.json",
+    "docs/checks/phase-28-postdelivery.json",
+    "docs/checks/phase-28-remote-ci-run-31-observation-02.json",
+    "docs/checks/release-tag-github-v0.2.4-observation-02.json",
+    "docs/checks/release-tag-v0.2.4-observation-02.json",
+    "docs/phase-status.json",
+    "docs/post-publication-governance.md",
+    "docs/reviews/recovery-authorizations/2026-10-22.json",
+    "docs/reviews/recovery-tools/ci-observer/v1/observer.py",
+    "docs/reviews/recovery-tools/ci-observer/v1/test_observer.py",
+    "docs/reviews/recovery-tools/ci-observer/v1/unit-checks.json",
+    "docs/typescript-035-parity-plan.md",
+    "scripts/check-access-release.py",
+    "scripts/check-management-package.py",
+    "scripts/check-package.py",
+    "scripts/check-prepublication.py",
+    "scripts/observe-release.py",
+    "scripts/verify-publication.py",
+    "tools/check_phase.py",
+    "tools/postdelivery.py",
+    "tools/release_delivery.py",
+    "tools/review_phase.py",
+    "tools/test_ci.py",
+    "tools/test_final_delivery_review.py",
+    "tools/test_management_package.py",
+    "tools/test_package_policy.py",
+    "tools/test_phase_checkpoint.py",
+    "tools/test_postdelivery.py",
+    "tools/test_release_023.py",
+    "tools/test_release_024.py",
+    "tools/test_release_delivery.py",
+    "tools/test_review_phase.py"
+  ]
+}

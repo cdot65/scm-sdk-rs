@@ -38,7 +38,7 @@ resource limits instead of assuming an unlimited connection lifetime.
 
 ## Models and signatures
 
-See the [Gateway module](https://docs.rs/scm-sdk/0.2.3/scm_sdk/airs/gateway/index.html).
-Hosted 0.2.3 rustdoc is built with default features; generate `--all-features`
+See the [Gateway module](https://docs.rs/scm-sdk/0.2.4/scm_sdk/airs/gateway/index.html).
+Hosted 0.2.4 rustdoc is built with default features; generate `--all-features`
 documentation for optional client and access-policy signatures using the
 [reference instructions](./index.md).

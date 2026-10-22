@@ -46,3 +46,8 @@ See [validation](/core/validation#responses-without-inserted-defaults).
 | `s010743` | Red Team | `OAuth2AuthConfig` | `oauth2_token_response_key` | `"access_token"` |
 | `s010825` | Red Team | `WebSocketConnectionParams` | `ws_response_timeout` | `110` |
 | `s012814` | Red Team | `DeploymentProfileRequest` | `aveTextRecord` | `0` |
+
+The TypeScript 0.35.0 versioned list schema also reuses the reviewed empty-array
+default via `s_ts035_s009653`, an alias of `s009653`. This is recorded
+separately from the 23 historical bindings. `ResponseWithoutDefaults`
+preserves omission for both identities.

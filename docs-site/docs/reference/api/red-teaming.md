@@ -48,7 +48,7 @@ effectiveness for your tenant.
 
 ## Models and signatures
 
-See the [Red Team module](https://docs.rs/scm-sdk/0.2.3/scm_sdk/airs/red_team/index.html).
+See the [Red Team module](https://docs.rs/scm-sdk/0.2.4/scm_sdk/airs/red_team/index.html).
 `models::data_plane` provides current vendor dataplane DTOs alongside compatible
 existing models. Optional client signatures require local rustdoc with
 `--all-features`; see the [reference overview](./index.md).

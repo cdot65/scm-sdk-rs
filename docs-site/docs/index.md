@@ -7,11 +7,10 @@ slug: /overview
 
 `scm-sdk` is a community-maintained, native async Rust SDK for Strata Cloud Manager. **Prisma AIRS is the first implemented product family**, alongside shared DLP and IAM clients. NGFW and SASE are planned product areas; this release does not provide those clients.
 
-The current published release is **0.2.3**, with Rust **1.89** as its minimum supported compiler. Applications own their async runtime, credentials, transport configuration, and enforcement decisions. Node.js is used to build this documentation site, not by the Rust crate.
+The current published release is **0.2.4**, with Rust **1.89** as its minimum supported compiler. Applications own their async runtime, credentials, transport configuration, and enforcement decisions. Node.js is used to build this documentation site, not by the Rust crate.
 
-The forthcoming **0.2.4** patch adds [directional security-profile models](/airs/directional-profiles)
-with TypeScript 0.35.0 request validation. It is not yet published; installation
-examples below remain pinned to 0.2.3.
+The **0.2.4** patch adds [directional security-profile models](/airs/directional-profiles)
+with TypeScript 0.35.0 request validation and preserved unknown response values.
 
 ## Choose your starting point
 
@@ -26,7 +25,7 @@ examples below remain pinned to 0.2.3.
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.3" }
+scm = { package = "scm-sdk", version = "=0.2.4" }
 ```
 
 Start with [installation](/getting-started/installation) and the [quick start](/getting-started/quick-start). Select optional product features as needed. Use the [API reference](/reference/api/) for client families and Rust API documentation.

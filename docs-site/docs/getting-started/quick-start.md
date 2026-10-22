@@ -8,7 +8,7 @@ scan service.
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.3" }
+scm = { package = "scm-sdk", version = "=0.2.4" }
 tokio = { version = "1", features = ["macros", "rt"] }
 ```
 

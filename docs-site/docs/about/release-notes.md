@@ -6,13 +6,12 @@ slug: /about/release-notes
 
 # Release notes
 
-These notes summarize consumer-facing changes in published `scm-sdk` releases
-and explicitly marked forthcoming additions.
+These notes summarize consumer-facing changes in published `scm-sdk` releases.
 The [crate registry](https://crates.io/crates/scm-sdk) provides published versions.
 
-## Forthcoming 0.2.4 — Directional security profiles
+## 0.2.4 — Directional security profiles
 
-This release is not yet published. Installation instructions continue to use 0.2.3.
+[Published crate](https://crates.io/crates/scm-sdk/0.2.4)
 
 - Adds `ContentTypeConfiguration` and `ContentTypeConfigurations`, their builders,
   and two named validators for independently optional prompt, response, tool-call,
@@ -30,7 +29,7 @@ This release is not yet published. Installation instructions continue to use 0.2
   `webpki-root-certs` 1.0.10 for RUSTSEC-2026-0382 and RUSTSEC-2026-0383.
   Applications retain their own lockfiles: update these transitive packages where
   present and audit the resolved graph. Installing the SDK does not replace an
-  application lockfile. See the [TLS dependency note](/developer/security#forthcoming-024-tls-dependency-patches).
+  application lockfile. See the [TLS dependency note](/developer/security#024-tls-dependency-patches).
 
 Existing standalone schema names retain historical validation; use versioned
 `typescript:0.35.0:<SchemaName>` roots for current standalone validation. Shared

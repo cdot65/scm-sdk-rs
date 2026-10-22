@@ -30,7 +30,7 @@ all service collections have the same cursor or total-count behavior.
 
 ## Models and signatures
 
-See the [Model Security module](https://docs.rs/scm-sdk/0.2.3/scm_sdk/airs/model_security/index.html)
+See the [Model Security module](https://docs.rs/scm-sdk/0.2.4/scm_sdk/airs/model_security/index.html)
 for its model namespace. For optional client signatures, generate local rustdoc
 with `--all-features` using the [reference instructions](./index.md).
 

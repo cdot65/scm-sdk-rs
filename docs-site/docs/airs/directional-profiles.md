@@ -4,9 +4,8 @@ title: Directional Security Profiles
 
 # Directional security profiles
 
-**Forthcoming in 0.2.4.** This guide describes the TypeScript SDK 0.35.0
-security-profile additions planned for the next Rust patch release. The current
-published release is 0.2.3; its crate does not include these additions.
+**Available in 0.2.4.** This guide describes the TypeScript SDK 0.35.0
+security-profile additions in the [published Rust patch release](https://crates.io/crates/scm-sdk/0.2.4).
 Directional live acceptance remains unverified: local model and wire checks do
 not establish that a service or tenant applies these settings.
 
@@ -55,7 +54,7 @@ four added TypeScript exports; generated Rust builders are their native support.
 
 ## Construction and current request validation
 
-The forthcoming release includes the offline `directional_profiles` example. It builds a
+The 0.2.4 release includes the offline `directional_profiles` example. It builds a
 prompt configuration, retains false inspection, supplies the placeholder DLP
 identifier `100`, validates the request, and demonstrates lossless response
 handling. Run it from that release’s source checkout without credentials:
@@ -138,9 +137,9 @@ Zod inputs and outcomes; Rust request-mode checks compare acceptance and
 normalized output. Intentional tolerant response differences have separate tests.
 
 Existing endpoint methods, operation names, shared protections, Rust 1.89,
-feature flags and direct dependency declarations remain. The forthcoming release
+feature flags and direct dependency declarations remain. The 0.2.4 release
 also refreshes two transitive TLS packages in the repository lockfile; see the
-[TLS dependency note](/developer/security#forthcoming-024-tls-dependency-patches). The twelve vendor-unsupported
+[TLS dependency note](/developer/security#024-tls-dependency-patches). The twelve vendor-unsupported
 Red Team query bindings retain their documented status; this profile model
 addition supplies no evidence that the service applies those options. Publication
 and remote delivery require separate evidence. See the

@@ -1,0 +1,80 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 1,
+  "reviewed_at": "2026-10-22T21:20:15.873355+00:00",
+  "source_sha256": "e899b7c0e49671fb6b1f7b41962c4ead1e235a44db6490da3654fcee9cde1db5",
+  "source_unchanged": true,
+  "checks_sha256": "e43acbf02f62af097763000af4efe624ef7e0a1e67cdf406ceeb80c691ef19a9",
+  "prompt_sha256": "63acbe96e813eeaeb61415f5dee24fc2fd43691f138809713d0501023e5ccf18",
+  "cli_output_sha256": "5676a54fa662de09bd6367a23920443985c37abef10625396ac5e0ec57069521",
+  "gate_passed": false,
+  "review": {
+    "score": 7,
+    "summary": "The post-publication governance work is strong: tools/postdelivery.py proves byte/mode equality with published commit 6f18529 outside a 19-path allowlist, re-executes the canonical guard in the separate qualified root, machine-validates the rejected readiness record, and binds fresh dual-remote tag plus two-snapshot CI observations. All prior high findings are genuinely fixed, including the ci.yml KeyError (now covered by a regression that runs the real heredoc) and the AGENTS.md mirror clause. Eight recorded commands and 167 focused tests pass at the reviewed source. But the phase cannot be accepted: the latest release-readiness chunk record is a rejection at a stale source, recovery authorization is still pending, and review_phase.accepted_chunks will refuse to advance. The changed governance CI route also has host-local evidence only.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "docs/phase-status.json",
+        "line": 9150,
+        "description": "Phase 28 acceptance requires both declared chunks accepted (docs/PHASES.md:291-303; acceptance_criteria at docs/phase-status.json:8732-8736), but the latest release-readiness chunk record is docs/reviews/phase-28-chunk-release-readiness-attempt-05.json with decision \"rejected\", total 39 and gate_passed false, at stale source 2a2984e. tools/review_phase.py:441-468 selects the highest-numbered chunk attempt, calls verify_record (which requires gate_passed true at :361) and then rejects any non-accepted decision at :467, so `--verify --advance` will raise \"Latest chunk review is rejected, stale, or invalid: release-readiness\". docs/post-publication-governance.md:89,95-97 and the readiness_recovery_request at docs/phase-status.json:9206-9214 confirm the chunk budget is exhausted and maintainer authorization is still \"explicit_authorization_requested_pending_reply\". Both chunk status fields remain \"pending\" (7805, 8321) and all three phase milestones remain \"pending\" (8721-8731).",
+        "required_fix": "Obtain the pending readiness recovery authorization and record a fresh accepted release-readiness chunk review at the current governance source (or an equivalent explicitly authorized disposition that accepted_chunks can bind), then re-run the phase advance so both chunks and the phase milestones reflect accepted state. Do not infer the authorization."
+      },
+      {
+        "severity": "medium",
+        "path": ".forgejo/workflows/ci.yml",
+        "line": 73,
+        "description": "The governance contracts route (`--post-publication-governance --verification-only --contracts-only`) and its log step at :74-82 have never executed on a runner. The 49 terminal successful contexts in docs/checks/phase-28-remote-ci-run-31-observation-06.json:2667-2671 belong to run 31 on commit 56a88d2 (published-source route), not to the modified workflow. docs/post-publication-governance.md:80-82 and docs/CI.md disclose this honestly, and tools/test_ci.py:46-142 executes the real producer and heredoc locally, but a workflow file that phase 28 counts as delivery evidence is being changed with no terminal remote run at the current source.",
+        "required_fix": "Either push the governance branch and retain a terminal successful run receipt for the changed contracts-and-package job, or state explicitly in docs/PHASES.md phase-28 acceptance that the governance workflow variant is qualified by local regression only and is excluded from the 49-context delivery requirement."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 8618,
+        "description": "The phase-level scope_evidence (8618-8718) omits every delivery receipt the phase's own acceptance depends on: docs/checks/release-registry-0.2.4.json, release-tag-v0.2.4.json, release-tag-github-v0.2.4.json and docs/checks/phase-28-remote-ci-run-31-observation-06.json. The remote-delivery chunk scope (8322-8374) still lists observations 02-05 while delivery (9101-9108) now points at observation-06, so the newest receipts are in no declared review scope.",
+        "required_fix": "Add the four current delivery receipts to the phase scope_evidence and refresh the remote-delivery chunk scope revision so the declared scope matches the receipts recorded under delivery."
+      },
+      {
+        "severity": "low",
+        "path": "tools/postdelivery.py",
+        "line": 352,
+        "description": "tools/check_phase.py is a mutable GOVERNANCE_PATHS entry (:19) and was changed to add the governance branch (tools/check_phase.py:896-911), but its dedicated regression suite tools/test_phase_checkpoint.py is not in commands_for and is therefore not executed by the governance gate. Every other mutable tool in the allowlist (release_delivery, review_phase, postdelivery, observe-release via test_release_023/024) has its suite in the executed set; docs/CI.md:177-181 documents a different exclusion (test_postdelivery/test_final_delivery_review from the historical 105-command glob).",
+        "required_fix": "Add tools/test_phase_checkpoint.py to postdelivery.commands_for and to the mutable-test allowlist assertion, or document in docs/CI.md why a changed check_phase.py is qualified without its own suite."
+      }
+    ],
+    "evidence": [
+      "Published-payload immutability is enforced rather than asserted: tools/postdelivery.py:68-114 rebuilds every blob OID and file mode from `git ls-tree 6f18529`, compares against `git ls-files --cached --others --exclude-standard`, rejects symlinks and replacements, byte-pins the single permitted AGENTS.md clause substitution (:86-91) and the exact two-substitution ci.yml delta (:92-100), and allows divergence only for the 19 GOVERNANCE_PATHS (:17-23). The prior deletion gap is closed at :84-85, where every allowlisted baseline path must still resolve through sha() as a regular non-symlink file; tools/test_postdelivery.py exercises this as test_governance_files_cannot_be_deleted_or_symlinked (checks.json:94).",
+      "The attempt-5 high finding on the CI log step is genuinely resolved. postdelivery.verify_portable now returns phase and source_unchanged (tools/postdelivery.py:453) and qualify_portable re-asserts them (:472), and tools/test_ci.py:46-142 extracts the literal heredoc from .forgejo/workflows/ci.yml, runs the real qualify_portable against a synthetic root with only host/network dependencies mocked, executes the extracted shell with bash, compares the logged JSON to the produced report, and asserts a KeyError naming each of the five required keys when any is deleted.",
+      "The rejected readiness record is machine-validated rather than narrated: tools/postdelivery.py:124-169 re-hashes docs/reviews/phase-28-chunk-release-readiness-attempt-05.json and .checks.json against pinned digests, requires decision \"rejected\", gate_passed false, total 39, source 2a2984e, and that the retained docs/checks/phase-28.json still carries source f9cebee with 105 passing checks; each predicate is named in the failure message. docs/checks/phase-28-readiness-05-disposition.json:20 states corrections do not convert the rejection into acceptance.",
+      "Delivery receipts are real and mutually consistent. docs/checks/release-registry-0.2.4.json:12-14,740-753 records archive 533294fe\u2026, 1043927 bytes, sourceCommit 6f18529, both compiler package proofs and the readiness review digest; docs/checks/phase-28-remote-ci-run-31-observation-06.json:2667-2675 records 49 success contexts, expectedJobCount 49, contextsMatchConfiguredMatrix true, run 31 as the latest run for commit 56a88d2 with run 30's failure preserved in both run histories (:1144-1157, :2300-2314), a valid observation window (:1159-1161) and governanceSourceSha256 e899b7c0\u2026 equal to this review's source. scripts/observe-release.py:150-187 re-derives and rejects any inconsistency.",
+      "The separate final-delivery budget is validated, not assumed: tools/review_phase.py:67-94 requires exactly one grant with id phase-28-final-delivery-recovery-2026-10-22, questionCallId call_1601a73a\u2026 and answer \"Authorize the final-delivery review budget\" (matching docs/reviews/recovery-authorizations/2026-10-22.json:21-35), and pins all 20 original phase-28 readiness artifacts to FINAL_DELIVERY_ORIGINALS_SHA256; :99-101 confines the namespace to complete phase-28 reviews and :121 removes the fifth-attempt exception for this budget. tools/test_final_delivery_review.py:95-139 proves grant tampering, original-byte changes, cross-phase/chunk use and a sixth attempt are all rejected.",
+      "Prior low/medium findings from readiness attempt 5 are implemented: README's directional guide link is now derived from release_delivery.GITHUB_REMOTE and crates/scm-sdk/Cargo.toml version and asserted as the sole match (tools/test_release_024.py:72-79), AGENTS.md:13 now carries the mirror destination, fourth delivery receipt and full-history disclosure and is asserted phrase-by-phrase (:80-89) with AGENTS.md added to GOVERNANCE_PATHS (tools/postdelivery.py:18), and tag-before-publish ordering is asserted against docs/RELEASE.md (:90-93).",
+      "Recorded check evidence is complete and passing for the reviewed source: docs/reviews/phase-28-final-delivery-attempt-01.checks.json:79-208 contains exactly the eight commands postdelivery.commands_for + composed_command define (tools/postdelivery.py:350-357), all exit_code 0, totalling 167 focused tests (25+6+14+52+12+18+40), with source_sha256 e899b7c0\u2026 and source_unchanged true (:3,:209)."
+    ],
+    "limitations": [
+      "Read-only review: I executed nothing and computed no digests. I did not recompute the source fingerprint e899b7c0\u2026, the checks digest e43acbf0\u2026, or any receipt SHA-256; conclusions rest on reading artifacts and tracing verifier code. The advancement failure for the release-readiness chunk is derived by tracing tools/review_phase.py:441-468 against the recorded attempt-05 record, not by running the tool.",
+      "I read nothing outside this repository, so the qualified release root /home/cdot/development/cdot65/scm-sdk-rs-ts035, its 105-command report, its .local package archives and the retained .crate bytes were not inspected; payload equivalence and the canonical guard receipt rest on postdelivery.py's logic and the recorded report.",
+      "No network calls: I could not confirm the crates.io 0.2.4 archive, the Forgejo run-31 contexts, or that either annotated v0.2.4 tag is presently reachable. Those rest on the retained receipts.",
+      "Phase-27 deliverables (generated models, overlay, oracle corpus, schema graph) were not re-audited; the published payload is proven unchanged by inventory, so I relied on the accepted phase-27 record and the retained package/fixture receipts.",
+      "I did not re-audit the historical 105-command readiness gate, the 0.2.2/0.2.3 release infrastructure, or phases 24/25, which are explicitly outside this scoped change.",
+      "I read no credential or tenant-registration material and no optional .local/typescript checkout."
+    ],
+    "categories": {
+      "implementation": 8,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 7
+    },
+    "total": 41
+  },
+  "review_budget": "final-delivery",
+  "authorization_sha256": "e7cacfd34e32d37f6422172ab62b601d47064e342eb82445b8f2d0482f380cf8",
+  "qualification_scope": "post_publication_governance",
+  "qualified_source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "qualified_release_root": "/home/cdot/development/cdot65/scm-sdk-rs-ts035",
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "phase"
+}

@@ -2,24 +2,28 @@
 title: Live Qualification
 ---
 
-The [live acceptance policy](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/LIVE_ACCEPTANCE_POLICY.md) governs tenant selection,
+The [live acceptance policy](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/LIVE_ACCEPTANCE_POLICY.md) governs tenant selection,
 owned fixtures, cost limits, promotion, and cleanup.
 
-The source of truth is [the exhaustive qualification matrix](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/contracts/qualification.json),
+The source of truth is [the exhaustive qualification matrix](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/contracts/qualification.json),
 with one row for each of the 448 frozen methods. Implementation, independent
 contract verification, and successful service execution have separate fields.
-Each unqualified method has a reason. The [current receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/contracts/live-evidence.json)
+Each unqualified method has a reason. The [current receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/contracts/live-evidence.json)
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
-## Current 0.2.3 read-only qualification
+## Current read-only qualification
 
-The current run is [phase 24 attempt 02](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-24-live-attempt-02.json).
+The current maintenance run is [phase 28 attempt 01](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/checks/phase-28-live-attempt-01.json).
+The probe ran against the prepublication 0.2.4 runtime. Registry publication
+is established separately in the [release notes](/about/release-notes).
 It verified **1 exact native method**, OAuth token exchange. All four single-page
 Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
 returned **HTTP 403 permission prerequisites**. These responses establish neither
 filter acceptance nor effectiveness. The run made four service requests and one
 token exchange, performed no mutations, and recorded `cleanupState: not_needed`.
+
+Directional profile create/update remain live-unverified.
 
 The selected endpoint profile was
 `https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt`. The SDK default
@@ -28,14 +32,14 @@ by this receipt and remains unchanged. Vertex AI, N8N, client-session, audio and
 realtime provider workflows remain live-unqualified. Offline fixture and consumer
 checks establish implementation compatibility separately from these service results.
 
-Attempt 01 recorded the same bounded probe outcomes. Attempt 02 names the endpoint
-profile explicitly and binds the updated qualification application. Neither attempt
+Phase 27 attempts 01 through 05 recorded the same bounded probe outcomes. Phase 28
+attempt 01 binds the 0.2.4 version and patched TLS dependencies. None of these attempts
 promotes the 17 historical successes to the current runtime.
 
 ## Historical qualification
 
-The archived **0.2.2** run is [attempt 14](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-08-live-attempt-14.json),
-retained through the [historical receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/contracts/historical/0.2.2-live-evidence.json).
+The archived **0.2.2** run is [attempt 14](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/checks/phase-08-live-attempt-14.json),
+retained through the [historical receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/contracts/historical/0.2.2-live-evidence.json).
 It verified **17 exact native methods** from 24 service requests and one token
 exchange. The synchronous scan-ID query and async lookup both returned complete,
 correlated results in this run. Three Red Team reads returned **403 permission
@@ -68,7 +72,7 @@ historical observations. Earlier 0.1.0 receipts also verified 17 methods.
 
 The first 0.1.1 execution (attempt 07) completed 24 service requests with cleanup
 not needed, but the wrapper rejected its version because it was hardcoded to
-0.1.0. The [parser-attempt record](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-91-live-refresh-attempt-07.json)
+0.1.0. The [parser-attempt record](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/checks/phase-91-live-refresh-attempt-07.json)
 preserves that failure. The manifest-bound parser now rejects receipts for a
 different SDK version. No earlier failure was promoted.
 
@@ -193,12 +197,12 @@ and DLP service deployment are similarly assessed from actual receipts without
 assuming that management-console access grants product permissions.
 
 Native execution currently covers Linux x86_64 musl. See [platform evidence](/developer/platforms)
-for the separately labeled compile checks and [phase status](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/phase-status.json)
-for retained remote Forgejo qualification. The [registry publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/release-registry-0.1.0.json)
+for the separately labeled compile checks and [phase status](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/phase-status.json)
+for retained remote Forgejo qualification. The [registry publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/checks/release-registry-0.1.0.json)
 separately records the published artifact and its exact source; publication does
 not expand live or native platform acceptance.
 
 The new Portkey access-policy methods were not called: the selected registration
 contains SCM OAuth credentials only. Their separate prerequisite/status is in
-[the access-policy live record](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-17-access-live.json). No access-policy
+[the access-policy live record](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/checks/phase-17-access-live.json). No access-policy
 authorization mutation was performed.

@@ -1,6 +1,6 @@
 # NGFW
 
-**Planned — no dedicated NGFW API client ships in `scm-sdk` 0.2.3.**
+**Planned — no dedicated NGFW API client ships in `scm-sdk` 0.2.4.**
 
 Next-Generation Firewall management is a future sibling product family within
 the SDK's Strata Cloud Manager scope. Current implementation focuses on Prisma

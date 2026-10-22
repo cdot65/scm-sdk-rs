@@ -19,7 +19,7 @@ Use the `scm` dependency alias so imports begin with `scm::`:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.3" }
+scm = { package = "scm-sdk", version = "=0.2.4" }
 tokio = { version = "1", features = ["macros", "rt"] }
 ```
 
@@ -35,7 +35,7 @@ Add the features your application uses:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.3", features = ["management", "red-team", "model-security"] }
+scm = { package = "scm-sdk", version = "=0.2.4", features = ["management", "red-team", "model-security"] }
 tokio = { version = "1", features = ["macros", "rt"] }
 ```
 
@@ -61,7 +61,7 @@ HTTP transport alongside the three selected product clients.
 For a Red Teaming application that does not need scanning:
 
 ```toml
-scm = { package = "scm-sdk", version = "=0.2.3", default-features = false, features = ["reqwest-transport", "red-team"] }
+scm = { package = "scm-sdk", version = "=0.2.4", default-features = false, features = ["reqwest-transport", "red-team"] }
 ```
 
 Disabling `reqwest-transport` means supplying your own HTTP transport. HTTP and

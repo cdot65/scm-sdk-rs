@@ -1,6 +1,6 @@
 # SASE
 
-**Planned — no dedicated SASE API client ships in `scm-sdk` 0.2.3.**
+**Planned — no dedicated SASE API client ships in `scm-sdk` 0.2.4.**
 
 Secure Access Service Edge is a future sibling product family within the SDK's
 Strata Cloud Manager scope. Its APIs will be evaluated independently from the

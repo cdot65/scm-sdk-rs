@@ -1,0 +1,112 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 1,
+  "reviewed_at": "2026-10-22T17:57:04.583372+00:00",
+  "source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "source_unchanged": true,
+  "checks_sha256": "6f2172ba51014573854f57c104d7f9de4cff81636280441b4eb7ab3692eb2f0e",
+  "prompt_sha256": "3dba64ef814e29a22a911bdcd291beaa10f6dc138fbb60e5c3360cd3f14af07f",
+  "cli_output_sha256": "1fbdf383c67e7b074ac7f05356d2d3337a791aaf06ddd16d4e48acd4d2aaf6a3",
+  "gate_passed": false,
+  "review": {
+    "score": 7,
+    "summary": "The 0.2.4 delivery really happened and its evidence is internally consistent: release-registry-0.2.4.json is produced by the tracked verify-publication.py (actual download, byte/file/VCS comparison with the 1.99.0 proof, readiness attempt-05 and fingerprint f9cebee bound), both annotated v0.2.4 tags peel to 6f18529 with identical tag objects, and run 31 records 49/49 successful contexts exactly matching the ci.yml matrix (24 features x 2 toolchains + contracts). Run 30's failure is preserved honestly. Two gaps block acceptance: the delivery CI receipt was produced by an unregistered observer under docs/reviews/ (excluded from the source fingerprint) while the tracked scripts/observe-release.py keeps the first-row-wins status defect untested and unfixed; and the documented delivery guard (docs/RELEASE.md:262) has no executed receipt anywhere, so nothing machine-validated the composed evidence. Prior readiness findings remain unimplemented on byte-identical source.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "scripts/observe-release.py",
+        "line": 106,
+        "description": "terminal_ci keeps the defect the delivery receipt was produced to avoid: it takes the first status row per context (`if context not in jobs`), trusting Forgejo list order, so an older success can mask a newer failure/pending row for the same job. The actual docs/checks/phase-28-remote-ci-run-31.json was instead produced by docs/reviews/recovery-tools/ci-observer/v1/observer.py:34-44 (max(created_at,id)), which lives in a directory excluded from the reviewed source fingerprint (tools/review_phase.py:15), is referenced by no tool or test (only phase-status prose at :8711-8715), and whose observerSha256/statusSelection fields are not checked by tools/release_delivery.py:95-116. tools/test_release_023.py:195-239 has no multi-row-per-context case, so the tracked tool's false-success path stays untested.",
+        "required_fix": "Port the (created_at, id) selection into scripts/observe-release.py terminal_ci, add negative regressions in tools/test_release_023.py for equal-timestamp reordering and a newer failure/pending row, re-observe (or bind) the run-31 receipt with the fixed tracked tool, and have tools/release_delivery.py validate the receipt's producer/selection fields."
+      },
+      {
+        "severity": "high",
+        "path": "docs/RELEASE.md",
+        "line": 262,
+        "description": "The documented prerequisite `python3 tools/release_delivery.py --phase 28 --version 0.2.4` (\"Only after that guard passes can the remote-delivery chunk ... establish completion\") has no retained execution anywhere: no delivery receipt exists in docs/checks, and the chunk's passing evidence (docs/reviews/phase-28-chunk-remote-delivery-attempt-01.checks.json, 105 commands) is the readiness set from tools/check_phase.py:319-328, ending at check-access-release.py. The only cross-check of registry<->tag<->CI<->package bytes therefore runs solely at `--verify --advance`, which cannot occur while the phase review budget is exhausted. The chunk's central claim is currently supported only by manual reading of receipts.",
+        "required_fix": "Execute the guard against the delivered source and retain its JSON output as a fixed-schema docs/checks receipt, and add the delivery verification (or an explicit delivery mode) to the phase-28 command set in tools/check_phase.py:319-328 so remote-delivery check evidence includes it."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/PHASES.md",
+        "line": 299,
+        "description": "Prior readiness findings are unresolved and the reviewed source is byte-identical to readiness attempt-05 (f9cebee), so nothing in-fingerprint changed for this chunk. docs/PHASES.md:299-303 still lists only registry bytes, the canonical tag and 49 CI contexts, omitting the GitHub mirror tag that tools/release_delivery.py:190-208 now enforces and that delivery actually used; docs/typescript-035-parity-plan.md:148-157 likewise omits it; docs/RELEASE.md:215-235 retains the publish-before-mirror order; README.md:31's versioned link and docs/checks/phase-28-public-guide-preflight.json still have no regression or producer. Authorization/disclosure lives only in docs/phase-status.json:8694-8716, which is not a governing contract.",
+        "required_fix": "Record the mirror destination, the fourth delivery receipt and the full-history disclosure in the docs/PHASES.md phase-28 paragraph and the plan's phase-28 section, reorder docs/RELEASE.md so both tag observations precede `cargo publish`, and assert those sentences plus the README link in tools/test_release_024.py."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/CI.md",
+        "line": 354,
+        "description": "The actual delivery history is not documented where this repository documents it. docs/CI.md records prior remote failures and causal analysis (runs 9/10/11 at :228-269, run 21 at :191-198) but says nothing about run 30's failure, the controlled reproduction, the selection of run 31 on the identical commit, or the status-ordering workaround; those exist only in docs/checks/phase-28-remote-ci-run-30-failure.json and phase-status prose. The failing job was a 5-second deadline test (crates/scm-sdk/tests/dlp_contracts.rs:909, native-probes/1.89.0) with no mitigation, so delivery CI remains schedule-sensitive for reruns.",
+        "required_fix": "Add a phase-28 delivery subsection to docs/CI.md recording run 30's failure and reproduction limits, run 31's selection on the same source, and the required latest-status selection rule; note the deadline sensitivity of the native-probes job or relax that test's bound."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/release-tag-v0.2.4.json",
+        "line": 12,
+        "description": "Both tag receipts were observed at 16:07:29, before run 31 completed (17:40) and before publication (17:49). tools/release_delivery.py:89-98 derives \"remote main == CI commit\" from that pre-delivery snapshot, so no retained observation confirms post-publication remote state (tag still peeling to 6f18529, main unchanged). The guard also accepts a per-run success while a failing earlier run exists for the same commit; phase-status `prior_failed_ci_observation` is checked by nothing.",
+        "required_fix": "Re-observe both tags after publication and after terminal CI, retain those receipts, and have tools/release_delivery.py require the preserved prior-failure record for the delivery commit (or assert that no later non-success run exists for it)."
+      }
+    ],
+    "evidence": [
+      "Registry delivery is tool-produced and byte-verified: docs/checks/release-registry-0.2.4.json:12-20 records archiveSha256 533294fe..., archiveBytes 1043927 and sourceCommit/vcs 6f18529...; :740-743 bind proofSha256 4eb1bbd6... and msrvProofSha256 601fb79b..., which are exactly the receipt digests recorded for the executed package commands in docs/reviews/phase-28-chunk-remote-delivery-attempt-01.checks.json:2888-2891 and :2919-2922; :749-753 bind readiness docs/reviews/phase-28-attempt-05.json and sourceSha256 f9cebee5..., matching the reviewed source. scripts/verify-publication.py:244-264 shows the receipt is written only after fetching crates.io metadata/owners and the 0.2.4 download and comparing them with the clean proof.",
+      "Both compiler archives and the retained registry archive still exist at the locations the guard requires: .local/package-worktrees/6f18529a.../.local/artifacts/scm-sdk-0.2.4-bbe267b3b4d66a21.crate and -533294fe977e26e2.crate, plus .local/artifacts/scm-sdk-0.2.4-registry-533294fe977e26e2.crate, matching tools/release_delivery.py:159-188. The recorded commands scripts/check-management-package.py --require-directional ran 393.8 s / 372.5 s with exit 0 on the detached 6f18529 worktree (checks.json:2862-2923) and check-access-release.py --phase 28 --version 0.2.4 returned releaseCommit 6f18529 and archiveSha256 533294fe (checks.json:2924-2955).",
+      "Tags are consistent and identical across remotes: docs/checks/release-tag-v0.2.4.json:3-11 and release-tag-github-v0.2.4.json:3-11 both record tagObject 2f7ad298... with refs/tags/v0.2.4^{} = 6f18529... and refs/heads/main = 56a88d2..., satisfying tools/release_delivery.py:89-94 and verify_github_tag at :190-208. docs/checks/phase-28-prepublication.json:1 shows the prepublication guard passed against readiness attempt-05 and the same source before publication.",
+      "CI evidence matches the configured matrix exactly: docs/checks/phase-28-remote-ci-run-31.json has 49 \"context\" entries, all status success, unique target_urls under /actions/runs/31/jobs/, run.commit_sha 56a88d2, reviewedSourceSha256 f9cebee5..., expectedJobCount 49 and counts {success: 49} (:355-359). .forgejo/workflows/ci.yml:90-91 declares 24 features x 2 toolchains; I enumerated all 24 feature names present for 1.99.0 plus the contracts-and-package context, so expected_contexts (tools/release_delivery.py:57-70) yields exactly these 49.",
+      "Failure preservation is honest: docs/checks/phase-28-remote-ci-run-30-failure.json:15-44 retains run 30's single failed context (native-probes, 1.89.0), the deadline test at crates/scm-sdk/tests/dlp_contracts.rs:909, a controlled reproduction with explicit limitation \"does not prove the exact CI scheduling cause\", and states that the record does not establish successful CI.",
+      "Governance status is stated rather than overclaimed: docs/phase-status.json:7791-7792 keeps phase 28 in_progress with both chunks pending, :8717-8721 records final_delivery_budget_request with authorization_inferred false, and :8694-8716 records the readiness decision accepted_with_deficiencies (docs/reviews/phase-28-attempt-05.json:68-80, total 44/50, two medium and two low findings carried over unimplemented).",
+      "The producer gap is verifiable: a repository-wide search for observerSha256/recovery-tools/ci_observation_producer/statusSelection matches only the receipt, phase-status.json, the chunk prompt and the recovery tool's own files - no tool or registered test. tools/release_delivery.py:95-116 validates run identity, contexts and job uniqueness but never the producer. scripts/observe-release.py:98-109 still selects the first row per context, and tools/test_release_023.py:195-239 only varies pending/missing/wrong-run/duplicate-job, never two rows for one context."
+    ],
+    "limitations": [
+      "Read-only review with Read/Glob/Grep only: I executed nothing and ran no git or network commands. I did not recompute the source fingerprint f9cebee5..., the checks digest 6f2172ba..., any receipt SHA-256, observer.py's 46e0a5e2... digest, or the .crate digests; I confirmed archive existence by path only and did not open archive bytes.",
+      "I could not confirm that commits 6f18529 and 56a88d2 differ from the working tree solely in fingerprint-excluded paths (docs/reviews/, docs/checks/, docs/phase-status.json); tools/release_delivery.py:121-126 enforces this at advance time, and I relied on that logic plus the commit subjects.",
+      "No network access: crates.io state, package ownership, the GitHub mirror's existence/visibility and the public guide URL were assessed only from the recorded receipts produced by tracked verifiers.",
+      "Per scope instructions I judged only the remote-delivery chunk: phase-27 generated-model/overlay/oracle correctness, historical phase 20/24 release infrastructure and pre-0.2.4 receipts were not re-audited, and the readiness chunk's already-accepted evidence was re-read only where delivery depends on it.",
+      "Directional live acceptance remains explicitly unverified (docs/checks/phase-28-live-attempt-01.json is read-only with HTTP 403 permission prerequisites); nothing in this chunk establishes service application of the new settings.",
+      "Whether phase 28 can complete at all depends on a maintainer decision outside this review: the phase-level budget is exhausted and the final-delivery review budget request is pending with authorization_inferred false."
+    ],
+    "categories": {
+      "implementation": 7,
+      "code_quality": 7,
+      "supportability": 7,
+      "architecture": 7,
+      "feature_delivery": 8
+    },
+    "total": 36
+  },
+  "rubric": "five-category-v1",
+  "chunk": "remote-delivery",
+  "decision": "rejected",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    ".forgejo/workflows/ci.yml",
+    "CHANGELOG.md",
+    "README.md",
+    "docs/CI.md",
+    "docs/DIRECTIONAL_PROFILES.md",
+    "docs/PHASES.md",
+    "docs/RELEASE.md",
+    "docs/STABILITY.md",
+    "docs/phase-status.json",
+    "docs/typescript-035-parity-plan.md",
+    "scripts/check-access-release.py",
+    "scripts/check-management-package.py",
+    "scripts/check-package.py",
+    "scripts/check-prepublication.py",
+    "scripts/observe-release.py",
+    "scripts/verify-publication.py",
+    "tools/check_phase.py",
+    "tools/release_delivery.py",
+    "tools/review_phase.py",
+    "tools/test_ci.py",
+    "tools/test_management_package.py",
+    "tools/test_package_policy.py",
+    "tools/test_release_023.py",
+    "tools/test_release_024.py",
+    "tools/test_release_delivery.py",
+    "docs/reviews/recovery-tools/ci-observer/v1/observer.py",
+    "docs/reviews/recovery-tools/ci-observer/v1/test_observer.py",
+    "docs/reviews/recovery-tools/ci-observer/v1/unit-checks.json"
+  ]
+}

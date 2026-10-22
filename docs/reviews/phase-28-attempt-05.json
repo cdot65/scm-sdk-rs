@@ -1,0 +1,81 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 5,
+  "reviewed_at": "2026-10-22T16:21:56.980020+00:00",
+  "source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "source_unchanged": true,
+  "checks_sha256": "6f2172ba51014573854f57c104d7f9de4cff81636280441b4eb7ab3692eb2f0e",
+  "prompt_sha256": "fc2958d022e0fe749a9a35f0c752515bc88357f3a7251b35c81d2e0e7dc7beb1",
+  "cli_output_sha256": "2a65c0ce66b8e790ad65e8ccdedd66ce10aa5e18920fd781ab197a40aff9208c",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Readiness is genuinely re-qualified at f9cebee: 105 registered commands, all exit 0, one continuous 15:25\u201315:57 run, including both `--require-directional` clean extracted packages (394 s/373 s, directional consumer executed externally with distinct executed-source digests) and `check-access-release.py --phase 28 --version 0.2.4`. The 0.2.4 guards are version-scoped and fail closed; readiness cannot advance the phase. Since attempt 4 the source is unchanged; the practical dead-link risk was closed operationally \u2014 identical annotated v0.2.4 tags on both remotes at the qualified commit 6f18529 and a credential-free HTTP 200 guide fetch \u2014 but the documented publish-before-mirror order, the governing-text/authorization sync and the README-link regression remain unimplemented, and the new guide receipt has no producer or verifier. Registry publication, main-branch tag delivery and 49 terminal CI contexts remain pending obligations.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "docs/RELEASE.md",
+        "line": 221,
+        "description": "The documented 0.2.4 order still publishes the immutable crate (`cargo +1.99.0 publish`, :221) before any tool verifies the GitHub mirror ref that makes the packaged README link (README.md:31) resolvable; the mirror push is only at :229-235 and enforcement only at delivery (tools/release_delivery.py:190-208). scripts/check-prepublication.py:19-30 and scripts/check-access-release.py:49-124 perform no mirror check. For this release the risk is eliminated operationally (docs/checks/release-tag-v0.2.4.json and release-tag-github-v0.2.4.json at 6f18529, guide HTTP 200), but the procedure and the gate remain in the risky order for 0.2.4 reruns and future releases.",
+        "required_fix": "Move tag creation/push and both tag observations before `cargo publish` in docs/RELEASE.md:215-247, or add a bounded credential-free mirror-ref check to scripts/check-prepublication.py; assert the resulting order in tools/test_release_024.py:77-100."
+      },
+      {
+        "severity": "medium",
+        "path": "AGENTS.md",
+        "line": 13,
+        "description": "Code now requires and an operator has now performed a GitHub mirror push, but the governing texts do not record it: AGENTS.md:13 still names a single authorized push destination, docs/PHASES.md:299-303 lists only registry bytes, the canonical annotated tag and 49 CI contexts, and docs/typescript-035-parity-plan.md:148-157 omits the mirror and the fourth delivery receipt. The only authorization/disclosure record is docs/phase-status.json:8688-8701, which is not a governing contract and cites docs/GITHUB_MIRROR.md on a different branch that is absent here, so the full-reachable-history disclosure is unverifiable in scope.",
+        "required_fix": "Record the mirror destination, the fourth delivery receipt and the full-history disclosure in AGENTS.md's push-destination clause, the docs/PHASES.md phase-28 paragraph and the plan's phase-28 section, and assert those sentences in tools/test_release_024.py alongside the existing documentation guards."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/phase-28-public-guide-preflight.json",
+        "line": 1,
+        "description": "This preflight receipt has no producer or verifier in the repository: its field set does not match scripts/observe-release.py (which writes the two tag receipts at :53-56), no check or test reads it, and nothing binds `contentSha256`/`bytes` to docs/DIRECTIONAL_PROFILES.md or the URL to README.md:31. It is referenced only by prose at docs/phase-status.json:8696, so the 'public guide verified' claim is not reproducible by any gate (the 139-line guide is merely consistent with the recorded 7108 bytes).",
+        "required_fix": "Add a bounded `observe-release.py guide --version 0.2.4` mode that fetches the README-declared versioned URL, compares the digest with the file at the release commit, writes a fixed-schema receipt, and add negative regressions for a tampered digest/URL; reference it from the phase-28 delivery metadata."
+      },
+      {
+        "severity": "low",
+        "path": "README.md",
+        "line": 31,
+        "description": "No regression binds the packaged README's absolute versioned link to the remote delivery actually verifies or to the crate version. tools/test_release_024.py:77-84 asserts 'Crate version: **0.2.4**' and the receipt-conditional sentences but checks neither the host (tools/release_delivery.py:20 GITHUB_REMOTE) nor the `v0.2.4` ref, so a version bump or mirror-host change would ship a stale link in an immutable archive while every gate passes.",
+        "required_fix": "In tools/test_release_024.py, derive the expected URL from release_delivery.GITHUB_REMOTE and the crates/scm-sdk/Cargo.toml version and assert README.md contains exactly that `blob/v<version>/docs/DIRECTIONAL_PROFILES.md` link."
+      }
+    ],
+    "evidence": [
+      "Check evidence is complete, passing and current-source bound: docs/reviews/phase-28-attempt-05.checks.json:1-6 records phase 28, source_sha256 f9cebee5..., source_unchanged true, passed true; I counted 105 `executed_at` entries and every `exit_code` is 0 with no `timeout: true` and no `source_unchanged: false`, all between 2026-10-22T15:25:34 and 15:57:13 (one continuous run, no checkpoint reuse \u2014 checkpoint_bindings are per-receipt digests only).",
+      "The registered phase-28 set actually ran, including the three phase-specific commands derived at tools/check_phase.py:319-328: checks.json:2862-2891 and :2893-2923 are `check-management-package.py --require-directional` on 1.89.0 (393.8 s) and 1.99.0 (372.5 s) binding receipts and retained .crate digests under .local/package-worktrees/6f18529a.../; :2924-2955 is `check-access-release.py --phase 28 --version 0.2.4` returning releaseCommit 6f18529, archiveSha256 533294fe, toolchains [1.89.0,1.99.0]. tools/test_release_024.py:148-156 asserts this set and that the candidate guard is last.",
+      "Directional execution is verified from the receipt itself, not prose: docs/checks/phase-28-release-package-1.99.0.json:63 packages examples/directional_profiles.rs, :767-775 binds it as an external consumer with checkIndex and selectedFeatures [], :980-990 shows the packaged `run --example directional_profiles --all-features --locked --offline` in the extracted archive, and :1116-1133 the external consumer run in /tmp/.../consumer with stdout 'Directional typed models and lossless response compatibility verified offline.', consumerSourceSha256 929b7b5f and consumerSourceUnchanged true; :1140 sourceSha256 equals the reviewed fingerprint. scripts/check-management-package.py:114,152-174 enforces 5 consumers and all seven executed-source digests.",
+      "The candidate guard is strict and version-scoped: scripts/check-access-release.py:30 registers (28,'0.2.4') only; :66-71 require schema-3 proofs, verify_receipt(require_directional=True), commit_fingerprint(releaseCommit)==fingerprint(root) and HEAD ancestry; :78-113 re-read retained archive bytes, file inventory, VCS identity and byte equality of every packaged member against the filesystem and the release commit plus all four manifests/lockfiles; :119-120 require both proofs to qualify identical files.",
+      "Readiness cannot complete the phase and delivery fails closed: tools/review_phase.py:304,459-460,478-479 restrict the release_readiness scope and forbid advancing on it; :483-489 call release_delivery.verify(phase=28, version='0.2.4'). tools/release_delivery.py:23 registers (28,'0.2.4'); :220-231 require release-registry-0.2.4.json, release-tag-v0.2.4.json and phase-28-remote-ci-run-N.json; :89-98 bind tag/registry/main; :105-116 require the CI contexts to equal the configured matrix exactly (.forgejo/workflows/ci.yml:90-91 yields 24 features x 2 toolchains + contracts-and-package = 49); :190-208 require the identical GitHub annotated tag. docs/phase-status.json:7791-7796,8351-8361 keep both chunks and all milestones pending.",
+      "The mirror preflight is real, tool-produced and bounded: docs/checks/release-tag-v0.2.4.json and release-tag-github-v0.2.4.json have exactly the field set written by scripts/observe-release.py:53-56 (git ls-remote, credential-free), both showing tagObject 2f7ad298 peeling to 6f18529 with refs/heads/main 56a88d2; docs/checks/phase-28-public-guide-preflight.json records HTTP 200 for raw.githubusercontent.com/.../v0.2.4/docs/DIRECTIONAL_PROFILES.md. The 6f18529 -> 56a88d2 advance is a deliberate, enforced evidence-only descendant pattern (tools/review_phase.py:15-16 exclusions, release_delivery.commit_fingerprint:42-54, scripts/check-private-material.py:137-156, docs/RELEASE.md:208-213).",
+      "Publication prerequisites are chained in code: scripts/check-prepublication.py:20-30 accepts only (28,'0.2.4') and requires the readiness review twice around the candidate guard; scripts/verify-publication.py:56-70 maps 0.2.4 to verify_release_readiness(phase=28), :96-121,242-243 require schema-3 proofs and require_directional management verification; tools/release_delivery.py:143-156 re-verifies the embedded readiness provenance against docs/reviews/phase-28-attempt-N.json.",
+      "Security and dependency posture is fresh and source-bound: docs/checks/phase-28-private-material.json (verified at checks.json:242-265) reports 2439 git-visible files, zero credential and zero registration matches and zero new tenant occurrences, with scripts/check-private-material.py:205-214 recomputing both fingerprints and the history identity; docs/checks/phase-28-dependencies.json:3-53 is a 15:28 audit against RustSec 640bf5a9 (commitTime 2026-10-22T12:49) with pinned cargo-audit 0.22.2/cargo-deny 0.20.2 binary digests, 206 dependencies, vulnerabilities found false, plus per-lockfile audits (:54+).",
+      "Documentation is complete and receipt-conditional: CHANGELOG.md:3-47 states the four exports, exactly five field occurrences, both validation directions, the retained [] list default and the rustls-webpki 0.103.16 / webpki-root-certs 1.0.10 advisory refresh with downstream-lockfile guidance; docs/STABILITY.md:28-44 records the request tightening and the intentional tolerant-response difference; docs/DIRECTIONAL_PROFILES.md:29-48,80-102 documents the six versioned roots and the two new schemas; README.md:20-22,51-53 keeps publication claims receipt-conditional. contracts/typescript-035-parity.json:19-27 counts 4/2/2/5/6/12/1 exactly as the plan requires, and crates/scm-sdk/src/airs/management/profiles.rs:91,214 repoint only the two request roots (response roots frozen at :76,92).",
+      "Live acceptance is honest: docs/checks/phase-28-live-attempt-01.json is read-only on 1.99.0, crateVersion 0.2.4, mutationsEnabled false, cleanupState not_needed, one verified OAuth probe and four HTTP 403 permission prerequisites, with explicit endpoint-profile limitations now mandatory for phase-27/28 receipts (tools/live_evidence.py:313-315); no security-profile endpoint was exercised, so directional service behavior is unestablished."
+    ],
+    "limitations": [
+      "Read-only review: I executed nothing. I did not recompute the source fingerprint f9cebee5..., the checks digest 6f2172ba..., any receipt SHA-256 or the retained .crate digests; conclusions rest on reading the recorded receipts and tracing tools/check_phase.py:319-328 against the tools/review_phase.py evidence gate.",
+      "Pending delivery obligations, not completed outcomes: no docs/checks/release-registry-0.2.4.json and no docs/checks/phase-28-remote-ci-run-N.json exist; crates.io publication has not occurred; the canonical annotated tag is not yet on a reviewed main-branch delivery commit per the delivery guard's own cross-checks; the 49 terminal CI contexts are unobserved (docs/phase-status.json:8698-8699 selects runs 30/31 without a receipt); the remote-delivery chunk is unreviewed.",
+      "No network calls were permitted, so I could not independently confirm the GitHub mirror's existence, visibility or the guide URL; I assessed only the recorded tag/guide receipts and repository-internal guards.",
+      "I could not verify the mirror authorization document cited at docs/phase-status.json:8690 (docs/GITHUB_MIRROR.md on branch 382d9a08), which is outside this runtime branch, nor independently confirm that commit 56a88d2 changes only fingerprint-excluded evidence; I relied on the recorded metadata plus the exclusion and history-identity logic.",
+      "I did not open the retained archives under .local/package-worktrees/6f18529.../.local/artifacts/ or the extracted build trees; packaged and external directional execution is established by the recorded commands, cwds, stdout and digests plus the verifier logic in scripts/check-management-package.py:152-174.",
+      "Generated model correctness, the additive overlay, the oracle corpus and the schema graph are accepted phase-27 deliverables; I relied on this phase's compiler, package, oracle and fixture receipts and selected declarations rather than re-auditing crates/scm-sdk/src/models/generated.rs or src/validation/schema_graph.json.",
+      "Directional live acceptance remains explicitly unverified: the only current-source receipt is read-only with one verified OAuth probe and four HTTP 403 permission prerequisites, so no service application of the new settings is established.",
+      "The two medium findings are carried over unchanged from docs/reviews/phase-28-attempt-04.json and the accepted chunk record (44/50), and the maintainer recorded them as deliberately unimplemented; the source fingerprint is identical, so I re-derived them from AGENTS.md:13, docs/PHASES.md:291-303, docs/RELEASE.md:215-247 and tools/test_release_024.py:77-100 rather than adopting the prior text.",
+      "Phase 24/25 acceptance and pre-phase-26 release infrastructure were out of scope beyond the pinned 0.2.3 receipt identity and the historical defaults asserted by tools/test_release_024.py:102-110; scripts/check-package.py changed, so historical phase-24 package receipts no longer match their recorded packageScriptSha256, which that phase regenerates."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "accepted_with_deficiencies",
+  "review_scope": "release_readiness"
+}

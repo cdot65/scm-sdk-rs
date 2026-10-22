@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-22T16:56:14.240948+00:00",
+  "source": "Forgejo Actions and commit-status APIs; authenticated same-origin job-log download",
+  "sourceCommit": "56a88d25f72951b8569193f6252efefae7053ea3",
+  "reviewedSourceSha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "run": {
+    "index_in_repo": 30,
+    "status": "failure",
+    "commit_sha": "56a88d25f72951b8569193f6252efefae7053ea3",
+    "html_url": "https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/30",
+    "started": "2026-10-22T16:07:06Z",
+    "stopped": "2026-10-22T16:35:18Z"
+  },
+  "counts": {
+    "success": 48,
+    "failure": 1
+  },
+  "failedJobs": [
+    {
+      "context": "Credential-free SDK qualification / rust (native-probes, 1.89.0) (push)",
+      "status": "failure",
+      "target_url": "/cdot/scm-sdk-rs/actions/runs/30/jobs/27"
+    }
+  ],
+  "failure": {
+    "test": "buffered_items_observe_cancellation_without_another_credential_lookup",
+    "location": "crates/scm-sdk/tests/dlp_contracts.rs:909",
+    "kind": "Deadline",
+    "remoteOutcome": "NotSent",
+    "stage": "First buffered item, before explicit cancellation",
+    "configuredTimeoutSeconds": 5,
+    "retainedPrivateLogSha256": "58b630d80cfa81a02b27c653ad2e706981a5cb754fef60b7d55bece7aa7c67cb"
+  },
+  "controlledReproduction": {
+    "releaseSource": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+    "injectedPrePollDelaySeconds": 6,
+    "originalTimeoutSeconds": 5,
+    "originalResult": "failed with matching Deadline/NotSent",
+    "comparisonTimeoutSeconds": 60,
+    "comparisonResult": "passed including cancellation and credential/request counts",
+    "limitation": "Demonstrates pre-poll deadline sensitivity; does not prove the exact CI scheduling cause. No runtime defect was demonstrated. Qualified source and tag remain unchanged."
+  },
+  "disposition": "Original failure retained. Identical-source main run31 is selected independently; this record does not establish successful CI."
+}

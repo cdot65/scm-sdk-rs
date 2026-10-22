@@ -34,16 +34,16 @@ transport failure; reconcile service state before retrying a write.
 
 ## Models and signatures
 
-The [management module](https://docs.rs/scm-sdk/0.2.3/scm_sdk/airs/management/index.html)
-contains its model namespace. Hosted 0.2.3 rustdoc omits optional management client
+The [management module](https://docs.rs/scm-sdk/0.2.4/scm_sdk/airs/management/index.html)
+contains its model namespace. Hosted 0.2.4 rustdoc omits optional management client
 signatures; generate documentation with `--all-features` as described in the
 [API reference overview](./index.md).
 
-## Forthcoming 0.2.4 profile models
+## Profile models in 0.2.4
 
 `ContentTypeConfiguration` and `ContentTypeConfigurations` add typed directional
 protections using the existing protection models. Profile create/update keeps
 `CreateSecurityProfileRequest`, with current request validation and tolerant
-response projections. These additions are not available in 0.2.3. See the
+response projections. These additions require 0.2.4 or later. See the
 [directional profile guide](/airs/directional-profiles) for exact fields, builders,
 versioned schema names, and the request-validation migration.

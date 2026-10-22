@@ -104,3 +104,7 @@ Packaged unit regressions use a compact independently bound oracle subset rather
 than the full development corpus. See [PACKAGING.md](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/PACKAGING.md) for actual
 extracted-archive tests, [Stability and Compatibility](/developer/stability) for public union/API policy,
 and [Live Qualification](/developer/live-qualification) for service qualification.
+
+For the 0.2.4 profile projections and current versioned request roots, see
+[directional profiles](/airs/directional-profiles). Existing standalone model
+schema identities retain their historical bindings.

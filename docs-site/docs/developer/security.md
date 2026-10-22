@@ -76,12 +76,12 @@ explicit publication control. Service qualification is recorded separately in
 must not be hidden as SDK successes. Remote CI execution and additional native
 platform runtime qualification require retained evidence.
 
-## Forthcoming 0.2.4 TLS dependency patches
+## 0.2.4 TLS dependency patches
 
-The forthcoming 0.2.4 source lockfile resolves `rustls-webpki` to **0.103.16** and
+The 0.2.4 source lockfile resolves `rustls-webpki` to **0.103.16** and
 `webpki-root-certs` to **1.0.10** for RUSTSEC-2026-0382 and RUSTSEC-2026-0383.
 These are transitive TLS dependency patches; direct SDK dependency declarations
-remain unchanged. Version 0.2.4 is not yet published.
+remain unchanged. Version 0.2.4 is [published on crates.io](https://crates.io/crates/scm-sdk/0.2.4).
 
 Applications retain their own `Cargo.lock`. Installing or updating `scm-sdk`
 does not replace that lockfile or establish that these patches are present in

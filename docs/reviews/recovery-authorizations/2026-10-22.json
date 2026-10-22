@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "authorizedBy": "maintainer (user in this conversation)",
+  "receivedOn": "2026-10-22",
+  "source": "Explicit request_user_input_async question replies; not inferred from general continuation instructions",
+  "grants": [
+    {
+      "id": "phase-25-drift-detection-recovery-2026-10-22",
+      "phase": 25,
+      "scope": "Narrowly revised phase-25 drift-detection recovery scope",
+      "maxFreshReviews": 5,
+      "questionCallId": "call_38a255fd7d91426a8904fe02ba87b261",
+      "question": "I’m continuing 0.2.4 publication. Separately, phase 25’s fifth Claude invocation returned invalid output and exhausted that chunk’s review budget. AGENTS.md and docs/PHASES.md explicitly require maintainer authorization for a recovery scope and forbid inferring it from “continue.” Do you authorize a narrowly revised phase-25 drift-detection recovery scope with up to five fresh reviews, preserving every original attempt?",
+      "answer": "Authorize the scoped recovery budget",
+      "preserveEveryOriginalAttempt": true,
+      "originalScopeRemainsHistorical": true,
+      "question_id": "call_38a255fd7d91426a8904fe02ba87b261",
+      "max_attempts": 5,
+      "review_scope": "drift-detection-recovery"
+    },
+    {
+      "id": "phase-28-final-delivery-recovery-2026-10-22",
+      "phase": 28,
+      "scope": "Separate post-publication final-delivery review budget",
+      "maxFreshReviews": 5,
+      "questionCallId": "call_1601a73a0c0e4677b8ba44a89934a97f",
+      "question": "Phase 28’s fourth phase review scored 44/50; all 105 checks passed. Its fifth slot is now needed for release readiness, leaving no slot for the required post-publication review. AGENTS.md requires explicit authorization to extend that shared budget. Do you authorize a separate final-delivery review budget of up to five attempts, preserving every readiness review? I’m continuing CI and publication preparation.",
+      "answer": "Authorize the final-delivery review budget",
+      "preserveEveryOriginalAttempt": true,
+      "originalScopeRemainsHistorical": true,
+      "question_id": "call_1601a73a0c0e4677b8ba44a89934a97f",
+      "max_attempts": 5,
+      "review_scope": "final-delivery",
+      "version": "0.2.4"
+    }
+  ]
+}

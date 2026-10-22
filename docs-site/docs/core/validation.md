@@ -146,3 +146,7 @@ Gateway artifacts; its [comparison receipt](https://github.com/cdot65/scm-sdk-rs
 retains those unchanged-observation facts. G25 subsequently changes response
 observations under the explicit policy above. A separate regression pins the
 original frozen request observations, which remain unchanged.
+
+For the 0.2.4 profile projections and current versioned request roots, see
+[directional profiles](/airs/directional-profiles). Existing standalone model
+schema identities retain their historical bindings.

@@ -23,6 +23,31 @@ complete. After the source branches are merged through the primary repository's
 review process, the maintainer can reconcile the documentation branch and its
 deployment trigger in a reviewed change.
 
+## 0.2.4 documentation update
+
+The current documentation update integrates accepted SDK release/CI history
+`56a88d25f72951b8569193f6252efefae7053ea3`, including published source
+`6f18529a47cc273feca1000af6e4fc0d96da757e`. The public main mirror carries that
+accepted history. The documentation branch retains its existing Pages workflow,
+project base path, user-supplied logo and theme assets.
+
+The registry archive, annotated tags, both package compilers and 49 terminal CI
+contexts are verified by the maintained delivery guard in the separate primary
+release checkouts. Current phase-28 metadata and supporting reference artifacts
+are copied exactly from governance commit
+`612864994ee7efbc36d0dd3edbcb60a16fc6e7aa`; its implementation and Git history are
+not integrated through this documentation update. The SDK phase remains
+`in_progress`, with its readiness recovery authorization and next full-phase
+review pending. Documentation review neither completes that phase nor grants
+a new SDK review budget.
+
+`docs-site/scripts/review-release-024.py` runs the independent documentation
+release-update scope against those primary release proofs, preserving the prior
+Pages and logo evidence. It records the actual source manifest, checks, prompt
+and Claude Code result, with at most five attempts. A passing readiness review
+does not establish that this documentation update has deployed; record its
+subsequent Pages run and verify the published URL separately.
+
 ## Documentation content
 
 The site lives entirely in `docs-site/` and uses Docusaurus 3.10.2. It follows the

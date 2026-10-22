@@ -32,8 +32,8 @@ Cargo feature does not grant service permissions.
 
 ## Generated reference
 
-- [DLP module](https://docs.rs/scm-sdk/0.2.3/scm_sdk/dlp/index.html)
-- [Shared IAM module](https://docs.rs/scm-sdk/0.2.3/scm_sdk/shared/iam/index.html)
+- [DLP module](https://docs.rs/scm-sdk/0.2.4/scm_sdk/dlp/index.html)
+- [Shared IAM module](https://docs.rs/scm-sdk/0.2.4/scm_sdk/shared/iam/index.html)
 
 Optional client signatures require local documentation with `--all-features`;
 see the [API reference overview](./index.md).
