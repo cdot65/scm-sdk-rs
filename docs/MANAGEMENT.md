@@ -4,6 +4,13 @@ Enable the `management` Cargo feature and supply a `Client` authenticated with S
 
 The facade exposes `profiles`, `topics`, `api_keys`, `customer_apps`, `deployment_profiles`, legacy `dlp_profiles`, legacy `scan_logs`, `dashboard`, and token administration through `oauth`. This milestone implements the 56 non-DLP resource/dashboard methods in the frozen TypeScript 0.34.0 baseline. Token administration and canonical DLP have their own implementation and contract records.
 
+## Directional profiles in 0.2.4
+
+Version 0.2.4 adds typed per-direction protections, full-conversation
+inspection, and DLP tenant fields. The [directional profile guide](DIRECTIONAL_PROFILES.md)
+explains the current request validation and tolerant response behavior. These
+additions are available in the published 0.2.4 crate.
+
 ## Endpoints and headers
 
 Pass the AIRS management base explicitly, commonly `https://api.apps.paloaltonetworks.com/aisec`. `with_dashboard_endpoint` changes only dashboard reads. It preserves the provider, transport, session, limiter, and destination policy; an unadmitted destination fails locally. Dashboard always sends `x-tsg-id` taken from its OAuth context, including when the original client's optional tenant header was disabled.
@@ -43,7 +50,7 @@ All frozen dashboard Zod input schemas are validated natively before authenticat
 
 ## Mutations and legacy logs
 
-Create/update requests use the frozen native schemas before requesting tokens. Profile/topic update and delete paths retain UUID checks; topic force deletion requires a nonblank audit identity. The legacy `force_delete` topic wrapper still fails when its optional identity is absent. Successful string-shaped deletion bodies normalize to the source's `{ "message": ... }` object contract.
+Profile create/update uses the current versioned request schema described in the [directional profile guide](DIRECTIONAL_PROFILES.md) before requesting tokens. Other resource mutations retain their existing request schemas. Profile/topic update and delete paths retain UUID checks; topic force deletion requires a nonblank audit identity. The legacy `force_delete` topic wrapper still fails when its optional identity is absent. Successful string-shaped deletion bodies normalize to the source's `{ "message": ... }` object contract.
 
 Every mutation, including legacy scan-log POST retrieval, has no automatic replay. An ambiguous transport or post-send decode failure retains `RemoteOutcome::Unknown`; local cancellation cannot establish whether the server committed a write. Reconcile remote state before retrying or deleting resources.
 

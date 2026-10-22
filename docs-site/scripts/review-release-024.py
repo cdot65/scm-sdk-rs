@@ -220,10 +220,25 @@ def append_documentation_update(status, expected_sha, update):
     status['independent_documentation_delivery'].setdefault('release_updates', []).append(update)
 
 
+def release_source_files():
+    manifest = json.loads(read('docs-site/DESIGN_SOURCE.json'))
+    entries = manifest.get('release024DerivedSources', {})
+    derived = manifest.get('derivedFrom', {})
+    if not isinstance(entries, dict) or not isinstance(derived, dict):
+        raise ValueError('Release derived-source mappings are malformed')
+    sources = []
+    for page, entry in entries.items():
+        source = entry.get('sourcePath') if isinstance(entry, dict) else None
+        if not isinstance(source, str) or derived.get(page) != source:
+            raise ValueError('Release derived sourcePath is missing or differs from derivedFrom')
+        sources.append(source)
+    return sources
+
+
 def snapshot(attempt=1):
     listed = git('ls-files', '--cached', '--others', '--exclude-standard', '-z', '--', 'docs-site').decode().split('\0')
     phase, evidence = delivery_records()
-    files = sorted(set(listed) - {''} | set(REFERENCES) | set(evidence) | set(prior_review_sources(attempt)) | {'.github/workflows/docs-deploy.yml'})
+    files = sorted(set(listed) - {''} | set(REFERENCES) | set(evidence) | set(release_source_files()) | set(prior_review_sources(attempt)) | {'.github/workflows/docs-deploy.yml'})
     digests = {name: sha(read(name)) for name in files}
     sdk_phase_sha = sha(json.dumps(phase, sort_keys=True, separators=(',', ':')).encode())
     docs_sha = documentation_metadata_sha(json.loads(read('docs/phase-status.json')))
@@ -385,7 +400,7 @@ def main():
                  '-p', 'test_review_release_024.py', '-v'],
                 ['npm', '--prefix', 'docs-site', 'run', 'build'],
                 ['npm', '--prefix', 'docs-site', 'run', 'typecheck'],
-                ['git', 'diff', '--check', BASE, '--', 'docs-site', 'docs/SECURITY.md',
+                ['git', 'diff', '--check', BASE, '--', 'docs-site', 'docs/SECURITY.md', 'docs/MANAGEMENT.md',
                  'docs/GITHUB_MIRROR.md', '.github/workflows/docs-deploy.yml']]
     checks = []
     for index, command in enumerate(commands):

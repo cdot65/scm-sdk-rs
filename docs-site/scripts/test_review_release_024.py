@@ -70,7 +70,11 @@ class Tests(unittest.TestCase):
         state = {'independent_documentation_delivery': {'score': 46}}
         values = {}
         def read(name):
-            return json.dumps(state).encode() if name == 'docs/phase-status.json' else values.get(name, b'fixed')
+            if name == 'docs/phase-status.json':
+                return json.dumps(state).encode()
+            if name == 'docs-site/DESIGN_SOURCE.json':
+                return b'{}'
+            return values.get(name, b'fixed')
         with mock.patch.object(r, 'git', side_effect=lambda *args: b'' if args[0] == 'ls-files' else b'head'), \
              mock.patch.object(r, 'delivery_records', return_value=({'id': 28, 'status': 'pending'}, [])), \
              mock.patch.object(r, 'read', side_effect=read):
@@ -80,6 +84,23 @@ class Tests(unittest.TestCase):
                     self.assertIn(f'docs/reviews/github-pages/release-0.2.4/attempt-{prior:02d}{suffix}', before['files'])
             values['docs/reviews/github-pages/release-0.2.4/attempt-02.disposition.json'] = b'changed'
             self.assertNotEqual(r.snapshot(3)['sourceSha256'], before['sourceSha256'])
+
+    def test_every_release_derived_source_is_bound_in_snapshot(self):
+        manifest = json.loads((r.ROOT / 'docs-site/DESIGN_SOURCE.json').read_text())
+        state = {'independent_documentation_delivery': {'score': 46}}
+        def read(name):
+            if name == 'docs/phase-status.json':
+                return json.dumps(state).encode()
+            if name == 'docs-site/DESIGN_SOURCE.json':
+                return json.dumps(manifest).encode()
+            return b'fixed'
+        with mock.patch.object(r, 'git', side_effect=lambda *args: b'' if args[0] == 'ls-files' else b'head'), \
+             mock.patch.object(r, 'delivery_records', return_value=({'id': 28, 'status': 'pending'}, [])), \
+             mock.patch.object(r, 'read', side_effect=read):
+            files = r.snapshot()['files']
+            self.assertTrue(manifest['release024DerivedSources'])
+            for entry in manifest['release024DerivedSources'].values():
+                self.assertIn(entry['sourcePath'], files)
 
     def test_missing_or_malformed_phases_is_named(self):
         for status in ({}, {'phases': None}, {'phases': {}}, {'phases': [None]}):
@@ -276,7 +297,7 @@ class Tests(unittest.TestCase):
         state = {'independent_documentation_delivery': {'score': 46}}
         with mock.patch.object(r, 'git', side_effect=lambda *args: b'' if args[0] == 'ls-files' else b'head'), \
              mock.patch.object(r, 'delivery_records', return_value=({'id': 28, 'status': 'pending'}, [])), \
-             mock.patch.object(r, 'read', side_effect=lambda name: json.dumps(state).encode() if name == 'docs/phase-status.json' else b'fixed'):
+             mock.patch.object(r, 'read', side_effect=lambda name: json.dumps(state).encode() if name == 'docs/phase-status.json' else b'{}' if name == 'docs-site/DESIGN_SOURCE.json' else b'fixed'):
             before = r.snapshot()
             state['independent_documentation_delivery']['score'] = 50
             after = r.snapshot()
