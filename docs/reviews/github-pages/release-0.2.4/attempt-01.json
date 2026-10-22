@@ -1,0 +1,104 @@
+{
+  "reviewer": "Claude Code",
+  "scope": "independent-docs-release-0.2.4",
+  "attempt": 1,
+  "reviewedAt": "2026-10-22T21:43:32.685696+00:00",
+  "sourceSha256": "af2a82170cc9a09d233f52ceb288f6acc06eae7c1956f443ffdb9c142e60f07b",
+  "sourceManifestSha256": "9f3882ab36bca63a011e9870de352fc74d1fe81b23f510df731bc7b39bc6b564",
+  "checksSha256": "7488285d367911d84137a528adf9aee29c1d6b1fabfa1ef6540b6b701fd178ae",
+  "promptSha256": "181960574d8318bea13dae719ad63d80099088c18bfda1e4057e6dcc1caa09f0",
+  "releaseSourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+  "runnerSha256": "06e90b6666757f57fc425bc9a08774cfc39c7541fe982b904dfcc45935bca2f8",
+  "templateSha256": "7a014c3b6b6e74d5b8eabd9134a9fc41289dafcc53ac522ae754be1e7b4a6cf6",
+  "sourceUnchanged": true,
+  "decision": "rejected",
+  "review": {
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "delivery": 9
+    },
+    "total": 44,
+    "overall": 9,
+    "blocking_findings": [],
+    "nonblocking_findings": [
+      {
+        "severity": "medium",
+        "path": "docs-site/docs/developer/security.md",
+        "line": 79,
+        "description": "The derived page adds a normative '0.2.4 TLS dependency patches' section (lines 79-91) that is absent from its authoritative source docs/SECURITY.md, which still ends its dependency/release policy at line 75 and never mentions rustls-webpki 0.103.16, webpki-root-certs 1.0.10 or RUSTSEC-2026-0382/0383. docs/GITHUB_MIRROR.md:117-124 requires repository guides to be authoritative and both copies to be updated in the same change and reviewed for semantic agreement; developer/security is a derived page (DESIGN_SOURCE.json:41), not one of the site-authored pages listed at docs/GITHUB_MIRROR.md:122-124. Consumers reading the published repository guide get no TLS guidance (only docs/RELEASE.md:7-8 and CHANGELOG.md:40-43 carry it).",
+        "required_fix": "Add the equivalent 0.2.4 TLS dependency-patch subsection to docs/SECURITY.md (naming rustls-webpki 0.103.16, webpki-root-certs 1.0.10, both advisories, and the downstream lockfile update/audit duty), or, if the addition is deliberately site-only, record that exception explicitly in docs-site/DESIGN_SOURCE.json and docs/GITHUB_MIRROR.md."
+      },
+      {
+        "severity": "medium",
+        "path": "docs-site/DESIGN_SOURCE.json",
+        "line": 74,
+        "description": "release024DerivedSources registers only docs/core/response-defaults.md, docs/developer/stability.md and docs/developer/live-qualification.md with sourceCommit 6f18529 and a source digest. docs/developer/security.md was also changed for this release (new 0.2.4 TLS section) but has no release-0.2.4 provenance entry, so the site page's 0.2.4 content is not bound to any published-source commit or digest and a future release update cannot detect the divergence.",
+        "required_fix": "Add a release024DerivedSources entry for 'docs/developer/security.md' with sourcePath docs/SECURITY.md, sourceCommit 6f18529a47cc273feca1000af6e4fc0d96da757e and the corresponding sourceSha256, after reconciling the source guide per the previous finding."
+      },
+      {
+        "severity": "medium",
+        "path": "docs-site/docs/developer/security.md",
+        "line": 7,
+        "description": "The dependency reference permalink is pinned to blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/DEPENDENCIES.md, the pre-0.2.4 content commit, on a page that now documents the 0.2.4 TLS patches. The current docs/DEPENDENCIES.md:3 is explicitly 'This 0.2.4 delivery snapshot ... resolved root and native-probe lockfiles at source qualification on 2026-10-22', so a reader following the link lands on the earlier snapshot that does not record RUSTSEC-2026-0382/0383 or the patched versions. Sibling 0.2.4 pages correctly repoint (developer/parity.md:21, developer/stability.md:10, developer/live-qualification.md:5).",
+        "required_fix": "Repoint the DEPENDENCIES.md permalink on docs-site/docs/developer/security.md:7 (and the RELEASE.md/receipt permalinks at lines 70-73 if they are intended to describe the 0.2.4 line) to blob/6f18529a47cc273feca1000af6e4fc0d96da757e, keeping deliberately historical links pinned and labelled as historical."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/GITHUB_MIRROR.md",
+        "line": 11,
+        "description": "The 'At preparation time' paragraph (lines 11-20) states that Forgejo main points to 0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e (0.2.2), that 'the published 0.2.3 source and its later work have not yet been merged into that branch', that the GitHub mirror 'must not present 0.2.3 as already merged', and that the documentation branch 'is based on the later 0.2.3 development history'. The retained receipts now show refs/heads/main = 56a88d25f72951b8569193f6252efefae7053ea3 on both remotes (docs/checks/release-tag-v0.2.4-observation-07.json:8 and docs/checks/release-tag-github-v0.2.4-observation-07.json:8), and this branch carries 0.2.4 history. Line 21-22 of the same guide requires recording the actual remote branch commits, which the 0.2.4 section (lines 26-42) does not do.",
+        "required_fix": "Mark the preparation-time paragraph as historical with its date, and record the currently observed remote branch commits (both remotes' main = 56a88d2, documentation branch head) in the '0.2.4 documentation update' section, citing the two observation-07 receipts."
+      },
+      {
+        "severity": "low",
+        "path": "docs/reviews/github-pages/release-0.2.4/attempt-01.checks.json",
+        "line": 44,
+        "description": "The recorded whitespace check is 'git diff --check -- docs-site .github/workflows/docs-deploy.yml' with no commit range, so it compares the working tree against the index only. With the review content already committed at headCommit 6f419fd, the command cannot detect whitespace defects in the reviewed change; its empty log digest (01ba4719..., the sha256 of a single newline) is empty by construction. I independently confirmed by grep that docs-site contains no trailing whitespace, so no actual defect is hidden, but the check as recorded does not establish that.",
+        "required_fix": "Change the command in docs-site/scripts/review-release-024.py:334 to a range form such as ['git','diff','--check','382d9a0876c569c8349cd0db0096635f2494389b..HEAD','--','docs-site','.github/workflows/docs-deploy.yml'] so the committed delta is actually inspected."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/scripts/review-release-024.py",
+        "line": 130,
+        "description": "The governance branch validates passed/source_sha256/qualifiedSourceSha256/qualifiedReleaseRoot and the published-source binding, but never asserts governance['scope'] == 'post_publication_governance' (the field is emitted, see attempt-01.checks.json:70) and never asserts that source_sha256 differs from qualifiedSourceSha256 and from the published archive digest. A future guard that returned the same hash for both identities would pass, which is exactly the conflation the governance scope is meant to prevent.",
+        "required_fix": "Add assertions that governance['scope'] == 'post_publication_governance' and that governance['source_sha256'] not in (governance['qualifiedSourceSha256'], registry['archiveSha256']), with a regression case in docs-site/scripts/test_review_release_024.py."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/scripts/review-release-024.py",
+        "line": 85,
+        "description": "delivery_records() indexes delivery['ci_receipt'] directly while every neighbouring lookup uses .get() plus an explicit ValueError. A phase record missing ci_receipt raises KeyError, which is not in the top-level except clause at line 429 ((ValueError, OSError, subprocess.SubprocessError)), so the runner would abort with a traceback instead of the intended single-line failure message.",
+        "required_fix": "Read ci_receipt with .get(), validate it against the same docs/checks/phase-28-remote-ci-run-<n>.json pattern as ci_observation, and raise ValueError with a named predicate when it is missing or malformed."
+      },
+      {
+        "severity": "low",
+        "path": ".github/workflows/docs-deploy.yml",
+        "line": 7,
+        "description": "The push path filter 'docs-site/**' now also matches the review tooling added under docs-site/scripts (review-release-024.py, its prompt template and unit tests), so a review-tooling-only commit triggers a full Pages build and deployment even though those files are never part of the Docusaurus build output. The workflow is intentionally unchanged this cycle and is the authorized delivery mechanism, so this is a follow-up, not a prerequisite.",
+        "required_fix": "In a separate reviewed change, either exclude '!docs-site/scripts/**' from the push paths or relocate the review runner outside docs-site/; do not modify the workflow as part of this documentation release."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/docs/airs/directional-profiles.md",
+        "line": 57,
+        "description": "The guide refers to 'the offline directional_profiles example' and gives the cargo command, but supplies no link, while the repository source links it (docs/DIRECTIONAL_PROFILES.md:52,78) and sibling site pages pin the release permalink (developer/examples.md:10, developer/parity.md:21). Readers of the guide have no direct route to the example source for the released commit.",
+        "required_fix": "Link the example to https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/crates/scm-sdk/examples/directional_profiles.rs, matching the permalink translation rule in docs/GITHUB_MIRROR.md:117-121."
+      }
+    ],
+    "evidence_limitations": [
+      "Read/Glob/Grep only: I did not execute npm build, npm typecheck, the helper unit tests, git, or tools/release_delivery.py. Check outcomes come from the recorded exit codes and log digests in docs/reviews/github-pages/release-0.2.4/attempt-01.checks.json, not from re-execution.",
+      "I could not compute sha256 digests, so every digest in attempt-01.source.json, attempt-01.checks.json and docs-site/DESIGN_SOURCE.json (including preservedAssets equality with baseline 382d9a0876c569c8349cd0db0096635f2494389b and the merged-versus-primary byte comparison) is accepted as recorded rather than independently recomputed.",
+      "The primary release checkout (/home/cdot/development/cdot65/scm-sdk-rs-ts035) and the governance worktree (/home/cdot/development/cdot65/scm-sdk-rs-delivery-governance) are outside this worktree and were not inspected; the governance/canonical guard results, the 49 terminal CI contexts, both package-compiler receipts and the retained .crate archive are reference evidence only.",
+      "No network access: crates.io, docs.rs, GitHub and Forgejo were not contacted. Publication, tag, remote-ref and CI facts rest on the retained receipts (release-registry-0.2.4.json, release-tag-v0.2.4-observation-07.json, release-tag-github-v0.2.4-observation-07.json).",
+      "Git history was not queryable, so I verified current-tree content only. Claims about what docs/DEPENDENCIES.md contained at commit efe9de04 are inferred from the current 0.2.4-specific text at docs/DEPENDENCIES.md:3, and the DESIGN_SOURCE binding of the guide to git show 6f18529:docs/DIRECTIONAL_PROFILES.md was not re-derived.",
+      "The anchor /developer/security#024-tls-dependency-patches was validated by deriving the Docusaurus slug from the heading at docs-site/docs/developer/security.md:79, not by a build; docusaurus.config.ts throws on broken links and broken markdown links but leaves onBrokenAnchors at its default warning level.",
+      "Rust compilation and execution of the crate, its tests and examples/directional_profiles.rs were not performed; API claims were checked by reading crates/scm-sdk sources in this worktree.",
+      "No Pages deployment, workflow run or published-URL HTTP evidence exists yet or was observed; this review covers readiness only, and the post-review workflow run plus URL verification must still be recorded."
+    ]
+  },
+  "fifthAttemptException": null,
+  "cliSha256": "58aa23274519f583ab0b633f6ae5a2d21c604029c77aa76397d2b202d7047740"
+}
