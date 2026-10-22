@@ -1,0 +1,77 @@
+{
+  "reviewer": "Claude Code",
+  "scope": "independent-docs-release-0.2.4",
+  "attempt": 3,
+  "reviewedAt": "2026-10-22T22:03:55.392510+00:00",
+  "sourceSha256": "fa1687236d955f4e0956a41f221a53dd4dd0f4e38252d6954cda1aff430d7a4d",
+  "sourceManifestSha256": "e2914a2868e5f1d5298eb0f996ecea8032bb72608266b096198959dff4613c68",
+  "checksSha256": "e15e578ec93013b045eb97a51093f847e165a4ea912a5a37c130654865cfdfb9",
+  "promptSha256": "3c4f0703ea6d6031337b8d465b43ae3693817a027e43b1a3f71facdb2486d0e8",
+  "releaseSourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+  "runnerSha256": "5ddf0c11d64aad13b72712bd161e9d004a6700c3a1496b788d02c84f92770de9",
+  "templateSha256": "8c5d51783d9b2ac099eecb8577691a28e11186064a60b1e480793993190edbb2",
+  "sourceUnchanged": true,
+  "decision": "rejected",
+  "review": {
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 9,
+      "architecture": 9,
+      "delivery": 9
+    },
+    "total": 45,
+    "overall": 9,
+    "blocking_findings": [],
+    "nonblocking_findings": [
+      {
+        "severity": "medium",
+        "path": "docs-site/docs/developer/stability.md",
+        "line": 6,
+        "description": "The sentence that substantiates the 0.2.4 publication claim links the receipt as https://github.com/cdot65/scm-sdk-rs/blob/56a88d25f72951b8569193f6252efefae7053ea3/docs/checks/release-registry-0.2.4.json, but that commit cannot contain the receipt. docs/checks/phase-28-remote-ci-run-31-observation-07.json:2 binds run 31 to 56a88d25 with its first status at 16:07:07Z and all 49 contexts terminal by 17:40:42Z (lines 2640-2669), while docs/checks/release-registry-0.2.4.json:7 records publishedAt 2026-10-22T17:49:15Z and checkedAt 17:49:18Z, so the file was created after 56a88d25 was already pushed. docs/GITHUB_MIRROR.md:48-50 confirms the merged receipt was copied from governance commit 612864994, whose history is explicitly not integrated into the mirror, and docs/reviews/github-pages/release-0.2.4/remote-branches-before-deployment.json:15-27 pins both remotes' refs/heads/main at 56a88d25. The published page will therefore serve a 404 for its only publication evidence link, and the recorded build cannot catch it because Docusaurus does not validate external URLs. The authoritative source wording at docs/STABILITY.md:3-5 deliberately uses a bare 'checks/release-registry-0.2.4.json' reference instead of a permalink.",
+        "required_fix": "Replace the permalink on docs-site/docs/developer/stability.md:6 with a reference that resolves: either cite the retained receipt path without a blob URL (mirroring docs/STABILITY.md:4) alongside the existing https://crates.io/crates/scm-sdk/0.2.4 link, or repoint it to a commit that actually contains docs/checks/release-registry-0.2.4.json on the published mirror once that commit exists, and record the chosen commit in docs-site/DESIGN_SOURCE.json so a future release update can re-verify it."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/docs/about/release-notes.md",
+        "line": 28,
+        "description": "The 0.2.4 entry says 'Refreshes the repository lockfile' (singular), while the published CHANGELOG.md:40 it summarizes says 'Refresh both the root and native-probe lockfiles', and both Cargo.lock:1122,1772 and contracts/native-probes/Cargo.lock:1122,1771 carry the patched versions. docs/SECURITY.md:79 and docs-site/docs/developer/security.md:81 likewise say 'The 0.2.4 source lockfile'. The understatement is the same imprecision that was already corrected once in the changelog (see docs/reviews/phase-28-attempt-02.json:34).",
+        "required_fix": "Say 'Refreshes the root and native-probe lockfiles to rustls-webpki 0.103.16 and webpki-root-certs 1.0.10' on docs-site/docs/about/release-notes.md:28, and align the wording in docs/SECURITY.md:79 and docs-site/docs/developer/security.md:81 so the repository guide and its derived page both match CHANGELOG.md:40."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/scripts/review-release-024.py",
+        "line": 197,
+        "description": "verify_release_delivery() returns only guard, governanceGuard, evidenceSha256 and the SDK phase fields, so the resolved primary release checkout used for the guard is never recorded. docs/reviews/github-pages/release-0.2.4/attempt-03.checks.json:71-176 consequently identifies the qualified root (/home/cdot/development/cdot65/scm-sdk-rs-ts035, via governanceGuard.qualifiedReleaseRoot and canonicalGuard.cwd) but not the governance checkout that the merged phase/evidence bytes were compared against, which is the very identity the prompt requires a reviewer to confirm. A later reader cannot tell which of several sibling worktrees produced the proof.",
+        "required_fix": "Add the resolved paths to the returned record, e.g. 'releaseRepo': str(release_repo) and 'qualifiedReleaseRepo': str(qualified_release_repo.resolve()) if qualified_release_repo else None, and extend docs-site/scripts/test_review_release_024.py's governance case to assert both appear in the result."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/scripts/review-release-024.py",
+        "line": 98,
+        "description": "render_prompt() always evaluates prior_review_name(attempt - 1), so attempt 1 computes the stem 'attempt-00' and probes SCOPE/'attempt-00.failed.json'. It is harmless today only because the paragraph filter at line 96 drops every paragraph containing the literal '{prior}' token before substitution, so the follow-up paragraph that also holds '{prior_review}' is removed first. That coupling is implicit: if the template paragraph were ever reworded to use only {prior_review}, attempt 1 would silently render 'attempt-00.json' into the prompt, and the existing assertNotIn('attempt-00', first) guard in docs-site/scripts/test_review_release_024.py:51 would then fail rather than prevent the defect.",
+        "required_fix": "Compute and apply the prior substitutions only when attempt > 1 (for example build the replacement pairs in a dict and skip the '{prior_review}'/'{prior}' entries for attempt 1), and add a test asserting that render_prompt(1) performs no prior-attempt filesystem probe."
+      },
+      {
+        "severity": "low",
+        "path": "docs-site/docs/developer/security.md",
+        "line": 70,
+        "description": "After the attempt-01 correction repointed the DEPENDENCIES.md and RELEASE.md permalinks on this page to 6f18529a (lines 7 and 73), two sibling permalinks remain pinned to the pre-0.2.4 content commit efe9de04d9f60d48e6ba8528d1a07e86376d706d without any label marking them historical: the 0.1.0 publication receipt (line 70) and the private-material scan receipt (line 95). Line 95 is the more confusing of the two because lines 144-146 of the same page tell the reader that release qualification refreshes the private scan at the clean candidate commit, so the linked phase-08 receipt is not the current one. The attempt-01 required fix explicitly asked for deliberately historical links to be kept pinned and labelled.",
+        "required_fix": "Label the efe9de04 permalinks on docs-site/docs/developer/security.md:70 and :95 as historical snapshots (for example 'the historical 0.1.0 publication receipt' and 'the retained phase-08 scan receipt'), or repoint them to 6f18529a where the current files live, and mirror whichever wording is chosen in docs/SECURITY.md so the authoritative guide and derived page agree."
+      }
+    ],
+    "evidence_limitations": [
+      "Read/Glob/Grep only: I executed nothing. The four checks in docs/reviews/github-pages/release-0.2.4/attempt-03.checks.json:4-56 (helper unittest discovery, npm --prefix docs-site run build, npm --prefix docs-site run typecheck, and git diff --check 382d9a0876c569c8349cd0db0096635f2494389b -- docs-site docs/SECURITY.md docs/GITHUB_MIRROR.md .github/workflows/docs-deploy.yml) are accepted from their recorded exitCode 0 and log digests, not re-run. The whitespace log digest 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b is the sha256 of a single newline, consistent with empty output from the now-ranged command. I counted 18 test methods in docs-site/scripts/test_review_release_024.py, matching helperUnitTestCount 18.",
+      "I cannot compute sha256, so every digest is accepted as recorded: the 99 file digests and sourceSha256 fa168723 in attempt-03.source.json, the preservedAssets equality with baseline 382d9a0876c569c8349cd0db0096635f2494389b for the ten protected logo/theme/style/config/workflow files, the docs-site/DESIGN_SOURCE.json provenance digests, and the merged-versus-primary byte comparisons inside verify_release_delivery().",
+      "The primary governance checkout and the qualified release root /home/cdot/development/cdot65/scm-sdk-rs-ts035 are outside this worktree and were not inspected. The release_delivery.py result (version 0.2.4, sourceCommit 6f18529a, ciCommit 56a88d25, jobs 49, passed true) and the post_publication_governance proof with its distinct source_sha256 ea692797, qualifiedSourceSha256 f9cebee5 and publishedInventorySha256 a376dfc6 are reference evidence accepted as recorded; I confirmed only that those three hashes differ from each other and from the published archiveSha256 533294fe, which is the conflation the runner guards at docs-site/scripts/review-release-024.py:172-177. The governance checkout path itself is not recorded in the receipt (see the low finding).",
+      "No network access: crates.io, docs.rs, GitHub and Forgejo were not contacted. Publication, archive, tag and remote-ref facts rest on the retained receipts docs/checks/release-registry-0.2.4.json, release-tag-v0.2.4(-observation-07).json, release-tag-github-v0.2.4(-observation-07).json and docs/reviews/github-pages/release-0.2.4/remote-branches-before-deployment.json. The medium finding's 404 conclusion is inferred from those receipt timestamps and docs/GITHUB_MIRROR.md:48-50, not from an HTTP request.",
+      "Git history was not queryable, so I verified current-tree content only. I could not confirm that the permalinked paths exist at 6f18529a (docs/checks/phase-28-live-attempt-01.json, docs/DEPENDENCIES.md, docs/RELEASE.md, contracts/*.json, crates/scm-sdk/examples/*.rs), nor that docs/RESPONSE_DEFAULTS.md, docs/LIVE_ACCEPTANCE.md and docs/SECURITY.md at that commit match the sourceSha256 values in docs-site/DESIGN_SOURCE.json:74-101. I did observe that the recorded directionalProfilesRelease.sourceSha256 0ad04305 and the stability repositorySourceSha256 c9c3ca82 equal the manifest digests for docs/DIRECTIONAL_PROFILES.md and docs/STABILITY.md in attempt-03.source.json:81,85, and that docs/SECURITY.md's published sourceSha256 e5cbec03 is deliberately distinct from its repositorySourceSha256 84f24944.",
+      "Rust was not compiled or executed. API claims were checked by reading this worktree's sources: crates/scm-sdk/src/models/generated.rs:4459-4559 (AiSecurityProfile fields, lossless deserialize, typed-over-extension serialization), 13369-13504 (both new types and their wire keys), 14512-14523 and 168359-168370 (dlp_tenant_id on CreateSecurityProfileRequest and SecurityProfile), 153631-153638 (ModelConfiguration), src/validation/schema_graph.json (exactly six typescript:0.35.0 roots plus the two unprefixed content-type schema names), src/airs/management/profiles.rs:91,214, crates/scm-sdk/Cargo.toml:3,16,19,21 and examples/directional_profiles.rs. The patched TLS versions were read from this tree's Cargo.lock:1122,1772 and contracts/native-probes/Cargo.lock:1122,1771, not from the published archive's Cargo.lock.",
+      "The anchor /developer/security#024-tls-dependency-patches used at docs-site/docs/airs/directional-profiles.md:142 and docs-site/docs/about/release-notes.md:32 was validated by deriving the slug from the heading at docs-site/docs/developer/security.md:79. docs-site/docusaurus.config.ts:20,32 throws on broken links and broken markdown links but leaves onBrokenAnchors at its default warning level and never validates external URLs, so the recorded passing build does not by itself prove the anchor resolves or that any permalink is reachable. Those config bytes are protected in this scope and must not be changed here.",
+      "No Pages deployment, workflow run or published-URL HTTP evidence exists or was observed; this review covers readiness only. The subsequent Pages run for docs/scm-github-pages and verification of https://cdot65.github.io/scm-sdk-rs/ must still be recorded. docs/phase-status.json:7789-7791 keeps phase 28 in_progress, 9161-9168 keeps readiness attempt 5 rejected with budget_exhausted true, 9198-9210 keeps the final-delivery review rejected with the recovery grant unresolved, and 9231-9237 keeps authorization_inferred false; this documentation review grants no SDK review budget and completes no SDK phase.",
+      "The deferred workflow path-filter follow-up recorded at docs/GITHUB_MIRROR.md:150-154 (a docs-site/scripts/** change can trigger a Pages deployment) is preserved deliberately: .github/workflows/docs-deploy.yml:6-8 is byte-protected in this scope, so I raised no finding against it."
+    ]
+  },
+  "fifthAttemptException": null,
+  "cliSha256": "a80d9ccef2c9fd79508bee4235316e6fc3634b03979d42d2c190e32471b4756d"
+}

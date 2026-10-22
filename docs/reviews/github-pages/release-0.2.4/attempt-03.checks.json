@@ -1,0 +1,179 @@
+{
+  "sourceSha256": "fa1687236d955f4e0956a41f221a53dd4dd0f4e38252d6954cda1aff430d7a4d",
+  "priorDocumentationMetadataSha256": "0b29d4cd0472b26a54a1b87da10c5e9f399f638fb4376fe5f7bc9ddc3b1c90c1",
+  "checks": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs-site/scripts",
+        "-p",
+        "test_review_release_024.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "logSha256": "d5bc388889db92c5fe1a3fdcb25f344239d6503e02bf00f57a2600ff18c0a503"
+    },
+    {
+      "command": [
+        "npm",
+        "--prefix",
+        "docs-site",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "logSha256": "3ddf8318269eda92f550ebc1dca1311bda330cc55133bc2d07211a9534635a92"
+    },
+    {
+      "command": [
+        "npm",
+        "--prefix",
+        "docs-site",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "logSha256": "883de7f30614bac6481fbcc1053dc79b5ee7f9ff52225177c0d68e4046c37e3b"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "382d9a0876c569c8349cd0db0096635f2494389b",
+        "--",
+        "docs-site",
+        "docs/SECURITY.md",
+        "docs/GITHUB_MIRROR.md",
+        ".github/workflows/docs-deploy.yml"
+      ],
+      "exitCode": 0,
+      "logSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ],
+  "helperUnitTestCount": 18,
+  "preservedAssets": {
+    "docs-site/static/img/brand-logo.png": "7b4ef48798f9f14d848a77de223d01a07134e1337489edcc7b8732422d4f78a4",
+    "docs-site/static/img/logo.svg": "eae27fb4d3bf4a349527f1627181f8e207c5d5f1289e85e0411ba90a98c9c883",
+    "docs-site/static/img/social-card.png": "b04ca9dd5a4a9dcc3c002accb7d2ba11d130d6a9aaf296ace27bf55041edf628",
+    "docs-site/src/css/custom.css": "2cd26600d312a80acc1758a15ea8c14510b8faf82746d612a666c72268d3fb7f",
+    "docs-site/src/css/prism-airs.ts": "bd805aa7a0920b7c22d88a5a8a87a68863403d0a26c293b500d0424e8ee08ec8",
+    "docs-site/src/pages/index.module.css": "8e752f10ffd7ddb6db06d2ee8d477df94a4f42c53dfa9d78cde9c42043e67a8e",
+    "docs-site/src/theme/DocItem/Layout/index.tsx": "02401eb52e895e3e9dc487d540be2eca52f826720e68d14b54e1edb51cb7c9ed",
+    "docs-site/src/theme/DocItem/Layout/styles.module.css": "5c4144c06d2a0368beafec9e28663d4beea070e8fe75d1842aa91be316834f47",
+    "docs-site/docusaurus.config.ts": "f07cd4a2dd6299fdef20a722a6963856bc5417c145204e748d723a45cf27d1e1",
+    ".github/workflows/docs-deploy.yml": "dcbd385f8d682150fb5b6686078c0c399a7490d403ac213c978ea9dda2e94b0a"
+  },
+  "verifiedReleaseDelivery": {
+    "guard": {
+      "version": "0.2.4",
+      "sourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+      "ciCommit": "56a88d25f72951b8569193f6252efefae7053ea3",
+      "jobs": 49,
+      "passed": true
+    },
+    "governanceGuard": {
+      "scope": "post_publication_governance",
+      "source_sha256": "ea6927971a238b574113e37bab2a9c62ac559828a6bc3b1f546c704fec4a3769",
+      "qualifiedSourceSha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+      "publishedSourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+      "qualifiedReleaseRoot": "/home/cdot/development/cdot65/scm-sdk-rs-ts035",
+      "publishedInventorySha256": "a376dfc692226aabdea8ee81e48fd5ea5800de0f4cee313f784749533cd440ad",
+      "immutableEvidence": {
+        "docs/checks/release-registry-0.2.4.json": "f36164e217ce4df2843f58316ab7e2234f0c4ca083fbbaab484a35d3aa1dd8f9",
+        "docs/checks/release-tag-v0.2.4.json": "891823b1aedc680bd62454b626867ea078d34057d7218aa8366911f4f90410e1",
+        "docs/checks/release-tag-github-v0.2.4.json": "6ecbc2777cd20db83f3ead655f2bdea3e3cc7f09829fb113725ed1aba93ce7b7",
+        "docs/reviews/phase-28-attempt-05.json": "4122bac9ee228a1f381777f6c55a634ca803e4e8190e3386d419ebfc7d10715e",
+        "docs/checks/phase-28-release-package-1.89.0.json": "601fb79b5d7bb590c4cf90f8f8089edd5665bc883ccf9cb388ecf113fc55b6c0",
+        "docs/checks/phase-28-release-package-1.99.0.json": "4eb1bbd67f7e971630ad336eac2bfcc8b945d8629bb7a229b3723e84890fd87b",
+        "docs/checks/phase-28.json": "6f2172ba51014573854f57c104d7f9de4cff81636280441b4eb7ab3692eb2f0e",
+        "docs/checks/phase-28-remote-ci-run-31.json": "f96e160c92b3200b52be6e9150f4dec7a06fc96d8f347e9d69ee9ad2c28a0d68",
+        "docs/checks/phase-28-composed-delivery-F.json": "b9f3a21619aa3661ecf4ab305f2549ecc351f4545c5d177f5a69bf0401a43c19",
+        "docs/checks/phase-28-remote-ci-run-30-failure.json": "bd27844ed3cc4a24881567f2d751898dfc69a90066b0198abab84ea545254852",
+        "docs/reviews/phase-28-attempt-05.checks.json": "6f2172ba51014573854f57c104d7f9de4cff81636280441b4eb7ab3692eb2f0e",
+        "docs/reviews/phase-28-attempt-05.prompt.md": "fc2958d022e0fe749a9a35f0c752515bc88357f3a7251b35c81d2e0e7dc7beb1",
+        "docs/reviews/phase-28-attempt-05.cli.json": "2a65c0ce66b8e790ad65e8ccdedd66ce10aa5e18920fd781ab197a40aff9208c",
+        "docs/reviews/phase-28-attempt-01.checks.json": "e370a530725a1b2834c0a18d2e017c73587f9edd289deab0e1cab1f86cecfd3c",
+        "docs/reviews/phase-28-attempt-01.cli.json": "d8d8b1ea2c3bf55bac36e9491fa10c31239d664022ca12b334ea36153b7d962b",
+        "docs/reviews/phase-28-attempt-01.json": "91ad5b2c2667fff0213ec0d39da77a0c6e04a1e3f2461786fc93d7c3c5040ab4",
+        "docs/reviews/phase-28-attempt-01.prompt.md": "deb752dd2a4fa827aaf005160332522d59995b54ae8bacb4b366187a42e6b55e",
+        "docs/reviews/phase-28-attempt-02.checks.json": "fe64ca837fc553e58632753f4c362717f97287e0c041200fc19d8a0dbb3a3e08",
+        "docs/reviews/phase-28-attempt-02.cli.json": "6546bf6c4470ca79b2bc5d55b3a3b1d4388b01cfe89a0219fa0619ed6b1427ca",
+        "docs/reviews/phase-28-attempt-02.json": "f9089e3e9fa4a0efefcef3513caacd8a08f282773d0eccb72022de74eae43772",
+        "docs/reviews/phase-28-attempt-02.prompt.md": "061db0382f0221a6208f68f0fbcfbc8218434e40b2a9e6c54dda0faa318a4597",
+        "docs/reviews/phase-28-attempt-03.checks.json": "39d230235237c220d677818bc528afd3a8c5b4042715fe49a69cf43648d01ea6",
+        "docs/reviews/phase-28-attempt-03.cli.json": "b07586fa2f94213d79c5e83c0b6d807d24f21e297770c36ee7b6e4f043d383f1",
+        "docs/reviews/phase-28-attempt-03.json": "dfd08c13ed22d049e908f613e792fa5b61cd58d37942477b39c43f891ea14ba7",
+        "docs/reviews/phase-28-attempt-03.prompt.md": "871570bc516c23f2391f70a881234fd1272eaf8891f36bb71e9031eb5ea8af26",
+        "docs/reviews/phase-28-attempt-04.checks.json": "6f2172ba51014573854f57c104d7f9de4cff81636280441b4eb7ab3692eb2f0e",
+        "docs/reviews/phase-28-attempt-04.cli.json": "329c48c1f434f07c50ec67631de7bcc97a62185d32e9ed77a0c85af9c3bd2074",
+        "docs/reviews/phase-28-attempt-04.json": "2b8393b76513961cf14b1f2dec49e155a510438e8ce196b706508f972cf6437b",
+        "docs/reviews/phase-28-attempt-04.prompt.md": "d7ef80db9cc5a3638280df7ea12e7479edc64d46150ac2b689348b0cc77ad235",
+        "docs/reviews/recovery-tools/ci-observer/v1/observer.py": "46e0a5e247b1ef677caf3fdbc66aae64d978409633dddafeb9fe0d95ece04f08",
+        "docs/reviews/recovery-tools/ci-observer/v1/test_observer.py": "2285685a5e2403390864a8a9008dfc223247cc5dcaa467fe565fdb0e86ab92fd",
+        "docs/reviews/recovery-tools/ci-observer/v1/unit-checks.json": "8c94395f43f8742c8e03e0e95cedf0527815371104887bb54ed6c2f68c7e4459"
+      },
+      "tagObservations": {
+        "docs/checks/release-tag-v0.2.4-observation-07.json": "bd8049910f51e77d9e146c9103e201c3ead0a28c32d06fe925ed474a6ada5026",
+        "docs/checks/release-tag-github-v0.2.4-observation-07.json": "1f3e49e3bef1b0d574c30f6c090a94426a4728e282d68a8e140a98f297319982"
+      },
+      "priorFailure": {
+        "docs/checks/phase-28-remote-ci-run-30-failure.json": "bd27844ed3cc4a24881567f2d751898dfc69a90066b0198abab84ea545254852"
+      },
+      "readinessDisposition": {
+        "path": "docs/checks/phase-28-readiness-05-disposition.json",
+        "sha256": "6a3d82ed539eeba0bb98f2b240871f70debb60920494dc07ddc683a35db16602"
+      },
+      "original105Sha256": "6f2172ba51014573854f57c104d7f9de4cff81636280441b4eb7ab3692eb2f0e",
+      "originalCiSha256": "f96e160c92b3200b52be6e9150f4dec7a06fc96d8f347e9d69ee9ad2c28a0d68",
+      "currentCiPath": "docs/checks/phase-28-remote-ci-run-31-observation-07.json",
+      "currentCiSha256": "957ab5bdb5ff92a9fbbbee99f3a153c49911963b7095159985fc18ebe4ec5206",
+      "canonicalGuard": {
+        "command": [
+          "/usr/bin/python3",
+          "tools/release_delivery.py",
+          "--phase",
+          "28",
+          "--version",
+          "0.2.4"
+        ],
+        "cwd": "/home/cdot/development/cdot65/scm-sdk-rs-ts035",
+        "exit_code": 0,
+        "result": {
+          "version": "0.2.4",
+          "sourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+          "ciCommit": "56a88d25f72951b8569193f6252efefae7053ea3",
+          "jobs": 49,
+          "passed": true
+        },
+        "stdoutSha256": "377f49d21c47a386dce01d80a40739abc8cb2e942e2db89d02345a9c1a74e451",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true
+    },
+    "evidenceSha256": {
+      "docs/checks/release-registry-0.2.4.json": "f36164e217ce4df2843f58316ab7e2234f0c4ca083fbbaab484a35d3aa1dd8f9",
+      "docs/checks/release-tag-v0.2.4.json": "891823b1aedc680bd62454b626867ea078d34057d7218aa8366911f4f90410e1",
+      "docs/checks/release-tag-github-v0.2.4.json": "6ecbc2777cd20db83f3ead655f2bdea3e3cc7f09829fb113725ed1aba93ce7b7",
+      "docs/checks/phase-28-remote-ci-run-31-observation-07.json": "957ab5bdb5ff92a9fbbbee99f3a153c49911963b7095159985fc18ebe4ec5206",
+      "docs/checks/phase-28-remote-ci-run-31.json": "f96e160c92b3200b52be6e9150f4dec7a06fc96d8f347e9d69ee9ad2c28a0d68",
+      "docs/checks/phase-28-release-package-1.89.0.json": "601fb79b5d7bb590c4cf90f8f8089edd5665bc883ccf9cb388ecf113fc55b6c0",
+      "docs/checks/phase-28-release-package-1.99.0.json": "4eb1bbd67f7e971630ad336eac2bfcc8b945d8629bb7a229b3723e84890fd87b",
+      "docs/reviews/phase-28-attempt-05.json": "4122bac9ee228a1f381777f6c55a634ca803e4e8190e3386d419ebfc7d10715e",
+      "docs/reviews/phase-28-attempt-05.checks.json": "6f2172ba51014573854f57c104d7f9de4cff81636280441b4eb7ab3692eb2f0e",
+      "docs/reviews/phase-28-attempt-05.prompt.md": "fc2958d022e0fe749a9a35f0c752515bc88357f3a7251b35c81d2e0e7dc7beb1",
+      "docs/reviews/phase-28-attempt-05.cli.json": "2a65c0ce66b8e790ad65e8ccdedd66ce10aa5e18920fd781ab197a40aff9208c",
+      "docs/checks/release-tag-v0.2.4-observation-07.json": "bd8049910f51e77d9e146c9103e201c3ead0a28c32d06fe925ed474a6ada5026",
+      "docs/checks/release-tag-github-v0.2.4-observation-07.json": "1f3e49e3bef1b0d574c30f6c090a94426a4728e282d68a8e140a98f297319982"
+    },
+    "sdkPhase28Status": "in_progress",
+    "sdkPhase28Sha256": "a4d678f2681f3b13a04499297e3cd28c18491a090f6566b68f648b8d3c353ab6",
+    "sdkFinalReview": "Not granted or replaced by independent documentation review."
+  },
+  "sdkTests": "Not rerun for documentation-only scope; qualified runtime is reference evidence.",
+  "deployment": "Not performed by this review helper."
+}
