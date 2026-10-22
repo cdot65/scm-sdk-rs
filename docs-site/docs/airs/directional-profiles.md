@@ -54,7 +54,7 @@ four added TypeScript exports; generated Rust builders are their native support.
 
 ## Construction and current request validation
 
-The 0.2.4 release includes the offline `directional_profiles` example. It builds a
+The 0.2.4 release includes the offline [`directional_profiles` example](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/crates/scm-sdk/examples/directional_profiles.rs). It builds a
 prompt configuration, retains false inspection, supplies the placeholder DLP
 identifier `100`, validates the request, and demonstrates lossless response
 handling. Run it from that release’s source checkout without credentials:

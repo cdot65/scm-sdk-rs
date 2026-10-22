@@ -1,0 +1,45 @@
+{
+  "review": "docs/reviews/github-pages/release-0.2.4/attempt-01.json",
+  "decision": "rejected",
+  "total": 44,
+  "original_artifacts_preserved": true,
+  "corrections": [
+    {
+      "finding": 1,
+      "change": "Added equivalent TLS subsection to authoritative docs/SECURITY.md and retained same site prose."
+    },
+    {
+      "finding": 2,
+      "change": "Bound published SECURITY.md base and CHANGELOG.md supplement; current repositorySourceSha256 explicitly binds the documentation-only augmentation."
+    },
+    {
+      "finding": 3,
+      "change": "Updated current dependency/release permalinks to immutable published source; intentionally historical receipts stay labelled and pinned."
+    },
+    {
+      "finding": 4,
+      "change": "Dated historical preparation, cited exact current main observations and retained separate live predeployment documentation branch observation."
+    },
+    {
+      "finding": 5,
+      "change": "Whitespace check now compares baseline382d9a0 to current tree, including committed and pending source changes."
+    },
+    {
+      "finding": 6,
+      "change": "Require post_publication_governance scope and distinct governance/qualified/archive digests; regression cases cover each conflation."
+    },
+    {
+      "finding": 7,
+      "change": "Validate canonical ci_receipt before indexing; missing/malformed cases fail with named predicate and regression coverage."
+    },
+    {
+      "finding": 9,
+      "change": "Guide links directly to directional_profiles.rs at published source."
+    }
+  ],
+  "deferred_followup": {
+    "finding": 8,
+    "severity": "low",
+    "change": "Workflow remains byte exact as required; docs/GITHUB_MIRROR.md records path-filter follow-up for a separately reviewed workflow change."
+  }
+}

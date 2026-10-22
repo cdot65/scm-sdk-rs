@@ -8,14 +8,16 @@ GitHub mirror is [cdot65/scm-sdk-rs](https://github.com/cdot65/scm-sdk-rs).
 Creating this workflow does not establish that the mirror or Pages deployment
 has been configured or successfully published.
 
-At preparation time, Forgejo `main` points to
-`0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e`, the 0.2.2 source state. The published
-0.2.3 source and its later work have not yet been merged into that branch. The
-initial GitHub `main` mirror must preserve the actual Forgejo `main` commit;
-it must not present 0.2.3 as already merged or fully accepted remotely.
+### Historical preparation — 2026-10-20
 
-The dedicated `docs/scm-github-pages` branch carries the Rust documentation site
-and is based on the later 0.2.3 development history. Pages deploys this branch,
+At initial preparation time, Forgejo `main` pointed to
+`0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e`, the 0.2.2 source state. The published
+0.2.3 source and its later work had not yet been merged into that branch. The
+initial GitHub `main` mirror preserved the actual Forgejo `main` commit; that
+initial state did not establish that 0.2.3 had merged or completed remote acceptance.
+
+The dedicated `docs/scm-github-pages` branch initially carried the Rust documentation
+site based on the later 0.2.3 development history. Pages deploys this branch,
 not mirrored `main`. This is an explicit documentation branch split, not a
 claim that the Forgejo release-delivery and phase-completion gates have passed.
 Record the actual remote branch commits and successful Pages run when setup is
@@ -28,7 +30,17 @@ deployment trigger in a reviewed change.
 The current documentation update integrates accepted SDK release/CI history
 `56a88d25f72951b8569193f6252efefae7053ea3`, including published source
 `6f18529a47cc273feca1000af6e4fc0d96da757e`. The public main mirror carries that
-accepted history. The documentation branch retains its existing Pages workflow,
+accepted history. Both remotes' `refs/heads/main` were observed at
+`56a88d25f72951b8569193f6252efefae7053ea3`, as recorded by the
+[Forgejo observation](checks/release-tag-v0.2.4-observation-07.json) and
+[GitHub observation](checks/release-tag-github-v0.2.4-observation-07.json).
+The documentation remote head remains
+`382d9a0876c569c8349cd0db0096635f2494389b` before this deployment, as recorded in
+[the predeployment branch observation](reviews/github-pages/release-0.2.4/remote-branches-before-deployment.json).
+The review source manifests identify each local candidate head independently;
+a local commit does not establish remote delivery.
+
+The documentation branch retains its existing Pages workflow,
 project base path, user-supplied logo and theme assets.
 
 The registry archive, annotated tags, both package compilers and 49 terminal CI
@@ -134,3 +146,9 @@ Actual setup and deployment receipts are retained under
 sequence, while those receipts identify completed actions and verified commits.
 The existing Forgejo tags through 0.2.2 are mirrored individually. A local 0.2.3
 release tag is not advertised as mirrored because it is absent from Forgejo.
+
+The release-0.2.4 documentation review records the existing workflow path filter
+for `docs-site/scripts/**` as a nonblocking follow-up: a tooling-only change can
+trigger a Pages deployment. Excluding that path or relocating the runner needs
+a separate reviewed workflow change; this update preserves the authorized
+workflow byte-for-byte.

@@ -4,7 +4,7 @@ title: Security
 
 `scm-sdk` is community maintained by `cdot65`. Project-owned Rust forbids unsafe
 code; third-party dependencies and native cryptography have their own boundaries.
-The package does not claim FIPS validation. [DEPENDENCIES.md](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/DEPENDENCIES.md)
+The package does not claim FIPS validation. [DEPENDENCIES.md](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/DEPENDENCIES.md)
 records exact choices, advisory/license/source checks and remaining platform scope.
 
 ## Reporting a vulnerability
@@ -70,7 +70,7 @@ release lines and migration requirements will be stated in release notes. The
 [publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/release-registry-0.1.0.json) binds the published
 archive and source commit.
 
-[RELEASE.md](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/RELEASE.md) requires source review, exact artifact/commit proof and
+[RELEASE.md](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/RELEASE.md) requires source review, exact artifact/commit proof and
 explicit publication control. Service qualification is recorded separately in
 [Live Qualification](/developer/live-qualification); permissions or missing prerequisites
 must not be hidden as SDK successes. Remote CI execution and additional native

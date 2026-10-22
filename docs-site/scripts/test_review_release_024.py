@@ -115,10 +115,24 @@ class Tests(unittest.TestCase):
         self.assertIn(canonical, files)
         self.assertIn(observed, files)
 
+    def test_missing_or_malformed_canonical_ci_receipt_is_named(self):
+        for canonical in (None, '', 31, 'docs/checks/phase-28-remote-ci-run-31-observation-03.json',
+                          '../phase-28-remote-ci-run-31.json'):
+            phase = {'id': 28, 'delivery': {
+                'ci_observation': 'docs/checks/phase-28-remote-ci-run-31-observation-03.json'}}
+            if canonical is not None:
+                phase['delivery']['ci_receipt'] = canonical
+            inputs = {'docs/phase-status.json': {'phases': [phase]},
+                      'docs/checks/release-registry-0.2.4.json': {
+                          'releaseReadiness': {'review': 'docs/reviews/phase-28-attempt-05.json'}}}
+            with mock.patch.object(r, 'read', side_effect=lambda name: json.dumps(inputs[name]).encode()):
+                with self.assertRaisesRegex(ValueError, 'canonical ci_receipt'):
+                    r.delivery_records()
+
     def test_governance_guard_requires_qualified_binding_and_merged_snapshot(self):
         phase = {'id': 28, 'status': 'pending'}
         name = 'docs/checks/release-registry-0.2.4.json'
-        raw = json.dumps({'sourceCommit': 'published'}).encode()
+        raw = json.dumps({'sourceCommit': 'published', 'archiveSha256': 'archive'}).encode()
         canonical = {'passed': True, 'version': '0.2.4', 'jobs': 49,
                      'sourceCommit': 'published', 'ciCommit': 'ci'}
         with tempfile.TemporaryDirectory() as tmp:
@@ -126,7 +140,7 @@ class Tests(unittest.TestCase):
             (root / name).write_bytes(raw)
             (root / 'docs/phase-status.json').write_text(json.dumps({'phases': [phase]}))
             qualified = root / 'qualified'
-            proof = {'passed': True, 'source_sha256': 'governance', 'qualifiedSourceSha256': 'frozen',
+            proof = {'scope': 'post_publication_governance', 'passed': True, 'source_sha256': 'governance', 'qualifiedSourceSha256': 'frozen',
                      'qualifiedReleaseRoot': str(qualified), 'publishedSourceCommit': 'published',
                      'canonicalGuard': {'result': canonical}, 'tagObservations': {name: r.sha(raw)},
                      'currentCiPath': name, 'currentCiSha256': r.sha(raw)}
@@ -140,6 +154,12 @@ class Tests(unittest.TestCase):
                     bad = dict(proof); bad[field] = 'wrong'
                     run.return_value = mock.Mock(returncode=0, stdout=json.dumps(bad))
                     with self.assertRaises(ValueError): r.verify_release_delivery(root, qualified)
+                for changed in (dict(proof, scope='wrong_scope'),
+                                dict(proof, source_sha256='frozen'),
+                                dict(proof, source_sha256='archive')):
+                    run.return_value = mock.Mock(returncode=0, stdout=json.dumps(changed))
+                    with self.assertRaisesRegex(ValueError, 'distinct source bindings'):
+                        r.verify_release_delivery(root, qualified)
 
     def test_prior_documentation_metadata_preserved_before_append(self):
         original = {'phases': [{'id': 28, 'status': 'pending'}],

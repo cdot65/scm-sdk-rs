@@ -48,6 +48,8 @@ REFERENCES = (
     'AGENTS.md', 'CLAUDE.md', 'docs/PHASES.md', 'docs/GITHUB_MIRROR.md',
     'docs/DIRECTIONAL_PROFILES.md', 'docs/STABILITY.md', 'docs/SECURITY.md', 'CHANGELOG.md',
     'docs/checks/release-registry-0.2.4.json',
+    'docs/reviews/github-pages/release-0.2.4/remote-branches-before-deployment.json',
+    'docs/reviews/github-pages/release-0.2.4/attempt-01.disposition.json',
 )
 
 
@@ -71,7 +73,11 @@ def delivery_records():
     phase = next((p for p in status['phases'] if p['id'] == 28), {})
     registry = json.loads(read('docs/checks/release-registry-0.2.4.json'))
     delivery = phase.get('delivery', {})
-    ci = delivery.get('ci_observation', delivery.get('ci_receipt', ''))
+    canonical_ci = delivery.get('ci_receipt')
+    if (not isinstance(canonical_ci, str)
+            or not re.fullmatch(r'docs/checks/phase-28-remote-ci-run-\d+\.json', canonical_ci)):
+        raise ValueError('Merged canonical ci_receipt is missing or malformed')
+    ci = delivery.get('ci_observation', canonical_ci)
     review = registry.get('releaseReadiness', {}).get('review', '')
     if (not re.fullmatch(r'docs/checks/phase-28-remote-ci-run-\d+(?:-observation-\d+)?\.json', ci)
             or not re.fullmatch(r'docs/reviews/phase-28-attempt-\d+\.json', review)):
@@ -80,7 +86,7 @@ def delivery_records():
     files = [
         'docs/checks/release-registry-0.2.4.json', 'docs/checks/release-tag-v0.2.4.json',
         'docs/checks/release-tag-github-v0.2.4.json', ci,
-        delivery['ci_receipt'],
+        canonical_ci,
         'docs/checks/phase-28-release-package-1.89.0.json',
         'docs/checks/phase-28-release-package-1.99.0.json',
         review, stem + '.checks.json', stem + '.prompt.md', stem + '.cli.json',
@@ -125,10 +131,13 @@ def verify_release_delivery(release_repo, qualified_release_repo=None):
         raise ValueError('Primary actual release_delivery.verify has not passed')
     verified = json.loads(result.stdout)
     governance = None
+    registry = json.loads(read('docs/checks/release-registry-0.2.4.json'))
     if qualified_release_repo is not None:
         governance = verified
-        if (governance.get('passed') is not True or not governance.get('source_sha256')
+        if (governance.get('scope') != 'post_publication_governance'
+                or governance.get('passed') is not True or not governance.get('source_sha256')
                 or not governance.get('qualifiedSourceSha256')
+                or governance.get('source_sha256') in (governance.get('qualifiedSourceSha256'), registry.get('archiveSha256'))
                 or governance.get('qualifiedReleaseRoot') != str(qualified_release_repo.resolve())):
             raise ValueError('Governance delivery proof lacks distinct source bindings')
         verified = governance.get('canonicalGuard', {}).get('result', {})
@@ -139,7 +148,6 @@ def verify_release_delivery(release_repo, qualified_release_repo=None):
                 raise ValueError('Governance tag observation is not bound to merged evidence')
         if digests.get(governance.get('currentCiPath')) != governance.get('currentCiSha256'):
             raise ValueError('Governance CI observation is not bound to merged evidence')
-    registry = json.loads(read('docs/checks/release-registry-0.2.4.json'))
     if (verified.get('passed') is not True or verified.get('version') != '0.2.4'
             or verified.get('jobs') != 49 or verified.get('sourceCommit') != registry['sourceCommit']):
         raise ValueError('Primary delivery guard lacks exact publication and terminal49-CI proof')
@@ -331,7 +339,8 @@ def main():
                  '-p', 'test_review_release_024.py', '-v'],
                 ['npm', '--prefix', 'docs-site', 'run', 'build'],
                 ['npm', '--prefix', 'docs-site', 'run', 'typecheck'],
-                ['git', 'diff', '--check', '--', 'docs-site', '.github/workflows/docs-deploy.yml']]
+                ['git', 'diff', '--check', BASE, '--', 'docs-site', 'docs/SECURITY.md',
+                 'docs/GITHUB_MIRROR.md', '.github/workflows/docs-deploy.yml']]
     checks = []
     for index, command in enumerate(commands):
         result = subprocess.run(command, cwd=ROOT, capture_output=True, timeout=900)
