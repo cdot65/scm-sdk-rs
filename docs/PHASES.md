@@ -288,6 +288,20 @@ compilers are deliberately deferred to phase 28; local model/wire results do not
 substitute for that release evidence. Both chunk reviews and the complete-phase
 review must meet the current rubric before advancing.
 
+Phase 28 acceptance requires both named chunks: `release-readiness` and
+`remote-delivery`. The readiness chunk retains the cumulative compatibility gate,
+fresh source-bound service evidence with its recorded limitations, and clean
+extracted packages on Rust 1.89.0 and 1.99.0. Each package must execute the
+directional-profile example and external consumer under `--require-directional`.
+The version-specific candidate and prepublication guards must verify phase 28 /
+0.2.4 against the current source, and the release-readiness chunk and full
+release-readiness Claude review must pass before publication. Readiness cannot
+complete the phase. The remote-delivery chunk and final complete-phase review
+additionally require verified 0.2.4 registry archive bytes, the remote annotated
+`v0.2.4` tag, and all 49 terminal successful CI contexts on the matching release
+source. Both chunks and the final phase review must meet the current rubric;
+local checks or a published artifact alone do not establish final delivery.
+
 After phase 28, explicitly reselect phase 24 to resume its existing delivery gate,
 then phase 25, preserving their original review attempts and acceptance rules.
 This maintenance sequence does not implicitly reactivate or complete them.

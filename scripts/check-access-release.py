@@ -65,7 +65,7 @@ def verify(root, phase=17, version='0.2.1'):
         proof = json.loads(path.read_text())
         if phase in (24, 28):
             publication.require_proof(proof, schema_version=3)
-            wrapper.verify_receipt(root, path, compiler, require_directional=True) if phase == 28 else wrapper.verify_receipt(root, path, compiler)
+            wrapper.verify_receipt(root, path, compiler, require_directional=phase == 28)
             if commit_fingerprint(root, proof["releaseCommit"]) != fingerprint(root):
                 raise ValueError("Package commit differs from current reviewed source")
             subprocess.run(["git", "merge-base", "--is-ancestor", proof["releaseCommit"], "HEAD"], cwd=root, check=True)

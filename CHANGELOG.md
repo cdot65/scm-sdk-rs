@@ -4,6 +4,9 @@
 
 Release candidate: not yet published. Publication and remote delivery require
 verified 0.2.4 registry, annotated-tag, and CI receipts.
+Publication is established only by the verified
+`docs/checks/release-registry-0.2.4.json` receipt; the delivery guard also requires
+the annotated tag and successful CI evidence.
 
 - Add `ContentTypeConfiguration` and `ContentTypeConfigurations`, their builders,
   and named validators `ContentTypeConfigurationSchema` and

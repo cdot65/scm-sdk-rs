@@ -200,3 +200,53 @@ Publication verification and final delivery require
 version-specific registry, annotated-tag, and terminal successful CI receipts.
 A readiness review cannot complete phase 28. Historical phase 24/25 records and
 release versions remain independent; never substitute their receipts.
+
+### Execute the reviewed 0.2.4 delivery
+
+Replace `NN` below with the accepted **phase-level release-readiness** attempt,
+not the readiness chunk review. Set `RELEASE_WORKTREE` to the clean detached
+worktree retained by both phase-28 package proofs, `RELEASE_SOURCE` to their
+`releaseCommit`, and `DELIVERY_SOURCE` to the pushed commit selected for CI.
+`RUN_NUMBER` is that successful Forgejo run's repository index. These are actual
+receipt identities, not the current branch name. The delivery source may be a
+later evidence-only descendant with the same reviewed source fingerprint.
+
+Run the prepublication guard against the unchanged candidate, then publish from
+that exact clean worktree using the owner-controlled Cargo credential:
+
+```sh
+python3 scripts/check-prepublication.py --phase 28 --version 0.2.4 \
+  --readiness-review docs/reviews/phase-28-attempt-NN.json
+(cd "$RELEASE_WORKTREE" && cargo +1.99.0 publish -p scm-sdk --locked)
+python3 scripts/verify-publication.py --version 0.2.4 \
+  --proof docs/checks/phase-28-release-package-1.99.0.json \
+  --msrv-proof docs/checks/phase-28-release-package-1.89.0.json \
+  --readiness-review docs/reviews/phase-28-attempt-NN.json \
+  --output docs/checks/release-registry-0.2.4.json
+```
+
+Create and push the annotated `v0.2.4` tag at `RELEASE_SOURCE`; push the delivery
+commit and wait for all 49 configured CI contexts to succeed. Record the remote
+observations explicitly with the 0.2.4 version (the observer's default remains
+historical 0.2.3):
+
+```sh
+python3 scripts/observe-release.py tag --version 0.2.4 \
+  --source "$RELEASE_SOURCE" --output docs/checks/release-tag-v0.2.4.json
+python3 scripts/observe-release.py ci --version 0.2.4 \
+  --source "$DELIVERY_SOURCE" --run "$RUN_NUMBER" \
+  --output "docs/checks/phase-28-remote-ci-run-$RUN_NUMBER.json"
+```
+
+In phase 28's `docs/phase-status.json` entry, record `registry_publication` with
+`status: published_and_verified`, `version: 0.2.4`, the registry receipt path in
+`evidence`, and its exact `sourceCommit` in `source_commit`. Record `delivery`
+with `registry_receipt`, `tag_receipt`, and `ci_receipt` pointing to the three
+verified files above. Then run the offline delivery guard:
+
+```sh
+python3 tools/release_delivery.py --phase 28 --version 0.2.4
+```
+
+Only after that guard passes can the remote-delivery chunk and final phase review
+establish completion. The readiness review alone cannot advance phase 28.

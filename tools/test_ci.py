@@ -561,7 +561,7 @@ class CiContractTests(unittest.TestCase):
         self.assertTrue(any('scripts/check-native-exports.py' in command for command in current_g25))
         invalid=subprocess.run([sys.executable,'tools/check_phase.py','--phase','12','--contracts-only'],cwd=ROOT,capture_output=True,text=True)
         self.assertEqual(invalid.returncode,2)
-        self.assertIn('requires --phase 12 --verification-only',invalid.stderr)
+        self.assertIn('requires --verification-only and a supported phase:', invalid.stderr)
 
     def test_active_management_ci_preserves_exact_vendor_bytes_and_scoped_receipts(self):
         from check_phase import ci_commands_for

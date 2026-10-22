@@ -324,7 +324,7 @@ unchanged. `--check` continues to reject that state.
 
 ### Interrupted local qualification
 
-For active phases 23–25, `python3 tools/check_phase.py --phase N --resume`
+For active phases 23–25 and 27, `python3 tools/check_phase.py --phase N --resume`
 checkpoints each successfully executed command. A checkpoint is only a passing
 prefix, never phase acceptance. Resume requires the identical source fingerprint,
 exact command plan, passing completed records, unchanged receipt/archive bytes,
@@ -335,6 +335,8 @@ full report and before accepting a review of the current source. Historical
 accepted review snapshots retain their original hashes and are not rebound to
 later runs' output files.
 Archive the partial receipt before beginning a new source or expired run.
+Phase 28 does not permit `--resume`: its release qualification requires a single
+complete run without reusing a checkpointed command prefix.
 
 ### TypeScript 0.35.0 patch delivery
 

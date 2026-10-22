@@ -895,7 +895,8 @@ def main():
     if args.resume and (args.phase not in (23, 24, 25, 27) or args.contracts_only or args.verification_only):
         parser.error('--resume requires an active full phase 23–25 or 27 qualification')
     if args.contracts_only and (not args.verification_only or args.phase not in CONTRACT_CI_PHASES):
-        parser.error("--contracts-only requires --phase 12 --verification-only (or another supported phase: 17, 20, 21–25)")
+        parser.error("--contracts-only requires --verification-only and a supported phase: "
+                     + ", ".join(map(str, CONTRACT_CI_PHASES)))
     status = json.loads((ROOT / "docs/phase-status.json").read_text())
     if status["active_phase"] != args.phase and not args.verification_only:
         raise ValueError("Run the active phase's checks")

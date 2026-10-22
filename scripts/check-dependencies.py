@@ -124,6 +124,34 @@ def find_tool(name, directory, query):
     return candidate
 
 
+def audit_lockfiles(tool, database, run):
+    """Independently audit SDK and development probe graphs at one RustSec pin."""
+    paths = ('Cargo.lock', 'contracts/native-probes/Cargo.lock')
+    before = {name: sha(ROOT / name) for name in paths}
+    results = []
+    for name in paths:
+        command = [str(tool), 'audit', '--file', str(ROOT / name), '--db', str(database),
+                   '--no-fetch', '--json', '--deny', 'warnings']
+        audit = run(command)
+        try:
+            document = json.loads(audit.stdout)
+        except json.JSONDecodeError as error:
+            raise ValueError('cargo-audit did not produce its machine-readable report: ' + name) from error
+        vulnerabilities = document.get('vulnerabilities') if isinstance(document, dict) else None
+        warnings = document.get('warnings') if isinstance(document, dict) else None
+        clean = (isinstance(vulnerabilities, dict)
+                 and type(vulnerabilities.get('count')) is int
+                 and vulnerabilities['count'] == 0
+                 and isinstance(warnings, dict) and not any(warnings.values()))
+        results.append({'path': name, 'lockfileSha256': before[name],
+                        'command': command, 'exit_code': audit.returncode, 'audit': document,
+                        'passed': audit.returncode == 0 and clean})
+    for result in results:
+        result['lockfileUnchanged'] = before[result['path']] == sha(ROOT / result['path'])
+        result['passed'] = result['passed'] and result['lockfileUnchanged']
+    return results
+
+
 def qualify(args, checks):
     env = {k:v for k,v in os.environ.items() if not k.startswith(('PANW_', 'AIRS_', 'SCM_'))}
     spec = importlib.util.spec_from_file_location('runner',ROOT/'scripts/check-native-exports.py')
@@ -193,11 +221,8 @@ def qualify(args, checks):
         if actual!=revision:
             raise ValueError('Advisory checkout pin mismatch')
         commit_time = query(['git', '-C', str(database), 'show', '-s', '--format=%cI', 'HEAD'])
-        audit=run([tools['cargo-audit'],'audit','--file',lock_path,'--db',database,'--no-fetch','--json','--deny','warnings'])
-        try:
-            audit_json=json.loads(audit.stdout)
-        except json.JSONDecodeError:
-            raise ValueError('cargo-audit did not produce its machine-readable report')
+        lockfile_audits = audit_lockfiles(tools['cargo-audit'], database, run)
+        audit_json = lockfile_audits[0]['audit']
     metadata=run([cargo,'+1.99.0','metadata','--all-features','--locked','--offline','--format-version','1'])
     if metadata.returncode:
         raise ValueError('Unable to resolve locked all-feature dependency metadata')
@@ -206,20 +231,21 @@ def qualify(args, checks):
     resolved_features = check_resolved_features(metadata_json)
     checks.pop()  # Store compact package evidence instead of huge absolute source paths.
     deny=run([tools['cargo-deny'],'--all-features','--locked','--offline','--format','json','check','bans','licenses','sources','--deny','warnings'])
+    for item in lockfile_audits:
+        item['lockfileUnchanged'] = item['lockfileUnchanged'] and item['lockfileSha256'] == sha(ROOT / item['path'])
+        item['passed'] = item['passed'] and item['lockfileUnchanged']
     unchanged=before==sha(lock_path)
-    vulnerabilities=audit_json.get('vulnerabilities',{})
-    warnings=audit_json.get('warnings',{})
-    zero=vulnerabilities.get('count')==0 and not any(warnings.values())
-    passed=audit.returncode==0 and deny.returncode==0 and unchanged and zero
+    passed=all(item['passed'] for item in lockfile_audits) and deny.returncode==0 and unchanged
     report={'schemaVersion':1,'checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'passed':passed,
             'lockfileSha256':before,'lockfileUnchanged':unchanged,'policySha256':sha(ROOT/'deny.toml'),
             'database':{'url':DATABASE,'revision':revision,'upstreamHeadAtFetch':current,'commitTime':commit_time,'freshHead':revision==current},
             'tools':[{'name':name,'version':VERSIONS[name],'binarySha256':sha(path)} for name,path in tools.items()],
-            'audit':audit_json,'packages':[{'name':p['name'],'version':p['version'],'license':p['license'],'source':p['source'],
+            'audit':audit_json, 'lockfileAudits':lockfile_audits, 'packages':[{'name':p['name'],'version':p['version'],'license':p['license'],'source':p['source'],
                 'rustVersion':p.get('rust_version')} for p in sorted(packages,key=lambda p:(p['name'],p['version']))],
             'resolvedPackages':len(packages), 'resolvedFeatures': resolved_features,
             'serdeJsonPreserveOrderEnabled': False, 'checks':checks,
-            'limitations':['RustSec covers published known advisories at the recorded revision, not all possible flaws.',
+            'limitations':['RustSec independently audits the SDK and native-probe lockfiles; license/source and feature evidence below covers the SDK graph.',
+                           'RustSec covers published known advisories at the recorded revision, not all possible flaws.',
                            'License/source policy checks package metadata and detected license files; downstream applications must audit their own resolved graphs.']}
     output = write_report(args, report)
     print(json.dumps({'passed':passed,'packages':len(packages),'advisoryRevision':revision,'freshHead':revision==current,'evidence':str(output)}))

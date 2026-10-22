@@ -7,6 +7,7 @@ import json
 import pathlib
 import subprocess
 import tempfile
+import sys
 import unittest
 from unittest.mock import Mock, patch
 
@@ -24,6 +25,31 @@ candidate = load('candidate024', 'check-access-release.py')
 
 
 class Release024Tests(unittest.TestCase):
+    def test_release_documentation_matches_candidate_and_delivery_guards(self):
+        root = pathlib.Path(__file__).resolve().parents[1]
+        readme = (root / 'README.md').read_text()
+        self.assertIn('current verified published version is [0.2.3]', readme)
+        self.assertIn('docs/checks/release-registry-0.2.3.json', readme)
+        self.assertIn('Crate version: **0.2.4**', readme)
+        self.assertIn('candidate, not yet published', readme)
+        self.assertIn('Until publication is verified, retain your existing released pin', readme)
+        phases = (root / 'docs/PHASES.md').read_text()
+        self.assertIn('Phase 28 acceptance requires both named chunks', phases)
+        self.assertIn('`release-readiness` and\n`remote-delivery`', phases)
+        ci = (root / 'docs/CI.md').read_text()
+        self.assertIn('For active phases 23–25 and 27,', ci)
+        self.assertIn('Phase 28 does not permit `--resume`', ci)
+        release = (root / 'docs/RELEASE.md').read_text().split(
+            '### Execute the reviewed 0.2.4 delivery', 1)[1]
+        for command in ('cargo +1.99.0 publish -p scm-sdk --locked',
+                        'scripts/verify-publication.py --version 0.2.4',
+                        '--proof docs/checks/phase-28-release-package-1.99.0.json',
+                        '--msrv-proof docs/checks/phase-28-release-package-1.89.0.json',
+                        'scripts/observe-release.py tag --version 0.2.4',
+                        'scripts/observe-release.py ci --version 0.2.4',
+                        'tools/release_delivery.py --phase 28 --version 0.2.4'):
+            self.assertIn(command, release)
+
     def test_explicit_contexts_preserve_old_defaults(self):
         self.assertIn((28, '0.2.4'), candidate.RELEASES)
         self.assertIn((28, '0.2.4'), release_delivery.RELEASES)
@@ -59,6 +85,16 @@ class Release024Tests(unittest.TestCase):
         self.assertEqual(registry.require_release_readiness.call_count, 2)
         self.assertEqual(result['version'], '0.2.4')
         self.assertFalse(result['publicationPerformed'])
+
+    def test_contract_subset_diagnostic_lists_all_supported_phases(self):
+        stderr = io.StringIO()
+        with patch.object(sys, 'argv', ['check_phase.py', '--phase', '28', '--contracts-only']), \
+                contextlib.redirect_stderr(stderr):
+            with self.assertRaises(SystemExit) as failure:
+                check_phase.main()
+        self.assertEqual(failure.exception.code, 2)
+        self.assertIn(', '.join(map(str, check_phase.CONTRACT_CI_PHASES)), stderr.getvalue())
+        self.assertIn('--verification-only', stderr.getvalue())
 
     def test_phase28_commands_require_both_directional_packages(self):
         commands = check_phase.commands_for(28)

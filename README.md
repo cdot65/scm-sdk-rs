@@ -26,13 +26,17 @@ It retains five experimental
 11 new calls, with a separately pinned vendor ledger. See the
 [migration notes](CHANGELOG.md) before adopting the stricter query contract.
 
-The published maintenance release is [0.1.1](https://crates.io/crates/scm-sdk/0.1.1),
+The current verified published version is [0.2.3](https://crates.io/crates/scm-sdk/0.2.3),
+with a verified [registry receipt](docs/checks/release-registry-0.2.3.json).
+The 0.2.4 candidate below remains unpublished.
+
+The earlier maintenance release is [0.1.1](https://crates.io/crates/scm-sdk/0.1.1),
 with [published API docs](https://docs.rs/scm-sdk/0.1.1/scm_sdk/) and a verified
 [publication receipt](docs/checks/release-registry-0.1.1.json). For its G10 behavior,
 see [response defaults](docs/RESPONSE_DEFAULTS.md) and the
 [offline example](crates/scm-sdk/examples/response_defaults.rs). The
 [initial 0.1.0 receipt](docs/checks/release-registry-0.1.0.json) remains historical.
-Install the vendor update as [scm-sdk 0.2.0](https://crates.io/crates/scm-sdk/0.2.0).
+The earlier vendor update [scm-sdk 0.2.0](https://crates.io/crates/scm-sdk/0.2.0) remains historical.
 Its [registry receipt](docs/checks/release-registry-0.2.0.json) records the verified
 archive and exact release source; its immutable tag is `v0.2.0`.
 See [CI](docs/CI.md) and the [release procedure](docs/RELEASE.md).
@@ -49,7 +53,8 @@ and remains live-unverified. Existing 0.2.0 APIs and G10 behavior are retained.
 ## Start here
 
 After 0.2.4 is published and its registry receipt above verifies, pin that release using the shorter
-dependency alias. Until publication is verified, retain your existing released pin:
+dependency alias. Until publication is verified, retain your existing released pin;
+0.2.3 is the current verified published version:
 
 ```toml
 [dependencies]
