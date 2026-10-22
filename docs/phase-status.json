@@ -9270,13 +9270,13 @@
       {
         "version": "0.2.4",
         "scope": "independent-docs-release-0.2.4",
-        "status": "reviewed_ready_for_deployment",
+        "status": "deployed",
         "score": 46,
         "fifth_attempt_exception": null,
         "review": "docs/reviews/github-pages/release-0.2.4/attempt-05.json",
         "source_manifest": "docs/reviews/github-pages/release-0.2.4/attempt-05.source.json",
         "checks": "docs/reviews/github-pages/release-0.2.4/attempt-05.checks.json",
-        "deployment_status": "pending",
+        "deployment_status": "success",
         "release_source_commit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
         "sdk_phase28_status_at_review": "in_progress",
         "sdk_final_review": "Not granted or replaced by this independent docs review.",
@@ -9311,7 +9311,16 @@
           }
         ],
         "review_gate": "normal46_no_exception",
-        "delivery_preflight": "docs/reviews/github-pages/release-0.2.4/delivery-preflight.json"
+        "delivery_preflight": "docs/reviews/github-pages/release-0.2.4/delivery-preflight.json",
+        "deployment_commit": "7c14399dce31bee881be09ff876f824145b04fe4",
+        "deployment_workflow": "https://github.com/cdot65/scm-sdk-rs/actions/runs/39865922997",
+        "deployment_receipt": "docs/reviews/github-pages/release-0.2.4/deployment.json",
+        "deployment_verified_at": "2026-10-22T22:35:25.070639+00:00",
+        "public_url": "https://cdot65.github.io/scm-sdk-rs/",
+        "public_pages_verified": 6,
+        "protected_images_verified": 3,
+        "theme_assets_verified": 3,
+        "receipt_only_followup": "Deployment evidence commit does not change the accepted site source or require a new Pages build."
       }
     ]
   }
