@@ -314,9 +314,9 @@ def commands_for(phase):
     if phase == 26:
         return [["git", "diff", "--exit-code", "578f2e6", "--", "crates/scm-sdk"],
                 ["python", "-c", "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk']), 'Unexpected SDK implementation file before plan acceptance'"],
-                ["git", "diff", "--check"],
-                ["git", "diff", "--check", "578f2e6..HEAD"],
-                ["git", "diff", "--cached", "--check"],
+                ["git", "diff", "--check", "--", ".", ":(exclude)contracts/sources/typescript-0.35.0/*"],
+                ["git", "diff", "--check", "578f2e6..HEAD", "--", ".", ":(exclude)contracts/sources/typescript-0.35.0/*"],
+                ["git", "diff", "--cached", "--check", "--", ".", ":(exclude)contracts/sources/typescript-0.35.0/*"],
                 ["python", "tools/verify_typescript035_source.py", "--check"],
                 ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-26-private-material.json"],
                 ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_typescript035_governance.py", "-v"],
@@ -859,7 +859,7 @@ def main():
         result = run_check(invocation)
         records.append({"command": command, "invocation": invocation, **result,
                         "duration_seconds": round(time.monotonic() - started, 3)})
-        if args.phase in (23, 24, 25) and result['exit_code'] == 0:
+        if args.phase in (23, 24, 25, 26) and result['exit_code'] == 0:
             if fingerprint(ROOT) != before:
                 raise ValueError('Source changed during resumable qualification')
             records[-1].update(source_unchanged=True,
@@ -878,7 +878,7 @@ def main():
                               "stderr_tail": result["stderr"][-16384:]}), file=sys.stderr, flush=True)
             break
     unchanged = before == fingerprint(ROOT)
-    if args.phase in (23, 24, 25):
+    if args.phase in (23, 24, 25, 26):
         verify_checkpoint_bindings([row for row in records if row['exit_code'] == 0])
     report = {"phase": args.phase, "source_sha256": before, "source_unchanged": unchanged,
               "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),

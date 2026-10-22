@@ -217,7 +217,7 @@ def check_evidence(root, phase, source_sha256, path=None):
         raise ValueError("Phase checks are incomplete, stale, or failing; rerun tools/check_phase.py")
     # Historical accepted snapshots retain their own evidence hashes. Current
     # qualification must additionally prove the referenced files still match.
-    if phase in (23, 24, 25) and source_sha256 == fingerprint(root):
+    if phase in (23, 24, 25, 26) and source_sha256 == fingerprint(root):
         verify_checkpoint_bindings(checks, root)
     return path
 

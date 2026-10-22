@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "contracts/sources/typescript-0.35.0"
-MANIFEST_SHA256 = "89831a8c173665e1a84f7d985db50ba78548b6f1595e6f10db0fc9d2d0a7ba6b"
+MANIFEST_SHA256 = "0c77c29a564771ad07f482027569f137c9d6ea3db8cc78cc8e9dd76ec796b2b7"
 
 def baseline_ledger(root=ROOT):
     manifest = json.loads((root / 'contracts/manifest.json').read_text())
@@ -27,6 +27,16 @@ def verify_zod_versions(package, lock):
         raise ValueError('Oracle Zod version does not satisfy the pinned source')
 
 
+def verify_license(manifest, baseline):
+    licenses = [row for row in baseline['licenses'] if row['id'] == 'typescript']
+    pinned = [row for row in manifest['files'] if row['upstreamPath'] == 'LICENSE']
+    if (manifest.get('license') != {'id': 'typescript', 'spdx': 'Apache-2.0'}
+            or len(licenses) != 1 or len(pinned) != 1
+            or licenses[0]['spdx'] != 'Apache-2.0'
+            or any(pinned[0][key] != licenses[0][key] for key in ('sha256', 'gitBlobSha1', 'bytes'))):
+        raise ValueError('Pinned TypeScript license differs from frozen Apache attribution')
+
+
 def verify(source=SOURCE):
     if source.is_symlink() or any(p.is_symlink() for p in source.rglob('*')):
         raise ValueError("Pinned source cannot contain symlinks")
@@ -34,6 +44,7 @@ def verify(source=SOURCE):
     if hashlib.sha256(raw).hexdigest() != MANIFEST_SHA256:
         raise ValueError("TypeScript 0.35.0 manifest does not match reviewed pin")
     manifest = json.loads(raw)
+    verify_license(manifest, json.loads((ROOT / "contracts/manifest.json").read_text()))
     if manifest["commit"] != "780c985cac90144ea1884fe6cffa58b5deec9ac4" or manifest["version"] != "0.35.0":
         raise ValueError("Unexpected TypeScript source identity")
     helper_spec = importlib.util.spec_from_file_location('frozen_contract_verifier', ROOT / 'tools/verify-contracts.py')

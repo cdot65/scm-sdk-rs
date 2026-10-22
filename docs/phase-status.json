@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 26,
+  "active_phase": 27,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations); additive Prisma AIRS OpenAPI reconciliation at pan.dev 582e30543bf2adfd8b0ee457170d22b5c380dfbe with retained SDK capabilities",
   "review_threshold": 9,
   "phases": [
@@ -6744,12 +6744,14 @@
     {
       "id": 26,
       "name": "TypeScript 0.35.0 parity plan",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-26-attempt-04.json"
+      ],
       "chunks": [
         {
           "id": "plan-and-provenance",
-          "status": "pending",
+          "status": "accepted",
           "scope_evidence": [
             "docs/typescript-035-parity-plan.md",
             "docs/PHASES.md",
@@ -6776,7 +6778,18 @@
                 "contracts/sources/typescript-0.35.0"
               ]
             }
-          ]
+          ],
+          "accepted_total": 45,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 9,
+            "supportability": 9,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-26-chunk-plan-and-provenance-attempt-05.json",
+          "accepted_source_sha256": "536b18139b9748719abd4ace20341fb93a6c37168c5feec06d47be19614cebb0",
+          "review_decision": "accepted"
         }
       ],
       "authorization": "User explicitly requested FIX IT NOW after the 0.35.0 parity audit; independent maintenance scope. Existing phase24/25 records remain incomplete and are not rebound.",
@@ -6798,13 +6811,24 @@
       "plan": "docs/typescript-035-parity-plan.md",
       "milestones": {
         "implemented_scope": {
-          "status": "pending"
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-26-attempt-04.json"
+          ]
         },
         "independent_verification": {
-          "status": "pending"
+          "status": "passed",
+          "evidence": [
+            "docs/reviews/phase-26-attempt-04.checks.json"
+          ],
+          "source_sha256": "536b18139b9748719abd4ace20341fb93a6c37168c5feec06d47be19614cebb0"
         },
         "claude_review": {
-          "status": "pending"
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-26-attempt-04.json"
+          ]
         }
       },
       "acceptance_criteria": [
@@ -6821,13 +6845,25 @@
         "Real predecessor review plus publication-tamper and symlink-directory tests pass; KeyboardInterrupt creates a retained failure receipt and is regression tested.",
         "Phases 27/28 artifact scopes and command/release guards remain later deliverables; no implementation or release completion is claimed.",
         "Attempt 2 accepted the chunk at 44/50. Its residual findings are corrected: hash-bound baseline ledger and tamper test, committed-history whitespace guard, full SDK path-set comparison, locked Zod compatibility test, explicit response divergence documentation, and corrected prose spacing. Original accepted review remains preserved; a fresh review covers these changes.",
-        "Chunk attempt 3 is a running Claude invocation on the current unchanged source, not an orphan. Complete-phase attempt 2 may independently assess this same snapshot concurrently; advancement remains blocked until both terminal accepted records exist. All earlier attempts have actual retained terminal records. Do not infer invocation failure from an in-flight prompt/checks pair."
-      ]
+        "Chunk attempts 3 and 4 terminated accepted at 45/50; phase attempt3 terminated rejected at45/50. Driver SDK freeze/untracked guards are unconditional, typo/citation corrected, and committed d62998f makes history hygiene non-vacuous. All originals retained.",
+        "Phase attempt3 findings addressed: checkpoint bindings now cover phase26 private receipt with tamper regression; all phase26 whitespace checks exclude verbatim pinned sources; redundant metadata-conditioned freeze is unconditional; phases27/28 have nonempty declared scope and are expanded before review; Apache license identity and byte/blob equality against frozen license are checked with negative tests. Fresh scan and checks required on corrected source."
+      ],
+      "accepted_source_sha256": "536b18139b9748719abd4ace20341fb93a6c37168c5feec06d47be19614cebb0",
+      "accepted_score": 9,
+      "accepted_total": 46,
+      "accepted_categories": {
+        "implementation": 9,
+        "code_quality": 9,
+        "supportability": 9,
+        "architecture": 9,
+        "feature_delivery": 10
+      },
+      "review_decision": "accepted"
     },
     {
       "id": 27,
       "name": "Directional profile implementation and qualification",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": [],
       "chunks": [
         {
@@ -6865,7 +6901,10 @@
       "depends_on": [
         26
       ],
-      "scope_evidence": [],
+      "scope_evidence": [
+        "docs/typescript-035-parity-plan.md",
+        "contracts/sources/typescript-0.35.0"
+      ],
       "final_in_sequence": false,
       "plan": "docs/typescript-035-parity-plan.md",
       "milestones": {
@@ -6926,7 +6965,10 @@
       "depends_on": [
         27
       ],
-      "scope_evidence": [],
+      "scope_evidence": [
+        "docs/typescript-035-parity-plan.md",
+        "contracts/sources/typescript-0.35.0"
+      ],
       "final_in_sequence": true,
       "plan": "docs/typescript-035-parity-plan.md",
       "milestones": {

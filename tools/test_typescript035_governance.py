@@ -9,8 +9,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import review_phase
-from check_phase import commands_for
-from verify_typescript035_source import SOURCE, baseline_ledger, verify, verify_zod_versions
+from check_phase import commands_for, checkpoint_bindings, verify_checkpoint_bindings
+from verify_typescript035_source import SOURCE, baseline_ledger, verify, verify_zod_versions, verify_license
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,10 +21,48 @@ class DirectionalGovernanceTests(unittest.TestCase):
     def test_phase26_driver_freezes_sdk_independently_of_status(self):
         commands = commands_for(26)
         self.assertIn(['git', 'diff', '--exit-code', '578f2e6', '--', 'crates/scm-sdk'], commands)
-        self.assertIn(['git', 'diff', '--check', '578f2e6..HEAD'], commands)
+        self.assertIn(['git', 'diff', '--check', '578f2e6..HEAD', '--', '.', ':(exclude)contracts/sources/typescript-0.35.0/*'], commands)
         guards = [c for c in commands if c[:2] == ['python', '-c']]
         self.assertTrue(any("'--others', '--exclude-standard', '--', 'crates/scm-sdk'" in c[2] for c in guards))
-        self.assertIn(self.status['active_phase'], (24, 25, 26, 27, 28, None))
+        self.assertEqual(self.status['active_phase'], 26)
+
+    def test_private_receipt_binding_detects_post_check_tamper(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            relative = 'docs/checks/phase-26-private-material.json'
+            path = root / relative
+            path.parent.mkdir(parents=True)
+            path.write_text('{"passed":true}')
+            command = ['python', 'scripts/check-private-material.py', '--check', relative]
+            rows = [{'command': command, 'exit_code': 0, 'checkpoint_bindings': checkpoint_bindings(command, root)}]
+            self.assertTrue(rows[0]['checkpoint_bindings'])
+            verify_checkpoint_bindings(rows, root)
+            report = root / 'docs/checks/phase-26.json'
+            report.write_text(json.dumps({'phase': 26, 'passed': True,
+                'source_sha256': 'current', 'source_unchanged': True, 'checks': rows}))
+            with patch('check_phase.commands_for', return_value=[command]), patch('review_phase.fingerprint', return_value='current'):
+                review_phase.check_evidence(root, 26, 'current', report)
+            path.write_text('{"passed":false}')
+            with self.assertRaisesRegex(ValueError, 'Checkpoint evidence changed'):
+                verify_checkpoint_bindings(rows, root)
+            with patch('check_phase.commands_for', return_value=[command]), patch('review_phase.fingerprint', return_value='current'):
+                with self.assertRaisesRegex(ValueError, 'Checkpoint evidence changed'):
+                    review_phase.check_evidence(root, 26, 'current', report)
+
+    def test_license_identity_and_digest_are_enforced(self):
+        manifest = verify()
+        baseline = json.loads((ROOT / 'contracts/manifest.json').read_text())
+        verify_license(manifest, baseline)
+        for mutation in ('identity', 'digest', 'baseline'):
+            changed, old = copy.deepcopy(manifest), copy.deepcopy(baseline)
+            if mutation == 'identity':
+                changed['license']['spdx'] = 'MIT'
+            elif mutation == 'digest':
+                next(row for row in changed['files'] if row['upstreamPath'] == 'LICENSE')['sha256'] = '0' * 64
+            else:
+                next(row for row in old['licenses'] if row['id'] == 'typescript')['spdx'] = 'MIT'
+            with self.assertRaisesRegex(ValueError, 'license differs'):
+                verify_license(changed, old)
 
     def test_baseline_ledger_tamper_and_oracle_dependency(self):
         baseline_ledger()
@@ -142,12 +180,11 @@ class DirectionalGovernanceTests(unittest.TestCase):
                  'contracts/native-union-variants.json', 'contracts/native-fixtures/schemas.json',
                  'contracts/sources/typescript/git-tree.json', 'contracts/sources/typescript/commit.txt',
                  'crates/scm-sdk/src/fixtures/model-regressions.json']
-        if self.status['active_phase'] == 26:
-            sdk = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', '578f2e6', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()
-            actual = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()
-            self.assertEqual(set(actual), set(sdk))
-            paths += sdk
-            self.assertEqual(subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk'], cwd=ROOT), b'')
+        sdk = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', '578f2e6', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()
+        actual = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()
+        self.assertEqual(set(actual), set(sdk))
+        paths += sdk
+        self.assertEqual(subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk'], cwd=ROOT), b'')
         for path in paths:
             expected = subprocess.check_output(['git', 'show', '578f2e6:' + path], cwd=ROOT)
             self.assertEqual((ROOT / path).read_bytes(), expected, path)
@@ -157,6 +194,7 @@ class DirectionalGovernanceTests(unittest.TestCase):
         self.assertEqual(old['phases'], [p for p in self.status['phases'] if p['id'] not in {26, 27, 28}])
         for phase in [26, 27, 28]:
             row = next(p for p in self.status['phases'] if p['id'] == phase)
+            self.assertTrue(row['scope_evidence'])
             self.assertIn(phase, review_phase.SCOPE_BOUND_PHASES)
             self.assertEqual(row['plan'], 'docs/typescript-035-parity-plan.md')
             for chunk in row['chunks']:

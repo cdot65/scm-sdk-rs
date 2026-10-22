@@ -1,8 +1,8 @@
 {
   "phase": 26,
-  "source_sha256": "1b95fd900ad524e5731450d3c163c07f85827c5e5f2e22a64b40371987d94c42",
+  "source_sha256": "536b18139b9748719abd4ace20341fb93a6c37168c5feec06d47be19614cebb0",
   "source_unchanged": true,
-  "checked_at": "2026-10-21T23:32:39.488042+00:00",
+  "checked_at": "2026-10-21T23:53:31.357457+00:00",
   "passed": true,
   "checks": [
     {
@@ -26,7 +26,10 @@
       "timeout": false,
       "stdout": "",
       "stderr": "",
-      "duration_seconds": 0.004
+      "duration_seconds": 0.003,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:28.396598+00:00",
+      "checkpoint_bindings": {}
     },
     {
       "command": [
@@ -43,62 +46,92 @@
       "timeout": false,
       "stdout": "",
       "stderr": "",
-      "duration_seconds": 0.02
-    },
-    {
-      "command": [
-        "git",
-        "diff",
-        "--check"
-      ],
-      "invocation": [
-        "git",
-        "diff",
-        "--check"
-      ],
-      "exit_code": 0,
-      "timeout": false,
-      "stdout": "",
-      "stderr": "",
-      "duration_seconds": 0.009
+      "duration_seconds": 0.02,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:28.517174+00:00",
+      "checkpoint_bindings": {}
     },
     {
       "command": [
         "git",
         "diff",
         "--check",
-        "578f2e6..HEAD"
+        "--",
+        ".",
+        ":(exclude)contracts/sources/typescript-0.35.0/*"
       ],
       "invocation": [
         "git",
         "diff",
         "--check",
-        "578f2e6..HEAD"
+        "--",
+        ".",
+        ":(exclude)contracts/sources/typescript-0.35.0/*"
       ],
       "exit_code": 0,
       "timeout": false,
       "stdout": "",
       "stderr": "",
-      "duration_seconds": 0.002
+      "duration_seconds": 0.007,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:28.623498+00:00",
+      "checkpoint_bindings": {}
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "578f2e6..HEAD",
+        "--",
+        ".",
+        ":(exclude)contracts/sources/typescript-0.35.0/*"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check",
+        "578f2e6..HEAD",
+        "--",
+        ".",
+        ":(exclude)contracts/sources/typescript-0.35.0/*"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.009,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:28.734919+00:00",
+      "checkpoint_bindings": {}
     },
     {
       "command": [
         "git",
         "diff",
         "--cached",
-        "--check"
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/sources/typescript-0.35.0/*"
       ],
       "invocation": [
         "git",
         "diff",
         "--cached",
-        "--check"
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/sources/typescript-0.35.0/*"
       ],
       "exit_code": 0,
       "timeout": false,
       "stdout": "",
       "stderr": "",
-      "duration_seconds": 0.002
+      "duration_seconds": 0.003,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:28.835139+00:00",
+      "checkpoint_bindings": {}
     },
     {
       "command": [
@@ -115,7 +148,10 @@
       "timeout": false,
       "stdout": "Verified TypeScript 0.35.0 source inputs\n",
       "stderr": "",
-      "duration_seconds": 0.06
+      "duration_seconds": 0.063,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:28.996620+00:00",
+      "checkpoint_bindings": {}
     },
     {
       "command": [
@@ -132,9 +168,14 @@
       ],
       "exit_code": 0,
       "timeout": false,
-      "stdout": "{\"receiptFresh\": true, \"privateScanReexecuted\": false, \"gitVisibleFilesChecked\": 2227}\n",
+      "stdout": "{\"receiptFresh\": true, \"privateScanReexecuted\": false, \"gitVisibleFilesChecked\": 2239}\n",
       "stderr": "",
-      "duration_seconds": 0.253
+      "duration_seconds": 0.253,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:29.345907+00:00",
+      "checkpoint_bindings": {
+        "/home/cdot/development/cdot65/scm-sdk-rs-ts035/docs/checks/phase-26-private-material.json": "db19896f9fb1e85468d83148374b91b0b2a3c02b69eb3f3677553e54f31d4b38"
+      }
     },
     {
       "command": [
@@ -162,8 +203,11 @@
       "exit_code": 0,
       "timeout": false,
       "stdout": "",
-      "stderr": "test_added_file_and_symlink_fail (test_typescript035_governance.DirectionalGovernanceTests.test_added_file_and_symlink_fail) ... ok\ntest_baseline_ledger_tamper_and_oracle_dependency (test_typescript035_governance.DirectionalGovernanceTests.test_baseline_ledger_tamper_and_oracle_dependency) ... ok\ntest_frozen_contracts_and_planning_sdk_bytes (test_typescript035_governance.DirectionalGovernanceTests.test_frozen_contracts_and_planning_sdk_bytes) ... ok\ntest_independent_dependency_checks_and_original_gate_remain (test_typescript035_governance.DirectionalGovernanceTests.test_independent_dependency_checks_and_original_gate_remain) ... ok\ntest_old_phase_records_preserved_and_new_chunks_bound (test_typescript035_governance.DirectionalGovernanceTests.test_old_phase_records_preserved_and_new_chunks_bound) ... ok\ntest_phase26_driver_freezes_sdk_independently_of_status (test_typescript035_governance.DirectionalGovernanceTests.test_phase26_driver_freezes_sdk_independently_of_status) ... ok\ntest_pinned_directory_symlink_rejected (test_typescript035_governance.DirectionalGovernanceTests.test_pinned_directory_symlink_rejected) ... ok\ntest_real_predecessor_evidence_and_publication_tamper (test_typescript035_governance.DirectionalGovernanceTests.test_real_predecessor_evidence_and_publication_tamper) ... ok\ntest_self_consistent_manifest_cannot_forge_git_origin (test_typescript035_governance.DirectionalGovernanceTests.test_self_consistent_manifest_cannot_forge_git_origin) ... ok\ntest_source_and_manifest_tampering_fail (test_typescript035_governance.DirectionalGovernanceTests.test_source_and_manifest_tampering_fail) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.713s\n\nOK\n",
-      "duration_seconds": 0.812
+      "stderr": "test_added_file_and_symlink_fail (test_typescript035_governance.DirectionalGovernanceTests.test_added_file_and_symlink_fail) ... ok\ntest_baseline_ledger_tamper_and_oracle_dependency (test_typescript035_governance.DirectionalGovernanceTests.test_baseline_ledger_tamper_and_oracle_dependency) ... ok\ntest_frozen_contracts_and_planning_sdk_bytes (test_typescript035_governance.DirectionalGovernanceTests.test_frozen_contracts_and_planning_sdk_bytes) ... ok\ntest_independent_dependency_checks_and_original_gate_remain (test_typescript035_governance.DirectionalGovernanceTests.test_independent_dependency_checks_and_original_gate_remain) ... ok\ntest_license_identity_and_digest_are_enforced (test_typescript035_governance.DirectionalGovernanceTests.test_license_identity_and_digest_are_enforced) ... ok\ntest_old_phase_records_preserved_and_new_chunks_bound (test_typescript035_governance.DirectionalGovernanceTests.test_old_phase_records_preserved_and_new_chunks_bound) ... ok\ntest_phase26_driver_freezes_sdk_independently_of_status (test_typescript035_governance.DirectionalGovernanceTests.test_phase26_driver_freezes_sdk_independently_of_status) ... ok\ntest_pinned_directory_symlink_rejected (test_typescript035_governance.DirectionalGovernanceTests.test_pinned_directory_symlink_rejected) ... ok\ntest_private_receipt_binding_detects_post_check_tamper (test_typescript035_governance.DirectionalGovernanceTests.test_private_receipt_binding_detects_post_check_tamper) ... ok\ntest_real_predecessor_evidence_and_publication_tamper (test_typescript035_governance.DirectionalGovernanceTests.test_real_predecessor_evidence_and_publication_tamper) ... ok\ntest_self_consistent_manifest_cannot_forge_git_origin (test_typescript035_governance.DirectionalGovernanceTests.test_self_consistent_manifest_cannot_forge_git_origin) ... ok\ntest_source_and_manifest_tampering_fail (test_typescript035_governance.DirectionalGovernanceTests.test_source_and_manifest_tampering_fail) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.695s\n\nOK\n",
+      "duration_seconds": 0.787,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:30.230690+00:00",
+      "checkpoint_bindings": {}
     },
     {
       "command": [
@@ -191,8 +235,11 @@
       "exit_code": 0,
       "timeout": false,
       "stdout": "",
-      "stderr": "test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage (test_review_phase.FiveCategoryReviewTests.test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage) ... ok\ntest_attempt_five_cannot_skip_previous_reviews (test_review_phase.FiveCategoryReviewTests.test_attempt_five_cannot_skip_previous_reviews) ... ok\ntest_blockers_still_block_fifth_attempt (test_review_phase.FiveCategoryReviewTests.test_blockers_still_block_fifth_attempt) ... ok\ntest_categories_cannot_be_fabricated (test_review_phase.FiveCategoryReviewTests.test_categories_cannot_be_fabricated) ... ok\ntest_chunk_followup_accepts_authorized_fifth_phase_exception (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_accepts_authorized_fifth_phase_exception) ... ok\ntest_chunk_followup_rejects_missing_rejected_stale_or_early_coverage (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_rejects_missing_rejected_stale_or_early_coverage) ... ok\ntest_chunk_orchestration_accumulates_scope_and_binds_record (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_accumulates_scope_and_binds_record) ... ok\ntest_chunk_orchestration_rejects_advance_and_missing_scope (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_advance_and_missing_scope) ... ok\ntest_chunk_orchestration_rejects_historical_rubric (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_historical_rubric) ... ok\ntest_chunk_scope_must_resolve_to_existing_repository_path (test_review_phase.FiveCategoryReviewTests.test_chunk_scope_must_resolve_to_existing_repository_path) ... ok\ntest_fifth_exception_is_explicit_and_requires_deficiency (test_review_phase.FiveCategoryReviewTests.test_fifth_exception_is_explicit_and_requires_deficiency) ... ok\ntest_historical_policy_and_chunk_names (test_review_phase.FiveCategoryReviewTests.test_historical_policy_and_chunk_names) ... ok\ntest_live_new_rubric_record_and_snapshot (test_review_phase.FiveCategoryReviewTests.test_live_new_rubric_record_and_snapshot) ... ok\ntest_phase_advancement_never_selects_earlier_passing_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_never_selects_earlier_passing_chunk) ... ok\ntest_phase_advancement_records_all_verified_chunk_scores (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_records_all_verified_chunk_scores) ... ok\ntest_phase_advancement_rejects_missing_or_empty_chunk_declarations (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_missing_or_empty_chunk_declarations) ... ok\ntest_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk) ... ok\ntest_phase_advancement_rejects_stale_or_misbound_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_stale_or_misbound_chunk) ... ok\ntest_phase_advancement_requires_every_declared_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_requires_every_declared_chunk) ... ok\ntest_phase_and_chunk_thresholds (test_review_phase.FiveCategoryReviewTests.test_phase_and_chunk_thresholds) ... ok\ntest_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_phase19_gate_retains_privacy_ci_and_all_rust_combinations (test_review_phase.ReviewGateTests.test_phase19_gate_retains_privacy_ci_and_all_rust_combinations) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_successors_do_not_reopen_completed_independent_maintenance (test_review_phase.ReviewGateTests.test_successors_do_not_reopen_completed_independent_maintenance) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 51 tests in 0.607s\n\nOK\n",
-      "duration_seconds": 0.68
+      "stderr": "test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage (test_review_phase.FiveCategoryReviewTests.test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage) ... ok\ntest_attempt_five_cannot_skip_previous_reviews (test_review_phase.FiveCategoryReviewTests.test_attempt_five_cannot_skip_previous_reviews) ... ok\ntest_blockers_still_block_fifth_attempt (test_review_phase.FiveCategoryReviewTests.test_blockers_still_block_fifth_attempt) ... ok\ntest_categories_cannot_be_fabricated (test_review_phase.FiveCategoryReviewTests.test_categories_cannot_be_fabricated) ... ok\ntest_chunk_followup_accepts_authorized_fifth_phase_exception (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_accepts_authorized_fifth_phase_exception) ... ok\ntest_chunk_followup_rejects_missing_rejected_stale_or_early_coverage (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_rejects_missing_rejected_stale_or_early_coverage) ... ok\ntest_chunk_orchestration_accumulates_scope_and_binds_record (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_accumulates_scope_and_binds_record) ... ok\ntest_chunk_orchestration_rejects_advance_and_missing_scope (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_advance_and_missing_scope) ... ok\ntest_chunk_orchestration_rejects_historical_rubric (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_historical_rubric) ... ok\ntest_chunk_scope_must_resolve_to_existing_repository_path (test_review_phase.FiveCategoryReviewTests.test_chunk_scope_must_resolve_to_existing_repository_path) ... ok\ntest_fifth_exception_is_explicit_and_requires_deficiency (test_review_phase.FiveCategoryReviewTests.test_fifth_exception_is_explicit_and_requires_deficiency) ... ok\ntest_historical_policy_and_chunk_names (test_review_phase.FiveCategoryReviewTests.test_historical_policy_and_chunk_names) ... ok\ntest_live_new_rubric_record_and_snapshot (test_review_phase.FiveCategoryReviewTests.test_live_new_rubric_record_and_snapshot) ... ok\ntest_phase_advancement_never_selects_earlier_passing_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_never_selects_earlier_passing_chunk) ... ok\ntest_phase_advancement_records_all_verified_chunk_scores (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_records_all_verified_chunk_scores) ... ok\ntest_phase_advancement_rejects_missing_or_empty_chunk_declarations (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_missing_or_empty_chunk_declarations) ... ok\ntest_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk) ... ok\ntest_phase_advancement_rejects_stale_or_misbound_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_stale_or_misbound_chunk) ... ok\ntest_phase_advancement_requires_every_declared_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_requires_every_declared_chunk) ... ok\ntest_phase_and_chunk_thresholds (test_review_phase.FiveCategoryReviewTests.test_phase_and_chunk_thresholds) ... ok\ntest_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_phase19_gate_retains_privacy_ci_and_all_rust_combinations (test_review_phase.ReviewGateTests.test_phase19_gate_retains_privacy_ci_and_all_rust_combinations) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_successors_do_not_reopen_completed_independent_maintenance (test_review_phase.ReviewGateTests.test_successors_do_not_reopen_completed_independent_maintenance) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 51 tests in 0.625s\n\nOK\n",
+      "duration_seconds": 0.696,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:31.025899+00:00",
+      "checkpoint_bindings": {}
     },
     {
       "command": [
@@ -221,7 +268,10 @@
       "timeout": false,
       "stdout": "",
       "stderr": "test_chunk_record_rejects_scope_tampering_even_with_rehashed_prompt (test_management_phases.ManagementPhaseTests.test_chunk_record_rejects_scope_tampering_even_with_rehashed_prompt) ... ok\ntest_ci_subsets_cannot_replace_full_reports (test_management_phases.ManagementPhaseTests.test_ci_subsets_cannot_replace_full_reports) ... ok\ntest_cli_rejects_scope_mismatch_before_requesting_review (test_management_phases.ManagementPhaseTests.test_cli_rejects_scope_mismatch_before_requesting_review) ... ok\ntest_cumulative_gate_orders_clean_packages_before_final_receipt_checks (test_management_phases.ManagementPhaseTests.test_cumulative_gate_orders_clean_packages_before_final_receipt_checks) ... ok\ntest_current_dependency_audit_and_committed_hygiene_are_required (test_management_phases.ManagementPhaseTests.test_current_dependency_audit_and_committed_hygiene_are_required) ... ok\ntest_declared_chunk_scope_must_match_exactly (test_management_phases.ManagementPhaseTests.test_declared_chunk_scope_must_match_exactly) ... ok\ntest_every_manifest_reader_is_selected_or_explicitly_explained (test_management_phases.ManagementPhaseTests.test_every_manifest_reader_is_selected_or_explicitly_explained) ... ok\ntest_exhausted_failure_has_no_automatic_budget_reset (test_management_phases.ManagementPhaseTests.test_exhausted_failure_has_no_automatic_budget_reset) ... ok\ntest_failed_attempts_cannot_unlock_fifth_exception (test_management_phases.ManagementPhaseTests.test_failed_attempts_cannot_unlock_fifth_exception) ... ok\ntest_failed_invocation_consumes_attempt_without_dead_end (test_management_phases.ManagementPhaseTests.test_failed_invocation_consumes_attempt_without_dead_end) ... ok\ntest_future_milestones_require_explicit_complete_artifacts (test_management_phases.ManagementPhaseTests.test_future_milestones_require_explicit_complete_artifacts) ... ok\ntest_gateway_proof_allows_only_two_rebound_input_hashes (test_management_phases.ManagementPhaseTests.test_gateway_proof_allows_only_two_rebound_input_hashes) ... ok\ntest_missing_prior_artifacts_are_sanitized_gate_errors (test_management_phases.ManagementPhaseTests.test_missing_prior_artifacts_are_sanitized_gate_errors) ... ok\ntest_only_fixture_source_hash_can_be_rebound (test_management_phases.ManagementPhaseTests.test_only_fixture_source_hash_can_be_rebound) ... ok\ntest_phase24_reuses_compatibility_and_requires_current_release_proofs (test_management_phases.ManagementPhaseTests.test_phase24_reuses_compatibility_and_requires_current_release_proofs) ... ok\ntest_phase_scope_set_covers_every_management_gate (test_management_phases.ManagementPhaseTests.test_phase_scope_set_covers_every_management_gate) ... ok\ntest_phases_registered_with_nonempty_scopes_and_order (test_management_phases.ManagementPhaseTests.test_phases_registered_with_nonempty_scopes_and_order) ... ok\ntest_plan_gate_covers_manifest_consumers_and_ci (test_management_phases.ManagementPhaseTests.test_plan_gate_covers_manifest_consumers_and_ci) ... ok\ntest_plan_gate_freezes_sdk_and_checks_provenance (test_management_phases.ManagementPhaseTests.test_plan_gate_freezes_sdk_and_checks_provenance) ... ok\ntest_plan_retains_static_closure_without_claiming_current_live_proof (test_management_phases.ManagementPhaseTests.test_plan_retains_static_closure_without_claiming_current_live_proof) ... ok\ntest_plan_score_floor_cannot_be_bypassed_by_category_total (test_management_phases.ManagementPhaseTests.test_plan_score_floor_cannot_be_bypassed_by_category_total) ... ok\ntest_provenance_guard_rejects_reformatting_and_other_bytes (test_management_phases.ManagementPhaseTests.test_provenance_guard_rejects_reformatting_and_other_bytes) ... ok\ntest_qualification_has_both_packaged_compilers (test_management_phases.ManagementPhaseTests.test_qualification_has_both_packaged_compilers) ... ok\ntest_scope_revision_history_preserves_old_reviews_and_rejects_rewrites (test_management_phases.ManagementPhaseTests.test_scope_revision_history_preserves_old_reviews_and_rejects_rewrites) ... ok\ntest_scoped_contract_ledgers_keep_their_declared_owning_checks (test_management_phases.ManagementPhaseTests.test_scoped_contract_ledgers_keep_their_declared_owning_checks) ... ok\ntest_vendor_whitespace_is_excluded_from_all_new_hygiene_checks (test_management_phases.ManagementPhaseTests.test_vendor_whitespace_is_excluded_from_all_new_hygiene_checks) ... ok\n\n----------------------------------------------------------------------\nRan 26 tests in 0.063s\n\nOK\n",
-      "duration_seconds": 0.133
+      "duration_seconds": 0.138,
+      "source_unchanged": true,
+      "executed_at": "2026-10-21T23:53:31.260482+00:00",
+      "checkpoint_bindings": {}
     }
   ]
 }

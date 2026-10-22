@@ -120,10 +120,10 @@ class ManagementPhaseTests(unittest.TestCase):
                     verify_planning_gateway_proof(root)
 
     def test_vendor_whitespace_is_excluded_from_all_new_hygiene_checks(self):
-        for phase in range(21, 26):
+        for phase in range(21, 27):
             for command in commands_for(phase):
                 if command[:2] == ["git", "diff"] and "--check" in command:
-                    self.assertIn(":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml", command)
+                    self.assertIn(":(exclude)contracts/sources/typescript-0.35.0/*" if phase == 26 else ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml", command)
 
     def test_plan_gate_covers_manifest_consumers_and_ci(self):
         commands = commands_for(21)
