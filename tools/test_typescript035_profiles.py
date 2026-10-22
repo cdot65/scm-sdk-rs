@@ -1,11 +1,36 @@
 """Focused mutation and ownership checks for the additive profile overlay."""
 import copy
 import json
+import re
 import unittest
 from unittest import mock
 
 import generate_models as models
 import typescript035_profiles as profiles
+
+
+def directional_call_bindings(text):
+    """Audit direct calls in these four rustfmt-formatted fixture functions.
+
+    This deliberately is not a Rust parser or an execution-coverage claim.
+    Comments/string literals cannot satisfy a call; receiver refactors require
+    updating this narrow audit alongside the operation ledger.
+    """
+    methods = {'create': 'create', 'update': 'update', 'get': 'get',
+               'list_for_token': 'listForToken', 'list': 'list', 'list_all': 'listAll'}
+    result = {method: set() for method in methods.values()}
+    # Current fixture functions use ordinary quoted strings, not raw strings.
+    code = re.sub(r'"(?:\\.|[^"\\])*"|//[^\n]*|/\*.*?\*/', ' ', text, flags=re.S)
+    for name in profiles.WIRE_TESTS:
+        bodies = re.findall(r'^async fn ' + re.escape(name) + r'\(\) \{\n(.*?)^\}',
+                            code, flags=re.M | re.S)
+        if len(bodies) != 1:
+            raise AssertionError('expected one directional test body: ' + name)
+        calls = re.findall(r'\b(?:client|management\s*\.\s*profiles\s*\(\s*\))'
+                           r'\s*\.\s*(' + '|'.join(methods) + r')\s*\(', bodies[0])
+        for method in calls:
+            result[methods[method]].add(name)
+    return result
 
 
 class ProfileOverlayTests(unittest.TestCase):
@@ -24,14 +49,8 @@ class ProfileOverlayTests(unittest.TestCase):
         self.assertIn('Mode::Response and Mode::ResponseWithoutDefaults', scope)
         self.assertIn('six versioned roots do not claim Zod response equivalence', scope)
         mappings = json.loads((profiles.ROOT / 'contracts/native-operation-mappings/management.json').read_text())
-        expected = {
-            'create': profiles.WIRE_TESTS[:3],
-            'update': profiles.WIRE_TESTS[:3],
-            'get': (profiles.WIRE_TESTS[0],),
-            'listForToken': (profiles.WIRE_TESTS[0], profiles.WIRE_TESTS[3]),
-            'list': (profiles.WIRE_TESTS[0], profiles.WIRE_TESTS[3]),
-            'listAll': (profiles.WIRE_TESTS[0], profiles.WIRE_TESTS[3]),
-        }
+        text = (profiles.ROOT / 'crates/scm-sdk/tests/management_contracts.rs').read_text()
+        expected = directional_call_bindings(text)
         for method, tests in expected.items():
             matches = [row for row in mappings['operations']
                        if row['baselineId'] == 'src/management/profiles.ts:ProfilesClient.' + method]
@@ -40,6 +59,25 @@ class ProfileOverlayTests(unittest.TestCase):
                 'crates/scm-sdk/tests/management_contracts.rs::' + name for name in (
                     'profile_methods_match_literal_routes_schemas_defaults_and_helpers', *tests)
             })
+
+    def test_directional_attribution_tracks_removed_calls_not_comments_or_strings(self):
+        text = (profiles.ROOT / 'crates/scm-sdk/tests/management_contracts.rs').read_text()
+        original = directional_call_bindings(text)
+        rust_methods = {'create': 'create', 'update': 'update', 'get': 'get',
+                        'list_for_token': 'listForToken', 'list': 'list', 'list_all': 'listAll'}
+        for rust_method, method in rust_methods.items():
+            with self.subTest(method=method):
+                self.assertTrue(original[method])
+                changed = re.sub(r'\.\s*' + rust_method + r'\s*\(', '.removed_call(', text)
+                # Apparent calls in comments and ordinary strings are not calls.
+                fake = f'// client.{rust_method}();\n        let fake = "client.{rust_method}()";\n'
+                for name in profiles.WIRE_TESTS:
+                    start = 'async fn ' + name + '() {\n'
+                    changed = changed.replace(start, start + fake)
+                derived = directional_call_bindings(changed)
+                self.assertEqual(derived[method], set())
+                for other in original.keys() - {method}:
+                    self.assertEqual(derived[other], original[other])
 
     def test_wire_qualification_names_and_binding_are_explicit(self):
         path = 'crates/scm-sdk/tests/management_contracts.rs'

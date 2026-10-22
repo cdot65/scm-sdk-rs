@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased — TypeScript 0.35.0 directional profile models
+## 0.2.4 — TypeScript 0.35.0 directional profile models
+
+Release candidate: not yet published. Publication and remote delivery require
+verified 0.2.4 registry, annotated-tag, and CI receipts.
 
 - Add `ContentTypeConfiguration` and `ContentTypeConfigurations`, their builders,
   and named validators `ContentTypeConfigurationSchema` and

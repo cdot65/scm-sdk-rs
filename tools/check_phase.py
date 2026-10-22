@@ -133,7 +133,7 @@ def run_check(command):
 
 
 MANAGEMENT_PHASES = (21, 22, 23, 24, 25)
-CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES)
+CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES, 28)
 MANAGEMENT_BASELINE = "0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e"
 
 
@@ -316,6 +316,16 @@ def management_commands(phase):
 
 
 def commands_for(phase):
+    if phase == 28:
+        commands = [[value.replace("phase-27-", "phase-28-") for value in command]
+                    for command in commands_for(27)]
+        for compiler in ("1.89.0", "1.99.0"):
+            commands.append(["python", "scripts/check-management-package.py", "--require-directional",
+                             "--toolchain", compiler, "--output",
+                             f"docs/checks/phase-28-release-package-{compiler}.json"])
+        commands.append(["python", "scripts/check-access-release.py", "--phase", "28", "--version", "0.2.4",
+                         "--output", "docs/checks/phase-28-release-readiness.json"])
+        return commands
     if phase == 27:
         # Cumulative offline regressions retain historical command definitions.
         # Clean extracted release archives are qualified separately in phase 28.
@@ -902,7 +912,7 @@ def main():
         result = run_check(invocation)
         records.append({"command": command, "invocation": invocation, **result,
                         "duration_seconds": round(time.monotonic() - started, 3)})
-        if args.phase in (23, 24, 25, 26, 27) and result['exit_code'] == 0:
+        if args.phase in (23, 24, 25, 26, 27, 28) and result['exit_code'] == 0:
             if fingerprint(ROOT) != before:
                 raise ValueError('Source changed during resumable qualification')
             records[-1].update(source_unchanged=True,
@@ -921,7 +931,7 @@ def main():
                               "stderr_tail": result["stderr"][-16384:]}), file=sys.stderr, flush=True)
             break
     unchanged = before == fingerprint(ROOT)
-    if args.phase in (23, 24, 25, 26, 27):
+    if args.phase in (23, 24, 25, 26, 27, 28):
         verify_checkpoint_bindings([row for row in records if row['exit_code'] == 0])
     report = {"phase": args.phase, "source_sha256": before, "source_unchanged": unchanged,
               "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),

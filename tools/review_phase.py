@@ -229,7 +229,7 @@ def check_evidence(root, phase, source_sha256, path=None, *, archived_sha256=Non
         raise ValueError("Phase checks are incomplete, stale, or failing; rerun tools/check_phase.py")
     # Historical accepted snapshots retain their own evidence hashes. Current
     # qualification must additionally prove the referenced files still match.
-    if phase in (23, 24, 25, 26, 27) and current_source:
+    if phase in (23, 24, 25, 26, 27, 28) and current_source:
         verify_checkpoint_bindings(checks, root)
     return path
 
@@ -301,7 +301,7 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
             return False
     if phase in SCOPE_BOUND_PHASES:
         scope = record.get("review_scope")
-        allowed = {"chunk"} if chunk else ({"phase", "release_readiness"} if phase in {20, 24} else {"phase"})
+        allowed = {"chunk"} if chunk else ({"phase", "release_readiness"} if phase in {20, 24, 28} else {"phase"})
         if scope not in allowed or not path.with_suffix(".prompt.md").read_text().startswith(
                 f"Review scope: {scope}.\n"):
             return False
@@ -331,7 +331,7 @@ def verify_release_readiness(root, path, source_sha256, phase=20):
     """Publication helpers must require this accepted, current-source assessment."""
     record = json.loads(path.read_text())
     return (record.get("review_scope") == "release_readiness"
-            and phase in {20, 24}
+            and phase in {20, 24, 28}
             and verify_record(root, path, phase, source_sha256))
 
 
@@ -445,7 +445,7 @@ def main(argv=None, root=None):
     parser.add_argument("--chunk", help="Named chunk review; cannot advance the phase")
     parser.add_argument("--scope-evidence", nargs="*", action="extend", default=[], help="Chunk artifact paths for the reviewer")
     parser.add_argument("--release-readiness", action="store_true",
-                        help="Phase 20 or 24 prepublication readiness review; cannot complete the phase")
+                        help="Phase 20, 24 or 28 prepublication readiness review; cannot complete the phase")
     parser.add_argument("--verify", type=pathlib.Path)
     parser.add_argument("--advance", action="store_true",
                         help="Advance only after verifying an accepted current-source review")
@@ -456,8 +456,8 @@ def main(argv=None, root=None):
         raise ValueError("Unknown phase or invalid attempt")
     rubric = uses_rubric(args.phase)
     completed_prior = 0
-    if args.release_readiness and (args.phase not in {20, 24} or args.chunk or args.verify or args.advance):
-        raise ValueError("Release readiness requires a new phase 20 or 24 review without chunk, verify, or advance")
+    if args.release_readiness and (args.phase not in {20, 24, 28} or args.chunk or args.verify or args.advance):
+        raise ValueError("Release readiness requires a new phase 20, 24 or 28 review without chunk, verify, or advance")
     if args.chunk and (not rubric or args.advance):
         raise ValueError("Chunk reviews require the new rubric and cannot advance a phase")
     if rubric and not args.verify:
@@ -475,14 +475,18 @@ def main(argv=None, root=None):
         if valid and args.advance:
             if status["active_phase"] != args.phase:
                 raise ValueError("Only the active phase can advance")
-            if args.phase in {20, 24} and json.loads(review_path.read_text()).get("review_scope") != "phase":
+            if args.phase in {20, 24, 28} and json.loads(review_path.read_text()).get("review_scope") != "phase":
                 raise ValueError("Release readiness does not complete delivery; obtain a final phase review")
             if rubric:
                 phases[args.phase]["chunks"] = accepted_chunks(
                     root, args.phase, phases[args.phase].get("chunks"), before, phase_review=review_path)
-            if args.phase in {20, 24}:
+            if args.phase in {20, 24, 28}:
                 from release_delivery import verify as verify_delivery
-                verify_delivery(root, before) if args.phase == 20 else verify_delivery(root, before, phase=24, version="0.2.3")
+                if args.phase == 20:
+                    verify_delivery(root, before)
+                else:
+                    verify_delivery(root, before, phase=args.phase,
+                                    version="0.2.4" if args.phase == 28 else "0.2.3")
             phases[args.phase]["status"] = "complete"
             record = json.loads(review_path.read_text())
             phases[args.phase]["reviews"].append(str(review_path.relative_to(root)))

@@ -172,6 +172,8 @@ def main():
             commands.append(['run', '--example', 'response_compatibility', '--all-features'])
         if 'examples/red_team_management.rs' in files:
             commands.append(['run', '--example', 'red_team_management', '--all-features'])
+        if 'examples/directional_profiles.rs' in files:
+            commands.append(['run', '--example', 'directional_profiles', '--all-features'])
         passed = True
         for command in commands:
             if not run(command + ['--locked', '--offline', '--target', host], extracted):
@@ -213,6 +215,12 @@ def main():
                 passed = run(['run', '--features', 'red-team', '--locked', '--offline', '--target', host], consumer)
                 consumer_sources[key] = {'sha256': digest(files[key]), 'checkIndex': len(checks) - 1,
                                          'selectedFeatures': ['red-team']}
+        key = 'examples/directional_profiles.rs'
+        if passed and key in files:
+            (consumer / 'src/main.rs').write_bytes(files[key])
+            passed = run(['run', '--locked', '--offline', '--target', host], consumer)
+            consumer_sources[key] = {'sha256': digest(files[key]), 'checkIndex': len(checks) - 1,
+                                     'selectedFeatures': []}
     if args.require_clean:
         current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         current_status = subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT, text=True)

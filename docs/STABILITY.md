@@ -1,7 +1,7 @@
 # Compatibility and support status
 
-The current Rust crate version is **0.2.3**, the [AIRS management compatibility patch](red-team-management-0.86-plan.md).
-The `checks/release-registry-0.2.3.json` establishes publication
+The current Rust crate version is **0.2.4**, the [directional-profile release candidate](DIRECTIONAL_PROFILES.md), not yet published.
+The `checks/release-registry-0.2.4.json` establishes publication
 only when present and verified. A missing receipt means publication is not yet verified.
 The [access-policy family](ACCESS_POLICIES.md) remains experimental/live-unverified;
 its Portkey key/control-plane contract is separate from SCM OAuth.
@@ -25,7 +25,7 @@ baseline is TypeScript SDK **0.34.0** at
 exported capabilities have implemented native mappings. [EXPORTS.md](EXPORTS.md)
 explains the independent validation, behavior and public-consumer evidence.
 
-## Pending directional profile addition
+## Directional profile release candidate
 
 The [TypeScript 0.35.0 directional profile addition](DIRECTIONAL_PROFILES.md) is
 separate from the published 0.2.3 source. It adds two model types and two named

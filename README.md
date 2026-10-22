@@ -17,7 +17,8 @@ at least 46/50, with each category at least 8/10. The five-attempt exception and
 recorded deficiencies follow the maintainer’s review policy. [Phase status](docs/phase-status.json) records the
 accepted reviews and exact source evidence.
 
-Crate version: **0.2.3**, the AIRS management 0.86.0 update, retaining the
+Crate version: **0.2.4**, the TypeScript 0.35.0 directional-profile release
+candidate, not yet published. It retains AIRS management 0.86.0 and the
 [G25 response-compatibility correction](docs/G25_COMPATIBILITY.md).
 It retains five experimental
 [Portkey access-policy APIs](docs/ACCESS_POLICIES.md) and retains full
@@ -38,8 +39,8 @@ See [CI](docs/CI.md) and the [release procedure](docs/RELEASE.md).
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
 
-The 0.2.3 `docs/checks/release-registry-0.2.3.json` and
-`docs/checks/release-tag-v0.2.3.json` establish publication only when
+The 0.2.4 `docs/checks/release-registry-0.2.4.json` and
+`docs/checks/release-tag-v0.2.4.json` establish publication only when
 present and verified; missing receipts mean that publication is not yet verified.
 The [published 0.2.2 receipt](docs/checks/release-registry-0.2.2.json) remains historical.
 The access-policy client requires explicit compatible control-plane key credentials
@@ -47,12 +48,12 @@ and remains live-unverified. Existing 0.2.0 APIs and G10 behavior are retained.
 
 ## Start here
 
-After verifying the 0.2.3 registry receipt above, pin that release using the shorter
+After 0.2.4 is published and its registry receipt above verifies, pin that release using the shorter
 dependency alias. Until publication is verified, retain your existing released pin:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.3" }
+scm = { package = "scm-sdk", version = "=0.2.4" }
 ```
 
 The alias exposes `scm::airs::scan`, `scm::airs::management`, and the other product

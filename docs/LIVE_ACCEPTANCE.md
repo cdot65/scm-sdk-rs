@@ -12,8 +12,8 @@ compiled executable, Rust version, host target, and execution time.
 
 ## Current read-only qualification
 
-The current maintenance run is [phase 27 attempt 05](checks/phase-27-live-attempt-05.json).
-It qualifies the directional-profile implementation source, not a published release.
+The current maintenance run is [phase 28 attempt 01](checks/phase-28-live-attempt-01.json).
+It qualifies the 0.2.4 release-candidate runtime, not a published release.
 It verified **1 exact native method**, OAuth token exchange. All four single-page
 Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
 returned **HTTP 403 permission prerequisites**. These responses establish neither
@@ -29,8 +29,8 @@ by this receipt and remains unchanged. Vertex AI, N8N, client-session, audio and
 realtime provider workflows remain live-unqualified. Offline fixture and consumer
 checks establish implementation compatibility separately from these service results.
 
-Phase 27 attempts 01 through 04 recorded the same bounded probe outcomes. Attempt 05
-binds the reviewed schema metadata, fixture provenance and patched TLS dependencies. None of these attempts
+Phase 27 attempts 01 through 05 recorded the same bounded probe outcomes. Phase 28
+attempt 01 binds the 0.2.4 version and patched TLS dependencies. None of these attempts
 promotes the 17 historical successes to the current runtime.
 
 ## Historical qualification

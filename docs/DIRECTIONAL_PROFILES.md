@@ -1,6 +1,6 @@
 # Directional security profiles
 
-This pending addition implements the security-profile model changes in TypeScript
+The scm-sdk 0.2.4 release candidate, not yet published, implements the security-profile model changes in TypeScript
 SDK 0.35.0 at commit `780c985cac90144ea1884fe6cffa58b5deec9ac4`. It is separate
 from the published 0.2.3 release. Offline model and wire checks do not establish
 that a service or tenant applies these settings; directional live acceptance

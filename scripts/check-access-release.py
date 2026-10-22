@@ -27,7 +27,7 @@ def load_module(name, path):
     return module
 
 
-RELEASES = {(17, '0.2.1'), (20, '0.2.2'), (24, '0.2.3')}
+RELEASES = {(17, '0.2.1'), (20, '0.2.2'), (24, '0.2.3'), (28, '0.2.4')}
 
 
 def verify_offline_delivery(proof, files, version):
@@ -53,7 +53,7 @@ def verify(root, phase=17, version='0.2.1'):
     from release_delivery import commit_fingerprint, retained_package_archive
     from review_phase import fingerprint
     wrapper = None
-    if phase == 24:
+    if phase in (24, 28):
         wrapper = load_module("release_management_package", root / "scripts/check-management-package.py")
     rows = []
     publication = load_module("release_publication", root / "scripts/verify-publication.py")
@@ -63,9 +63,9 @@ def verify(root, phase=17, version='0.2.1'):
         if path.is_symlink():
             raise ValueError("Proof must be a regular file")
         proof = json.loads(path.read_text())
-        if phase == 24:
+        if phase in (24, 28):
             publication.require_proof(proof, schema_version=3)
-            wrapper.verify_receipt(root, path, compiler)
+            wrapper.verify_receipt(root, path, compiler, require_directional=True) if phase == 28 else wrapper.verify_receipt(root, path, compiler)
             if commit_fingerprint(root, proof["releaseCommit"]) != fingerprint(root):
                 raise ValueError("Package commit differs from current reviewed source")
             subprocess.run(["git", "merge-base", "--is-ancestor", proof["releaseCommit"], "HEAD"], cwd=root, check=True)
@@ -73,7 +73,7 @@ def verify(root, phase=17, version='0.2.1'):
             publication.require_proof(proof)
         if proof["toolchain"] != compiler:
             raise ValueError("Compiler proof identity differs")
-        if phase != 24 and proof["releaseCommit"] != git(root, "rev-parse", "HEAD").decode().strip():
+        if phase not in (24, 28) and proof["releaseCommit"] != git(root, "rev-parse", "HEAD").decode().strip():
             raise ValueError("Clean proof must qualify the current release commit")
         archive = retained_package_archive(root, proof, phase)
         data = archive.read_bytes()
@@ -104,7 +104,7 @@ def verify(root, phase=17, version='0.2.1'):
                 raise ValueError("Current packaged input differs: " + relative)
             if git(root, "show", proof["releaseCommit"] + ":" + relative) != content:
                 raise ValueError("Packaged input differs from release commit")
-        if phase != 24:
+        if phase not in (24, 28):
             verify_offline_delivery(proof, files, version)
         if proof["publicConsumerSourceSha256"] != sha((root / "contracts/native-probes/src/main.rs").read_bytes()):
             raise ValueError("External consumer differs from executed proof")

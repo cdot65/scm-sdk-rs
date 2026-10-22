@@ -1,6 +1,15 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.3**. [Phase 24](red-team-management-0.86-plan.md)
+The workspace version is **0.2.4**, a release candidate that is not yet published.
+Phase 28 qualifies the TypeScript 0.35.0 directional-profile delta, preserves the
+existing APIs, and requires its own registry, annotated-tag, and CI receipts.
+The lockfiles include rustls-webpki 0.103.16 and webpki-root-certs 1.0.10 for
+RUSTSEC-2026-0382/0383. Downstream applications must update and audit their own
+resolved lockfiles; crate publication does not replace them.
+
+## Historical 0.2.3 delivery procedure
+
+[Phase 24](red-team-management-0.86-plan.md)
 qualifies AIRS management 0.86.0 while preserving the published 0.2.2 API.
 The `checks/release-registry-0.2.3.json` and
 `checks/release-tag-v0.2.3.json` establish actual publication and
@@ -175,3 +184,19 @@ matrix jobs succeeded, while `contracts-and-package` failed after setup.
 Current remote qualification is recorded in [phase status](phase-status.json). Other target
 builds remain compile-only where [PLATFORMS.md](PLATFORMS.md) says so; those facts
 are release limitations, not platform runtime or live-provider acceptance.
+
+## TypeScript 0.35.0 patch release (phase 28)
+
+Use `python3 tools/check_phase.py --phase 28` for cumulative local qualification.
+Both clean compiler packages must execute the directional-profile consumer.
+Obtain the phase-28 release-readiness review before publishing 0.2.4; the explicit
+prepublication guard is:
+
+```sh
+python3 scripts/check-prepublication.py --phase 28 --version 0.2.4 --readiness-review PATH
+```
+
+Publication verification and final delivery require
+version-specific registry, annotated-tag, and terminal successful CI receipts.
+A readiness review cannot complete phase 28. Historical phase 24/25 records and
+release versions remain independent; never substitute their receipts.

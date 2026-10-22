@@ -55,7 +55,7 @@ def require_proof(proof, clean=True, schema_version=2):
 
 def require_release_readiness(version, review_path):
     """Bind reviewed release registry receipt creation to actual current-source Claude approval."""
-    if version not in {"0.2.2", "0.2.3"}:
+    if version not in {"0.2.2", "0.2.3", "0.2.4"}:
         return None
     if review_path is None:
         raise ValueError(version + " requires --readiness-review before registry verification")
@@ -66,21 +66,21 @@ def require_release_readiness(version, review_path):
         raise ValueError("Readiness review must be retained inside the repository")
     source = fingerprint(ROOT)
     if not (verify_release_readiness(ROOT, path, source) if version == "0.2.2" else
-            verify_release_readiness(ROOT, path, source, phase=24)):
+            verify_release_readiness(ROOT, path, source, phase=28 if version == "0.2.4" else 24)):
         raise ValueError("Publication requires an accepted current-source release-readiness review")
     return {"review": path.relative_to(ROOT).as_posix(), "reviewSha256": sha(path.read_bytes()),
             "sourceSha256": source}
 
 
-def verify_management_proofs(proof_path, msrv_path):
+def verify_management_proofs(proof_path, msrv_path, *, require_directional=False):
     """Schema 3 cannot be accepted without its complete source/archive verifier."""
     if msrv_path is None:
-        raise ValueError('0.2.3 requires both clean compiler package proofs')
+        raise ValueError('Management publication requires both clean compiler package proofs')
     spec = importlib.util.spec_from_file_location('publication_management_package', ROOT / 'scripts/check-management-package.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    module.verify_receipt(ROOT, proof_path, '1.99.0')
-    module.verify_receipt(ROOT, msrv_path, '1.89.0')
+    module.verify_receipt(ROOT, proof_path, '1.99.0', **({'require_directional': True} if require_directional else {}))
+    module.verify_receipt(ROOT, msrv_path, '1.89.0', **({'require_directional': True} if require_directional else {}))
 
 
 def verify_response_examples(proof, files):
@@ -93,9 +93,9 @@ def verify_response_examples(proof, files):
 
 
 def verify(version, proof, metadata, owners, archive, msrv_proof=None):
-    require_proof(proof, schema_version=3 if version == "0.2.3" else 2)
-    if version == "0.2.3" and (msrv_proof is None or proof.get("toolchain") != "1.99.0"):
-        raise ValueError("0.2.3 registry verification requires development and MSRV proofs")
+    require_proof(proof, schema_version=3 if version in {"0.2.3", "0.2.4"} else 2)
+    if version in {"0.2.3", "0.2.4"} and (msrv_proof is None or proof.get("toolchain") != "1.99.0"):
+        raise ValueError("Management registry verification requires development and MSRV proofs")
     if not (isinstance(metadata, dict) and isinstance(metadata.get("version"), dict)
             and isinstance(owners, dict) and isinstance(owners.get("users"), list)
             and all(isinstance(u, dict) and isinstance(u.get("login"), str) for u in owners["users"])):
@@ -118,7 +118,7 @@ def verify(version, proof, metadata, owners, archive, msrv_proof=None):
         raise ValueError("Published files or VCS metadata differ from the qualified archive")
     verify_response_examples(proof, files)
     if msrv_proof is not None:
-        require_proof(msrv_proof, schema_version=3 if version == "0.2.3" else 2)
+        require_proof(msrv_proof, schema_version=3 if version in {"0.2.3", "0.2.4"} else 2)
         if not (msrv_proof["toolchain"] == "1.89.0"
                 and msrv_proof["releaseCommit"] == proof["releaseCommit"]
                 and msrv_proof["files"] == rows and msrv_proof["vcs"] == vcs):
@@ -225,7 +225,7 @@ def main():
     parser.add_argument("--proof", type=pathlib.Path, required=True)
     parser.add_argument("--msrv-proof", type=pathlib.Path)
     parser.add_argument("--readiness-review", type=pathlib.Path,
-                        help="Accepted current-source phase20/24 readiness review; required for 0.2.2/0.2.3")
+                        help="Accepted current-source phase20/24/28 readiness review; required for 0.2.2/0.2.3/0.2.4")
     parser.add_argument("--output", type=pathlib.Path, required=True)
     parser.add_argument("--delta", action="store_true", help="Compare the qualified candidate with published 0.1.0")
     args = parser.parse_args()
@@ -237,10 +237,10 @@ def main():
     proof = json.loads(args.proof.read_text())
     if args.delta:
         return check_delta(args.version, proof, args.output)
-    require_proof(proof, schema_version=3 if args.version == "0.2.3" else 2)
+    require_proof(proof, schema_version=3 if args.version in {"0.2.3", "0.2.4"} else 2)
     msrv = json.loads(args.msrv_proof.read_text()) if args.msrv_proof else None
-    if args.version == "0.2.3":
-        verify_management_proofs(args.proof, args.msrv_proof)
+    if args.version in {"0.2.3", "0.2.4"}:
+        verify_management_proofs(args.proof, args.msrv_proof, require_directional=args.version == "0.2.4")
     base = "https://crates.io/api/v1/crates/scm-sdk"
     version_url, owners_url = base + "/" + args.version, base + "/owners"
     download = base + "/" + args.version + "/download"
@@ -262,7 +262,7 @@ def main():
         "retainedArchive": retained.relative_to(ROOT).as_posix(),
         "sources": [version_url, owners_url, download],
     })
-    if args.version in {"0.2.2", "0.2.3"}:
+    if args.version in {"0.2.2", "0.2.3", "0.2.4"}:
         if require_release_readiness(args.version, args.readiness_review) != readiness:
             raise ValueError("Readiness or reviewed source changed during registry verification")
         report["releaseReadiness"] = readiness

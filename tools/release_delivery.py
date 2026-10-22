@@ -19,7 +19,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 REMOTE = 'ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git'
 VERSION = '0.2.2'
 PHASE = 20
-RELEASES = {(20, '0.2.2'), (24, '0.2.3')}
+RELEASES = {(20, '0.2.2'), (24, '0.2.3'), (28, '0.2.4')}
 
 
 def require(condition, message):
@@ -158,7 +158,7 @@ def verify_registry_readiness(root, registry, source_sha256, phase=PHASE):
 def retained_package_archive(root, proof, phase):
     """Bind management archives to their qualified commit's own worktree."""
     archive = pathlib.Path(proof['retainedArchive'])
-    if phase == 24:
+    if phase in (24, 28):
         commit = proof.get('releaseCommit')
         require(isinstance(commit, str) and re.fullmatch('[0-9a-f]{40}', commit),
                 'Retained archive requires an exact release commit')
@@ -211,7 +211,7 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
     publication = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(publication)
     for proof in proofs:
-        if phase_id == 24:
+        if phase_id in (24, 28):
             publication.require_proof(proof, schema_version=3)
         else:
             publication.require_proof(proof)
@@ -223,10 +223,11 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
         require(publication.file_rows(files) == proof['files']
                 and publication.policy.validate_vcs(files, proof['releaseCommit'], True) == proof['vcs'],
                 'Retained archive files or VCS differ from clean proof')
-    if phase_id == 24:
+    if phase_id in (24, 28):
         publication.verify_management_proofs(
-            root / "docs/checks/phase-24-release-package-1.99.0.json",
-            root / "docs/checks/phase-24-release-package-1.89.0.json")
+            root / f"docs/checks/phase-{phase_id}-release-package-1.99.0.json",
+            root / f"docs/checks/phase-{phase_id}-release-package-1.89.0.json",
+            **({"require_directional": True} if phase_id == 28 else {}))
         verify_retained_registry(root, registry, publication)
     result = validate_receipts(registry, tag, ci, proofs,
                                expected_contexts((root / '.forgejo/workflows/ci.yml').read_text()), source_sha256, version)

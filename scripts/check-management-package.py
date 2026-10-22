@@ -25,7 +25,7 @@ def package_module(root):
     return module
 
 
-def verify_receipt(root, path, toolchain, source_sha=None):
+def verify_receipt(root, path, toolchain, source_sha=None, *, require_directional=False):
     root, path = pathlib.Path(root).absolute(), pathlib.Path(path)
     if any(part.is_symlink() for part in (path, *path.parents)):
         raise ValueError('Package receipt must have a regular path')
@@ -111,7 +111,7 @@ def verify_receipt(root, path, toolchain, source_sha=None):
         raise ValueError('External consumer feature manifest differs')
     consumers = report.get('externalExampleConsumers', {})
     indices = [entry.get('checkIndex') for entry in consumers.values()]
-    if len(indices) != 4 or any(type(index) is not int for index in indices) or len(set(indices)) != 4:
+    if len(indices) != (5 if require_directional else 4) or any(type(index) is not int for index in indices) or len(set(indices)) != len(indices):
         raise ValueError('Consumer execution indices must be unique')
     probe_index = report.get('frozenProbeCheckIndex')
     if (type(probe_index) is not int or not 0 <= probe_index < len(checks) or probe_index in indices
@@ -149,6 +149,19 @@ def verify_receipt(root, path, toolchain, source_sha=None):
             raise ValueError('External consumer execution binding differs')
         if not archive_command_executed(['run', '--example', name, '--all-features', '--locked', '--offline', '--target', host]):
             raise ValueError('Packaged example did not execute')
+    if require_directional:
+        key = 'examples/directional_profiles.rs'
+        binding = consumers.get(key, {})
+        index = binding.get('checkIndex')
+        if (key not in files or binding.get('sha256') != hashlib.sha256(files[key]).hexdigest()
+                or binding.get('sha256') != sha(root / 'crates/scm-sdk' / key)
+                or binding.get('selectedFeatures') != [] or type(index) is not int
+                or not 0 <= index < len(checks)
+                or commands[index] != ['run', '--locked', '--offline', '--target', host]
+                or pathlib.Path(checks[index]['cwd']) != consumer_root
+                or not archive_command_executed(['run', '--example', 'directional_profiles', '--all-features',
+                                                '--locked', '--offline', '--target', host])):
+            raise ValueError('Directional profile consumer execution binding differs')
     if report.get('managementConsumerSourceSha256') != sha(root / 'crates/scm-sdk/examples/red_team_management.rs'):
         raise ValueError('Management consumer binding differs')
     if report.get('publicConsumerSourceSha256') != expected_old['contracts/native-probes/src/main.rs']:
@@ -161,10 +174,11 @@ def main():
     parser.add_argument('--toolchain', choices=['1.89.0', '1.99.0'], required=True)
     parser.add_argument('--output', type=pathlib.Path, required=True)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--require-directional', action='store_true')
     args = parser.parse_args()
     output = args.output.resolve()
     if args.check:
-        verify_receipt(ROOT, output, args.toolchain)
+        verify_receipt(ROOT, output, args.toolchain, require_directional=args.require_directional)
     else:
         source = fingerprint(ROOT)
         manifest = management_consumers.verify(root=ROOT)
@@ -190,7 +204,7 @@ def main():
                       oldConsumerManifestSha256=sha(ROOT / management_consumers.MANIFEST),
                       oldConsumerSources={row['path']: row['sha256'] for row in manifest['consumers']})
         output.write_text(json.dumps(report, indent=2) + '\n')
-        verify_receipt(ROOT, output, args.toolchain, source)
+        verify_receipt(ROOT, output, args.toolchain, source, require_directional=args.require_directional)
     print(json.dumps({'passed': True, 'toolchain': args.toolchain, 'receipt': str(output)}))
 
 
