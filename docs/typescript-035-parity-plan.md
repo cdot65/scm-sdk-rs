@@ -227,3 +227,52 @@ The phase-26 driver now runs unconditional baseline-to-working-tree SDK comparis
 and an untracked SDK file guard. They execute even with --verification-only and do
 not depend on fingerprint-excluded active_phase metadata. The additional unit-test
 freeze is supplementary, not the sole acceptance boundary.
+
+### Phase 27 qualification adjustment
+
+Actual qualification exposed a historical gate distinction: the phase-23 checker
+requires the absence of current live evidence, whereas native ledgers correctly
+require a fresh receipt once runtime source changes. Phase 27 therefore uses the
+explicit `--check --current-source-compatibility` mode: unchanged runtime-adoption
+and cumulative offline checks plus current-source bounded read-only evidence.
+It does not accept phase 24, use old package receipts, or promote the new
+directional write workflows to live-qualified status. Historical phase-23 and
+phase-24 command meanings remain unchanged.
+
+The vendor management operations artifact is itself pinned by the immutable
+manifest. Its historical runtime evidence therefore remains byte-identical;
+`typescript-035-management-compatibility.json` separately binds the current
+management generator evidence. The owner still regenerates and compares all 42
+operation rows, verifies current runtime adoption, and rejects changes to the
+frozen artifact. This preserves provenance without representing old hashes as
+current execution evidence.
+
+The frozen schema oracle encountered distinct ESM/CommonJS Zod constructor
+identities when reconstructing discriminated unions. Its response adapter now
+retains the original discriminator map and adapts only the mapped child schemas;
+request schemas are untouched. Qualification permits exactly the corresponding
+`provenance.generatorSha256` refresh in `contracts/native-fixtures/schemas.json`.
+All historical outcomes, inputs, policies, counts and other provenance fields
+remain unchanged, enforced against the original Git baseline by a regression.
+The packaged 18-specimen subset is regenerated from that verified oracle; only
+its `provenance.sha256` and `provenance.oracleSha256` bindings change. All specimen
+identities, source pointers, outputs and remaining metadata stay identical. The
+historical G25 semantic digest validates the current oracle generator hash before
+normalizing that hash to its historical identity for comparison.
+
+### Newly disclosed TLS dependency advisories
+
+The fresh 2026-10-22 dependency audit found RUSTSEC-2026-0382 and
+RUSTSEC-2026-0383 in the inherited lockfile. Qualification updates only the
+locked versions/checksums of rustls-webpki (0.103.15 to 0.103.16) and
+webpki-root-certs (1.0.9 to 1.0.10), with no new dependency or production
+manifest change. The MSRV and complete feature matrix remain mandatory.
+Dependency auditing now precedes that matrix so new advisories fail early.
+Downstream lockfiles require their own updates and audit, documented in the
+changelog. The new lockfile receives a fresh live receipt and package evidence.
+
+Phase 27 also reuses the existing source-bound checkpoint mechanism via
+`--resume`: only an actually executed passing prefix with identical source,
+command order, receipt/archive hashes and age under eight hours is reusable.
+Changed source or evidence is rejected; no historical phase qualification is
+reused. Regression tests cover phase identity and tampered receipts.

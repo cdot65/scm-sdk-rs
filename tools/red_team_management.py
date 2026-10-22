@@ -606,7 +606,8 @@ def build():
         Path('contracts/airs-operations.json'): {'schemaVersion': 1, 'snapshotCommit': COMMIT, 'bindingProvenance': str(AUDIT), 'operations': rows},
         Path('contracts/airs-retained-capabilities.json'): retention,
         VENDOR / 'operations.json': {'schemaVersion': 1, 'sourceId': SOURCE_ID, 'operations': management_rows,
-            'runtimeEvidence': management_runtime_evidence() if adopted else None},
+            'runtimeEvidence': historical_management_runtime_evidence() if adopted else None},
+        Path('contracts/typescript-035-management-compatibility.json'): management_compatibility_evidence(),
         # Stable machine identifiers consumed downstream; do not reformat phase tokens.
         VENDOR / 'compatibility-decisions.json': {'schemaVersion': 1, 'sourceId': SOURCE_ID, 'baselineVersion': baseline['info']['version'], 'currentVersion': management_spec['info']['version'], 'deltas': deltas, 'plan': 'docs/red-team-management-0.86-plan.md', 'runtimeAdoption': management_adoption_tokens(adopted)[1], 'targetResponseDeclarations': target_response_declarations(management_spec) if adopted else None},
     }
@@ -684,6 +685,31 @@ def target_response_declarations(spec):
                      'fixture': 'crates/scm-sdk/tests/red_team_management_contracts.rs::all_five_operations_preserve_declared_sensitive_response_shapes',
                      'responseModes': ['Response', 'ResponseWithoutDefaults']})
     return rows
+
+
+def historical_management_runtime_evidence():
+    """Read the immutable adoption snapshot; never present its hashes as current."""
+    path = VENDOR / 'operations.json'
+    records = [row for row in load('contracts/manifest.json')['vendorArtifacts'] if row['path'] == str(path)]
+    expected = '1888202d439416ba32ccc529095a40231bca1af6d171b73279aa67ef665007f6'
+    if len(records) != 1 or records[0]['sha256'] != expected:
+        raise ValueError('Historical management operations snapshot pin differs')
+    data = checked_bytes(path, expected)
+    if len(data) != records[0]['bytes']:
+        raise ValueError('Historical management operations snapshot length differs')
+    return json.loads(data)['runtimeEvidence']
+
+
+def management_compatibility_evidence():
+    historical = historical_management_runtime_evidence()
+    return {
+        'schemaVersion': 1,
+        'scope': 'Additive TypeScript 0.35.0 compatibility evidence. The manifest-pinned vendor operations artifact retains historical adoption hashes; current source bindings below are verified independently. Neither snapshot establishes test execution, directional live acceptance, or completion of a historical release phase.',
+        'historicalArtifact': str(VENDOR / 'operations.json'),
+        'historicalArtifactSha256': sha(safe_path(VENDOR / 'operations.json').read_bytes()),
+        'historicalRuntimeEvidence': historical,
+        'currentRuntimeEvidence': management_runtime_evidence(),
+    }
 
 
 def management_runtime_evidence():
@@ -771,9 +797,9 @@ def verify_service_qualification():
     checked_bytes(reference['report'], reference['reportSha256'])
     _, envelope = live_evidence.load(ROOT, required=True)
     if envelope['report']['schemaVersion'] != 2:
-        raise ValueError('Phase 24 requires fresh bounded read-only management qualification')
+        raise ValueError('Current-source qualification requires fresh bounded read-only management evidence')
     if envelope['report'].get('limitations') != live_evidence.READ_ONLY_LIMITATIONS:
-        raise ValueError('Phase 24 requires explicit exercised and unexercised endpoint profiles')
+        raise ValueError('Current-source qualification requires explicit exercised and unexercised endpoint profiles')
     annotations, _, receipt = native_operations.live_projection(ROOT)
     for name, key in (('native-operations', 'operations'), ('qualification', 'operations'),
                       ('native-exports', 'capabilities')):
@@ -818,11 +844,16 @@ def verify_cumulative_qualification(*, package_receipts=False, phase=23):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--current-source-compatibility', action='store_true',
+                        help='Check retained runtime contracts against fresh bounded reads; no release or package acceptance')
     parser.add_argument('--verify-package-receipts', action='store_true', help='Phase 23/24 final gate: verify both executed clean package receipts')
     parser.add_argument('--verify-retention-origin', action='store_true', help='Phase 21 only: verify current source ledgers equal audited seed digests')
     parser.add_argument('--require-through-phase', type=int, choices=range(21, 26), default=21)
     args = parser.parse_args()
     try:
+        if args.current_source_compatibility and (not args.check or args.verify_package_receipts
+                or args.verify_retention_origin or args.require_through_phase != 21):
+            raise ValueError('Current-source compatibility requires --check with default phase 21 and no package or retention verification')
         if args.verify_package_receipts and args.require_through_phase not in (23, 24):
             raise ValueError('Package receipt verification requires phase 23 or 24')
         if args.require_through_phase > 24:
@@ -830,16 +861,18 @@ def main():
         if args.verify_retention_origin:
             verify_retention_origin()
         outputs = build()
-        if args.require_through_phase in (22, 23, 24):
+        if args.current_source_compatibility or args.require_through_phase in (22, 23, 24):
             source = next(row for row in load('contracts/manifest.json')['sources'] if row['id'] == SOURCE_ID)
             if source['usedForGeneration'] is not True:
                 raise ValueError('Management runtime adoption is not declared')
             verify_runtime_adoption()
-            if args.require_through_phase == 24:
+            if args.current_source_compatibility or args.require_through_phase == 24:
                 verify_service_qualification()
             else:
                 verify_offline_live_boundary()
-        if args.require_through_phase in (23, 24):
+        if args.current_source_compatibility:
+            verify_cumulative_qualification(package_receipts=False)
+        elif args.require_through_phase in (23, 24):
             verify_cumulative_qualification(package_receipts=args.verify_package_receipts, phase=args.require_through_phase)
         for path, value in outputs.items():
             content = encoded(value)
@@ -849,7 +882,9 @@ def main():
             else:
                 (ROOT / path).parent.mkdir(parents=True, exist_ok=True)
                 (ROOT / path).write_text(content)
-        print('AIRS contracts: 7 source pins, 160 operation mappings, 42 management operations; static evidence only')
+        print('AIRS contracts: 7 source pins, 160 operation mappings, 42 management operations; '
+              + ('current-source compatibility and bounded reads verified; release acceptance not assessed'
+                 if args.current_source_compatibility else 'static evidence only'))
     except (ValueError, KeyError, OSError) as exc:
         parser.exit(1, str(exc) + '\n')
 

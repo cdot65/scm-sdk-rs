@@ -198,7 +198,7 @@ def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def check_evidence(root, phase, source_sha256, path=None):
+def check_evidence(root, phase, source_sha256, path=None, *, archived_sha256=None):
     """Accept the complete command set only when checked against unchanged inputs."""
     from check_phase import commands_for, verify_checkpoint_bindings
 
@@ -207,17 +207,29 @@ def check_evidence(root, phase, source_sha256, path=None):
         raise ValueError("Check evidence must be a regular file")
     report = json.loads(path.read_text())
     checks = report.get("checks", [])
+    current_source = source_sha256 == fingerprint(root)
+    # Only verify_record supplies a preserved snapshot hash, after validating
+    # its review/CLI/prompt bindings. Historical command policies belong to that
+    # accepted snapshot; today's policy must still govern every current source.
+    archived = (archived_sha256 is not None and not current_source
+                and sha256(path) == archived_sha256)
+    commands_valid = (isinstance(checks, list) and bool(checks)
+                      and all(isinstance(item, dict)
+                              and isinstance(item.get("command"), list)
+                              and bool(item["command"])
+                              and all(isinstance(arg, str) and arg for arg in item["command"])
+                              for item in checks))
     if not (report.get("phase") == phase and report.get("passed") is True
             and report.get("scope") is None
             and report.get("source_sha256") == source_sha256
             and report.get("source_unchanged") is True
-            and isinstance(checks, list)
-            and [item.get("command") for item in checks] == commands_for(phase)
+            and commands_valid
+            and (archived or [item["command"] for item in checks] == commands_for(phase))
             and all(type(item.get("exit_code")) is int and item["exit_code"] == 0 for item in checks)):
         raise ValueError("Phase checks are incomplete, stale, or failing; rerun tools/check_phase.py")
     # Historical accepted snapshots retain their own evidence hashes. Current
     # qualification must additionally prove the referenced files still match.
-    if phase in (23, 24, 25, 26) and source_sha256 == fingerprint(root):
+    if phase in (23, 24, 25, 26, 27) and current_source:
         verify_checkpoint_bindings(checks, root)
     return path
 
@@ -306,7 +318,12 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
         output = json.loads(envelope.get("result", "{}"))
     if envelope.get("is_error") is not False or output != record["review"]:
         return False
-    checks = check_evidence(root, phase, source_sha256, path.with_suffix(".checks.json") if rubric else None)
+    snapshot = path.with_suffix(".checks.json") if rubric else None
+    if rubric and (not snapshot.is_file() or snapshot.is_symlink()
+                   or sha256(snapshot) != record.get("checks_sha256")):
+        return False
+    checks = check_evidence(root, phase, source_sha256, snapshot,
+                            archived_sha256=record.get("checks_sha256") if rubric else None)
     return sha256(checks) == record.get("checks_sha256")
 
 

@@ -557,7 +557,8 @@ class Generator:
             if target.startswith("Vec<"):
                 target = "Sequence<" + target[4:]
             body = f"#[derive(Clone, PartialEq, Serialize, Deserialize)]\n#[serde(transparent)]\npub struct {name}({target});\nimpl {name}{{pub fn new(value:{target})->Self{{Self(value)}}pub fn as_inner(&self)->&{target}{{&self.0}}pub fn into_inner(self)->{target}{{self.0}}}}\n"
-        self.declarations[name] = f"/// Native typed contract for frozen schema `{sid}`. Validate wire constraints with `validation::parse`.\n" + body + self.debug(name)
+        provenance = "TypeScript 0.35.0 supplemental" if sid.startswith("s_ts035_") else "frozen"
+        self.declarations[name] = f"/// Native typed contract for {provenance} schema `{sid}`. Validate wire constraints with `validation::parse`.\n" + body + self.debug(name)
 
     def union(self, name, variants, schema):
         types = []
@@ -1045,9 +1046,11 @@ def main():
         raise ValueError("Unexpected model generation baseline")
     import red_team_dataplane as vendor
     import red_team_management_models as management
+    import typescript035_profiles as profiles
+    profiles_overlay = profiles.Overlay()
     management_overlay = management.Overlay()
     _, _, _, current, vendor_graph, _ = vendor.contract()
-    merged = management_overlay.extend_graph(vendor.extend_graph(compact_graph(inventory), vendor_graph))
+    merged = profiles_overlay.extend_graph(management_overlay.extend_graph(vendor.extend_graph(compact_graph(inventory), vendor_graph)))
     outputs = {ROOT / "crates/scm-sdk/src/validation/schema_graph.json": json.dumps(merged, separators=(",", ":"), ensure_ascii=False) + "\n"}
     if not args.graph_only:
         generator = Generator(inventory)
@@ -1055,6 +1058,7 @@ def main():
         additions = vendor.augment_models(generator, current, vendor_generator)
         management_source, management_generator = management_overlay.model_outputs(Generator)
         management_overlay.augment_models(generator, management_generator)
+        profiles_overlay.augment_models(generator)
         rust = generator.generate(args.only)
         if not args.only:
             management_overlay.verify_model_names(generator)
@@ -1116,6 +1120,9 @@ def main():
         if not args.only and unresolved:
             raise ValueError(f"Known source models lack a typed adapter: {[row['export'] for row in unresolved]}")
         ledger = {"schemaVersion": 1, "baselineCommit": inventory["baseline"]["commit"], "sourceSha256": sha(SOURCE.read_bytes()), "generatorSha256": sha(pathlib.Path(__file__).read_bytes()), "partialFamily": args.only, "structuralChecks":validate_graph_contract(inventory), "unionVariantPins":"contracts/native-union-variants.json", "unionVariantPinsSha256":sha(UNION_PINS.read_bytes()) if UNION_PINS.is_file() else None, "semanticRegistry": "contracts/native-semantics.json", "nativeBoundaries": [{"schema":sid,"rustType":"BinaryFile" if "z.instanceof(Blob)" in node.get("semanticSource",{}).get("source",{}).get("text","") else "crate::validation::NativeDate" if node["kind"]=="ZodDate" else "crate::Transport" if sid=="s000009" else "crate::RequestOptions"} for sid,node in inventory["schemas"]["definitions"].items() if node["kind"]=="ZodDate" or sid in {"s000009","s000014"} or "z.instanceof(Blob)" in node.get("semanticSource",{}).get("source",{}).get("text","")], "transformOutputs": [{"schema":sid,"representation":"object with required message string" if sid in TRANSFORM_MESSAGE else "array unwrapped from data envelope" if sid=="s002084" else "object with required type string and preserved additional JSON fields"} for sid in sorted(TRANSFORM_MESSAGE|{"s002084","s006118"})], "schemas": generator.schema_models, "modelExports": generator.model_rows, "generatedDeclarations": len(generator.declarations), "aliases": len(generator.aliases), "deferred": [row for row in generator.model_rows if row["status"].startswith(("pending_","deferred_"))]}
+        ledger["typescript035Schemas"] = profiles_overlay.supplemental_schemas()
+        ledger["typescript035ModelExports"] = profiles_overlay.supplemental_models()
+        outputs[profiles.LEDGER] = json.dumps(profiles_overlay.ledger(), indent=2) + "\n"
         outputs[ROOT / "contracts/native-models.json"] = json.dumps(ledger, indent=2) + "\n"
     for file, content in outputs.items():
         if args.check:

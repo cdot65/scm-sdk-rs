@@ -423,6 +423,33 @@ class FiveCategoryReviewTests(unittest.TestCase):
                 self.assertEqual(main(['--phase', '19'], root), 0)
                 path = root / 'docs/reviews/phase-19-attempt-01.json'
                 self.assertTrue(verify_record(root, path, 19, source))
+                # Current source must satisfy today's full command policy.
+                with patch('check_phase.commands_for', return_value=[['new-current-check']]):
+                    with self.assertRaises(ValueError):
+                        verify_record(root, path, 19, source)
+                # Historical chunk/follow-up and predecessor evidence retain
+                # their actual command snapshot across deduplication/additions.
+                source_file = root / 'source.rs'
+                source_file.write_text('next phase source')
+                chunk_path = root / 'docs/reviews/phase-19-chunk-example-attempt-01.json'
+                for historical_path, chunk in ((path, None), (chunk_path, 'example')):
+                    for current_commands in ([['deduplicated-check']],
+                                             [['synthetic-check'], ['new-release-check']]):
+                        with patch('check_phase.commands_for', return_value=current_commands):
+                            self.assertTrue(verify_record(root, historical_path, 19, source, chunk))
+                    snapshot = historical_path.with_suffix('.checks.json')
+                    original = snapshot.read_bytes()
+                    tampered = json.loads(original)
+                    tampered['checks'] = []
+                    snapshot.write_text(json.dumps(tampered))
+                    self.assertFalse(verify_record(root, historical_path, 19, source, chunk))
+                    snapshot.write_bytes(original)
+                # Direct qualification never gains historical-snapshot trust.
+                from review_phase import check_evidence
+                with patch('check_phase.commands_for', return_value=[['new-current-check']]):
+                    with self.assertRaises(ValueError):
+                        check_evidence(root, 19, source, path.with_suffix('.checks.json'))
+                source_file.write_text('source')
                 # A later qualification run cannot erase this attempt's checks.
                 checks.write_text('{}')
                 self.assertTrue(verify_record(root, path, 19, source))
@@ -658,6 +685,29 @@ class FiveCategoryReviewTests(unittest.TestCase):
             self.assertEqual(chunk['accepted_review'], str(chunk_path.relative_to(root)))
             self.assertEqual(chunk['phase_followup_review'], str(phase_path.relative_to(root)))
             self.assertEqual(chunk['phase_followup_current_source_sha256'], fingerprint(root))
+
+    def test_fifth_followup_and_predecessor_survive_command_policy_changes(self):
+        with self.chunk_repository() as (root, original_source, _):
+            self.declare_chunks(root, 'example')
+            checks_path = root / 'docs/checks/phase-19.json'
+            checks = json.loads(checks_path.read_text())
+            checks['checks'] *= 2
+            checks_path.write_text(json.dumps(checks))
+            with patch('check_phase.commands_for', return_value=[['synthetic-check']] * 2):
+                for attempt in range(1, 6):
+                    self.run_synthetic_review(root, chunk='example', attempt=attempt)
+            (root / 'source.rs').write_text('Reviewed deduplication correction')
+            checks['checks'] = checks['checks'][:1]
+            checks_path.write_text(json.dumps(checks))
+            self.refresh_synthetic_checks(root)
+            _, phase_path = self.run_synthetic_review(root)
+            self.assertEqual(main(['--phase', '19', '--verify', str(phase_path), '--advance'], root), 0)
+            status = json.loads((root / 'docs/phase-status.json').read_text())
+            self.assertEqual(status['phases'][0]['chunks'][0]['accepted_source_sha256'], original_source)
+            # A later release adds a test to the cumulative predecessor policy.
+            (root / 'source.rs').write_text('Later release tooling adds checks')
+            with patch('check_phase.commands_for', return_value=[['synthetic-check'], ['release-check']]):
+                validate_predecessors(root, status, 20)
 
     def test_chunk_followup_rejects_missing_rejected_stale_or_early_coverage(self):
         from review_phase import accepted_chunks

@@ -94,6 +94,22 @@ class LiveEvidenceTests(unittest.TestCase):
                     live.run(args)
                 process.assert_not_called()
 
+    def test_read_only_phase_selection_precedes_build(self):
+        import types
+        base = dict(config=pathlib.Path('/synthetic/external.json'), expect_tsg='123',
+                    mutations=False, read_only=True, attempt=1)
+        self.assertEqual(live.selected_phase(types.SimpleNamespace(**base)), '24')
+        self.assertEqual(live.selected_phase(types.SimpleNamespace(**dict(base, read_only=False, mutations=True))), '08')
+        for phase in (24, 27, 28):
+            self.assertEqual(live.selected_phase(types.SimpleNamespace(**base, phase=phase)), str(phase))
+        for phase, mutations, read_only in ((8, False, True), (25, False, True), (True, False, True),
+                                           (27, True, False), (24, True, False), (28, True, False)):
+            args = types.SimpleNamespace(**dict(base, phase=phase, mutations=mutations, read_only=read_only))
+            with mock.patch.object(live.subprocess, 'check_output') as process:
+                with self.assertRaisesRegex(ValueError, '--phase'):
+                    live.run(args)
+                process.assert_not_called()
+
     def test_report_version_is_bound_to_the_selected_crate_manifest(self):
         report = specimen()
         live.validate_report(report)
@@ -352,6 +368,22 @@ class LiveEvidenceTests(unittest.TestCase):
                 save(read_only)
                 observations, _ = live.load(root, required=True)
                 self.assertEqual(len(observations), 2)
+                archived = copy.deepcopy(read_only)
+                archived['report']['limitations'] = live.HISTORICAL_READ_ONLY_LIMITATIONS
+                save(archived)
+                live.load(root, required=True)
+                for phase in (27, 28):
+                    report_path = root / f'docs/checks/phase-{phase}-live-attempt-01.json'
+                    save(read_only)
+                    observations, _ = live.load(root, required=True)
+                    self.assertEqual(len(observations), 2)
+                    self.assertFalse(any('directional' in name for name in observations))
+                    save(archived)
+                    with self.assertRaisesRegex(ValueError, 'endpoint-profile limitations'):
+                        live.load(root, required=True)
+                    save(envelope)
+                    with self.assertRaisesRegex(ValueError, 'phase and qualification mode'):
+                        live.load(root, required=True)
                 read_only['commandTemplate'] = live.command_template(False)
                 save(read_only)
                 with self.assertRaisesRegex(ValueError, 'invocation metadata'):

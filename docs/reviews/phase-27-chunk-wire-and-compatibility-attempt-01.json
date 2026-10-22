@@ -1,0 +1,123 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 27,
+  "attempt": 1,
+  "reviewed_at": "2026-10-22T02:21:55.751794+00:00",
+  "source_sha256": "9761d2cef77fefd89b27cefca25db51debc503eac5df34e5e2aa4222f397fb7b",
+  "source_unchanged": true,
+  "checks_sha256": "3807bc27c784b5b7e50fb0375b5b78db5e58486e120a30fe99040b8dc8401545",
+  "prompt_sha256": "271ab0e8e1b6f0773f34a508025178f5cef5dbabf4c69b3f04c7fc7c31845943",
+  "cli_output_sha256": "91a3694778eaeb88862b897a2593bb9238ba5fad42a42c941e1341dc4d0d889a",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "The wire-and-compatibility chunk is implemented tightly and backed by real execution evidence. profiles.rs changes exactly the two request-schema arguments (lines 91, 214) and keeps frozen response roots and operation names; a dedicated regression proves that byte-exact delta. New Rust tests cover create/update/get/list/paged paths with defaults on and off, pre-auth rejection of newly modeled invalid values (zero token/wire calls), typed-over-extension precedence, lossless null/unsupported responses, and the 0.35.0 oracle corpus; all ran under 1.89.0 and 1.99.0 with the offline example executed. Docs (DIRECTIONAL_PROFILES, CHANGELOG, STABILITY, LIVE_ACCEPTANCE) are candid and receipt-bound; the fresh read-only receipt honestly records 1 verified method. Main gap: phase 27's command set drops the entire test_typescript035_governance.py suite, removing several supplemental-source tamper regressions from the cumulative gate.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/check_phase.py",
+        "line": 328,
+        "description": "commands_for(27) excludes the whole test_typescript035_governance.py suite from the glob-expanded unit-test set. Only two of its tests genuinely conflict with post-implementation state (test_frozen_contracts_and_planning_sdk_bytes asserts crates/scm-sdk equals 578f2e6, and test_independent_dependency_checks_and_original_gate_remain expects phase 26 to be an unmet predecessor). Excluding the file also drops still-valid supplemental-source regressions from the phase-27 gate: forged self-consistent manifest/git origin (line 98), license identity and digest (line 52), baseline ledger tamper and pinned Zod dependency (line 67), added-file/symlink rejection (lines 123, 167), and private-receipt post-check tamper (line 29). verify-contracts.py --self-test and verify_typescript035_source.py --check still run and cover part of this, but the fail-closed proofs for the 0.35.0 pins are no longer re-executed.",
+        "required_fix": "Split the two phase-26-only assertions into a separate module (or gate them on the active phase) and include the remaining governance regressions in commands_for(27), rather than excluding the file by name."
+      },
+      {
+        "severity": "low",
+        "path": "tools/live_evidence.py",
+        "line": 176,
+        "description": "The read-only receipt validator accepts either HISTORICAL_READ_ONLY_LIMITATIONS or READ_ONLY_LIMITATIONS, so `live_evidence.py --check` alone would pass a phase-27 receipt that omits the required endpoint-profile limitation. Only red_team_management.py --check --current-source-compatibility (verify_service_qualification, line 801) enforces the complete list.",
+        "required_fix": "Require READ_ONLY_LIMITATIONS for non-phase-24 (current-source) receipts in live_evidence.load, keeping the historical list accepted only for the archived phase-24 receipt path."
+      },
+      {
+        "severity": "low",
+        "path": "contracts/typescript-035-parity.json",
+        "line": 7,
+        "description": "sourceBindings pin only the upstream model file and the four generator tools. The delivered wire-layer artifacts for this chunk (crates/scm-sdk/src/airs/management/profiles.rs, tests/typescript035_models.rs, examples/directional_profiles.rs) are not hash-bound in the additive ledger; they are covered indirectly by tools/test_typescript035_implementation.py and the phase source fingerprint.",
+        "required_fix": "Add the profile client, directional model test and example to the parity ledger sourceBindings so the ledger alone pins the delivered implementation, mirroring red_team_management.py's management_runtime_evidence source bindings."
+      },
+      {
+        "severity": "low",
+        "path": "docs/DIRECTIONAL_PROFILES.md",
+        "line": 62,
+        "description": "The Rust builder snippet (including the `# Ok::<(), scm_sdk::Error>(())` doctest idiom) is in a standalone markdown file that no crate target includes, so it is never compiled; it can drift from the API. The equivalent flow is compiled and executed via examples/directional_profiles.rs.",
+        "required_fix": "Either include this guide through #![doc = include_str!(..)] so the snippet is doctested, or drop the doctest-only hidden line and reference the compiled example instead."
+      }
+    ],
+    "evidence": [
+      "crates/scm-sdk/src/airs/management/profiles.rs:91,214 repoint exactly the two CreateSecurityProfileRequestSchema arguments to \"typescript:0.35.0:CreateSecurityProfileRequestSchema\"; response roots (lines 76, 92, 107, 215, 231) and all .named() operation ids are unchanged.",
+      "tools/test_typescript035_implementation.py:67-76 proves the profiles.rs delta is exactly those two strings (before.count==2, after.count==2, after.replace(current,previous)==before) and that .named() operation lists are identical.",
+      "crates/scm-sdk/tests/management_contracts.rs:1736-1839 exercises POST/PUT/list_for_token/list/get/list_all for both defaults=true/false against a directional fixture whose reply carries null dlp_tenant_id, integer tool-call and null enable-full-conversation-inspection, asserting byte-equal round-trip.",
+      "crates/scm-sdk/tests/management_contracts.rs:1842-1873 drives 5 JSON pointers x 3 invalid values through create and update, asserting ErrorKind::Validation with token.calls==0 and wire.requests==0 (validation precedes auth and transport).",
+      "crates/scm-sdk/tests/typescript035_models.rs:21-88 replays contracts/typescript-035-oracle.json (sourceCommit 780c985c...) through parse() for all 8 roots, compares normalized Zod output, typed round-trips each root, and requires at least one acceptance and one rejection per root.",
+      "crates/scm-sdk/tests/typescript035_models.rs:91-213 covers omission/null/wrong-type/unexpected projections in Mode::Response and ResponseWithoutDefaults, typed-over-extension precedence with Debug redaction, and the versioned list default ([] inserted, omitted without defaults).",
+      "docs/checks/phase-27-rust-1.89.0-management.json:90 recorded executed output: management_contracts 23 passed including directional_profiles_preserve_all_wire_paths_and_both_response_policies, current_profile_requests_reject_new_invalid_fields_before_authentication, valid_raw_directional_extensions_submit_and_decode_typed_responses; typescript035_models 4 passed; schema_contracts 10 passed.",
+      "docs/reviews/phase-27-chunk-wire-and-compatibility-attempt-01.checks.json: 93 checks, every exit_code 0, timeout false, source_unchanged true, source_sha256 9761d2ce... matching the reviewed source; includes cargo run of the directional example on both 1.89.0 (line 2949) and 1.99.0 (line 2981).",
+      "Executed tool evidence in the same receipt: typescript035_profiles --check {addedExports 4, projectedFields 5, versionedRoots 6, clonedNodes 12, defaultAliases 1}; typescript035-oracle --check {roots 8, cases 376, accepted 139}; tsc --noEmit --strict on the oracle; native_exports --check {frozenCapabilities 3820, implemented 3820}; qualification --check {operations 448, liveVerified 1, liveNotVerified 447}.",
+      "contracts/live-evidence.json -> docs/checks/phase-27-live-attempt-04.json records a fresh read-only run (executedAt 2026-10-22T01:14Z, mutationsEnabled false, 1 verified probe, four 403 permission prerequisites); tools/live_evidence.py:301 binds runtimeInputsSha256 to the current runtime fingerprint, so stale receipts fail closed.",
+      "tools/test_live_acceptance_docs.py:10-23 ties every numeric claim in docs/LIVE_ACCEPTANCE.md to that receipt; tools/test_live_evidence.py:376 asserts no live observation is named 'directional' for phases 27/28.",
+      "crates/scm-sdk/src/models/generated.rs:4467-4559 implements the AiSecurityProfile projection: unrepresentable values fall back into extensions on decode, and serialization skips a colliding extension only when the typed field is set - matching the plan and verified by the tests above.",
+      "contracts/sources/typescript-0.35.0/src/models/mgmt-security-profile.ts:239-292, 334, 368 confirm the Rust types match upstream exactly (content-type-mode z.string().optional(), dlp_tenant_id z.string().optional(), enable-full-conversation-inspection z.boolean().optional(), both content-type schemas .passthrough()).",
+      "tools/test_g25.py:14-21 keeps the frozen format inventory at 190 rows with a digest pinned to accepted source 578f2e6 and asserts no typescript:/vendor: root inflates it; crates/scm-sdk/tests/schema_contracts.rs:9-52 keeps the 23 historical defaults and counts s_ts035_s009653 separately while asserting it equals s009653.",
+      "tools/check_phase.py:835-869 plus tools/test_phase_checkpoint.py (12 tests incl. later-command receipt mutation, archive bytes, stale/future windows, symlink) make --resume reuse fail closed; review_phase.py:220 rechecks receipt bindings at review time."
+    ],
+    "limitations": [
+      "Read-only review: I could not run git, cargo or the phase driver, so command exit codes, test counts and source fingerprints were assessed from the recorded receipts (docs/reviews/phase-27-chunk-wire-and-compatibility-attempt-01.checks.json and docs/checks/phase-27-rust-*-management.json) rather than re-executed.",
+      "I did not recompute SHA-256 digests, so pin consistency (e.g. qualification.json's live-evidence hash, parity ledger sourceBindings) rests on the recorded passing checks that verify them.",
+      "Directional create/update were never exercised against a real tenant; the current receipt verifies only OAuth token exchange, and the four Red Team probes returned 403. Directional live acceptance remains unverified, as the docs state.",
+      "No package-consumer build against the changed source runs in phase 27 (check-management-package.py and --verify-package-receipts are deliberately excluded); management_consumers.py --check reports executionClaimed false. That evidence is deferred to phase 28 per the plan and I did not judge it here.",
+      "I reviewed only the wire-and-compatibility chunk scope; generated model/validation correctness was assessed through the compiler, selected generated declarations (generated.rs:4456-4569, 13369-13580) and the independent fixture/oracle checks, not a full audit of the models-and-validation chunk.",
+      "I did not read .local/typescript or any credential/tenant-registration material; the pinned contracts/sources/typescript-0.35.0 tree was used as the authoritative upstream input."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": "wire-and-compatibility",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "crates/scm-sdk/src/airs/management/profiles.rs",
+    "crates/scm-sdk/tests/typescript035_models.rs",
+    "crates/scm-sdk/tests/management_contracts.rs",
+    "crates/scm-sdk/examples/directional_profiles.rs",
+    "crates/scm-sdk/Cargo.toml",
+    "tools/test_typescript035_implementation.py",
+    "tools/test_management_phases.py",
+    "tools/check_phase.py",
+    "tools/review_phase.py",
+    "scripts/check-rust.py",
+    "CHANGELOG.md",
+    "docs/STABILITY.md",
+    "docs/DIRECTIONAL_PROFILES.md",
+    "docs/RESPONSE_DEFAULTS.md",
+    "contracts/native-operations.json",
+    "contracts/native-exports.json",
+    "contracts/qualification.json",
+    "docs/PHASES.md",
+    "tools/test_ci.py",
+    "tools/g25_audit.py",
+    "tools/test_g25.py",
+    "contracts/compatibility/g25/audit.json",
+    "contracts/compatibility/g25/comparison.json",
+    "tools/live_evidence.py",
+    "tools/test_live_evidence.py",
+    "contracts/live-evidence.json",
+    "tools/red_team_management.py",
+    "tools/test_red_team_management.py",
+    "docs/typescript-035-parity-plan.md",
+    "contracts/typescript-035-management-compatibility.json",
+    "crates/scm-sdk/tests/schema_contracts.rs",
+    "contracts/native-gateway-bindings.json",
+    "tools/test_g10_release.py",
+    "docs/LIVE_ACCEPTANCE.md",
+    "tools/test_live_acceptance_docs.py",
+    "Cargo.lock",
+    "tools/test_phase_checkpoint.py",
+    "tools/test_red_team_dataplane.py"
+  ]
+}

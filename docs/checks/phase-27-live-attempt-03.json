@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "executedAt": "2026-10-22T00:40:18.924915+00:00",
+  "runtimeInputsSha256": "64c3c3c454e81f369fb9f91336dac6cb061b7307d408937e9d1f4a4154ad2c3e",
+  "binarySha256": "c0fe72680aa8d50d3f263136b3511c8d6f77495bd3cf7b8977f0efd06a8d16e6",
+  "toolchain": "1.99.0",
+  "hostTarget": "x86_64-unknown-linux-musl",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "commandTemplate": [
+    "live_qualification",
+    "--config",
+    "[external-registration]",
+    "--expect-tsg",
+    "[verified-external-scope]",
+    "--output",
+    "[private-report]",
+    "--recovery-output",
+    "[private-recovery]",
+    "--read-only"
+  ],
+  "report": {
+    "schemaVersion": 2,
+    "tenantScopeMatched": true,
+    "client": "native_scm_sdk",
+    "crateVersion": "0.2.3",
+    "automaticRetries": 0,
+    "maximumTransportAttempts": 5,
+    "perOperationTimeoutSeconds": 15,
+    "scanAuthentication": null,
+    "mutationsEnabled": false,
+    "cleanupState": "not_needed",
+    "probes": [
+      {
+        "operation": "oauth.get_token",
+        "classification": "verified",
+        "status": 200,
+        "errorKind": null,
+        "remoteOutcome": null,
+        "workflowAccepted": true
+      },
+      {
+        "operation": "red_team.targets.list.profiling_not_started",
+        "classification": "permission_prerequisite",
+        "status": 403,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "red_team.targets.list.profiling_in_progress",
+        "classification": "permission_prerequisite",
+        "status": 403,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "red_team.targets.list.profiling_completed",
+        "classification": "permission_prerequisite",
+        "status": 403,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      },
+      {
+        "operation": "red_team.targets.list.profiling_failed",
+        "classification": "permission_prerequisite",
+        "status": 403,
+        "errorKind": "http",
+        "remoteOutcome": "rejected",
+        "workflowAccepted": false
+      }
+    ],
+    "cleanup": [],
+    "serviceRequests": 4,
+    "tokenExchanges": 1,
+    "limitations": [
+      "Read-only qualification attempts OAuth and four single-page target lists with limit 1; all other workflows remain live-unqualified.",
+      "Filter acceptance means HTTP success and native typed decoding only; filtering effectiveness is not established, including for empty or ambiguous results.",
+      "Vertex AI, client_session and audio workflows remain experimental and live-unverified without provider credentials, fixtures and execution prerequisites.",
+      "Endpoint profile exercised: https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt. The SDK default https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane was not exercised; no default endpoint migration or alias equivalence is established."
+    ]
+  }
+}

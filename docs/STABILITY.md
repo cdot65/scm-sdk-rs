@@ -25,6 +25,35 @@ baseline is TypeScript SDK **0.34.0** at
 exported capabilities have implemented native mappings. [EXPORTS.md](EXPORTS.md)
 explains the independent validation, behavior and public-consumer evidence.
 
+## Pending directional profile addition
+
+The [TypeScript 0.35.0 directional profile addition](DIRECTIONAL_PROFILES.md) is
+separate from the published 0.2.3 source. It adds two model types and two named
+schemas, plus five typed field occurrences on existing profile models. This is
+an additive maintenance delta; the historical 3,820 capabilities and 448 methods
+remain the TypeScript 0.34.0 baseline. No 0.2.4 publication or delivery is claimed.
+
+Create/update requests use the versioned current root and intentionally reject
+newly known null/wrong-type values, including raw extensions that the historical
+root accepted. Existing unprefixed standalone validators retain their frozen
+semantics. Use the six `typescript:0.35.0:` roots documented in the guide for
+current standalone validation.
+
+Upstream TypeScript 0.35.0 response schemas also reject invalid newly known
+fields. Rust profile responses intentionally preserve the older acceptance and
+lossless typed projections in both `Mode::Response` and
+`Mode::ResponseWithoutDefaults`. Unrepresentable values, including explicit
+null, remain in extensions; omitted fields stay absent. A supplied typed value
+wins over a same-key extension. Disabling response defaults changes only default
+insertion, including the existing list `[]` default.
+
+Independent pinned-Zod fixtures and local model/wire tests provide offline
+compatibility evidence. Directional service behavior remains live-unverified;
+historical tenant receipts do not qualify this changed source. Reviewed
+publication, registry verification and remote CI remain separate delivery gates.
+Existing service limitations and vendor-unsupported Red Team query bindings
+retain their status.
+
 ## Separate claims
 
 | Claim | Evidence |

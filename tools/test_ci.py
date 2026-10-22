@@ -512,6 +512,10 @@ class CiContractTests(unittest.TestCase):
                     expected = [['/explicit/cargo', '+' + compiler, 'run', '--package', 'scm-sdk',
                                  '--example', 'red_team_management', '--locked', '--target',
                                  'native-host', *module.FEATURES[feature]]]
+                if feature == 'management':
+                    expected = [['/explicit/cargo', '+' + compiler, 'run', '--package', 'scm-sdk',
+                                 '--example', 'directional_profiles', '--locked', '--target',
+                                 'native-host', *module.FEATURES[feature]]]
                 self.assertEqual(runs, expected)
 
     def test_node_matches_owned_pin_and_phase_gate_verifies_only(self):

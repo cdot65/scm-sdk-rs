@@ -1,5 +1,7 @@
 """Offline regressions for management plan evidence (not runtime conformance)."""
 import copy
+import contextlib
+import io
 import subprocess
 import sys
 import json
@@ -15,6 +17,36 @@ class ManagementPlanTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.outputs = subject.build()
+
+    def test_current_source_mode_rejects_incompatible_flags_before_build(self):
+        for flags in ([], ['--check', '--verify-package-receipts'],
+                      ['--check', '--verify-retention-origin'],
+                      *[['--check', '--require-through-phase', str(phase)] for phase in (22, 23, 24, 25)]):
+            with self.subTest(flags=flags), patch.object(sys, 'argv', ['audit', '--current-source-compatibility', *flags]), \
+                    patch.object(subject, 'build') as build, contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as result:
+                    subject.main()
+                self.assertEqual(result.exception.code, 1)
+                build.assert_not_called()
+
+    def test_current_source_mode_checks_runtime_reads_and_offline_contracts_without_packages(self):
+        with patch.object(sys, 'argv', ['audit', '--check', '--current-source-compatibility']), \
+                patch.object(subject, 'build', return_value={}) as build, \
+                patch.object(subject, 'load', return_value={'sources': [{'id': subject.SOURCE_ID, 'usedForGeneration': True}]}), \
+                patch.object(subject, 'verify_runtime_adoption') as runtime, \
+                patch.object(subject, 'verify_service_qualification') as service, \
+                patch.object(subject, 'verify_offline_live_boundary') as historical, \
+                patch.object(subject, 'verify_cumulative_qualification') as cumulative, \
+                patch.object(subject, 'verify_retention_origin') as retention, \
+                contextlib.redirect_stdout(io.StringIO()) as output:
+            subject.main()
+            build.assert_called_once_with()
+            runtime.assert_called_once_with()
+            service.assert_called_once_with()
+            cumulative.assert_called_once_with(package_receipts=False)
+            historical.assert_not_called()
+            retention.assert_not_called()
+            self.assertIn('release acceptance not assessed', output.getvalue())
 
     def test_seven_sources_and_160_operations(self):
         sources = self.outputs[subject.Path('contracts/airs-active-sources.json')]['sources']
@@ -384,6 +416,42 @@ class ManagementPlanTests(unittest.TestCase):
                         patch.object(subject, 'load', return_value=management_fixtures.expected()):
                     with self.assertRaisesRegex(ValueError, 'Missing management fixture test binding'):
                         subject.verify_cumulative_qualification()
+
+    def test_historical_operations_snapshot_rejects_tampering(self):
+        path = subject.VENDOR / 'operations.json'
+        original = subject.safe_path
+        with tempfile.TemporaryDirectory() as temporary:
+            changed = subject.Path(temporary) / 'operations.json'
+            changed.write_bytes(original(path).read_bytes() + b'\n')
+            with patch.object(subject, 'safe_path', side_effect=lambda name: changed if str(name) == str(path) else original(name)):
+                with self.assertRaises(ValueError):
+                    subject.historical_management_runtime_evidence()
+
+    def test_management_compatibility_separates_historical_and_current_bindings(self):
+        path = subject.VENDOR / 'operations.json'
+        snapshot = json.loads(subject.safe_path(path).read_text())
+        self.assertEqual(self.outputs[path], snapshot)
+        self.assertEqual(len(snapshot['operations']), 42)
+        value = self.outputs[subject.Path('contracts/typescript-035-management-compatibility.json')]
+        self.assertEqual(value['historicalRuntimeEvidence'], snapshot['runtimeEvidence'])
+        self.assertEqual(value['currentRuntimeEvidence'], subject.management_runtime_evidence())
+        self.assertIn('Neither snapshot establishes test execution', value['scope'])
+        current = {row['path']: row['sha256'] for row in value['currentRuntimeEvidence']['sourceBindings']}
+        self.assertEqual(current['contracts/red-team-management-model-overlay.json'],
+                         subject.sha(subject.safe_path('contracts/red-team-management-model-overlay.json').read_bytes()))
+
+    def test_stale_current_management_compatibility_ledger_rejected(self):
+        relative = subject.Path('contracts/typescript-035-management-compatibility.json')
+        expected = self.outputs[relative]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = subject.Path(temporary)
+            (root / relative).parent.mkdir(parents=True)
+            (root / relative).write_text(subject.encoded(dict(expected, scope='stale')))
+            with patch.object(subject, 'ROOT', root), patch.object(subject, 'build', return_value={relative: expected}), \
+                    patch.object(sys, 'argv', ['audit', '--check']), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as result:
+                    subject.main()
+                self.assertEqual(result.exception.code, 1)
 
     def test_runtime_evidence_binds_the_delivered_example(self):
         paths = {row['path'] for row in subject.management_runtime_evidence()['sourceBindings']}

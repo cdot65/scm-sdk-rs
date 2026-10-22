@@ -120,10 +120,22 @@ class ManagementPhaseTests(unittest.TestCase):
                     verify_planning_gateway_proof(root)
 
     def test_vendor_whitespace_is_excluded_from_all_new_hygiene_checks(self):
-        for phase in range(21, 27):
+        for phase in range(21, 28):
             for command in commands_for(phase):
                 if command[:2] == ["git", "diff"] and "--check" in command:
                     self.assertIn(":(exclude)contracts/sources/typescript-0.35.0/*" if phase == 26 else ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml", command)
+                    if phase == 27:
+                        self.assertIn(":(exclude)contracts/sources/typescript-0.35.0/*", command)
+
+    def test_phase27_unittest_discovery_runs_each_suite_once(self):
+        commands = commands_for(27)
+        suites = [tuple(command) for command in commands
+                  if command[1:4] == ["-m", "unittest", "discover"]]
+        self.assertEqual(len(suites), len(set(suites)))
+        for name in ("test_management_consumers.py", "test_management_fixtures.py",
+                     "test_red_team_management.py", "test_management_phases.py",
+                     "test_review_phase.py"):
+            self.assertEqual(sum(name in command for command in suites), 1)
 
     def test_plan_gate_covers_manifest_consumers_and_ci(self):
         commands = commands_for(21)
@@ -165,7 +177,7 @@ class ManagementPhaseTests(unittest.TestCase):
                         readers.add(path.relative_to(ROOT).as_posix())
         selected = {argument for command in commands_for(21) for argument in command}
         exemptions = {
-            "tools/verify_typescript035_source.py": "Owns independent phase 26 source provenance and is executed there; does not alter historical phase 21 inputs or command set.",
+            "tools/verify_typescript035_source.py": "Owns independent phase 26 source provenance and remains executed in maintenance phases; does not alter historical phase 21 inputs or command set.",
             "tools/bootstrap_reference.py": "Executed before the CI gate; restores verified frozen inputs and installed oracle dependencies.",
             "tools/check_phase.py": "This is the executing phase driver; its hash guards bind current manifest provenance.",
             "tools/extract-operations.mts": "Reads frozen baseline, references and fixtures only; verify-contracts checks their unchanged hashes. New vendor sources are not extraction inputs.",
@@ -180,8 +192,8 @@ class ManagementPhaseTests(unittest.TestCase):
         active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
         scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
         verify_scoped_ledger_owners(scope, commands_for(active['id']))
-        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json' and not p.startswith('contracts/sources/typescript-0.35.0/')], commands_for(23))
-        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not p.startswith('contracts/sources/typescript-0.35.0/')], commands_for(24))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json' and not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'})], commands_for(23))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'})], commands_for(24))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
             verify_scoped_ledger_owners(['contracts/live-evidence.json'], commands_for(23))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
@@ -250,6 +262,7 @@ class ManagementPhaseTests(unittest.TestCase):
                 self.assertIn(["python", "scripts/check-management-package.py" if phase in (23, 24) else "scripts/check-package.py", "--toolchain", compiler,
                                "--output", f"docs/checks/phase-{phase}-{release_prefix}package-{compiler}.json"], commands_for(phase))
 
+    @patch("review_phase.fingerprint", new=lambda root: "fixed")
     def test_ci_subsets_cannot_replace_full_reports(self):
         for phase in range(21, 26):
             commands = ci_commands_for(phase)
@@ -322,6 +335,7 @@ class ManagementPhaseTests(unittest.TestCase):
         path.write_text(json.dumps(record))
         return path, record
 
+    @patch("review_phase.fingerprint", new=lambda root: "fixed")
     def test_plan_score_floor_cannot_be_bypassed_by_category_total(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)
@@ -334,6 +348,7 @@ class ManagementPhaseTests(unittest.TestCase):
             self.assertFalse(verify_record(root, path, 21, "fixed"))
             self.assertEqual(gate_decision(record["review"], rubric=True, phase=21), "rejected")
 
+    @patch("review_phase.fingerprint", new=lambda root: "fixed")
     def test_chunk_record_rejects_scope_tampering_even_with_rehashed_prompt(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)
@@ -375,6 +390,7 @@ class ManagementPhaseTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "evidence has changed"):
                     self.assertEqual(verify_attempt_sequence(root, 21, 2), 0)
 
+    @patch("review_phase.fingerprint", new=lambda root: "fixed")
     def test_scope_revision_history_preserves_old_reviews_and_rejects_rewrites(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)

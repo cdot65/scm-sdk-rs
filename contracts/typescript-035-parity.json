@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "version": "0.35.0",
+  "commit": "780c985cac90144ea1884fe6cffa58b5deec9ac4",
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "sourceManifestSha256": "0c77c29a564771ad07f482027569f137c9d6ea3db8cc78cc8e9dd76ec796b2b7",
+  "sourceBindings": {
+    "contracts/sources/typescript-0.35.0/src/models/mgmt-security-profile.ts": "1d2fb2e9eef85e77cf6b8a5c7f7a5271808e3214c6c09ae921b0333040cefa7e",
+    "crates/scm-sdk/tests/management_contracts.rs": "b7f46743bde2e83f420b51a5b7c18c045d29ad922a569e94e1ce9d662e2ecea8",
+    "tools/typescript035_profiles.py": "4d7070e1de11dc956022b6710d54945efe3876cac6abfed949d37100f7b62a7a",
+    "tools/generate_models.py": "561d2ab5582df443e78102358681e075de3a50562b13f57b50100f7a99b1a402",
+    "tools/generate_validation.py": "68a9ea447de6f617e9eb638b0f648895c6d3869b5de2763a64e216bf7d705a54",
+    "tools/response_defaults.py": "b02f8c4766cbbd40ad7ed1137dfcf858bca40949b304b6bc44e1cb02148f25f4",
+    "tools/verify_typescript035_source.py": "c2fb88f1d7081f68554565ada2c0d44601a954771c84d4e1e80973a3a9d2e8f3",
+    "crates/scm-sdk/src/airs/management/profiles.rs": "41d2aa0583bc925e3188209e9890fd23d3d395a11324305a4d6f56140e81f50c",
+    "crates/scm-sdk/tests/typescript035_models.rs": "26a9ea6a3043c68d58067a5e367213c04be6197f0dbf89c4cd8835d3e32ad05d",
+    "crates/scm-sdk/examples/directional_profiles.rs": "929b7b5fbe9d555c52bea803b619b25be12634d09115380123449be78f2eaee8"
+  },
+  "counts": {
+    "addedExports": 4,
+    "addedModels": 2,
+    "addedSchemas": 2,
+    "projectedFields": 5,
+    "versionedRoots": 6,
+    "clonedNodes": 12,
+    "defaultAliases": 1
+  },
+  "modelExportDelta": {
+    "baselineExports": 2254,
+    "currentExports": 2258,
+    "added": [
+      "ContentTypeConfiguration",
+      "ContentTypeConfigurationSchema",
+      "ContentTypeConfigurations",
+      "ContentTypeConfigurationsSchema"
+    ],
+    "removed": []
+  },
+  "schemas": [
+    {
+      "export": "ContentTypeConfigurationSchema",
+      "schema": "s_ts035_content_type_configuration",
+      "rustType": "ContentTypeConfiguration",
+      "namespace": "airs::management",
+      "status": "typed_model",
+      "validator": "crate::validation::parse"
+    },
+    {
+      "export": "ContentTypeConfigurationsSchema",
+      "schema": "s_ts035_content_type_configurations",
+      "rustType": "ContentTypeConfigurations",
+      "namespace": "airs::management",
+      "status": "typed_model",
+      "validator": "crate::validation::parse"
+    }
+  ],
+  "modelExports": [
+    {
+      "export": "ContentTypeConfiguration",
+      "rustType": "ContentTypeConfiguration",
+      "status": "typed_model"
+    },
+    {
+      "export": "ContentTypeConfigurations",
+      "rustType": "ContentTypeConfigurations",
+      "status": "typed_model"
+    }
+  ],
+  "versionedRoots": {
+    "typescript:0.35.0:ModelConfigurationSchema": "s_ts035_s009588",
+    "typescript:0.35.0:AiSecurityProfileSchema": "s_ts035_s009599",
+    "typescript:0.35.0:PolicySchema": "s_ts035_s009606",
+    "typescript:0.35.0:SecurityProfileSchema": "s_ts035_s009612",
+    "typescript:0.35.0:CreateSecurityProfileRequestSchema": "s_ts035_s009632",
+    "typescript:0.35.0:SecurityProfileListResponseSchema": "s_ts035_s009651"
+  },
+  "clonedNodes": {
+    "s009588": "s_ts035_s009588",
+    "s009599": "s_ts035_s009599",
+    "s009605": "s_ts035_s009605",
+    "s009606": "s_ts035_s009606",
+    "s009608": "s_ts035_s009608",
+    "s009609": "s_ts035_s009609",
+    "s009612": "s_ts035_s009612",
+    "s009625": "s_ts035_s009625",
+    "s009632": "s_ts035_s009632",
+    "s009651": "s_ts035_s009651",
+    "s009653": "s_ts035_s009653",
+    "s009654": "s_ts035_s009654"
+  },
+  "projections": [
+    {
+      "baselineSchema": "s009588",
+      "currentSchema": "s_ts035_s009588",
+      "field": "enable-full-conversation-inspection",
+      "valueSchema": "s009590"
+    },
+    {
+      "baselineSchema": "s009599",
+      "currentSchema": "s_ts035_s009599",
+      "field": "content-type-mode",
+      "valueSchema": "s009601"
+    },
+    {
+      "baselineSchema": "s009599",
+      "currentSchema": "s_ts035_s009599",
+      "field": "content-type-configurations",
+      "valueSchema": "s_ts035_configurations_optional"
+    },
+    {
+      "baselineSchema": "s009612",
+      "currentSchema": "s_ts035_s009612",
+      "field": "dlp_tenant_id",
+      "valueSchema": "s009601"
+    },
+    {
+      "baselineSchema": "s009632",
+      "currentSchema": "s_ts035_s009632",
+      "field": "dlp_tenant_id",
+      "valueSchema": "s009601"
+    }
+  ],
+  "defaultAliases": {
+    "s_ts035_s009653": "s009653"
+  },
+  "wireTests": [
+    "directional_profiles_preserve_all_wire_paths_and_both_response_policies",
+    "current_profile_requests_reject_new_invalid_fields_before_authentication",
+    "valid_raw_directional_extensions_submit_and_decode_typed_responses",
+    "profile_wire_defaults_and_empty_terminal_pages_follow_request_options"
+  ],
+  "versionedFormatInventory": {
+    "roots": 6,
+    "rootsWithFormats": 1,
+    "formatSites": 1,
+    "entries": [
+      {
+        "root": "typescript:0.35.0:AiSecurityProfileSchema",
+        "formatSites": []
+      },
+      {
+        "root": "typescript:0.35.0:CreateSecurityProfileRequestSchema",
+        "formatSites": [
+          {
+            "node": "s009650",
+            "kind": "datetime"
+          }
+        ]
+      },
+      {
+        "root": "typescript:0.35.0:ModelConfigurationSchema",
+        "formatSites": []
+      },
+      {
+        "root": "typescript:0.35.0:PolicySchema",
+        "formatSites": []
+      },
+      {
+        "root": "typescript:0.35.0:SecurityProfileListResponseSchema",
+        "formatSites": []
+      },
+      {
+        "root": "typescript:0.35.0:SecurityProfileSchema",
+        "formatSites": []
+      }
+    ]
+  },
+  "requestOperations": [
+    "ProfilesClient.create",
+    "ProfilesClient.update"
+  ],
+  "compatibility": {
+    "historicalRoots": "Unchanged 0.34.0 validation and response acceptance.",
+    "currentRoots": "New known fields reject null and wrong types as TypeScript 0.35.0 does.",
+    "models": "Five optional projections preserve unsupported JSON in extensions; typed values take precedence.",
+    "responseDifference": "Rust retains historical tolerant responses; TypeScript 0.35.0 rejects wrong-typed new fields.",
+    "oracleScope": "The actual Zod corpus is replayed for all eight roots in Mode::Request. The two newly named ContentType roots also replay that corpus in Mode::Response and Mode::ResponseWithoutDefaults; their current reachable schemas contain no enum, format, or default adaptations. The six versioned roots do not claim Zod response equivalence; tolerant profile response preservation has separate Rust regressions.",
+    "liveAcceptance": "Not established by generated contracts or local fixtures."
+  }
+}

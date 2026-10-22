@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
 import shutil
@@ -129,6 +130,19 @@ def git_tree_hash(files: list[dict]) -> str:
     return tree(root)
 
 
+def supplemental_source_paths() -> set[str]:
+    """Delegate only the explicitly registered additive source pin to its owner."""
+    spec = importlib.util.spec_from_file_location(
+        "typescript035_source_owner", ROOT / "tools/verify_typescript035_source.py")
+    owner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(owner)
+    source = safe_path("contracts/sources/typescript-0.35.0")
+    manifest = owner.verify(source)
+    names = {"manifest.json", *(row["path"] for row in manifest["proofFiles"]),
+             *(row["upstreamPath"] for row in manifest["files"])}
+    return {(source / name).relative_to(ROOT).as_posix() for name in names}
+
+
 def self_test() -> None:
     """Exercise rejection paths against disposable copies of the corpus."""
     cases = ("fixture-change", "fixture-removal", "unmanifested-source", "license-removal",
@@ -139,7 +153,7 @@ def self_test() -> None:
              "unowned-vendor-file", "missing-vendor-file", "modified-vendor-file",
              "vendor-license-commit", "duplicate-source-id", "vendor-artifact-origin",
              "vendor-artifact-omission", "vendor-artifact-escape", "vendor-symlink",
-             "unowned-vendor-version")
+             "unowned-vendor-version", "unowned-source-version", "modified-supplemental-source")
     with tempfile.TemporaryDirectory(prefix="scm-contract-verifier-") as temporary:
         root = Path(temporary)
         shutil.copytree(ROOT / "contracts", root / "contracts")
@@ -152,6 +166,8 @@ def self_test() -> None:
                 shutil.copy2(safe_path(evidence_path), target)
         (root / "tools").mkdir()
         shutil.copy2(Path(__file__), root / "tools/verify-contracts.py")
+        for name in ("verify_typescript035_source.py", "package-lock.json"):
+            shutil.copy2(ROOT / "tools" / name, root / "tools" / name)
         command = [sys.executable, "-I", str(root / "tools/verify-contracts.py")]
         result = subprocess.run(command, capture_output=True, text=True)
         require(result.returncode == 0, f"Untouched self-test corpus failed: {result.stderr.strip()}")
@@ -171,6 +187,14 @@ def self_test() -> None:
             elif case == "unmanifested-source":
                 changed_path = root / "contracts/sources/unlicensed.yaml"
                 changed_path.write_text("openapi: 3.0.0\n")
+            elif case == "unowned-source-version":
+                changed_path = root / "contracts/sources/typescript-0.36.0/unowned.json"
+                changed_path.parent.mkdir()
+                changed_path.write_text("{}\n")
+            elif case == "modified-supplemental-source":
+                changed_path = root / "contracts/sources/typescript-0.35.0/package.json"
+                original_data = changed_path.read_bytes()
+                changed_path.write_bytes(original_data + b"\n")
             elif case == "license-removal":
                 changed_path = root / manifest["licenses"][0]["path"]
                 original_data = changed_path.read_bytes()
@@ -465,7 +489,7 @@ def main() -> None:
     expected_fingerprint = hashlib.sha256("".join(f"{entry['sha256']}  {entry['file']}\n" for entry in inventory["sources"]).encode()).hexdigest()
     require(inventory["sourceFingerprint"] == expected_fingerprint, "Export inventory fingerprint differs")
 
-    expected_paths = owned_files
+    expected_paths = owned_files | supplemental_source_paths()
     # Own the product subtree, including unregistered future version directories.
     # Other products retain their existing dedicated verifier ownership.
     vendor_parents = sorted({Path(directory).parent.as_posix() for directory in VENDOR_ROOTS})

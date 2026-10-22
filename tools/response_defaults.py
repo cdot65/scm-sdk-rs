@@ -57,12 +57,26 @@ def build(root=ROOT):
     source, models, graph, semantics = [json.loads((root / p).read_text()) for p in inputs]
     if source["baseline"]["commit"] != PIN or models["baselineCommit"] != PIN:
         raise ValueError("Default inventory requires the frozen TypeScript baseline")
+    from typescript035_profiles import default_aliases, PREFIX
+    aliases = default_aliases()
+    additive = []
     bindings = []
     for sid, semantic in sorted(semantics.items()):
         if semantic["binding"] != "default":
             continue
         if graph["nodes"][sid]["kind"] != "ZodDefault":
             raise ValueError("Default binding no longer names a default node")
+        if sid in aliases:
+            original_sid = aliases[sid]
+            if semantic != semantics[original_sid] or semantic["default"] != []:
+                raise ValueError("TypeScript default alias changed")
+            if graph["roots"].get(PREFIX + "SecurityProfileListResponseSchema") != "s_ts035_s009651":
+                raise ValueError("TypeScript default alias root changed")
+            if graph["nodes"]["s_ts035_s009651"]["properties"]["ai_profiles"]["schema"] != {"$ref": sid}:
+                raise ValueError("TypeScript default alias field changed")
+            additive.append({"binding": sid, "aliasOf": original_sid, "default": [],
+                             "schema": PREFIX + "SecurityProfileListResponseSchema", "field": "ai_profiles"})
+            continue
         original = source["schemas"]["definitions"][sid]["semanticSource"]["source"]
         uses = []
         for parent_id, parent in graph["nodes"].items():
@@ -100,6 +114,8 @@ def build(root=ROOT):
             "default": semantic["default"], "uses": uses,
             "sourceFile": filename, "sourceLine": original["line"],
         })
+    if {row["binding"] for row in additive} != set(aliases):
+        raise ValueError("TypeScript default aliases are incomplete")
     if len(bindings) != 23:
         raise ValueError("The frozen default denominator changed")
     return {
@@ -111,6 +127,7 @@ def build(root=ROOT):
                    "redTeamBindings": sum(not b["outsideRedTeam"] for b in bindings),
                    "outsideRedTeamBindings": sum(b["outsideRedTeam"] for b in bindings)},
         "bindings": bindings,
+        "typescript035DefaultAliases": additive,
     }
 
 
@@ -149,6 +166,10 @@ def render(inventory):
             code(binding["binding"]), product, ", ".join(map(code, names)),
             ", ".join(map(code, fields)), code(json.dumps(binding["default"])),
         ]) + " |")
+    rows.extend(["", "The TypeScript 0.35.0 versioned list schema also reuses the reviewed empty-array",
+                 "default via `s_ts035_s009653`, an alias of `s009653`. This is recorded",
+                 "separately from the 23 historical bindings. `ResponseWithoutDefaults`",
+                 "preserves omission for both identities."])
     return "\n".join(rows) + "\n"
 
 

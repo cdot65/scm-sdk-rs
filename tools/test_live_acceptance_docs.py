@@ -11,7 +11,7 @@ class LiveAcceptanceDocsTests(unittest.TestCase):
         reference = json.loads((ROOT / "contracts/live-evidence.json").read_text())
         report = json.loads((ROOT / reference["report"]).read_text())["report"]
         text = (ROOT / "docs/LIVE_ACCEPTANCE.md").read_text()
-        current = text.split("## Current 0.2.3 read-only qualification", 1)[1].split("## Historical qualification", 1)[0]
+        current = text.split("## Current read-only qualification", 1)[1].split("## Historical qualification", 1)[0]
         self.assertIn(reference["report"].removeprefix("docs/"), current)
         accepted = {row["operation"] for row in report["probes"] if row["workflowAccepted"]}
         self.assertIn(f"**{len(accepted)} exact native method**", current)
@@ -29,6 +29,7 @@ class LiveAcceptanceDocsTests(unittest.TestCase):
                         "https://api.apps.paloaltonetworks.com/ai-red-teaming/mgmt-plane"):
             self.assertIn(profile, current)
         self.assertIn("was not exercised", current)
+        self.assertIn("Directional profile create/update remain live-unverified.", current)
         self.assertIn("../contracts/historical/0.2.2-live-evidence.json", historical)
         self.assertIn("verified **17 exact native methods**", historical)
         self.assertNotIn("current **0.2.2**", text)

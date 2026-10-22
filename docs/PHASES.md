@@ -280,6 +280,16 @@ bytes, hygiene and governance regressions, accepted plan-and-provenance chunk,
 and a complete-phase Claude review of at least 46/50 (every category at least 8).
 The per-phase plan and milestone entries are explicit in phase-status.json.
 
+Phase 27 acceptance requires the cumulative model/wire checks and
+`red_team_management.py --check --current-source-compatibility`, including a fresh
+current-source bounded read-only live receipt. That receipt does not qualify
+directional write workflows. Clean extracted package consumers on both supported
+compilers are deliberately deferred to phase 28; local model/wire results do not
+substitute for that release evidence. Both chunk reviews and the complete-phase
+review must meet the current rubric before advancing.
+
 After phase 28, explicitly reselect phase 24 to resume its existing delivery gate,
 then phase 25, preserving their original review attempts and acceptance rules.
 This maintenance sequence does not implicitly reactivate or complete them.
+
+Phases 26–28 also retain the current rubric’s fifth-attempt exception: a total strictly above 40, every category at least 8, four prior substantive reviews, and recorded remaining deficiencies. Passing checks and required delivery evidence are still mandatory.

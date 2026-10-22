@@ -38,6 +38,17 @@ class CheckpointTests(unittest.TestCase):
         self.assertEqual(started, self.started)
         self.assertFalse(json.loads(self.path.read_text())['complete'])
 
+    def test_directional_phase_reuses_only_its_unchanged_executed_prefix(self):
+        gate.write_checkpoint(self.path, 27, 'source', self.commands, [self.record], self.started)
+        records, _ = gate.read_checkpoint(self.path, 27, 'source', self.commands)
+        self.assertEqual(records, [self.record])
+        for phase, source in [(28, 'source'), (27, 'changed')]:
+            with self.assertRaises(ValueError):
+                gate.read_checkpoint(self.path, phase, source, self.commands)
+        self.receipt.write_text('{"tampered":true}')
+        with self.assertRaisesRegex(ValueError, 'evidence changed'):
+            gate.read_checkpoint(self.path, 27, 'source', self.commands)
+
     def test_source_phase_command_changes_rejected(self):
         for phase, source, commands in [(24, 'source', self.commands), (23, 'changed', self.commands),
                                        (23, 'source', list(reversed(self.commands)))]:

@@ -24,7 +24,10 @@ class DirectionalGovernanceTests(unittest.TestCase):
         self.assertIn(['git', 'diff', '--check', '578f2e6..HEAD', '--', '.', ':(exclude)contracts/sources/typescript-0.35.0/*'], commands)
         guards = [c for c in commands if c[:2] == ['python', '-c']]
         self.assertTrue(any("'--others', '--exclude-standard', '--', 'crates/scm-sdk'" in c[2] for c in guards))
-        self.assertEqual(self.status['active_phase'], 26)
+
+    def test_phase27_retains_governance_regressions(self):
+        self.assertIn(['python', '-m', 'unittest', 'discover', '-s', 'tools',
+                       '-p', 'test_typescript035_governance.py', '-v'], commands_for(27))
 
     def test_private_receipt_binding_detects_post_check_tamper(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -137,12 +140,16 @@ class DirectionalGovernanceTests(unittest.TestCase):
                 verify(source)
 
     def test_independent_dependency_checks_and_original_gate_remain(self):
+        # Recreate the planning boundary even after phase 26 has been accepted.
+        planning = copy.deepcopy(self.status)
+        phase26 = next(p for p in planning['phases'] if p['id'] == 26)
+        phase26.update(status='in_progress', reviews=[])
         with patch.object(review_phase, 'verify_record', return_value=True):
             review_phase.validate_predecessors(ROOT, self.status, 26)
             with self.assertRaisesRegex(ValueError, 'Earlier phases'):
                 review_phase.validate_predecessors(ROOT, self.status, 25)
             with self.assertRaisesRegex(ValueError, 'Maintenance predecessor'):
-                review_phase.validate_predecessors(ROOT, self.status, 27)
+                review_phase.validate_predecessors(ROOT, planning, 27)
         with patch.object(review_phase, 'verify_record', return_value=False):
             with self.assertRaises(ValueError):
                 review_phase.validate_predecessors(ROOT, self.status, 26)
@@ -174,11 +181,20 @@ class DirectionalGovernanceTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 verify(source)
 
-    def test_frozen_contracts_and_planning_sdk_bytes(self):
+    def test_frozen_contract_bytes(self):
         paths = ['contracts/typescript.json', 'contracts/operations.json',
                  'contracts/export-classification.json', 'contracts/manifest.json',
-                 'contracts/native-union-variants.json', 'contracts/native-fixtures/schemas.json',
-                 'contracts/sources/typescript/git-tree.json', 'contracts/sources/typescript/commit.txt',
+                 'contracts/native-union-variants.json',
+                 'contracts/sources/typescript/git-tree.json', 'contracts/sources/typescript/commit.txt']
+        for path in paths:
+            expected = subprocess.check_output(['git', 'show', '578f2e6:' + path], cwd=ROOT)
+            self.assertEqual((ROOT / path).read_bytes(), expected, path)
+    def test_planning_sdk_bytes(self):
+        # Implementation intentionally adds SDK files and refreshes precisely
+        # validated fixture provenance; its separate preservation tests own that.
+        if self.status['active_phase'] != 26:
+            self.skipTest('Phase 26 planning boundary only')
+        paths = ['contracts/native-fixtures/schemas.json',
                  'crates/scm-sdk/src/fixtures/model-regressions.json']
         sdk = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', '578f2e6', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()
         actual = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '--', 'crates/scm-sdk'], cwd=ROOT).decode().splitlines()

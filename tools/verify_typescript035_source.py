@@ -3,12 +3,107 @@
 import argparse
 import hashlib
 import json
+import re
 import importlib.util
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "contracts/sources/typescript-0.35.0"
 MANIFEST_SHA256 = "0c77c29a564771ad07f482027569f137c9d6ea3db8cc78cc8e9dd76ec796b2b7"
+SDK_MAINTENANCE_BASELINE = '578f2e631cbf649c073f9f8940a9ce60216c58ed'
+NEW_PROFILE_DECLARATIONS = {
+    'ContentTypeConfigurationSchema': (326, 'bd7bc7996b5ab309c60d3671a53e3527feb9eff99c4b5e24600f33405704fc79'),
+    'ContentTypeConfigurationsSchema': (343, '326ffb36bb8ab7dfe09d173e094699ab93844cc4e6820bf9ab70231e4871b82d'),
+}
+
+
+def verify_model_imports(text):
+    """Allow exactly the reviewed Zod import before executing the pinned model.
+
+    This intentionally conservative check rejects other import/require tokens,
+    including dynamic forms, rather than trying to interpret arbitrary TypeScript.
+    The independent whole-file and Git-blob pins remain mandatory.
+    """
+    allowed = "import { z } from 'zod';\n"
+    if not text.startswith(allowed) or re.search(r"\b(?:import|require)\b|\bfrom\s*['\"]", text[len(allowed):]):
+        raise ValueError('Pinned profile model must import only the reviewed Zod module')
+
+
+def verify_new_profile_declarations(text):
+    """Pin new expression spans and derive optional property keys from their text."""
+    properties = {}
+    for name, (length, digest) in NEW_PROFILE_DECLARATIONS.items():
+        matches = list(re.finditer(r'^export const (?=' + re.escape(name) + r'\b)', text, re.MULTILINE))
+        if len(matches) != 1:
+            raise ValueError('New profile declaration identity changed: ' + name)
+        start = matches[0].end()
+        expression = text[start:start + length]
+        if (hashlib.sha256(expression.encode()).hexdigest() != digest
+                or text[start + length:start + length + 1] != ';'):
+            raise ValueError('New profile declaration changed: ' + name)
+        keys = re.findall(r"^    (?:'([^']+)'|(\w+)): .+\.optional\(\),$", expression, re.MULTILINE)
+        properties[name] = tuple(quoted or plain for quoted, plain in keys)
+        if len(properties[name]) != 4 or len(set(properties[name])) != 4 or not expression.endswith('.passthrough()'):
+            raise ValueError('New profile property extraction changed: ' + name)
+    return properties
+
+
+def verify_model_export_delta(text, inventory, changed_runtime_sources):
+    """Parse the pinned barrel, resolving only unchanged wildcard modules.
+
+    The inventory contains the resolved public exports of the frozen baseline.
+    Wildcards may reuse that inventory only when Git provenance proves their
+    source modules unchanged; changed modules must be explicitly enumerated.
+    """
+    baseline = {row['name']: row for row in inventory['exports']
+                if row['source']['file'].startswith('src/models/')}
+    statement = re.compile(r"export(?:\s+type)?\s+(\*|\{[^}]*\})\s+from\s+'\./([^']+)\.js';")
+    names, position = set(), 0
+    for match in statement.finditer(text):
+        if text[position:match.start()].strip():
+            raise ValueError('Unparsed model index export syntax')
+        position = match.end()
+        body, module = match.groups()
+        if not re.fullmatch(r'[A-Za-z0-9_-]+', module):
+            raise ValueError('Unreviewed model index module')
+        filename = 'src/models/' + module + '.ts'
+        known = {name for name, row in baseline.items() if row['source']['file'] == filename}
+        if not known:
+            raise ValueError('Model index module absent from frozen inventory: ' + filename)
+        if body == '*':
+            if filename in changed_runtime_sources:
+                raise ValueError('Changed wildcard model exports require independent extraction: ' + filename)
+            exported = known
+        else:
+            exported = set()
+            members = body[1:-1].split(',')
+            for index, member in enumerate(members):
+                if not member.strip() and index == len(members) - 1:
+                    continue
+                item = re.fullmatch(r'\s*(?:type\s+)?([A-Za-z_$][\w$]*)(?:\s+as\s+([A-Za-z_$][\w$]*))?\s*', member)
+                if not item:
+                    raise ValueError('Unparsed model export member')
+                name = item.group(2) or item.group(1)
+                if name in exported:
+                    raise ValueError('Duplicate model export: ' + name)
+                if name in baseline and name not in known:
+                    raise ValueError('Model export source changed: ' + name)
+                if name not in baseline and (filename != 'src/models/mgmt-security-profile.ts'
+                                             or name != item.group(1)):
+                    raise ValueError('New model export source or alias differs: ' + name)
+                exported.add(name)
+        if names.intersection(exported):
+            raise ValueError('Duplicate model index export')
+        names.update(exported)
+    if text[position:].strip() or not position:
+        raise ValueError('Unparsed model index export syntax')
+    added, removed = names - baseline.keys(), baseline.keys() - names
+    expected = {'ContentTypeConfiguration', 'ContentTypeConfigurationSchema',
+                'ContentTypeConfigurations', 'ContentTypeConfigurationsSchema'}
+    if added != expected or removed:
+        raise ValueError('Unexpected model export delta')
+    return {'baselineExports': len(baseline), 'currentExports': len(names),
+            'added': sorted(added), 'removed': sorted(removed)}
 
 def baseline_ledger(root=ROOT):
     manifest = json.loads((root / 'contracts/manifest.json').read_text())
@@ -27,6 +122,12 @@ def verify_zod_versions(package, lock):
         raise ValueError('Oracle Zod version does not satisfy the pinned source')
 
 
+def verify_version_identity(manifest, package, constants):
+    declarations = re.findall(r"^export const SDK_VERSION = ['\"]([^'\"]+)['\"];", constants, re.MULTILINE)
+    if package.get('version') != manifest['version'] or declarations != [manifest['version']]:
+        raise ValueError('Pinned package and SDK constant versions must match the source manifest')
+
+
 def verify_license(manifest, baseline):
     licenses = [row for row in baseline['licenses'] if row['id'] == 'typescript']
     pinned = [row for row in manifest['files'] if row['upstreamPath'] == 'LICENSE']
@@ -36,6 +137,45 @@ def verify_license(manifest, baseline):
             or any(pinned[0][key] != licenses[0][key] for key in ('sha256', 'gitBlobSha1', 'bytes'))):
         raise ValueError('Pinned TypeScript license differs from frozen Apache attribution')
 
+
+
+def verify_reused_profile_declarations(text, inventory):
+    """Prove every reused declaration and its schema dependencies stayed exact.
+
+    Spans are located by their unique export declaration, then compared at the
+    frozen text length and terminating semicolon. Source line shifts are harmless;
+    edits, additions to an expression, missing exports and duplicates fail closed.
+    """
+    filename = 'src/models/mgmt-security-profile.ts'
+    declarations = {row['name']: row for row in inventory['exports']
+                    if row['kind'] == 'schema' and row['source']['file'] == filename}
+    pending = ['DataProtectionSchema', 'PolicyAppProtectionSchema',
+               'ModelProtectionItemSchema', 'AgentProtectionItemSchema',
+               'PolicyLatencySchema', 'DlpDataProfilePolicySchema']
+    checked = {}
+    while pending:
+        name = pending.pop()
+        if name in checked:
+            continue
+        row = declarations.get(name)
+        if row is None or len(row['declarations']) != 1:
+            raise ValueError('Reused profile declaration missing: ' + name)
+        frozen = row['declarations'][0]
+        expected = frozen['text']
+        digest = hashlib.sha256(expected.encode()).hexdigest()
+        if frozen['file'] != filename or digest != frozen['sha256']:
+            raise ValueError('Frozen profile declaration hash changed: ' + name)
+        matches = list(re.finditer(r'^export const (?=' + re.escape(name) + r'\b)', text, re.MULTILINE))
+        if len(matches) != 1:
+            raise ValueError('Reused profile declaration identity changed: ' + name)
+        start = matches[0].end()
+        actual = text[start:start + len(expected)]
+        if (actual != expected or hashlib.sha256(actual.encode()).hexdigest() != digest
+                or text[start + len(expected):start + len(expected) + 1] != ';'):
+            raise ValueError('Reused profile declaration changed: ' + name)
+        checked[name] = digest
+        pending.extend(set(re.findall(r'\b[A-Za-z_]\w*Schema\b', expected)) - {name})
+    return checked
 
 def verify(source=SOURCE):
     if source.is_symlink() or any(p.is_symlink() for p in source.rglob('*')):
@@ -89,7 +229,15 @@ def verify(source=SOURCE):
         raise ValueError("Unexpected pinned source inventory")
     if not set(changed) <= {r['upstreamPath'] for r in manifest['files']}:
         raise ValueError('Changed runtime source not bundled')
+    verify_model_imports((source / 'src/models/mgmt-security-profile.ts').read_text())
+    verify_reused_profile_declarations(
+        (source / 'src/models/mgmt-security-profile.ts').read_text(),
+        json.loads((ROOT / 'contracts/typescript.json').read_text()))
+    verify_new_profile_declarations((source / 'src/models/mgmt-security-profile.ts').read_text())
+    verify_model_export_delta((source / 'src/models/index.ts').read_text(),
+                              json.loads((ROOT / 'contracts/typescript.json').read_text()), changed)
     package = json.loads((source / 'package.json').read_text())
+    verify_version_identity(manifest, package, (source / 'src/constants.ts').read_text())
     verify_zod_versions(package, json.loads((ROOT / 'tools/package-lock.json').read_text()))
     if package['repository']['url'] != 'git+' + manifest['repository'] + '.git':
         raise ValueError('Canonical repository differs from published metadata')
