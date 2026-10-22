@@ -17,6 +17,10 @@ at least 46/50, with each category at least 8/10. The five-attempt exception and
 recorded deficiencies follow the maintainer’s review policy. [Phase status](docs/phase-status.json) records the
 accepted reviews and exact source evidence.
 
+Publication statements below record the source qualification snapshot and remain
+in the immutable archive after release. Check [scm-sdk 0.2.4 on crates.io](https://crates.io/crates/scm-sdk/0.2.4) and the repository's version-specific
+registry receipt for current availability.
+
 Crate version: **0.2.4**, the TypeScript 0.35.0 directional-profile release
 candidate, not yet published. It retains AIRS management 0.86.0 and the
 [G25 response-compatibility correction](docs/G25_COMPATIBILITY.md).

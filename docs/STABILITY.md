@@ -1,5 +1,9 @@
 # Compatibility and support status
 
+Publication statements below record the source qualification snapshot and remain
+in the immutable archive after release. Check [scm-sdk 0.2.4 on crates.io](https://crates.io/crates/scm-sdk/0.2.4) and the repository's version-specific
+registry receipt for current availability.
+
 The current Rust crate version is **0.2.4**, the [directional-profile release candidate](DIRECTIONAL_PROFILES.md), not yet published.
 The `checks/release-registry-0.2.4.json` establishes publication
 only when present and verified. A missing receipt means publication is not yet verified.

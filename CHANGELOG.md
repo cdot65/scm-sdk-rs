@@ -2,6 +2,10 @@
 
 ## 0.2.4 — TypeScript 0.35.0 directional profile models
 
+Publication statements below record the source qualification snapshot and remain
+in the immutable archive after release. Check [scm-sdk 0.2.4 on crates.io](https://crates.io/crates/scm-sdk/0.2.4) and the repository's version-specific
+registry receipt for current availability.
+
 Release candidate: not yet published. Publication and remote delivery require
 verified 0.2.4 registry, annotated-tag, and CI receipts.
 Publication is established only by the verified
