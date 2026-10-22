@@ -9265,6 +9265,54 @@
       "score": 46,
       "deployment": "verified_live",
       "evidence": "docs/reviews/github-pages/logo/deployment.json"
-    }
+    },
+    "release_updates": [
+      {
+        "version": "0.2.4",
+        "scope": "independent-docs-release-0.2.4",
+        "status": "reviewed_ready_for_deployment",
+        "score": 46,
+        "fifth_attempt_exception": null,
+        "review": "docs/reviews/github-pages/release-0.2.4/attempt-05.json",
+        "source_manifest": "docs/reviews/github-pages/release-0.2.4/attempt-05.source.json",
+        "checks": "docs/reviews/github-pages/release-0.2.4/attempt-05.checks.json",
+        "deployment_status": "pending",
+        "release_source_commit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+        "sdk_phase28_status_at_review": "in_progress",
+        "sdk_final_review": "Not granted or replaced by this independent docs review.",
+        "remaining_nonblocking_findings": [
+          {
+            "severity": "low",
+            "path": "docs-site/docs/airs/directional-profiles.md",
+            "line": 5,
+            "description": "This derived page is the only one of the 32 entries in docs-site/DESIGN_SOURCE.json derivedFrom that retains its repository source's first heading. It carries front matter `title: Directional Security Profiles` (line 2) and then `# Directional security profiles` (line 5), copied from docs/DIRECTIONAL_PROFILES.md:1. docs/GITHUB_MIRROR.md:131-132 requires a derived page to \"retain the site's front matter, remove the duplicate first heading where applicable\", and every other derived page follows that rule: docs-site/docs/airs/management.md, docs-site/docs/developer/security.md, docs-site/docs/developer/stability.md, docs-site/docs/core/models.md and the rest begin with front matter and an H2, with no `^# ` line (only site-authored pages such as docs-site/docs/index.md:6 and docs-site/docs/about/release-notes.md:7 keep an H1). The rendered heading also differs in case from the sidebar/metadata title. The recorded `npm run build` cannot detect this; it is a convention divergence, not a broken page.",
+            "required_fix": "Delete the `# Directional security profiles` heading (and its following blank line) at docs-site/docs/airs/directional-profiles.md:5-6 so the page starts with the `## Types and wire fields` section like every other derived page, keeping the front-matter title as the single page title."
+          },
+          {
+            "severity": "low",
+            "path": "docs-site/DESIGN_SOURCE.json",
+            "line": 65,
+            "description": "The `directionalProfilesRelease` block registers the new guide and binds `sourceCommit` 6f18529a, `registryReceiptSha256` f36164e2, `archiveSha256` 533294fe and `sourceSha256` 0ad04305 (equal to the docs/DIRECTIONAL_PROFILES.md digest in attempt-05.source.json:81), but it records no `derivation` note, unlike the entries added for models/validation/parity at lines 120-152 and the augmentation entries at lines 96-119. The derived page does contain site-only text with no counterpart in the published repository guide: docs-site/docs/airs/directional-profiles.md:140-147 adds the two-package TLS cross-reference to /developer/security#024-tls-dependency-patches, changes \"production dependencies remain\" (docs/DIRECTIONAL_PROFILES.md:137) to \"direct dependency declarations remain\", and adds release-notes and live-qualification pointers. The statements are accurate and sourced from CHANGELOG.md:40-43 and docs/SECURITY.md:77-89, but the manifest does not say that this flagship page is a published base plus site-only additions, which is exactly the drift the tightened policy at lines 48 and 101/113/124 is meant to make visible.",
+            "required_fix": "Add a `derivation` field to `directionalProfilesRelease` (or a `docs/airs/directional-profiles.md` entry under release024DerivedSources with sourcePath docs/DIRECTIONAL_PROFILES.md) stating that lines 140-147 are site-only navigation/TLS cross-references whose supporting sources are CHANGELOG.md and docs/SECURITY.md, with a supplementalSource binding for CHANGELOG.md; alternatively add the equivalent TLS sentence to docs/DIRECTIONAL_PROFILES.md and record a repositorySourceSha256 as was done for docs/SECURITY.md and docs/MANAGEMENT.md."
+          },
+          {
+            "severity": "low",
+            "path": "docs-site/DESIGN_SOURCE.json",
+            "line": 91,
+            "description": "The `docs/developer/live-qualification.md` entry records only sourcePath/sourceCommit/sourceSha256 (5ae2460c, equal to the docs/LIVE_ACCEPTANCE.md digest in attempt-05.source.json:84), implying the derived page is a pure translation of the published base. The site page diverges: docs-site/docs/developer/live-qualification.md:18-19 replaces the base sentence docs/LIVE_ACCEPTANCE.md:16 (\"It qualifies the 0.2.4 release-candidate runtime, not a published release.\") with \"The probe ran against the prepublication 0.2.4 runtime.\" plus a site-only sentence, \"Registry publication is established separately in the release notes.\" Both readings are accurate and the site wording is the better post-publication phrasing, but the manifest carries no derivation note for it, unlike the stability entry which documents exactly this situation at lines 84-89 (publicationEvidence/referencePolicy).",
+            "required_fix": "Add a `derivation` (or `publicationEvidence`-style) note to the docs/developer/live-qualification.md entry in docs-site/DESIGN_SOURCE.json recording that the published-base release-candidate sentence is restated as prepublication with a site-only pointer to /about/release-notes, bound to docs/checks/release-registry-0.2.4.json; or mirror the sentence into docs/LIVE_ACCEPTANCE.md and record a repositorySourceSha256."
+          },
+          {
+            "severity": "low",
+            "path": "docs-site/scripts/review-release-024.py",
+            "line": 230,
+            "description": "release_source_files() binds only each entry's top-level `sourcePath`, so the nested provenance sources introduced by the attempt-04 corrections are not generically bound in the attempt manifest: `supplementalSource.sourcePath` at docs-site/DESIGN_SOURCE.json:104 (CHANGELOG.md) and :115 (docs/DIRECTIONAL_PROFILES.md), and the `forwardReference.sourcePath` values at :126, :138 and :148. Both currently reach attempt-05.source.json only because they happen to be listed in REFERENCES (lines 49), so a future supplemental or forward-reference source outside REFERENCES would carry a recorded sourceSha256 that the snapshot never freezes, and the new regression test at docs-site/scripts/test_review_release_024.py:88-103 asserts only the top-level sourcePath values.",
+            "required_fix": "Extend release_source_files() to also collect `supplementalSource.sourcePath` and `forwardReference.sourcePath` (validating each is a string) and assert in test_every_release_derived_source_is_bound_in_snapshot that every nested sourcePath in release024DerivedSources also appears in snapshot()['files']."
+          }
+        ],
+        "review_gate": "normal46_no_exception",
+        "delivery_preflight": "docs/reviews/github-pages/release-0.2.4/delivery-preflight.json"
+      }
+    ]
   }
 }
