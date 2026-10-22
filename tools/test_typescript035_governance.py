@@ -215,9 +215,13 @@ class DirectionalGovernanceTests(unittest.TestCase):
             self.assertEqual(row['plan'], 'docs/typescript-035-parity-plan.md')
             for chunk in row['chunks']:
                 self.assertTrue(review_phase.declared_chunk_scope(ROOT, phase, chunk['id'], 1))
-        rows = {p['id']: p for p in self.status['phases']}
+        rows = {p['id']: copy.deepcopy(p) for p in self.status['phases']}
+        # Exercise progression independently of this checkout's completed phases.
+        rows[27]['status'] = rows[28]['status'] = 'pending'
         self.assertEqual(review_phase.next_phase(rows, 26), 27)
         self.assertEqual(review_phase.next_phase(rows, 27), 28)
+        rows[27]['status'] = 'complete'
+        self.assertEqual(review_phase.next_phase(rows, 26), 28)
         self.assertIsNone(review_phase.next_phase(rows, 25))
         self.assertIsNone(review_phase.next_phase(rows, 28))
 
