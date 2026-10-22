@@ -9,6 +9,10 @@ slug: /overview
 
 The current published release is **0.2.3**, with Rust **1.89** as its minimum supported compiler. Applications own their async runtime, credentials, transport configuration, and enforcement decisions. Node.js is used to build this documentation site, not by the Rust crate.
 
+The forthcoming **0.2.4** patch adds [directional security-profile models](/airs/directional-profiles)
+with TypeScript 0.35.0 request validation. It is not yet published; installation
+examples below remain pinned to 0.2.3.
+
 ## Choose your starting point
 
 | Area | What is available |

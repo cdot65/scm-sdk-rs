@@ -4,7 +4,7 @@ const sidebars: SidebarsConfig = {
     'index',
     {type: 'category', label: 'Getting Started', collapsed: false, items: ['getting-started/installation', 'getting-started/configuration', 'getting-started/environment-variables', 'getting-started/quick-start']},
     'products/overview',
-    {type: 'category', label: 'Prisma AIRS', items: ['airs/scanning', 'airs/management', 'airs/model-security', 'airs/red-team', 'airs/red-team-resources', {type: 'category', label: 'AI Gateway', items: ['airs/gateway', 'airs/gateway-control', 'airs/gateway-runtime', 'airs/access-policies']}, 'airs/agentguard', 'airs/realtime']},
+    {type: 'category', label: 'Prisma AIRS', items: ['airs/scanning', 'airs/management', 'airs/directional-profiles', 'airs/model-security', 'airs/red-team', 'airs/red-team-resources', {type: 'category', label: 'AI Gateway', items: ['airs/gateway', 'airs/gateway-control', 'airs/gateway-runtime', 'airs/access-policies']}, 'airs/agentguard', 'airs/realtime']},
     {type: 'category', label: 'Shared SCM Services', items: ['shared/oauth', 'shared/dlp', 'shared/iam']},
     {type: 'doc', label: 'NGFW · Planned', id: 'products/ngfw'},
     {type: 'doc', label: 'SASE · Planned', id: 'products/sase'},

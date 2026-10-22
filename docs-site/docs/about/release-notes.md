@@ -6,8 +6,37 @@ slug: /about/release-notes
 
 # Release notes
 
-These notes summarize consumer-facing changes in published `scm-sdk` releases.
+These notes summarize consumer-facing changes in published `scm-sdk` releases
+and explicitly marked forthcoming additions.
 The [crate registry](https://crates.io/crates/scm-sdk) provides published versions.
+
+## Forthcoming 0.2.4 — Directional security profiles
+
+This release is not yet published. Installation instructions continue to use 0.2.3.
+
+- Adds `ContentTypeConfiguration` and `ContentTypeConfigurations`, their builders,
+  and two named validators for independently optional prompt, response, tool-call,
+  and tool-response protections.
+- Adds optional content mode and directional configurations to `AiSecurityProfile`,
+  full-conversation inspection to `ModelConfiguration`, and `dlp_tenant_id` to
+  both profile and create/update request models.
+- Validates profile create/update against the current TypeScript 0.35.0 request
+  schema before authentication or I/O. Newly known fields with null or wrong types
+  now fail request validation, including values supplied through extensions.
+- Retains tolerant Rust profile responses, preserving invalid newly known values
+  and explicit null in extensions. Upstream TypeScript 0.35.0 responses reject
+  those values. Explicit typed values take precedence over same-key extensions.
+- Refreshes the repository lockfile to `rustls-webpki` 0.103.16 and
+  `webpki-root-certs` 1.0.10 for RUSTSEC-2026-0382 and RUSTSEC-2026-0383.
+  Applications retain their own lockfiles: update these transitive packages where
+  present and audit the resolved graph. Installing the SDK does not replace an
+  application lockfile. See the [TLS dependency note](/developer/security#forthcoming-024-tls-dependency-patches).
+
+Existing standalone schema names retain historical validation; use versioned
+`typescript:0.35.0:<SchemaName>` roots for current standalone validation. Shared
+protections, list defaults, endpoint methods, Rust 1.89, features, and direct
+dependency declarations remain. Directional live acceptance remains unverified. See the
+[directional profile guide](/airs/directional-profiles) for fields and migration.
 
 ## 0.2.3 — AIRS management compatibility
 
