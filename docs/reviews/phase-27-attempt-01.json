@@ -1,0 +1,90 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 27,
+  "attempt": 1,
+  "reviewed_at": "2026-10-22T08:47:31.272537+00:00",
+  "source_sha256": "cfc549423158949f98d95af63fc0d402f53bf7e922c5a4363467db4644c8a308",
+  "source_unchanged": true,
+  "checks_sha256": "457958074223a1df67a33f7633e9d3cf0c71195cc92d54dedf1c8fbd3a2dad97",
+  "prompt_sha256": "9498e2eb484db05f511d21f3286804ff8393fc4ec94c976b5848c8dbbd629f71",
+  "cli_output_sha256": "56acff8d1fcdecd0f6f8f4b79e8a6083f9c2735a1942488b02122b3253b357c8",
+  "gate_passed": false,
+  "review": {
+    "score": 8.5,
+    "summary": "Phase 27 delivers a genuinely additive, mechanically verified TypeScript 0.35.0 directional-profile implementation. I independently confirmed: upstream shapes at the pinned source match the overlay; the 12 cloned ancestors plus 4 new nodes leave every historical node/root intact; profiles.rs repoints exactly two request-schema arguments; projections are lossless and typed-wins; request validation precedes auth/I/O; new types are Debug-redacted; the 906-case Zod oracle is replayed in Rust on 1.89.0 and 1.99.0; regeneration is byte-compared from the frozen inventory; tamper cases fail closed; the private scan and live receipt bind this exact source. Documentation and live/release scoping are candid. Both chunks were accepted at this SHA, but all five chunk-level low findings remain unfixed, concentrated in supportability (unbound wire tests, hand-asserted upstream key sets, an inert test branch, misleading messages, missing format-site inventory).",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "contracts/typescript-035-parity.json",
+        "line": 7,
+        "description": "sourceBindings pin profiles.rs, tests/typescript035_models.rs and the example, but not crates/scm-sdk/tests/management_contracts.rs, which holds this phase's actual wire qualification (lines 1725-2044). No owner asserts the four directional wire test function names, unlike tools/red_team_management.py:765-768 which greps MANAGEMENT_WIRE_TESTS out of its contract test. Renaming or deleting directional_profiles_preserve_all_wire_paths_and_both_response_policies, current_profile_requests_reject_new_invalid_fields_before_authentication, valid_raw_directional_extensions_submit_and_decode_typed_responses or profile_wire_defaults_and_empty_terminal_pages_follow_request_options would fail no check.",
+        "required_fix": "Add crates/scm-sdk/tests/management_contracts.rs to the parity ledger sourceBindings and assert the four directional wire test function names in tools/typescript035_profiles.py --check, mirroring red_team_management.py's verify_runtime_adoption name check."
+      },
+      {
+        "severity": "low",
+        "path": "tools/typescript035_profiles.py",
+        "line": 95,
+        "description": "The two genuinely new upstream declarations are not span-pinned: verify_reused_profile_declarations (tools/verify_typescript035_source.py:58) only pins declarations present in the frozen 0.34.0 inventory. The overlay hand-transcribes the four protection keys, the four direction keys and unconditionally overrides inputPresence/inputNull; the ledger's addedExports=4 / projectedFields=5 counts are asserted rather than derived from the pinned src/models/index.ts delta. At this pin the transcription is correct (mgmt-security-profile.ts:239-269; index.ts:132-135 adds exactly the four names), but a future re-pin adding a fifth typed key or export would pass generation silently and be treated as passthrough.",
+        "required_fix": "Span-pin ContentTypeConfigurationSchema/ContentTypeConfigurationsSchema text and sha256 in verify_typescript035_source.py, derive or assert the overlay property key sets from that pinned text, and derive the added-export count by diffing the pinned index.ts export names against contracts/typescript.json."
+      },
+      {
+        "severity": "low",
+        "path": "tools/test_typescript035_governance.py",
+        "line": 194,
+        "description": "test_frozen_contracts_and_planning_sdk_bytes keeps the frozen contract byte assertions unconditional (189-191) but bare-`return`s from the SDK-freeze block when active_phase != 26. Under active_phase 27 that half of the test is inert yet recorded as a plain pass in the phase receipt, so executed and skipped coverage are indistinguishable.",
+        "required_fix": "Replace the bare return with self.skipTest('phase 26 planning boundary only') so the phase-27 receipt records the skip explicitly."
+      },
+      {
+        "severity": "low",
+        "path": "tools/red_team_management.py",
+        "line": 800,
+        "description": "verify_service_qualification is now reached from --check --current-source-compatibility (line 869-870), but both failure messages still read 'Phase 24 requires fresh bounded read-only management qualification' and 'Phase 24 requires explicit exercised and unexercised endpoint profiles'. A phase-27 qualification failure would be diagnosed as a phase-24 gate failure.",
+        "required_fix": "Reword both messages to name the current-source bounded read-only qualification rather than phase 24."
+      },
+      {
+        "severity": "low",
+        "path": "tools/g25_audit.py",
+        "line": 82,
+        "description": "The frozen format inventory now skips every root prefixed 'typescript:' as well as 'vendor:', so the six new versioned 0.35.0 roots contribute no formatSites rows (allFrozenRootsWithFormats stays 190). Their reachable format constraints (for example CreateSecurityProfileRequest last_modified_ts datetime, integer revision) have no static inventory anywhere; only the oracle's executed acceptance covers them.",
+        "required_fix": "Record the versioned roots' reachable format sites in a separately counted section (for example in contracts/typescript-035-parity.json) so the new roots have a static format inventory alongside the oracle outcomes."
+      }
+    ],
+    "evidence": [
+      "Check evidence is real and source-bound: docs/reviews/phase-27-attempt-01.checks.json records phase 27, source_sha256 cfc54942... (the reviewed SHA), passed true, and 107 commands with no exit_code other than 0, no timeout true and no source_unchanged false, executed contiguously 06:58-08:28 on 2026-10-22. The set matches tools/check_phase.py:317-353 (phase-23 cumulative minus package-archive checks, every tools/test_*.py file individually, the five new 0.35.0 commands, dependency audit reordered before the first check-rust.py, management feature set on both compilers).",
+      "Upstream fidelity verified at the pin: contracts/sources/typescript-0.35.0/src/models/mgmt-security-profile.ts:239-269 defines ContentTypeConfigurationSchema (four optional protection keys, passthrough) and ContentTypeConfigurationsSchema (prompt/response/tool-call/tool-response optional, passthrough); :272-292 add enable-full-conversation-inspection, content-type-mode and content-type-configurations; :334 and :368 add dlp_tenant_id. The overlay in tools/typescript035_profiles.py:92-108 reproduces exactly these shapes and reuses the frozen s009588 protection property refs, so no duplicate protection types are minted.",
+      "Source verification fails closed before generation or execution: tools/verify_typescript035_source.py:86-151 checks manifest digest, commit/tree/blob reconstruction via verify-contracts.py helpers, the exact three-file runtime delta, symlink rejection, inventory equality, Apache license blob identity, Zod range vs the committed lockfile, and the four public fixture identifiers. tools/typescript035-oracle.mts:19 runs that verifier before copying anything; tools/test_typescript035_oracle.py:73-86 proves a tampered source or manifest aborts with no UPSTREAM_EXECUTED marker and no .local workspace (receipt line 1692: all 5 tests ok).",
+      "Graph additivity confirmed directly in the runtime artifact: crates/scm-sdk/src/validation/schema_graph.json contains the six typescript:0.35.0: roots mapped to s_ts035_s009588/99/06/12/32/51, the new s_ts035_content_type_configuration(s) nodes with catchall s009589 (ZodNever) and inputPresence accepts / inputNull rejects, and s_ts035_s009599's model-configuration correctly remapped to the cloned s_ts035_s009605. tools/test_typescript035_implementation.py:112-127 asserts every historical node/root survives byte-equal and that additions are exactly 12 clones + 4 nodes + 8 roots.",
+      "Determinism is a real regeneration, not a self-comparison: tools/generate_models.py:1044-1137 rebuilds the graph, Rust and ledgers from the frozen contracts/typescript.json through the same Overlay and byte-compares in --check mode; the receipt records {\"checked\": true, \"outputs\": 20, \"graphNodes\": 13018} exit 0, and tools/typescript035_profiles.py --check reports {addedExports 4, projectedFields 5, versionedRoots 6, clonedNodes 12, defaultAliases 1}.",
+      "Lossless typed-wins projection uses the pre-existing generic mechanism (tools/generate_models.py:471-506), not hand-edited Rust: crates/scm-sdk/src/models/generated.rs:4467-4512 removes a projected key and re-inserts an undecodable value as an extension; :4548-4557 skips a colliding extension only when the typed field is set; KNOWN (:4519) still rejects baseline collisions. The two new types (:13369-13604) carry builders, SCHEMA, parse, build_validated and redacted Debug (:13484, :13600).",
+      "Wire behavior is executed, not asserted: crates/scm-sdk/tests/management_contracts.rs:1736-1839 drives POST/PUT/list_for_token/list/get/paged list_all with defaults on and off against a directional fixture whose reply carries null dlp_tenant_id, integer tool-call and null inspection, asserting byte-equal round-trip; :1842-1873 drives 5 JSON pointers x 3 invalid values through create and update asserting ErrorKind::Validation with token.calls==0 and wire.requests==0; :1876-1982 proves raw-extension requests still serialize and decode into typed projections. docs/checks/phase-27-rust-1.89.0-management.json and the 1.99.0 report record all four tests ok plus cargo run of the directional_profiles example (receipt lines 2981, 3013).",
+      "Rust/TypeScript equivalence is replayed: crates/scm-sdk/tests/typescript035_models.rs:21-88 parses every case of contracts/typescript-035-oracle.json (sourceCommit 780c985c..., zod 3.25.76, 906 cases, 231 accepted) through validation::parse for all 8 roots, compares acceptance and normalized output, typed-round-trips each root, and requires at least one acceptance and one rejection per root; :91-213 cover omission/null/wrong-type in Mode::Response and ResponseWithoutDefaults plus the versioned list default.",
+      "Default alias is bounded: tools/generate_validation.py:151-154 refuses an alias whose original is not exactly {binding: default, default: []} and keeps the 69-binding denominator; crates/scm-sdk/src/validation/tests.rs:206-220 asserts semantics.len()==70 with [] inserted in Response and omitted in ResponseWithoutDefaults; contracts/response-defaults.json:498-506 and docs/RESPONSE_DEFAULTS.md:48-51 record it separately from the 23 historical bindings.",
+      "Frozen-byte preservation and the narrow permitted deltas are enforced against git: tools/test_typescript035_implementation.py:25-53 proves contracts/native-fixtures/schemas.json differs from baseline 578f2e6 only in provenance.generatorSha256 and model-regressions.json only in provenance.sha256/oracleSha256, each bound to current bytes; :67-76 proves profiles.rs changed exactly two request-schema strings with an identical .named() list; :90-110 proves the Cargo.lock delta is exactly rustls-webpki 0.103.15->0.103.16 and webpki-root-certs 1.0.9->1.0.10 and that check-dependencies.py precedes the first check-rust.py.",
+      "Security and honesty evidence: docs/checks/phase-27-private-material.json records an executed private scan at sourceSha256 cfc54942... with 2307 files, zero credential and zero published-crate registration matches and zero new tenant occurrences; the real upstream DLP identifier 8259670718644550000 appears only in the pinned fixture, the verifier and historical phase-26 records, never in contracts/typescript-035-oracle.json (oracle substitutes placeholder 100 at typescript035-oracle.mts:34). contracts/qualification.json:53-67 and contracts/native-exports.json:34-62 report liveVerified 1 of 448 / 3820 bound to docs/checks/phase-27-live-attempt-05.json, whose runtimeInputsSha256 must equal the current runtime fingerprint (tools/live_evidence.py:301) and whose limitations must retain the endpoint profile for phase 27/28 receipts (:313-315).",
+      "Documentation matches the implementation: docs/DIRECTIONAL_PROFILES.md tabulates all four direction keys, the five field occurrences and the six versioned roots, links the compiled example and states the intentional tolerant-response difference; CHANGELOG.md:17-28 and docs/STABILITY.md:36-48 disclose the request tightening and the retained response acceptance in both directions; docs/LIVE_ACCEPTANCE.md:13-32 states 1 verified method, four 403 probes, no mutations and that attempts 01-04 recorded identical bounded outcomes."
+    ],
+    "limitations": [
+      "Read-only Read/Glob/Grep only, with Bash disabled: I could not recompute any SHA-256, run git, cargo or the phase driver, or re-execute a check. Pass/fail conclusions rest on the recorded commands, exit codes, stderr test listings and executed_at values in docs/reviews/phase-27-attempt-01.checks.json cross-read against tools/check_phase.py:317-353, and on the owner checks that verify the digest bindings.",
+      "I did not verify that the 107 recorded commands are literally equal to commands_for(27); review_phase.check_evidence enforces that equality at record time and the receipt reports passed true.",
+      "crates/scm-sdk/src/validation/schema_graph.json and semantics.json are single-line minified artifacts; I verified the new nodes, roots and clone remapping by targeted greps plus the generator reconstruction path and the Python/Rust regressions, not by end-to-end reading.",
+      "The oracle-to-Rust replay is Mode::Request only; the versioned roots' Response/ResponseWithoutDefaults behavior is not compared case-by-case against Zod. This matches the plan's deliberate retention of frozen tolerant response validation, and the one defaulted field is covered in all three modes.",
+      "No package-consumer or extracted-archive build runs on this source: check-management-package.py and --verify-package-receipts are deliberately excluded (tools/check_phase.py:323) and management_consumers reports executionClaimed false. The plan assigns that evidence to phase 28, so I did not score it; milestone 2's package-consumer wording is therefore only partly satisfied here.",
+      "No CI context executes this phase's command set on the changed source: .forgejo/workflows/ci.yml:73 still runs check_phase.py --phase 24 --verification-only --contracts-only. The plan assigns workflow wiring and CI context recording to phase 28, so I treated this as deferred scope rather than a finding.",
+      "Directional create/update were never exercised against a tenant; the current receipt verifies only OAuth token exchange plus four 403 permission probes, and directional live acceptance remains explicitly unverified in every document.",
+      "I read no credential or tenant-registration material, used no .local/typescript checkout, made no network calls, and treated contracts/sources/typescript-0.35.0 as pinned as the authoritative upstream input. I did not re-audit unrelated historical phase 8-24 infrastructure or release receipts.",
+      "Both chunk reviews (attempt 02, accepted at 45/50 each) were recorded at the same source SHA as this phase review, so their low findings could not have been fixed beforehand; I verified each is still present in current source rather than relying on their prose."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "phase"
+}

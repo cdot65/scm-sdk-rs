@@ -10,11 +10,20 @@ fn all_23_frozen_defaults_validate_under_both_response_policies() {
     let semantics: Value =
         serde_json::from_str(include_str!("../src/validation/semantics.json")).unwrap();
     let mut count = 0;
+    let mut aliases = 0;
     for (schema, binding) in semantics.as_object().unwrap() {
         if binding["binding"] != "default" {
             continue;
         }
-        count += 1;
+        if schema == "s_ts035_s009653" {
+            aliases += 1;
+            assert_eq!(
+                binding, &semantics["s009653"],
+                "versioned list alias changed its default"
+            );
+        } else {
+            count += 1;
+        }
         let default = &binding["default"];
         for mode in [Mode::Request, Mode::Response] {
             assert_eq!(
@@ -39,6 +48,7 @@ fn all_23_frozen_defaults_validate_under_both_response_policies() {
         }
     }
     assert_eq!(count, 23);
+    assert_eq!(aliases, 1);
 }
 
 #[test]

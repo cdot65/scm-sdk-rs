@@ -77,7 +77,9 @@ def audit():
         if total:request_sources.append({'source':name,'occurrences':total,'methods':per_method})
     global_roots=[]
     for name,sid in sorted(graph['roots'].items()):
-        if name.startswith('vendor:'):continue
+        # Keep the historical 0.34.0 denominator; later versioned overlays
+        # receive their own qualification rather than expanding frozen coverage.
+        if name.startswith(('vendor:', 'typescript:')):continue
         pending=[sid];seen=set();sites=[]
         while pending:
             current=pending.pop()

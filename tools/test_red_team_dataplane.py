@@ -38,7 +38,9 @@ class VendorAdapterTests(unittest.TestCase):
         if manifest['package']['version'].startswith('0.2.'):
             self.assertEqual(vendor.sha(vendor.canonical(manifest['dependencies']).encode()),'1de1e4a6ed28c4d49b71cd5585f63f098a42ce5f6d42c3d4317d8b072094f35b')
             self.assertEqual(vendor.sha(vendor.canonical(manifest['features']).encode()),'ee22fe9d2878d5837c82502c9d716939a4d968fef87aa18a8590e752531300a3')
-            self.assertEqual(vendor.sha(vendor.canonical([p for p in lock['package'] if p.get('source')]).encode()),'b65607fe9e4c07fc3c6b5bc7fe7be964d9f789cd5665baeec37a41588fcc6d79')
+            # Reviewed TLS security patches only; the directional invariant test
+            # separately compares every package against the historical lockfile.
+            self.assertEqual(vendor.sha(vendor.canonical([p for p in lock['package'] if p.get('source')]).encode()),'d96eaa5b52d666c9028773aa3091424525afdcb7fb43ddfa95713569cf479de6')
         workspace=tomllib.loads((vendor.ROOT/'Cargo.toml').read_text())
         self.assertEqual(workspace['workspace']['package']['rust-version'],'1.89')
         changelog=(vendor.ROOT/'CHANGELOG.md').read_text().split('## 0.1.1',1)[0]

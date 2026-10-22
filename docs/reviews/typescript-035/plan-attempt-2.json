@@ -1,0 +1,46 @@
+{
+  "scope": "Second plan review of docs/typescript-035-parity-plan.md plus its registration delta (PHASES.md 268-276, implementation-plan.md 186-191, phase-status phases 26-28, tools/verify_typescript035_source.py, check_phase.py phase-26 routing and CONTRACT_LEDGER_OWNERS, docs/checks/phase-26.json). Planning only; phase 27/28 command sets and release guards are not expected to exist.",
+  "attempt": 2,
+  "scores": {
+    "implementation": 8,
+    "code_quality": 8,
+    "supportability": 6,
+    "architecture": 8,
+    "delivery": 7
+  },
+  "total": 37,
+  "overall": 7,
+  "accepted": false,
+  "acceptance_rule": ">=46/50, each >=8, no blockers",
+  "prior_findings_resolved": [
+    "Blocker 4 corrected and now factually right: generate_models.py:498 excludes vendorProjection wires from KNOWN so the collision error at :499 never fires for the four new keys, and :502-506 skips a same-key extension only when the typed field is set. Existing .extension(...) callers keep working; non-projection structs keep today's collision error. 'Reuse, not a blanket collision-policy change' is accurate.",
+    "Blocker 5 resolved: pinned mgmt-security-profile.ts:1 imports only 'zod'; tools/package.json pins zod 3.25.76 (satisfies upstream package.json ^3.24.0) and tsx 4.23.15, so partial vendoring is executable with no other source files.",
+    "Blocker 6 resolved: verify_typescript035_source.py checks manifest digest, commit/version identity, per-file sha256+bytes, symlink and traversal rejection, and exact inventory; all three pinned JSONs have owners at check_phase.py:28-30 matching the actual seven-file tree; docs/checks/phase-26.json is a real passing source-bound receipt whose checks[].command equals commands_for(26), satisfying review_phase.check_evidence:210-217.",
+    "Blocker 3 resolved: per-ledger artifact table with treatment and owner; 0.34.0 inputs byte-frozen against parent 578f2e6; 0.35.0 parity ledger counted separately from 3,820.",
+    "Blocker 2 resolved: non-rebinding of 24/25 stated in the plan, PHASES.md:272-274, implementation-plan.md:190-191 and each new phase's authorization; their fail-closed --require-through-phase posture is preserved.",
+    "Blocker 7 addressed at design level: version-specific 0.2.4 readiness/delivery guard, no reuse of the 0.2.3 guard, exact CI context set required.",
+    "Blocker 1 only partially resolved: phases 26-28 are registered, but in a form the governance tooling cannot consume (see blockers below)."
+  ],
+  "blockers": [
+    "Phase 26 is ungateable and the new sequence has no evaluable dependency relation. review_phase.py:432 runs validate_predecessors on every invocation, including --verify; it raises 'Earlier phases have not passed their gates' for --phase 26 because phase 24 is in_progress with reviews: [] (phase-status.json:6193-6194) and phase 25 is pending (:6706). next_phase (review_phase.py:395-400) returns None after phase 25's final_in_sequence: true (:6741), so 26 is unreachable by advancement even though active_phase is already 26 (:3). The plan asserts an 'independently prioritized maintenance branch' but never states the scoped dependency on the accepted phase-23 qualification and published 0.2.3 code (:6690-6693), and nothing in phase-status expresses it as data. No source-bound review evidence for phase 26 can be retained under the current registration.",
+    "Chunk registration shape is incompatible with every tool that reads chunks, and the new phases are not scope-bound. Phases 26-28 declare chunks as an object keyed by name with attempt_budget (phase-status.json:6749-6754, 6762-6771, 6779-6788); consumers expect a list of {id, scope_evidence, scope_revisions}. review_phase.accepted_chunks:321-324 raises 'Rubric phases must declare a nonempty chunks list' for a dict and uses_rubric(26) is true, so advancement always fails; declared_chunk_scope:228 calls item.get('id') over dict keys (AttributeError); test_management_phases.py:180 iterates the active phase's chunks and now raises TypeError. attempt_budget is read by no tool (the five-attempt cap is review_phase.py:427). SCOPE_BOUND_PHASES (review_phase.py:17) is {20..25}, so 26-28 chunk reviews lose the scope_evidence and 'Review scope:' prompt binding that 20-25 require, and phase 26 declares no scope_evidence at all, so verify_scoped_ledger_owners never covers contracts/sources/typescript-0.35.0 despite its owners being correctly registered."
+  ],
+  "recommendations": [
+    "State in the plan that phases 26-28 depend on the accepted phase-23 qualification and the published/verified 0.2.3 code, explicitly not on 24-25; encode it as data (e.g. depends_on: [23]) and make validate_predecessors honour an explicit dependency set while phases 1-25 keep the sequential rule, leaving 24/25 status, empty reviews and fail-closed --require-through-phase byte-unchanged. Resolve the final_in_sequence/next_phase interaction so no gate is skipped.",
+    "Convert 26-28 chunks to the list form with scope_evidence and scope_revisions [{from_attempt: 1, ...}]; add 26-28 to SCOPE_BOUND_PHASES; give phase 26 scope_evidence covering docs/typescript-035-parity-plan.md and contracts/sources/typescript-0.35.0 so the registered ledger owners are actually enforced.",
+    "Give verify_typescript035_source.py real argparse: it currently ignores sys.argv, so --check is cosmetic and any flag exits 0, while CONTRACT_LEDGER_OWNERS matches the literal --check adjacency.",
+    "Pin phase 27's cumulative management regressions to --require-through-phase 23 explicitly; an unpinned 'existing regressions' set inherits 24/25 fail-closed and cannot pass.",
+    "Add a phase-28 branch to review_phase.py:446-448, which hardwires release verification to phases {20, 24} and version 0.2.3; 'wire this phase into the workflow' is not specific enough to review.",
+    "Reconcile AGENTS.md:7 (contracts/manifest.json as the committed TypeScript baseline) with the second 0.35.0 manifest, and state the deliberate non-registration in contracts/airs-active-sources.json, which is owned by tools/red_team_management.py and would rebind 24/25 ledgers.",
+    "Record that MANIFEST_SHA256 in the verifier is itself bound by the phase receipt's source_sha256, so tampering requires changing a fingerprinted tool."
+  ],
+  "verification_if_fixed": [
+    "python -m unittest discover -s tools -p test_management_phases.py -v (currently TypeError at line 180 with active_phase 26)",
+    "python -m unittest discover -s tools -p test_review_phase.py -v",
+    "python tools/review_phase.py --phase 26 --attempt 2 --chunk plan-and-provenance --scope-evidence ... must reach the review step instead of 'Earlier phases have not passed their gates'",
+    "python tools/check_phase.py --phase 26 still passes source-bound",
+    "phases 24/25 checks still fail closed and their records are byte-unchanged",
+    "tamper one pinned byte and the manifest separately; the verifier must fail before oracle execution"
+  ],
+  "notes": "The model, projection, versioned-root, provenance and oracle design is sound and code-accurate; the corrected projection reading and the zod-only executability claim both hold. The remaining gap is entirely governance registration: as registered, phase 26 cannot obtain or record the review evidence this very process requires, and the dependency relation the user asked for is absent from both the document and phase-status.json. Both fixes are small and data/tooling level, not a redesign."
+}

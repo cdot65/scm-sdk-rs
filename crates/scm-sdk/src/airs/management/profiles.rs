@@ -88,7 +88,7 @@ impl ProfilesClient {
                 RawRequest::new(Method::POST, "/v1/mgmt/profile")
                     .named("airs.management.profiles.create"),
                 body,
-                "CreateSecurityProfileRequestSchema",
+                "typescript:0.35.0:CreateSecurityProfileRequestSchema",
                 "SecurityProfileSchema",
                 options,
             )
@@ -211,7 +211,7 @@ impl ProfilesClient {
                     .segment(id)?
                     .named("airs.management.profiles.update"),
                 body,
-                "CreateSecurityProfileRequestSchema",
+                "typescript:0.35.0:CreateSecurityProfileRequestSchema",
                 "SecurityProfileSchema",
                 options,
             )

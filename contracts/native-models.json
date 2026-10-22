@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "sourceSha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
-  "generatorSha256": "cf181a0044a72f097d9c73a0ab88a4e04f18fc97263ff33c5d548590e296ea11",
+  "generatorSha256": "561d2ab5582df443e78102358681e075de3a50562b13f57b50100f7a99b1a402",
   "partialFamily": null,
   "structuralChecks": {
     "stringChecks": [
@@ -16722,7 +16722,37 @@
       "behavioralClosurePhase": 7
     }
   ],
-  "generatedDeclarations": 1958,
+  "generatedDeclarations": 1960,
   "aliases": 53,
-  "deferred": []
+  "deferred": [],
+  "typescript035Schemas": [
+    {
+      "export": "ContentTypeConfigurationSchema",
+      "schema": "s_ts035_content_type_configuration",
+      "rustType": "ContentTypeConfiguration",
+      "namespace": "airs::management",
+      "status": "typed_model",
+      "validator": "crate::validation::parse"
+    },
+    {
+      "export": "ContentTypeConfigurationsSchema",
+      "schema": "s_ts035_content_type_configurations",
+      "rustType": "ContentTypeConfigurations",
+      "namespace": "airs::management",
+      "status": "typed_model",
+      "validator": "crate::validation::parse"
+    }
+  ],
+  "typescript035ModelExports": [
+    {
+      "export": "ContentTypeConfiguration",
+      "rustType": "ContentTypeConfiguration",
+      "status": "typed_model"
+    },
+    {
+      "export": "ContentTypeConfigurations",
+      "rustType": "ContentTypeConfigurations",
+      "status": "typed_model"
+    }
+  ]
 }

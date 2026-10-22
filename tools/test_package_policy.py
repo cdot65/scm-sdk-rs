@@ -4,6 +4,7 @@ import io
 import json
 import pathlib
 import tarfile
+import tempfile
 import unittest
 from unittest import mock
 import types
@@ -14,6 +15,56 @@ spec.loader.exec_module(policy)
 
 
 class PackagePolicyTests(unittest.TestCase):
+    def test_external_consumer_run_records_executed_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / 'main.rs'
+            source.write_bytes(b'fn main() {}\n')
+            result = types.SimpleNamespace(returncode=0, stdout='ok', stderr='')
+            with mock.patch.object(policy.subprocess, 'run', return_value=result):
+                row = policy.execute_package_check(['cargo', 'run'], root, {}, consumer_main=source)
+            self.assertTrue(row['passed'])
+            self.assertTrue(row['consumerSourceUnchanged'])
+            self.assertEqual(row['consumerSourceSha256'], policy.digest(source.read_bytes()))
+
+    def test_external_consumer_mutation_or_deletion_fails_even_with_exit_zero(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / 'main.rs'
+            for mutation in ('replace', 'delete'):
+                source.write_bytes(b'original')
+                def execute(*args, **kwargs):
+                    if mutation == 'delete':
+                        source.unlink()
+                    else:
+                        source.write_bytes(b'changed')
+                    return types.SimpleNamespace(returncode=0, stdout='', stderr='')
+                with self.subTest(mutation=mutation), mock.patch.object(policy.subprocess, 'run', side_effect=execute):
+                    row = policy.execute_package_check(['cargo', 'run'], root, {}, consumer_main=source)
+                    self.assertFalse(row['passed'])
+                    self.assertFalse(row['consumerSourceUnchanged'])
+                    self.assertEqual(row['consumerSourceSha256'], policy.digest(b'original'))
+
+    def test_external_consumer_missing_or_symlink_source_rejected_before_execution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            target = root / 'target.rs'
+            target.write_bytes(b'source')
+            alias = root / 'main.rs'
+            alias.symlink_to(target)
+            for source in (root / 'missing.rs', alias):
+                with self.subTest(source=source), mock.patch.object(policy.subprocess, 'run') as run:
+                    with self.assertRaisesRegex(ValueError, 'regular file'):
+                        policy.execute_package_check(['cargo', 'run'], root, {}, consumer_main=source)
+                    run.assert_not_called()
+
+    def test_nonconsumer_check_retains_normal_exit_status(self):
+        for code in (0, 1):
+            with mock.patch.object(policy.subprocess, 'run', return_value=types.SimpleNamespace(returncode=code, stdout='', stderr='')):
+                row = policy.execute_package_check(['cargo', 'test'], pathlib.Path('/repo'), {})
+            self.assertEqual(row['passed'], code == 0)
+            self.assertNotIn('consumerSourceSha256', row)
+
     def archive(self, names):
         output = io.BytesIO()
         with tarfile.open(fileobj=output, mode='w:gz') as archive:

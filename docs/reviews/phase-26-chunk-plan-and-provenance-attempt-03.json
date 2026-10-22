@@ -1,0 +1,96 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 26,
+  "attempt": 3,
+  "reviewed_at": "2026-10-21T23:29:38.068359+00:00",
+  "source_sha256": "95f6cc262d01bb3f35fc3cc3b7a21a23608e876250a66dd81c818c9b6b07e7f5",
+  "source_unchanged": true,
+  "checks_sha256": "c2172eb4453c3108cd98e2882e483671fdde3443ac3de017d86656bafe82a21f",
+  "prompt_sha256": "141037b09aace07305793b6ade84238e36efe13218afcda31275ceec8b31b5d0",
+  "cli_output_sha256": "51b05a55ca84e07c602926276f8ed68de05be9a99776b806fcf57d4fa9059f31",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Attempt 3 closes five of the six residual attempt-2 findings with executed, source-bound evidence. baseline_ledger() now hash-binds contracts/manifest.json's gitTreeLedgerSha256 and the 0.34.0 commit before deriving the three-file runtime delta, with a tamper test; the SDK freeze compares the full cached+untracked path set against 578f2e6; a locked-Zod range test was added; committed-history hygiene was registered; and the response-tolerance divergence is now explicitly slated for CHANGELOG/STABILITY. Provenance remains strong: commit object -> complete 699-file tree -> each of seven pinned blobs, inventory equality, symlink/traversal rejection, pinned manifest digest. Checks receipt c2172eb4 is genuine (8 commands, exit 0, 9/51/26 tests run) and bound to source 95f6cc26. Residual defects are cosmetic or defense-in-depth: one uncorrected prose typo, a freeze assertion gated on fingerprint-excluded phase-status data, and vacuous whitespace coverage of the untracked deliverables.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/test_typescript035_governance.py",
+        "line": 136,
+        "description": "The planning-phase SDK freeze - the only guard that keeps phase 26 implementation-free - is gated on `self.status['active_phase'] == 26`, read from docs/phase-status.json, which review_phase.fingerprint deliberately excludes (tools/review_phase.py:16 EXCLUDED_FILES). A full `check_phase.py --phase 26` run does require the active phase (tools/check_phase.py:845), but `--verification-only` does not and still writes docs/checks/phase-26.json with no `scope` key, so a report produced while active_phase named another command-defined phase (e.g. 23) would skip the path-set and byte comparisons yet still satisfy check_evidence (tools/review_phase.py:210-216) after the status file is set back to 26. No executed check binds active_phase to the reviewed fingerprint.",
+        "required_fix": "Derive the freeze condition from immutable data rather than phase-status: assert the 578f2e6 crates/scm-sdk path set and bytes unconditionally in this module (it is only registered in commands_for(26)), or add an explicit `self.assertEqual(self.status['active_phase'], 26)` plus a scope marker on --verification-only reports so they cannot qualify a phase review."
+      },
+      {
+        "severity": "low",
+        "path": "docs/typescript-035-parity-plan.md",
+        "line": 65,
+        "description": "The prose-spacing fix claimed at docs/phase-status.json:6823 ('corrected prose spacing') is incomplete: line 65 still reads 'chunks >=42 (target45)'. Every other instance flagged by attempt 2 (plan:161-162,169,199; docs/PHASES.md:278,280; the disposition strings) is corrected, so this is the single residual occurrence in the chunk's primary deliverable, and the disposition slightly overstates completion.",
+        "required_fix": "Insert the missing space ('target 45') at docs/typescript-035-parity-plan.md:65."
+      },
+      {
+        "severity": "low",
+        "path": "tools/check_phase.py",
+        "line": 316,
+        "description": "The newly added committed-history hygiene command is currently vacuous: HEAD is 578f2e6 (docs/checks/phase-26-private-material.json:5), so `git diff --check 578f2e6..HEAD` compares a commit with itself (recorded empty output, 0.002s). `git diff --check` and `--cached --check` cover only the six modified tracked files, so none of this chunk's new artifacts - docs/typescript-035-parity-plan.md, tools/verify_typescript035_source.py, tools/test_typescript035_governance.py, contracts/sources/typescript-0.35.0/** - are whitespace-checked, all being untracked in the reviewed state. The plan prose is now accurately narrowed (plan:215), so this is residual coverage rather than a false claim, and no executed check asserts the new command's presence in commands_for(26).",
+        "required_fix": "Add an `--others --exclude-standard` whitespace pass over new untracked artifacts (or re-run hygiene after committing them) and assert the presence of the baseline..HEAD command in tools/test_typescript035_governance.py, following the MANAGEMENT_BASELINE assertion at tools/test_management_phases.py:427."
+      },
+      {
+        "severity": "low",
+        "path": "tools/review_phase.py",
+        "line": 466,
+        "description": "The plan promises that 'absence or mismatch of that guard blocks advancement' for the phase-28 0.2.4 delivery verification (docs/typescript-035-parity-plan.md:178-180), but nothing fails closed today: the delivery branch is restricted to phases 20/24 (:466-468), and phase 28 would complete through the ordinary advance path once its command set is registered. By contrast, commands_for(27)/(28) do fail closed (tools/check_phase.py:755), showing the pattern is available.",
+        "required_fix": "Register a placeholder fail-closed branch now - e.g. raise in the advance path when args.phase == 28 until a version-specific 0.2.4 release_delivery.verify call exists - and assert it in tools/test_typescript035_governance.py."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 6745,
+        "description": "Switching active_phase to 26 while phase 24 stays 'in_progress' and 25 'pending' leaves no tool-supported return path: review_phase.main refuses non-active phases (:493), and next_phase returns None for phase 28 via final_in_sequence (:417-420), so completing this sequence sets active_phase to null with two incomplete phases. The non-reset intent is documented (docs/PHASES.md:272-274), but neither the plan nor PHASES.md states how 24/25 are later reactivated, and no check binds the active_phase switch to the recorded authorization string at :6782.",
+        "required_fix": "Document the resumption procedure (explicit maintainer re-selection of active_phase 24 after phase 28, with its existing fail-closed requirements unchanged) in docs/typescript-035-parity-plan.md and docs/PHASES.md, and assert in tools/test_typescript035_governance.py that active_phase is one of the authorized values while phases 24/25 remain incomplete."
+      }
+    ],
+    "evidence": [
+      "Prior medium finding closed with code and a test: tools/verify_typescript035_source.py:13-21 now reads contracts/manifest.json, requires sha256(contracts/sources/typescript/git-tree.json) == baseline.gitTreeLedgerSha256 (the same value verify-contracts.py:305 enforces) and ledger['commit'] == 4a80dbdb3dc14365e1c25d838ac0bd139485d48c before verify() derives the src/ delta at :56-61; tools/test_typescript035_governance.py:20-31 copies both files, appends a byte and asserts ValueError matching 'baseline tree ledger'.",
+      "Prior low findings closed: tools/test_typescript035_governance.py:137-141 compares `git ls-files --cached --others --exclude-standard -- crates/scm-sdk` as a set against `git ls-tree -r --name-only 578f2e6 -- crates/scm-sdk` (so committed additions now fail, not only untracked ones) plus a zero-untracked assertion and per-file byte equality at :142-144; tools/verify_typescript035_source.py:24-27 binds the pinned package.json range '^3.24.0' to tools/package-lock.json's node_modules/zod version with a [3.24.0,4.0.0) window, exercised for 3.23.0 and 4.0.0 at test:32-38; docs/typescript-035-parity-plan.md:206-210 adds the explicit two-direction CHANGELOG/STABILITY requirement; plan:213-214 explains why the global active_followup_plan stays historical.",
+      "Provenance is Git-object complete, not digest-only: tools/verify_typescript035_source.py:39-54 loads tools/verify-contracts.py and requires helper.git_hash('commit', commit.txt) == 780c985cac90144ea1884fe6cffa58b5deec9ac4 and commit.txt's first line == 'tree ' + helper.git_tree_hash(ledger['files']); contracts/sources/typescript-0.35.0/git-tree.json has exactly 699 gitBlobSha1 entries (plan:184) and commit.txt is the real merge object ('Merge directional security profiles and SDK 0.35.0 release', two parents); :62-78 recomputes each pinned blob SHA-1, bytes and sha256, cross-checks the ledger entry, rejects absolute/'..' paths and non-regular files, and requires exact inventory equality against the 10 files present.",
+      "The passing receipt is real and source-bound: docs/reviews/phase-26-chunk-plan-and-provenance-attempt-03.checks.json records phase 26, passed true, source_sha256 95f6cc262d01bb3f35fc3cc3b7a21a23608e876250a66dd81c818c9b6b07e7f5 (equal to the reviewed source), no 'scope' key, a command list byte-equal to commands_for(26) at tools/check_phase.py:313-322, all eight exit_code 0 and timeout false, with stderr showing 9 governance, 51 review-phase and 26 management-phase tests actually executed; tools/check_phase.py:83-91 would have failed an empty discovery. docs/checks/phase-26.json is the same report.",
+      "Private-material evidence is a fresh scan of this exact source, not a reused receipt: docs/checks/phase-26-private-material.json:3-16 records checkedAt 2026-10-21T23:21:37Z (two seconds before the check run at 23:21:39), sourceSha256 95f6cc26..., 2,218 git-visible files, 0 credential/secret matches, 0 published-crate registration matches and existingTenantIdentifier newOrChangedFilesCount 0 over three unchanged HEAD occurrences, so the newly pinned upstream fixture introduces no local tenant identifier; the receipt honestly labels --check as not re-executing private matching (:33), matching the recorded stdout privateScanReexecuted false.",
+      "The pinned source substantiates the plan's accounting exactly: contracts/sources/typescript-0.35.0/src/models/index.ts:132-135 exports ContentTypeConfigurationSchema, ContentTypeConfiguration, ContentTypeConfigurationsSchema and ContentTypeConfigurations (the four new exports, plan:95); mgmt-security-profile.ts:1 imports only zod; :239-269 defines both new types over existing DataProtection/PolicyAppProtection/ModelProtectionItem/AgentProtectionItem with passthrough and the four optional direction keys; :272-277 extends ModelConfigurationSchema with 'enable-full-conversation-inspection'; :288-289 adds 'content-type-mode' and 'content-type-configurations'; :334 and :368 add dlp_tenant_id to SecurityProfile and CreateSecurityProfileRequest (five field occurrences, plan:96-97); :392 is the single .default([]); the six schemas named at plan:101-104 are precisely the changed-or-dependent roots.",
+      "Fail-closed governance verified as data plus exact checks: tools/review_phase.py:386-404 exact-matches depends_on {26:[23],27:[26],28:[27]} against docs/phase-status.json:6783-6785/6864-6866/6925-6927, binds the immutable 0.2.3 receipt (version, sourceCommit 14a67541..., archiveSha256 80a58b7b...) and recurses into phase 23's own sequential gate and verify_record; tools/test_typescript035_governance.py:92-118 asserts acceptance for 26, 'Earlier phases' for 25, 'Maintenance predecessor' for 27, failure when verify_record is false, failure when depends_on is emptied, one unpatched real-evidence call, and three publication-tamper cases; commands_for(27)/(28) raise at tools/check_phase.py:755.",
+      "Scoped ledger ownership is enforced over the real tree: tools/check_phase.py:27-31 declares tools/verify_typescript035_source.py --check as owner of all four JSON files under contracts/sources/typescript-0.35.0, and tools/test_management_phases.py:178-184 runs verify_scoped_ledger_owners over the active phase's scope with commands_for(26) (rglob-based, so any new unowned contracts JSON under the directory scope fails closed), while excluding the 0.35.0 paths from the historical phase 23/24 owner sets rather than rebinding them.",
+      "Historical records are preserved byte-for-byte: tools/test_typescript035_governance.py:146-148 compares every non-26/27/28 phase row with `git show 578f2e6:docs/phase-status.json`, and :130-144 byte-compares the nine frozen contract/fixture inputs (contracts/typescript.json, operations.json, export-classification.json, manifest.json, native-union-variants.json, native-fixtures/schemas.json, sources/typescript/git-tree.json and commit.txt, crates/scm-sdk/src/fixtures/model-regressions.json); docs/phase-status.json:6191-6193 keeps phase 24 in_progress with empty reviews and :6704-6707 keeps phase 25 pending, with next_phase(25) asserted None at test:158.",
+      "Attempt sequencing is genuinely bound: docs/reviews/phase-26-chunk-plan-and-provenance-attempt-03.prompt.md:1,14,16-18,31,38 carries 'Review scope: chunk.', the correct plan, source 95f6cc26..., the checks digest c2172eb4... and the declared nine-path scope matching docs/phase-status.json:6753-6763, exactly as verify_record (tools/review_phase.py:290-310) and verify_attempt_sequence (:125-130) require; attempt-01 (rejected, 42) and attempt-02 (accepted, 44) remain preserved with prompts and CLI envelopes."
+    ],
+    "limitations": [
+      "Read-only Read/Glob/Grep with no shell: I recomputed no SHA-256, SHA-1, Git blob or tree hash. The reviewed fingerprint 95f6cc26..., checks digest c2172eb4..., MANIFEST_SHA256 89831a8c... and per-file digests were assessed for internal consistency and for what the code does with them. I could not re-run the eight phase-26 commands; I assessed the recorded receipt plus the code those commands execute.",
+      "I could not diff against 578f2e6 myself, so the attempt-2 to attempt-3 delta was reconstructed from current file contents, the prior review's cited line ranges and the recorded dispositions; docs/PHASES.md and docs/implementation-plan.md remain unbound by any executed byte-freeze (only the source fingerprint covers them).",
+      "Upstream commit 780c985cac90144ea1884fe6cffa58b5deec9ac4 cannot be authenticated offline. The pin proves internal Git-object consistency (commit -> complete 699-file tree -> each pinned blob) at parity with the enforced 0.34.0 standard, not that this commit is the published upstream release. No .local/typescript checkout exists and none is required.",
+      "Phase 27/28 acceptance was not assessed and is not a deliverable here: the additive overlay, contracts/typescript-035-parity.json and its oracle, the 12-node ancestor closure count, the directional corpus, regeneration determinism, and the 0.2.4 readiness/delivery guards are declared later obligations, and their chunk scope_evidence (docs/phase-status.json:6835-6860, 6896-6921) is registration rather than completion. No Rust, generator or oracle execution exists yet by design.",
+      "Milestone 3's pre-implementation plan reviews live outside the gated review path (docs/reviews/typescript-035/plan-attempt-1..3.json); only attempt 3 has a CLI envelope, and no tool verifies these records. They are excluded from the fingerprint (docs/reviews/) and cannot be mistaken for gate evidence by accepted_chunks, but they are not independently verifiable the way the phase-26 chunk records are.",
+      "I did not read any credential or tenant-registration file, the external registration config, or anything outside this repository. I grepped only key names in contracts/sources/typescript-0.35.0/test/models/fixtures/directional-security-profile.json (csp_id, dlp_tenant_id, profile_id, tsg_id), relying on the byte/blob pin plus the allowlist at tools/verify_typescript035_source.py:86-89 for its identifier inventory."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 45
+  },
+  "rubric": "five-category-v1",
+  "chunk": "plan-and-provenance",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "docs/typescript-035-parity-plan.md",
+    "docs/PHASES.md",
+    "docs/implementation-plan.md",
+    "tools/verify_typescript035_source.py",
+    "tools/check_phase.py",
+    "tools/review_phase.py",
+    "tools/test_typescript035_governance.py",
+    "tools/test_management_phases.py",
+    "contracts/sources/typescript-0.35.0"
+  ]
+}

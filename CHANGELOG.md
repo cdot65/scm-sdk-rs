@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.2.4 — TypeScript 0.35.0 directional profile models
+
+Publication and remote delivery require
+verified 0.2.4 registry, annotated-tag, and CI receipts.
+Publication is established only by the verified
+`docs/checks/release-registry-0.2.4.json` receipt; the delivery guard also requires
+the annotated tag and successful CI evidence.
+
+- Add `ContentTypeConfiguration` and `ContentTypeConfigurations`, their builders,
+  and named validators `ContentTypeConfigurationSchema` and
+  `ContentTypeConfigurationsSchema`: four added TypeScript exports. Independently
+  optional prompt, response, tool-call and tool-response settings reuse existing
+  protection types and preserve unknown direction keys.
+- Add exactly five field occurrences: `AiSecurityProfile.content_type_mode`
+  (`content-type-mode`), `AiSecurityProfile.content_type_configurations`
+  (`content-type-configurations`),
+  `ModelConfiguration.enable_full_conversation_inspection`
+  (`enable-full-conversation-inspection`), and `dlp_tenant_id` on both
+  `SecurityProfile` and `CreateSecurityProfileRequest`. All use `Optional<T>`;
+  omitted settings stay absent and explicit false stays false.
+- Create and update validate the current versioned request root before
+  authentication or I/O. Newly modeled null/wrong-type values that previously
+  passed as unknown extensions now fail request validation, matching upstream
+  TypeScript 0.35.0. Existing standalone schema names remain frozen; select
+  `typescript:0.35.0:<SchemaName>` for current validation of the six updated roots.
+- Upstream 0.35.0 response schemas also reject invalid newly known values. Rust
+  deliberately keeps its frozen tolerant profile response validation in both
+  `Mode::Response` and `Mode::ResponseWithoutDefaults`, preserving unsupported
+  values and explicit null in extensions. Representable values populate typed
+  projections; explicit typed values take precedence over colliding extensions.
+  The existing list default remains `[]`; disabling response defaults preserves
+  omission without changing acceptance.
+- Retain all existing endpoints, operation names, shared/legacy protections,
+  capabilities, Rust 1.89, features and production dependency declarations. The 3,820
+  capability / 448 method baseline remains scoped to TypeScript 0.34.0; this delta
+  has its own additive ledger. The twelve vendor-unsupported Red Team query
+  bindings retain their documented status.
+- Refresh both the root and native-probe lockfiles to `rustls-webpki` 0.103.16 and `webpki-root-certs`
+  1.0.10 for RUSTSEC-2026-0382 and RUSTSEC-2026-0383. Downstream applications
+  retain their own lockfiles: update these transitive packages and audit the
+  resolved graph; installing this crate does not replace an application lockfile.
+- See the [directional profile guide](docs/DIRECTIONAL_PROFILES.md) and
+  [offline example](crates/scm-sdk/examples/directional_profiles.rs). Directional
+  live acceptance remains unverified. This entry does not establish a new
+  published release or remote delivery.
+
 ## 0.2.3 — AIRS management 0.86.0 compatibility
 
 Publication is established only by the verified

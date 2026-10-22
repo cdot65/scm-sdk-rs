@@ -19,6 +19,57 @@ spec.loader.exec_module(policy)
 
 
 class DependencyPolicyTests(unittest.TestCase):
+    def test_probe_audit_is_independent_and_fails_closed(self):
+        clean = {'vulnerabilities': {'count': 0}, 'warnings': {}}
+        scenarios = ('clean', 'advisory', 'warning', 'exit', 'malformed', 'missing-warnings', 'changed')
+        for scenario in scenarios:
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as temporary:
+                root = pathlib.Path(temporary)
+                probe = root / 'contracts/native-probes/Cargo.lock'
+                probe.parent.mkdir(parents=True)
+                (root / 'Cargo.lock').write_text('root lock')
+                probe.write_text('probe lock')
+                commands = []
+
+                def run(command):
+                    commands.append(command)
+                    is_probe = str(probe) in command
+                    document = copy.deepcopy(clean)
+                    code = 0
+                    if is_probe:
+                        if scenario == 'advisory':
+                            document['vulnerabilities']['count'] = 1
+                        elif scenario == 'warning':
+                            document['warnings'] = {'unmaintained': [{'id': 'SYNTHETIC'}]}
+                        elif scenario == 'exit':
+                            code = 1
+                        elif scenario == 'missing-warnings':
+                            del document['warnings']
+                        elif scenario == 'changed':
+                            probe.write_text('changed during audit')
+                    stdout = 'not JSON' if is_probe and scenario == 'malformed' else json.dumps(document)
+                    return subprocess.CompletedProcess(command, code, stdout, '')
+
+                with mock.patch.object(policy, 'ROOT', root):
+                    if scenario == 'malformed':
+                        with self.assertRaisesRegex(ValueError, 'machine-readable'):
+                            policy.audit_lockfiles('cargo-audit', '/pinned-db', run)
+                    else:
+                        results = policy.audit_lockfiles('cargo-audit', '/pinned-db', run)
+                        self.assertTrue(results[0]['passed'])
+                        self.assertEqual(all(row['passed'] for row in results), scenario == 'clean')
+                        self.assertEqual(results[1]['path'], 'contracts/native-probes/Cargo.lock')
+                        self.assertEqual(results[1]['lockfileSha256'], policy.hashlib.sha256(b'probe lock').hexdigest())
+                        self.assertEqual(results[1]['command'], commands[1])
+                self.assertEqual(len(commands), 2)
+                for command in commands:
+                    self.assertEqual(command[command.index('--db') + 1], '/pinned-db')
+                    self.assertIn('--no-fetch', command)
+                    self.assertEqual(command[-2:], ['--deny', 'warnings'])
+        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(policy, 'ROOT', pathlib.Path(temporary)):
+            with self.assertRaises(OSError):
+                policy.audit_lockfiles('cargo-audit', '/pinned-db', mock.Mock())
+
     def test_dependency_diagnostics_redact_url_credentials_and_authorization(self):
         message = ('https://synthetic-user:synthetic-password@example.test/repo?access_token=synthetic-token\n'
                    'Authorization: Bearer synthetic-authorization\n'

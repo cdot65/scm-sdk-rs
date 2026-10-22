@@ -70,6 +70,9 @@ def commands(cargo, toolchain, feature_set, host):
         # cargo test --examples compiles examples but does not execute their main.
         checks.append([*base, "run", "--package", "scm-sdk", "--example",
                        "red_team_management", "--locked", "--target", host, *flags])
+    if feature_set == "management":
+        checks.append([*base, "run", "--package", "scm-sdk", "--example",
+                       "directional_profiles", "--locked", "--target", host, *flags])
     return checks
 
 

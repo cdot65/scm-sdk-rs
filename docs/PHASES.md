@@ -263,3 +263,47 @@ readiness review cannot complete the phase. The delivery chunk and final phase
 review additionally require verified registry bytes, remote annotated tag and
 terminal successful CI on the matching source. Ordinary CI verifies sanitized
 service receipts without loading credentials or making tenant requests.
+
+
+## Independent TypeScript 0.35.0 maintenance follow-up (phases 26–28)
+
+The user's explicit parity-fix instruction prioritizes this isolated maintenance
+branch. Phase 26 gates its plan/provenance, phase 27 its model/wire qualification,
+and phase 28 its release and delivery. It neither completes nor resets phases
+24–25. Their historical fingerprints, failed attempts and fail-closed acceptance
+requirements remain unchanged. See docs/typescript-035-parity-plan.md for exact
+artifact boundaries, command sets and named chunks in phase-status.json. Every
+chunk/phase retains the five-category rubric and five-attempt budget.
+
+Phase 26 acceptance requires origin-verified pinned inputs, frozen baseline/SDK
+bytes, hygiene and governance regressions, accepted plan-and-provenance chunk,
+and a complete-phase Claude review of at least 46/50 (every category at least 8).
+The per-phase plan and milestone entries are explicit in phase-status.json.
+
+Phase 27 acceptance requires the cumulative model/wire checks and
+`red_team_management.py --check --current-source-compatibility`, including a fresh
+current-source bounded read-only live receipt. That receipt does not qualify
+directional write workflows. Clean extracted package consumers on both supported
+compilers are deliberately deferred to phase 28; local model/wire results do not
+substitute for that release evidence. Both chunk reviews and the complete-phase
+review must meet the current rubric before advancing.
+
+Phase 28 acceptance requires both named chunks: `release-readiness` and
+`remote-delivery`. The readiness chunk retains the cumulative compatibility gate,
+fresh source-bound service evidence with its recorded limitations, and clean
+extracted packages on Rust 1.89.0 and 1.99.0. Each package must execute the
+directional-profile example and external consumer under `--require-directional`.
+The version-specific candidate and prepublication guards must verify phase 28 /
+0.2.4 against the current source, and the release-readiness chunk and full
+release-readiness Claude review must pass before publication. Readiness cannot
+complete the phase. The remote-delivery chunk and final complete-phase review
+additionally require verified 0.2.4 registry archive bytes, the remote annotated
+`v0.2.4` tag, and all 49 terminal successful CI contexts on the matching release
+source. Both chunks and the final phase review must meet the current rubric;
+local checks or a published artifact alone do not establish final delivery.
+
+After phase 28, explicitly reselect phase 24 to resume its existing delivery gate,
+then phase 25, preserving their original review attempts and acceptance rules.
+This maintenance sequence does not implicitly reactivate or complete them.
+
+Phases 26–28 also retain the current rubric’s fifth-attempt exception: a total strictly above 40, every category at least 8, four prior substantive reviews, and recorded remaining deficiencies. Passing checks and required delivery evidence are still mandatory.

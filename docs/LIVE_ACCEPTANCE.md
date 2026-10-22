@@ -10,14 +10,17 @@ Each unqualified method has a reason. The [current receipt reference](../contrac
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
-## Current 0.2.3 read-only qualification
+## Current read-only qualification
 
-The current run is [phase 24 attempt 02](checks/phase-24-live-attempt-02.json).
+The current maintenance run is [phase 28 attempt 01](checks/phase-28-live-attempt-01.json).
+It qualifies the 0.2.4 release-candidate runtime, not a published release.
 It verified **1 exact native method**, OAuth token exchange. All four single-page
 Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
 returned **HTTP 403 permission prerequisites**. These responses establish neither
 filter acceptance nor effectiveness. The run made four service requests and one
 token exchange, performed no mutations, and recorded `cleanupState: not_needed`.
+
+Directional profile create/update remain live-unverified.
 
 The selected endpoint profile was
 `https://api.sase.paloaltonetworks.com/ai-red-teaming/mgmt`. The SDK default
@@ -26,8 +29,8 @@ by this receipt and remains unchanged. Vertex AI, N8N, client-session, audio and
 realtime provider workflows remain live-unqualified. Offline fixture and consumer
 checks establish implementation compatibility separately from these service results.
 
-Attempt 01 recorded the same bounded probe outcomes. Attempt 02 names the endpoint
-profile explicitly and binds the updated qualification application. Neither attempt
+Phase 27 attempts 01 through 05 recorded the same bounded probe outcomes. Phase 28
+attempt 01 binds the 0.2.4 version and patched TLS dependencies. None of these attempts
 promotes the 17 historical successes to the current runtime.
 
 ## Historical qualification

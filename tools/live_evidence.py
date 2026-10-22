@@ -287,7 +287,7 @@ def load(root=ROOT, required=False):
     require_keys(reference, {"schemaVersion", "baselineCommit", "report", "reportSha256"})
     if type(reference["schemaVersion"]) is not int or reference["schemaVersion"] != 1 or reference["baselineCommit"] != BASELINE:
         raise ValueError("Qualification baseline mismatch")
-    if not re.fullmatch(r"docs/checks/phase-(?:08|24)-live-attempt-\d{2}\.json", reference["report"]):
+    if not re.fullmatch(r"docs/checks/phase-(?:08|24|27|28)-live-attempt-\d{2}\.json", reference["report"]):
         raise ValueError("Unexpected controlled report path")
     path = regular(root, reference["report"])
     if digest(path) != reference["reportSha256"]:
@@ -305,11 +305,14 @@ def load(root=ROOT, required=False):
     if executed_at.tzinfo is None or executed_at.utcoffset() != datetime.timedelta(0):
         raise ValueError("Receipt execution time must be explicit UTC")
     read_only = envelope["report"].get("schemaVersion") == 2
-    if reference["report"].startswith("docs/checks/phase-24-") != read_only:
+    if (not reference["report"].startswith("docs/checks/phase-08-")) != read_only:
         raise ValueError("Controlled report phase and qualification mode differ")
     if envelope["commandTemplate"] != command_template(read_only):
         raise ValueError("Unreviewed or credential-bearing invocation metadata")
     report = validate_report(envelope["report"], expected_version=crate_version(root))
+    if (reference['report'].startswith(('docs/checks/phase-27-', 'docs/checks/phase-28-'))
+            and report['limitations'] != READ_ONLY_LIMITATIONS):
+        raise ValueError('Current-source read-only receipt must retain endpoint-profile limitations')
     frozen_ids = {v["id"] for v in json.loads((root / "contracts/operations.json").read_text())["operations"]}
     if set(PROBE_BINDINGS.values()) - frozen_ids:
         raise ValueError("Controlled probe binding is absent from the frozen inventory")
@@ -318,11 +321,22 @@ def load(root=ROOT, required=False):
     return annotations, envelope
 
 
+def selected_phase(args):
+    """Select receipt ownership without expanding the probes' acceptance scope."""
+    phase = getattr(args, "phase", None)
+    read_only = getattr(args, "read_only", False)
+    if phase is not None and (type(phase) is not int or phase not in (24, 27, 28)
+                              or not read_only or args.mutations):
+        raise ValueError("--phase requires --read-only and phase 24, 27 or 28")
+    return str(phase or 24) if read_only else "08"
+
+
 def run(args):
     """Only this explicitly selected mode performs service requests."""
     read_only = getattr(args, "read_only", False)
     if not args.config or not args.expect_tsg or args.mutations == read_only or not 1 <= args.attempt <= 99:
         raise ValueError("Select an external config, expected nonproduction scope, exactly one of --mutations/--read-only and attempt 1–99")
+    phase = selected_phase(args)
     cargo = pathlib.Path.home() / ".cargo/bin/cargo"
     rustc = cargo.with_name("rustc")
     toolchain = "1.99.0"
@@ -330,7 +344,6 @@ def run(args):
     host = next(line[6:] for line in native.splitlines() if line.startswith("host: "))
     if host != "x86_64-unknown-linux-musl":
         raise ValueError("This controlled receipt currently qualifies the recorded musl host only")
-    phase = "24" if read_only else "08"
     report_path = ROOT / f"docs/checks/phase-{phase}-live-attempt-{args.attempt:02d}.json"
     if report_path.exists():
         raise ValueError("Preserve previous attempts and select a new attempt number")
@@ -362,13 +375,16 @@ def run(args):
     if execution.returncode or not raw_path.is_file():
         raise ValueError(f"Native qualification interrupted; private recovery retained at {private}")
     report = validate_report(json.loads(raw_path.read_text()), expected_version=crate_version())
+    if (report["schemaVersion"] == 2) != read_only:
+        raise ValueError("Execution report and selected qualification mode differ")
     envelope = {"schemaVersion": 1, "baselineCommit": BASELINE,
         "executedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "runtimeInputsSha256": before, "binarySha256": digest(binary), "toolchain": toolchain,
         "hostTarget": host, "sourceUnchanged": before == runtime_fingerprint(), "exitCode": execution.returncode,
         "commandTemplate": command_template(read_only),
         "report": report}
-    report_path.write_text(json.dumps(envelope, indent=2) + "\n")
+    with report_path.open("x") as stream:
+        stream.write(json.dumps(envelope, indent=2) + "\n")
     (ROOT / INPUT).write_text(json.dumps({"schemaVersion": 1, "baselineCommit": BASELINE,
         "report": report_path.relative_to(ROOT).as_posix(), "reportSha256": digest(report_path)}, indent=2) + "\n")
     annotations, _ = load(required=True)
@@ -386,8 +402,12 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--mutations", action="store_true")
     mode.add_argument("--read-only", action="store_true")
+    parser.add_argument("--phase", type=int, choices=(24, 27, 28),
+                        help="Read-only receipt phase; defaults to 24 and does not qualify directional workflows")
     parser.add_argument("--attempt", type=int, default=1)
     args = parser.parse_args()
+    if args.phase is not None and (not args.run or not args.read_only):
+        parser.error("--phase requires --run --read-only")
     if args.run and args.check:
         parser.error("Choose execution or credential-free verification")
     if args.run:

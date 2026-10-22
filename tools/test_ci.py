@@ -512,6 +512,10 @@ class CiContractTests(unittest.TestCase):
                     expected = [['/explicit/cargo', '+' + compiler, 'run', '--package', 'scm-sdk',
                                  '--example', 'red_team_management', '--locked', '--target',
                                  'native-host', *module.FEATURES[feature]]]
+                if feature == 'management':
+                    expected = [['/explicit/cargo', '+' + compiler, 'run', '--package', 'scm-sdk',
+                                 '--example', 'directional_profiles', '--locked', '--target',
+                                 'native-host', *module.FEATURES[feature]]]
                 self.assertEqual(runs, expected)
 
     def test_node_matches_owned_pin_and_phase_gate_verifies_only(self):
@@ -539,9 +543,9 @@ class CiContractTests(unittest.TestCase):
         for script in ('scripts/check-rust.py','scripts/check-native-exports.py','scripts/check-package.py'):
             self.assertTrue(any(script in command for command in full))
             self.assertFalse(any(script in command for command in fast))
-        self.assertIn('--phase 24 --verification-only --contracts-only',WORKFLOW)
-        self.assertIn('docs/checks/phase-24-contracts.json',WORKFLOW)
-        self.assertNotIn('docs/checks/phase-24.json',WORKFLOW)
+        self.assertIn('--phase 28 --verification-only --contracts-only',WORKFLOW)
+        self.assertIn('docs/checks/phase-28-contracts.json',WORKFLOW)
+        self.assertNotIn('docs/checks/phase-28.json',WORKFLOW)
         current, selected = commands_for(17), ci_commands_for(17)
         self.assertTrue(all(c in current for c in selected))
         self.assertIn(['node', 'tools/portkey-access.mjs', '--check'], selected)
@@ -557,7 +561,7 @@ class CiContractTests(unittest.TestCase):
         self.assertTrue(any('scripts/check-native-exports.py' in command for command in current_g25))
         invalid=subprocess.run([sys.executable,'tools/check_phase.py','--phase','12','--contracts-only'],cwd=ROOT,capture_output=True,text=True)
         self.assertEqual(invalid.returncode,2)
-        self.assertIn('requires --phase 12 --verification-only',invalid.stderr)
+        self.assertIn('requires --verification-only and a supported phase:', invalid.stderr)
 
     def test_active_management_ci_preserves_exact_vendor_bytes_and_scoped_receipts(self):
         from check_phase import ci_commands_for

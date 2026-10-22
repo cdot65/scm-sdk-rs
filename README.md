@@ -17,7 +17,9 @@ at least 46/50, with each category at least 8/10. The five-attempt exception and
 recorded deficiencies follow the maintainer’s review policy. [Phase status](docs/phase-status.json) records the
 accepted reviews and exact source evidence.
 
-Crate version: **0.2.3**, the AIRS management 0.86.0 update, retaining the
+Crate version: **0.2.4**, the TypeScript 0.35.0 directional-profile update.
+Publication and delivery are established only by verified version-specific
+registry, annotated-tag and CI receipts. It retains AIRS management 0.86.0 and the
 [G25 response-compatibility correction](docs/G25_COMPATIBILITY.md).
 It retains five experimental
 [Portkey access-policy APIs](docs/ACCESS_POLICIES.md) and retains full
@@ -25,21 +27,29 @@ It retains five experimental
 11 new calls, with a separately pinned vendor ledger. See the
 [migration notes](CHANGELOG.md) before adopting the stricter query contract.
 
-The published maintenance release is [0.1.1](https://crates.io/crates/scm-sdk/0.1.1),
+Directional profiles add `ContentTypeConfiguration` and
+`ContentTypeConfigurations`; see the [directional-profile guide](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.4/docs/DIRECTIONAL_PROFILES.md).
+Create/update requests now reject invalid newly modeled settings before I/O;
+profile responses retain tolerant parsing and preserve unknown or null values.
+
+A verified earlier release is [0.2.3](https://crates.io/crates/scm-sdk/0.2.3),
+with a verified [registry receipt](docs/checks/release-registry-0.2.3.json).
+
+The earlier maintenance release is [0.1.1](https://crates.io/crates/scm-sdk/0.1.1),
 with [published API docs](https://docs.rs/scm-sdk/0.1.1/scm_sdk/) and a verified
 [publication receipt](docs/checks/release-registry-0.1.1.json). For its G10 behavior,
 see [response defaults](docs/RESPONSE_DEFAULTS.md) and the
 [offline example](crates/scm-sdk/examples/response_defaults.rs). The
 [initial 0.1.0 receipt](docs/checks/release-registry-0.1.0.json) remains historical.
-Install the vendor update as [scm-sdk 0.2.0](https://crates.io/crates/scm-sdk/0.2.0).
+The earlier vendor update [scm-sdk 0.2.0](https://crates.io/crates/scm-sdk/0.2.0) remains historical.
 Its [registry receipt](docs/checks/release-registry-0.2.0.json) records the verified
 archive and exact release source; its immutable tag is `v0.2.0`.
 See [CI](docs/CI.md) and the [release procedure](docs/RELEASE.md).
 The [qualification summary](contracts/qualification.json) consolidates the
 source-bound implementation, checks, live classifications and delivery limitations.
 
-The 0.2.3 `docs/checks/release-registry-0.2.3.json` and
-`docs/checks/release-tag-v0.2.3.json` establish publication only when
+The 0.2.4 `docs/checks/release-registry-0.2.4.json` and
+`docs/checks/release-tag-v0.2.4.json` establish publication only when
 present and verified; missing receipts mean that publication is not yet verified.
 The [published 0.2.2 receipt](docs/checks/release-registry-0.2.2.json) remains historical.
 The access-policy client requires explicit compatible control-plane key credentials
@@ -47,12 +57,13 @@ and remains live-unverified. Existing 0.2.0 APIs and G10 behavior are retained.
 
 ## Start here
 
-After verifying the 0.2.3 registry receipt above, pin that release using the shorter
-dependency alias. Until publication is verified, retain your existing released pin:
+After the 0.2.4 registry receipt above verifies, pin that release using the shorter
+dependency alias. If publication is unverified, retain your existing released pin;
+the earlier 0.2.3 registry receipt remains available above:
 
 ```toml
 [dependencies]
-scm = { package = "scm-sdk", version = "=0.2.3" }
+scm = { package = "scm-sdk", version = "=0.2.4" }
 ```
 
 The alias exposes `scm::airs::scan`, `scm::airs::management`, and the other product

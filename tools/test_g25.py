@@ -1,5 +1,5 @@
 """Independent inventory guards for the G25 compatibility work."""
-import json, pathlib, unittest
+import hashlib, json, pathlib, unittest
 import g25_audit
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 class G25AuditTests(unittest.TestCase):
@@ -11,6 +11,14 @@ class G25AuditTests(unittest.TestCase):
         self.assertEqual(a['summary']['formatAffectedOperations'],28)
         self.assertEqual(len({r['operationId'] for r in a['operations']}),47)
         self.assertTrue(all(r['baselineExpression'] for r in a['operations'] if r['baselineOperation']))
+    def test_frozen_format_inventory_excludes_later_overlays(self):
+        rows = g25_audit.audit()['allFrozenRootsWithFormats']
+        self.assertEqual(len(rows), 190)
+        self.assertTrue(all(not row['root'].startswith(('vendor:', 'typescript:')) for row in rows))
+        # Canonical complete row digest from accepted source 578f2e6: names and
+        # reachable format nodes must both retain the original denominator.
+        digest = hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        self.assertEqual(digest, '7bb567277b2ff539be46d208cc67a3d44440aca7da57cdab398b3e4762efc4b8')
     def test_target_error_log_contract_is_explicit(self):
         a=g25_audit.audit();r=next(r for r in a['operations'] if r['nativeMethod']=='get_target_profile_error_logs')
         self.assertEqual(r['baselineExpression'],'ErrorLogListResponseSchema')

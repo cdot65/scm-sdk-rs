@@ -1721,3 +1721,324 @@ async fn oversized_dashboard_queries_reject_before_copy_authentication_and_netwo
     assert_eq!(wire.requests.load(Ordering::SeqCst), 0);
     wire.done();
 }
+
+fn directional_profile_request() -> Value {
+    json!({"profile_name":"directional-fixture", "dlp_tenant_id":"100", "policy":{
+        "ai-security-profiles":[{"content-type-mode":"per_content_type", "content-type-configurations":{
+            "prompt":{"data-protection":{"data-leak-detection":{"action":"block","member":null}}},
+            "response":{"model-protection":[{"name":"toxicity","action":"alert"}]},
+            "tool-call":{"agent-protection":[{"name":"tool","action":"block"}]},
+            "tool-response":{}, "future-direction":{"extension":true}},
+            "model-configuration":{"enable-full-conversation-inspection":false,"mask-data-in-storage":true}}]}})
+}
+
+#[tokio::test]
+async fn directional_profiles_preserve_all_wire_paths_and_both_response_policies() {
+    for defaults in [true, false] {
+        let (management, wire, _) = clients();
+        let client = management.profiles();
+        let mut options = RequestOptions::with_timeout(Duration::from_secs(10)).unwrap();
+        if !defaults {
+            options = options.without_response_defaults();
+        }
+        let sent = directional_profile_request();
+        let request: CreateSecurityProfileRequest = serde_json::from_value(sent.clone()).unwrap();
+        let mut reply = sent.clone();
+        reply["profile_id"] = json!(ID);
+        // Service-only values must survive typed decoding, even when newly modeled.
+        reply["dlp_tenant_id"] = Value::Null;
+        reply["policy"]["ai-security-profiles"][0]["content-type-configurations"]["tool-call"] =
+            json!(17);
+        reply["policy"]["ai-security-profiles"][0]["model-configuration"]["enable-full-conversation-inspection"] =
+            Value::Null;
+        for (method, path) in [
+            (Method::POST, "/v1/mgmt/profile".to_owned()),
+            (Method::PUT, format!("/v1/mgmt/profile/uuid/{ID}")),
+        ] {
+            wire.expect(
+                method.clone(),
+                &path,
+                &[],
+                Some(sent.clone()),
+                reply.clone(),
+            );
+            let actual = if method == Method::POST {
+                client.create(&request, Some(&options)).await.unwrap()
+            } else {
+                client.update(ID, &request, Some(&options)).await.unwrap()
+            };
+            assert_eq!(serde_json::to_value(actual).unwrap(), reply);
+        }
+        let page = json!({"ai_profiles":[reply.clone()]});
+        wire.expect(Method::GET, "/v1/mgmt/profiles", PAGE, None, page.clone());
+        assert_eq!(
+            serde_json::to_value(
+                client
+                    .list_for_token(PaginationOptions::default(), Some(&options))
+                    .await
+                    .unwrap()
+            )
+            .unwrap(),
+            page
+        );
+        wire.expect(
+            Method::GET,
+            "/v1/mgmt/profiles/tsg/123456789",
+            PAGE,
+            None,
+            page.clone(),
+        );
+        assert_eq!(
+            serde_json::to_value(
+                client
+                    .list(PaginationOptions::default(), Some(&options))
+                    .await
+                    .unwrap()
+            )
+            .unwrap(),
+            page
+        );
+        wire.expect(
+            Method::GET,
+            "/v1/mgmt/profiles/tsg/123456789",
+            PAGE,
+            None,
+            page,
+        );
+        assert_eq!(
+            serde_json::to_value(client.get(ID, Some(&options)).await.unwrap()).unwrap(),
+            reply
+        );
+        let second = json!({"profile_name":"second", "profile_id":"second-id",
+            "policy":{"ai-security-profiles":[{"content-type-mode":false,"content-type-configurations":null}]}});
+        wire.expect(
+            Method::GET,
+            "/v1/mgmt/profiles/tsg/123456789",
+            PAGE,
+            None,
+            json!({"ai_profiles":[reply.clone()],"next_offset":2}),
+        );
+        wire.expect(
+            Method::GET,
+            "/v1/mgmt/profiles/tsg/123456789",
+            &[("offset", "2"), ("limit", "100")],
+            None,
+            json!({"ai_profiles":[second.clone()],"next_offset":0}),
+        );
+        let all = client
+            .list_all(ProfileListAllOptions::default(), Some(&options))
+            .await
+            .unwrap();
+        assert!(all.is_complete());
+        assert_eq!(
+            serde_json::to_value(all.items).unwrap(),
+            json!([reply, second])
+        );
+        wire.done();
+    }
+}
+
+#[tokio::test]
+async fn current_profile_requests_reject_new_invalid_fields_before_authentication() {
+    let (management, wire, token) = clients();
+    let client = management.profiles();
+    let paths = [
+        "/dlp_tenant_id",
+        "/policy/ai-security-profiles/0/content-type-mode",
+        "/policy/ai-security-profiles/0/content-type-configurations",
+        "/policy/ai-security-profiles/0/model-configuration/enable-full-conversation-inspection",
+        "/policy/ai-security-profiles/0/content-type-configurations/prompt",
+    ];
+    for path in paths {
+        for invalid in [json!(null), json!(17), json!(["unexpected"])] {
+            let mut value = directional_profile_request();
+            *value.pointer_mut(path).unwrap() = invalid;
+            // Historical passthrough parsing deliberately remains available.
+            let request =
+                CreateSecurityProfileRequest::parse(value, scm_sdk::validation::Mode::Request)
+                    .unwrap();
+            assert_eq!(
+                client.create(&request, None).await.unwrap_err().kind(),
+                ErrorKind::Validation
+            );
+            assert_eq!(
+                client.update(ID, &request, None).await.unwrap_err().kind(),
+                ErrorKind::Validation
+            );
+        }
+    }
+    assert_eq!(token.calls.load(Ordering::SeqCst), 0);
+    assert_eq!(wire.requests.load(Ordering::SeqCst), 0);
+    wire.done();
+}
+
+#[tokio::test]
+async fn valid_raw_directional_extensions_submit_and_decode_typed_responses() {
+    fn present<T>(value: &Optional<T>) -> &T {
+        match value {
+            Optional::Value(value) => value,
+            Optional::Unset => panic!("expected typed directional field"),
+        }
+    }
+    for defaults in [true, false] {
+        let (management, wire, _) = clients();
+        let mut options = RequestOptions::with_timeout(Duration::from_secs(10)).unwrap();
+        if !defaults {
+            options = options.without_response_defaults();
+        }
+        let mut sent = directional_profile_request();
+        sent["policy"]["ai-security-profiles"][0]["content-type-configurations"]["tool-response"] =
+            json!({"app-protection":{"url-detected-action":"alert"}});
+        let source_ai = &sent["policy"]["ai-security-profiles"][0];
+        let shared = ModelConfiguration::builder()
+            .mask_data_in_storage(Optional::Value(true))
+            .extension("enable-full-conversation-inspection", json!(false).into())
+            .build()
+            .unwrap();
+        assert!(shared.enable_full_conversation_inspection.is_unset());
+        let ai = AiSecurityProfile::builder()
+            .model_configuration(Optional::Value(shared))
+            .extension(
+                "content-type-mode",
+                source_ai["content-type-mode"].clone().into(),
+            )
+            .extension(
+                "content-type-configurations",
+                source_ai["content-type-configurations"].clone().into(),
+            )
+            .build()
+            .unwrap();
+        assert!(ai.content_type_mode.is_unset());
+        assert!(ai.content_type_configurations.is_unset());
+        let request = CreateSecurityProfileRequest::builder()
+            .profile_name("directional-fixture".into())
+            .policy(
+                Policy::builder()
+                    .ai_security_profiles(Optional::Value(vec![ai]))
+                    .build()
+                    .unwrap(),
+            )
+            .extension("dlp_tenant_id", json!("100").into())
+            .build()
+            .unwrap();
+        assert!(request.dlp_tenant_id.is_unset());
+        assert_eq!(serde_json::to_value(&request).unwrap(), sent);
+        let mut reply = sent.clone();
+        reply["profile_id"] = json!(ID);
+        for (method, path) in [
+            (Method::POST, "/v1/mgmt/profile".to_owned()),
+            (Method::PUT, format!("/v1/mgmt/profile/uuid/{ID}")),
+        ] {
+            wire.expect(
+                method.clone(),
+                &path,
+                &[],
+                Some(sent.clone()),
+                reply.clone(),
+            );
+            let actual = if method == Method::POST {
+                management
+                    .profiles()
+                    .create(&request, Some(&options))
+                    .await
+                    .unwrap()
+            } else {
+                management
+                    .profiles()
+                    .update(ID, &request, Some(&options))
+                    .await
+                    .unwrap()
+            };
+            assert_eq!(present(&actual.dlp_tenant_id), "100");
+            let ai = &present(&present(&actual.policy).ai_security_profiles)[0];
+            assert_eq!(present(&ai.content_type_mode), "per_content_type");
+            let directions = present(&ai.content_type_configurations);
+            assert!(matches!(
+                present(&directions.prompt).data_protection,
+                Optional::Value(_)
+            ));
+            assert_eq!(
+                present(&present(&directions.response).model_protection).len(),
+                1
+            );
+            assert_eq!(
+                present(&present(&directions.tool_call).agent_protection).len(),
+                1
+            );
+            assert_eq!(
+                present(
+                    &present(&present(&directions.tool_response).app_protection)
+                        .url_detected_action
+                ),
+                "alert"
+            );
+            let shared = present(&ai.model_configuration);
+            assert!(!present(&shared.enable_full_conversation_inspection));
+            assert!(*present(&shared.mask_data_in_storage));
+            assert_eq!(serde_json::to_value(actual).unwrap(), reply);
+        }
+        wire.done();
+    }
+}
+
+#[tokio::test]
+async fn profile_wire_defaults_and_empty_terminal_pages_follow_request_options() {
+    for defaults in [true, false] {
+        let (management, wire, _) = clients();
+        let client = management.profiles();
+        let mut options = RequestOptions::with_timeout(Duration::from_secs(10)).unwrap();
+        if !defaults {
+            options = options.without_response_defaults();
+        }
+        for for_token in [true, false] {
+            let path = if for_token {
+                "/v1/mgmt/profiles"
+            } else {
+                "/v1/mgmt/profiles/tsg/123456789"
+            };
+            wire.expect(Method::GET, path, PAGE, None, json!({"future":false}));
+            let actual = if for_token {
+                client
+                    .list_for_token(PaginationOptions::default(), Some(&options))
+                    .await
+                    .unwrap()
+            } else {
+                client
+                    .list(PaginationOptions::default(), Some(&options))
+                    .await
+                    .unwrap()
+            };
+            assert_eq!(actual.ai_profiles.is_unset(), !defaults);
+            assert_eq!(
+                serde_json::to_value(actual).unwrap(),
+                if defaults {
+                    json!({"ai_profiles":[], "future":false})
+                } else {
+                    json!({"future":false})
+                }
+            );
+        }
+        let first = directional_profile_request();
+        wire.expect(
+            Method::GET,
+            "/v1/mgmt/profiles/tsg/123456789",
+            PAGE,
+            None,
+            json!({"ai_profiles":[first.clone()], "next_offset":2}),
+        );
+        wire.expect(
+            Method::GET,
+            "/v1/mgmt/profiles/tsg/123456789",
+            &[("offset", "2"), ("limit", "100")],
+            None,
+            json!({}),
+        );
+        let all = client
+            .list_all(ProfileListAllOptions::default(), Some(&options))
+            .await
+            .unwrap();
+        assert!(all.is_complete());
+        assert_eq!(serde_json::to_value(all.items).unwrap(), json!([first]));
+        wire.done();
+    }
+}

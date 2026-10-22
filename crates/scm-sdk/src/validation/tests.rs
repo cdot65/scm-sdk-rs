@@ -206,7 +206,18 @@ fn examples(binding: &str) -> (Value, Value) {
 #[test]
 fn all_semantic_bindings_are_exercised() {
     let registry = registry().unwrap();
-    assert_eq!(registry.semantics.len(), 69);
+    assert_eq!(registry.semantics.len(), 70);
+    let alias = registry.semantics.get("s_ts035_s009653").unwrap();
+    assert_eq!(alias.binding, "default");
+    assert_eq!(alias.default, json!([]));
+    assert_eq!(
+        parse_optional("s_ts035_s009653", None, Mode::Response).unwrap(),
+        Some(json!([]))
+    );
+    assert_eq!(
+        parse_optional("s_ts035_s009653", None, Mode::ResponseWithoutDefaults).unwrap(),
+        None
+    );
     let required: std::collections::BTreeSet<_> = registry
         .graph
         .nodes

@@ -4,11 +4,14 @@
 verification for pushes and pull requests. Its 49 required jobs use the ordinary
 Linux runner. [The separate native workflow](../.forgejo/workflows/native-platforms.yml)
 runs only when explicitly dispatched after its three native runner labels are
-registered. No external mirror, registry publication,
-release token, service registration, or live service workflow is configured.
+registered. A public source mirror exists at
+[GitHub](https://github.com/cdot65/scm-sdk-rs). Phase 28 requires its annotated
+release tag to match the qualified canonical tag and source. Registry publication,
+release tokens, service registration, and live service workflows are not configured
+in this credential-free CI workflow.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
-CI now executes the Phase 24 contracts gate, whose invocation and current
+CI now executes the Phase 28 contracts gate, whose invocation and current
 script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
 Phase 12, maintenance Phase 92 and access-policy Phase 17 gates remain historical.
 See [the G25 plan](g25-response-compatibility-plan.md).
@@ -107,7 +110,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 24 --verification-only --contracts-only. Its 52 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-24-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 28 --verification-only --contracts-only. Its 83 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-28-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
 | rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -156,8 +159,8 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 24 gate has 73 commands.
-CI's 52-command subset writes `phase-24-contracts.json`. The full local gate
+The complete local Phase 28 gate has 105 commands.
+CI's 83-command subset writes `phase-28-contracts.json`. The full local gate
 additionally executes fourteen compiler/feature combinations, native export probes,
 generated model fixture compilation, and two source-matched clean package checks.
 The final gates verify both package receipts and the version-specific release candidate after those checks execute. Actual publication and terminal remote CI are separate delivery requirements.
@@ -167,7 +170,7 @@ Both new integration suites are included by the Red Team cargo test commands.
 The Red Team and combined Red Team/JSON runner selections also execute the offline
 `red_team_management` example with `cargo run` on both 1.89.0 and 1.99.0;
 `cargo test --examples` alone only compiles its main function.
-Only a complete source-bound `phase-24.json` receipt can qualify review; the
+Only a complete source-bound `phase-28.json` receipt can qualify the current release review; the
 contracts-only scope marker cannot substitute for it. Full Git history supplies
 the frozen baseline used by the committed hygiene check.
 The independent 48-job Rust matrix remains unchanged: 24 feature selections on both
@@ -199,8 +202,14 @@ run and exact per-job context set.
 Dependency tools are installed with their own lockfiles at exact versions:
 cargo-audit 0.22.2 and cargo-deny 0.20.2. The phase gate invokes
 scripts/check-dependencies.py; it refreshes and records official RustSec
-provenance, audits the complete Cargo lock with warnings denied, and checks
-all-feature license/source/ban policy. Public registry, source, npm, and advisory
+provenance and independently audits both the root and native-probe Cargo
+lockfiles with warnings denied. Both lockfile digests and unchanged-input checks
+are retained in `lockfileAudits`. Registry checksum/source checks, resolved
+feature evidence and the all-feature license/source/bans policy cover only the
+root SDK graph. The probe graph is deliberately excluded from those latter
+checks because its local harness requires a separately defined source policy;
+its advisory result is not license/source approval. See
+[DEPENDENCIES.md](DEPENDENCIES.md) for this release's exact boundary. Public registry, source, npm, and advisory
 downloads are allowed; these checks need no service credentials.
 Failed dependency commands retain bounded stdout/stderr tails in a failed
 partial receipt and in the job log, including early version/provenance errors and
@@ -324,7 +333,7 @@ unchanged. `--check` continues to reject that state.
 
 ### Interrupted local qualification
 
-For active phases 23–25, `python3 tools/check_phase.py --phase N --resume`
+For active phases 23–25 and 27, `python3 tools/check_phase.py --phase N --resume`
 checkpoints each successfully executed command. A checkpoint is only a passing
 prefix, never phase acceptance. Resume requires the identical source fingerprint,
 exact command plan, passing completed records, unchanged receipt/archive bytes,
@@ -335,3 +344,13 @@ full report and before accepting a review of the current source. Historical
 accepted review snapshots retain their original hashes and are not rebound to
 later runs' output files.
 Archive the partial receipt before beginning a new source or expired run.
+Phase 28 does not permit `--resume`: its release qualification requires a single
+complete run without reusing a checkpointed command prefix.
+
+### TypeScript 0.35.0 patch delivery
+
+Phase 28 inherits phase 27 compatibility checks, requires both compiler archives
+and their directional-profile consumers, and binds the 0.2.4 release to its own
+readiness review, registry artifact, annotated tag, and all 49 terminal CI jobs.
+Earlier phase 24/25 acceptance remains independent. Generic read-only service
+observations do not establish directional-profile workflow acceptance.

@@ -1,6 +1,6 @@
 # Dependency and source review
 
-This delivery dependency snapshot describes the resolved `Cargo.lock` and `cargo metadata --locked --all-features` on 2026-10-16. The lockfile fixes repository verification inputs; downstream applications resolve their own compatible dependency graph. Review lockfile changes and rerun compiler, feature, advisory, and license checks before release.
+This 0.2.4 delivery snapshot describes the resolved root and native-probe lockfiles at source qualification on 2026-10-22. The executed dependency receipt records both advisory audits and the root `cargo metadata --locked --all-features` result. The lockfile fixes repository verification inputs; downstream applications resolve their own compatible dependency graph. Review lockfile changes and rerun compiler, feature, advisory, and license checks before release.
 
 ## Resolved direct dependencies
 
@@ -93,14 +93,28 @@ The official PANW Gateway specification is not bundled or used for generation wh
 
 Phase 8 implements `scripts/check-dependencies.py` and `deny.toml`. The checker
 requires exact **cargo-audit 0.22.2** and **cargo-deny 0.20.2**, records binary
-hashes, verifies registry checksums and permits only crates.io dependency sources.
-Every all-feature/all-target resolved package is considered, including development
-dependencies and target-specific lockfile entries. No graph exclusions, advisory
-ignores, license exceptions or unapproved Git/registry sources are accepted.
+hashes, and independently audits both `Cargo.lock` and
+`contracts/native-probes/Cargo.lock` for RustSec advisories. The receipt's
+`lockfileAudits` records each lockfile digest, command, result and unchanged-input
+check. A finding, warning, command failure or changed input in either audit fails
+qualification.
+
+Registry checksum/source checks (`check_lock`), resolved feature evidence, and
+cargo-deny's license/source/bans policy currently cover only the SDK graph from
+the root `Cargo.lock`. That graph includes all features, all targets, development
+dependencies and target-specific entries, with no graph exclusions, advisory
+ignores, license exceptions or unapproved Git/registry sources. The independent
+native-probe graph receives the advisory audit but is deliberately outside those
+checksum/source/license checks in this release: its local
+`scm-sdk-export-probes` harness package is not permitted by the root-only
+`check_lock` policy. Do not interpret the probe advisory result as equivalent
+license or source approval. Extending those checks requires a separate explicit
+local-package policy; broadly allowing arbitrary path dependencies is not an
+acceptable substitute.
 
 The default audit fetches the authoritative [RustSec database](https://github.com/RustSec/advisory-db)
 HEAD and checks out that exact commit in a private temporary working tree. The
-report binds its revision, fetch HEAD and commit date to the unchanged lockfile.
+report binds its revision, fetch HEAD and commit date to both unchanged lockfiles.
 Cargo-audit rejects all reported warnings, including unsound/unmaintained/yanked
 findings. Cargo-deny enforces the resolved license/source/bans policy offline with
 warnings denied. Its [license policy](https://embarkstudios.github.io/cargo-deny/checks/licenses/cfg.html)

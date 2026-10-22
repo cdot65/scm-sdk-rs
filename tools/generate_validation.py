@@ -11,6 +11,8 @@ from pathlib import Path
 import re
 import sys
 
+from typescript035_profiles import default_aliases
+
 ROOT = Path(__file__).resolve().parents[1]
 source = json.loads((ROOT / "contracts/typescript.json").read_text())
 if source["baseline"]["sourceFingerprint"] != "a972723bb524cf8fce652d50297d94ed7af278b13b9a045b5c6bdc79212eb48f":
@@ -141,10 +143,16 @@ payload = {"schemaVersion": 1, "baselineCommit": source["baseline"]["commit"],
            "generatorSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
            "policy": "Every binding has concrete native behavior; registry generation alone is not test evidence. JSON fakes for typed runtime inputs are rejected.",
            "bindings": sorted(entries, key=lambda entry: entry["schema"])}
+payload["runtimeAliases"] = default_aliases()
 serialized = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
 destination = ROOT / "contracts/native-semantics.json"
 runtime = ROOT / "crates/scm-sdk/src/validation/semantics.json"
-runtime_bytes = json.dumps({entry["schema"]: {k:entry[k] for k in ["binding", "default"] if k in entry} for entry in entries}, separators=(",", ":"), sort_keys=True) + "\n"
+runtime_entries = {entry["schema"]: {k:entry[k] for k in ["binding", "default"] if k in entry} for entry in entries}
+for alias, original in default_aliases().items():
+    if alias in runtime_entries or runtime_entries[original] != {"binding": "default", "default": []}:
+        raise ValueError("Unreviewed TypeScript default alias")
+    runtime_entries[alias] = dict(runtime_entries[original])
+runtime_bytes = json.dumps(runtime_entries, separators=(",", ":"), sort_keys=True) + "\n"
 if "--check" in sys.argv:
     assert destination.read_text() == serialized, "native semantic registry is stale"
     assert runtime.read_text() == runtime_bytes, "runtime semantic registry is stale"

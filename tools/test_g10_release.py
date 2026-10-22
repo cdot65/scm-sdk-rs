@@ -163,9 +163,13 @@ class G10ContractTests(unittest.TestCase):
         self.assertIn("Crate version: **" + version + "**", (ROOT / "README.md").read_text())
         self.assertIn("workspace version is **" + version + "**", (ROOT / "docs/RELEASE.md").read_text())
         self.assertIn("current Rust crate version is **" + version + "**", (ROOT / "docs/STABILITY.md").read_text())
-        heading = next(line for line in (ROOT / "CHANGELOG.md").read_text().splitlines()
-                       if line.startswith("## "))
-        self.assertTrue(heading.startswith("## " + version + " — "), heading)
+        headings = [line for line in (ROOT / "CHANGELOG.md").read_text().splitlines()
+                    if line.startswith("## ")]
+        # Pending additive work may precede the current version without claiming publication.
+        if headings and headings[0].startswith("## Unreleased — "):
+            headings = headings[1:]
+        self.assertTrue(headings)
+        self.assertTrue(headings[0].startswith("## " + version + " — "), headings[0])
 
 
 class PublicationProofTests(unittest.TestCase):

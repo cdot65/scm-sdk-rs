@@ -240,8 +240,12 @@ function responseSchema(schema: ZodTypeAny): ZodTypeAny {
     else if (kind === 'ZodLazy') cloned.getter = () => responseSchema(def.getter());
     else if (kind === 'ZodUnion') cloned.options = def.options.map(responseSchema);
     else if (kind === 'ZodDiscriminatedUnion') {
-      value = z.discriminatedUnion(def.discriminator, def.options.map(responseSchema) as any);
-      responseMemo.set(schema, value); return value;
+      // Preserve the original dispatch keys. Rebuilding through z.discriminatedUnion
+      // introspects children with instanceof, which fails when frozen modules and
+      // this ESM tool resolve distinct Zod constructor identities.
+      cloned.options = def.options.map(responseSchema);
+      cloned.optionsMap = new Map([...def.optionsMap.entries()].map(
+        ([key, option]: [unknown, ZodTypeAny]) => [key, responseSchema(option)]));
     }
     else if (kind === 'ZodIntersection') { cloned.left = responseSchema(def.left); cloned.right = responseSchema(def.right); }
     else if (kind === 'ZodPipeline') { cloned.in = responseSchema(def.in); cloned.out = responseSchema(def.out); }

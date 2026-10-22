@@ -1,0 +1,104 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 1,
+  "reviewed_at": "2026-10-22T13:07:01.728684+00:00",
+  "source_sha256": "5156a408ada0d03ea16fc6fe82f16f0cbfc0f6a4c7d7b6792dd17ad80588f60c",
+  "source_unchanged": true,
+  "checks_sha256": "e370a530725a1b2834c0a18d2e017c73587f9edd289deab0e1cab1f86cecfd3c",
+  "prompt_sha256": "deb752dd2a4fa827aaf005160332522d59995b54ae8bacb4b366187a42e6b55e",
+  "cli_output_sha256": "d8d8b1ea2c3bf55bac36e9491fa10c31239d664022ca12b334ea36153b7d962b",
+  "gate_passed": false,
+  "review": {
+    "score": 8,
+    "summary": "Phase 28 readiness is genuinely built, not renamed: phase-28 commands = full phase-27 set plus two `--require-directional` clean-package qualifications and `check-access-release --phase 28 --version 0.2.4`, all 105 commands executed at exit 0 in one continuous run bound to source 5156a408, with `--resume` barred for phase 28. `--require-directional` is a real constraint with negative coverage; the delivery branch (registry/tag/49 CI contexts) exists and fails closed; a readiness review cannot advance. Dependency audit is fresh and clean; live acceptance is honestly bounded. Blocking the 46/50 bar: the packaged README still names 0.1.1 as the published release and tells consumers to install 0.2.0 while 0.2.3 is published, and that README is bound by `readmeSha256` in the readiness receipt. Four supportability/doc lows remain unaddressed from the chunk review.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "README.md",
+        "line": 29,
+        "description": "README misstates the current published release inside a packaged archive member. Line 29 says \"The published maintenance release is [0.1.1]\", line 35 says \"Install the vendor update as scm-sdk 0.2.0\", and lines 51-52 tell consumers to \"retain your existing released pin\" without naming it. docs/checks/release-registry-0.2.3.json (version 0.2.3, yanked false, publishedAt 2026-10-20) and docs/phase-status.json:6689-6693 (status published_and_verified) show 0.2.3 is the published release, and docs/STABILITY.md:31 says so. Cargo.toml include ships README.md, and docs/checks/phase-28-release-readiness.json:23-26,703 binds its bytes, so publishing 0.2.4 would ship install guidance pointing at 0.2.0. The automated guard cannot catch this: tools/test_ci.py:346-348 returns early because workspace version 0.2.4 != publication version 0.2.3.",
+        "required_fix": "Name 0.2.3 as the current verified published release in README.md and cite docs/checks/release-registry-0.2.3.json (matching docs/STABILITY.md:31), replace the 0.2.0 install line, then re-run scripts/check-management-package.py --require-directional for both toolchains and scripts/check-access-release.py --phase 28 --version 0.2.4 so the readiness receipt rebinds the corrected readmeSha256 and archives."
+      },
+      {
+        "severity": "low",
+        "path": "docs/PHASES.md",
+        "line": 291,
+        "description": "The maintenance section gives explicit acceptance paragraphs for phase 26 (278-281) and phase 27 (283-289) but none for phase 28; it only states that phase 28 \"gates its release and delivery\" and that package consumers are deferred to it. AGENTS.md:3 makes PHASES.md the document to read before implementation or review, yet phase 28's actual requirements (both-compiler directional consumers, version-specific 0.2.4 readiness guard, registry/tag/49 CI contexts, readiness cannot complete the phase) appear only in docs/RELEASE.md:188-203, docs/CI.md:339-346 and the plan.",
+        "required_fix": "Add a phase-28 acceptance paragraph to docs/PHASES.md mirroring the 26/27 entries: both named chunks, the version-specific 0.2.4 guards, and the exact delivery evidence required."
+      },
+      {
+        "severity": "low",
+        "path": "docs/RELEASE.md",
+        "line": 188,
+        "description": "The \"TypeScript 0.35.0 patch release (phase 28)\" section documents only check_phase.py and check-prepublication.py. Unlike the 0.2.3 procedure (lines 53-61, 49-50) it omits the 0.2.4 forms of scripts/verify-publication.py with docs/checks/phase-28-release-package-1.99.0.json / -1.89.0.json, scripts/observe-release.py --version 0.2.4, and tools/release_delivery.py --phase 28 --version 0.2.4. It also never states that publication must be performed with the 1.99.0 toolchain, even though scripts/verify-publication.py:106-110 requires the registry checksum to equal the 1.99.0 proof's archive_sha256 and docs/checks/phase-28-release-readiness.json:704 binds 447ca402 (the 1.99.0 archive, distinct from the 1.89.0 archive 14f0292f).",
+        "required_fix": "Extend docs/RELEASE.md:188-203 with the exact 0.2.4 verify-publication, observe-release and release_delivery invocations and state that the registry archive must be produced by the 1.99.0 toolchain bound in the readiness receipt."
+      },
+      {
+        "severity": "low",
+        "path": "docs/CI.md",
+        "line": 327,
+        "description": "The interrupted-qualification section documents --resume for \"active phases 23\u201325\" only, while tools/check_phase.py:893,895 permit 23, 24, 25 and 27. The deliberate exclusion of phase 28 (so release readiness cannot be assembled from a checkpointed prefix, and there is no docs/checks/phase-28-partial.json) is a meaningful property that is not documented anywhere.",
+        "required_fix": "Update docs/CI.md:327-337 to state the actual permitted set (23\u201325 and 27) and record that phase 28 requires a single complete run with no checkpoint reuse."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/check-access-release.py",
+        "line": 68,
+        "description": "A conditional expression is used as a bare statement at the directional enforcement point: `wrapper.verify_receipt(root, path, compiler, require_directional=True) if phase == 28 else wrapper.verify_receipt(root, path, compiler)`. Both branches are side-effecting calls whose return value is discarded, which obscures that this single line is what makes the phase-28 readiness guard directional and invites an edit that silently drops the flag.",
+        "required_fix": "Replace with one call: `wrapper.verify_receipt(root, path, compiler, require_directional=phase == 28)`."
+      },
+      {
+        "severity": "low",
+        "path": "tools/check_phase.py",
+        "line": 898,
+        "description": "CONTRACT_CI_PHASES was extended with 28 (line 136) but the --contracts-only diagnostic still reads \"requires --phase 12 --verification-only (or another supported phase: 17, 20, 21\u201325)\", omitting 28. The CI workflow (.forgejo/workflows/ci.yml:73) runs exactly `--phase 28 --verification-only --contracts-only`, so the error text now misdescribes the supported set a maintainer would consult after a typo.",
+        "required_fix": "Update the parser.error message at tools/check_phase.py:898 to list the actual CONTRACT_CI_PHASES set including 28, ideally derived from the constant."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/check-dependencies.py",
+        "line": 136,
+        "description": "The advisory gate audits only the root lockfile (`lock_path = ROOT/'Cargo.lock'`, used at line 196 for cargo-audit and lines 208-209 for cargo-deny). contracts/native-probes/Cargo.lock was updated in this phase to the same patched TLS versions (rustls-webpki 0.103.16 at :1123, webpki-root-certs 1.0.10 at :1772) but is never independently audited, so a future advisory affecting only the probe lockfile would not fail the phase-28 dependency check even though that lockfile is consumed by the external package consumers and the native-probes CI feature set.",
+        "required_fix": "Audit contracts/native-probes/Cargo.lock as a second lockfile input in scripts/check-dependencies.py and record its digest in the receipt, or document in docs/CI.md and docs/DEPENDENCIES.md why the probe lockfile is excluded from the advisory gate."
+      }
+    ],
+    "evidence": [
+      "Check evidence is real and complete, not a subset: docs/reviews/phase-28-attempt-01.checks.json:1-6 binds phase 28 to source_sha256 5156a408... with passed true and source_unchanged true; 105 recorded commands, every one \"exit_code\": 0, zero matches for \"timeout\": true or \"source_unchanged\": false. tools/review_phase.py:222-228 requires [item['command'] for item in checks] == commands_for(28) with every exit_code == 0, and :232-233 additionally re-verifies checkpoint_bindings for phase 28 on current source.",
+      "Phase-28 command set is phase 27 plus exactly three new guards: tools/check_phase.py:318-328 renames phase-27 receipt paths to phase-28 and appends check-management-package.py --require-directional for 1.89.0 and 1.99.0 plus check-access-release.py --phase 28 --version 0.2.4. Those three appear in the executed evidence at checks.json:2862-2891, 2893-2923 and 2924-2955, with checkpoint_bindings to their receipts and to the retained .crate files under .local/package-worktrees/4c85f31e.../.",
+      "Execution was a single continuous run, not a checkpoint assembly: first check executed_at 2026-10-22T11:34:18, last 12:53:52; the two package qualifications took 391s and 373s. tools/check_phase.py:892-896 rejects --resume for any phase outside (23,24,25,27), and no docs/checks/phase-28-partial.json exists.",
+      "--require-directional is a substantive additional constraint: scripts/check-management-package.py:114 requires exactly 5 external consumer indices (4 without the flag); :152-164 requires examples/directional_profiles.rs in the archive, a digest equal to both the archive member and the working-tree file, selectedFeatures == [], a unique in-range checkIndex executed in the external consumer root, and a separate `run --example directional_profiles --all-features --locked --offline` inside the extracted archive. scripts/check-package.py:175-176,218-223 are the matching producers.",
+      "Negative coverage exists for the new guard: tools/test_release_024.py:204-232 verifies the receipt then rejects a wrong sha256, a checkIndex colliding with frozenProbeCheckIndex, selectedFeatures == ['red-team'], and omission of the directional entry. :63-71 pins the exact command set, :103-116 pins archives to the qualified commit worktree, :118-128 pins require_directional through both compiler proofs.",
+      "The 0.2.4 readiness receipt is source-bound, not a 0.2.3 copy: scripts/check-access-release.py:30 registers (28,'0.2.4') and rejects (24,'0.2.4') (asserted in tools/test_release_022.py:31-32 and test_release_024.py:28-30); :62 reads phase-28-release-package-{compiler}.json; :67 requires schema 3; :69-71 requires commit_fingerprint(releaseCommit) == fingerprint(root) plus ancestry to HEAD; :82-106 re-derives the archive with the scm-sdk-0.2.4/ prefix and compares every packaged src/examples/README/LICENSE/NOTICE/Cargo.toml.orig byte against both the working tree and `git show releaseCommit:...`; :119-120 requires both compiler proofs to qualify identical files/vcs. Output docs/checks/phase-28-release-readiness.json:4-5,704-708 records 0.2.4, releaseCommit 4c85f31e..., archiveSha256 447ca402..., toolchains [1.89.0, 1.99.0].",
+      "The plan-required phase-28 delivery branch exists and fails closed: tools/review_phase.py:483-489 calls release_delivery.verify(..., phase=28, version='0.2.4'); tools/release_delivery.py:22,190 register and enforce the (28,'0.2.4') pair; :203-204 requires docs/checks/phase-28-remote-ci-run-N.json; :226-230 forwards require_directional=True; :104-115 requires CI job contexts to equal the configured matrix exactly with no duplicate target_urls; :142-155 requires the registry receipt to reference an accepted phase-28 readiness review with matching source and review digests.",
+      "A readiness review cannot complete the phase: tools/review_phase.py:459-460 forbids --release-readiness with --advance, :478-479 rejects advancement when review_scope != 'phase', and :304 restricts the allowed scopes. tools/test_release_024.py:73-101 exercises both paths and asserts docs/phase-status.json is left unmodified.",
+      "CI is wired to this phase with a derived, asserted context set: .forgejo/workflows/ci.yml:73 runs `check_phase.py --phase 28 --verification-only --contracts-only`; ci.yml:90-91 declares 2 toolchains x 24 feature sets; tools/release_delivery.py:56-69 derives 48 rust contexts plus contracts-and-package = 49; tools/check_phase.py:136 adds 28 to CONTRACT_CI_PHASES and :813-825 strips every native/package/access-release command from the CI subset (asserted in tools/test_release_024.py:70).",
+      "Dependency security is current rather than inherited: docs/checks/phase-28-dependencies.json:3-13,47-52 shows the audit ran at 11:36:58 within this phase run against advisory-db revision 640bf5a9 with freshHead true, 0 vulnerabilities and no warnings; Cargo.lock:1122-1125,1772-1775 and contracts/native-probes/Cargo.lock:1122-1125,1771-1774 both carry rustls-webpki 0.103.16 and webpki-root-certs 1.0.10, matching CHANGELOG.md:37-40. tools/check_phase.py:361-365 moves the audit ahead of the Rust matrix.",
+      "Release and live claims are accurate and bounded: CHANGELOG.md:5-6,43-44 state release candidate and that the entry establishes no publication or remote delivery; docs/STABILITY.md:3-5,34; docs/RELEASE.md:3-8,199-202. docs/LIVE_ACCEPTANCE.md:15-23 records 1 verified method (OAuth), four HTTP 403 permission prerequisites, no mutations, cleanupState not_needed, and \"Directional profile create/update remain live-unverified\"; contracts/live-evidence.json:4-5 binds docs/checks/phase-28-live-attempt-01.json by digest.",
+      "Packaged privacy and compiler evidence were executed on this source: docs/checks/phase-28-private-material.json:3-12 records sourceSha256 5156a408, headCommit 4c85f31e, 2376 git-visible files, 135 packaged src/example candidates, 0 credential and 0 registration value matches; docs/checks/phase-28-rust-1.89.0-management.json:3-15 shows a native musl run on rustc 1.89.0 with the phase lockfile digest e76abae3 matching the dependency receipt.",
+      "The delivered consumer is substantive, not a stub: crates/scm-sdk/examples/directional_profiles.rs:13-57 builds the new ContentTypeConfiguration/ContentTypeConfigurations types, round-trips the request through `typescript:0.35.0:CreateSecurityProfileRequestSchema`, and then asserts lossless preservation of a wrong-typed/null response document in both Mode::Response and Mode::ResponseWithoutDefaults. contracts/native-probes/Cargo.toml:11 supplies the `management` feature to the external consumer, so the selectedFeatures == [] binding is meaningful.",
+      "Chunk disposition: docs/reviews/phase-28-chunk-release-readiness-attempt-01.json accepted the release-readiness chunk at 44/50 on this identical source 5156a408 with one medium (README) and four low findings. The source fingerprint has not changed, so none of those findings is yet addressed; I independently confirmed all five and add two more (tools/check_phase.py:898, docs/RELEASE.md:188)."
+    ],
+    "limitations": [
+      "Read-only review: I executed no commands and re-ran no checks. All pass/fail conclusions rest on reading docs/reviews/phase-28-attempt-01.checks.json and docs/checks/phase-28-*.json and tracing the registered command set in tools/check_phase.py:318-328 against the gate in tools/review_phase.py:201-234. I did not recompute the source fingerprint, any receipt SHA-256, or the retained .crate digests.",
+      "I did not open the retained archives under .local/package-worktrees/4c85f31e.../.local/artifacts/ or the extracted consumer roots; directional consumer execution is established by the recorded receipts plus the verification logic in scripts/check-management-package.py:152-164, not by inspecting build output.",
+      "Remote delivery is the other phase-28 chunk and is unverified here: no docs/checks/release-registry-0.2.4.json, release-tag-v0.2.4.json or phase-28-remote-ci-run-N.json exists; docs/phase-status.json:8150-8160 milestones are all pending and no registry_publication block exists for phase 28; the 49 CI contexts have not been observed on the released source. Actual registry publication, the remote annotated tag and terminal CI remain pending delivery obligations, not completed outcomes.",
+      "Generated model correctness, the additive overlay, the oracle corpus and the schema-graph roots are phase-27 deliverables accepted at 46/50; I relied on this phase's recorded Rust/management receipts and the declaration-level evidence rather than re-auditing crates/scm-sdk/src/models/generated.rs or validation/schema_graph.json.",
+      "Per instruction I read no credential or tenant-registration material, nothing outside this repository, and no optional .local/typescript checkout; the `verify-contracts.py --baseline .local/typescript` result (extractedBaselineVerified true) is taken from the recorded run.",
+      "Phase 24/25 acceptance, the 0.2.3 delivery gate and pre-phase-26 release infrastructure were out of scope beyond the pinned 0.2.3 receipt identity that tools/review_phase.py:409 depends on and the published-0.2.3 facts relevant to the README finding.",
+      "This record is the prepublication readiness assessment and cannot advance the phase; a fresh complete-phase review after delivery and both accepted chunks is required."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 43
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "release_readiness"
+}

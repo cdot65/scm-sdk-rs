@@ -1,7 +1,7 @@
 # Compatibility and support status
 
-The current Rust crate version is **0.2.3**, the [AIRS management compatibility patch](red-team-management-0.86-plan.md).
-The `checks/release-registry-0.2.3.json` establishes publication
+The current Rust crate version is **0.2.4**, the [directional-profile update](DIRECTIONAL_PROFILES.md). Publication and delivery require verified version-specific receipts.
+The `checks/release-registry-0.2.4.json` establishes publication
 only when present and verified. A missing receipt means publication is not yet verified.
 The [access-policy family](ACCESS_POLICIES.md) remains experimental/live-unverified;
 its Portkey key/control-plane contract is separate from SCM OAuth.
@@ -24,6 +24,35 @@ baseline is TypeScript SDK **0.34.0** at
 `4a80dbdb3dc14365e1c25d838ac0bd139485d48c`. All 448 concrete methods and 3,820
 exported capabilities have implemented native mappings. [EXPORTS.md](EXPORTS.md)
 explains the independent validation, behavior and public-consumer evidence.
+
+## Directional profile release
+
+The [TypeScript 0.35.0 directional profile addition](DIRECTIONAL_PROFILES.md) is
+separate from the published 0.2.3 source. It adds two model types and two named
+schemas, plus five typed field occurrences on existing profile models. This is
+an additive maintenance delta; the historical 3,820 capabilities and 448 methods
+remain the TypeScript 0.34.0 baseline. Publication and delivery are established by the version-specific verified receipts.
+
+Create/update requests use the versioned current root and intentionally reject
+newly known null/wrong-type values, including raw extensions that the historical
+root accepted. Existing unprefixed standalone validators retain their frozen
+semantics. Use the six `typescript:0.35.0:` roots documented in the guide for
+current standalone validation.
+
+Upstream TypeScript 0.35.0 response schemas also reject invalid newly known
+fields. Rust profile responses intentionally preserve the older acceptance and
+lossless typed projections in both `Mode::Response` and
+`Mode::ResponseWithoutDefaults`. Unrepresentable values, including explicit
+null, remain in extensions; omitted fields stay absent. A supplied typed value
+wins over a same-key extension. Disabling response defaults changes only default
+insertion, including the existing list `[]` default.
+
+Independent pinned-Zod fixtures and local model/wire tests provide offline
+compatibility evidence. Directional service behavior remains live-unverified;
+historical tenant receipts do not qualify this changed source. Reviewed
+publication, registry verification and remote CI remain separate delivery gates.
+Existing service limitations and vendor-unsupported Red Team query bindings
+retain their status.
 
 ## Separate claims
 

@@ -1,0 +1,109 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 27,
+  "attempt": 1,
+  "reviewed_at": "2026-10-22T02:22:29.137537+00:00",
+  "source_sha256": "9761d2cef77fefd89b27cefca25db51debc503eac5df34e5e2aa4222f397fb7b",
+  "source_unchanged": true,
+  "checks_sha256": "3807bc27c784b5b7e50fb0375b5b78db5e58486e120a30fe99040b8dc8401545",
+  "prompt_sha256": "62aaa8ed14e9bd3f27101cd7aca926c779e458f2d75ab5f4ebc84078522b74eb",
+  "cli_output_sha256": "fe80ea65070002dcbd5bfb91bcd20508e3496bc155d46969f0e14fc3ab549e24",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "The models-and-validation chunk is a genuinely additive, well-evidenced overlay. `typescript035_profiles.py` derives the 12-node ancestor closure from the frozen 0.34.0 inventory, asserts it equals the reviewed clone set, rejects root/node/clone/model identity collisions atomically, and `--check` reconstructs the committed graph and parity ledger rather than trusting them. The five projected fields and two new types reuse existing protection types and the pre-existing vendorProjection decode/serialize mechanism, so omission, explicit null and unsupported JSON stay lossless with typed precedence. The pinned Zod oracle (376 cases, 8 roots) is executed from hash-verified source in a disposable workspace and compared case-by-case against Rust `parse`, with tamper cases proving fail-closed ordering. The 23-default denominator, 3,820/448 ledgers and frozen specimen bytes are preserved, with only the documented provenance rebinds, each pinned to the Git baseline. All recorded checks, including both compilers over the full feature matrix, exit 0.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "tools/typescript035_profiles.py",
+        "line": 95,
+        "description": "The two new type nodes are synthesized by copying `s009588`'s four protection properties and catchall from the frozen 0.34.0 inventory, not from the pinned 0.35.0 declarations. The verifier only proves that mgmt-security-profile.ts is one of exactly three changed runtime files; nothing mechanically proves the shared declarations (DataProtectionSchema, PolicyAppProtectionSchema, ModelProtectionItemSchema, AgentProtectionItemSchema and their descendants) are byte-identical across the two versions. I confirmed two of them by hand against contracts/typescript.json:246108 and :246220, and the 376-case oracle comparison covers behavior, so this is residual re-pin risk rather than a current defect.",
+        "required_fix": "In verify_typescript035_source.py, assert the frozen 0.34.0 declaration texts/sha256 values for the reused declarations against the corresponding spans of the pinned 0.35.0 file, so a future re-pin that edits a shared sub-schema fails before generation."
+      },
+      {
+        "severity": "low",
+        "path": "tools/typescript035_profiles.py",
+        "line": 102,
+        "description": "Properties of the two new object nodes are emitted as bare `{'schema': {'$ref': ...}}`, omitting the `inputPresence`/`inputNull` metadata that every other object property in the graph carries (see contracts/typescript.json:347746-347752 and the projected properties at line 139 of this file). Behavior is unaffected because validation.rs ignores these keys, but a consumer that indexes them directly (tools/red_team_management.py:656,673,677) would KeyError if pointed at the new nodes.",
+        "required_fix": "Emit `inputPresence: 'accepts'` and `inputNull: 'rejects'` for the four direction properties and the protection properties of the new nodes, matching the baseline convention."
+      },
+      {
+        "severity": "low",
+        "path": "tools/typescript035-oracle.mts",
+        "line": 72,
+        "description": "Nested protection corners have no wrong-type or null cases: `data-protection.data-leak-detection.mask-data-inline`, `data-protection.source-code-detection`, `severity-by-confidence`, `toxic-category-list` items and `latency.inline-timeout-action` are only exercised through the single valid public fixture. Rust/Zod equivalence for those keys therefore rests on structural reuse rather than executed comparison.",
+        "required_fix": "Add wrong-type and explicit-null cases for the remaining nested optional keys of ContentTypeConfigurationSchema and ModelConfigurationSchema, regenerate the corpus, and keep the Rust comparison test unchanged."
+      },
+      {
+        "severity": "low",
+        "path": "tools/generate_validation.py",
+        "line": 144,
+        "description": "`from typescript035_profiles import default_aliases` is placed mid-module, after the 69-entry inventory assertion and `payload` construction, while every other import sits in the header block. It reads as an afterthought in an otherwise tightly ordered generator.",
+        "required_fix": "Move the import into the module header alongside the other imports."
+      }
+    ],
+    "evidence": [
+      "tools/typescript035_profiles.py:77-85 derives the ancestor closure from the four projected schema ids and raises 'Unreviewed TypeScript profile ancestor closure' unless it equals the 12 reviewed clones; I independently confirmed via contracts/typescript.json that exactly six exports reference s009588/s009599/s009606/s009612/s009632/s009651 and the other six clones (s009605, s009608, s009609, s009625, s009653, s009654) are internal wrappers, so the six registered versioned roots are the complete affected export set.",
+      "tools/typescript035_profiles.py:212-227 (--check) rebuilds the expected graph from the committed graph minus the overlay and compares, and re-derives the ledger and native-models supplemental keys; generate_models.py:1053-1126 regenerates schema_graph.json, generated.rs and the ledgers through the same Overlay, so the committed artifacts are proven deterministic. Recorded run: generate_models.py --check -> {\"checked\": true, \"outputs\": 20, \"graphNodes\": 13018} exit 0.",
+      "Type reuse verified against the baseline inventory: s009590 is ZodOptional<ZodBoolean> (contracts/typescript.json:347550) and s009601 is ZodOptional<ZodString> (:347641), matching upstream `enable-full-conversation-inspection: z.boolean().optional()` and the `content-type-mode`/`dlp_tenant_id` string optionals in contracts/sources/typescript-0.35.0/src/models/mgmt-security-profile.ts:276,288,334,368.",
+      "Generated projections use the pre-existing mechanism (tools/generate_models.py:471-506): generated.rs:4467-4512 and :153641-153682 remove the projected key, fall back to retaining an undecodable value as an extension, and generated.rs:4549-4556 / :153731-153737 skip the matching extension only when the typed field is set. generated.rs:13389-13394 and :13510 keep strict collision errors for the two new types, so baseline collision rules are not globally weakened.",
+      "contracts/typescript-035-parity.json records addedExports 4, addedModels 2, addedSchemas 2, projectedFields 5, versionedRoots 6, clonedNodes 12, defaultAliases 1, separately from the frozen ledgers; tools/test_typescript035_implementation.py:140-148 asserts contracts/native-models.json 'schemas', 'modelExports', 'unionVariantPins' and 'aliases' are byte-equal to baseline 578f2e6, and native_exports.py --check reports frozenCapabilities 3820 / implemented 3820 / unresolved 0.",
+      "The pinned oracle executes the actual upstream file: tools/typescript035-oracle.mts:19 runs the source verifier before any copy, :23-25 pins Zod to tools/package-lock.json, :34 replaces the DLP identifier with placeholder '100'. Recorded run: {\"roots\":8,\"cases\":376,\"accepted\":139} exit 0, plus tsc --strict exit 0. crates/scm-sdk/tests/typescript035_models.rs:44-87 compares every case's acceptance and normalized output against Rust parse in Request mode and requires both accepted and rejected cases per root.",
+      "tools/test_typescript035_oracle.py:59-72 appends `throw new Error(\"UPSTREAM_EXECUTED\")` to the copied source and a byte to the manifest, and asserts non-zero exit, absence of that marker in stderr and that no workspace was created; :74-91 reject a doctored corpus and a changed oracle script without rewriting the file.",
+      "Default-alias handling is bounded and tested: tools/generate_validation.py:150-153 refuses an alias whose original is not the reviewed `{binding: default, default: []}`; tools/response_defaults.py:69-79,117-120 records the alias separately and still asserts the 23-binding denominator (recorded stdout {\"defaultBindings\": 23, \"redTeamBindings\": 8, \"outsideRedTeamBindings\": 15}); crates/scm-sdk/src/validation/tests.rs:209-220 asserts semantics.len()==70 with [] inserted in Mode::Response and omitted in Mode::ResponseWithoutDefaults; crates/scm-sdk/tests/schema_contracts.rs:18-26 keeps the alias out of the 23 count.",
+      "Permitted provenance rebinds are pinned to the Git baseline: tools/test_typescript035_implementation.py:37-53 proves contracts/native-fixtures/schemas.json differs from 578f2e6 only in provenance.generatorSha256 and crates/scm-sdk/src/fixtures/model-regressions.json only in provenance.sha256/oracleSha256, each bound to current bytes; tools/test_model_fixtures.py:19-32 normalizes generatorSha256 to the historical value and asserts the historical digest ddc0f2ac...; tools/test_schema_oracle.py:12-48 proves the old z.discriminatedUnion rebuild throws across Zod constructor identities while the new adapter preserves dispatch, enum widening and unknown-key passthrough.",
+      "tools/test_typescript035_profiles.py:31-57,95-112 assert deterministic, non-mutating extension (+16 nodes, +8 roots), reject reapplication, and prove node/name/declaration/alias/baseline collisions leave the generator state untouched; :59-69 flips each of the 12 clone kinds and requires a 'node identity' failure.",
+      "Recorded source-bound evidence: docs/reviews/phase-27-chunk-models-and-validation-attempt-01.checks.json has source_sha256 9761d2cef... (matching the reviewed SHA), source_unchanged true, passed true, and every one of its ~95 checks at exit_code 0 with timeout false, including verify-contracts.py --self-test (29 tamper cases), check-dependencies.py ordered before the first Rust check ({\"passed\": true, \"packages\": 206, \"freshHead\": true}), and scripts/check-rust.py for 1.89.0 and 1.99.0 across minimal/default/all/gateway/gateway-json-unification/default-tracing/red-team/json-unification/red-team-json-unification/management with fmt, check, clippy -D warnings, test, examples, doc and the directional_profiles example all exit 0.",
+      "Scope and documentation integrity: docs/phase-status.json:6870-6934 chunk scope_evidence equals the reviewed scope and its sole revision; docs/DIRECTIONAL_PROFILES.md:83-99 and docs/STABILITY.md:36-48 explicitly document that existing model SCHEMA identities and build_validated retain frozen semantics while the six typescript:0.35.0: roots carry current request rules, and that response tolerance is an intentional difference."
+    ],
+    "limitations": [
+      "Read-only tools only: I could not recompute SHA-256 of the reviewed source or of the checks artifact, nor re-execute any check. Pass/fail conclusions rest on the recorded exit codes, stdout/stderr and executed_at values in docs/reviews/phase-27-chunk-models-and-validation-attempt-01.checks.json, cross-read against the command set derived in tools/check_phase.py:318-353.",
+      "I did not read credential or tenant-registration files and made no network calls; the oracle and Rust suites were not re-run.",
+      "Live/service acceptance for directional profiles is explicitly unestablished by this chunk (contracts/typescript-035-parity.json compatibility.liveAcceptance, docs/DIRECTIONAL_PROFILES.md:1-7), and I did not attempt to assess it.",
+      "schema_graph.json and semantics.json are single-line minified artifacts; I verified their new content through targeted greps, the generator reconstruction path and the Rust/Python regressions rather than by reading them end to end.",
+      "Wire-chunk artifacts (profiles.rs, typescript035_models.rs, test_typescript035_implementation.py, examples, CHANGELOG/STABILITY) were inspected only insofar as they evidence this chunk's claims; they are scored under the wire-and-compatibility chunk.",
+      "I did not re-audit historical phase 19-24 infrastructure, release receipts or the frozen 0.34.0 baseline beyond the identity checks this overlay depends on."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 45
+  },
+  "rubric": "five-category-v1",
+  "chunk": "models-and-validation",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "tools/typescript035_profiles.py",
+    "tools/generate_models.py",
+    "tools/generate_validation.py",
+    "tools/response_defaults.py",
+    "tools/typescript035-oracle.mts",
+    "tools/verify_typescript035_source.py",
+    "tools/verify-contracts.py",
+    "tools/test_typescript035_profiles.py",
+    "tools/test_typescript035_source.py",
+    "tools/test_typescript035_oracle.py",
+    "contracts/typescript-035-parity.json",
+    "contracts/typescript-035-oracle.json",
+    "contracts/native-models.json",
+    "contracts/native-semantics.json",
+    "contracts/response-defaults.json",
+    "contracts/red-team-management-model-overlay.json",
+    "contracts/native-fixtures/gateway-specimens.json",
+    "crates/scm-sdk/src/models/generated.rs",
+    "crates/scm-sdk/src/models/management.rs",
+    "crates/scm-sdk/src/validation/schema_graph.json",
+    "crates/scm-sdk/src/validation/semantics.json",
+    "crates/scm-sdk/src/validation/tests.rs",
+    "tools/schema-oracle.mts",
+    "tools/test_schema_oracle.py",
+    "contracts/native-fixtures/schemas.json",
+    "tools/test_model_fixtures.py",
+    "crates/scm-sdk/src/fixtures/model-regressions.json"
+  ]
+}

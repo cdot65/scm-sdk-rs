@@ -3,9 +3,11 @@ import copy
 import hashlib
 import json
 import pathlib
+import subprocess
 import unittest
 from unittest.mock import patch
 import model_fixtures as fixture
+from verify_typescript035_source import SDK_MAINTENANCE_BASELINE
 
 
 class ModelFixturesTests(unittest.TestCase):
@@ -23,6 +25,14 @@ class ModelFixturesTests(unittest.TestCase):
         # remain identical. Verify the live binding separately from that pin.
         manifest_sha=corpus['provenance'].pop('manifestSha256')
         self.assertEqual(manifest_sha,fixture.sha(fixture.ROOT/'contracts/manifest.json'))
+        # The ESM/CommonJS adapter repair changes only generator provenance.
+        # Verify its current binding before normalizing to the historical pin.
+        self.assertEqual(corpus['provenance']['generatorSha256'],
+                         fixture.sha(fixture.ROOT/'tools/schema-oracle.mts'))
+        baseline_generator = subprocess.check_output(
+            ['git', 'show', SDK_MAINTENANCE_BASELINE + ':tools/schema-oracle.mts'],
+            cwd=fixture.ROOT, timeout=30)
+        corpus['provenance']['generatorSha256']=hashlib.sha256(baseline_generator).hexdigest()
         digest=hashlib.sha256(json.dumps(corpus,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
         self.assertEqual(digest,'ddc0f2ac51368005823957a1de68c0517ce151b6d94ff4e95e5875553ba5615b')
 

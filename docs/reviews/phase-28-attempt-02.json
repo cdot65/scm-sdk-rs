@@ -1,0 +1,93 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 2,
+  "reviewed_at": "2026-10-22T14:20:27.051159+00:00",
+  "source_sha256": "63009ca5104c5adb6f2c017fdfebb1f428bcde8f9ca49a513265528cf1aecd9e",
+  "source_unchanged": true,
+  "checks_sha256": "fe64ca837fc553e58632753f4c362717f97287e0c041200fc19d8a0dbb3a3e08",
+  "prompt_sha256": "061db0382f0221a6208f68f0fbcfbc8218434e40b2a9e6c54dda0faa318a4597",
+  "cli_output_sha256": "6546bf6c4470ca79b2bc5d55b3a3b1d4388b01cfe89a0219fa0619ed6b1427ca",
+  "gate_passed": false,
+  "review": {
+    "score": 8,
+    "summary": "Phase 28 readiness is real and well evidenced: 105 commands, all exit 0, one continuous 13:31\u201314:02 run on source 63009ca5 equal to commit 17c9946, including both `--require-directional` clean packages (392s/377s) whose recorded stdout proves the directional example ran in-archive and as an external consumer on 1.89.0 and 1.99.0, plus a fresh read-only live receipt, dual-lockfile RustSec audit at a fresh head, and a 0.2.4-specific readiness guard. All six attempt-1 findings are closed in source, not prose. Guards fail closed: readiness cannot advance, delivery requires registry/tag/49-context receipts. Residual issues are six lows, mostly documentation: docs/DEPENDENCIES.md still describes a single lockfile and an older snapshot, the probe lockfile escapes check_lock/check_policy, CHANGELOG omits its refresh, consumer rows are only positionally identified, and the packaged README never links the directional guide. Publication, tag and CI remain pending.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "docs/DEPENDENCIES.md",
+        "line": 94,
+        "description": "The canonical dependency-policy section still describes one lockfile and a single combined gate, and its snapshot prose (line 3, \"resolved Cargo.lock ... on 2026-10-16\") predates the 0.2.4 lockfile change. It does not state that scripts/check-dependencies.py:127-152 now audits Cargo.lock and contracts/native-probes/Cargo.lock independently, nor that check_lock/check_policy/cargo-deny cover only the SDK graph. The split is recorded only in the receipt limitations (scripts/check-dependencies.py:247). The file is also absent from phase 28 scope_evidence (docs/phase-status.json:8153-8245), so it was never reviewed as a changed-release artifact. This repeats an unresolved low from the accepted chunk review.",
+        "required_fix": "Document the dual-lockfile advisory audit and the SDK-only license/source/checksum scope in docs/DEPENDENCIES.md, refresh its snapshot statement for the 0.2.4 lockfile, and add the file to the phase-28 scope_evidence."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/check-dependencies.py",
+        "line": 164,
+        "description": "check_lock and check_policy run only against ROOT/'Cargo.lock'. A git/path dependency source or a registry entry without a checksum added to contracts/native-probes/Cargo.lock would still pass the phase-28 dependency gate, although that lockfile is compiled by the external package consumers (scripts/check-package.py:187,196-206) and by the native-probes CI feature sets. audit_lockfiles only runs cargo-audit against it.",
+        "required_fix": "Apply check_lock to tomllib.loads(contracts/native-probes/Cargo.lock) as well, or state the deliberate exclusion in docs/DEPENDENCIES.md and docs/CI.md."
+      },
+      {
+        "severity": "low",
+        "path": "CHANGELOG.md",
+        "line": 44,
+        "description": "The advisory remediation entry says \"Refresh the lockfile\" (singular) and only addresses downstream application lockfiles, although contracts/native-probes/Cargo.lock:1123,1772 were updated to the same patched rustls-webpki 0.103.16 / webpki-root-certs 1.0.10 as Cargo.lock:1123,1773.",
+        "required_fix": "Note the development probe lockfile refresh alongside the root lockfile in the 0.2.4 entry."
+      },
+      {
+        "severity": "low",
+        "path": "scripts/check-management-package.py",
+        "line": 152,
+        "description": "The directional binding verifies the archive member digest, the working-tree digest, selectedFeatures == [], index uniqueness against the frozen probe and other consumers, the command and the cwd, but nothing in the verified row ties that execution to the directional source copied into the consumer's src/main.rs; it is distinguished only positionally from the access-policy consumer run, which has an identical command and cwd. The recorded stdout does distinguish it (docs/checks/phase-28-release-package-1.99.0.json:1099 and -1.89.0.json:1099), but verify_receipt never asserts it.",
+        "required_fix": "Record the consumer main.rs digest per external-consumer check row in scripts/check-package.py:218-223 and assert it (or the expected stdout line) in verify_receipt."
+      },
+      {
+        "severity": "low",
+        "path": "README.md",
+        "line": 24,
+        "description": "README.md is the only documentation inside the published archive (docs/checks/phase-28-release-readiness.json:22-26 lists README.md, LICENSE, NOTICE, Cargo.toml.orig, src/**, examples/**). It names 0.2.4 as \"the TypeScript 0.35.0 directional-profile release candidate\" but never links docs/DIRECTIONAL_PROFILES.md, lists no new types, and does not mention the deliberate request-validation tightening, while enumerating ten other product guides at lines 82-89. That information lives only in CHANGELOG.md:27-38 and docs/STABILITY.md:40-52, neither of which is packaged.",
+        "required_fix": "Add a directional-profile pointer and a one-line request-validation tightening note to README.md, then rebind the readiness receipt by rerunning both --require-directional package checks and check-access-release.py."
+      },
+      {
+        "severity": "low",
+        "path": "README.md",
+        "line": 35,
+        "description": "Absolute publication statements (\"The 0.2.4 candidate below remains unpublished\" here, CHANGELOG.md:9 \"Release candidate: not yet published\", docs/STABILITY.md:7 \"not yet published\") will ship verbatim in the immutable 0.2.4 archive and become inaccurate for crates.io readers after publication. The disclaimer paragraphs (README.md:20-22, CHANGELOG.md:5-7) mitigate but do not remove this; the 0.2.3 entry at CHANGELOG.md:55-58 demonstrates a version-neutral phrasing that stays correct after release.",
+        "required_fix": "Reword the archived candidate statements receipt-conditionally, as in CHANGELOG.md:55-58, so the published archive text remains accurate, and rebind the readiness receipt afterwards."
+      }
+    ],
+    "evidence": [
+      "Evidence is executed, complete and current-source bound: docs/reviews/phase-28-attempt-02.checks.json:1-6 records phase 28, source_sha256 63009ca5..., source_unchanged true, passed true; 105 \"exit_code\" fields, all 0, no \"timeout\": true, no \"source_unchanged\": false. It is a byte copy of docs/checks/phase-28.json (identical header and checked_at 14:02:26.276449, tools/review_phase.py:530-533). tools/review_phase.py:222-228 requires [item['command'] for item in checks] == commands_for(28) with every exit_code 0, and :232-233 re-verifies checkpoint_bindings against current bytes for phase 28.",
+      "The three phase-28-specific commands are exactly those defined at tools/check_phase.py:319-328 and all executed: checks.json:2862-2891 and 2893-2923 are scripts/check-management-package.py --require-directional for 1.89.0 (392.551s) and 1.99.0 (376.633s), each binding its receipt plus the retained .crate under .local/package-worktrees/17c994619d913e96c35b0b5fb049a4e1a02bc083/; checks.json:2924-2955 is check-access-release.py --phase 28 --version 0.2.4 returning releaseCommit 17c9946..., archiveSha256 9683a688..., toolchains [1.89.0, 1.99.0].",
+      "The directional consumer genuinely ran on both compilers, not merely compiled: docs/checks/phase-28-release-package-1.99.0.json:977-981 (cwd .../scm-sdk, in-archive example) and :1097-1101 (cwd .../consumer, \"Compiling scm-sdk-export-probes v0.0.0\") both print \"Directional typed models and lossless response compatibility verified offline.\"; phase-28-release-package-1.89.0.json:977-981,1097-1101 show the same for 1.89.0. contracts/native-probes/Cargo.toml:11 supplies the management feature, so the external run with selectedFeatures == [] is meaningful, and crates/scm-sdk/Cargo.toml:83-85 registers the example with required-features management.",
+      "The example is a real consumer of the release's new API: crates/scm-sdk/examples/directional_profiles.rs:13-32 builds ContentTypeConfiguration/ContentTypeConfigurations, enable_full_conversation_inspection(false), content_type_mode and dlp_tenant_id \"100\"; :34-49 validates against typescript:0.35.0:CreateSecurityProfileRequestSchema and asserts hyphenated wire keys; :50-57 asserts lossless preservation of wrong-typed and null response values in Mode::Response and Mode::ResponseWithoutDefaults. crates/scm-sdk/src/airs/management/profiles.rs:91,214 repoint exactly the two request-schema arguments while :76,92,107,215,231,250 keep response schemas frozen, matching docs/typescript-035-parity-plan.md:107-109.",
+      "Version-specific guards exist and reject cross-version reuse: scripts/check-access-release.py:30 registers (28,'0.2.4') and not (24,'0.2.4'); :56-77 requires schema-3 proofs, require_directional=phase==28 (single call, closing the attempt-1 style finding), commit_fingerprint == fingerprint, ancestry, and archive-vs-filesystem-vs-release-commit byte equality for every packaged input; scripts/check-prepublication.py:19-27 accepts only {(24,'0.2.3'),(28,'0.2.4')} and re-reads readiness after the candidate check; scripts/verify-publication.py:68-69,243 require a phase-28 readiness review and require_directional for 0.2.4. tools/test_release_024.py:53-61,78-87,99-107 assert these and that no fetch happens without a readiness review; all 13 tests ran OK (checks.json:1372).",
+      "Readiness cannot complete the phase and delivery fails closed: tools/review_phase.py:459-460 forbids --release-readiness with --advance, :478-479 rejects advancement unless review_scope == \"phase\", :483-489 calls release_delivery.verify(phase=28, version=\"0.2.4\"). tools/release_delivery.py:22,190 register and enforce (28,'0.2.4'); :198-204 require docs/checks/release-registry-0.2.4.json, release-tag-v0.2.4.json and a docs/checks/phase-28-remote-ci-run-N.json; :104-115 require CI job contexts to equal the derived matrix exactly, which is 24 features x 2 toolchains + contracts-and-package = 49 from .forgejo/workflows/ci.yml:91,90,18; :226-231 forward require_directional and verify the retained registry archive. tools/test_release_024.py:109-137 proves both paths leave docs/phase-status.json unmodified.",
+      "Prior findings are closed in source: README.md:33-35 names 0.2.3 as \"The current verified published version\" with its registry receipt (bound by test_release_024.py:31-35); docs/PHASES.md:291-303 is the new phase-28 acceptance paragraph; docs/CI.md:327,338-339 state the real --resume set and the phase-28 exclusion, matching tools/check_phase.py:895; docs/RELEASE.md:208-256 gives the complete 0.2.4 sequence (prepublication guard, cargo +1.99.0 publish from the retained worktree, verify-publication with both proofs, observe-release tag/ci, release_delivery --phase 28); tools/check_phase.py:898-899 derives the diagnostic from CONTRACT_CI_PHASES; scripts/check-dependencies.py:127-152 adds the independent probe-lockfile audit.",
+      "Security and dependency posture is current: docs/checks/phase-28-dependencies.json:3-13,56,98-102,144-145 shows the audit at 13:34:07 against RustSec 640bf5a9 with freshHead true and both lockfiles passed and unchanged; Cargo.lock:1123,1773 and contracts/native-probes/Cargo.lock:1123,1772 carry rustls-webpki 0.103.16 and webpki-root-certs 1.0.10 for RUSTSEC-2026-0382/0383. docs/checks/phase-28-private-material.json:3-12 records a 13:31:26 scan bound to source 63009ca5 and HEAD 17c9946 over 2412 git-visible files and 135 packaged candidates with zero credential and zero registration matches.",
+      "Service and capability claims stay bounded: docs/checks/phase-28-live-attempt-01.json:4-10,27-33,36-74 is a read-only 1.99.0 receipt with runtimeInputsSha256 94f22c91..., crateVersion 0.2.4, mutationsEnabled false, cleanupState not_needed, one verified OAuth probe and four HTTP 403 permission prerequisites; tools/live_evidence.py:122-133 binds it to SDK runtime inputs only and :161-177 fixes the permitted vocabulary. contracts/qualification.json:58-60 records liveVerified 1 / liveNotVerified 447; docs/DIRECTIONAL_PROFILES.md:7-11,129-142 and docs/STABILITY.md:32-52 document both validation directions and state that directional live acceptance is unverified.",
+      "Release-candidate identity is coherent: crates/scm-sdk/Cargo.toml:3,11 is version 0.2.4 with include limited to src/examples/LICENSE/NOTICE/README; docs/checks/phase-28-release-readiness.json:3-5,703-708 binds version 0.2.4, releaseCommit 17c9946..., readmeSha256 9a83ec49..., archiveSha256 9683a688... and both toolchains, and its protectedFiles contain no pinned upstream TypeScript source, keeping contracts/sources/typescript-0.35.0 outside the crate as the plan requires."
+    ],
+    "limitations": [
+      "Read-only review: I ran no commands and re-executed nothing. All pass/fail conclusions rest on reading the recorded receipts and tracing tools/check_phase.py:319-328 against tools/review_phase.py:201-234. I did not recompute the source fingerprint 63009ca5..., the checks digest fe64ca83..., any receipt SHA-256, or the retained .crate digests.",
+      "I did not open the retained archives under .local/package-worktrees/17c9946.../.local/artifacts/ or the extracted/consumer build trees; directional execution is established by the recorded commands, cwds and stdout plus the verifier logic in scripts/check-management-package.py:152-164.",
+      "Remote delivery is pending and unverified: no docs/checks/release-registry-0.2.4.json, release-tag-v0.2.4.json or phase-28-remote-ci-run-N.json exists, docs/phase-status.json:8249-8259 milestones are all pending with no registry_publication or delivery block, both chunks are still status pending, and the 49 terminal CI contexts have not been observed on the released source. I judged only that the guards for that evidence exist and fail closed; the remote-delivery chunk and a final complete-phase review remain required.",
+      "Generated model correctness, the additive overlay, the oracle corpus and the schema graph are accepted phase-27 deliverables; I relied on this phase's compiler, package and fixture receipts and on declaration-level documentation rather than re-auditing crates/scm-sdk/src/models/generated.rs or src/validation/schema_graph.json.",
+      "Per instruction I read no credential or tenant-registration files, nothing outside this repository, and no optional .local/typescript checkout; the verify-contracts.py --baseline .local/typescript result (extractedBaselineVerified true) is taken from the recorded run.",
+      "Phase 24/25 acceptance, the published 0.2.3 gate and pre-phase-26 release infrastructure were out of scope beyond the pinned 0.2.3 receipt identity enforced at tools/review_phase.py:409-413.",
+      "Three of my six findings restate lows already recorded in the accepted chunk review docs/reviews/phase-28-chunk-release-readiness-attempt-02.json:15-36; they remain unfixed in the current source, which is why they also count against this complete-phase assessment."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "release_readiness"
+}

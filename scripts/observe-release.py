@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Retain read-only remote tag and terminal Forgejo CI observations for phase 24.
 
-Only the fixed SDK remote is contacted. No credentials are written to receipts.
+Only the fixed canonical SDK remote or its GitHub mirror is contacted. No credentials are written to receipts.
 This observes delivery; it never pushes, merges, approves jobs or publishes.
 """
 import argparse
@@ -18,7 +18,7 @@ import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
-from release_delivery import REMOTE, commit_fingerprint, expected_contexts
+from release_delivery import REMOTE, GITHUB_REMOTE, commit_fingerprint, expected_contexts
 from review_phase import fingerprint
 BASE = 'https://git.cdot.io/api/v1/repos/cdot/scm-sdk-rs'
 
@@ -28,11 +28,18 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def remote_tag(source, output):
+def remote_tag(source, output, version="0.2.3", tag_remote="canonical"):
+    remotes = {"canonical": REMOTE, "github": GITHUB_REMOTE}
+    if tag_remote not in remotes:
+        raise ValueError("Unreviewed tag remote")
+    remote = remotes[tag_remote]
+    if version not in {"0.2.3", "0.2.4"}:
+        raise ValueError("Unreviewed release version")
+    tag_ref = "refs/tags/v" + version
     if not re.fullmatch('[0-9a-f]{40}', source):
         raise ValueError('Expected exact source commit')
-    result = subprocess.run(['git', 'ls-remote', REMOTE, 'refs/heads/main',
-                             'refs/tags/v0.2.3', 'refs/tags/v0.2.3^{}'], cwd=ROOT,
+    result = subprocess.run(['git', 'ls-remote', remote, 'refs/heads/main',
+                             tag_ref, tag_ref + '^{}'], cwd=ROOT,
                             capture_output=True, text=True, timeout=60, check=True)
     refs = {}
     for line in result.stdout.splitlines():
@@ -40,11 +47,11 @@ def remote_tag(source, output):
         if not re.fullmatch('[0-9a-f]{40}', oid) or ref in refs:
             raise ValueError('Unexpected remote reference')
         refs[ref] = oid
-    if (refs.get('refs/tags/v0.2.3^{}') != source or
-            'refs/tags/v0.2.3' not in refs or 'refs/heads/main' not in refs):
+    if (refs.get(tag_ref + '^{}') != source or
+            tag_ref not in refs or 'refs/heads/main' not in refs):
         raise ValueError('Annotated remote tag is absent or differs from qualified source')
-    receipt = {'passed': True, 'remote': REMOTE, 'tag': 'v0.2.3',
-               'sourceCommit': source, 'tagObject': refs['refs/tags/v0.2.3'],
+    receipt = {'passed': True, 'remote': remote, 'tag': 'v' + version,
+               'sourceCommit': source, 'tagObject': refs[tag_ref],
                'remoteRefs': refs}
     write(output, receipt)
 
@@ -90,7 +97,7 @@ def terminal_ci(source, run_number, output):
     prefix = f'/cdot/scm-sdk-rs/actions/runs/{run_number}/jobs/'
     jobs = {}
     for page in range(1, 21):
-        rows = get(f'/statuses/{source}?limit=100&page={page}')
+        rows = get(f'/statuses/{source}?limit=50&page={page}')
         for row in rows:
             target = row.get('target_url', '')
             if not re.fullmatch(re.escape(prefix) + r'\d+', target):
@@ -98,8 +105,10 @@ def terminal_ci(source, run_number, output):
             context = row.get('context')
             if context not in jobs:
                 jobs[context] = {key: row.get(key) for key in ('context', 'status', 'target_url')}
-        if len(rows) < 100:
+        if len(rows) < 50:
             break
+    else:
+        raise ValueError('CI status history exceeded the bounded pagination limit')
     if set(jobs) != contexts or any(row['status'] != 'success' for row in jobs.values()):
         raise ValueError('All configured CI contexts must report success for this run')
     if len({row['target_url'] for row in jobs.values()}) != len(jobs):
@@ -126,12 +135,16 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('kind', choices=['tag', 'ci'])
     parser.add_argument('--source', required=True)
+    parser.add_argument('--version', choices=('0.2.3', '0.2.4'), default='0.2.3')
+    parser.add_argument('--tag-remote', choices=('canonical', 'github'), default='canonical')
     parser.add_argument('--run', type=int)
     parser.add_argument('--output', required=True, type=pathlib.Path)
     args = parser.parse_args()
     try:
+        if args.kind != 'tag' and args.tag_remote != 'canonical':
+            raise ValueError('--tag-remote applies only to tag observations')
         if args.kind == 'tag':
-            remote_tag(args.source, args.output)
+            remote_tag(args.source, args.output, args.version, args.tag_remote)
         elif args.run is None:
             raise ValueError('CI observation requires --run')
         else:

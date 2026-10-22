@@ -1,6 +1,16 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.3**. [Phase 24](red-team-management-0.86-plan.md)
+The workspace version is **0.2.4**. Its publication and delivery are established
+only by verified version-specific receipts.
+Phase 28 qualifies the TypeScript 0.35.0 directional-profile delta, preserves the
+existing APIs, and requires its own registry, annotated-tag, and CI receipts.
+The lockfiles include rustls-webpki 0.103.16 and webpki-root-certs 1.0.10 for
+RUSTSEC-2026-0382/0383. Downstream applications must update and audit their own
+resolved lockfiles; crate publication does not replace them.
+
+## Historical 0.2.3 delivery procedure
+
+[Phase 24](red-team-management-0.86-plan.md)
 qualifies AIRS management 0.86.0 while preserving the published 0.2.2 API.
 The `checks/release-registry-0.2.3.json` and
 `checks/release-tag-v0.2.3.json` establish actual publication and
@@ -175,3 +185,82 @@ matrix jobs succeeded, while `contracts-and-package` failed after setup.
 Current remote qualification is recorded in [phase status](phase-status.json). Other target
 builds remain compile-only where [PLATFORMS.md](PLATFORMS.md) says so; those facts
 are release limitations, not platform runtime or live-provider acceptance.
+
+## TypeScript 0.35.0 patch release (phase 28)
+
+Use `python3 tools/check_phase.py --phase 28` for cumulative local qualification.
+Both clean compiler packages must execute the directional-profile consumer.
+Obtain the phase-28 release-readiness review before publishing 0.2.4; the explicit
+prepublication guard is:
+
+```sh
+python3 scripts/check-prepublication.py --phase 28 --version 0.2.4 --readiness-review PATH
+```
+
+Publication verification and final delivery require
+version-specific registry, annotated-tag, and terminal successful CI receipts.
+A readiness review cannot complete phase 28. Historical phase 24/25 records and
+release versions remain independent; never substitute their receipts.
+
+### Execute the reviewed 0.2.4 delivery
+
+Replace `NN` below with the accepted **phase-level release-readiness** attempt,
+not the readiness chunk review. Set `RELEASE_WORKTREE` to the clean detached
+worktree retained by both phase-28 package proofs, `RELEASE_SOURCE` to their
+`releaseCommit`, and `DELIVERY_SOURCE` to the pushed commit selected for CI.
+`RUN_NUMBER` is that successful Forgejo run's repository index. These are actual
+receipt identities, not the current branch name. The delivery source may be a
+later evidence-only descendant with the same reviewed source fingerprint.
+
+Run the prepublication guard against the unchanged candidate, then publish from
+that exact clean worktree using the owner-controlled Cargo credential:
+
+```sh
+python3 scripts/check-prepublication.py --phase 28 --version 0.2.4 \
+  --readiness-review docs/reviews/phase-28-attempt-NN.json
+(cd "$RELEASE_WORKTREE" && cargo +1.99.0 publish -p scm-sdk --locked)
+python3 scripts/verify-publication.py --version 0.2.4 \
+  --proof docs/checks/phase-28-release-package-1.99.0.json \
+  --msrv-proof docs/checks/phase-28-release-package-1.89.0.json \
+  --readiness-review docs/reviews/phase-28-attempt-NN.json \
+  --output docs/checks/release-registry-0.2.4.json
+```
+
+Create the annotated `v0.2.4` tag at `RELEASE_SOURCE` and push that same tag
+object to both authorized remotes; never recreate or force-replace an existing tag:
+
+```sh
+git push ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git refs/tags/v0.2.4:refs/tags/v0.2.4
+git push git@github.com:cdot65/scm-sdk-rs.git refs/tags/v0.2.4:refs/tags/v0.2.4
+```
+
+The GitHub tag makes the packaged README's versioned source links resolvable.
+Push the delivery
+commit and wait for all 49 configured CI contexts to succeed. Record the remote
+observations explicitly with the 0.2.4 version (the observer's default remains
+historical 0.2.3):
+
+```sh
+python3 scripts/observe-release.py tag --version 0.2.4 \
+  --source "$RELEASE_SOURCE" --output docs/checks/release-tag-v0.2.4.json
+python3 scripts/observe-release.py tag --version 0.2.4 --tag-remote github \
+  --source "$RELEASE_SOURCE" --output docs/checks/release-tag-github-v0.2.4.json
+python3 scripts/observe-release.py ci --version 0.2.4 \
+  --source "$DELIVERY_SOURCE" --run "$RUN_NUMBER" \
+  --output "docs/checks/phase-28-remote-ci-run-$RUN_NUMBER.json"
+```
+
+In phase 28's `docs/phase-status.json` entry, record `registry_publication` with
+`status: published_and_verified`, `version: 0.2.4`, the registry receipt path in
+`evidence`, and its exact `sourceCommit` in `source_commit`. Record `delivery`
+with `registry_receipt`, `tag_receipt`, `github_tag_receipt`, and `ci_receipt`
+pointing to the four verified files above. The phase-28 guard requires the
+GitHub mirror to contain the identical annotated tag object and peeled release
+commit; historical phases keep their original canonical-only requirement. Then run the offline delivery guard:
+
+```sh
+python3 tools/release_delivery.py --phase 28 --version 0.2.4
+```
+
+Only after that guard passes can the remote-delivery chunk and final phase review
+establish completion. The readiness review alone cannot advance phase 28.

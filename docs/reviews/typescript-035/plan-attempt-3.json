@@ -1,0 +1,40 @@
+{
+  "scope": "Third plan review of docs/typescript-035-parity-plan.md plus registration delta (PHASES.md:268-276, implementation-plan.md:186-191, phase-status.json phases 26-28, review_phase.py maintenance dependency branch and SCOPE_BOUND_PHASES, check_phase.py phase-26 commands and CONTRACT_LEDGER_OWNERS, verify_typescript035_source.py, test_typescript035_governance.py, docs/checks/phase-26.json). Planning only; phase 27/28 command sets and 0.2.4 release guards are declared deliverables.",
+  "attempt": 3,
+  "scores": {
+    "implementation": 9,
+    "code_quality": 9,
+    "supportability": 9,
+    "architecture": 10,
+    "feature_delivery": 9
+  },
+  "total": 46,
+  "overall": 9,
+  "accepted": true,
+  "acceptance_rule": ">=46/50, each >=8, overall >=9, no blockers",
+  "blockers": [],
+  "attempt_2_blockers_resolved": [
+    "Blocker 1 (phase 26 ungateable, no evaluable dependency relation) resolved. review_phase.py:386-404 adds an exact-matched maintenance branch {26:[23],27:[26],28:[27]}; depends_on is data at phase-status.json:6783-6785/6837-6839/6881-6883 and a declaration differing from the reviewed graph raises before any review. The immutable 0.2.3 receipt is checked by version, sourceCommit 14a67541 and archiveSha256 80a58b7b (:392-396), and each dependency is recursively re-validated through its own sequential rule plus verify_record, so phase 23 still proves its own gate. next_phase (:415-420) honours final_in_sequence: phase 25 (:6741) terminates its old sequence (None), 26->27->28 advance, 28 (:6885) terminates. Phase 24/25 remain in_progress/pending with empty reviews and unchanged fail-closed --require-through-phase posture.",
+    "Blocker 2 (chunk shape incompatible with every consumer; phases not scope-bound) resolved. Phases 26-28 declare chunks as lists of {id, status, scope_evidence, scope_revisions:[{from_attempt:1,...}]} satisfying declared_chunk_scope:225-253 and accepted_chunks:321-335; SCOPE_BOUND_PHASES is {20..28} (review_phase.py:17), so 26-28 reviews get the 'Review scope:'/'Chunk scope artifacts:' prompt binding and scope_evidence record field (:290-302, :634-637). attempt_budget is gone; the five-attempt cap remains :446-449. Phase 26 declares scope_evidence covering the plan and contracts/sources/typescript-0.35.0, so test_management_phases.py:177-182 runs verify_scoped_ledger_owners over the active phase and actually enforces the three owners at check_phase.py:28-30 against the real seven-file tree; that test is in commands_for(26)."
+  ],
+  "verified_independently": [
+    "Strict argparse: verify_typescript035_source.py:37-39 requires --check; verify() digests manifest bytes before parsing (:13-16), pins commit 780c985c/version 0.35.0, rejects absolute/.. paths, symlinks and non-regular files, checks per-file bytes and sha256, and requires exact inventory including symlinks (:19-33).",
+    "test_typescript035_governance.py covers manifest tamper, pinned-source tamper, extra file, symlink substitution, dependency accept/reject for 26/25/27, verify_record failure, depends_on removal, byte-equality of all non-26/27/28 phase records against 578f2e6, SCOPE_BOUND membership, every declared chunk scope and all four next_phase outcomes.",
+    "docs/checks/phase-26.json is a real passing receipt: source_unchanged true, no scope key, four groups exit 0, checks[].command equals commands_for(26) (check_phase.py:313-317), satisfying check_evidence:201-222.",
+    "Plan technical claims re-checked against source: wire names are hyphenated 'content-type-mode'/'content-type-configurations'/'enable-full-conversation-inspection' with underscored dlp_tenant_id (mgmt-security-profile.ts:276,288-289,317,334,350,368), exactly as plan lines 96-97 list; the four new exports are at :239-269; ModelConfigurationSchema extends ContentTypeConfigurationSchema (:272) so reusing existing protection types and retaining s009588/s009599 (native-models.json:7448,336) replaces no identity; the single closure .default([]) is SecurityProfileListResponseSchema (:392); profiles.rs has exactly two CreateSecurityProfileRequestSchema arguments (airs/management/profiles.rs:91,214) with response arguments frozen, matching plan lines 107-109.",
+    "CI stays pinned to --phase 24 --verification-only --contracts-only (.forgejo/workflows/ci.yml:73) and test_ci.py derives its phase from the workflow, so active_phase 26 moves no historical gate.",
+    "commands_for(27)/(28) raise at check_phase.py:750, so both later phases fail closed until they register their command sets."
+  ],
+  "required_fixes_not_blocking": [
+    "Phases 26-28 have no 'plan' key, so review_phase.py:513 falls back to active_followup_plan = docs/red-team-management-0.86-plan.md (phase-status.json:6888) and the recorded prompt would name the unrelated Prisma AIRS drift plan. Add \"plan\": \"docs/typescript-035-parity-plan.md\" to phases 26-28 before invoking the phase-26 chunk review; the correct plan is already in scope_evidence, so the gate stays sound.",
+    "Phase 27/28 chunk scope_evidence is still the plan document alone; revise the from_attempt 1 scope to the real artifact set when their command sets are registered, before any review binds the placeholder (matches_declared_scope:256-259, verify_attempt_sequence:125-130).",
+    "Phase 26 has no analogue of phase 18's pre-acceptance SDK-freeze assertion (check_phase.py:361). The fingerprint binding makes the reviewed tree tamper-evident, so this is defence in depth, but a 'no untracked crates/scm-sdk implementation file' assertion would make the plan-only claim executable.",
+    "The maintenance branch's recursive verify_record path is exercised only with verify_record patched; one unpatched assertion that validate_predecessors(26) succeeds against the real phase-23 record would close the gap."
+  ],
+  "limitations": [
+    "Read-only review: the four phase-26 command groups were assessed from docs/checks/phase-26.json and the code they execute, not re-run.",
+    "Phase 27/28 acceptance not assessed; their guards, the 0.2.4 readiness/delivery branch (review_phase.py:442-468) and command registration are deliverables before those gates.",
+    "Directional live tenant acceptance and Forgejo write/CI limits remain real external blockers, correctly disclosed in plan lines 149-157."
+  ],
+  "notes": "Both attempt-2 blockers are closed with executable, tested, regression-protected enforcement, and the previously accepted model/projection/oracle design holds at every point re-checked against actual source. Remaining items are a one-key prompt-binding fix and registrations the plan defers by design. Approved for implementing the SDK gap under phase 27."
+}

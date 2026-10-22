@@ -25,6 +25,14 @@ COMMAND_TIMEOUT_SECONDS = 7 * 900 + 60
 # Every scoped contract JSON requires a declared verifying owner. Unknown artifacts
 # fail closed, including new files discovered under a directory scope.
 CONTRACT_LEDGER_OWNERS = {
+    "contracts/typescript-035-management-compatibility.json": ("tools/red_team_management.py", "--check"),
+    "contracts/native-semantics.json": ("tools/generate_validation.py", "--check"),
+    "contracts/typescript-035-parity.json": ("tools/typescript035_profiles.py", "--check"),
+    "contracts/typescript-035-oracle.json": ("tools/typescript035-oracle.mts", "--check"),
+    'contracts/sources/typescript-0.35.0/manifest.json': ("tools/verify_typescript035_source.py", "--check"),
+    'contracts/sources/typescript-0.35.0/git-tree.json': ("tools/verify_typescript035_source.py", "--check"),
+    'contracts/sources/typescript-0.35.0/package.json': ("tools/verify_typescript035_source.py", "--check"),
+    'contracts/sources/typescript-0.35.0/test/models/fixtures/directional-security-profile.json': ("tools/verify_typescript035_source.py", "--check"),
     'contracts/live-evidence.json': ('tools/live_evidence.py', '--check'),
     'contracts/compatibility/management-old-consumers.json': ('tools/management_consumers.py', '--check'),
     'contracts/native-fixtures/red-team-management.json': ('tools/management_fixtures.py', '--check'),
@@ -41,6 +49,7 @@ CONTRACT_LEDGER_OWNERS = {
     'contracts/red-team-management-model-overlay.json': ('tools/generate_models.py', '--check'),
     'contracts/red-team-management-union-extensions.json': ('tools/generate_models.py', '--check'),
     'contracts/native-operations.json': ('tools/native_operations.py', '--check'),
+    'contracts/native-operation-mappings/management.json': ('tools/native_operations.py', '--check'),
     'contracts/native-exports.json': ('tools/native_exports.py', '--check'),
     'contracts/qualification.json': ('tools/qualification.py', '--check'),
     'contracts/response-defaults.json': ('tools/response_defaults.py', '--check'),
@@ -124,7 +133,7 @@ def run_check(command):
 
 
 MANAGEMENT_PHASES = (21, 22, 23, 24, 25)
-CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES)
+CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES, 28)
 MANAGEMENT_BASELINE = "0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e"
 
 
@@ -307,6 +316,65 @@ def management_commands(phase):
 
 
 def commands_for(phase):
+    if phase == 28:
+        commands = [[value.replace("phase-27-", "phase-28-") for value in command]
+                    for command in commands_for(27)]
+        for compiler in ("1.89.0", "1.99.0"):
+            commands.append(["python", "scripts/check-management-package.py", "--require-directional",
+                             "--toolchain", compiler, "--output",
+                             f"docs/checks/phase-28-release-package-{compiler}.json"])
+        commands.append(["python", "scripts/check-access-release.py", "--phase", "28", "--version", "0.2.4",
+                         "--output", "docs/checks/phase-28-release-readiness.json"])
+        return commands
+    if phase == 27:
+        # Cumulative offline regressions retain historical command definitions.
+        # Clean extracted release archives are qualified separately in phase 28.
+        commands = []
+        for original in management_commands(23):
+            if "scripts/check-management-package.py" in original or "--verify-package-receipts" in original:
+                continue
+            if original[1:4] == ["-m", "unittest", "discover"] and "test_*.py" in original:
+                # Governance tests isolate their planning-only assertions; keep
+                # all supplemental source and evidence tamper checks cumulative.
+                for path in sorted((ROOT / "tools").glob("test_*.py")):
+                    command = ["python", "-m", "unittest", "discover", "-s", "tools", "-p", path.name, "-v"]
+                    if command not in commands:
+                        commands.append(command)
+                continue
+            command = [value.replace("phase-23-", "phase-27-") for value in original]
+            if command[:2] == ["python", "tools/red_team_management.py"] and "--require-through-phase" in command:
+                command = ["python", "tools/red_team_management.py", "--check", "--current-source-compatibility"]
+            if command[:2] == ["git", "diff"] and "--check" in command:
+                command.append(":(exclude)contracts/sources/typescript-0.35.0/*")
+            if command not in commands:
+                commands.append(command)
+        commands += [
+            ["python", "tools/verify_typescript035_source.py", "--check"],
+            ["python", "tools/typescript035_profiles.py", "--check"],
+            ["python", "tools/live_evidence.py", "--check"],
+            ["tools/node_modules/.bin/tsx", "tools/typescript035-oracle.mts", "--check"],
+            ["tools/node_modules/.bin/tsc", "--noEmit", "--strict", "--target", "ES2022", "--module", "NodeNext", "--moduleResolution", "NodeNext", "--skipLibCheck", "--typeRoots", "tools/node_modules/@types", "tools/typescript035-oracle.mts"],
+        ]
+        for compiler in ("1.89.0", "1.99.0"):
+            commands.append(["python", "scripts/check-rust.py", "--toolchain", compiler,
+                             "--feature-set", "management", "--output", f"docs/checks/phase-27-rust-{compiler}-management.json"])
+        # Reject newly disclosed dependency vulnerabilities before the costly Rust matrix.
+        security = [c for c in commands if "scripts/check-dependencies.py" in c]
+        commands = [c for c in commands if c not in security]
+        first_rust = next(i for i, c in enumerate(commands) if "scripts/check-rust.py" in c)
+        commands[first_rust:first_rust] = security
+        return commands
+    if phase == 26:
+        return [["git", "diff", "--exit-code", "578f2e6", "--", "crates/scm-sdk"],
+                ["python", "-c", "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk']), 'Unexpected SDK implementation file before plan acceptance'"],
+                ["git", "diff", "--check", "--", ".", ":(exclude)contracts/sources/typescript-0.35.0/*"],
+                ["git", "diff", "--check", "578f2e6..HEAD", "--", ".", ":(exclude)contracts/sources/typescript-0.35.0/*"],
+                ["git", "diff", "--cached", "--check", "--", ".", ":(exclude)contracts/sources/typescript-0.35.0/*"],
+                ["python", "tools/verify_typescript035_source.py", "--check"],
+                ["python", "scripts/check-private-material.py", "--check", "docs/checks/phase-26-private-material.json"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_typescript035_governance.py", "-v"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"],
+                ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_management_phases.py", "-v"]]
     if phase in MANAGEMENT_PHASES:
         return management_commands(phase)
     if phase == 20:
@@ -822,12 +890,13 @@ def main():
     parser.add_argument("--contracts-only", action="store_true",
                         help="Selected phase CI contract subset; requires --verification-only and never qualifies a phase review")
     parser.add_argument('--resume', action='store_true',
-                        help='Resume a source-bound passing prefix within eight hours (phases 23–25 only)')
+                        help='Resume a source-bound passing prefix within eight hours (phases 23–25 and 27)')
     args = parser.parse_args()
-    if args.resume and (args.phase not in (23, 24, 25) or args.contracts_only or args.verification_only):
-        parser.error('--resume requires an active full phase 23–25 qualification')
+    if args.resume and (args.phase not in (23, 24, 25, 27) or args.contracts_only or args.verification_only):
+        parser.error('--resume requires an active full phase 23–25 or 27 qualification')
     if args.contracts_only and (not args.verification_only or args.phase not in CONTRACT_CI_PHASES):
-        parser.error("--contracts-only requires --phase 12 --verification-only (or another supported phase: 17, 20, 21–25)")
+        parser.error("--contracts-only requires --verification-only and a supported phase: "
+                     + ", ".join(map(str, CONTRACT_CI_PHASES)))
     status = json.loads((ROOT / "docs/phase-status.json").read_text())
     if status["active_phase"] != args.phase and not args.verification_only:
         raise ValueError("Run the active phase's checks")
@@ -844,7 +913,7 @@ def main():
         result = run_check(invocation)
         records.append({"command": command, "invocation": invocation, **result,
                         "duration_seconds": round(time.monotonic() - started, 3)})
-        if args.phase in (23, 24, 25) and result['exit_code'] == 0:
+        if args.phase in (23, 24, 25, 26, 27, 28) and result['exit_code'] == 0:
             if fingerprint(ROOT) != before:
                 raise ValueError('Source changed during resumable qualification')
             records[-1].update(source_unchanged=True,
@@ -863,7 +932,7 @@ def main():
                               "stderr_tail": result["stderr"][-16384:]}), file=sys.stderr, flush=True)
             break
     unchanged = before == fingerprint(ROOT)
-    if args.phase in (23, 24, 25):
+    if args.phase in (23, 24, 25, 26, 27, 28):
         verify_checkpoint_bindings([row for row in records if row['exit_code'] == 0])
     report = {"phase": args.phase, "source_sha256": before, "source_unchanged": unchanged,
               "checked_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),

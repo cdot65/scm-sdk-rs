@@ -4454,17 +4454,62 @@ impl fmt::Debug for AiProfile {
 }
 
 /// Native typed contract for frozen schema `s009599`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct AiSecurityProfile {
-    #[serde(rename = "model-type", default)]
     pub model_type: Optional<String>,
-    #[serde(rename = "content-type", default)]
     pub content_type: Optional<String>,
-    #[serde(rename = "model-configuration", default)]
     pub model_configuration: Optional<ModelConfiguration>,
-    #[serde(flatten)]
+    pub content_type_mode: Optional<String>,
+    pub content_type_configurations: Optional<ContentTypeConfigurations>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for AiSecurityProfile {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut content_type_mode: Optional<String> = Default::default();
+        if let Some(value) = raw.remove("content-type-mode") {
+            match crate::json_decode::from_value::<Optional<String>>(value.clone()) {
+                Ok(value) => content_type_mode = value,
+                Err(_) => {
+                    raw.insert("content-type-mode".into(), value);
+                }
+            }
+        }
+        let mut content_type_configurations: Optional<ContentTypeConfigurations> =
+            Default::default();
+        if let Some(value) = raw.remove("content-type-configurations") {
+            match crate::json_decode::from_value::<Optional<ContentTypeConfigurations>>(
+                value.clone(),
+            ) {
+                Ok(value) => content_type_configurations = value,
+                Err(_) => {
+                    raw.insert("content-type-configurations".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "model-type", default)]
+            model_type: Optional<String>,
+            #[serde(rename = "content-type", default)]
+            content_type: Optional<String>,
+            #[serde(rename = "model-configuration", default)]
+            model_configuration: Optional<ModelConfiguration>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            model_type: baseline.model_type,
+            content_type: baseline.content_type,
+            model_configuration: baseline.model_configuration,
+            content_type_mode,
+            content_type_configurations,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for AiSecurityProfile {
     fn serialize<S: serde::Serializer>(
@@ -4491,7 +4536,23 @@ impl Serialize for AiSecurityProfile {
         if !self.model_configuration.is_unset() {
             map.serialize_entry("model-configuration", &self.model_configuration)?;
         }
+        if !self.content_type_mode.is_unset() {
+            map.serialize_entry("content-type-mode", &self.content_type_mode)?;
+        }
+        if !self.content_type_configurations.is_unset() {
+            map.serialize_entry(
+                "content-type-configurations",
+                &self.content_type_configurations,
+            )?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "content-type-mode" && !self.content_type_mode.is_unset() {
+                continue;
+            }
+            if key == "content-type-configurations" && !self.content_type_configurations.is_unset()
+            {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -4511,6 +4572,8 @@ pub struct AiSecurityProfileBuilder {
     model_type: Optional<String>,
     content_type: Optional<String>,
     model_configuration: Optional<ModelConfiguration>,
+    content_type_mode: Optional<String>,
+    content_type_configurations: Optional<ContentTypeConfigurations>,
     extensions: Extensions<JsonValue>,
 }
 impl AiSecurityProfileBuilder {
@@ -4526,6 +4589,17 @@ impl AiSecurityProfileBuilder {
         self.model_configuration = value;
         self
     }
+    pub fn content_type_mode(mut self, value: Optional<String>) -> Self {
+        self.content_type_mode = value;
+        self
+    }
+    pub fn content_type_configurations(
+        mut self,
+        value: Optional<ContentTypeConfigurations>,
+    ) -> Self {
+        self.content_type_configurations = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -4535,6 +4609,8 @@ impl AiSecurityProfileBuilder {
             model_type: self.model_type,
             content_type: self.content_type,
             model_configuration: self.model_configuration,
+            content_type_mode: self.content_type_mode,
+            content_type_configurations: self.content_type_configurations,
             extensions: self.extensions,
         })
     }
@@ -13290,6 +13366,243 @@ impl fmt::Debug for ContentErrorType {
     }
 }
 
+/// Native typed contract for TypeScript 0.35.0 supplemental schema `s_ts035_content_type_configuration`. Validate wire constraints with `validation::parse`.
+#[derive(Clone, PartialEq, Deserialize)]
+#[non_exhaustive]
+pub struct ContentTypeConfiguration {
+    #[serde(rename = "data-protection", default)]
+    pub data_protection: Optional<DataProtection>,
+    #[serde(rename = "app-protection", default)]
+    pub app_protection: Optional<PolicyAppProtection>,
+    #[serde(rename = "model-protection", default)]
+    pub model_protection: Optional<Vec<ModelProtectionItem>>,
+    #[serde(rename = "agent-protection", default)]
+    pub agent_protection: Optional<Vec<AgentProtectionItem>>,
+    #[serde(flatten)]
+    pub extensions: Extensions<JsonValue>,
+}
+impl Serialize for ContentTypeConfiguration {
+    fn serialize<S: serde::Serializer>(
+        &self,
+        serializer: S,
+    ) -> std::result::Result<S::Ok, S::Error> {
+        const KNOWN: &[&str] = &[
+            "data-protection",
+            "app-protection",
+            "model-protection",
+            "agent-protection",
+        ];
+        if self
+            .extensions
+            .keys()
+            .any(|key| KNOWN.contains(&key.as_str()))
+        {
+            return Err(serde::ser::Error::custom(
+                "extension collides with a known model field",
+            ));
+        }
+        let mut map = serializer.serialize_map(None)?;
+        if !self.data_protection.is_unset() {
+            map.serialize_entry("data-protection", &self.data_protection)?;
+        }
+        if !self.app_protection.is_unset() {
+            map.serialize_entry("app-protection", &self.app_protection)?;
+        }
+        if !self.model_protection.is_unset() {
+            map.serialize_entry("model-protection", &self.model_protection)?;
+        }
+        if !self.agent_protection.is_unset() {
+            map.serialize_entry("agent-protection", &self.agent_protection)?;
+        }
+        for (key, value) in self.extensions.iter() {
+            map.serialize_entry(key, value)?;
+        }
+        map.end()
+    }
+}
+impl ContentTypeConfiguration {
+    pub fn builder() -> ContentTypeConfigurationBuilder {
+        ContentTypeConfigurationBuilder::default()
+    }
+    pub const SCHEMA: &'static str = "s_ts035_content_type_configuration";
+    pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
+        super::support::parse(Self::SCHEMA, value, mode)
+    }
+}
+#[derive(Default)]
+pub struct ContentTypeConfigurationBuilder {
+    data_protection: Optional<DataProtection>,
+    app_protection: Optional<PolicyAppProtection>,
+    model_protection: Optional<Vec<ModelProtectionItem>>,
+    agent_protection: Optional<Vec<AgentProtectionItem>>,
+    extensions: Extensions<JsonValue>,
+}
+impl ContentTypeConfigurationBuilder {
+    pub fn data_protection(mut self, value: Optional<DataProtection>) -> Self {
+        self.data_protection = value;
+        self
+    }
+    pub fn app_protection(mut self, value: Optional<PolicyAppProtection>) -> Self {
+        self.app_protection = value;
+        self
+    }
+    pub fn model_protection(mut self, value: Optional<Vec<ModelProtectionItem>>) -> Self {
+        self.model_protection = value;
+        self
+    }
+    pub fn agent_protection(mut self, value: Optional<Vec<AgentProtectionItem>>) -> Self {
+        self.agent_protection = value;
+        self
+    }
+    pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
+        self.extensions.insert(key.into(), value);
+        self
+    }
+    pub fn build(self) -> crate::Result<ContentTypeConfiguration> {
+        Ok(ContentTypeConfiguration {
+            data_protection: self.data_protection,
+            app_protection: self.app_protection,
+            model_protection: self.model_protection,
+            agent_protection: self.agent_protection,
+            extensions: self.extensions,
+        })
+    }
+    pub fn build_validated(
+        self,
+        mode: crate::validation::Mode,
+    ) -> crate::Result<ContentTypeConfiguration> {
+        let model = self.build()?;
+        let value = super::support::wire_value(&model)?;
+        ContentTypeConfiguration::parse(value, mode)
+    }
+}
+impl fmt::Debug for ContentTypeConfigurationBuilder {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("ContentTypeConfigurationBuilder([REDACTED])")
+    }
+}
+impl fmt::Debug for ContentTypeConfiguration {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("ContentTypeConfiguration([REDACTED])")
+    }
+}
+
+/// Native typed contract for TypeScript 0.35.0 supplemental schema `s_ts035_content_type_configurations`. Validate wire constraints with `validation::parse`.
+#[derive(Clone, PartialEq, Deserialize)]
+#[non_exhaustive]
+pub struct ContentTypeConfigurations {
+    #[serde(rename = "prompt", default)]
+    pub prompt: Optional<ContentTypeConfiguration>,
+    #[serde(rename = "response", default)]
+    pub response: Optional<ContentTypeConfiguration>,
+    #[serde(rename = "tool-call", default)]
+    pub tool_call: Optional<ContentTypeConfiguration>,
+    #[serde(rename = "tool-response", default)]
+    pub tool_response: Optional<ContentTypeConfiguration>,
+    #[serde(flatten)]
+    pub extensions: Extensions<JsonValue>,
+}
+impl Serialize for ContentTypeConfigurations {
+    fn serialize<S: serde::Serializer>(
+        &self,
+        serializer: S,
+    ) -> std::result::Result<S::Ok, S::Error> {
+        const KNOWN: &[&str] = &["prompt", "response", "tool-call", "tool-response"];
+        if self
+            .extensions
+            .keys()
+            .any(|key| KNOWN.contains(&key.as_str()))
+        {
+            return Err(serde::ser::Error::custom(
+                "extension collides with a known model field",
+            ));
+        }
+        let mut map = serializer.serialize_map(None)?;
+        if !self.prompt.is_unset() {
+            map.serialize_entry("prompt", &self.prompt)?;
+        }
+        if !self.response.is_unset() {
+            map.serialize_entry("response", &self.response)?;
+        }
+        if !self.tool_call.is_unset() {
+            map.serialize_entry("tool-call", &self.tool_call)?;
+        }
+        if !self.tool_response.is_unset() {
+            map.serialize_entry("tool-response", &self.tool_response)?;
+        }
+        for (key, value) in self.extensions.iter() {
+            map.serialize_entry(key, value)?;
+        }
+        map.end()
+    }
+}
+impl ContentTypeConfigurations {
+    pub fn builder() -> ContentTypeConfigurationsBuilder {
+        ContentTypeConfigurationsBuilder::default()
+    }
+    pub const SCHEMA: &'static str = "s_ts035_content_type_configurations";
+    pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
+        super::support::parse(Self::SCHEMA, value, mode)
+    }
+}
+#[derive(Default)]
+pub struct ContentTypeConfigurationsBuilder {
+    prompt: Optional<ContentTypeConfiguration>,
+    response: Optional<ContentTypeConfiguration>,
+    tool_call: Optional<ContentTypeConfiguration>,
+    tool_response: Optional<ContentTypeConfiguration>,
+    extensions: Extensions<JsonValue>,
+}
+impl ContentTypeConfigurationsBuilder {
+    pub fn prompt(mut self, value: Optional<ContentTypeConfiguration>) -> Self {
+        self.prompt = value;
+        self
+    }
+    pub fn response(mut self, value: Optional<ContentTypeConfiguration>) -> Self {
+        self.response = value;
+        self
+    }
+    pub fn tool_call(mut self, value: Optional<ContentTypeConfiguration>) -> Self {
+        self.tool_call = value;
+        self
+    }
+    pub fn tool_response(mut self, value: Optional<ContentTypeConfiguration>) -> Self {
+        self.tool_response = value;
+        self
+    }
+    pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
+        self.extensions.insert(key.into(), value);
+        self
+    }
+    pub fn build(self) -> crate::Result<ContentTypeConfigurations> {
+        Ok(ContentTypeConfigurations {
+            prompt: self.prompt,
+            response: self.response,
+            tool_call: self.tool_call,
+            tool_response: self.tool_response,
+            extensions: self.extensions,
+        })
+    }
+    pub fn build_validated(
+        self,
+        mode: crate::validation::Mode,
+    ) -> crate::Result<ContentTypeConfigurations> {
+        let model = self.build()?;
+        let value = super::support::wire_value(&model)?;
+        ContentTypeConfigurations::parse(value, mode)
+    }
+}
+impl fmt::Debug for ContentTypeConfigurationsBuilder {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("ContentTypeConfigurationsBuilder([REDACTED])")
+    }
+}
+impl fmt::Debug for ContentTypeConfigurations {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("ContentTypeConfigurations([REDACTED])")
+    }
+}
+
 /// Native typed contract for frozen schema `s006675`. Validate wire constraints with `validation::parse`.
 #[derive(Clone, PartialEq, Deserialize)]
 #[non_exhaustive]
@@ -14194,31 +14507,76 @@ impl fmt::Debug for CreateCustomTopicRequest {
 }
 
 /// Native typed contract for frozen schema `s009632`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct CreateSecurityProfileRequest {
-    #[serde(rename = "profile_id", default)]
     pub profile_id: Optional<String>,
-    #[serde(rename = "profile_name")]
     pub profile_name: String,
-    #[serde(rename = "csp_id", default)]
     pub csp_id: Optional<String>,
-    #[serde(rename = "tsg_id", default)]
     pub tsg_id: Optional<String>,
-    #[serde(rename = "revision", default)]
     pub revision: Optional<FiniteNumber>,
-    #[serde(rename = "active", default)]
     pub active: Optional<bool>,
-    #[serde(rename = "policy")]
     pub policy: Policy,
-    #[serde(rename = "created_by", default)]
     pub created_by: Optional<String>,
-    #[serde(rename = "updated_by", default)]
     pub updated_by: Optional<String>,
-    #[serde(rename = "last_modified_ts", default)]
     pub last_modified_ts: Optional<String>,
-    #[serde(flatten)]
+    pub dlp_tenant_id: Optional<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for CreateSecurityProfileRequest {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut dlp_tenant_id: Optional<String> = Default::default();
+        if let Some(value) = raw.remove("dlp_tenant_id") {
+            match crate::json_decode::from_value::<Optional<String>>(value.clone()) {
+                Ok(value) => dlp_tenant_id = value,
+                Err(_) => {
+                    raw.insert("dlp_tenant_id".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "profile_id", default)]
+            profile_id: Optional<String>,
+            #[serde(rename = "profile_name")]
+            profile_name: String,
+            #[serde(rename = "csp_id", default)]
+            csp_id: Optional<String>,
+            #[serde(rename = "tsg_id", default)]
+            tsg_id: Optional<String>,
+            #[serde(rename = "revision", default)]
+            revision: Optional<FiniteNumber>,
+            #[serde(rename = "active", default)]
+            active: Optional<bool>,
+            #[serde(rename = "policy")]
+            policy: Policy,
+            #[serde(rename = "created_by", default)]
+            created_by: Optional<String>,
+            #[serde(rename = "updated_by", default)]
+            updated_by: Optional<String>,
+            #[serde(rename = "last_modified_ts", default)]
+            last_modified_ts: Optional<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            profile_id: baseline.profile_id,
+            profile_name: baseline.profile_name,
+            csp_id: baseline.csp_id,
+            tsg_id: baseline.tsg_id,
+            revision: baseline.revision,
+            active: baseline.active,
+            policy: baseline.policy,
+            created_by: baseline.created_by,
+            updated_by: baseline.updated_by,
+            last_modified_ts: baseline.last_modified_ts,
+            dlp_tenant_id,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for CreateSecurityProfileRequest {
     fn serialize<S: serde::Serializer>(
@@ -14273,7 +14631,13 @@ impl Serialize for CreateSecurityProfileRequest {
         if !self.last_modified_ts.is_unset() {
             map.serialize_entry("last_modified_ts", &self.last_modified_ts)?;
         }
+        if !self.dlp_tenant_id.is_unset() {
+            map.serialize_entry("dlp_tenant_id", &self.dlp_tenant_id)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "dlp_tenant_id" && !self.dlp_tenant_id.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -14300,6 +14664,7 @@ pub struct CreateSecurityProfileRequestBuilder {
     created_by: Optional<String>,
     updated_by: Optional<String>,
     last_modified_ts: Optional<String>,
+    dlp_tenant_id: Optional<String>,
     extensions: Extensions<JsonValue>,
 }
 impl CreateSecurityProfileRequestBuilder {
@@ -14343,6 +14708,10 @@ impl CreateSecurityProfileRequestBuilder {
         self.last_modified_ts = value;
         self
     }
+    pub fn dlp_tenant_id(mut self, value: Optional<String>) -> Self {
+        self.dlp_tenant_id = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -14363,6 +14732,7 @@ impl CreateSecurityProfileRequestBuilder {
             created_by: self.created_by,
             updated_by: self.updated_by,
             last_modified_ts: self.last_modified_ts,
+            dlp_tenant_id: self.dlp_tenant_id,
             extensions: self.extensions,
         })
     }
@@ -153256,23 +153626,60 @@ impl fmt::Debug for MetadataCriterion {
 }
 
 /// Native typed contract for frozen schema `s009588`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct ModelConfiguration {
-    #[serde(rename = "mask-data-in-storage", default)]
     pub mask_data_in_storage: Optional<bool>,
-    #[serde(rename = "latency", default)]
     pub latency: Optional<PolicyLatency>,
-    #[serde(rename = "data-protection", default)]
     pub data_protection: Optional<DataProtection>,
-    #[serde(rename = "app-protection", default)]
     pub app_protection: Optional<PolicyAppProtection>,
-    #[serde(rename = "model-protection", default)]
     pub model_protection: Optional<Vec<ModelProtectionItem>>,
-    #[serde(rename = "agent-protection", default)]
     pub agent_protection: Optional<Vec<AgentProtectionItem>>,
-    #[serde(flatten)]
+    pub enable_full_conversation_inspection: Optional<bool>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for ModelConfiguration {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut enable_full_conversation_inspection: Optional<bool> = Default::default();
+        if let Some(value) = raw.remove("enable-full-conversation-inspection") {
+            match crate::json_decode::from_value::<Optional<bool>>(value.clone()) {
+                Ok(value) => enable_full_conversation_inspection = value,
+                Err(_) => {
+                    raw.insert("enable-full-conversation-inspection".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "mask-data-in-storage", default)]
+            mask_data_in_storage: Optional<bool>,
+            #[serde(rename = "latency", default)]
+            latency: Optional<PolicyLatency>,
+            #[serde(rename = "data-protection", default)]
+            data_protection: Optional<DataProtection>,
+            #[serde(rename = "app-protection", default)]
+            app_protection: Optional<PolicyAppProtection>,
+            #[serde(rename = "model-protection", default)]
+            model_protection: Optional<Vec<ModelProtectionItem>>,
+            #[serde(rename = "agent-protection", default)]
+            agent_protection: Optional<Vec<AgentProtectionItem>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            mask_data_in_storage: baseline.mask_data_in_storage,
+            latency: baseline.latency,
+            data_protection: baseline.data_protection,
+            app_protection: baseline.app_protection,
+            model_protection: baseline.model_protection,
+            agent_protection: baseline.agent_protection,
+            enable_full_conversation_inspection,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for ModelConfiguration {
     fn serialize<S: serde::Serializer>(
@@ -153315,7 +153722,18 @@ impl Serialize for ModelConfiguration {
         if !self.agent_protection.is_unset() {
             map.serialize_entry("agent-protection", &self.agent_protection)?;
         }
+        if !self.enable_full_conversation_inspection.is_unset() {
+            map.serialize_entry(
+                "enable-full-conversation-inspection",
+                &self.enable_full_conversation_inspection,
+            )?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "enable-full-conversation-inspection"
+                && !self.enable_full_conversation_inspection.is_unset()
+            {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -153338,6 +153756,7 @@ pub struct ModelConfigurationBuilder {
     app_protection: Optional<PolicyAppProtection>,
     model_protection: Optional<Vec<ModelProtectionItem>>,
     agent_protection: Optional<Vec<AgentProtectionItem>>,
+    enable_full_conversation_inspection: Optional<bool>,
     extensions: Extensions<JsonValue>,
 }
 impl ModelConfigurationBuilder {
@@ -153365,6 +153784,10 @@ impl ModelConfigurationBuilder {
         self.agent_protection = value;
         self
     }
+    pub fn enable_full_conversation_inspection(mut self, value: Optional<bool>) -> Self {
+        self.enable_full_conversation_inspection = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -153377,6 +153800,7 @@ impl ModelConfigurationBuilder {
             app_protection: self.app_protection,
             model_protection: self.model_protection,
             agent_protection: self.agent_protection,
+            enable_full_conversation_inspection: self.enable_full_conversation_inspection,
             extensions: self.extensions,
         })
     }
@@ -167930,31 +168354,76 @@ impl fmt::Debug for ScoreTrendSeries {
 }
 
 /// Native typed contract for frozen schema `s009612`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct SecurityProfile {
-    #[serde(rename = "profile_id", default)]
     pub profile_id: Optional<String>,
-    #[serde(rename = "profile_name")]
     pub profile_name: String,
-    #[serde(rename = "csp_id", default)]
     pub csp_id: Optional<String>,
-    #[serde(rename = "tsg_id", default)]
     pub tsg_id: Optional<String>,
-    #[serde(rename = "revision", default)]
     pub revision: Optional<FiniteNumber>,
-    #[serde(rename = "active", default)]
     pub active: Optional<bool>,
-    #[serde(rename = "policy", default)]
     pub policy: Optional<Policy>,
-    #[serde(rename = "created_by", default)]
     pub created_by: Optional<String>,
-    #[serde(rename = "updated_by", default)]
     pub updated_by: Optional<String>,
-    #[serde(rename = "last_modified_ts", default)]
     pub last_modified_ts: Optional<String>,
-    #[serde(flatten)]
+    pub dlp_tenant_id: Optional<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for SecurityProfile {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut dlp_tenant_id: Optional<String> = Default::default();
+        if let Some(value) = raw.remove("dlp_tenant_id") {
+            match crate::json_decode::from_value::<Optional<String>>(value.clone()) {
+                Ok(value) => dlp_tenant_id = value,
+                Err(_) => {
+                    raw.insert("dlp_tenant_id".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "profile_id", default)]
+            profile_id: Optional<String>,
+            #[serde(rename = "profile_name")]
+            profile_name: String,
+            #[serde(rename = "csp_id", default)]
+            csp_id: Optional<String>,
+            #[serde(rename = "tsg_id", default)]
+            tsg_id: Optional<String>,
+            #[serde(rename = "revision", default)]
+            revision: Optional<FiniteNumber>,
+            #[serde(rename = "active", default)]
+            active: Optional<bool>,
+            #[serde(rename = "policy", default)]
+            policy: Optional<Policy>,
+            #[serde(rename = "created_by", default)]
+            created_by: Optional<String>,
+            #[serde(rename = "updated_by", default)]
+            updated_by: Optional<String>,
+            #[serde(rename = "last_modified_ts", default)]
+            last_modified_ts: Optional<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            profile_id: baseline.profile_id,
+            profile_name: baseline.profile_name,
+            csp_id: baseline.csp_id,
+            tsg_id: baseline.tsg_id,
+            revision: baseline.revision,
+            active: baseline.active,
+            policy: baseline.policy,
+            created_by: baseline.created_by,
+            updated_by: baseline.updated_by,
+            last_modified_ts: baseline.last_modified_ts,
+            dlp_tenant_id,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for SecurityProfile {
     fn serialize<S: serde::Serializer>(
@@ -168011,7 +168480,13 @@ impl Serialize for SecurityProfile {
         if !self.last_modified_ts.is_unset() {
             map.serialize_entry("last_modified_ts", &self.last_modified_ts)?;
         }
+        if !self.dlp_tenant_id.is_unset() {
+            map.serialize_entry("dlp_tenant_id", &self.dlp_tenant_id)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "dlp_tenant_id" && !self.dlp_tenant_id.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -168038,6 +168513,7 @@ pub struct SecurityProfileBuilder {
     created_by: Optional<String>,
     updated_by: Optional<String>,
     last_modified_ts: Optional<String>,
+    dlp_tenant_id: Optional<String>,
     extensions: Extensions<JsonValue>,
 }
 impl SecurityProfileBuilder {
@@ -168081,6 +168557,10 @@ impl SecurityProfileBuilder {
         self.last_modified_ts = value;
         self
     }
+    pub fn dlp_tenant_id(mut self, value: Optional<String>) -> Self {
+        self.dlp_tenant_id = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -168099,6 +168579,7 @@ impl SecurityProfileBuilder {
             created_by: self.created_by,
             updated_by: self.updated_by,
             last_modified_ts: self.last_modified_ts,
+            dlp_tenant_id: self.dlp_tenant_id,
             extensions: self.extensions,
         })
     }

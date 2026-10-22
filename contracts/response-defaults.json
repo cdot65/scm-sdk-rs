@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "introducedIn": "0.1.1",
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
-  "generatorSha256": "5e580b07a2e511634ed215849dffa6deb85f6b1e6d0e2592907157b6e00cf5c3",
+  "generatorSha256": "b02f8c4766cbbd40ad7ed1137dfcf858bca40949b304b6bc44e1cb02148f25f4",
   "sources": {
     "contracts/typescript.json": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
-    "contracts/native-models.json": "2035597aa88cd19e5a1f0a084fe51093e52a303ec35121453f4504181089ff7a",
-    "crates/scm-sdk/src/validation/schema_graph.json": "3bfcae4d6f27b79f4ff330d67a565aa52b7bb70b3d42053671b1045a340cccdd",
-    "crates/scm-sdk/src/validation/semantics.json": "ad7efd54b9f6bf5368acd78fe5f7030dc7b98d4733cb58593bdc58791b224844"
+    "contracts/native-models.json": "b7eb0b52c57d2c5d0312ff795b10872f2c68ca452f7e87595e55f1ce22c95df3",
+    "crates/scm-sdk/src/validation/schema_graph.json": "f2a8fe0f1f3baa269b07d9732afa704f10358082947d7a5fd6ead44538e2aba1",
+    "crates/scm-sdk/src/validation/semantics.json": "473e5bf7621df5f782af0755a696a5338897706078a0b2d336729070e4072003"
   },
   "rustOnlyAdditions": [
     "scm_sdk::RequestOptions::without_response_defaults",
@@ -493,6 +493,15 @@
       ],
       "sourceFile": "src/models/red-team.ts",
       "sourceLine": 2033
+    }
+  ],
+  "typescript035DefaultAliases": [
+    {
+      "binding": "s_ts035_s009653",
+      "aliasOf": "s009653",
+      "default": [],
+      "schema": "typescript:0.35.0:SecurityProfileListResponseSchema",
+      "field": "ai_profiles"
     }
   ]
 }
