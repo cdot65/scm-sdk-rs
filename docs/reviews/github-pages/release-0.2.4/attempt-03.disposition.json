@@ -1,0 +1,28 @@
+{
+  "review": "docs/reviews/github-pages/release-0.2.4/attempt-03.json",
+  "decision": "rejected",
+  "total": 45,
+  "original_artifacts_preserved": true,
+  "corrections": [
+    {
+      "finding": 1,
+      "change": "Publication evidence now uses the retained receipt path plus the actual published-crate URL; the manifest binds that reference to the verified receipt digest without a false earlier-commit permalink."
+    },
+    {
+      "finding": 2,
+      "change": "Release summary, repository/site security guides and directional guide now name both root and native-probe lockfiles."
+    },
+    {
+      "finding": 3,
+      "change": "Guard records now include resolved releaseRepo and qualifiedReleaseRepo paths; regression asserts both."
+    },
+    {
+      "finding": 4,
+      "change": "Prompt1 removes both prior-token paragraph forms and performs no prior substitution or filesystem probe; regression asserts the prior helper is never called."
+    },
+    {
+      "finding": 5,
+      "change": "Repository and site security guides explicitly label historical 0.1.0 and phase-08 receipt snapshots."
+    }
+  ]
+}

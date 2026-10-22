@@ -25,7 +25,7 @@ The [crate registry](https://crates.io/crates/scm-sdk) provides published versio
 - Retains tolerant Rust profile responses, preserving invalid newly known values
   and explicit null in extensions. Upstream TypeScript 0.35.0 responses reject
   those values. Explicit typed values take precedence over same-key extensions.
-- Refreshes the repository lockfile to `rustls-webpki` 0.103.16 and
+- Refreshes the root and native-probe lockfiles to `rustls-webpki` 0.103.16 and
   `webpki-root-certs` 1.0.10 for RUSTSEC-2026-0382 and RUSTSEC-2026-0383.
   Applications retain their own lockfiles: update these transitive packages where
   present and audit the resolved graph. Installing the SDK does not replace an

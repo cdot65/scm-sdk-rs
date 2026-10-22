@@ -80,7 +80,13 @@
     "docs/developer/stability.md": {
       "sourcePath": "docs/STABILITY.md",
       "sourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
-      "sourceSha256": "c9c3ca82c3bcd93faba8a79994fb992526b703c8a59b6d384c8762d113796c17"
+      "sourceSha256": "c9c3ca82c3bcd93faba8a79994fb992526b703c8a59b6d384c8762d113796c17",
+      "publicationEvidence": {
+        "registryReceipt": "docs/checks/release-registry-0.2.4.json",
+        "registryReceiptSha256": "f36164e217ce4df2843f58316ab7e2234f0c4ca083fbbaab484a35d3aa1dd8f9",
+        "publishedCrateUrl": "https://crates.io/crates/scm-sdk/0.2.4",
+        "referencePolicy": "Retained repository path, without attributing the post-publication receipt to an earlier CI commit."
+      }
     },
     "docs/developer/live-qualification.md": {
       "sourcePath": "docs/LIVE_ACCEPTANCE.md",
@@ -91,7 +97,7 @@
       "sourcePath": "docs/SECURITY.md",
       "sourceCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
       "sourceSha256": "e5cbec03172c84a41a302ef4ea52829dabe6160a24388b8e9191999f419e8f85",
-      "repositorySourceSha256": "84f249443e1a1b6837e78412eb6431d4cbfbb5c4e03f01eb65d30975ce0387a3",
+      "repositorySourceSha256": "702386de557387aba010aab6c2ba67fbc2c127797585fe13f93f13b386dea6e7",
       "derivation": "Published SECURITY.md base, with the equivalent TLS subsection added to repository and site guides from the published 0.2.4 changelog. The repositorySourceSha256 binds this documentation-only augmentation; it is not attributed to the immutable release source.",
       "supplementalSource": {
         "sourcePath": "CHANGELOG.md",

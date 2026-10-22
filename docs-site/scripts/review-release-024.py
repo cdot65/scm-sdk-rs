@@ -93,9 +93,12 @@ def render_prompt(attempt):
     prior = f'attempt-{attempt - 1:02d}'
     paragraphs = TEMPLATE.read_text().split('\n\n')
     if attempt == 1:
-        paragraphs = [paragraph for paragraph in paragraphs if '{prior}' not in paragraph]
-    return ('\n\n'.join(paragraphs).replace('{current}', current)
-            .replace('{prior_review}', prior_review_name(attempt - 1)).replace('{prior}', prior))
+        paragraphs = [paragraph for paragraph in paragraphs
+                      if not any(token in paragraph for token in ('{prior}', '{prior_review}'))]
+    prompt = '\n\n'.join(paragraphs).replace('{current}', current)
+    if attempt > 1:
+        prompt = prompt.replace('{prior_review}', prior_review_name(attempt - 1)).replace('{prior}', prior)
+    return prompt
 
 
 def delivery_records():
@@ -194,7 +197,9 @@ def verify_release_delivery(release_repo, qualified_release_repo=None):
         raise ValueError('Primary delivery guard lacks exact publication and terminal49-CI proof')
     for commit in (verified.get('sourceCommit'), verified.get('ciCommit')):
         subprocess.run(['git', 'merge-base', '--is-ancestor', commit, 'HEAD'], cwd=ROOT, check=True)
-    return {'guard': verified, 'governanceGuard': governance, 'evidenceSha256': digests,
+    return {'releaseRepo': str(release_repo),
+            'qualifiedReleaseRepo': str(qualified_release_repo.resolve()) if qualified_release_repo else None,
+            'guard': verified, 'governanceGuard': governance, 'evidenceSha256': digests,
             'sdkPhase28Status': phase.get('status'),
             'sdkPhase28Sha256': sha(json.dumps(phase, sort_keys=True, separators=(',', ':')).encode()),
             'sdkFinalReview': 'Not granted or replaced by independent documentation review.'}

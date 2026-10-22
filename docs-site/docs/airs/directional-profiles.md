@@ -138,7 +138,7 @@ normalized output. Intentional tolerant response differences have separate tests
 
 Existing endpoint methods, operation names, shared protections, Rust 1.89,
 feature flags and direct dependency declarations remain. The 0.2.4 release
-also refreshes two transitive TLS packages in the repository lockfile; see the
+also refreshes two transitive TLS packages in the root and native-probe lockfiles; see the
 [TLS dependency note](/developer/security#024-tls-dependency-patches). The twelve vendor-unsupported
 Red Team query bindings retain their documented status; this profile model
 addition supplies no evidence that the service applies those options. Publication

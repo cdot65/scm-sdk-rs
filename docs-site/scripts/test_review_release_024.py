@@ -45,7 +45,9 @@ class Tests(unittest.TestCase):
             with self.assertRaises(ValueError): r.parse_envelope(envelope)
 
     def test_prompt_names_current_source_and_actual_prior_review(self):
-        first = r.render_prompt(1)
+        with mock.patch.object(r, 'prior_review_name', side_effect=AssertionError('No prior probe for attempt1')) as prior:
+            first = r.render_prompt(1)
+            prior.assert_not_called()
         self.assertIn('attempt-01.source.json and attempt-01.checks.json', first)
         self.assertNotIn('For this follow-up', first)
         self.assertNotIn('attempt-00', first)
@@ -232,6 +234,8 @@ class Tests(unittest.TestCase):
                 run.return_value = mock.Mock(returncode=0, stdout=json.dumps(proof))
                 result = r.verify_release_delivery(root, qualified)
                 self.assertEqual(result['governanceGuard'], proof)
+                self.assertEqual(result['releaseRepo'], str(root.resolve()))
+                self.assertEqual(result['qualifiedReleaseRepo'], str(qualified.resolve()))
                 self.assertIn('--post-publication-governance', run.call_args_list[0].args[0])
                 for field in ('currentCiSha256', 'qualifiedReleaseRoot', 'publishedSourceCommit'):
                     bad = dict(proof); bad[field] = 'wrong'

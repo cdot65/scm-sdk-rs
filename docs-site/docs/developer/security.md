@@ -67,7 +67,7 @@ applications resolve and audit their own dependency graphs. The published
 [0.1.0 line on crates.io](https://crates.io/crates/scm-sdk/0.1.0) is the initial
 supported release; the main branch contains ongoing development. Future supported
 release lines and migration requirements will be stated in release notes. The
-[publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/release-registry-0.1.0.json) binds the published
+[historical 0.1.0 publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/release-registry-0.1.0.json) binds the published
 archive and source commit.
 
 [RELEASE.md](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/RELEASE.md) requires source review, exact artifact/commit proof and
@@ -78,7 +78,7 @@ platform runtime qualification require retained evidence.
 
 ## 0.2.4 TLS dependency patches
 
-The 0.2.4 source lockfile resolves `rustls-webpki` to **0.103.16** and
+The 0.2.4 root and native-probe lockfiles resolve `rustls-webpki` to **0.103.16** and
 `webpki-root-certs` to **1.0.10** for RUSTSEC-2026-0382 and RUSTSEC-2026-0383.
 These are transitive TLS dependency patches; direct SDK dependency declarations
 remain unchanged. Version 0.2.4 is [published on crates.io](https://crates.io/crates/scm-sdk/0.2.4).
@@ -92,7 +92,7 @@ The packages selected can depend on enabled features and target platform.
 
 ## Private material exclusion evidence
 
-The [selected-value scan receipt](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-08-private-material.json) records
+The [retained phase-08 scan receipt](https://github.com/cdot65/scm-sdk-rs/blob/efe9de04d9f60d48e6ba8528d1a07e86376d706d/docs/checks/phase-08-private-material.json) records
 an exact-match check of one explicitly selected external registration. To
 reproduce it, create `.local/checks`, select the external nonproduction file
 explicitly and choose a new receipt filename:
