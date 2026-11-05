@@ -1,0 +1,307 @@
+{
+  "verifiedAt": "2026-11-05T21:12:06.297330+00:00",
+  "version": "0.2.5",
+  "deploymentCommit": "19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+  "previousDeploymentCommit": "9a40963cf7cdec5d84b6fbf6f2a443ac0ffa79ec",
+  "workflow": {
+    "conclusion": "success",
+    "createdAt": "2026-11-05T21:00:06Z",
+    "event": "push",
+    "headBranch": "docs/scm-github-pages",
+    "headSha": "19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+    "jobs": [
+      {
+        "completedAt": "2026-11-05T21:01:08Z",
+        "conclusion": "success",
+        "databaseId": 127529752060,
+        "name": "build",
+        "startedAt": "2026-11-05T21:00:10Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-05T21:00:12Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-05T21:00:11Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:00:16Z",
+            "conclusion": "success",
+            "name": "Check out documentation source",
+            "number": 2,
+            "startedAt": "2026-11-05T21:00:12Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:00:20Z",
+            "conclusion": "success",
+            "name": "Install pinned Node 24",
+            "number": 3,
+            "startedAt": "2026-11-05T21:00:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:00:55Z",
+            "conclusion": "success",
+            "name": "Install locked documentation dependencies",
+            "number": 4,
+            "startedAt": "2026-11-05T21:00:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:00:56Z",
+            "conclusion": "success",
+            "name": "Check documentation types",
+            "number": 5,
+            "startedAt": "2026-11-05T21:00:55Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:01:00Z",
+            "conclusion": "success",
+            "name": "Build Docusaurus site",
+            "number": 6,
+            "startedAt": "2026-11-05T21:00:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:01:02Z",
+            "conclusion": "success",
+            "name": "Upload Pages artifact",
+            "number": 7,
+            "startedAt": "2026-11-05T21:01:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:01:05Z",
+            "conclusion": "success",
+            "name": "Post Install pinned Node 24",
+            "number": 13,
+            "startedAt": "2026-11-05T21:01:02Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:01:06Z",
+            "conclusion": "success",
+            "name": "Post Check out documentation source",
+            "number": 14,
+            "startedAt": "2026-11-05T21:01:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:01:06Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 15,
+            "startedAt": "2026-11-05T21:01:06Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/cdot65/scm-sdk-rs/actions/runs/42108547361/job/127529752060"
+      },
+      {
+        "completedAt": "2026-11-05T21:01:27Z",
+        "conclusion": "success",
+        "databaseId": 127530312779,
+        "name": "deploy",
+        "startedAt": "2026-11-05T21:01:12Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-05T21:01:14Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-05T21:01:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:01:25Z",
+            "conclusion": "success",
+            "name": "Deploy to GitHub Pages",
+            "number": 2,
+            "startedAt": "2026-11-05T21:01:14Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:01:26Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 3,
+            "startedAt": "2026-11-05T21:01:25Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/cdot65/scm-sdk-rs/actions/runs/42108547361/job/127530312779"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-11-05T21:01:28Z",
+    "url": "https://github.com/cdot65/scm-sdk-rs/actions/runs/42108547361"
+  },
+  "artifact": {
+    "id": 13451244665,
+    "name": "github-pages",
+    "size_in_bytes": 2649654,
+    "digest": "sha256:5af4a9c343a66f40fb4e2978f890040d4e571a2633c4a506450d43352c6520a6",
+    "created_at": "2026-11-05T21:01:02Z",
+    "expires_at": "2026-11-06T21:01:00Z",
+    "workflow_run": {
+      "id": 42108547361,
+      "repository_id": 1427449306,
+      "head_repository_id": 1427449306,
+      "head_branch": "docs/scm-github-pages",
+      "head_sha": "19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085"
+    }
+  },
+  "retainedArtifactTarSha256": "32ff9e1b437423ac519f2471a42486b537a716378e8411001aa766a24fb41d58",
+  "pages": {
+    "": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 9986,
+      "sha256": "59cbfdcddea56f32071c4c5329feee2118b1b5064c7b5cdcb496144d888e32ac",
+      "etag": "\"6aeceea2-2702\"",
+      "lastModified": "Thu, 05 Nov 2026 21:01:22 GMT",
+      "artifactPath": "index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "SCM SDK for Rust"
+      ]
+    },
+    "overview/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/overview/?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 18588,
+      "sha256": "98ebb96c87b84da3a7da9c13d9f15ddcf19f7c320742f8b6973e72564cdac57f",
+      "etag": "\"6aeceea2-489c\"",
+      "lastModified": "Thu, 05 Nov 2026 21:01:22 GMT",
+      "artifactPath": "overview/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "0.2.5",
+        "8e5da0e",
+        "list_with_options"
+      ]
+    },
+    "about/release-notes/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/about/release-notes/?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 24935,
+      "sha256": "dd3ca3f67605511699eb2aea8797f9b22c8aaf58d0c401652c464a9bfdd7d195",
+      "etag": "\"6aeceea2-6167\"",
+      "lastModified": "Thu, 05 Nov 2026 21:01:22 GMT",
+      "artifactPath": "about/release-notes/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "0.2.5",
+        "MCP tags",
+        "8e5da0e",
+        "mcp_tags_filter"
+      ]
+    },
+    "airs/gateway-control/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/airs/gateway-control/?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 45101,
+      "sha256": "c4c9e4bdf48b3dd2a43cf0c53102a608b634a26b14d09e1a8c02252ff6d6d761",
+      "etag": "\"6aeceea2-b02d\"",
+      "lastModified": "Thu, 05 Nov 2026 21:01:22 GMT",
+      "artifactPath": "airs/gateway-control/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "MCP tags",
+        "8e5da0e",
+        "mcp_tags_filter",
+        "list_with_options",
+        "v0.2.5"
+      ]
+    },
+    "developer/live-qualification/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/developer/live-qualification/?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 34819,
+      "sha256": "ff2bbfd7e623344e9cd0979de9506eb317245cd9c743cd83055a07dd81b7e705",
+      "etag": "\"6aeceea2-8803\"",
+      "lastModified": "Thu, 05 Nov 2026 21:01:22 GMT",
+      "artifactPath": "developer/live-qualification/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "MCP tags",
+        "v0.2.5"
+      ]
+    }
+  },
+  "protectedImages": {
+    "img/brand-logo.png": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/img/brand-logo.png?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 1154299,
+      "sha256": "7b4ef48798f9f14d848a77de223d01a07134e1337489edcc7b8732422d4f78a4",
+      "matchesArtifact": true,
+      "matchesProtectedBaseline": true
+    },
+    "img/logo.svg": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/img/logo.svg?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 2933,
+      "sha256": "eae27fb4d3bf4a349527f1627181f8e207c5d5f1289e85e0411ba90a98c9c883",
+      "matchesArtifact": true,
+      "matchesProtectedBaseline": true
+    },
+    "img/social-card.png": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/img/social-card.png?release=19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+      "status": 200,
+      "bytes": 35578,
+      "sha256": "b04ca9dd5a4a9dcc3c002accb7d2ba11d130d6a9aaf296ace27bf55041edf628",
+      "matchesArtifact": true,
+      "matchesProtectedBaseline": true
+    }
+  },
+  "protectedSourceAssets": {
+    "docs-site/static/img/brand-logo.png": {
+      "sha256": "7b4ef48798f9f14d848a77de223d01a07134e1337489edcc7b8732422d4f78a4",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/static/img/logo.svg": {
+      "sha256": "eae27fb4d3bf4a349527f1627181f8e207c5d5f1289e85e0411ba90a98c9c883",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/static/img/social-card.png": {
+      "sha256": "b04ca9dd5a4a9dcc3c002accb7d2ba11d130d6a9aaf296ace27bf55041edf628",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/css/custom.css": {
+      "sha256": "2cd26600d312a80acc1758a15ea8c14510b8faf82746d612a666c72268d3fb7f",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/css/prism-airs.ts": {
+      "sha256": "bd805aa7a0920b7c22d88a5a8a87a68863403d0a26c293b500d0424e8ee08ec8",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/pages/index.module.css": {
+      "sha256": "8e752f10ffd7ddb6db06d2ee8d477df94a4f42c53dfa9d78cde9c42043e67a8e",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/theme/DocItem/Layout/index.tsx": {
+      "sha256": "02401eb52e895e3e9dc487d540be2eca52f826720e68d14b54e1edb51cb7c9ed",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/theme/DocItem/Layout/styles.module.css": {
+      "sha256": "5c4144c06d2a0368beafec9e28663d4beea070e8fe75d1842aa91be316834f47",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/docusaurus.config.ts": {
+      "sha256": "f07cd4a2dd6299fdef20a722a6963856bc5417c145204e748d723a45cf27d1e1",
+      "unchangedFromPreviousDeployment": true
+    },
+    ".github/workflows/docs-deploy.yml": {
+      "sha256": "dcbd385f8d682150fb5b6686078c0c399a7490d403ac213c978ea9dda2e94b0a",
+      "unchangedFromPreviousDeployment": true
+    }
+  },
+  "evidenceBoundary": "Actual terminal Pages deployment for the 0.2.5 docs merge; public page bytes compared with the deployed artifact. Third-party font servers are not verified.",
+  "artifactZipSha256Verified": true
+}
