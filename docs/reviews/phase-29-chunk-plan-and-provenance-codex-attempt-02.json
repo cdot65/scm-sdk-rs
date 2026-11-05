@@ -1,0 +1,62 @@
+{
+  "phase": 29,
+  "chunk": "plan-and-provenance",
+  "attempt": 2,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "d0bd336a3d0f67f2f82c58b46ed2400d4c800578e9b7aa942ec6b9768d9e2bcf",
+  "scope_evidence": [
+    "docs/portkey-mcp-tags-plan.md",
+    "docs/PHASES.md",
+    "contracts/vendor/portkey-mcp-tags/8e5da0e",
+    "tools/portkey-mcp-tags.mjs",
+    "tools/test_portkey_mcp_tags.py",
+    "tools/codex_review.py",
+    "tools/test_codex_review.py",
+    "tools/check_phase.py",
+    "tools/test_typescript035_governance.py",
+    "tools/test_management_phases.py"
+  ],
+  "prompt_sha256": "70e61e9f6a0df0ec46c11bdd60ced7c3e33e87faba1e9ccef8175a0072839ab7",
+  "checks_sha256": "599b4e936ffd0b79b30a9ca905110a1f3e3f6ab8db9c437e6a9445571446bbed",
+  "requested_at": "2026-11-05T13:26:44.821254+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 8,
+    "summary": "Provenance anchoring is fixed, the plan is clear, and SDK runtime bytes remain unchanged. Recorded checks pass for the exact fingerprint. Acceptance remains blocked by incomplete source/scope verification of accepted chunk records; interruption recovery also has an uncovered failure case.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "tools/codex_review.py",
+        "line": 151,
+        "description": "Chunk acceptance compares current source and scope only with editable record/status fields. verify_attempt hashes the preserved prompt and checks but never verifies that their contents identify the same source and scope or contain passing checks. An in-memory probe accepted CURRENT/new-scope metadata while the unchanged prompt and checks still identified OLD/old-scope. Thus the earlier source-binding finding is only partially resolved.",
+        "required_fix": "Validate the preserved check snapshot against the accepted source and required command set, and verify the prompt's source, scope, phase, chunk and attempt against the record. Add regression tests that rebind record/status metadata while leaving the original prompt, checks and output unchanged."
+      },
+      {
+        "severity": "medium",
+        "path": "tools/codex_review.py",
+        "line": 174,
+        "description": "An interruption after prompt reservation but before copying checks leaves a prompt-only slot. mark_interrupted records checks_sha256 as null, but verify_attempt unconditionally requires the checks file. Consequently, the advertised recovery command creates a failure record that permanently blocks subsequent attempts. The existing orphan test always supplies checks and misses this case.",
+        "required_fix": "Define a verifiable interrupted-record format for slots whose check snapshot was never created, preserving the consumed attempt without fabricating evidence. Test interruption immediately after reservation, recovery, and successful allocation of the next attempt."
+      }
+    ],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, the accepted MCP tags plan, and phase 29\u201331 registrations.",
+      "Inspected scoped verifier, review tooling, regression tests, governance changes, provenance manifest, license, classification ledger and extracted contract.",
+      "Verified fingerprint d0bd336a3d0f67f2f82c58b46ed2400d4c800578e9b7aa942ec6b9768d9e2bcf before and after review; validated check-report binding and identical attempt-02 check snapshot.",
+      "Inspected all 19 recorded checks: successful exits without timeouts; seven unittest suites report 141 cases, including one skip.",
+      "Independently reran delta verification, contract verification, model/validation generation checks and Gateway binding verification; all passed. SDK/Cargo comparison against 56a88d2 showed no changes or untracked SDK files.",
+      "Verified preserved attempt 1 remains rejected at score 7. Read-only in-memory probes reproduced both reported gate defects."
+    ],
+    "limitations": [
+      "Mutation-based unit suites and private-material scanning were not rerun; their recorded results were inspected.",
+      "No network requests, credential or tenant-registration reads, file edits, commits or pushes occurred. Upstream origin was not independently authenticated.",
+      "Phase 30 implementation/live acceptance and phase 31 release/delivery remain future work and were not credited as completed."
+    ]
+  },
+  "decision": "rejected",
+  "output_sha256": "c0984ee35d8bcaf74591f5e918818a6781d314a7a911b3fea15f3ba4a09dfcba",
+  "events_sha256": "7acaca9d3e6254a8aa1f13eea9c13c8ffebd716136445a6922e6c6696d02b647",
+  "completed_at": "2026-11-05T13:29:31.312464+00:00"
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+  "baseCommit": "a27feb9efaac3653d2d94eca5d7d210944b6e160",
+  "groups": [
+    {
+      "id": "D1",
+      "disposition": "import",
+      "reason": "MCP integration and server write bodies gain nullable string-map tags (update replaces; null clears).",
+      "items": [
+        "component:schemas:CreateMcpIntegration:changed",
+        "component:schemas:UpdateMcpIntegration:changed",
+        "component:schemas:CreateMcpServer:changed",
+        "component:schemas:UpdateMcpServer:changed"
+      ]
+    },
+    {
+      "id": "D2",
+      "disposition": "import",
+      "reason": "MCP integration and server responses and list items gain nullable string-map tags.",
+      "items": [
+        "component:schemas:McpIntegration:changed",
+        "component:schemas:McpIntegrationListItem:changed",
+        "component:schemas:McpServer:changed",
+        "component:schemas:McpServerListItem:changed"
+      ]
+    },
+    {
+      "id": "D3",
+      "disposition": "import",
+      "reason": "GET /mcp-integrations and GET /mcp-servers accept a JSON-encoded tags filter query.",
+      "items": [
+        "path:get:/mcp-integrations:changed:parameters",
+        "path:get:/mcp-servers:changed:parameters"
+      ]
+    },
+    {
+      "id": "D4",
+      "disposition": "already_supported",
+      "reason": "IntegrationList.tags is already typed by frozen GatewayIntegration.tags (s007274), the ListIntegrationsResponse data element.",
+      "items": [
+        "component:schemas:IntegrationList:changed"
+      ]
+    },
+    {
+      "id": "D5",
+      "disposition": "not_applicable",
+      "reason": "Analytics workspace aggregation parameters; the SDK implements no analytics client.",
+      "items": [
+        "path:get:/analytics/graphs/cache/hit-rate:changed:parameters",
+        "path:get:/analytics/graphs/cache/latency:changed:parameters",
+        "path:get:/analytics/graphs/cost:changed:parameters",
+        "path:get:/analytics/graphs/errors/rate:changed:parameters",
+        "path:get:/analytics/graphs/errors/stacks:changed:parameters",
+        "path:get:/analytics/graphs/errors/status-codes:changed:parameters",
+        "path:get:/analytics/graphs/errors:changed:parameters",
+        "path:get:/analytics/graphs/feedbacks/ai-models:changed:parameters",
+        "path:get:/analytics/graphs/feedbacks/scores:changed:parameters",
+        "path:get:/analytics/graphs/feedbacks/weighted:changed:parameters",
+        "path:get:/analytics/graphs/feedbacks:changed:parameters",
+        "path:get:/analytics/graphs/latency:changed:parameters",
+        "path:get:/analytics/graphs/requests/rescued:changed:parameters",
+        "path:get:/analytics/graphs/requests:changed:parameters",
+        "path:get:/analytics/graphs/tokens:changed:parameters",
+        "path:get:/analytics/graphs/users/requests:changed:parameters",
+        "path:get:/analytics/graphs/users:changed:parameters",
+        "path:get:/analytics/groups/ai-models:changed:parameters",
+        "path:get:/analytics/groups/metadata/{metadataKey}:changed:parameters",
+        "path:get:/analytics/groups/provider:changed:parameters",
+        "path:get:/analytics/groups/users:changed:parameters",
+        "path:get:/analytics/summary/cache:changed:parameters",
+        "component:parameters:ExcludeWorkspaceSlugs:added",
+        "component:parameters:IncludeAllWorkspaces:added"
+      ]
+    },
+    {
+      "id": "D6",
+      "disposition": "deferred_new_capability",
+      "reason": "Anthropic Messages and token-count routes for Azure AI Foundry are a new runtime capability outside this delta's import scope; recorded, not implemented.",
+      "items": [
+        "path:post:/messages/count_tokens:added",
+        "path:post:/messages:added",
+        "path:servers:/messages/count_tokens:added",
+        "path:servers:/messages:added",
+        "component:schemas:AnthropicContentBlock:added",
+        "component:schemas:AnthropicDocumentContent:added",
+        "component:schemas:AnthropicDocumentSource:added",
+        "component:schemas:AnthropicImageContent:added",
+        "component:schemas:AnthropicImageSource:added",
+        "component:schemas:AnthropicMessage:added",
+        "component:schemas:AnthropicRedactedThinkingContent:added",
+        "component:schemas:AnthropicSystemContent:added",
+        "component:schemas:AnthropicTextContent:added",
+        "component:schemas:AnthropicThinkingConfig:added",
+        "component:schemas:AnthropicThinkingContent:added",
+        "component:schemas:AnthropicTool:added",
+        "component:schemas:AnthropicToolResultContent:added",
+        "component:schemas:AnthropicToolUseContent:added",
+        "component:schemas:AnthropicUsage:added",
+        "component:schemas:CountMessageTokensRequest:added",
+        "component:schemas:CountMessageTokensResponse:added",
+        "component:schemas:CreateAnthropicMessageRequest:added",
+        "component:schemas:CreateMessageResponse:added"
+      ]
+    },
+    {
+      "id": "D7",
+      "disposition": "not_applicable",
+      "reason": "Threads operationId rename; the SDK implements no threads/assistants client and binds no upstream operationId.",
+      "items": [
+        "path:post:/threads/{thread_id}/messages:changed:operationId"
+      ]
+    },
+    {
+      "id": "D8",
+      "disposition": "documentation_only",
+      "reason": "Upstream documentation navigation: new Messages tag group and x-code-samples navigation entries.",
+      "items": [
+        "top:tags:changed",
+        "top:x-code-samples:changed"
+      ]
+    }
+  ]
+}

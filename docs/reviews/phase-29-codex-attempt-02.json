@@ -1,0 +1,58 @@
+{
+  "phase": 29,
+  "chunk": null,
+  "attempt": 2,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "56dbaa471fec8ba55523b1d53f643d80751df7d93a419fc79b664a6ca6caf220",
+  "scope_evidence": [
+    "docs/portkey-mcp-tags-plan.md",
+    "docs/PHASES.md",
+    "contracts/vendor/portkey-mcp-tags/8e5da0e",
+    "tools/portkey-mcp-tags.mjs",
+    "tools/test_portkey_mcp_tags.py",
+    "tools/codex_review.py",
+    "tools/test_codex_review.py",
+    "tools/check_phase.py",
+    "tools/test_typescript035_governance.py",
+    "tools/test_management_phases.py"
+  ],
+  "prompt_sha256": "77fb293acc4dbe371be4d11d80bef58aa5a4dbc5869c811f6896f02dd9ef837f",
+  "checks_sha256": "76b18e3c063ed43f3a6dc6aec7dc875437a719042ab0edd203c2c7598ae09855",
+  "requested_at": "2026-11-05T13:43:14.697354+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 9,
+    "summary": "Phase 29 meets acceptance requirements. Pinned provenance, complete delta classification, unchanged SDK runtime, and source-bound passing checks are supported by inspected evidence. Earlier blocking findings are resolved. One acknowledged low-severity bookkeeping issue remains.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "tools/codex_review.py",
+        "line": 254,
+        "description": "Accepting a chunk leaves any prior latest_review value unchanged. The current status was corrected manually, but an in-memory reproduction confirms that rejection followed by acceptance can restore misleading bookkeeping. Acceptance verification remains effective.",
+        "required_fix": "Complete the scheduled phase-30 fix: clear or update latest_review on acceptance and add a rejection-then-acceptance regression."
+      }
+    ],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, the MCP tags plan, and phase registrations.",
+      "Independently verified fingerprint 56dbaa471fec8ba55523b1d53f643d80751df7d93a419fc79b664a6ca6caf220 before and after review.",
+      "Inspected all 19 phase-29 check commands and results: exact current command set, successful exits, no timeouts. Seven unittest suites recorded 145 cases, including one intentional skip.",
+      "Verified preserved chunk attempts 1\u20134 and rejected complete-phase attempt 1, including prompt, output, check-snapshot and decision bindings. Chunk attempt 4 is accepted at 9/10 for this source; the phase-attempt-2 check snapshot matches the current report exactly.",
+      "Inspected vendored provenance, YAML delta, classification ledger, extracted contract, verifier and tamper tests. Independently reran the verifier successfully: 61 classified delta items, eight imported schemas, two list operations.",
+      "Confirmed SDK and Cargo files are unchanged against 56a88d2, no untracked SDK files exist, and working-tree whitespace checks pass.",
+      "Read-only in-memory probes rejected missing, empty, renamed and duplicate chunk declarations. Reproduced the remaining bookkeeping defect with writes intercepted.",
+      "Inspected the source-matched sanitized private-material receipt and its documented limitations."
+    ],
+    "limitations": [
+      "Mutation-based unit suites and the full phase gate were not rerun; their implementations and recorded results were inspected.",
+      "No network requests, credential or tenant-registration reads, edits, commits or pushes occurred. Upstream origin was not independently authenticated.",
+      "Private matching was not re-executed; the recorded gate verifies receipt freshness and structure.",
+      "Phase 30 implementation/live acceptance and phase 31 release/delivery remain future work and received no completion credit."
+    ]
+  },
+  "decision": "accepted",
+  "output_sha256": "5ad02e66bce8b5a48e6c5b8e0ba6dfc7b21a667f9e8efb8fc71bece9bc906b74",
+  "events_sha256": "2d4df78429ad375bd71cef5d9a1ec9b11f2d6e25452a0b3ead6532de41e1e3e6",
+  "completed_at": "2026-11-05T13:45:17.545437+00:00"
+}

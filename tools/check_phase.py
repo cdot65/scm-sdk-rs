@@ -62,6 +62,10 @@ CONTRACT_LEDGER_OWNERS = {
     'contracts/compatibility/g25/projection-bindings.json': ('tools/g25_fixtures.py', '--check'),
     'contracts/compatibility/g25/projections.json': ('tools/g25_fixtures.py', '--check'),
     'contracts/compatibility/g25/outcomes.json': ('tools/g25-oracle.mts', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/source.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/delta.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/contract.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json': ('tools/portkey-mcp-tags.mjs', '--check'),
 }
 
 
@@ -315,7 +319,36 @@ def management_commands(phase):
     return commands
 
 
+PORTKEY_MCP_BASELINE = "56a88d2"
+PORTKEY_MCP_YAML_EXCLUSIONS = (":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+                               ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml")
+
+
+def portkey_mcp_planning_commands(phase):
+    """Phase 29 planning/provenance gate; the SDK runtime stays byte-identical."""
+    unit = lambda name: ["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+    return [
+        ["git", "diff", "--exit-code", PORTKEY_MCP_BASELINE, "--", "crates/scm-sdk", "Cargo.toml", "Cargo.lock"],
+        ["python", "-c", "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk']), 'Unexpected SDK implementation file before plan acceptance'"],
+        ["git", "diff", "--check", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS],
+        ["git", "diff", "--cached", "--check", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS],
+        ["git", "diff", "--check", PORTKEY_MCP_BASELINE + "..HEAD", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS],
+        ["node", "tools/portkey-mcp-tags.mjs", "--check"],
+        ["node", "tools/portkey-access.mjs", "--check"],
+        ["python", "tools/verify-contracts.py"],
+        ["python", "tools/generate_models.py", "--check"],
+        ["python", "tools/generate_validation.py", "--check"],
+        ["python", "tools/verify_gateway_bindings.py", "--check"],
+        ["python", "scripts/check-private-material.py", "--check", f"docs/checks/phase-{phase}-private-material.json"],
+        *[unit(name) for name in ("test_portkey_mcp_tags.py", "test_codex_review.py", "test_portkey_access.py",
+                                  "test_review_phase.py", "test_phase_checkpoint.py", "test_management_phases.py",
+                                  "test_typescript035_governance.py")],
+    ]
+
+
 def commands_for(phase):
+    if phase == 29:
+        return portkey_mcp_planning_commands(29)
     if phase == 28:
         commands = [[value.replace("phase-27-", "phase-28-") for value in command]
                     for command in commands_for(27)]

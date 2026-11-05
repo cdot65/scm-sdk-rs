@@ -192,8 +192,10 @@ class ManagementPhaseTests(unittest.TestCase):
         active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
         scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
         verify_scoped_ledger_owners(scope, commands_for(active['id']))
-        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json' and not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'})], commands_for(23))
-        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'})], commands_for(24))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json' and not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/'))], commands_for(23))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/'))], commands_for(24))
+        # The Portkey MCP tags pin is owned from its own phase 29 gate onward.
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p.startswith('contracts/vendor/portkey-mcp-tags/')], commands_for(29))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
             verify_scoped_ledger_owners(['contracts/live-evidence.json'], commands_for(23))
         with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):

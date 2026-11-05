@@ -307,3 +307,24 @@ then phase 25, preserving their original review attempts and acceptance rules.
 This maintenance sequence does not implicitly reactivate or complete them.
 
 Phases 26–28 also retain the current rubric’s fifth-attempt exception: a total strictly above 40, every category at least 8, four prior substantive reviews, and recorded remaining deficiencies. Passing checks and required delivery evidence are still mandatory.
+
+## Portkey MCP tags delta and 0.2.5 release (phases 29–31)
+
+The maintainer authorized this independent maintenance track on 2026-11-05. It imports the
+Portkey-AI/openapi changes from the existing `a27feb9` pin to `8e5da0e756bc49ee3e82ca13df693b39fa541627`,
+then implements, qualifies and releases them as 0.2.5 with updated Docusaurus documentation.
+Follow [the plan](portkey-mcp-tags-plan.md) for exact artifacts, chunks, checks and boundaries.
+
+| Phase | Milestones | Required evidence |
+| --- | --- | --- |
+| 29. Plan and provenance | Exact upstream bytes; complete fail-closed delta classification; Rust design; Codex review gate. | `node tools/portkey-mcp-tags.mjs --check`, tamper tests, unchanged SDK bytes, governance regressions, private-material scan. |
+| 30. Implementation and qualification | Typed MCP `tags` on writes, responses and list filters; `list_with_options`; bounded disposable live workflow. | Cumulative phase-27 offline gate on both compilers and all feature sets, new model/wire tests, implementation bindings, sanitized live receipt or explicit service limitation. |
+| 31. Release, delivery and documentation | Version 0.2.5, clean archives, publication, tag, push, terminal CI, Docusaurus update. | Clean extracted packages on 1.89.0/1.99.0, verified registry archive, remote tag, CI result, docs-site build. |
+
+**Reviewer exception.** The maintainer's instruction for this track replaces the Claude reviewer and the
+50-point rubric. At the end of every chunk and phase, a Codex CLI review runs through `tools/codex_review.py`
+with a read-only sandbox, scoring an integer from 1 to 10. Acceptance requires at least 9 and no
+blocker/high finding. Each chunk and phase keeps the five-attempt budget. Every prompt, check snapshot,
+Codex final message, failed invocation and decision is preserved under `docs/reviews/`; raw event logs
+stay in ignored `.local/reviews` and are bound by hash. Historical phases keep their original reviewers
+and rubrics. Phases 24, 25 and 28 are neither completed nor rebound by this track.

@@ -1,0 +1,28 @@
+{
+  "score": 8,
+  "summary": "Provenance, delta classification, planning, and recorded checks are sound, and SDK runtime files remain unchanged. However, a reproduced chunk-review bypass prevents acceptance of the phase governance tooling.",
+  "findings": [
+    {
+      "severity": "high",
+      "path": "tools/codex_review.py",
+      "line": 175,
+      "description": "Missing or empty chunk declarations silently satisfy verify_chunk_acceptance. Because phase-status.json is excluded from the source fingerprint, removing its chunks leaves the passing check report valid while bypassing every required chunk review. An in-memory reproduction confirmed that both missing and empty declarations pass without verifying any review, and update_status then marks phase 29 complete and advances to phase 30. Removing individual required chunks is likewise unchecked.",
+      "required_fix": "Validate declarations against a source-bound definition of the required chunks. Reject missing, empty, duplicate, or removed required chunks and review artifacts whose chunks are no longer declared. Apply this validation before phase review and advancement, with regression tests covering complete and partial declaration removal."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, the accepted MCP tags plan, and phase registrations.",
+    "Independently verified source fingerprint 44895279d852f4eca035c42fc9e8963f8d75bcb597aeced0aed9559f259072e3 before and after inspection.",
+    "Inspected all 19 commands and results in docs/checks/phase-29.json: all exited successfully without timeouts. Seven unittest suites recorded 143 cases, including one intentional skip.",
+    "Inspected byte anchors, source.json, the upstream YAML delta, classification ledger, extracted contract, and tamper tests. Independently reran the verifier: 61 classified changes, eight imported schemas, and two list operations.",
+    "Independently reran frozen-contract verification, model and validation generation checks, Gateway binding verification, and working-tree whitespace checks; all passed.",
+    "Confirmed SDK and Cargo files are unchanged against 56a88d2 and no untracked SDK files exist.",
+    "Verified preserved chunk attempts 1 and 2 remain rejected and attempt 3 is accepted at 9/10 for the current source.",
+    "Reproduced the declaration-removal bypass using in-memory copies and intercepted writes; no files were changed."
+  ],
+  "limitations": [
+    "Mutation-based unit suites and private-material scanning were not rerun; their recorded evidence and test implementations were inspected.",
+    "No network requests, credential or tenant-registration reads, edits, commits, or pushes occurred. Upstream origin was not independently authenticated.",
+    "Phase 30 implementation and live acceptance, and phase 31 release and delivery, remain future work and received no completion credit."
+  ]
+}
