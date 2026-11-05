@@ -1,0 +1,53 @@
+{
+  "phase": 31,
+  "chunk": "docs-site",
+  "attempt": 2,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "adbdec87ffba019d14c68d44c509e5cf6ab5cea1a3b638bc62565cb59a31612d",
+  "scope_evidence": [
+    "docs/portkey-mcp-tags-plan.md",
+    ".local/docs-site-worktree/docs-site",
+    "docs/reviews/github-pages/release-0.2.5/binding.json",
+    "docs/reviews/github-pages/release-0.2.5/site_binding.py",
+    "docs/reviews/github-pages/release-0.2.5/cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720"
+  ],
+  "prompt_sha256": "c83b121ddd3a415b08fd1bcb06f36bf01b214d1697283113efd9a550d059c99d",
+  "checks_sha256": "d176b5852931ffe6fc518ba80d9476f2e389deb052704c2332cbfc04d5f32223",
+  "requested_at": "2026-11-05T21:21:07.687219+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 8,
+    "summary": "Not accepted. The documentation corrections and deployed-source binding verify locally, but the earlier high-severity acceptance-enforcement gap remains unresolved.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "tools/codex_review.py",
+        "line": 193,
+        "description": "Chunk acceptance still checks only the SDK fingerprint and scope path strings. Neither review completion nor phase advancement invokes site_binding.py or verifies the binding and receipt hashes. The separate site and docs/reviews artifacts remain excluded from that fingerprint. Consequently, subsequent site changes or replaced deployment evidence do not invalidate acceptance. The standalone checker provides useful evidence, but its documented deferral leaves the original enforcement defect open.",
+        "required_fix": "Make verification of the reviewed site commit, source contents, workflow and receipt hashes mandatory before recording chunk acceptance and during phase advancement. Preserve the published SDK identity through a separate site/governance binding mechanism. Add regressions proving site-only changes and replaced receipts block acceptance."
+      }
+    ],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, the accepted phases 29\u201331 plan, phase-31 status and the rejected docs-site attempt-01 review.",
+      "Recomputed SDK fingerprint adbdec87ffba019d14c68d44c509e5cf6ab5cea1a3b638bc62565cb59a31612d. Inspected all 113 phase-31 command/result entries: zero exit codes and no timeouts; no site-binding check is included.",
+      "Ran site_binding.py --check successfully: site commit cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720, docs-site tree 61f8093efe0b80f4cd7cfe125d98cb7c9ae73538.",
+      "Reviewed the 0.2.5 site changes, Docusaurus configuration, package configuration and pinned deployment workflow. The retained deployment receipt records successful typecheck, build and deployment.",
+      "Independently matched all five recorded page hashes against local generated HTML, confirmed expected content markers and absent rustdoc prefixes, and matched all protected source-asset hashes.",
+      "Confirmed corrected attempt-02 live-evidence links and inspected the 19-step MCP receipt. Compared documented MCP behavior with client and filter implementations.",
+      "Inspected both clean-package reports: 18 successful recorded commands per compiler on Rust 1.89.0 and 1.99.0. Verified the retained registry archive hash and inspected canonical and GitHub annotated-tag receipts.",
+      "Inspected fingerprint exclusions, chunk acceptance, review completion and release-delivery validation; none enforces the new site binding."
+    ],
+    "limitations": [
+      "Read-only, offline review; no files changed, credentials or tenant registrations accessed, or services contacted.",
+      "Builds, compiler tests and snippet execution were not rerun. Their execution claims remain recorded evidence.",
+      "Remote publication, tags and Pages state were not rechecked online. Complete-phase terminal SDK CI was not established by this chunk review.",
+      "Windows compilation remains unexecuted as recorded."
+    ]
+  },
+  "decision": "rejected",
+  "output_sha256": "cbad46db1927b405f7728595088757ada40cf2e07a8ea18b2058ff4c6bb3f885",
+  "events_sha256": "196fd74f141b2c8f9421707e9630a10e8b6403494486f64ff43a15d3eaf7577e",
+  "completed_at": "2026-11-05T21:23:08.569007+00:00"
+}
