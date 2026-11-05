@@ -1,0 +1,339 @@
+{
+  "verifiedAt": "2026-11-05T21:19:58.354821+00:00",
+  "version": "0.2.5",
+  "deploymentCommit": "cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+  "previousDeploymentCommit": "19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085",
+  "workflow": {
+    "conclusion": "success",
+    "createdAt": "2026-11-05T21:18:26Z",
+    "event": "push",
+    "headBranch": "docs/scm-github-pages",
+    "headSha": "cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+    "jobs": [
+      {
+        "completedAt": "2026-11-05T21:19:10Z",
+        "conclusion": "success",
+        "databaseId": 127539679728,
+        "name": "build",
+        "startedAt": "2026-11-05T21:18:29Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-05T21:18:31Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-05T21:18:30Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:18:36Z",
+            "conclusion": "success",
+            "name": "Check out documentation source",
+            "number": 2,
+            "startedAt": "2026-11-05T21:18:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:18:44Z",
+            "conclusion": "success",
+            "name": "Install pinned Node 24",
+            "number": 3,
+            "startedAt": "2026-11-05T21:18:36Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:18:56Z",
+            "conclusion": "success",
+            "name": "Install locked documentation dependencies",
+            "number": 4,
+            "startedAt": "2026-11-05T21:18:44Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:18:58Z",
+            "conclusion": "success",
+            "name": "Check documentation types",
+            "number": 5,
+            "startedAt": "2026-11-05T21:18:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:19:05Z",
+            "conclusion": "success",
+            "name": "Build Docusaurus site",
+            "number": 6,
+            "startedAt": "2026-11-05T21:18:58Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:19:07Z",
+            "conclusion": "success",
+            "name": "Upload Pages artifact",
+            "number": 7,
+            "startedAt": "2026-11-05T21:19:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:19:07Z",
+            "conclusion": "success",
+            "name": "Post Install pinned Node 24",
+            "number": 13,
+            "startedAt": "2026-11-05T21:19:07Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:19:07Z",
+            "conclusion": "success",
+            "name": "Post Check out documentation source",
+            "number": 14,
+            "startedAt": "2026-11-05T21:19:07Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:19:07Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 15,
+            "startedAt": "2026-11-05T21:19:07Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/cdot65/scm-sdk-rs/actions/runs/42111424214/job/127539679728"
+      },
+      {
+        "completedAt": "2026-11-05T21:19:24Z",
+        "conclusion": "success",
+        "databaseId": 127540070384,
+        "name": "deploy",
+        "startedAt": "2026-11-05T21:19:14Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-05T21:19:16Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-05T21:19:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:19:22Z",
+            "conclusion": "success",
+            "name": "Deploy to GitHub Pages",
+            "number": 2,
+            "startedAt": "2026-11-05T21:19:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-05T21:19:22Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 3,
+            "startedAt": "2026-11-05T21:19:22Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/cdot65/scm-sdk-rs/actions/runs/42111424214/job/127540070384"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-11-05T21:19:25Z",
+    "url": "https://github.com/cdot65/scm-sdk-rs/actions/runs/42111424214"
+  },
+  "artifact": {
+    "id": 13454331630,
+    "name": "github-pages",
+    "size_in_bytes": 2650152,
+    "digest": "sha256:b06c442b95256cd9f4ace51b9b0719a50f7058d74e23ab32b20ca2c48c81cd59",
+    "created_at": "2026-11-05T21:19:06Z",
+    "expires_at": "2026-11-06T21:19:05Z",
+    "workflow_run": {
+      "id": 42111424214,
+      "repository_id": 1427449306,
+      "head_repository_id": 1427449306,
+      "head_branch": "docs/scm-github-pages",
+      "head_sha": "cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720"
+    }
+  },
+  "artifactZipSha256Verified": true,
+  "retainedArtifactTarSha256": "b2955810b896b4b022f45b967965836e66229af957803614307b855e45117a56",
+  "pages": {
+    "": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 9986,
+      "sha256": "550e75f5a83ad7a9acaa1cd3226e3fd9f5a92f27c31d0ddc923bffbcaca5caf1",
+      "etag": "\"6aecf2d7-2702\"",
+      "lastModified": "Thu, 05 Nov 2026 21:19:19 GMT",
+      "artifactPath": "index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "SCM SDK for Rust"
+      ],
+      "absentMarkers": [
+        "# fn ",
+        "# let ",
+        "# Ok::",
+        "live-attempt-01.json"
+      ]
+    },
+    "overview/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/overview/?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 18588,
+      "sha256": "1f519235fd718bf6ecd66dcff9f72e4e973388eb629e56f532338ab3cc8a6ced",
+      "etag": "\"6aecf2d6-489c\"",
+      "lastModified": "Thu, 05 Nov 2026 21:19:18 GMT",
+      "artifactPath": "overview/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "0.2.5",
+        "8e5da0e",
+        "list_with_options"
+      ],
+      "absentMarkers": [
+        "# fn ",
+        "# let ",
+        "# Ok::",
+        "live-attempt-01.json"
+      ]
+    },
+    "about/release-notes/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/about/release-notes/?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 24935,
+      "sha256": "e39d25403def594178b2aedb205db623cad5b19cb59bd92fb08e0f2ab429480e",
+      "etag": "\"6aecf2d6-6167\"",
+      "lastModified": "Thu, 05 Nov 2026 21:19:18 GMT",
+      "artifactPath": "about/release-notes/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "0.2.5",
+        "MCP tags",
+        "8e5da0e",
+        "mcp_tags_filter"
+      ],
+      "absentMarkers": [
+        "# fn ",
+        "# let ",
+        "# Ok::",
+        "live-attempt-01.json"
+      ]
+    },
+    "airs/gateway-control/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/airs/gateway-control/?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 45955,
+      "sha256": "4ec1b78fbc5e478e2b2c9d9263485a4ee16d3e060d47024909b801b30ccace0f",
+      "etag": "\"6aecf2d6-b383\"",
+      "lastModified": "Thu, 05 Nov 2026 21:19:18 GMT",
+      "artifactPath": "airs/gateway-control/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "MCP tags",
+        "8e5da0e",
+        "mcp_tags_filter",
+        "list_with_options",
+        "phase-31-mcp-tags-live-attempt-02.json"
+      ],
+      "absentMarkers": [
+        "# fn ",
+        "# let ",
+        "# Ok::",
+        "live-attempt-01.json"
+      ]
+    },
+    "developer/live-qualification/": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/developer/live-qualification/?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 35341,
+      "sha256": "54d9236fc4f001748fc791a6f5fa3288124a3d48575528c68592c361c871967f",
+      "etag": "\"6aecf2d6-8a0d\"",
+      "lastModified": "Thu, 05 Nov 2026 21:19:18 GMT",
+      "artifactPath": "developer/live-qualification/index.html",
+      "matchesArtifact": true,
+      "contentMarkers": [
+        "MCP tags",
+        "phase-31-live-attempt-02.json",
+        "phase-31-mcp-tags-live-attempt-02.json",
+        "blob/v0.2.5/contracts/live-evidence.json"
+      ],
+      "absentMarkers": [
+        "# fn ",
+        "# let ",
+        "# Ok::",
+        "live-attempt-01.json"
+      ]
+    }
+  },
+  "protectedImages": {
+    "img/brand-logo.png": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/img/brand-logo.png?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 1154299,
+      "sha256": "7b4ef48798f9f14d848a77de223d01a07134e1337489edcc7b8732422d4f78a4",
+      "matchesArtifact": true,
+      "matchesProtectedBaseline": true
+    },
+    "img/logo.svg": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/img/logo.svg?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 2933,
+      "sha256": "eae27fb4d3bf4a349527f1627181f8e207c5d5f1289e85e0411ba90a98c9c883",
+      "matchesArtifact": true,
+      "matchesProtectedBaseline": true
+    },
+    "img/social-card.png": {
+      "url": "https://cdot65.github.io/scm-sdk-rs/img/social-card.png?release=cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+      "status": 200,
+      "bytes": 35578,
+      "sha256": "b04ca9dd5a4a9dcc3c002accb7d2ba11d130d6a9aaf296ace27bf55041edf628",
+      "matchesArtifact": true,
+      "matchesProtectedBaseline": true
+    }
+  },
+  "protectedSourceAssets": {
+    "docs-site/static/img/brand-logo.png": {
+      "sha256": "7b4ef48798f9f14d848a77de223d01a07134e1337489edcc7b8732422d4f78a4",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/static/img/logo.svg": {
+      "sha256": "eae27fb4d3bf4a349527f1627181f8e207c5d5f1289e85e0411ba90a98c9c883",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/static/img/social-card.png": {
+      "sha256": "b04ca9dd5a4a9dcc3c002accb7d2ba11d130d6a9aaf296ace27bf55041edf628",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/css/custom.css": {
+      "sha256": "2cd26600d312a80acc1758a15ea8c14510b8faf82746d612a666c72268d3fb7f",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/css/prism-airs.ts": {
+      "sha256": "bd805aa7a0920b7c22d88a5a8a87a68863403d0a26c293b500d0424e8ee08ec8",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/pages/index.module.css": {
+      "sha256": "8e752f10ffd7ddb6db06d2ee8d477df94a4f42c53dfa9d78cde9c42043e67a8e",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/theme/DocItem/Layout/index.tsx": {
+      "sha256": "02401eb52e895e3e9dc487d540be2eca52f826720e68d14b54e1edb51cb7c9ed",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/src/theme/DocItem/Layout/styles.module.css": {
+      "sha256": "5c4144c06d2a0368beafec9e28663d4beea070e8fe75d1842aa91be316834f47",
+      "unchangedFromPreviousDeployment": true
+    },
+    "docs-site/docusaurus.config.ts": {
+      "sha256": "f07cd4a2dd6299fdef20a722a6963856bc5417c145204e748d723a45cf27d1e1",
+      "unchangedFromPreviousDeployment": true
+    },
+    ".github/workflows/docs-deploy.yml": {
+      "sha256": "dcbd385f8d682150fb5b6686078c0c399a7490d403ac213c978ea9dda2e94b0a",
+      "unchangedFromPreviousDeployment": true
+    }
+  },
+  "evidenceBoundary": "Actual terminal Pages deployment for the 0.2.5 docs merge; public page bytes compared with the deployed artifact. Third-party font servers are not verified."
+}

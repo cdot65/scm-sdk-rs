@@ -9270,7 +9270,9 @@
           "scope_evidence": [
             "docs/portkey-mcp-tags-plan.md",
             ".local/docs-site-worktree/docs-site",
-            "docs/reviews/github-pages/release-0.2.5"
+            "docs/reviews/github-pages/release-0.2.5/binding.json",
+            "docs/reviews/github-pages/release-0.2.5/site_binding.py",
+            "docs/reviews/github-pages/release-0.2.5/cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720"
           ],
           "scope_revisions": [
             {
@@ -9280,8 +9282,20 @@
                 ".local/docs-site-worktree/docs-site",
                 "docs/reviews/github-pages/release-0.2.5"
               ]
+            },
+            {
+              "from_attempt": 2,
+              "scope_evidence": [
+                "docs/portkey-mcp-tags-plan.md",
+                ".local/docs-site-worktree/docs-site",
+                "docs/reviews/github-pages/release-0.2.5/binding.json",
+                "docs/reviews/github-pages/release-0.2.5/site_binding.py",
+                "docs/reviews/github-pages/release-0.2.5/cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720"
+              ]
             }
-          ]
+          ],
+          "review_decision": "rejected",
+          "latest_review": "docs/reviews/phase-31-chunk-docs-site-codex-attempt-01.json"
         }
       ],
       "acceptance_criteria": [
@@ -9295,7 +9309,22 @@
         "High (registry readiness path): tools/release_delivery.py accepts phase 31's Codex chunk record path (phase-31-chunk-release-readiness-codex-attempt-NN.json) and keeps historical formats; regression in tools/test_release_025.py.",
         "High (completion without delivery): codex_review requires release_delivery.verify(root, source, phase=31, version='0.2.5') both before reserving a phase-level attempt and before recording completion; regression proves a failing delivery blocks advancement and that non-release phases are unaffected.",
         "Medium (Windows example build): Unix permission handling is confined to a #[cfg(unix)] open_private; a #[cfg(not(unix))] fallback refuses to write recovery ids rather than weaken privacy. A static guard test enforces the gating. A local x86_64-pc-windows-msvc check was attempted but cannot complete on this Linux host (aws-lc-sys needs MSVC/NASM); Windows compilation remains an unexecuted check, recorded as a limitation rather than claimed.",
-        "Runtime changed, so read-only (attempt 02) and MCP tags (attempt 02, 19/19, complete cleanup) receipts were refreshed for the release runtime."
+        "Runtime changed, so read-only (attempt 02) and MCP tags (attempt 02, 19/19, complete cleanup) receipts were refreshed for the release runtime.",
+        "docs-site attempt 1 (7, rejected) is preserved.",
+        "High (site acceptance not bound to site source or deployment receipts): the fix cannot modify tools/codex_review.py or any other fingerprinted source, because the published 0.2.5 delivery (tools/release_delivery.py verify) requires the current SDK fingerprint to equal the published fingerprint adbdec87...; changing governance tooling after publication would make the 0.2.5 release permanently unverifiable. Mitigation within that constraint: docs/reviews/github-pages/release-0.2.5/binding.json binds the docs-site chunk to site commit cce6cb2 (docs-site tree 61f8093e, deploy workflow blob), the per-commit deployment and push receipt hashes, the verified Pages artifact digest, the protected asset digests and the merged release source 4adbe97; site_binding.py --check recomputes all of these offline from git objects and retained receipts and fails on site-only changes, replaced or mismatched receipts, or a worktree HEAD other than the bound commit (tampering verified to fail). Earlier receipts for 19a7fd9 are retained under their own commit directory. Automated enforcement of this binding inside tools/codex_review.py chunk acceptance is deferred to the next governance phase after 0.2.5 and is recorded as a limitation, not claimed.",
+        "Medium (stale live receipts): live-qualification and gateway-control now cite phase 31 attempt 02 receipts (runtime a495f826...) and the v0.2.5-tagged qualification, live-evidence and MCP operations ledgers; attempt 01 is labeled historical. The deployment receipt asserts the attempt-02 markers present and attempt-01 links absent on the live pages.",
+        "Medium (rustdoc-only lines): the gateway MCP tags example and the core models example are ordinary Rust functions; both exact snippets compiled and ran against crates.io scm-sdk =0.2.5 (features gateway, scan) on Rust 1.99.0. The deployment receipt asserts no rendered \"# fn\", \"# let\" or \"# Ok::\" lines on the live pages."
+      ],
+      "limitations": [
+        {
+          "id": "docs-site-acceptance-enforcement",
+          "status": "deferred",
+          "scope": "Automated verification of docs/reviews/github-pages/release-0.2.5/binding.json inside tools/codex_review.py chunk/phase acceptance; deferred because 0.2.5 delivery binds the unchanged published SDK fingerprint.",
+          "evidence": [
+            "docs/reviews/github-pages/release-0.2.5/site_binding.py",
+            "docs/reviews/github-pages/release-0.2.5/binding.json"
+          ]
+        }
       ]
     }
   ],
