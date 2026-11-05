@@ -88,18 +88,26 @@ Since **0.2.5**, MCP integrations and servers carry the `tags` contract from
 | `airs::gateway::mcp_tags_filter` | Builds a filter string with sorted keys and rejects duplicate keys. |
 
 ```rust
-use scm_sdk::{airs::gateway::{mcp_tags_filter, models::*}, data::{Patch, TypedMap}};
+use scm_sdk::{
+    airs::gateway::{mcp_tags_filter, models::*},
+    data::{Optional, Patch, TypedMap},
+    validation::Mode,
+};
 
-# fn build() -> scm_sdk::Result<()> {
-let tags: TypedMap<String> = [("env", "prod".to_owned()), ("team", "sec".to_owned())].into_iter().collect();
-let update = GatewayMcpServersClientUpdateRequest::builder()
-    .tags(Patch::Value(tags))
-    .build_validated(scm_sdk::validation::Mode::Request)?;
-let filter = mcp_tags_filter([("env", "prod")])?; // {"env":"prod"}
-let query = GatewayMcpServersClientListOptions::builder()
-    .tags(scm_sdk::data::Optional::Value(filter))
-    .build()?;
-# let _ = (update, query); Ok(()) }
+fn build() -> scm_sdk::Result<()> {
+    let tags: TypedMap<String> = [("env", "prod".to_owned()), ("team", "sec".to_owned())]
+        .into_iter()
+        .collect();
+    let update = GatewayMcpServersClientUpdateRequest::builder()
+        .tags(Patch::Value(tags))
+        .build_validated(Mode::Request)?;
+    let filter = mcp_tags_filter([("env", "prod")])?; // {"env":"prod"}
+    let query = GatewayMcpServersClientListOptions::builder()
+        .tags(Optional::Value(filter))
+        .build()?;
+    let _ = (update, query);
+    Ok(())
+}
 ```
 
 All requests and filters are validated before authentication. A filter must be a
@@ -107,6 +115,6 @@ JSON object of unique keys with string values; that applies to filters supplied
 through the open extensions map as well. The service rejects unresolvable
 integration hosts (400 `AB01`). It also requires an integration to be enabled for a
 workspace (`set_workspaces`) before that workspace's MCP server can reference it
-(403 `AB03`). The [live receipt](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-mcp-tags-live-attempt-01.json)
+(403 `AB03`). The [live receipt](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-mcp-tags-live-attempt-02.json)
 verified creation, filtering, read-back, replacement and null clearing for both
 resource types. Both disposable fixtures were deleted afterwards.

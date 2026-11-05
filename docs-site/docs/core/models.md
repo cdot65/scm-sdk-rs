@@ -18,17 +18,18 @@ Non-exhaustive object models expose `builder()` with typed setters. `build()` ch
 use scm_sdk::airs::scan::models::{AiProfile, Optional, ScanRequest, ScanRequestContentsInner};
 use scm_sdk::validation::Mode;
 
-let profile = AiProfile::builder()
-    .profile_name(Optional::Value("profile-name".into()))
-    .build_validated(Mode::Request)?;
-let content = ScanRequestContentsInner::builder()
-    .prompt(Optional::Value("Text to scan".into()))
-    .build_validated(Mode::Request)?;
-let request = ScanRequest::builder()
-    .ai_profile(profile)
-    .contents(vec![content])
-    .build_validated(Mode::Request)?;
-# Ok::<(), scm_sdk::Error>(())
+fn build_scan_request() -> scm_sdk::Result<ScanRequest> {
+    let profile = AiProfile::builder()
+        .profile_name(Optional::Value("profile-name".into()))
+        .build_validated(Mode::Request)?;
+    let content = ScanRequestContentsInner::builder()
+        .prompt(Optional::Value("Text to scan".into()))
+        .build_validated(Mode::Request)?;
+    ScanRequest::builder()
+        .ai_profile(profile)
+        .contents(vec![content])
+        .build_validated(Mode::Request)
+}
 ```
 
 Schema-backed object types expose their precise graph identifier as `SCHEMA` and provide `parse(serde_json::Value, Mode)`. For root aliases or scalar/union contracts, use the family's generic `parse::<Type>(schema_name, value, mode)` function. SDK request clients validate inputs before authentication or network access. Direct Serde decoding is a representation conversion; use native validation to enforce schema semantics and reject malformed known union variants.

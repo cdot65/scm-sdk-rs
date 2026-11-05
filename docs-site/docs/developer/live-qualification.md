@@ -2,20 +2,22 @@
 title: Live Qualification
 ---
 
-The [live acceptance policy](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/LIVE_ACCEPTANCE_POLICY.md) governs tenant selection,
+The [live acceptance policy](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/LIVE_ACCEPTANCE_POLICY.md) governs tenant selection,
 owned fixtures, cost limits, promotion, and cleanup.
 
-The source of truth is [the exhaustive qualification matrix](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/contracts/qualification.json),
+The source of truth is [the exhaustive qualification matrix](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/contracts/qualification.json),
 with one row for each of the 448 frozen methods. Implementation, independent
 contract verification, and successful service execution have separate fields.
-Each unqualified method has a reason. The [current receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/contracts/live-evidence.json)
+Each unqualified method has a reason. The [current receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/contracts/live-evidence.json)
 binds an allowlisted native execution report to the SDK source, dependencies,
 compiled executable, Rust version, host target, and execution time.
 
 ## Current read-only qualification
 
-The current maintenance run is [phase 31 attempt 01](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-live-attempt-01.json).
-The probe ran against the prepublication 0.2.5 runtime. Registry publication
+The current maintenance run is [phase 31 attempt 02](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-live-attempt-02.json),
+bound to the released 0.2.5 runtime (runtime fingerprint `a495f826…`) through the
+[current receipt reference](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/contracts/live-evidence.json).
+The probe ran against the prepublication 0.2.5 source that was published unchanged. Registry publication
 is established separately in the [release notes](/about/release-notes).
 It verified **1 exact native method**, OAuth token exchange. All four single-page
 Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
@@ -33,13 +35,14 @@ realtime provider workflows remain live-unqualified. Offline fixture and consume
 checks establish implementation compatibility separately from these service results.
 
 Phase 27 attempts 01 through 05 recorded the same bounded probe outcomes. Phase 28
-attempt 01 binds the 0.2.4 version and patched TLS dependencies; phase 31 attempt 01 binds
-0.2.5. None of these attempts promotes the 17 historical successes to the current runtime.
+attempt 01 binds the 0.2.4 version and patched TLS dependencies; phase 31 attempt 01 is a
+historical earlier-runtime 0.2.5 receipt, and attempt 02 binds the released 0.2.5 runtime. None of these attempts promotes the 17 historical successes to the current runtime.
 
 ## MCP tags workflow
 
-The separately bounded [MCP tags receipt](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-mcp-tags-live-attempt-01.json)
-for the 0.2.5 runtime verified all 19 recorded steps and completed cleanup of both
+The separately bounded [MCP tags receipt](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-mcp-tags-live-attempt-02.json)
+(phase 31 attempt 02, the receipt named by the [MCP tags operations ledger](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json))
+for the released 0.2.5 runtime verified all 19 recorded steps and completed cleanup of both
 disposable fixtures. The steps cover integration create, tags filter inclusion and
 exclusion, typed read-back, replacement, null clearing, workspace enablement, and server
 create, read-back, filtered list, replacement and null clearing. Creates whose remote outcome
