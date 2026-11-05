@@ -1,9 +1,10 @@
 # Release and delivery procedure
 
-The workspace version is **0.2.4**. Its publication and delivery are established
+The workspace version is **0.2.5**. Its publication and delivery are established
 only by verified version-specific receipts.
-Phase 28 qualifies the TypeScript 0.35.0 directional-profile delta, preserves the
-existing APIs, and requires its own registry, annotated-tag, and CI receipts.
+Phase 31 releases the Portkey MCP tags delta (phases 29–30) and preserves the
+existing APIs. It requires its own registry, annotated-tag and CI receipts. Phase 28
+qualified 0.2.4, the TypeScript 0.35.0 directional-profile delta.
 The lockfiles include rustls-webpki 0.103.16 and webpki-root-certs 1.0.10 for
 RUSTSEC-2026-0382/0383. Downstream applications must update and audit their own
 resolved lockfiles; crate publication does not replace them.
@@ -264,3 +265,39 @@ python3 tools/release_delivery.py --phase 28 --version 0.2.4
 
 Only after that guard passes can the remote-delivery chunk and final phase review
 establish completion. The readiness review alone cannot advance phase 28.
+
+## Portkey MCP tags release (phase 31)
+
+Use `python3 tools/check_phase.py --phase 31` for cumulative local qualification on
+the committed 0.2.5 source. Both clean compiler packages must execute the
+directional-profile consumer. Phase 31 uses the maintainer-selected Codex reviewer
+([plan](portkey-mcp-tags-plan.md)): the publication guards accept only the latest
+accepted `release-readiness` chunk record for the current source, verified by
+`tools/codex_review.py` (`docs/reviews/phase-31-chunk-release-readiness-codex-attempt-NN.json`).
+
+```sh
+python3 scripts/check-prepublication.py --phase 31 --version 0.2.5 \
+  --readiness-review docs/reviews/phase-31-chunk-release-readiness-codex-attempt-NN.json
+(cd "$RELEASE_WORKTREE" && cargo +1.99.0 publish -p scm-sdk --locked)
+python3 scripts/verify-publication.py --version 0.2.5 \
+  --proof docs/checks/phase-31-release-package-1.99.0.json \
+  --msrv-proof docs/checks/phase-31-release-package-1.89.0.json \
+  --readiness-review docs/reviews/phase-31-chunk-release-readiness-codex-attempt-NN.json \
+  --output docs/checks/release-registry-0.2.5.json
+git push ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git refs/tags/v0.2.5:refs/tags/v0.2.5
+git push git@github.com:cdot65/scm-sdk-rs.git refs/tags/v0.2.5:refs/tags/v0.2.5
+python3 scripts/observe-release.py tag --version 0.2.5 \
+  --source "$RELEASE_SOURCE" --output docs/checks/release-tag-v0.2.5.json
+python3 scripts/observe-release.py tag --version 0.2.5 --tag-remote github \
+  --source "$RELEASE_SOURCE" --output docs/checks/release-tag-github-v0.2.5.json
+python3 scripts/observe-release.py ci --version 0.2.5 \
+  --source "$DELIVERY_SOURCE" --run "$RUN_NUMBER" \
+  --output "docs/checks/phase-31-remote-ci-run-$RUN_NUMBER.json"
+python3 tools/release_delivery.py --phase 31 --version 0.2.5
+```
+
+Record `registry_publication` and `delivery` in phase 31's status entry exactly as
+for phase 28, including `github_tag_receipt`. Only after the delivery guard passes
+can the `remote-delivery` and `docs-site` chunks and the final phase review complete
+phase 31. Publication uses the owner-controlled external Cargo credential.
+

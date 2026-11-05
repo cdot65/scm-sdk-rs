@@ -34,18 +34,18 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "d8d140ea5b302d9a7ead48b3b49f478e1fb049120022c1926a32c16ba519cc5a"
+      "sha256": "9e99670d2d19d4ee336104876bc6178e3f9d6bb16830318e81607fab5179893b"
     },
     "report": {
-      "path": "docs/checks/phase-30-live-attempt-04.json",
-      "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986"
+      "path": "docs/checks/phase-31-live-attempt-01.json",
+      "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
       "sha256": "e96ab9afb2245bc74b45990d8af1434e1719b395d5dbc8d3a28d615d8c4e6928"
     },
-    "executedAt": "2026-11-05T15:55:27.517573+00:00",
-    "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
+    "executedAt": "2026-11-05T16:26:06.160893+00:00",
+    "runtimeInputsSha256": "7071e8d8454e0edf10f75bcb07063e90ba75c35959f36ee178fd3ab1b401d8b6",
     "toolchain": "1.99.0",
     "hostTarget": "x86_64-unknown-linux-gnu",
     "cleanupState": "not_needed"
@@ -53,8 +53,8 @@
   "portkeyMcpTagsSupplemental": {
     "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
     "implementationBindings": "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
-    "implementationBindingsSha256": "3fe500a5ceb60a82c7a773a26d4939e60db280effcc2ae28a08c9345f91de39a",
-    "liveReceipt": "docs/checks/phase-30-mcp-tags-live-attempt-08.json",
+    "implementationBindingsSha256": "38ad3e9579d092c08ecb7f15878be155bd296765112edae15b45c906d56972a4",
+    "liveReceipt": "docs/checks/phase-31-mcp-tags-live-attempt-01.json",
     "frozenParityDenominatorUnchanged": true,
     "fieldProjections": 8,
     "records": [
@@ -135,7 +135,7 @@
   "sourceBindings": [
     {
       "path": "Cargo.lock",
-      "sha256": "e76abae34cc779628605e93d283eacb725cb67e8902cfe4fa07a28d73b1631b8"
+      "sha256": "27bd743195b765a4664369c235daca7dc7cd46ab7f68513f694978a6cbfa3847"
     },
     {
       "path": "Cargo.toml",
@@ -147,7 +147,7 @@
     },
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "d8d140ea5b302d9a7ead48b3b49f478e1fb049120022c1926a32c16ba519cc5a"
+      "sha256": "9e99670d2d19d4ee336104876bc6178e3f9d6bb16830318e81607fab5179893b"
     },
     {
       "path": "contracts/native-capability-mappings/client-members.json",
@@ -175,7 +175,7 @@
     },
     {
       "path": "contracts/native-operations.json",
-      "sha256": "0b926fe42929eb3e5d7891a3d6db2b108746912bab5bfe0eb35172e3b364b948"
+      "sha256": "40b28befc9fceb1b19d9126faa15fb348d12a330361801cf9bb7d60d185bac6e"
     },
     {
       "path": "contracts/typescript.json",
@@ -183,7 +183,7 @@
     },
     {
       "path": "crates/scm-sdk/Cargo.toml",
-      "sha256": "61580bedb990228795628d753844efc1fe924a295d761aea77bed06fc17325e8"
+      "sha256": "9ebdd775e967017cf728125c5061c6d12401b15069e6348467d88cdf10b93328"
     },
     {
       "path": "crates/scm-sdk/src/airs/agentguard/client.rs",
@@ -734,8 +734,8 @@
       "sha256": "702d599394328c375a6647ccaa0cf1d092355568b6c063d23974652fb7ac749a"
     },
     {
-      "path": "docs/checks/phase-30-live-attempt-04.json",
-      "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986"
+      "path": "docs/checks/phase-31-live-attempt-01.json",
+      "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d"
     },
     {
       "path": "scripts/check-native-exports.py",
@@ -116578,10 +116578,10 @@
       "probeIndex": 3094,
       "liveAcceptance": "verified",
       "liveEvidence": {
-        "path": "docs/checks/phase-30-live-attempt-04.json",
-        "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986",
+        "path": "docs/checks/phase-31-live-attempt-01.json",
+        "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
+        "runtimeInputsSha256": "7071e8d8454e0edf10f75bcb07063e90ba75c35959f36ee178fd3ab1b401d8b6",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -130624,10 +130624,10 @@
       "probeIndex": 3458,
       "liveAcceptance": "permission_prerequisite",
       "liveEvidence": {
-        "path": "docs/checks/phase-30-live-attempt-04.json",
-        "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986",
+        "path": "docs/checks/phase-31-live-attempt-01.json",
+        "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
+        "runtimeInputsSha256": "7071e8d8454e0edf10f75bcb07063e90ba75c35959f36ee178fd3ab1b401d8b6",
         "probe": "red_team.targets.list.profiling_not_started",
         "observations": [
           {
@@ -144174,7 +144174,7 @@
       },
       {
         "path": "Cargo.lock",
-        "sha256": "3446f68ad99a2c1ac9ee61120cbb4f0140b40074af20b277a18ac965ba0e4458"
+        "sha256": "d338d3c2624059387a9ff163dbfca3b541fdcfaf68fc630938db0a3b95eda8a6"
       },
       {
         "path": "src/main.rs",

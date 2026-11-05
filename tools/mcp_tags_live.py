@@ -51,11 +51,12 @@ def crate_version():
     return re.search(r'^version = "([^"]+)"', text, re.MULTILINE).group(1)
 
 
-def validate_report(report):
+def validate_report(report, expected_version=None):
     """Allowlist every exported value; unexpected fields could carry tenant data."""
     if not isinstance(report, dict) or set(report) != REPORT_KEYS:
         raise ValueError('Unexpected MCP tags report fields')
-    if (report['schemaVersion'] != 2 or report['crateVersion'] != crate_version()
+    if (report['schemaVersion'] != 2 or report['crateVersion'] != (expected_version or report['crateVersion'])
+            or not re.fullmatch(r'\d+\.\d+\.\d+', str(report['crateVersion']))
             or report['upstreamCommit'] != '8e5da0e756bc49ee3e82ca13df693b39fa541627' or report['tenantScopeMatched'] is not True
             or not isinstance(report['serverWorkflowSelected'], bool)
             or report['cleanupState'] not in {'not_needed', 'complete', 'incomplete'}):
@@ -111,7 +112,9 @@ def check(path, current=True):
         raise ValueError('MCP tags receipt lacks clean execution evidence')
     if current and envelope['runtimeInputsSha256'] != runtime_fingerprint(ROOT):
         raise ValueError('MCP tags receipt is stale for the current runtime')
-    if envelope['summary'] != summarize(validate_report(envelope['report'])):
+    # A current-runtime receipt must also name the current crate version.
+    expected = crate_version() if current else None
+    if envelope['summary'] != summarize(validate_report(envelope['report'], expected)):
         raise ValueError('MCP tags receipt summary differs from its report')
     executed = datetime.datetime.fromisoformat(envelope['executedAt'])
     if executed.utcoffset() != datetime.timedelta(0):
@@ -156,7 +159,7 @@ def run(args):
         (private / name).chmod(0o600)
     if execution.returncode or not raw.is_file():
         raise ValueError(f'MCP tags live workflow interrupted; private diagnostics retained at {private}')
-    report = validate_report(json.loads(raw.read_text()))
+    report = validate_report(json.loads(raw.read_text()), crate_version())
     envelope = {'schemaVersion': 1, 'phase': args.phase, 'attempt': args.attempt,
                 'executedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 'runtimeInputsSha256': before, 'binarySha256': digest(binary), 'toolchain': TOOLCHAIN, 'hostTarget': host,

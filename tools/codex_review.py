@@ -196,6 +196,18 @@ def verify_chunk_acceptance(root, row, source):
             raise ValueError('Chunk acceptance is stale, superseded or inconsistent: ' + chunk['id'])
 
 
+def verify_release_readiness(root, path, source):
+    """Phase 31 publication guard: the latest release-readiness chunk attempt is an
+    accepted, unchanged Codex record of exactly this source."""
+    phase, chunk = 31, 'release-readiness'
+    latest = latest_attempt(root, phase, chunk)
+    if not latest or path.resolve() != destination(root, phase, latest, chunk).resolve() or path.is_symlink():
+        return False
+    record = verify_attempt(root, phase, latest, chunk)
+    return (record.get('decision') == 'accepted' and record.get('source_unchanged') is True
+            and record.get('source_sha256') == source)
+
+
 def mark_interrupted(root, phase, attempt, chunk):
     """Record an orphaned slot as a consumed failed attempt once no invocation holds its lock."""
     path = destination(root, phase, attempt, chunk)

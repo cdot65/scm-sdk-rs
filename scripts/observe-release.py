@@ -33,7 +33,7 @@ def remote_tag(source, output, version="0.2.3", tag_remote="canonical"):
     if tag_remote not in remotes:
         raise ValueError("Unreviewed tag remote")
     remote = remotes[tag_remote]
-    if version not in {"0.2.3", "0.2.4"}:
+    if version not in {"0.2.3", "0.2.4", "0.2.5"}:
         raise ValueError("Unreviewed release version")
     tag_ref = "refs/tags/v" + version
     if not re.fullmatch('[0-9a-f]{40}', source):
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('kind', choices=['tag', 'ci'])
     parser.add_argument('--source', required=True)
-    parser.add_argument('--version', choices=('0.2.3', '0.2.4'), default='0.2.3')
+    parser.add_argument('--version', choices=('0.2.3', '0.2.4', '0.2.5'), default='0.2.3')
     parser.add_argument('--tag-remote', choices=('canonical', 'github'), default='canonical')
     parser.add_argument('--run', type=int)
     parser.add_argument('--output', required=True, type=pathlib.Path)

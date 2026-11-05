@@ -1,7 +1,7 @@
 # Compatibility and support status
 
-The current Rust crate version is **0.2.4**, the [directional-profile update](DIRECTIONAL_PROFILES.md). Publication and delivery require verified version-specific receipts.
-The `checks/release-registry-0.2.4.json` establishes publication
+The current Rust crate version is **0.2.5**, the [Portkey MCP tags update](GATEWAY_CONTROL.md#portkey-mcp-tags-8e5da0e); it retains the 0.2.4 [directional-profile update](DIRECTIONAL_PROFILES.md). Publication and delivery require verified version-specific receipts.
+The `checks/release-registry-0.2.5.json` establishes publication
 only when present and verified. A missing receipt means publication is not yet verified.
 The [access-policy family](ACCESS_POLICIES.md) remains experimental/live-unverified;
 its Portkey key/control-plane contract is separate from SCM OAuth.

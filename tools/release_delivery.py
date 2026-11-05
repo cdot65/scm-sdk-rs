@@ -20,7 +20,7 @@ REMOTE = 'ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git'
 GITHUB_REMOTE = 'https://github.com/cdot65/scm-sdk-rs.git'
 VERSION = '0.2.2'
 PHASE = 20
-RELEASES = {(20, '0.2.2'), (24, '0.2.3'), (28, '0.2.4')}
+RELEASES = {(20, '0.2.2'), (24, '0.2.3'), (28, '0.2.4'), (31, '0.2.5')}
 
 
 def require(condition, message):
@@ -159,7 +159,7 @@ def verify_registry_readiness(root, registry, source_sha256, phase=PHASE):
 def retained_package_archive(root, proof, phase):
     """Bind management archives to their qualified commit's own worktree."""
     archive = pathlib.Path(proof['retainedArchive'])
-    if phase in (24, 28):
+    if phase in (24, 28, 31):
         commit = proof.get('releaseCommit')
         require(isinstance(commit, str) and re.fullmatch('[0-9a-f]{40}', commit),
                 'Retained archive requires an exact release commit')
@@ -188,23 +188,24 @@ def verify_retained_registry(root, registry, publication):
 
 
 def verify_github_tag(root, delivery, canonical, phase, version):
-    """Require the public source-link mirror only for the 0.2.4 delivery."""
-    if phase != 28:
+    """Require the public source-link mirror for the 0.2.4 and 0.2.5 deliveries."""
+    mirrored = {28: '0.2.4', 31: '0.2.5'}
+    if phase not in mirrored:
         return
-    require(version == '0.2.4', 'Unreviewed GitHub mirror release')
-    path = 'docs/checks/release-tag-github-v0.2.4.json'
+    require(version == mirrored[phase], 'Unreviewed GitHub mirror release')
+    path = f'docs/checks/release-tag-github-v{version}.json'
     require(delivery.get('github_tag_receipt') == path,
-            'Phase 28 must identify its GitHub mirror tag receipt')
+            f'Phase {phase} must identify its GitHub mirror tag receipt')
     mirror = read_record(root, path)
     refs = mirror.get('remoteRefs', {})
     require(mirror.get('passed') is True and mirror.get('remote') == GITHUB_REMOTE
-            and mirror.get('tag') == canonical.get('tag') == 'v0.2.4'
+            and mirror.get('tag') == canonical.get('tag') == f'v{version}'
             and mirror.get('sourceCommit') == canonical.get('sourceCommit')
             and mirror.get('tagObject') == canonical.get('tagObject')
             and isinstance(mirror.get('tagObject'), str)
             and re.fullmatch('[0-9a-f]{40}', mirror['tagObject'])
-            and refs.get('refs/tags/v0.2.4') == mirror['tagObject']
-            and refs.get('refs/tags/v0.2.4^{}') == mirror['sourceCommit'],
+            and refs.get(f'refs/tags/v{version}') == mirror['tagObject']
+            and refs.get(f'refs/tags/v{version}^{{}}') == mirror['sourceCommit'],
             'GitHub annotated tag differs from qualified canonical release')
 
 
@@ -233,7 +234,7 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
     publication = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(publication)
     for proof in proofs:
-        if phase_id in (24, 28):
+        if phase_id in (24, 28, 31):
             publication.require_proof(proof, schema_version=3)
         else:
             publication.require_proof(proof)
@@ -245,11 +246,11 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
         require(publication.file_rows(files) == proof['files']
                 and publication.policy.validate_vcs(files, proof['releaseCommit'], True) == proof['vcs'],
                 'Retained archive files or VCS differ from clean proof')
-    if phase_id in (24, 28):
+    if phase_id in (24, 28, 31):
         publication.verify_management_proofs(
             root / f"docs/checks/phase-{phase_id}-release-package-1.99.0.json",
             root / f"docs/checks/phase-{phase_id}-release-package-1.89.0.json",
-            **({"require_directional": True} if phase_id == 28 else {}))
+            **({"require_directional": True} if phase_id in (28, 31) else {}))
         verify_retained_registry(root, registry, publication)
     result = validate_receipts(registry, tag, ci, proofs,
                                expected_contexts((root / '.forgejo/workflows/ci.yml').read_text()), source_sha256, version)

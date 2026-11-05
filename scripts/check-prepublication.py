@@ -17,7 +17,7 @@ def module(name, filename):
 
 
 def verify(review, phase=24, version="0.2.3"):
-    if (phase, version) not in {(24, "0.2.3"), (28, "0.2.4")}:
+    if (phase, version) not in {(24, "0.2.3"), (28, "0.2.4"), (31, "0.2.5")}:
         raise ValueError("Unreviewed release phase/version pair")
     publication = module('prepublish_publication', 'verify-publication.py')
     readiness = publication.require_release_readiness(version, review)

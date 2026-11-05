@@ -138,7 +138,7 @@ def run_check(command):
 
 
 MANAGEMENT_PHASES = (21, 22, 23, 24, 25)
-CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES, 28)
+CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES, 28, 31)
 MANAGEMENT_BASELINE = "0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e"
 
 
@@ -379,7 +379,24 @@ def portkey_mcp_implementation_commands(phase):
     return commands
 
 
+def portkey_mcp_release_commands(phase):
+    """Phase 31: cumulative phase-30 qualification on the 0.2.5 source, then both
+    clean extracted archives and the version-specific readiness receipt."""
+    # The MCP tags receipt path always comes from the implementation-binding ledger.
+    commands = [command if command[:2] == ["python", "tools/mcp_tags_live.py"]
+                else [value.replace("phase-30-", f"phase-{phase}-") for value in command]
+                for command in portkey_mcp_implementation_commands(30)]
+    for compiler in ("1.89.0", "1.99.0"):
+        commands.append(["python", "scripts/check-management-package.py", "--require-directional",
+                         "--toolchain", compiler, "--output", f"docs/checks/phase-{phase}-release-package-{compiler}.json"])
+    commands.append(["python", "scripts/check-access-release.py", "--phase", str(phase), "--version", "0.2.5",
+                     "--output", f"docs/checks/phase-{phase}-release-readiness.json"])
+    return commands
+
+
 def commands_for(phase):
+    if phase == 31:
+        return portkey_mcp_release_commands(31)
     if phase == 29:
         return portkey_mcp_planning_commands(29)
     if phase == 30:

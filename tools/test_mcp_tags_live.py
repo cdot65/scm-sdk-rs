@@ -74,7 +74,7 @@ class McpTagsLiveReceiptTests(unittest.TestCase):
         # The same bytes are asserted equal to the example's offline producer output.
         report = json.loads((ROOT / 'crates/scm-sdk/examples/mcp_tags_live_uncertain_report.json').read_text())
         report['crateVersion'] = mcp_tags_live.crate_version()
-        validated = mcp_tags_live.validate_report(report)
+        validated = mcp_tags_live.validate_report(report, mcp_tags_live.crate_version())
         self.assertEqual(validated['cleanupState'], 'incomplete')
         self.assertEqual(mcp_tags_live.summarize(validated)['verifiedSteps'], [])
 

@@ -45,18 +45,18 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "d8d140ea5b302d9a7ead48b3b49f478e1fb049120022c1926a32c16ba519cc5a"
+      "sha256": "9e99670d2d19d4ee336104876bc6178e3f9d6bb16830318e81607fab5179893b"
     },
     "report": {
-      "path": "docs/checks/phase-30-live-attempt-04.json",
-      "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986"
+      "path": "docs/checks/phase-31-live-attempt-01.json",
+      "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
       "sha256": "e96ab9afb2245bc74b45990d8af1434e1719b395d5dbc8d3a28d615d8c4e6928"
     },
-    "executedAt": "2026-11-05T15:55:27.517573+00:00",
-    "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
+    "executedAt": "2026-11-05T16:26:06.160893+00:00",
+    "runtimeInputsSha256": "7071e8d8454e0edf10f75bcb07063e90ba75c35959f36ee178fd3ab1b401d8b6",
     "toolchain": "1.99.0",
     "hostTarget": "x86_64-unknown-linux-gnu",
     "cleanupState": "not_needed"
@@ -64,8 +64,8 @@
   "portkeyMcpTagsSupplemental": {
     "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
     "implementationBindings": "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
-    "implementationBindingsSha256": "3fe500a5ceb60a82c7a773a26d4939e60db280effcc2ae28a08c9345f91de39a",
-    "liveReceipt": "docs/checks/phase-30-mcp-tags-live-attempt-08.json",
+    "implementationBindingsSha256": "38ad3e9579d092c08ecb7f15878be155bd296765112edae15b45c906d56972a4",
+    "liveReceipt": "docs/checks/phase-31-mcp-tags-live-attempt-01.json",
     "frozenParityDenominatorUnchanged": true,
     "fieldProjections": 8,
     "records": [
@@ -156,7 +156,7 @@
     },
     "airs_api_defaults": {
       "service-name": "api",
-      "user-agent": "PAN-AIRS/0.2.4-rust-sdk",
+      "user-agent": "PAN-AIRS/0.2.5-rust-sdk",
       "scope": "API requests assembled by Client, including injected transports and streams; OAuth issuer exchange has its own headers.",
       "frozenUserAgent": "PAN-AIRS/0.34.0-typescript-sdk",
       "deliberateDifference": "Native crate version and rust-sdk suffix retain the PAN-AIRS vendor prefix.",
@@ -168,7 +168,7 @@
   "sourceBindings": [
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "d8d140ea5b302d9a7ead48b3b49f478e1fb049120022c1926a32c16ba519cc5a"
+      "sha256": "9e99670d2d19d4ee336104876bc6178e3f9d6bb16830318e81607fab5179893b"
     },
     {
       "path": "contracts/native-operation-mappings/agentguard-oauth.json",
@@ -551,8 +551,8 @@
       "sha256": "0888a724815100e771cf088e55af5a7c6ab0a33407aab2e4db9e0859b5dca407"
     },
     {
-      "path": "docs/checks/phase-30-live-attempt-04.json",
-      "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986"
+      "path": "docs/checks/phase-31-live-attempt-01.json",
+      "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d"
     },
     {
       "path": "tools/live_evidence.py",
@@ -7414,10 +7414,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-30-live-attempt-04.json",
-        "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986",
+        "path": "docs/checks/phase-31-live-attempt-01.json",
+        "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
+        "runtimeInputsSha256": "7071e8d8454e0edf10f75bcb07063e90ba75c35959f36ee178fd3ab1b401d8b6",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -11647,10 +11647,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-30-live-attempt-04.json",
-        "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986",
+        "path": "docs/checks/phase-31-live-attempt-01.json",
+        "sha256": "bcd1165199661eaa9bd4681dddbe8bf740bac221d146de69197045e4804dd22d",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
+        "runtimeInputsSha256": "7071e8d8454e0edf10f75bcb07063e90ba75c35959f36ee178fd3ab1b401d8b6",
         "probe": "red_team.targets.list.profiling_not_started",
         "observations": [
           {

@@ -317,12 +317,30 @@ mod live {
     fn write_private(path: &PathBuf, value: &impl Serialize) -> Result<()> {
         let bytes =
             serde_json::to_vec_pretty(value).map_err(|_| Error::new(ErrorKind::Configuration))?;
+        // Recovery ids are private: refuse symlinks, non-regular files and any
+        // existing destination readable by others; create owner-only (0600).
+        use std::os::unix::fs::{OpenOptionsExt, PermissionsExt};
+        let unsafe_mode = |mode: u32| mode & 0o077 != 0;
+        if let Ok(existing) = std::fs::symlink_metadata(path)
+            && (!existing.file_type().is_file() || unsafe_mode(existing.permissions().mode()))
+        {
+            return Err(Error::new(ErrorKind::Configuration));
+        }
         let mut file = OpenOptions::new()
             .write(true)
             .create(true)
             .truncate(true)
+            .mode(0o600)
             .open(path)
             .map_err(|_| Error::new(ErrorKind::Configuration))?;
+        let mode = file
+            .metadata()
+            .map_err(|_| Error::new(ErrorKind::Configuration))?
+            .permissions()
+            .mode();
+        if unsafe_mode(mode) {
+            return Err(Error::new(ErrorKind::Configuration));
+        }
         file.write_all(&bytes)
             .map_err(|_| Error::new(ErrorKind::Configuration))
     }

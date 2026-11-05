@@ -9122,39 +9122,117 @@
       },
       "final_in_sequence": true,
       "scope_evidence": [
-        "Cargo.toml",
-        "Cargo.lock",
-        "crates/scm-sdk/Cargo.toml",
+        ".forgejo/workflows/ci.yml",
+        ".local/docs-site-worktree/docs-site",
         "CHANGELOG.md",
+        "Cargo.lock",
         "README.md",
-        "docs/RELEASE.md",
+        "contracts/live-evidence.json",
+        "contracts/native-exports.json",
+        "contracts/native-gateway-bindings.json",
+        "contracts/native-operations.json",
+        "contracts/native-probes/Cargo.lock",
+        "contracts/qualification.json",
+        "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+        "crates/scm-sdk/Cargo.toml",
+        "crates/scm-sdk/examples/mcp_tags_live.rs",
+        "docs/CI.md",
+        "docs/GATEWAY_CONTROL.md",
         "docs/LIVE_ACCEPTANCE.md",
-        "../prisma-airs-cli/docs-site"
+        "docs/RELEASE.md",
+        "docs/STABILITY.md",
+        "docs/portkey-mcp-tags-plan.md",
+        "scripts/check-access-release.py",
+        "scripts/check-prepublication.py",
+        "scripts/observe-release.py",
+        "scripts/verify-publication.py",
+        "tools/check_phase.py",
+        "tools/codex_review.py",
+        "tools/mcp_tags_live.py",
+        "tools/release_delivery.py",
+        "tools/review_phase.py",
+        "tools/test_ci.py",
+        "tools/test_mcp_tags_live.py",
+        "tools/test_release_022.py",
+        "tools/test_release_024.py",
+        "tools/test_release_025.py"
       ],
       "chunks": [
         {
           "id": "release-readiness",
           "status": "pending",
           "scope_evidence": [
-            "Cargo.toml",
-            "Cargo.lock",
-            "crates/scm-sdk/Cargo.toml",
+            ".forgejo/workflows/ci.yml",
             "CHANGELOG.md",
+            "Cargo.lock",
             "README.md",
+            "contracts/live-evidence.json",
+            "contracts/native-exports.json",
+            "contracts/native-gateway-bindings.json",
+            "contracts/native-operations.json",
+            "contracts/native-probes/Cargo.lock",
+            "contracts/qualification.json",
+            "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+            "crates/scm-sdk/Cargo.toml",
+            "crates/scm-sdk/examples/mcp_tags_live.rs",
+            "docs/CI.md",
+            "docs/GATEWAY_CONTROL.md",
+            "docs/LIVE_ACCEPTANCE.md",
             "docs/RELEASE.md",
-            "docs/LIVE_ACCEPTANCE.md"
+            "docs/STABILITY.md",
+            "docs/portkey-mcp-tags-plan.md",
+            "scripts/check-access-release.py",
+            "scripts/check-prepublication.py",
+            "scripts/observe-release.py",
+            "scripts/verify-publication.py",
+            "tools/check_phase.py",
+            "tools/codex_review.py",
+            "tools/mcp_tags_live.py",
+            "tools/release_delivery.py",
+            "tools/review_phase.py",
+            "tools/test_ci.py",
+            "tools/test_mcp_tags_live.py",
+            "tools/test_release_022.py",
+            "tools/test_release_024.py",
+            "tools/test_release_025.py"
           ],
           "scope_revisions": [
             {
               "from_attempt": 1,
               "scope_evidence": [
-                "Cargo.toml",
-                "Cargo.lock",
-                "crates/scm-sdk/Cargo.toml",
+                ".forgejo/workflows/ci.yml",
                 "CHANGELOG.md",
+                "Cargo.lock",
                 "README.md",
+                "contracts/live-evidence.json",
+                "contracts/native-exports.json",
+                "contracts/native-gateway-bindings.json",
+                "contracts/native-operations.json",
+                "contracts/native-probes/Cargo.lock",
+                "contracts/qualification.json",
+                "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+                "crates/scm-sdk/Cargo.toml",
+                "crates/scm-sdk/examples/mcp_tags_live.rs",
+                "docs/CI.md",
+                "docs/GATEWAY_CONTROL.md",
+                "docs/LIVE_ACCEPTANCE.md",
                 "docs/RELEASE.md",
-                "docs/LIVE_ACCEPTANCE.md"
+                "docs/STABILITY.md",
+                "docs/portkey-mcp-tags-plan.md",
+                "scripts/check-access-release.py",
+                "scripts/check-prepublication.py",
+                "scripts/observe-release.py",
+                "scripts/verify-publication.py",
+                "tools/check_phase.py",
+                "tools/codex_review.py",
+                "tools/mcp_tags_live.py",
+                "tools/release_delivery.py",
+                "tools/review_phase.py",
+                "tools/test_ci.py",
+                "tools/test_mcp_tags_live.py",
+                "tools/test_release_022.py",
+                "tools/test_release_024.py",
+                "tools/test_release_025.py"
               ]
             }
           ]
@@ -9163,13 +9241,21 @@
           "id": "remote-delivery",
           "status": "pending",
           "scope_evidence": [
-            "docs/RELEASE.md"
+            "docs/RELEASE.md",
+            "tools/release_delivery.py",
+            "scripts/observe-release.py",
+            "scripts/verify-publication.py",
+            "scripts/check-prepublication.py"
           ],
           "scope_revisions": [
             {
               "from_attempt": 1,
               "scope_evidence": [
-                "docs/RELEASE.md"
+                "docs/RELEASE.md",
+                "tools/release_delivery.py",
+                "scripts/observe-release.py",
+                "scripts/verify-publication.py",
+                "scripts/check-prepublication.py"
               ]
             }
           ]
@@ -9178,13 +9264,15 @@
           "id": "docs-site",
           "status": "pending",
           "scope_evidence": [
-            "../prisma-airs-cli/docs-site"
+            "docs/portkey-mcp-tags-plan.md",
+            ".local/docs-site-worktree/docs-site"
           ],
           "scope_revisions": [
             {
               "from_attempt": 1,
               "scope_evidence": [
-                "../prisma-airs-cli/docs-site"
+                "docs/portkey-mcp-tags-plan.md",
+                ".local/docs-site-worktree/docs-site"
               ]
             }
           ]

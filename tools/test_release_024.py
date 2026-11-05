@@ -76,10 +76,16 @@ class Release024Tests(unittest.TestCase):
 
     def test_release_documentation_matches_candidate_and_delivery_guards(self):
         root = pathlib.Path(__file__).resolve().parents[1]
-        readme = (root / 'README.md').read_text()
+        # The 0.2.4 README is immutable at its published release commit; the
+        # current README belongs to the later 0.2.5 (phase 31) release.
+        import subprocess
+        readme = subprocess.check_output(['git', 'show', '6f18529a47cc273feca1000af6e4fc0d96da757e:README.md'],
+                                         cwd=root, text=True)
         self.assertIn('verified earlier release is [0.2.3]', readme)
         self.assertIn('docs/checks/release-registry-0.2.3.json', readme)
         self.assertIn('Crate version: **0.2.4**', readme)
+        current = (root / 'README.md').read_text()
+        self.assertIn('Verified earlier releases are [0.2.4]', current)
         self.assertIn('Publication and delivery are established only by verified', readme)
         self.assertIn('If publication is unverified, retain your existing released pin', readme)
         phases = (root / 'docs/PHASES.md').read_text()

@@ -143,7 +143,7 @@ Cleanup is recorded. A sanitized receipt is written to `docs/checks/phase-30-mcp
   2. Verify the registry archive.
   3. Push the annotated tag `v0.2.5` and the commits to `origin`.
   4. Wait for terminal CI.
-- **Chunk `docs-site`:** update the Docusaurus site at `prisma-airs-cli/docs-site`, covering SDK version references and MCP tag usage. This is a separate repository, committed and pushed there. Run `npm run build` to verify.
+- **Chunk `docs-site`:** update the SDK's Docusaurus site, `docs-site/` on the `docs/scm-github-pages` branch of the public GitHub mirror (deployed to `https://cdot65.github.io/scm-sdk-rs/` by its `docs-deploy` workflow). Merge the released `main` into that branch, update the release-derived version references and the MCP tags guide content, and build the site locally. Then push the branch so its workflow deploys the site. The work happens in a separate worktree at `.local/docs-site-worktree`.
 
 ## Acceptance
 

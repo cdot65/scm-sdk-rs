@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased — Portkey MCP tags (8e5da0e)
+## 0.2.5 — Portkey MCP tags (8e5da0e)
+
+Publication and remote delivery require verified 0.2.5 registry, annotated-tag and
+CI receipts (`docs/checks/release-registry-0.2.5.json`, `docs/checks/release-tag-v0.2.5.json`).
+
 
 - Add `tags: Patch<TypedMap<String>>` to MCP integration and server create and
   update requests. Omitted, `null` and value stay distinct: on update `null`
