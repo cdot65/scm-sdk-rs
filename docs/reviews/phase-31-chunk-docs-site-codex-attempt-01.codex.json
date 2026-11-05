@@ -1,0 +1,44 @@
+{
+  "score": 7,
+  "summary": "Not accepted. The site contains the 0.2.5 updates and recorded successful deployment, but review acceptance does not bind the separate site source. Published documentation also cites superseded live receipts and contains an invalid copyable Rust example.",
+  "findings": [
+    {
+      "severity": "high",
+      "path": "tools/codex_review.py",
+      "line": 393,
+      "description": "The unchanged-source check excludes this chunk's actual implementation: fingerprint() ignores .local/docs-site-worktree and excludes docs/reviews/, including the deployment receipts. The 113-command phase check report contains no site check, and chunk acceptance validates only the root fingerprint and scope path strings. Changing the site or replacing its deployment receipts therefore does not invalidate an accepted docs-site review or prevent phase advancement.",
+      "required_fix": "Bind the docs worktree commit and source contents, deployment workflow, and receipt hashes to the preserved review/check evidence. Validate those bindings before and after review and during phase advancement. Add regressions proving site-only changes and replaced or mismatched deployment evidence invalidate acceptance."
+    },
+    {
+      "severity": "medium",
+      "path": ".local/docs-site-worktree/docs-site/docs/developer/live-qualification.md",
+      "line": 17,
+      "description": "The current qualification section and MCP tags section cite attempt 01, whose runtime fingerprint is 7071e8d8454e0edf10f75bcb07063e90ba75c35959f36ee178fd3ab1b401d8b6. The refreshed release receipts are attempt 02 with fingerprint a495f826dc8a6360105a21bc3fdac1a152424fad37a7f074289e31ef689bf5a6. The gateway guide also cites MCP attempt 01, while the 'current receipt reference' still points to an older commit. Readers cannot follow these links to the evidence qualifying the released runtime.",
+      "required_fix": "Update both guides to the attempt-02 receipts and release-specific qualification/live-evidence ledgers. Keep earlier receipts explicitly historical, and check that current documentation references match the release's bound runtime evidence."
+    },
+    {
+      "severity": "medium",
+      "path": ".local/docs-site-worktree/docs-site/docs/airs/gateway-control.md",
+      "line": 93,
+      "description": "The new example includes rustdoc-only '# fn build()' and '# let _' lines. Docusaurus renders these prefixes literally; inspection of the generated HTML confirms they are present in the code block. Copying the example produces invalid Rust syntax.",
+      "required_fix": "Use ordinary Rust function syntax without rustdoc hiding prefixes. Verify the exact copyable example against scm-sdk 0.2.5 with the gateway feature enabled."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/portkey-mcp-tags-plan.md, and the phase-31 status entry; applied the explicit Codex 1\u201310 rubric exception.",
+    "Recomputed root fingerprint: adbdec87ffba019d14c68d44c509e5cf6ab5cea1a3b638bc62565cb59a31612d.",
+    "Inspected all 113 command/result entries in docs/checks/phase-31.json: recorded exit codes are zero with no timeouts; no documentation-site command is included.",
+    "Inspected both clean-package qualification reports for Rust 1.89.0 and 1.99.0, including packaged tests, examples, doctests and external consumers. Verified the retained registry archive hash against release-registry-0.2.5.json.",
+    "Reviewed the site diff from previous deployment 9a40963 to clean worktree HEAD 19a7fd96c3ca8ae6034f763fe9cd4f3834fc8085; docs-site tree is aa3bf66ef77a589de3ea3512639bf54a44af2bf4.",
+    "Inspected package configuration, Docusaurus configuration and the pinned docs-deploy workflow. Deployment receipt records successful typecheck, build and deployment for that HEAD.",
+    "Independently matched all five recorded page hashes against local generated HTML and all protected source-asset hashes against worktree files.",
+    "Compared documented MCP APIs with generated request models and mcp_tags_filter implementation; compared attempt-01 and attempt-02 live fingerprints and contracts/live-evidence.json.",
+    "Inspected fingerprint(), review binding and chunk-acceptance logic; confirmed the site path is ignored by the root repository."
+  ],
+  "limitations": [
+    "Read-only inspection only: no files changed, credentials or tenant registrations accessed, network requests made, or services contacted.",
+    "Builds and tests were not rerun; execution results are recorded evidence. Local hashes and generated HTML were independently inspected.",
+    "Remote publication, tag, CI and Pages state were not rechecked online. This chunk review does not certify complete-phase delivery.",
+    "Windows compilation remains unexecuted as recorded; successful Linux package checks do not establish Windows support."
+  ]
+}
