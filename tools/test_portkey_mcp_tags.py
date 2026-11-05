@@ -114,6 +114,78 @@ class PortkeyMcpTagsProvenanceTests(unittest.TestCase):
         path.write_text(json.dumps(contract, indent=2) + '\n')
         self.assert_rejected('Contract drift')
 
+    def test_implementation_bindings_require_passed_live_steps_and_every_import(self):
+        path = self.copy / 'operations.json'
+        ledger = json.loads(path.read_text())
+        ledger['bindings'][0]['liveSteps'] = ['mcp_integrations.unrecorded']
+        path.write_text(json.dumps(ledger))
+        self.assert_rejected('Live step binding is missing or did not pass')
+        ledger = json.loads((PIN / 'operations.json').read_text())
+        ledger['bindings'].pop()
+        path.write_text(json.dumps(ledger))
+        self.assert_rejected('Imported delta lacks an implementation binding')
+        ledger = json.loads((PIN / 'operations.json').read_text())
+        ledger['bindings'][0]['evidence'] = 'pub async fn missing_method('
+        path.write_text(json.dumps(ledger))
+        self.assert_rejected('Implementation/test binding drift')
+
+    def test_supplemental_capabilities_are_verified_and_recorded_in_native_ledgers(self):
+        import shutil
+        import sys
+        sys.path.insert(0, str(ROOT / 'tools'))
+        import portkey_mcp_tags
+        record = portkey_mcp_tags.supplemental_capabilities()
+        for ledger in ('contracts/native-operations.json', 'contracts/native-exports.json'):
+            self.assertEqual(json.loads((ROOT / ledger).read_text())['portkeyMcpTagsSupplemental'], record)
+        items = {row['item']: row for row in record['records']}
+        self.assertEqual(items['scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::list_with_options']['liveAcceptance'], 'verified')
+        self.assertTrue(record['frozenParityDenominatorUnchanged'])
+        root = pathlib.Path(self.temporary.name) / 'root'
+        for relative in ['contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json', record['liveReceipt'],
+                         *{row['source'] for row in record['records']}, *{row['test'].split('::')[0] for row in record['records']}]:
+            (root / relative).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, root / relative)
+        self.assertEqual(portkey_mcp_tags.supplemental_capabilities(root)['records'], record['records'])
+        source = root / 'crates/scm-sdk/src/airs/gateway/mcp_tags.rs'
+        source.write_text(source.read_text().replace('pub fn mcp_tags_filter<', 'pub fn renamed_filter<'))
+        with self.assertRaisesRegex(ValueError, 'source drift'):
+            portkey_mcp_tags.supplemental_capabilities(root)
+
+    def test_overlay_fails_closed_on_frozen_identity_changes(self):
+        import copy
+        import sys
+        sys.path.insert(0, str(ROOT / 'tools'))
+        import portkey_mcp_tags
+        overlay = portkey_mcp_tags.Overlay()
+        graph = json.loads((ROOT / 'crates/scm-sdk/src/validation/schema_graph.json').read_text())
+        historical = copy.deepcopy(graph)
+        for sid in set(overlay.mapping.values()) | set(overlay.nodes):
+            historical['nodes'].pop(sid, None)
+        for name in overlay.roots:
+            historical['roots'].pop(name, None)
+        self.assertEqual(overlay.extend_graph(historical), graph)
+        changed = copy.deepcopy(historical)
+        changed['nodes']['s000769']['properties']['tags'] = {'schema': {'$ref': 's000770'}}
+        with self.assertRaisesRegex(ValueError, 'Frozen MCP node identity changed'):
+            overlay.extend_graph(changed)
+        changed = copy.deepcopy(historical)
+        changed['roots']['GatewayMcpServersClientCreateRequestSchema'] = 's000826'
+        with self.assertRaisesRegex(ValueError, 'root identity changed'):
+            overlay.extend_graph(changed)
+        changed = copy.deepcopy(historical)
+        changed['roots']['portkey:8e5da0e:McpIntegrationCreateRequestSchema'] = 's006420'
+        with self.assertRaisesRegex(ValueError, 'identity collision'):
+            overlay.extend_graph(changed)
+        # Versioned roots differ from their frozen originals only by the projected tags.
+        for name, sid in portkey_mcp_tags.CURRENT_ROOTS.items():
+            clone = copy.deepcopy(graph['nodes'][graph['roots'][portkey_mcp_tags.PREFIX + name]])
+            target = clone if 'properties' in clone else graph['nodes'][clone['inner']['$ref']]
+            original = graph['nodes'][sid] if 'properties' in graph['nodes'][sid] else graph['nodes'][graph['nodes'][sid]['inner']['$ref']]
+            target = copy.deepcopy(target)
+            target['properties'].pop('tags')
+            self.assertEqual(json.dumps(target, sort_keys=True).replace(portkey_mcp_tags.P, ''),
+                             json.dumps(original, sort_keys=True))
+
     def test_imported_fragments_are_exactly_the_reviewed_tags_contract(self):
         contract = json.loads((PIN / 'contract.json').read_text())
         schemas = contract['components']['schemas']

@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased — Portkey MCP tags (8e5da0e)
+
+- Add `tags: Patch<TypedMap<String>>` to MCP integration and server create and
+  update requests. Omitted, `null` and value stay distinct: on update `null`
+  clears and a value replaces. Keys are validated against `^[a-zA-Z0-9_-]+$` and
+  values must be strings, before authentication.
+- Add typed `tags` to `McpIntegrationDetail`, `McpIntegration`,
+  `GatewayMcpServer` and `GatewayMcpServerListItem`; non-conforming response
+  values stay in `extensions`.
+- Add a `tags` filter to `GatewayMcpServersClientListOptions`, the new
+  `AIGatewayMcpIntegrationsClient::list_with_options` with
+  `GatewayMcpIntegrationsClientListOptions`, and `airs::gateway::mcp_tags_filter`.
+- Name `scm_sdk::data::TypedMap` and `Extensions` publicly, with `FromIterator`
+  and `From<BTreeMap>` constructors.
+- MCP request validation selects versioned `portkey:8e5da0e:` roots. Frozen
+  standalone schema names are unchanged.
+- Add the explicit `mcp_tags_live` acceptance example.
+
 ## 0.2.4 — TypeScript 0.35.0 directional profile models
 
 Publication and remote delivery require

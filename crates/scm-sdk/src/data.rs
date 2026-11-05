@@ -5,6 +5,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer, de::Error as _};
 use serde_json::{Number, Value};
 use std::fmt;
 
+/// Open wire-field container and typed string-keyed dictionary used by generated
+/// models, for example MCP `tags`. Construct with `collect()` or `From<BTreeMap>`;
+/// ordinary formatting redacts keys and values.
+#[cfg(feature = "models")]
+pub use crate::models::{Extensions, TypedMap};
+
 /// An omitted or present nonnull field. Omission requires serde(default) and
 /// skip_serializing_if = "Optional::is_unset" on the containing field.
 #[derive(Clone, PartialEq, Eq, Default)]

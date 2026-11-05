@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "baselineOperationsSha256": "028acb96f9740018f2fbdf699d7a110688553e667433e63abf7a137ab67d8abf",
-  "generatorSha256": "838e3c054b892dfbd75c65e89bfca1f821768ff233e77a743dc32369f221a6a0",
+  "generatorSha256": "ced28a5980f3f13c3f2f4ee238a886ffa485a56476569cddc8f0349acffe9e37",
   "ownershipOverrides": {
     "src/ai-gateway/inference-client.ts:AIGatewayInferenceClient.connectRealtime": {
       "phase": 7,
@@ -45,21 +45,93 @@
   "liveReceipt": {
     "reference": {
       "path": "contracts/live-evidence.json",
-      "sha256": "378c155d220d2b77297840e1240e677b750d9e4fd825481d37e08170cc94d03b"
+      "sha256": "d8d140ea5b302d9a7ead48b3b49f478e1fb049120022c1926a32c16ba519cc5a"
     },
     "report": {
-      "path": "docs/checks/phase-28-live-attempt-01.json",
-      "sha256": "4d32ec1d8986ca4d9a43ec8d93f26657b4f8c2228ce549302fe58327894fd2e7"
+      "path": "docs/checks/phase-30-live-attempt-04.json",
+      "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986"
     },
     "verifier": {
       "path": "tools/live_evidence.py",
-      "sha256": "99c2ce245934bae9b364277c53b6bf67c93d94505406b4c4e09ab1bd9f5d294d"
+      "sha256": "e96ab9afb2245bc74b45990d8af1434e1719b395d5dbc8d3a28d615d8c4e6928"
     },
-    "executedAt": "2026-10-22T11:25:18.050634+00:00",
-    "runtimeInputsSha256": "94f22c9160a7bcb39707d984cf6289980c7d5e48cb30e8c7a5b105665d898323",
+    "executedAt": "2026-11-05T15:55:27.517573+00:00",
+    "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
     "toolchain": "1.99.0",
-    "hostTarget": "x86_64-unknown-linux-musl",
+    "hostTarget": "x86_64-unknown-linux-gnu",
     "cleanupState": "not_needed"
+  },
+  "portkeyMcpTagsSupplemental": {
+    "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+    "implementationBindings": "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+    "implementationBindingsSha256": "3fe500a5ceb60a82c7a773a26d4939e60db280effcc2ae28a08c9345f91de39a",
+    "liveReceipt": "docs/checks/phase-30-mcp-tags-live-attempt-08.json",
+    "frozenParityDenominatorUnchanged": true,
+    "fieldProjections": 8,
+    "records": [
+      {
+        "item": "scm_sdk::airs::gateway::AIGatewayMcpIntegrationsClient::list_with_options",
+        "kind": "method",
+        "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+        "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::list_filters_send_exact_queries_and_frozen_list_is_unchanged",
+        "deltaItems": [
+          "path:get:/mcp-integrations:changed:parameters"
+        ],
+        "liveAcceptance": "verified",
+        "liveSteps": [
+          "mcp_integrations.list_with_options.tags_filter_excludes_others",
+          "mcp_integrations.list_with_options.tags_filter_includes_fixture"
+        ]
+      },
+      {
+        "item": "scm_sdk::airs::gateway::mcp_tags_filter",
+        "kind": "function",
+        "source": "crates/scm-sdk/src/airs/gateway/mcp_tags.rs",
+        "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::list_filters_send_exact_queries_and_frozen_list_is_unchanged",
+        "deltaItems": [
+          "path:get:/mcp-integrations:changed:parameters",
+          "path:get:/mcp-servers:changed:parameters"
+        ],
+        "liveAcceptance": "verified",
+        "liveSteps": [
+          "mcp_integrations.list_with_options.tags_filter_excludes_others",
+          "mcp_integrations.list_with_options.tags_filter_includes_fixture",
+          "mcp_servers.list.tags_filter_includes_fixture"
+        ]
+      },
+      {
+        "item": "scm_sdk::airs::gateway::models::GatewayMcpIntegrationsClientListOptions",
+        "kind": "model",
+        "source": "crates/scm-sdk/src/models/generated.rs",
+        "test": "crates/scm-sdk/tests/portkey_mcp_tags_models.rs::list_option_roots_carry_the_pinned_query_contract",
+        "deltaItems": [
+          "path:get:/mcp-integrations:changed:parameters"
+        ],
+        "liveAcceptance": "verified",
+        "liveSteps": [
+          "mcp_integrations.list_with_options.tags_filter_excludes_others",
+          "mcp_integrations.list_with_options.tags_filter_includes_fixture"
+        ]
+      },
+      {
+        "item": "scm_sdk::data::TypedMap",
+        "kind": "type_alias",
+        "source": "crates/scm-sdk/src/data.rs",
+        "test": "crates/scm-sdk/tests/portkey_mcp_tags_models.rs::typed_model_validation_paths_accept_exactly_what_clients_accept",
+        "deltaItems": [],
+        "liveAcceptance": "not_applicable",
+        "liveSteps": []
+      },
+      {
+        "item": "scm_sdk::data::Extensions",
+        "kind": "type",
+        "source": "crates/scm-sdk/src/data.rs",
+        "test": "crates/scm-sdk/tests/portkey_mcp_tags_models.rs::typed_request_models_preserve_omission_null_and_value",
+        "deltaItems": [],
+        "liveAcceptance": "not_applicable",
+        "liveSteps": []
+      }
+    ]
   },
   "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
   "requestHeaderContracts": {
@@ -96,7 +168,7 @@
   "sourceBindings": [
     {
       "path": "contracts/live-evidence.json",
-      "sha256": "378c155d220d2b77297840e1240e677b750d9e4fd825481d37e08170cc94d03b"
+      "sha256": "d8d140ea5b302d9a7ead48b3b49f478e1fb049120022c1926a32c16ba519cc5a"
     },
     {
       "path": "contracts/native-operation-mappings/agentguard-oauth.json",
@@ -192,11 +264,11 @@
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "sha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74"
+      "sha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "sha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f"
+      "sha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64"
     },
     {
       "path": "crates/scm-sdk/src/airs/gateway/model_pricing.rs",
@@ -479,12 +551,12 @@
       "sha256": "0888a724815100e771cf088e55af5a7c6ab0a33407aab2e4db9e0859b5dca407"
     },
     {
-      "path": "docs/checks/phase-28-live-attempt-01.json",
-      "sha256": "4d32ec1d8986ca4d9a43ec8d93f26657b4f8c2228ce549302fe58327894fd2e7"
+      "path": "docs/checks/phase-30-live-attempt-04.json",
+      "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986"
     },
     {
       "path": "tools/live_evidence.py",
-      "sha256": "99c2ce245934bae9b364277c53b6bf67c93d94505406b4c4e09ab1bd9f5d294d"
+      "sha256": "e96ab9afb2245bc74b45990d8af1434e1719b395d5dbc8d3a28d615d8c4e6928"
     }
   ],
   "summary": {
@@ -7342,10 +7414,10 @@
       "deliveredInPhase": 4,
       "lastContractPhase": 4,
       "liveEvidence": {
-        "path": "docs/checks/phase-28-live-attempt-01.json",
-        "sha256": "4d32ec1d8986ca4d9a43ec8d93f26657b4f8c2228ce549302fe58327894fd2e7",
+        "path": "docs/checks/phase-30-live-attempt-04.json",
+        "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "94f22c9160a7bcb39707d984cf6289980c7d5e48cb30e8c7a5b105665d898323",
+        "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
         "probe": "oauth.get_token",
         "observations": [
           {
@@ -11575,10 +11647,10 @@
       "deliveredInPhase": 5,
       "lastContractPhase": 5,
       "liveEvidence": {
-        "path": "docs/checks/phase-28-live-attempt-01.json",
-        "sha256": "4d32ec1d8986ca4d9a43ec8d93f26657b4f8c2228ce549302fe58327894fd2e7",
+        "path": "docs/checks/phase-30-live-attempt-04.json",
+        "sha256": "5822b376ca78a1fa6badf9833e7f0345bf6020ec88454747e0a76211c8df6986",
         "scope": "controlled_nonproduction",
-        "runtimeInputsSha256": "94f22c9160a7bcb39707d984cf6289980c7d5e48cb30e8c7a5b105665d898323",
+        "runtimeInputsSha256": "97d9a9e0edd39664477e72508f24b98c907bbf1cbb49a9682853c8bc7575102f",
         "probe": "red_team.targets.list.profiling_not_started",
         "observations": [
           {

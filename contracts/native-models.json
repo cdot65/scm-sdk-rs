@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
   "sourceSha256": "213cce0477275f166a4185a3a5e109b70f5393608543545d3fd5b50ecc7fe1b0",
-  "generatorSha256": "561d2ab5582df443e78102358681e075de3a50562b13f57b50100f7a99b1a402",
+  "generatorSha256": "0890f0c22b903d8b93d9975a3dc9f3beed05c6819b299bd582485dab63823689",
   "partialFamily": null,
   "structuralChecks": {
     "stringChecks": [
@@ -16722,7 +16722,7 @@
       "behavioralClosurePhase": 7
     }
   ],
-  "generatedDeclarations": 1960,
+  "generatedDeclarations": 1962,
   "aliases": 53,
   "deferred": [],
   "typescript035Schemas": [
@@ -16752,6 +16752,23 @@
     {
       "export": "ContentTypeConfigurations",
       "rustType": "ContentTypeConfigurations",
+      "status": "typed_model"
+    }
+  ],
+  "portkeyMcpTagsSchemas": [
+    {
+      "export": "GatewayMcpIntegrationsClientListOptionsSchema",
+      "schema": "s_pk8e5_mcp_integrations_list_options",
+      "rustType": "GatewayMcpIntegrationsClientListOptions",
+      "namespace": "airs::gateway",
+      "status": "typed_model",
+      "validator": "crate::validation::parse"
+    }
+  ],
+  "portkeyMcpTagsModelExports": [
+    {
+      "export": "GatewayMcpIntegrationsClientListOptions",
+      "rustType": "GatewayMcpIntegrationsClientListOptions",
       "status": "typed_model"
     }
   ]

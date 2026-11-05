@@ -5,7 +5,7 @@
   "inputs": [
     {
       "path": "tools/verify_gateway_bindings.py",
-      "sha256": "5dc027b0c95d05e0ba6d7a1c104dd444f81f65d05bee4139ed80316b8f119d64"
+      "sha256": "dfb7f270744738bc41c8d9ea5fea1b75a349d67d34cb5571aa6776fce7a69b91"
     },
     {
       "path": "contracts/operations.json",
@@ -17,7 +17,7 @@
     },
     {
       "path": "contracts/native-operations.json",
-      "sha256": "ba4d4f9592ea4426977b57820f5c54f6bb1357c4ddb552563118d025e842bde8"
+      "sha256": "0b926fe42929eb3e5d7891a3d6db2b108746912bab5bfe0eb35172e3b364b948"
     }
   ],
   "count": 194,
@@ -2813,6 +2813,13 @@
       "implementationSha256": "536ee741c3e6ed2012d0ba284726efd50a6a6630422628b1c14ca56615ad4b0b",
       "namedHelperProofs": [],
       "schemaDecompositions": [],
+      "versionedSchemaRoots": [
+        {
+          "versionedRoot": "portkey:8e5da0e:McpIntegrationCreateRequestSchema",
+          "frozenRoot": "McpIntegrationCreateRequestSchema",
+          "source": "contracts/portkey-mcp-tags-overlay.json"
+        }
+      ],
       "frozenSchemaRoots": [
         "GatewayWriteResponseSchema",
         "McpIntegrationCreateRequestSchema"
@@ -2825,14 +2832,14 @@
         "create"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations"
       ],
       "nativeHelperProofs": [
         {
           "method": "create",
-          "tokensSha256": "71703ceede3d0872aae970f5e1d9b1a169195a959d0198bb628ddcce3838e73b"
+          "tokensSha256": "8c4eece525b0ff1fddc6e4ff7baebd860befe2179e0d3b5221f9831661b95912"
         }
       ],
       "tests": [
@@ -2862,7 +2869,7 @@
         "delete"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}"
       ],
@@ -2902,7 +2909,7 @@
         "get"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}"
       ],
@@ -2941,7 +2948,7 @@
         "get_capabilities"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}/capabilities"
       ],
@@ -2980,7 +2987,7 @@
         "get_metadata"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}/metadata"
       ],
@@ -3021,7 +3028,7 @@
         "get_workspaces"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}/workspaces"
       ],
@@ -3062,7 +3069,7 @@
         "list"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations"
       ],
@@ -3103,7 +3110,7 @@
         "set_capabilities"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}/capabilities"
       ],
@@ -3146,7 +3153,7 @@
         "set_workspaces"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}/workspaces"
       ],
@@ -3177,6 +3184,13 @@
       "implementationSha256": "52254f8231bbe5eb7863588cd1b4624bd3552a257baaef0947fe2cd956a8d98d",
       "namedHelperProofs": [],
       "schemaDecompositions": [],
+      "versionedSchemaRoots": [
+        {
+          "versionedRoot": "portkey:8e5da0e:McpIntegrationUpdateRequestSchema",
+          "frozenRoot": "McpIntegrationUpdateRequestSchema",
+          "source": "contracts/portkey-mcp-tags-overlay.json"
+        }
+      ],
       "frozenSchemaRoots": [
         "GatewayWriteResponseSchema",
         "McpIntegrationUpdateRequestSchema"
@@ -3189,14 +3203,14 @@
         "update"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
-      "nativeSourceSha256": "40f1ffdf64b056b47f67a2f313bbb26e8945d5f95d7c618c51b2f343cc2d2f74",
+      "nativeSourceSha256": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
       "nativeRouteTemplates": [
         "/mcp-integrations/{}"
       ],
       "nativeHelperProofs": [
         {
           "method": "update",
-          "tokensSha256": "47b60d2c9083427cea7aa93ebdc351df1334e60b863f7894f41f241c537bb753"
+          "tokensSha256": "20e9371ae0dac3de506a306e52f5d855eeb6d33d8ea10deb4f915321411e9515"
         }
       ],
       "tests": [
@@ -3220,6 +3234,13 @@
       "implementationSha256": "4e7b84e02fef46eb6fa2ef64564d0035bc15d3180862e20c913b4223bc049585",
       "namedHelperProofs": [],
       "schemaDecompositions": [],
+      "versionedSchemaRoots": [
+        {
+          "versionedRoot": "portkey:8e5da0e:GatewayMcpServersClientCreateRequestSchema",
+          "frozenRoot": "GatewayMcpServersClientCreateRequestSchema",
+          "source": "contracts/portkey-mcp-tags-overlay.json"
+        }
+      ],
       "frozenSchemaRoots": [
         "GatewayMcpServersClientCreateRequestSchema",
         "GatewayMcpServersClientCreateResponseSchema"
@@ -3232,14 +3253,14 @@
         "create"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers"
       ],
       "nativeHelperProofs": [
         {
           "method": "create",
-          "tokensSha256": "0cf0abdb49aca284651e1cff19ae81d4b7a37e1198f855bc579cb2ed848ea3ef"
+          "tokensSha256": "49db0ccbae24033ff3dff2b184ff383cb2221112f8243c8a6fc73bd34c0959e0"
         }
       ],
       "tests": [
@@ -3274,7 +3295,7 @@
         "delete"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}"
       ],
@@ -3318,7 +3339,7 @@
         "delete_connections"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}/connections"
       ],
@@ -3360,7 +3381,7 @@
         "get"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}"
       ],
@@ -3402,7 +3423,7 @@
         "get_capabilities"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}/capabilities"
       ],
@@ -3444,7 +3465,7 @@
         "get_connections"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}/connections"
       ],
@@ -3486,7 +3507,7 @@
         "get_user_access"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}/user-access"
       ],
@@ -3516,6 +3537,13 @@
       "implementationSha256": "2a84e832ec8bbcf5638f104e85b2fee181487acb9fad8a17321e34e71a2a98d6",
       "namedHelperProofs": [],
       "schemaDecompositions": [],
+      "versionedSchemaRoots": [
+        {
+          "versionedRoot": "portkey:8e5da0e:GatewayMcpServersClientListOptionsSchema",
+          "frozenRoot": "GatewayMcpServersClientListOptionsSchema",
+          "source": "contracts/portkey-mcp-tags-overlay.json"
+        }
+      ],
       "frozenSchemaRoots": [
         "GatewayMcpServersClientListOptionsSchema",
         "GatewayMcpServersClientListResponseSchema"
@@ -3528,14 +3556,14 @@
         "list"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers"
       ],
       "nativeHelperProofs": [
         {
           "method": "list",
-          "tokensSha256": "e17234bb73cc16e2baf301df7bf19d8010d4187f66806cd60de9ecd0232ce32a"
+          "tokensSha256": "de00268b6039da6431f9c60b5e0f27062dfcf7b1b6c93f29174401ec96a9cd2f"
         }
       ],
       "tests": [
@@ -3568,7 +3596,7 @@
         "test"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}/test"
       ],
@@ -3600,6 +3628,13 @@
       "implementationSha256": "0477929b29cddc115c5f78b52010a5d24536700372cccd8333854075aa9ea9bc",
       "namedHelperProofs": [],
       "schemaDecompositions": [],
+      "versionedSchemaRoots": [
+        {
+          "versionedRoot": "portkey:8e5da0e:GatewayMcpServersClientUpdateRequestSchema",
+          "frozenRoot": "GatewayMcpServersClientUpdateRequestSchema",
+          "source": "contracts/portkey-mcp-tags-overlay.json"
+        }
+      ],
       "frozenSchemaRoots": [
         "GatewayMcpServersClientUpdateRequestSchema",
         "GatewayMcpServersClientUpdateResponseSchema"
@@ -3612,14 +3647,14 @@
         "update"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}"
       ],
       "nativeHelperProofs": [
         {
           "method": "update",
-          "tokensSha256": "46353f25ff26a87cbac3aa11f8a4f94406333cc3fd062d22e8c1f65086f30418"
+          "tokensSha256": "6c4ba32f892aba9d86f4541a09096b8a74dc174959ec437b6a7ded5c3241f45f"
         }
       ],
       "tests": [
@@ -3656,7 +3691,7 @@
         "update_capabilities"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}/capabilities"
       ],
@@ -3700,7 +3735,7 @@
         "update_user_access"
       ],
       "nativeSource": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
-      "nativeSourceSha256": "1636c9276ee2e07b26752a0407aa6d5f4ba5d1b563e901fb37217cf1e5bdff1f",
+      "nativeSourceSha256": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
       "nativeRouteTemplates": [
         "/mcp-servers/{}/user-access"
       ],

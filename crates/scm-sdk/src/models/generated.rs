@@ -120512,30 +120512,271 @@ impl fmt::Debug for GatewayMcpIntegrationWorkspacesListResponseGlobalWorkspaceAc
     }
 }
 
-/// Native typed contract for frozen schema `s000786`. Validate wire constraints with `validation::parse`.
+/// Native typed contract for frozen schema `s_pk8e5_mcp_integrations_list_options`. Validate wire constraints with `validation::parse`.
 #[derive(Clone, PartialEq, Deserialize)]
 #[non_exhaustive]
-pub struct GatewayMcpServer {
-    #[serde(rename = "id", default)]
-    pub id: Optional<String>,
-    #[serde(rename = "slug", default)]
-    pub slug: Optional<String>,
-    #[serde(rename = "name", default)]
-    pub name: Optional<String>,
-    #[serde(rename = "status", default)]
-    pub status: Optional<String>,
-    #[serde(rename = "description", default)]
-    pub description: Patch<String>,
-    #[serde(rename = "created_at", default)]
-    pub created_at: Optional<String>,
-    #[serde(rename = "mcp_integration_id", default)]
-    pub mcp_integration_id: Optional<String>,
-    #[serde(rename = "mcp_integration_details", default)]
-    pub mcp_integration_details: Patch<GatewayMcpServerMcpIntegrationDetails>,
+pub struct GatewayMcpIntegrationsClientListOptions {
+    #[serde(rename = "organisation_id", default)]
+    pub organisation_id: Optional<String>,
+    #[serde(rename = "type", default)]
+    pub r#type: Optional<GatewayMcpIntegrationsClientListOptionsType>,
     #[serde(rename = "workspace_id", default)]
-    pub workspace_id: Patch<String>,
+    pub workspace_id: Optional<String>,
+    #[serde(rename = "page_size", default)]
+    pub page_size: Optional<FiniteNumber>,
+    #[serde(rename = "current_page", default)]
+    pub current_page: Optional<FiniteNumber>,
+    #[serde(rename = "search", default)]
+    pub search: Optional<String>,
+    #[serde(rename = "tags", default)]
+    pub tags: Optional<String>,
     #[serde(flatten)]
     pub extensions: Extensions<JsonValue>,
+}
+impl Serialize for GatewayMcpIntegrationsClientListOptions {
+    fn serialize<S: serde::Serializer>(
+        &self,
+        serializer: S,
+    ) -> std::result::Result<S::Ok, S::Error> {
+        const KNOWN: &[&str] = &[
+            "organisation_id",
+            "type",
+            "workspace_id",
+            "page_size",
+            "current_page",
+            "search",
+            "tags",
+        ];
+        if self
+            .extensions
+            .keys()
+            .any(|key| KNOWN.contains(&key.as_str()))
+        {
+            return Err(serde::ser::Error::custom(
+                "extension collides with a known model field",
+            ));
+        }
+        let mut map = serializer.serialize_map(None)?;
+        if !self.organisation_id.is_unset() {
+            map.serialize_entry("organisation_id", &self.organisation_id)?;
+        }
+        if !self.r#type.is_unset() {
+            map.serialize_entry("type", &self.r#type)?;
+        }
+        if !self.workspace_id.is_unset() {
+            map.serialize_entry("workspace_id", &self.workspace_id)?;
+        }
+        if !self.page_size.is_unset() {
+            map.serialize_entry("page_size", &self.page_size)?;
+        }
+        if !self.current_page.is_unset() {
+            map.serialize_entry("current_page", &self.current_page)?;
+        }
+        if !self.search.is_unset() {
+            map.serialize_entry("search", &self.search)?;
+        }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
+        for (key, value) in self.extensions.iter() {
+            map.serialize_entry(key, value)?;
+        }
+        map.end()
+    }
+}
+impl GatewayMcpIntegrationsClientListOptions {
+    pub fn builder() -> GatewayMcpIntegrationsClientListOptionsBuilder {
+        GatewayMcpIntegrationsClientListOptionsBuilder::default()
+    }
+    pub const SCHEMA: &'static str = "s_pk8e5_mcp_integrations_list_options";
+    pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
+        super::support::parse(Self::SCHEMA, value, mode)
+    }
+}
+#[derive(Default)]
+pub struct GatewayMcpIntegrationsClientListOptionsBuilder {
+    organisation_id: Optional<String>,
+    r#type: Optional<GatewayMcpIntegrationsClientListOptionsType>,
+    workspace_id: Optional<String>,
+    page_size: Optional<FiniteNumber>,
+    current_page: Optional<FiniteNumber>,
+    search: Optional<String>,
+    tags: Optional<String>,
+    extensions: Extensions<JsonValue>,
+}
+impl GatewayMcpIntegrationsClientListOptionsBuilder {
+    pub fn organisation_id(mut self, value: Optional<String>) -> Self {
+        self.organisation_id = value;
+        self
+    }
+    pub fn r#type(mut self, value: Optional<GatewayMcpIntegrationsClientListOptionsType>) -> Self {
+        self.r#type = value;
+        self
+    }
+    pub fn workspace_id(mut self, value: Optional<String>) -> Self {
+        self.workspace_id = value;
+        self
+    }
+    pub fn page_size(mut self, value: Optional<FiniteNumber>) -> Self {
+        self.page_size = value;
+        self
+    }
+    pub fn current_page(mut self, value: Optional<FiniteNumber>) -> Self {
+        self.current_page = value;
+        self
+    }
+    pub fn search(mut self, value: Optional<String>) -> Self {
+        self.search = value;
+        self
+    }
+    pub fn tags(mut self, value: Optional<String>) -> Self {
+        self.tags = value;
+        self
+    }
+    pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
+        self.extensions.insert(key.into(), value);
+        self
+    }
+    pub fn build(self) -> crate::Result<GatewayMcpIntegrationsClientListOptions> {
+        Ok(GatewayMcpIntegrationsClientListOptions {
+            organisation_id: self.organisation_id,
+            r#type: self.r#type,
+            workspace_id: self.workspace_id,
+            page_size: self.page_size,
+            current_page: self.current_page,
+            search: self.search,
+            tags: self.tags,
+            extensions: self.extensions,
+        })
+    }
+    pub fn build_validated(
+        self,
+        mode: crate::validation::Mode,
+    ) -> crate::Result<GatewayMcpIntegrationsClientListOptions> {
+        let model = self.build()?;
+        let value = super::support::wire_value(&model)?;
+        GatewayMcpIntegrationsClientListOptions::parse(value, mode)
+    }
+}
+impl fmt::Debug for GatewayMcpIntegrationsClientListOptionsBuilder {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("GatewayMcpIntegrationsClientListOptionsBuilder([REDACTED])")
+    }
+}
+impl fmt::Debug for GatewayMcpIntegrationsClientListOptions {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("GatewayMcpIntegrationsClientListOptions([REDACTED])")
+    }
+}
+
+/// Native typed contract for frozen schema `s_pk8e5_integration_type`. Validate wire constraints with `validation::parse`.
+#[derive(Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum GatewayMcpIntegrationsClientListOptionsType {
+    Workspace,
+    Organisation,
+    All,
+    Unknown(String),
+}
+impl GatewayMcpIntegrationsClientListOptionsType {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Workspace => "workspace",
+            Self::Organisation => "organisation",
+            Self::All => "all",
+            Self::Unknown(value) => value,
+        }
+    }
+}
+impl Serialize for GatewayMcpIntegrationsClientListOptionsType {
+    fn serialize<S: serde::Serializer>(&self, s: S) -> std::result::Result<S::Ok, S::Error> {
+        s.serialize_str(self.as_str())
+    }
+}
+impl<'de> Deserialize<'de> for GatewayMcpIntegrationsClientListOptionsType {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let value = String::deserialize(d)?;
+        Ok(match value.as_str() {
+            "workspace" => Self::Workspace,
+            "organisation" => Self::Organisation,
+            "all" => Self::All,
+            _ => Self::Unknown(value),
+        })
+    }
+}
+impl fmt::Debug for GatewayMcpIntegrationsClientListOptionsType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("GatewayMcpIntegrationsClientListOptionsType([REDACTED])")
+    }
+}
+
+/// Native typed contract for frozen schema `s000786`. Validate wire constraints with `validation::parse`.
+#[derive(Clone, PartialEq)]
+#[non_exhaustive]
+pub struct GatewayMcpServer {
+    pub id: Optional<String>,
+    pub slug: Optional<String>,
+    pub name: Optional<String>,
+    pub status: Optional<String>,
+    pub description: Patch<String>,
+    pub created_at: Optional<String>,
+    pub mcp_integration_id: Optional<String>,
+    pub mcp_integration_details: Patch<GatewayMcpServerMcpIntegrationDetails>,
+    pub workspace_id: Patch<String>,
+    pub tags: Patch<TypedMap<String>>,
+    pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for GatewayMcpServer {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "id", default)]
+            id: Optional<String>,
+            #[serde(rename = "slug", default)]
+            slug: Optional<String>,
+            #[serde(rename = "name", default)]
+            name: Optional<String>,
+            #[serde(rename = "status", default)]
+            status: Optional<String>,
+            #[serde(rename = "description", default)]
+            description: Patch<String>,
+            #[serde(rename = "created_at", default)]
+            created_at: Optional<String>,
+            #[serde(rename = "mcp_integration_id", default)]
+            mcp_integration_id: Optional<String>,
+            #[serde(rename = "mcp_integration_details", default)]
+            mcp_integration_details: Patch<GatewayMcpServerMcpIntegrationDetails>,
+            #[serde(rename = "workspace_id", default)]
+            workspace_id: Patch<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            id: baseline.id,
+            slug: baseline.slug,
+            name: baseline.name,
+            status: baseline.status,
+            description: baseline.description,
+            created_at: baseline.created_at,
+            mcp_integration_id: baseline.mcp_integration_id,
+            mcp_integration_details: baseline.mcp_integration_details,
+            workspace_id: baseline.workspace_id,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for GatewayMcpServer {
     fn serialize<S: serde::Serializer>(
@@ -120590,7 +120831,13 @@ impl Serialize for GatewayMcpServer {
         if !self.workspace_id.is_unset() {
             map.serialize_entry("workspace_id", &self.workspace_id)?;
         }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -120616,6 +120863,7 @@ pub struct GatewayMcpServerBuilder {
     mcp_integration_id: Optional<String>,
     mcp_integration_details: Patch<GatewayMcpServerMcpIntegrationDetails>,
     workspace_id: Patch<String>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl GatewayMcpServerBuilder {
@@ -120658,6 +120906,10 @@ impl GatewayMcpServerBuilder {
         self.workspace_id = value;
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -120673,6 +120925,7 @@ impl GatewayMcpServerBuilder {
             mcp_integration_id: self.mcp_integration_id,
             mcp_integration_details: self.mcp_integration_details,
             workspace_id: self.workspace_id,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -122345,43 +122598,100 @@ impl fmt::Debug for GatewayMcpServerCreateResponse {
 }
 
 /// Native typed contract for frozen schema `s000723`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct GatewayMcpServerListItem {
-    #[serde(rename = "id", default)]
     pub id: Optional<String>,
-    #[serde(rename = "organisation_id", default)]
     pub organisation_id: Optional<String>,
-    #[serde(rename = "name", default)]
     pub name: Optional<String>,
-    #[serde(rename = "description", default)]
     pub description: Patch<String>,
-    #[serde(rename = "status", default)]
     pub status: Optional<String>,
-    #[serde(rename = "created_at", default)]
     pub created_at: Optional<String>,
-    #[serde(rename = "owner_id", default)]
     pub owner_id: Optional<String>,
-    #[serde(rename = "slug", default)]
     pub slug: Optional<String>,
-    #[serde(rename = "workspace_id", default)]
     pub workspace_id: Patch<String>,
-    #[serde(rename = "mcp_integration_id", default)]
     pub mcp_integration_id: Optional<String>,
-    #[serde(rename = "mcp_integration_slug", default)]
     pub mcp_integration_slug: Patch<String>,
-    #[serde(rename = "mcp_integration_url", default)]
     pub mcp_integration_url: Patch<String>,
-    #[serde(rename = "auth_type", default)]
     pub auth_type: Optional<String>,
-    #[serde(rename = "workspace_name", default)]
     pub workspace_name: Patch<String>,
-    #[serde(rename = "workspace_slug", default)]
     pub workspace_slug: Patch<String>,
-    #[serde(rename = "url", default)]
     pub url: Optional<String>,
-    #[serde(flatten)]
+    pub tags: Patch<TypedMap<String>>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for GatewayMcpServerListItem {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "id", default)]
+            id: Optional<String>,
+            #[serde(rename = "organisation_id", default)]
+            organisation_id: Optional<String>,
+            #[serde(rename = "name", default)]
+            name: Optional<String>,
+            #[serde(rename = "description", default)]
+            description: Patch<String>,
+            #[serde(rename = "status", default)]
+            status: Optional<String>,
+            #[serde(rename = "created_at", default)]
+            created_at: Optional<String>,
+            #[serde(rename = "owner_id", default)]
+            owner_id: Optional<String>,
+            #[serde(rename = "slug", default)]
+            slug: Optional<String>,
+            #[serde(rename = "workspace_id", default)]
+            workspace_id: Patch<String>,
+            #[serde(rename = "mcp_integration_id", default)]
+            mcp_integration_id: Optional<String>,
+            #[serde(rename = "mcp_integration_slug", default)]
+            mcp_integration_slug: Patch<String>,
+            #[serde(rename = "mcp_integration_url", default)]
+            mcp_integration_url: Patch<String>,
+            #[serde(rename = "auth_type", default)]
+            auth_type: Optional<String>,
+            #[serde(rename = "workspace_name", default)]
+            workspace_name: Patch<String>,
+            #[serde(rename = "workspace_slug", default)]
+            workspace_slug: Patch<String>,
+            #[serde(rename = "url", default)]
+            url: Optional<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            id: baseline.id,
+            organisation_id: baseline.organisation_id,
+            name: baseline.name,
+            description: baseline.description,
+            status: baseline.status,
+            created_at: baseline.created_at,
+            owner_id: baseline.owner_id,
+            slug: baseline.slug,
+            workspace_id: baseline.workspace_id,
+            mcp_integration_id: baseline.mcp_integration_id,
+            mcp_integration_slug: baseline.mcp_integration_slug,
+            mcp_integration_url: baseline.mcp_integration_url,
+            auth_type: baseline.auth_type,
+            workspace_name: baseline.workspace_name,
+            workspace_slug: baseline.workspace_slug,
+            url: baseline.url,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for GatewayMcpServerListItem {
     fn serialize<S: serde::Serializer>(
@@ -122464,7 +122774,13 @@ impl Serialize for GatewayMcpServerListItem {
         if !self.url.is_unset() {
             map.serialize_entry("url", &self.url)?;
         }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -122497,6 +122813,7 @@ pub struct GatewayMcpServerListItemBuilder {
     workspace_name: Patch<String>,
     workspace_slug: Patch<String>,
     url: Optional<String>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl GatewayMcpServerListItemBuilder {
@@ -122564,6 +122881,10 @@ impl GatewayMcpServerListItemBuilder {
         self.url = value;
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -122586,6 +122907,7 @@ impl GatewayMcpServerListItemBuilder {
             workspace_name: self.workspace_name,
             workspace_slug: self.workspace_slug,
             url: self.url,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -123228,21 +123550,56 @@ impl fmt::Debug for GatewayMcpServerUserAccessItem {
 }
 
 /// Native typed contract for frozen schema `s000769`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct GatewayMcpServersClientCreateRequest {
-    #[serde(rename = "workspace_id", default)]
     pub workspace_id: Optional<String>,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "description", default)]
     pub description: Patch<String>,
-    #[serde(rename = "mcp_integration_id")]
     pub mcp_integration_id: String,
-    #[serde(rename = "slug", default)]
     pub slug: Optional<String>,
-    #[serde(flatten)]
+    pub tags: Patch<TypedMap<String>>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for GatewayMcpServersClientCreateRequest {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "workspace_id", default)]
+            workspace_id: Optional<String>,
+            #[serde(rename = "name")]
+            name: String,
+            #[serde(rename = "description", default)]
+            description: Patch<String>,
+            #[serde(rename = "mcp_integration_id")]
+            mcp_integration_id: String,
+            #[serde(rename = "slug", default)]
+            slug: Optional<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            workspace_id: baseline.workspace_id,
+            name: baseline.name,
+            description: baseline.description,
+            mcp_integration_id: baseline.mcp_integration_id,
+            slug: baseline.slug,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for GatewayMcpServersClientCreateRequest {
     fn serialize<S: serde::Serializer>(
@@ -123277,7 +123634,13 @@ impl Serialize for GatewayMcpServersClientCreateRequest {
         if !self.slug.is_unset() {
             map.serialize_entry("slug", &self.slug)?;
         }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -123287,7 +123650,7 @@ impl GatewayMcpServersClientCreateRequest {
     pub fn builder() -> GatewayMcpServersClientCreateRequestBuilder {
         GatewayMcpServersClientCreateRequestBuilder::default()
     }
-    pub const SCHEMA: &'static str = "s000769";
+    pub const SCHEMA: &'static str = "s_pk8e5_s000769";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
         super::support::parse(Self::SCHEMA, value, mode)
     }
@@ -123299,6 +123662,7 @@ pub struct GatewayMcpServersClientCreateRequestBuilder {
     description: Patch<String>,
     mcp_integration_id: Option<String>,
     slug: Optional<String>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl GatewayMcpServersClientCreateRequestBuilder {
@@ -123322,6 +123686,10 @@ impl GatewayMcpServersClientCreateRequestBuilder {
         self.slug = value;
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -123337,6 +123705,7 @@ impl GatewayMcpServersClientCreateRequestBuilder {
                 .mcp_integration_id
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
             slug: self.slug,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -123969,21 +124338,56 @@ impl fmt::Debug for GatewayMcpServersClientGetUserAccessResponse {
 }
 
 /// Native typed contract for frozen schema `s000711`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct GatewayMcpServersClientListOptions {
-    #[serde(rename = "workspace_id", default)]
     pub workspace_id: Optional<String>,
-    #[serde(rename = "current_page", default)]
     pub current_page: Optional<FiniteNumber>,
-    #[serde(rename = "page_size", default)]
     pub page_size: Optional<FiniteNumber>,
-    #[serde(rename = "id", default)]
     pub id: Optional<String>,
-    #[serde(rename = "search", default)]
     pub search: Optional<String>,
-    #[serde(flatten)]
+    pub tags: Optional<String>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for GatewayMcpServersClientListOptions {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Optional<String> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Optional<String>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "workspace_id", default)]
+            workspace_id: Optional<String>,
+            #[serde(rename = "current_page", default)]
+            current_page: Optional<FiniteNumber>,
+            #[serde(rename = "page_size", default)]
+            page_size: Optional<FiniteNumber>,
+            #[serde(rename = "id", default)]
+            id: Optional<String>,
+            #[serde(rename = "search", default)]
+            search: Optional<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            workspace_id: baseline.workspace_id,
+            current_page: baseline.current_page,
+            page_size: baseline.page_size,
+            id: baseline.id,
+            search: baseline.search,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for GatewayMcpServersClientListOptions {
     fn serialize<S: serde::Serializer>(
@@ -124016,7 +124420,13 @@ impl Serialize for GatewayMcpServersClientListOptions {
         if !self.search.is_unset() {
             map.serialize_entry("search", &self.search)?;
         }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -124026,7 +124436,7 @@ impl GatewayMcpServersClientListOptions {
     pub fn builder() -> GatewayMcpServersClientListOptionsBuilder {
         GatewayMcpServersClientListOptionsBuilder::default()
     }
-    pub const SCHEMA: &'static str = "s000711";
+    pub const SCHEMA: &'static str = "s_pk8e5_s000711";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
         super::support::parse(Self::SCHEMA, value, mode)
     }
@@ -124038,6 +124448,7 @@ pub struct GatewayMcpServersClientListOptionsBuilder {
     page_size: Optional<FiniteNumber>,
     id: Optional<String>,
     search: Optional<String>,
+    tags: Optional<String>,
     extensions: Extensions<JsonValue>,
 }
 impl GatewayMcpServersClientListOptionsBuilder {
@@ -124061,6 +124472,10 @@ impl GatewayMcpServersClientListOptionsBuilder {
         self.search = value;
         self
     }
+    pub fn tags(mut self, value: Optional<String>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -124072,6 +124487,7 @@ impl GatewayMcpServersClientListOptionsBuilder {
             page_size: self.page_size,
             id: self.id,
             search: self.search,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -124438,15 +124854,44 @@ impl fmt::Debug for GatewayMcpServersClientUpdateCapabilitiesRequestCapabilities
 }
 
 /// Native typed contract for frozen schema `s000826`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct GatewayMcpServersClientUpdateRequest {
-    #[serde(rename = "name", default)]
     pub name: Optional<String>,
-    #[serde(rename = "description", default)]
     pub description: Patch<String>,
-    #[serde(flatten)]
+    pub tags: Patch<TypedMap<String>>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for GatewayMcpServersClientUpdateRequest {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "name", default)]
+            name: Optional<String>,
+            #[serde(rename = "description", default)]
+            description: Patch<String>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            name: baseline.name,
+            description: baseline.description,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for GatewayMcpServersClientUpdateRequest {
     fn serialize<S: serde::Serializer>(
@@ -124470,7 +124915,13 @@ impl Serialize for GatewayMcpServersClientUpdateRequest {
         if !self.description.is_unset() {
             map.serialize_entry("description", &self.description)?;
         }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -124480,7 +124931,7 @@ impl GatewayMcpServersClientUpdateRequest {
     pub fn builder() -> GatewayMcpServersClientUpdateRequestBuilder {
         GatewayMcpServersClientUpdateRequestBuilder::default()
     }
-    pub const SCHEMA: &'static str = "s000826";
+    pub const SCHEMA: &'static str = "s_pk8e5_s000826";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
         super::support::parse(Self::SCHEMA, value, mode)
     }
@@ -124489,6 +124940,7 @@ impl GatewayMcpServersClientUpdateRequest {
 pub struct GatewayMcpServersClientUpdateRequestBuilder {
     name: Optional<String>,
     description: Patch<String>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl GatewayMcpServersClientUpdateRequestBuilder {
@@ -124500,6 +124952,10 @@ impl GatewayMcpServersClientUpdateRequestBuilder {
         self.description = value;
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -124508,6 +124964,7 @@ impl GatewayMcpServersClientUpdateRequestBuilder {
         Ok(GatewayMcpServersClientUpdateRequest {
             name: self.name,
             description: self.description,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -150832,45 +151289,104 @@ impl fmt::Debug for McReport {
 }
 
 /// Native typed contract for frozen schema `s007421`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct McpIntegration {
-    #[serde(rename = "slug", default)]
     pub slug: Optional<String>,
-    #[serde(rename = "workspace_id", default)]
     pub workspace_id: Patch<String>,
-    #[serde(rename = "description", default)]
     pub description: Patch<String>,
-    #[serde(rename = "workspaces_count", default)]
     pub workspaces_count: Patch<FiniteNumber>,
-    #[serde(rename = "secret_mappings", default)]
     pub secret_mappings: Patch<Vec<GatewayCatalogSecretMapping>>,
-    #[serde(rename = "id")]
     pub id: String,
-    #[serde(rename = "organisation_id")]
     pub organisation_id: String,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "owner_id")]
     pub owner_id: String,
-    #[serde(rename = "status")]
     pub status: String,
-    #[serde(rename = "type")]
     pub r#type: String,
-    #[serde(rename = "url")]
     pub url: String,
-    #[serde(rename = "auth_type")]
     pub auth_type: String,
-    #[serde(rename = "transport")]
     pub transport: String,
-    #[serde(rename = "configurations")]
     pub configurations: String,
-    #[serde(rename = "created_at")]
     pub created_at: String,
-    #[serde(rename = "last_updated_at")]
     pub last_updated_at: String,
-    #[serde(flatten)]
+    pub tags: Patch<TypedMap<String>>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for McpIntegration {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "slug", default)]
+            slug: Optional<String>,
+            #[serde(rename = "workspace_id", default)]
+            workspace_id: Patch<String>,
+            #[serde(rename = "description", default)]
+            description: Patch<String>,
+            #[serde(rename = "workspaces_count", default)]
+            workspaces_count: Patch<FiniteNumber>,
+            #[serde(rename = "secret_mappings", default)]
+            secret_mappings: Patch<Vec<GatewayCatalogSecretMapping>>,
+            #[serde(rename = "id")]
+            id: String,
+            #[serde(rename = "organisation_id")]
+            organisation_id: String,
+            #[serde(rename = "name")]
+            name: String,
+            #[serde(rename = "owner_id")]
+            owner_id: String,
+            #[serde(rename = "status")]
+            status: String,
+            #[serde(rename = "type")]
+            r#type: String,
+            #[serde(rename = "url")]
+            url: String,
+            #[serde(rename = "auth_type")]
+            auth_type: String,
+            #[serde(rename = "transport")]
+            transport: String,
+            #[serde(rename = "configurations")]
+            configurations: String,
+            #[serde(rename = "created_at")]
+            created_at: String,
+            #[serde(rename = "last_updated_at")]
+            last_updated_at: String,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            slug: baseline.slug,
+            workspace_id: baseline.workspace_id,
+            description: baseline.description,
+            workspaces_count: baseline.workspaces_count,
+            secret_mappings: baseline.secret_mappings,
+            id: baseline.id,
+            organisation_id: baseline.organisation_id,
+            name: baseline.name,
+            owner_id: baseline.owner_id,
+            status: baseline.status,
+            r#type: baseline.r#type,
+            url: baseline.url,
+            auth_type: baseline.auth_type,
+            transport: baseline.transport,
+            configurations: baseline.configurations,
+            created_at: baseline.created_at,
+            last_updated_at: baseline.last_updated_at,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for McpIntegration {
     fn serialize<S: serde::Serializer>(
@@ -150933,7 +151449,13 @@ impl Serialize for McpIntegration {
         map.serialize_entry("configurations", &self.configurations)?;
         map.serialize_entry("created_at", &self.created_at)?;
         map.serialize_entry("last_updated_at", &self.last_updated_at)?;
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -150967,6 +151489,7 @@ pub struct McpIntegrationBuilder {
     configurations: Option<String>,
     created_at: Option<String>,
     last_updated_at: Option<String>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl McpIntegrationBuilder {
@@ -151038,6 +151561,10 @@ impl McpIntegrationBuilder {
         self.last_updated_at = Some(value);
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -151085,6 +151612,7 @@ impl McpIntegrationBuilder {
             last_updated_at: self
                 .last_updated_at
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -152012,31 +152540,76 @@ impl fmt::Debug for McpIntegrationCapabilityUpdate {
 }
 
 /// Native typed contract for frozen schema `s006420`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct McpIntegrationCreateRequest {
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "organisation_id")]
     pub organisation_id: String,
-    #[serde(rename = "workspace_id", default)]
     pub workspace_id: Optional<String>,
-    #[serde(rename = "slug")]
     pub slug: String,
-    #[serde(rename = "url")]
     pub url: String,
-    #[serde(rename = "auth_type")]
     pub auth_type: GatewayMcpAuthType,
-    #[serde(rename = "transport")]
     pub transport: GatewayMcpTransport,
-    #[serde(rename = "description", default)]
     pub description: Patch<String>,
-    #[serde(rename = "configurations", default)]
     pub configurations: Optional<McpIntegrationCreateRequestConfigurations>,
-    #[serde(rename = "secret_mappings", default)]
     pub secret_mappings: Optional<Vec<GatewaySecretMapping>>,
-    #[serde(flatten)]
+    pub tags: Patch<TypedMap<String>>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for McpIntegrationCreateRequest {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "name")]
+            name: String,
+            #[serde(rename = "organisation_id")]
+            organisation_id: String,
+            #[serde(rename = "workspace_id", default)]
+            workspace_id: Optional<String>,
+            #[serde(rename = "slug")]
+            slug: String,
+            #[serde(rename = "url")]
+            url: String,
+            #[serde(rename = "auth_type")]
+            auth_type: GatewayMcpAuthType,
+            #[serde(rename = "transport")]
+            transport: GatewayMcpTransport,
+            #[serde(rename = "description", default)]
+            description: Patch<String>,
+            #[serde(rename = "configurations", default)]
+            configurations: Optional<McpIntegrationCreateRequestConfigurations>,
+            #[serde(rename = "secret_mappings", default)]
+            secret_mappings: Optional<Vec<GatewaySecretMapping>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            name: baseline.name,
+            organisation_id: baseline.organisation_id,
+            workspace_id: baseline.workspace_id,
+            slug: baseline.slug,
+            url: baseline.url,
+            auth_type: baseline.auth_type,
+            transport: baseline.transport,
+            description: baseline.description,
+            configurations: baseline.configurations,
+            secret_mappings: baseline.secret_mappings,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for McpIntegrationCreateRequest {
     fn serialize<S: serde::Serializer>(
@@ -152083,7 +152656,13 @@ impl Serialize for McpIntegrationCreateRequest {
         if !self.secret_mappings.is_unset() {
             map.serialize_entry("secret_mappings", &self.secret_mappings)?;
         }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -152093,7 +152672,7 @@ impl McpIntegrationCreateRequest {
     pub fn builder() -> McpIntegrationCreateRequestBuilder {
         McpIntegrationCreateRequestBuilder::default()
     }
-    pub const SCHEMA: &'static str = "s006420";
+    pub const SCHEMA: &'static str = "s_pk8e5_s006420";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
         super::support::parse(Self::SCHEMA, value, mode)
     }
@@ -152110,6 +152689,7 @@ pub struct McpIntegrationCreateRequestBuilder {
     description: Patch<String>,
     configurations: Optional<McpIntegrationCreateRequestConfigurations>,
     secret_mappings: Optional<Vec<GatewaySecretMapping>>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl McpIntegrationCreateRequestBuilder {
@@ -152156,6 +152736,10 @@ impl McpIntegrationCreateRequestBuilder {
         self.secret_mappings = value;
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -152184,6 +152768,7 @@ impl McpIntegrationCreateRequestBuilder {
             description: self.description,
             configurations: self.configurations,
             secret_mappings: self.secret_mappings,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -152234,45 +152819,104 @@ impl fmt::Debug for McpIntegrationCreateRequestConfigurations {
 }
 
 /// Native typed contract for frozen schema `s007458`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct McpIntegrationDetail {
-    #[serde(rename = "id")]
     pub id: String,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "description")]
     pub description: Nullable<String>,
-    #[serde(rename = "owner_id")]
     pub owner_id: String,
-    #[serde(rename = "status")]
     pub status: String,
-    #[serde(rename = "created_at")]
     pub created_at: String,
-    #[serde(rename = "last_updated_at")]
     pub last_updated_at: String,
-    #[serde(rename = "configurations")]
     pub configurations: GatewayCatalogMcpConfiguration,
-    #[serde(rename = "global_workspace_access")]
     pub global_workspace_access: Nullable<McpIntegrationDetailGlobalWorkspaceAccess>,
-    #[serde(rename = "workspace_id")]
     pub workspace_id: Nullable<String>,
-    #[serde(rename = "slug")]
     pub slug: String,
-    #[serde(rename = "url")]
     pub url: String,
-    #[serde(rename = "auth_type")]
     pub auth_type: String,
-    #[serde(rename = "transport")]
     pub transport: String,
-    #[serde(rename = "type")]
     pub r#type: String,
-    #[serde(rename = "secret_mappings")]
     pub secret_mappings: Nullable<Vec<GatewayCatalogSecretMapping>>,
-    #[serde(rename = "object")]
     pub object: String,
-    #[serde(flatten)]
+    pub tags: Patch<TypedMap<String>>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for McpIntegrationDetail {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "id")]
+            id: String,
+            #[serde(rename = "name")]
+            name: String,
+            #[serde(rename = "description")]
+            description: Nullable<String>,
+            #[serde(rename = "owner_id")]
+            owner_id: String,
+            #[serde(rename = "status")]
+            status: String,
+            #[serde(rename = "created_at")]
+            created_at: String,
+            #[serde(rename = "last_updated_at")]
+            last_updated_at: String,
+            #[serde(rename = "configurations")]
+            configurations: GatewayCatalogMcpConfiguration,
+            #[serde(rename = "global_workspace_access")]
+            global_workspace_access: Nullable<McpIntegrationDetailGlobalWorkspaceAccess>,
+            #[serde(rename = "workspace_id")]
+            workspace_id: Nullable<String>,
+            #[serde(rename = "slug")]
+            slug: String,
+            #[serde(rename = "url")]
+            url: String,
+            #[serde(rename = "auth_type")]
+            auth_type: String,
+            #[serde(rename = "transport")]
+            transport: String,
+            #[serde(rename = "type")]
+            r#type: String,
+            #[serde(rename = "secret_mappings")]
+            secret_mappings: Nullable<Vec<GatewayCatalogSecretMapping>>,
+            #[serde(rename = "object")]
+            object: String,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            id: baseline.id,
+            name: baseline.name,
+            description: baseline.description,
+            owner_id: baseline.owner_id,
+            status: baseline.status,
+            created_at: baseline.created_at,
+            last_updated_at: baseline.last_updated_at,
+            configurations: baseline.configurations,
+            global_workspace_access: baseline.global_workspace_access,
+            workspace_id: baseline.workspace_id,
+            slug: baseline.slug,
+            url: baseline.url,
+            auth_type: baseline.auth_type,
+            transport: baseline.transport,
+            r#type: baseline.r#type,
+            secret_mappings: baseline.secret_mappings,
+            object: baseline.object,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for McpIntegrationDetail {
     fn serialize<S: serde::Serializer>(
@@ -152325,7 +152969,13 @@ impl Serialize for McpIntegrationDetail {
         map.serialize_entry("type", &self.r#type)?;
         map.serialize_entry("secret_mappings", &self.secret_mappings)?;
         map.serialize_entry("object", &self.object)?;
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -152359,6 +153009,7 @@ pub struct McpIntegrationDetailBuilder {
     r#type: Option<String>,
     secret_mappings: Option<Nullable<Vec<GatewayCatalogSecretMapping>>>,
     object: Option<String>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl McpIntegrationDetailBuilder {
@@ -152433,6 +153084,10 @@ impl McpIntegrationDetailBuilder {
         self.object = Some(value);
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -152490,6 +153145,7 @@ impl McpIntegrationDetailBuilder {
             object: self
                 .object
                 .ok_or_else(|| crate::Error::new(crate::ErrorKind::Validation))?,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }
@@ -152826,25 +153482,64 @@ impl fmt::Debug for McpIntegrationMetadata {
 }
 
 /// Native typed contract for frozen schema `s006433`. Validate wire constraints with `validation::parse`.
-#[derive(Clone, PartialEq, Deserialize)]
+#[derive(Clone, PartialEq)]
 #[non_exhaustive]
 pub struct McpIntegrationUpdateRequest {
-    #[serde(rename = "name", default)]
     pub name: Optional<String>,
-    #[serde(rename = "description", default)]
     pub description: Patch<String>,
-    #[serde(rename = "configurations", default)]
     pub configurations: Optional<McpIntegrationUpdateRequestConfigurations>,
-    #[serde(rename = "url", default)]
     pub url: Optional<String>,
-    #[serde(rename = "auth_type", default)]
     pub auth_type: Optional<GatewayMcpAuthType>,
-    #[serde(rename = "transport", default)]
     pub transport: Optional<GatewayMcpTransport>,
-    #[serde(rename = "secret_mappings", default)]
     pub secret_mappings: Optional<Vec<GatewaySecretMapping>>,
-    #[serde(flatten)]
+    pub tags: Patch<TypedMap<String>>,
     pub extensions: Extensions<JsonValue>,
+}
+impl<'de> Deserialize<'de> for McpIntegrationUpdateRequest {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> std::result::Result<Self, D::Error> {
+        let mut raw = serde_json::Map::<String, serde_json::Value>::deserialize(d)?;
+        let mut tags: Patch<TypedMap<String>> = Default::default();
+        if let Some(value) = raw.remove("tags") {
+            match crate::json_decode::from_value::<Patch<TypedMap<String>>>(value.clone()) {
+                Ok(value) => tags = value,
+                Err(_) => {
+                    raw.insert("tags".into(), value);
+                }
+            }
+        }
+        #[derive(Deserialize)]
+        struct BaselineWire {
+            #[serde(rename = "name", default)]
+            name: Optional<String>,
+            #[serde(rename = "description", default)]
+            description: Patch<String>,
+            #[serde(rename = "configurations", default)]
+            configurations: Optional<McpIntegrationUpdateRequestConfigurations>,
+            #[serde(rename = "url", default)]
+            url: Optional<String>,
+            #[serde(rename = "auth_type", default)]
+            auth_type: Optional<GatewayMcpAuthType>,
+            #[serde(rename = "transport", default)]
+            transport: Optional<GatewayMcpTransport>,
+            #[serde(rename = "secret_mappings", default)]
+            secret_mappings: Optional<Vec<GatewaySecretMapping>>,
+            #[serde(flatten)]
+            extensions: Extensions<JsonValue>,
+        }
+        let baseline: BaselineWire = crate::json_decode::from_value(serde_json::Value::Object(raw))
+            .map_err(|_| serde::de::Error::custom("baseline response model mismatch"))?;
+        Ok(Self {
+            name: baseline.name,
+            description: baseline.description,
+            configurations: baseline.configurations,
+            url: baseline.url,
+            auth_type: baseline.auth_type,
+            transport: baseline.transport,
+            secret_mappings: baseline.secret_mappings,
+            tags,
+            extensions: baseline.extensions,
+        })
+    }
 }
 impl Serialize for McpIntegrationUpdateRequest {
     fn serialize<S: serde::Serializer>(
@@ -152891,7 +153586,13 @@ impl Serialize for McpIntegrationUpdateRequest {
         if !self.secret_mappings.is_unset() {
             map.serialize_entry("secret_mappings", &self.secret_mappings)?;
         }
+        if !self.tags.is_unset() {
+            map.serialize_entry("tags", &self.tags)?;
+        }
         for (key, value) in self.extensions.iter() {
+            if key == "tags" && !self.tags.is_unset() {
+                continue;
+            }
             map.serialize_entry(key, value)?;
         }
         map.end()
@@ -152901,7 +153602,7 @@ impl McpIntegrationUpdateRequest {
     pub fn builder() -> McpIntegrationUpdateRequestBuilder {
         McpIntegrationUpdateRequestBuilder::default()
     }
-    pub const SCHEMA: &'static str = "s006433";
+    pub const SCHEMA: &'static str = "s_pk8e5_s006433";
     pub fn parse(value: serde_json::Value, mode: crate::validation::Mode) -> crate::Result<Self> {
         super::support::parse(Self::SCHEMA, value, mode)
     }
@@ -152915,6 +153616,7 @@ pub struct McpIntegrationUpdateRequestBuilder {
     auth_type: Optional<GatewayMcpAuthType>,
     transport: Optional<GatewayMcpTransport>,
     secret_mappings: Optional<Vec<GatewaySecretMapping>>,
+    tags: Patch<TypedMap<String>>,
     extensions: Extensions<JsonValue>,
 }
 impl McpIntegrationUpdateRequestBuilder {
@@ -152949,6 +153651,10 @@ impl McpIntegrationUpdateRequestBuilder {
         self.secret_mappings = value;
         self
     }
+    pub fn tags(mut self, value: Patch<TypedMap<String>>) -> Self {
+        self.tags = value;
+        self
+    }
     pub fn extension(mut self, key: impl Into<String>, value: JsonValue) -> Self {
         self.extensions.insert(key.into(), value);
         self
@@ -152962,6 +153668,7 @@ impl McpIntegrationUpdateRequestBuilder {
             auth_type: self.auth_type,
             transport: self.transport,
             secret_mappings: self.secret_mappings,
+            tags: self.tags,
             extensions: self.extensions,
         })
     }

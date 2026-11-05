@@ -66,6 +66,7 @@ CONTRACT_LEDGER_OWNERS = {
     'contracts/vendor/portkey-mcp-tags/8e5da0e/delta.json': ('tools/portkey-mcp-tags.mjs', '--check'),
     'contracts/vendor/portkey-mcp-tags/8e5da0e/contract.json': ('tools/portkey-mcp-tags.mjs', '--check'),
     'contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/portkey-mcp-tags-overlay.json': ('tools/portkey_mcp_tags.py', '--check'),
 }
 
 
@@ -346,9 +347,43 @@ def portkey_mcp_planning_commands(phase):
     ]
 
 
+def portkey_mcp_live_receipt():
+    """The implementation-binding ledger names the single current live receipt."""
+    ledger = ROOT / "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json"
+    return json.loads(ledger.read_text())["liveReceipt"]
+
+
+def portkey_mcp_implementation_commands(phase):
+    """Phase 30: the cumulative phase-27 offline gate plus the Portkey MCP tags checks."""
+    commands = []
+    for original in commands_for(27):
+        command = [value.replace("phase-27-", f"phase-{phase}-") for value in original]
+        if command[:2] == ["git", "diff"] and "--check" in command:
+            if "--" not in command:
+                command += ["--", "."]
+            for exclusion in PORTKEY_MCP_YAML_EXCLUSIONS:
+                if exclusion not in command:
+                    command.append(exclusion)
+        if command not in commands:
+            commands.append(command)
+    portkey = [
+        ["git", "diff", "--check", PORTKEY_MCP_BASELINE + "..HEAD", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS,
+         ":(exclude)contracts/sources/typescript-0.35.0/*", ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml"],
+        ["node", "tools/portkey-mcp-tags.mjs", "--check"],
+        ["python", "tools/portkey_mcp_tags.py", "--check"],
+        ["python", "tools/mcp_tags_live.py", "--check", portkey_mcp_live_receipt()],
+    ]
+    # Cheap provenance and overlay checks precede the costly Rust matrix.
+    first_rust = next(i for i, c in enumerate(commands) if "scripts/check-rust.py" in c)
+    commands[first_rust:first_rust] = [c for c in portkey if c not in commands]
+    return commands
+
+
 def commands_for(phase):
     if phase == 29:
         return portkey_mcp_planning_commands(29)
+    if phase == 30:
+        return portkey_mcp_implementation_commands(30)
     if phase == 28:
         commands = [[value.replace("phase-27-", "phase-28-") for value in command]
                     for command in commands_for(27)]

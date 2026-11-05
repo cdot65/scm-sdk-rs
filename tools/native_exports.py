@@ -461,6 +461,7 @@ def generate():
         "policy": "Every frozen root/member has concrete native API evidence and a compiled external public probe; explicit language adaptations never count as missing capabilities.",
         "jsonBoundaryContract": operations["jsonBoundaryContract"],
         "liveReceipt": live_receipt,
+        "portkeyMcpTagsSupplemental": __import__("portkey_mcp_tags").supplemental_capabilities(),
         "generatorSha256": sha(pathlib.Path(__file__)), "summary": {"frozenRoots": 2630, "frozenCapabilities": len(expected),
             "implemented": len(rows), "unresolved": len(gaps),
             "liveVerified": sum(row["liveAcceptance"] == "verified" for row in rows),

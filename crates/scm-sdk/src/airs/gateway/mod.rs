@@ -32,6 +32,8 @@ mod mcp_integrations;
 #[cfg(feature = "gateway")]
 mod mcp_servers;
 #[cfg(feature = "gateway")]
+mod mcp_tags;
+#[cfg(feature = "gateway")]
 mod model_pricing;
 #[cfg(feature = "gateway")]
 mod organisations;
@@ -82,6 +84,8 @@ pub use log_exports::*;
 pub use mcp_integrations::*;
 #[cfg(feature = "gateway")]
 pub use mcp_servers::*;
+#[cfg(feature = "gateway")]
+pub use mcp_tags::mcp_tags_filter;
 #[cfg(feature = "gateway")]
 pub use model_pricing::*;
 #[cfg(feature = "gateway")]

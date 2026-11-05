@@ -237,6 +237,7 @@ def generate():
         "ownershipOverrides": OWNERSHIP_OVERRIDES,
         "jsonBoundaryContract": boundary,
         "liveReceipt": live_receipt,
+        "portkeyMcpTagsSupplemental": __import__("portkey_mcp_tags").supplemental_capabilities(),
         "purpose": "Native implementation and verification status; frozen operations.json remains unchanged. Mapping declarations, method presence and test pointers are checked here; source-bound independent test execution establishes the declared wire behavior. An implemented method with partial option parity remains an explicit owning-phase obligation.",
         "requestHeaderContracts": {
             "gateway_realtime": {

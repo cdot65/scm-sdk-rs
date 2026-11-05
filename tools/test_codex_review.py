@@ -138,6 +138,10 @@ class CodexReviewTests(unittest.TestCase):
         self.assertNotIn('accepted_review', chunk)
         with self.assertRaisesRegex(ValueError, 'accepted latest review'):
             self.run_review(review(9), chunk=None)
+        self.assertEqual(self.run_review(review(9)), 0)
+        chunk = self.status_now()['phases'][0]['chunks'][0]
+        self.assertNotIn('latest_review', chunk)
+        self.assertTrue(chunk['accepted_review'].endswith('attempt-03.json'))
 
     def test_tampered_accepted_decision_is_detected(self):
         self.run_review(review(5))
@@ -249,6 +253,19 @@ class CodexReviewTests(unittest.TestCase):
         for row in status['phases']:
             if row['id'] in codex_review.PHASES:
                 self.assertEqual(tuple(c['id'] for c in row['chunks']), codex_review.REQUIRED_CHUNKS[row['id']])
+
+    def test_status_update_rereads_bookkeeping_written_by_a_concurrent_review(self):
+        stale = json.loads(json.dumps(self.status))
+        # Another review accepted a different field after this one loaded its status.
+        current = self.status_now()
+        current['phases'][1]['note'] = 'written concurrently'
+        (self.root / 'docs/phase-status.json').write_text(json.dumps(current))
+        path = codex_review.destination(self.root, 29, 1, 'plan-and-provenance')
+        (self.root / '.local/reviews').mkdir(parents=True, exist_ok=True)
+        codex_review.update_status(self.root, stale, stale['phases'][0], 'plan-and-provenance', path, review(6), 's1', 'rejected')
+        status = self.status_now()
+        self.assertEqual(status['phases'][1]['note'], 'written concurrently')
+        self.assertEqual(status['phases'][0]['chunks'][0]['review_decision'], 'rejected')
 
     def test_unregistered_or_inactive_phase_is_refused(self):
         self.status['phases'][0]['review_policy'] = {'reviewer': 'claude', 'minimum_score': 9}

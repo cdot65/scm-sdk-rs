@@ -245,10 +245,23 @@ def build_prompt(row, chunk, scope, source, checks_name, attempt):
 
 
 def update_status(root, status, row, chunk, record_path, review, source, decision):
+    """Apply one decision to a freshly read status under an exclusive lock, so
+    concurrent chunk reviews cannot overwrite each other's bookkeeping."""
+    lock = (root / '.local/reviews/phase-status.lock').open('a')
+    fcntl.flock(lock, fcntl.LOCK_EX)
+    try:
+        status = json.loads((root / 'docs/phase-status.json').read_text())
+        row = next(item for item in status['phases'] if item['id'] == row['id'])
+        _apply_status(root, status, row, chunk, record_path, review, source, decision)
+    finally:
+        lock.close()
+
+
+def _apply_status(root, status, row, chunk, record_path, review, source, decision):
     relative = record_path.relative_to(root).as_posix()
     if chunk:
         target = next(item for item in row['chunks'] if item['id'] == chunk)
-        for key in ('accepted_review', 'accepted_score', 'accepted_source_sha256'):
+        for key in ('accepted_review', 'accepted_score', 'accepted_source_sha256', 'latest_review'):
             target.pop(key, None)
         if decision == 'accepted':
             target.update(status='accepted', review_decision='accepted', accepted_review=relative,

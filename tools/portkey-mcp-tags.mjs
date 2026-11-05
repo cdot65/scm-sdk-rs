@@ -160,6 +160,11 @@ let bindings = 0;
 if (fs.existsSync(operationsPath)) {
   const operations = JSON.parse(read(operationsPath));
   if (operations.upstreamCommit !== HEAD) fail('Operation ledger identity drift');
+  // Live claims name exact steps of one sanitized receipt; each must have passed.
+  if (!/^docs\/checks\/phase-3[01]-mcp-tags-live-attempt-\d{2}\.json$/.test(operations.liveReceipt ?? '')) fail('Live receipt path drift');
+  const receipt = JSON.parse(fs.readFileSync(new URL(operations.liveReceipt, root), 'utf8'));
+  const passed = new Set(receipt.report.steps.filter(step => step.outcome === 'ok' && step.verified !== false).map(step => step.operation));
+  if (receipt.report.cleanupState !== 'complete') fail('Live receipt cleanup is not complete');
   for (const row of operations.bindings) {
     if (!classified.includes(row.delta)) fail('Binding names an unclassified delta item: ' + row.delta);
     const group = ledger.groups.find(g => g.items.includes(row.delta));
@@ -168,6 +173,8 @@ if (fs.existsSync(operationsPath)) {
     const [testFile, testName] = row.test.split('::');
     if (!source.includes(row.evidence) || !fs.readFileSync(new URL(testFile, root), 'utf8').includes(`fn ${testName}(`))
       fail('Implementation/test binding drift: ' + row.delta);
+    if (!Array.isArray(row.liveSteps) || !row.liveSteps.length || row.liveSteps.some(step => !passed.has(step)))
+      fail('Live step binding is missing or did not pass: ' + row.delta);
     bindings += 1;
   }
   const imported = ledger.groups.filter(g => g.disposition === 'import').flatMap(g => g.items);

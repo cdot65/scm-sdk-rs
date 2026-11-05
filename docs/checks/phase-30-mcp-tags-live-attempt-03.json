@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "phase": 30,
+  "attempt": 3,
+  "executedAt": "2026-11-05T14:06:26.127267+00:00",
+  "runtimeInputsSha256": "35aeb281ab63d06e4fe99bb97fbc27c1cee49b36e2b4284902921186caa0edc8",
+  "binarySha256": "21c5c34252e63f7b75257f91267b25cc09d676dac94e29827420fbe950fcf42b",
+  "toolchain": "1.99.0",
+  "hostTarget": "x86_64-unknown-linux-gnu",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "workspaceSelected": true,
+  "report": {
+    "schemaVersion": 1,
+    "crateVersion": "0.2.4",
+    "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+    "tenantScopeMatched": true,
+    "serverWorkflowSelected": true,
+    "steps": [
+      {
+        "operation": "mcp_integrations.create",
+        "outcome": "error",
+        "errorKind": "Http",
+        "status": 400,
+        "serviceCode": "AB01"
+      },
+      {
+        "operation": "mcp_integrations.list_with_options.tags_filter_includes_fixture",
+        "outcome": "verification_failed",
+        "verified": false
+      },
+      {
+        "operation": "mcp_integrations.list_with_options.tags_filter_excludes_others",
+        "outcome": "ok",
+        "verified": true
+      }
+    ],
+    "fixturesCreated": 0,
+    "fixturesDeleted": 0,
+    "cleanupState": "not_needed",
+    "limitations": [
+      "Only the recorded MCP tags steps were attempted; other MCP workflows remain live-unqualified.",
+      "The fixture integration URL is never contacted by the SDK; service-side discovery is not asserted."
+    ]
+  },
+  "summary": {
+    "verifiedSteps": [
+      "mcp_integrations.list_with_options.tags_filter_excludes_others"
+    ],
+    "failedSteps": [
+      "mcp_integrations.create",
+      "mcp_integrations.list_with_options.tags_filter_includes_fixture"
+    ],
+    "cleanupState": "not_needed"
+  }
+}

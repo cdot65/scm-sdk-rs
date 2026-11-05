@@ -1,0 +1,29 @@
+{
+  "score": 9,
+  "summary": "Accept phase 30 for fingerprint 77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179. Implementation, contract tests, provenance, and source-bound qualification support the acceptance criteria. No blocker/high findings remain; one previously recorded low-severity issue remains deferred to phase 31.",
+  "findings": [
+    {
+      "severity": "low",
+      "path": "crates/scm-sdk/examples/mcp_tags_live.rs",
+      "line": 320,
+      "description": "write_private relies on default file permissions and permits existing destinations. Direct invocation under a typical 022 umask can expose recovery identifiers. The Python runner's private directory protects the recorded qualification run.",
+      "required_fix": "Complete the recorded phase-31 follow-up: enforce owner-only recovery-file permissions, reject unsafe existing destinations, and refresh qualification evidence."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, the accepted MCP tags plan, PHASES.md, implementation context, and phase-30 status.",
+    "Independently recomputed the source fingerprint and confirmed it remained unchanged.",
+    "Verified all 109 recorded checks match the current phase command list, report exit code 0, and have no timeout.",
+    "Inspected Rust 1.89.0 and 1.99.0 all-feature reports: seven MCP model tests, four wire tests, and four example tests passed.",
+    "Inspected generated models, validation clones, client wiring, filter validation, response preservation, live reconciliation, receipt validation, and supplemental inventories. Historical validation nodes, roots, and semantic bindings remain unchanged.",
+    "Executed read-only provenance, overlay, and semantic-generation checks successfully: 61 classified delta items, eight imported schemas, two list operations, and ten implementation bindings.",
+    "Validated live attempt 08 against current runtime inputs: 19 successful steps, two fixtures created and deleted, zero uncertain fixtures, complete cleanup. Validated the failed-reconciliation fixture preserves incomplete cleanup.",
+    "Verified current read-only receipt freshness, both accepted chunk reviews, and preserved prior-attempt artifact bindings."
+  ],
+  "limitations": [
+    "Rust builds and tests were not rerun; their execution evidence comes from inspected source-bound reports.",
+    "No network requests, tenant contact, credential reads, registration reads, or checkout mutations occurred. Live results were assessed through sanitized receipts.",
+    "Recorded execution covers Linux x86_64 GNU. Unrelated service workflows remain unqualified; Red Team target-list probes retain HTTP 403 permission limitations.",
+    "Phase-31 clean packaging, publication, remote delivery, and documentation-site qualification remain separate requirements."
+  ]
+}

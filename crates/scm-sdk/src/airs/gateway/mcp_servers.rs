@@ -13,17 +13,28 @@ impl AIGatewayMcpServersClient {
             client: common::oauth(client)?,
         })
     }
+    /// List MCP servers. `tags` (Portkey 8e5da0e) must be a JSON object of string
+    /// values, for example from [`super::mcp_tags_filter`]; it is checked before
+    /// authentication and sent after the frozen query keys.
     pub async fn list(
         &self,
         query: &GatewayMcpServersClientListOptions,
         options: Option<&RequestOptions>,
     ) -> Result<GatewayMcpServersClientListResponse> {
+        super::mcp_tags::check_filter(query)?;
         let options = self.client.operation_options(options)?;
         let query = common::query(
             &self.client,
             query,
-            "GatewayMcpServersClientListOptionsSchema",
-            &["workspace_id", "current_page", "page_size", "id", "search"],
+            "portkey:8e5da0e:GatewayMcpServersClientListOptionsSchema",
+            &[
+                "workspace_id",
+                "current_page",
+                "page_size",
+                "id",
+                "search",
+                "tags",
+            ],
             &options,
         )
         .await?;
@@ -37,6 +48,8 @@ impl AIGatewayMcpServersClient {
             )
             .await
     }
+    /// Create an MCP server. Optional `tags` keys match `^[a-zA-Z0-9_-]+$` and
+    /// values are strings; `Patch::Null` is sent as an explicit null.
     pub async fn create(
         &self,
         body: &GatewayMcpServersClientCreateRequest,
@@ -47,7 +60,7 @@ impl AIGatewayMcpServersClient {
                 RawRequest::new(Method::POST, "/mcp-servers")
                     .named("airs.gateway.mcp_servers.create"),
                 body,
-                "GatewayMcpServersClientCreateRequestSchema",
+                "portkey:8e5da0e:GatewayMcpServersClientCreateRequestSchema",
                 "GatewayMcpServersClientCreateResponseSchema",
                 options,
             )
@@ -69,6 +82,8 @@ impl AIGatewayMcpServersClient {
             )
             .await
     }
+    /// Update an MCP server. `tags` replaces existing tags, `Patch::Null` clears
+    /// them, and `Patch::Unset` leaves them unchanged.
     pub async fn update(
         &self,
         id: &str,
@@ -82,7 +97,7 @@ impl AIGatewayMcpServersClient {
                     .segment(id)?
                     .named("airs.gateway.mcp_servers.update"),
                 body,
-                "GatewayMcpServersClientUpdateRequestSchema",
+                "portkey:8e5da0e:GatewayMcpServersClientUpdateRequestSchema",
                 "GatewayMcpServersClientUpdateResponseSchema",
                 options,
             )

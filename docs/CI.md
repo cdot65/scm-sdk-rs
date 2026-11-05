@@ -110,7 +110,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 28 --verification-only --contracts-only. Its 83 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-28-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 28 --verification-only --contracts-only. Its 86 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-28-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
 | rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -159,8 +159,9 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 28 gate has 105 commands.
-CI's 83-command subset writes `phase-28-contracts.json`. The full local gate
+The complete local Phase 28 gate has 108 commands. Phase 27 discovers every `tools/test_*.py`, so the count
+includes three suites added by the Portkey MCP tags track (phases 29–31).
+CI's 86-command subset writes `phase-28-contracts.json`. The full local gate
 additionally executes fourteen compiler/feature combinations, native export probes,
 generated model fixture compilation, and two source-matched clean package checks.
 The final gates verify both package receipts and the version-specific release candidate after those checks execute. Actual publication and terminal remote CI are separate delivery requirements.

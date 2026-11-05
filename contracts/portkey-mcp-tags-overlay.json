@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+  "baselineCommit": "4a80dbdb3dc14365e1c25d838ac0bd139485d48c",
+  "sourceBindings": {
+    "tools/portkey_mcp_tags.py": "2e0970c4f88455f6bff2e88a63bf2d2bf252a1a1f5b3e5e2e13f5290a831cf43",
+    "tools/generate_models.py": "0890f0c22b903d8b93d9975a3dc9f3beed05c6819b299bd582485dab63823689",
+    "tools/portkey-mcp-tags.mjs": "c576a569cacdd67c4b5fb94261ea5102893b14520be3bcf3693606da798873c8",
+    "contracts/vendor/portkey-mcp-tags/8e5da0e/contract.json": "05fbd232db231d88c5fed9975ec00de90c88be634116adfba9ab85375ee9ce68",
+    "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs": "5c371e2f73e0358d78e8806606181c597b08bd2c7dc835f8078241f4001132b5",
+    "crates/scm-sdk/src/airs/gateway/mcp_servers.rs": "a9c55767e9a258eafdc2d9d3958e37e338f84e9a32c3696e056f9ccd0340ac64",
+    "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs": "e10614a54aff1e7662d77d16daadb36326cca11faeac2ce1c553ac0f45075fac",
+    "crates/scm-sdk/tests/portkey_mcp_tags_models.rs": "74ae131f3b5c252b58928dbce667d75b92c446a82e774bbc4885622b1cf1c005"
+  },
+  "counts": {
+    "versionedRoots": 5,
+    "clonedNodes": 6,
+    "addedModels": 1,
+    "requestProjections": 5,
+    "responseProjections": 4
+  },
+  "versionedRoots": {
+    "portkey:8e5da0e:McpIntegrationCreateRequestSchema": "s_pk8e5_s006420",
+    "portkey:8e5da0e:McpIntegrationUpdateRequestSchema": "s_pk8e5_s006433",
+    "portkey:8e5da0e:GatewayMcpServersClientCreateRequestSchema": "s_pk8e5_s000769",
+    "portkey:8e5da0e:GatewayMcpServersClientUpdateRequestSchema": "s_pk8e5_s000826",
+    "portkey:8e5da0e:GatewayMcpServersClientListOptionsSchema": "s_pk8e5_s000711"
+  },
+  "clonedNodes": {
+    "s000711": "s_pk8e5_s000711",
+    "s000769": "s_pk8e5_s000769",
+    "s000826": "s_pk8e5_s000826",
+    "s006420": "s_pk8e5_s006420",
+    "s006433": "s_pk8e5_s006433",
+    "s006434": "s_pk8e5_s006434"
+  },
+  "requestProjections": [
+    {
+      "baselineSchema": "s006420",
+      "currentSchema": "s_pk8e5_s006420",
+      "upstream": "CreateMcpIntegration",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_write_tags_optional"
+    },
+    {
+      "baselineSchema": "s006434",
+      "currentSchema": "s_pk8e5_s006434",
+      "upstream": "UpdateMcpIntegration",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_write_tags_optional"
+    },
+    {
+      "baselineSchema": "s000769",
+      "currentSchema": "s_pk8e5_s000769",
+      "upstream": "CreateMcpServer",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_write_tags_optional"
+    },
+    {
+      "baselineSchema": "s000826",
+      "currentSchema": "s_pk8e5_s000826",
+      "upstream": "UpdateMcpServer",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_write_tags_optional"
+    },
+    {
+      "baselineSchema": "s000711",
+      "currentSchema": "s_pk8e5_s000711",
+      "upstream": "/mcp-servers",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_tags_filter_optional"
+    }
+  ],
+  "responseProjections": [
+    {
+      "baselineSchema": "s007458",
+      "upstream": "McpIntegration",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_read_tags_optional"
+    },
+    {
+      "baselineSchema": "s007421",
+      "upstream": "McpIntegrationListItem",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_read_tags_optional"
+    },
+    {
+      "baselineSchema": "s000786",
+      "upstream": "McpServer",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_read_tags_optional"
+    },
+    {
+      "baselineSchema": "s000723",
+      "upstream": "McpServerListItem",
+      "field": "tags",
+      "valueSchema": "s_pk8e5_read_tags_optional"
+    }
+  ],
+  "schemas": [
+    {
+      "export": "GatewayMcpIntegrationsClientListOptionsSchema",
+      "schema": "s_pk8e5_mcp_integrations_list_options",
+      "rustType": "GatewayMcpIntegrationsClientListOptions",
+      "namespace": "airs::gateway",
+      "status": "typed_model",
+      "validator": "crate::validation::parse"
+    }
+  ],
+  "modelExports": [
+    {
+      "export": "GatewayMcpIntegrationsClientListOptions",
+      "rustType": "GatewayMcpIntegrationsClientListOptions",
+      "status": "typed_model"
+    }
+  ],
+  "wireTests": [
+    "tags_write_bodies_preserve_omission_null_and_value_for_all_four_writes",
+    "invalid_tags_and_filters_are_rejected_before_authentication",
+    "list_filters_send_exact_queries_and_frozen_list_is_unchanged",
+    "responses_type_conforming_tags_and_preserve_nonconforming_values"
+  ],
+  "compatibility": {
+    "historicalRoots": "Frozen request, query and response roots are byte-identical and keep 0.34.0 acceptance.",
+    "currentRoots": "Versioned roots add only tags: write keys match ^[a-zA-Z0-9_-]+$, values are strings, null is accepted; filters are strings that clients additionally require to be a JSON object of string values.",
+    "responses": "Historical tolerant response roots; conforming tags decode typed, nonconforming JSON stays in extensions.",
+    "liveAcceptance": "Not established by generated contracts or local fixtures."
+  }
+}

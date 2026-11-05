@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+  "scope": "Implementation bindings for the ten imported delta items; live status names the exact sanitized receipt steps.",
+  "liveReceipt": "docs/checks/phase-30-mcp-tags-live-attempt-08.json",
+  "bindings": [
+    {
+      "delta": "component:schemas:CreateMcpIntegration:changed",
+      "rustItem": "airs::gateway::AIGatewayMcpIntegrationsClient::create",
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "evidence": "\"portkey:8e5da0e:McpIntegrationCreateRequestSchema\"",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::tags_write_bodies_preserve_omission_null_and_value_for_all_four_writes",
+      "liveSteps": [
+        "mcp_integrations.create",
+        "mcp_integrations.get.tags_created"
+      ]
+    },
+    {
+      "delta": "component:schemas:UpdateMcpIntegration:changed",
+      "rustItem": "airs::gateway::AIGatewayMcpIntegrationsClient::update",
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "evidence": "\"portkey:8e5da0e:McpIntegrationUpdateRequestSchema\"",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::tags_write_bodies_preserve_omission_null_and_value_for_all_four_writes",
+      "liveSteps": [
+        "mcp_integrations.update.tags_replace",
+        "mcp_integrations.update.tags_null_clear"
+      ]
+    },
+    {
+      "delta": "component:schemas:CreateMcpServer:changed",
+      "rustItem": "airs::gateway::AIGatewayMcpServersClient::create",
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "evidence": "\"portkey:8e5da0e:GatewayMcpServersClientCreateRequestSchema\"",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::tags_write_bodies_preserve_omission_null_and_value_for_all_four_writes",
+      "liveSteps": [
+        "mcp_servers.create",
+        "mcp_servers.get.tags_created"
+      ]
+    },
+    {
+      "delta": "component:schemas:UpdateMcpServer:changed",
+      "rustItem": "airs::gateway::AIGatewayMcpServersClient::update",
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "evidence": "\"portkey:8e5da0e:GatewayMcpServersClientUpdateRequestSchema\"",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::tags_write_bodies_preserve_omission_null_and_value_for_all_four_writes",
+      "liveSteps": [
+        "mcp_servers.update.tags_replace",
+        "mcp_servers.get.tags_replaced",
+        "mcp_servers.update.tags_null_clear",
+        "mcp_servers.get.tags_cleared"
+      ]
+    },
+    {
+      "delta": "component:schemas:McpIntegration:changed",
+      "rustItem": "airs::gateway::models::McpIntegration::tags",
+      "source": "crates/scm-sdk/src/models/generated.rs",
+      "evidence": "pub struct McpIntegration {",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::responses_type_conforming_tags_and_preserve_nonconforming_values",
+      "liveSteps": [
+        "mcp_integrations.list_with_options.tags_filter_excludes_others"
+      ]
+    },
+    {
+      "delta": "component:schemas:McpIntegrationListItem:changed",
+      "rustItem": "airs::gateway::models::McpIntegration::tags",
+      "source": "crates/scm-sdk/src/models/generated.rs",
+      "evidence": "pub struct McpIntegration {",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::responses_type_conforming_tags_and_preserve_nonconforming_values",
+      "liveSteps": [
+        "mcp_integrations.list_with_options.tags_filter_includes_fixture"
+      ]
+    },
+    {
+      "delta": "component:schemas:McpServer:changed",
+      "rustItem": "airs::gateway::models::GatewayMcpServer::tags",
+      "source": "crates/scm-sdk/src/models/generated.rs",
+      "evidence": "pub struct GatewayMcpServer {",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::responses_type_conforming_tags_and_preserve_nonconforming_values",
+      "liveSteps": [
+        "mcp_servers.get.tags_created"
+      ]
+    },
+    {
+      "delta": "component:schemas:McpServerListItem:changed",
+      "rustItem": "airs::gateway::models::GatewayMcpServerListItem::tags",
+      "source": "crates/scm-sdk/src/models/generated.rs",
+      "evidence": "pub struct GatewayMcpServerListItem {",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::responses_type_conforming_tags_and_preserve_nonconforming_values",
+      "liveSteps": [
+        "mcp_servers.list.tags_filter_includes_fixture"
+      ]
+    },
+    {
+      "delta": "path:get:/mcp-integrations:changed:parameters",
+      "rustItem": "airs::gateway::AIGatewayMcpIntegrationsClient::list_with_options",
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+      "evidence": "pub async fn list_with_options(",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::list_filters_send_exact_queries_and_frozen_list_is_unchanged",
+      "liveSteps": [
+        "mcp_integrations.list_with_options.tags_filter_includes_fixture",
+        "mcp_integrations.list_with_options.tags_filter_excludes_others"
+      ]
+    },
+    {
+      "delta": "path:get:/mcp-servers:changed:parameters",
+      "rustItem": "airs::gateway::AIGatewayMcpServersClient::list",
+      "source": "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+      "evidence": "\"portkey:8e5da0e:GatewayMcpServersClientListOptionsSchema\"",
+      "test": "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs::list_filters_send_exact_queries_and_frozen_list_is_unchanged",
+      "liveSteps": [
+        "mcp_servers.list.tags_filter_includes_fixture"
+      ]
+    }
+  ]
+}

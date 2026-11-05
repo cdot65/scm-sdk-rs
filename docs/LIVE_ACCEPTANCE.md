@@ -12,8 +12,8 @@ compiled executable, Rust version, host target, and execution time.
 
 ## Current read-only qualification
 
-The current maintenance run is [phase 28 attempt 01](checks/phase-28-live-attempt-01.json).
-It qualifies the 0.2.4 release-candidate runtime, not a published release.
+The current maintenance run is [phase 30 attempt 04](checks/phase-30-live-attempt-04.json).
+It qualifies the Portkey MCP tags implementation runtime (pre-0.2.5), not a published release.
 It verified **1 exact native method**, OAuth token exchange. All four single-page
 Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
 returned **HTTP 403 permission prerequisites**. These responses establish neither
@@ -30,8 +30,23 @@ realtime provider workflows remain live-unqualified. Offline fixture and consume
 checks establish implementation compatibility separately from these service results.
 
 Phase 27 attempts 01 through 05 recorded the same bounded probe outcomes. Phase 28
-attempt 01 binds the 0.2.4 version and patched TLS dependencies. None of these attempts
-promotes the 17 historical successes to the current runtime.
+attempt 01 binds the 0.2.4 version and patched TLS dependencies; phase 30 attempts 01–04
+repeat the same probes for the MCP tags runtime on the maintainer's
+`x86_64-unknown-linux-gnu` host. None of these attempts promotes the 17 historical
+successes to the current runtime.
+
+## Portkey MCP tags workflow
+
+The separately bounded [MCP tags receipt](checks/phase-30-mcp-tags-live-attempt-08.json)
+verified all 19 recorded steps and completed cleanup of both disposable fixtures:
+integration create, tags filter inclusion and exclusion, typed read-back,
+replacement and null clearing, workspace enablement, plus server create, read-back,
+filtered list, replacement and null clearing. Ambiguous creates are reconciled through
+the fixture's unique tag, and unresolved fixtures are reported as uncertain, never as clean. Attempts 01–07 are preserved; attempt 08 binds the final phase-30 runtime. Attempt 06 reran after a validation-test source change, and attempt 07 added
+server replacement and uncertain-create reconciliation. Attempts 01–03 used an
+unresolvable fixture host, which the service rejects with 400 `AB01`. Attempt 04
+showed that a workspace server needs workspace enablement first (403 `AB03`).
+The workflow is `examples/mcp_tags_live.rs`, run through `tools/mcp_tags_live.py --run`.
 
 ## Historical qualification
 

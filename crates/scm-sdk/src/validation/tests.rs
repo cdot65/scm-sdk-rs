@@ -206,7 +206,12 @@ fn examples(binding: &str) -> (Value, Value) {
 #[test]
 fn all_semantic_bindings_are_exercised() {
     let registry = registry().unwrap();
-    assert_eq!(registry.semantics.len(), 70);
+    assert_eq!(registry.semantics.len(), 71);
+    // The cloned Portkey MCP integration update refinement keeps its reviewed binding.
+    let refinement = registry.semantics.get("s_pk8e5_s006433").unwrap();
+    assert_eq!(refinement.binding, "nonempty_object");
+    assert!(parse("s_pk8e5_s006433", json!({"tags": null}), Mode::Request).is_ok());
+    assert!(parse("s_pk8e5_s006433", json!({}), Mode::Request).is_err());
     let alias = registry.semantics.get("s_ts035_s009653").unwrap();
     assert_eq!(alias.binding, "default");
     assert_eq!(alias.default, json!([]));
