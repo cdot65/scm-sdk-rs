@@ -54,6 +54,71 @@ def commit_fingerprint(root, commit):
     return digest.hexdigest()
 
 
+# After publication the published SDK identity is immutable, but release governance
+# may still evolve (for example docs-site acceptance enforcement). A successor may
+# differ from the published inputs only in these reviewed governance paths; the
+# packaged crate, contracts, publication scripts, lockfiles and CI are excluded.
+GOVERNANCE_SUCCESSOR_PATHS = {31: frozenset({
+    'docs/CI.md', 'docs/PHASES.md', 'docs/RELEASE.md', 'docs/portkey-mcp-tags-plan.md',
+    'tools/check_phase.py', 'tools/codex_review.py', 'tools/release_delivery.py', 'tools/site_binding.py',
+    'tools/test_codex_review.py', 'tools/test_release_025.py', 'tools/test_release_delivery.py',
+    'tools/test_site_binding.py',
+})}
+
+
+def source_inputs(root):
+    """Per-file digests of the current fingerprint inputs (see review_phase.fingerprint)."""
+    output = git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z')
+    inputs = {}
+    for name in sorted(set(output.decode().split('\0')) - {''}):
+        if name in EXCLUDED_FILES or name.startswith(EXCLUDED_DIRECTORIES):
+            continue
+        path = root / name
+        require(not path.is_symlink() and path.is_file(), 'Nonregular current source input: ' + name)
+        inputs[name] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return inputs
+
+
+def commit_inputs(root, commit):
+    require(isinstance(commit, str) and re.fullmatch('[0-9a-f]{40}', commit), 'Invalid source commit')
+    inputs = {}
+    for row in git(root, 'ls-tree', '-r', '-z', commit).split(b'\0')[:-1]:
+        metadata, raw_name = row.split(b'\t', 1)
+        name = raw_name.decode()
+        if name in EXCLUDED_FILES or name.startswith(EXCLUDED_DIRECTORIES):
+            continue
+        mode, kind, object_id = metadata.decode().split()
+        require(mode in {'100644', '100755'} and kind == 'blob', 'Nonregular delivery source input')
+        inputs[name] = hashlib.sha256(git(root, 'cat-file', 'blob', object_id)).hexdigest()
+    return inputs
+
+
+def verify_governance_successor(root, phase, release_commit, published_sha256):
+    """The current source is the published source plus reviewed governance-only changes."""
+    allowed = GOVERNANCE_SUCCESSOR_PATHS.get(phase)
+    require(allowed is not None, 'This release phase does not permit governance successors')
+    require(commit_fingerprint(root, release_commit) == published_sha256, 'Release commit differs from the published source')
+    require(subprocess.run(['git', 'merge-base', '--is-ancestor', release_commit, 'HEAD'], cwd=root).returncode == 0,
+            'Current source does not descend from the published release commit')
+    before, after = commit_inputs(root, release_commit), source_inputs(root)
+    changed = {name for name in before.keys() | after.keys() if before.get(name) != after.get(name)}
+    outside = sorted(changed - allowed)
+    require(not outside, 'Post-publication changes outside reviewed governance paths: ' + ', '.join(outside[:10]))
+    return sorted(changed)
+
+
+def published_source(root, version):
+    """The verified registry receipt's readiness source, or None before publication."""
+    path = root / f'docs/checks/release-registry-{version}.json'
+    if not path.is_file():
+        return None
+    registry = read_record(root, path.relative_to(root).as_posix())
+    readiness = registry.get('releaseReadiness', {})
+    require(isinstance(readiness.get('sourceSha256'), str) and re.fullmatch('[0-9a-f]{64}', readiness['sourceSha256']),
+            'Registry receipt lacks its published source fingerprint')
+    return registry['sourceCommit'], readiness['sourceSha256']
+
+
 def expected_contexts(workflow):
     """Read the deliberately inline JSON matrix without a YAML dependency."""
     names = re.findall(r'^name: (.+)$', workflow, re.M)
@@ -216,8 +281,17 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
     require((phase, version) in RELEASES, "Unreviewed release phase/version pair")
     phase_id = phase
     root = root.resolve()
-    source_sha256 = source_sha256 or fingerprint(root)
-    require(fingerprint(root) == source_sha256, 'Current source differs from reviewed source')
+    current = fingerprint(root)
+    require(source_sha256 in (None, current), 'Current source differs from reviewed source')
+    source_sha256 = current
+    if phase in GOVERNANCE_SUCCESSOR_PATHS:
+        # Receipts bind the published source; the current source must equal it or be
+        # a verified governance-only successor of the published release commit.
+        identity = published_source(root, version)
+        require(identity is not None, 'Release registry receipt is required')
+        release_commit, source_sha256 = identity
+        if current != source_sha256:
+            verify_governance_successor(root, phase, release_commit, source_sha256)
     status = read_record(root, 'docs/phase-status.json')
     phase = next(item for item in status['phases'] if item['id'] == phase_id)
     delivery = phase.get('delivery', {})

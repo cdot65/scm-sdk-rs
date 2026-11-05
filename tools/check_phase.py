@@ -394,8 +394,27 @@ def portkey_mcp_release_commands(phase):
     return commands
 
 
+def portkey_mcp_post_publication_commands(phase):
+    """Phase 31 after the verified 0.2.5 publication: the cumulative phase-30 set
+    on the current (governance-successor) source, then offline delivery and
+    docs-site binding verification. Release-bound package proofs and the readiness
+    receipt are verified by the delivery guard and are never regenerated."""
+    commands = [command for command in portkey_mcp_release_commands(phase)
+                if "scripts/check-management-package.py" not in command
+                and "scripts/check-access-release.py" not in command]
+    commands.append(["python", "tools/release_delivery.py", "--phase", str(phase), "--version", "0.2.5"])
+    commands.append(["python", "tools/site_binding.py", "--version", "0.2.5", "--check"])
+    return commands
+
+
+def published(version, root=None):
+    return ((ROOT if root is None else root) / f"docs/checks/release-registry-{version}.json").is_file()
+
+
 def commands_for(phase):
     if phase == 31:
+        if published("0.2.5"):
+            return portkey_mcp_post_publication_commands(31)
         return portkey_mcp_release_commands(31)
     if phase == 29:
         return portkey_mcp_planning_commands(29)
@@ -903,7 +922,9 @@ def ci_commands_for(phase):
     """
     if phase not in CONTRACT_CI_PHASES:
         raise ValueError("The contracts-only scope is not defined for this phase")
-    native_scripts = {"scripts/check-management-package.py", "scripts/check-rust.py", "scripts/check-native-exports.py", "scripts/check-package.py", "scripts/check-access-release.py"}
+    native_scripts = {"scripts/check-management-package.py", "scripts/check-rust.py", "scripts/check-native-exports.py", "scripts/check-package.py", "scripts/check-access-release.py",
+                      # Retained archives, release worktrees and the docs worktree are local evidence.
+                      "tools/release_delivery.py", "tools/site_binding.py"}
     return [command for command in commands_for(phase)
             if not native_scripts.intersection(command)
             and "--verify-package-receipts" not in command

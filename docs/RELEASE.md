@@ -300,3 +300,28 @@ Record `registry_publication` and `delivery` in phase 31's status entry exactly 
 for phase 28, including `github_tag_receipt`. Only after the delivery guard passes
 can the `remote-delivery` and `docs-site` chunks and the final phase review complete
 phase 31. Publication uses the owner-controlled external Cargo credential.
+
+### After 0.2.5 publication
+
+The published SDK identity is immutable: the registry receipt's readiness source
+fingerprint, the release commit `4adbe97`, both clean package proofs and the accepted
+`release-readiness` record. Release governance may still change after publication.
+`tools/release_delivery.py` binds every receipt to that published fingerprint and accepts a
+different current source only as a **governance successor**: it must descend from the release
+commit, and every changed fingerprint input must be in the reviewed allowlist
+(`GOVERNANCE_SUCCESSOR_PATHS`: release/review tooling, their tests and release documents).
+Changes to the packaged crate, contracts, publication scripts, lockfiles or CI are refused.
+
+Once `docs/checks/release-registry-0.2.5.json` exists, `tools/check_phase.py --phase 31` runs the
+post-publication gate. It contains the cumulative offline set, the delivery guard and the
+docs-site binding check. It never regenerates the release-bound package proofs or readiness
+receipt. The `release-readiness` chunk stays bound to the published source and its
+pre-publication gate.
+
+The `docs-site` chunk is bound to the deployed Docusaurus source. After the Pages workflow
+succeeds for the docs branch commit, retain its per-commit deployment and push receipts under
+`docs/reviews/github-pages/release-0.2.5/<commit>/`. Then record the binding with
+`python3 tools/site_binding.py --version 0.2.5 --write`. `tools/codex_review.py` verifies
+`--check` before and after each docs-site review, records the binding digest in the prompt
+and record, and verifies it again at chunk acceptance and phase completion. A site-only
+commit, an uncommitted site edit, or a replaced receipt invalidates acceptance.

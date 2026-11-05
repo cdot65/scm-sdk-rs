@@ -110,7 +110,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 31 --verification-only --contracts-only. Its 91 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-31-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 31 --verification-only --contracts-only. Its 92 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-31-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
 | rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -159,10 +159,16 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 31 gate has 113 commands: the cumulative phase-30 set (which inherits
-phase 27's discovery of every `tools/test_*.py`), both clean extracted archives and the 0.2.5
-readiness receipt. The historical Phase 28 gate now has 109 commands for the same discovery reason.
-CI's 91-command subset writes `phase-31-contracts.json`. The full local gate
+The complete local Phase 31 gate has 113 commands. 0.2.5 is published, so the gate is the
+post-publication set: the cumulative phase-30 set (which inherits phase 27's discovery of
+every `tools/test_*.py`), then the offline delivery guard
+(`tools/release_delivery.py --phase 31 --version 0.2.5`) and the docs-site binding check
+(`tools/site_binding.py --version 0.2.5 --check`). The release-bound clean archives and
+readiness receipt are verified by the delivery guard and are never regenerated after
+publication. The pre-publication set (both clean extracted archives, then the readiness receipt
+last) now has 114 commands and remains the gate recorded by the accepted release-readiness review.
+The historical Phase 28 gate now has 110 commands for the same discovery reason.
+CI's 92-command subset writes `phase-31-contracts.json`. The full local gate
 additionally executes fourteen compiler/feature combinations, native export probes,
 generated model fixture compilation, and two source-matched clean package checks.
 The final gates verify both package receipts and the version-specific release candidate after those checks execute. Actual publication and terminal remote CI are separate delivery requirements.

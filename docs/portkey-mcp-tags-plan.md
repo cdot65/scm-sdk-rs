@@ -145,6 +145,19 @@ Cleanup is recorded. A sanitized receipt is written to `docs/checks/phase-30-mcp
   4. Wait for terminal CI.
 - **Chunk `docs-site`:** update the SDK's Docusaurus site, `docs-site/` on the `docs/scm-github-pages` branch of the public GitHub mirror (deployed to `https://cdot65.github.io/scm-sdk-rs/` by its `docs-deploy` workflow). Merge the released `main` into that branch, update the release-derived version references and the MCP tags guide content, and build the site locally. Then push the branch so its workflow deploys the site. The work happens in a separate worktree at `.local/docs-site-worktree`.
 
+### Post-publication governance
+
+The docs-site review (attempts 1–2) required its acceptance to be bound to the deployed site
+source and receipts, which are outside the SDK fingerprint. Phase 31 therefore adds:
+
+- `tools/site_binding.py`: the site binding, verified by `tools/codex_review.py` for the
+  `docs-site` chunk before and after review, at acceptance and at phase completion;
+- governance successors in `tools/release_delivery.py`, which keep 0.2.5 delivery bound to the
+  published fingerprint while only allowlisted governance paths change; and
+- the post-publication phase 31 gate in `tools/check_phase.py`.
+
+`docs/RELEASE.md` ("After 0.2.5 publication") states the rules.
+
 ## Acceptance
 
 Each chunk and each phase needs all of the following:

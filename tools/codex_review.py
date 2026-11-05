@@ -33,6 +33,13 @@ REQUIRED_CHUNKS = {29: ('plan-and-provenance',), 30: ('models-and-validation', '
 MINIMUM_SCORE = 9
 MAX_ATTEMPTS = 5
 TIMEOUT_SECONDS = 3600
+# The chunk reviewed before publication stays bound to the published source; later
+# governance-only successors are verified by tools/release_delivery.py.
+PUBLICATION_CHUNKS = {31: 'release-readiness'}
+# Chunks whose implementation is the separately deployed documentation site.
+SITE_BINDINGS = {(31, 'docs-site'): '0.2.5'}
+# Attempts before enforcement was introduced remain valid unbound (rejected) history.
+SITE_BINDING_FROM_ATTEMPT = {(31, 'docs-site'): 3}
 FAILURE_REASONS = {'timeout', 'process_error', 'invalid_output', 'launch_error', 'interrupted'}
 # Codex structured output requires every property to be required and closed.
 OUTPUT_SCHEMA = json.loads(json.dumps(SCHEMA))
@@ -124,7 +131,8 @@ def verify_attempt(root, phase, attempt, chunk):
     if json.loads(output.read_text()) != record.get('review'):
         raise ValueError('Previous review differs from the actual Codex output')
     validate_review(record['review'])
-    expected = decide(record['review']) if record.get('source_unchanged') is True else 'rejected'
+    unchanged = record.get('source_unchanged') is True and record.get('site_unchanged', True) is True
+    expected = decide(record['review']) if unchanged else 'rejected'
     if record.get('status') != 'completed' or record.get('decision') != expected:
         raise ValueError('Review decision does not follow from its preserved output')
     return record
@@ -137,6 +145,13 @@ def verify_bindings(prompt, checks, record):
     target = f'chunk `{chunk}` of phase {phase} ' if chunk else f'the complete phase {phase} '
     required = (f'You are the independent reviewer for {target}', f'Review attempt {attempt} of at most {MAX_ATTEMPTS}.',
                 f'Reviewed source fingerprint: {source}.', 'Scope artifacts: ' + json.dumps(record.get('scope_evidence')) + '.')
+    if (phase, chunk) in SITE_BINDINGS and attempt >= SITE_BINDING_FROM_ATTEMPT[(phase, chunk)]:
+        site = record.get('site_binding')
+        if not isinstance(site, dict) or record.get('site_unchanged') not in (True, False):
+            raise ValueError('Site-bound review lacks its recorded site binding')
+        required += (site_prompt(site),)
+    elif 'site_binding' in record or 'site_unchanged' in record:
+        raise ValueError('Unexpected site binding on a source-only review')
     if not isinstance(source, str) or any(fragment not in text for fragment in required):
         raise ValueError('Preserved prompt does not bind the recorded source and scope')
     report = json.loads(checks.read_text())
@@ -181,6 +196,7 @@ def verify_chunk_acceptance(root, row, source):
     declared = row.get('chunks')
     if not isinstance(declared, list) or tuple(item.get('id') for item in declared) != REQUIRED_CHUNKS[row['id']]:
         raise ValueError('Declared chunks differ from the reviewed required chunk set')
+    identity = published_identity(root, row['id'])
     for chunk in declared:
         latest = latest_attempt(root, row['id'], chunk['id'])
         expected = destination(root, row['id'], latest, chunk['id']).relative_to(root).as_posix() if latest else None
@@ -188,12 +204,53 @@ def verify_chunk_acceptance(root, row, source):
             raise ValueError('Every declared chunk must have an accepted latest review: ' + chunk['id'])
         record = verify_attempt(root, row['id'], latest, chunk['id'])
         snapshot = json.loads(destination(root, row['id'], latest, chunk['id']).with_suffix('.checks.json').read_text())
-        if [item['command'] for item in snapshot['checks']] != commands_for(row['id']):
+        commands = [item['command'] for item in snapshot['checks']]
+        expected_source = source
+        if identity and PUBLICATION_CHUNKS.get(row['id']) == chunk['id']:
+            # Accepted before publication: bound to the published source and its
+            # pre-publication gate (clean packages, then the readiness receipt last).
+            expected_source = identity[1]
+            if not (commands and commands[-1][:2] == ['python', 'scripts/check-access-release.py']
+                    and any('scripts/check-management-package.py' in command for command in commands)):
+                raise ValueError('Publication chunk acceptance lacks its pre-publication gate: ' + chunk['id'])
+        elif commands != commands_for(row['id']):
             raise ValueError('Chunk acceptance used a different check command set: ' + chunk['id'])
-        if (record.get('decision') != 'accepted' or record.get('source_sha256') != source
-                or chunk.get('accepted_source_sha256') != source or record.get('scope_evidence') != chunk['scope_evidence']
+        if (row['id'], chunk['id']) in SITE_BINDINGS:
+            binding, digest = verify_site(root, row['id'], chunk['id'])
+            if record.get('site_unchanged') is not True or record.get('site_binding') != site_summary(binding, digest):
+                raise ValueError('Site-bound chunk acceptance differs from the current site binding: ' + chunk['id'])
+        if (record.get('decision') != 'accepted' or record.get('source_sha256') != expected_source
+                or chunk.get('accepted_source_sha256') != expected_source or record.get('scope_evidence') != chunk['scope_evidence']
                 or chunk.get('accepted_score') != record['review']['score']):
             raise ValueError('Chunk acceptance is stale, superseded or inconsistent: ' + chunk['id'])
+
+
+def published_identity(root, phase):
+    """(release commit, published source fingerprint) once the release is published, else None."""
+    if phase not in RELEASE_PHASES:
+        return None
+    from release_delivery import published_source
+    return published_source(root, RELEASE_PHASES[phase])
+
+
+def verify_site(root, phase, chunk):
+    import site_binding
+    return site_binding.check(root, SITE_BINDINGS[(phase, chunk)])
+
+
+def site_summary(binding, digest):
+    return {'version': binding['version'], 'siteCommit': binding['siteCommit'], 'docsSiteTree': binding['docsSiteTree'],
+            'binding': site_binding_path(binding['version']), 'bindingSha256': digest}
+
+
+def site_binding_path(version):
+    import site_binding
+    return site_binding.RELEASES[version]
+
+
+def site_prompt(site):
+    return ('Site binding: ' + json.dumps(site, sort_keys=True) + ' (verified by tools/site_binding.py --check; '
+            'the docs worktree HEAD is the bound deployed site commit).')
 
 
 def verify_release_readiness(root, path, source):
@@ -242,7 +299,7 @@ def mark_interrupted(root, phase, attempt, chunk):
     return record
 
 
-def build_prompt(row, chunk, scope, source, checks_name, attempt):
+def build_prompt(row, chunk, scope, source, checks_name, attempt, site=None):
     target = f"chunk `{chunk}` of phase {row['id']}" if chunk else f"the complete phase {row['id']}"
     criteria = row.get('acceptance_criteria', [])
     lines = [
@@ -254,6 +311,7 @@ def build_prompt(row, chunk, scope, source, checks_name, attempt):
         f'Review attempt {attempt} of at most {MAX_ATTEMPTS}. Reviewed source fingerprint: {source}. '
         f'Passing check report for this exact source: {checks_name} (inspect its commands and results).',
         'Scope artifacts: ' + json.dumps(scope) + '.',
+        *([site_prompt(site)] if site else []),
         'Acceptance criteria: ' + json.dumps(criteria) + '.',
         'Assess the actual code, tests, provenance, security, functionality, ergonomics and maintainability against the plan. '
         'Do not reward claimed coverage that is not supported by implemented methods, tests or recorded evidence. '
@@ -340,6 +398,7 @@ def main(argv=None, root=ROOT, runner=invoke):
         verify_chunk_acceptance(root, row, source)
         verify_release_delivery(root, args.phase, source)
     checks = check_evidence(root, args.phase, source)
+    site = site_summary(*verify_site(root, args.phase, args.chunk)) if (args.phase, args.chunk) in SITE_BINDINGS else None
     attempt = next_attempt(root, args.phase, args.chunk)
     verify_prior_attempts(root, args.phase, attempt, args.chunk)
     record_path = destination(root, args.phase, attempt, args.chunk)
@@ -352,7 +411,7 @@ def main(argv=None, root=ROOT, runner=invoke):
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except BlockingIOError:
         raise ValueError('Another invocation holds this attempt slot') from None
-    reserve(prompt_path, build_prompt(row, args.chunk, scope, source, checks.relative_to(root).as_posix(), attempt))
+    reserve(prompt_path, build_prompt(row, args.chunk, scope, source, checks.relative_to(root).as_posix(), attempt, site))
     shutil.copyfile(checks, checks_copy)
     stem = record_path.stem
     events_path, schema_path = private / f'{stem}.events.jsonl', private / f'{stem}.schema.json'
@@ -361,7 +420,7 @@ def main(argv=None, root=ROOT, runner=invoke):
     version = subprocess.run(['codex', '--version'], capture_output=True, text=True).stdout.strip()
     base = {'phase': args.phase, 'chunk': args.chunk, 'attempt': attempt, 'reviewer': REVIEWER, 'codex_version': version,
             'source_sha256': source, 'scope_evidence': scope, 'prompt_sha256': sha256(prompt_path),
-            'checks_sha256': sha256(checks_copy), 'requested_at': datetime.datetime.now(datetime.timezone.utc).isoformat()}
+            'checks_sha256': sha256(checks_copy), **({'site_binding': site} if site else {}), 'requested_at': datetime.datetime.now(datetime.timezone.utc).isoformat()}
 
     def failed(reason):
         record = {**base, 'status': 'invocation_failed', 'reason': reason,
@@ -391,8 +450,14 @@ def main(argv=None, root=ROOT, runner=invoke):
     except (OSError, ValueError, KeyError, TypeError):
         return failed('invalid_output')
     unchanged = fingerprint(root) == source
-    decision = decide(review) if unchanged else 'rejected'
-    record = {**base, 'status': 'completed', 'source_unchanged': unchanged, 'review': review, 'decision': decision,
+    site_fields = {}
+    if site:
+        try:
+            site_fields['site_unchanged'] = site_summary(*verify_site(root, args.phase, args.chunk)) == site
+        except (OSError, ValueError, subprocess.CalledProcessError):
+            site_fields['site_unchanged'] = False
+    decision = decide(review) if unchanged and site_fields.get('site_unchanged', True) else 'rejected'
+    record = {**base, 'status': 'completed', 'source_unchanged': unchanged, **site_fields, 'review': review, 'decision': decision,
               'output_sha256': sha256(output_path), 'events_sha256': sha256(events_path),
               'completed_at': datetime.datetime.now(datetime.timezone.utc).isoformat()}
     record_path.write_text(json.dumps(record, indent=2) + '\n')
