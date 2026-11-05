@@ -86,6 +86,48 @@ class Release025Tests(unittest.TestCase):
             release_delivery.verify_github_tag(ROOT, {'github_tag_receipt': 'docs/checks/release-tag-github-v0.2.5.json'},
                                                {}, 31, '0.2.4')
 
+    def test_registry_readiness_accepts_only_the_phase_31_codex_chunk_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            registry = {'releaseReadiness': {'review': 'docs/reviews/phase-31-attempt-01.json',
+                                             'reviewSha256': 'x', 'sourceSha256': 's1'}}
+            with self.assertRaisesRegex(ValueError, 'actual release phase review'):
+                release_delivery.verify_registry_readiness(root, registry, 's1', 31)
+            path = root / 'docs/reviews/phase-31-chunk-release-readiness-codex-attempt-01.json'
+            path.parent.mkdir(parents=True)
+            path.write_text('{}')
+            registry['releaseReadiness']['review'] = path.relative_to(root).as_posix()
+            registry['releaseReadiness']['reviewSha256'] = __import__('hashlib').sha256(b'{}').hexdigest()
+            with mock.patch.object(release_delivery, 'verify_release_readiness', return_value=True) as accepted:
+                release_delivery.verify_registry_readiness(root, registry, 's1', 31)
+            accepted.assert_called_once()
+            self.assertEqual(accepted.call_args.kwargs.get('phase'), 31)
+
+    def test_phase_31_completion_requires_verified_delivery(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            row = {'id': 31, 'chunks': []}
+            with mock.patch.object(codex_review, 'verify_chunk_acceptance'), \
+                    mock.patch('release_delivery.verify', side_effect=ValueError('Phase delivery must identify canonical registry and tag receipts')):
+                with self.assertRaisesRegex(ValueError, 'registry and tag receipts'):
+                    codex_review._apply_status(root, {'phases': [row]}, row, None, root / 'x.json', review(10), 's1', 'accepted')
+            self.assertNotIn('status', row)
+            with mock.patch('release_delivery.verify', return_value={}) as delivered:
+                codex_review.verify_release_delivery(root, 31, 's1')
+                delivered.assert_called_once_with(root, 's1', phase=31, version='0.2.5')
+                codex_review.verify_release_delivery(root, 30, 's1')
+                delivered.assert_called_once()
+
+    def test_example_unix_permission_code_is_platform_gated(self):
+        text = (ROOT / 'crates/scm-sdk/examples/mcp_tags_live.rs').read_text()
+        self.assertIn('#[cfg(not(unix))]\n    fn open_private(', text)
+        for index in [i for i in range(len(text)) if text.startswith('std::os::unix', i)]:
+            preceding = text[:index]
+            function = preceding.rfind('fn open_private(')
+            self.assertGreater(function, preceding.rfind('\n    }\n'), 'unix API used outside open_private')
+            self.assertTrue(preceding[:function].rstrip().endswith('#[cfg(unix)]\n    fn') or
+                            preceding[:function].rstrip().endswith('#[cfg(unix)]'), 'open_private must be cfg(unix)')
+
     def test_release_documentation_names_the_phase_31_procedure(self):
         release = (ROOT / 'docs/RELEASE.md').read_text()
         for text in ('The workspace version is **0.2.5**', 'scripts/check-prepublication.py --phase 31 --version 0.2.5',

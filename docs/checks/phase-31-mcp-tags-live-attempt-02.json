@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "phase": 31,
+  "attempt": 2,
+  "executedAt": "2026-11-05T17:16:00.006414+00:00",
+  "runtimeInputsSha256": "a495f826dc8a6360105a21bc3fdac1a152424fad37a7f074289e31ef689bf5a6",
+  "binarySha256": "652cb12c0db1e78aa01db27b8b3389b3c769db0d29e313573852d8a64d547d2a",
+  "toolchain": "1.99.0",
+  "hostTarget": "x86_64-unknown-linux-gnu",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "workspaceSelected": true,
+  "report": {
+    "schemaVersion": 2,
+    "crateVersion": "0.2.5",
+    "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+    "tenantScopeMatched": true,
+    "serverWorkflowSelected": true,
+    "steps": [
+      {
+        "operation": "mcp_integrations.create",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_integrations.list_with_options.tags_filter_includes_fixture",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_integrations.list_with_options.tags_filter_excludes_others",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_integrations.get.tags_created",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_integrations.update.tags_replace",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_integrations.get.tags_replaced",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_integrations.update.tags_null_clear",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_integrations.get.tags_cleared",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "workspaces.get.selected",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_integrations.set_workspaces.enable_selected",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_servers.create",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_servers.get.tags_created",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_servers.list.tags_filter_includes_fixture",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_servers.update.tags_replace",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_servers.get.tags_replaced",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_servers.update.tags_null_clear",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_servers.get.tags_cleared",
+        "outcome": "ok",
+        "verified": true
+      },
+      {
+        "operation": "mcp_servers.delete",
+        "outcome": "ok"
+      },
+      {
+        "operation": "mcp_integrations.delete",
+        "outcome": "ok"
+      }
+    ],
+    "fixturesCreated": 2,
+    "fixturesUncertain": 0,
+    "fixturesDeleted": 2,
+    "cleanupState": "complete",
+    "limitations": [
+      "Only the recorded MCP tags steps were attempted; other MCP workflows remain live-unqualified.",
+      "The fixture URL is the reserved example.com host: the service rejects unresolvable hosts as unsafe. The SDK never contacts it; service-side discovery is not asserted."
+    ]
+  },
+  "summary": {
+    "verifiedSteps": [
+      "mcp_integrations.create",
+      "mcp_integrations.delete",
+      "mcp_integrations.get.tags_cleared",
+      "mcp_integrations.get.tags_created",
+      "mcp_integrations.get.tags_replaced",
+      "mcp_integrations.list_with_options.tags_filter_excludes_others",
+      "mcp_integrations.list_with_options.tags_filter_includes_fixture",
+      "mcp_integrations.set_workspaces.enable_selected",
+      "mcp_integrations.update.tags_null_clear",
+      "mcp_integrations.update.tags_replace",
+      "mcp_servers.create",
+      "mcp_servers.delete",
+      "mcp_servers.get.tags_cleared",
+      "mcp_servers.get.tags_created",
+      "mcp_servers.get.tags_replaced",
+      "mcp_servers.list.tags_filter_includes_fixture",
+      "mcp_servers.update.tags_null_clear",
+      "mcp_servers.update.tags_replace",
+      "workspaces.get.selected"
+    ],
+    "failedSteps": [],
+    "cleanupState": "complete"
+  }
+}

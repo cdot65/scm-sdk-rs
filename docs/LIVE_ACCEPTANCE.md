@@ -12,7 +12,7 @@ compiled executable, Rust version, host target, and execution time.
 
 ## Current read-only qualification
 
-The current maintenance run is [phase 31 attempt 01](checks/phase-31-live-attempt-01.json).
+The current maintenance run is [phase 31 attempt 02](checks/phase-31-live-attempt-02.json).
 It qualifies the 0.2.5 release-candidate runtime, not a published release.
 It verified **1 exact native method**, OAuth token exchange. All four single-page
 Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
@@ -37,7 +37,7 @@ successes to the current runtime.
 
 ## Portkey MCP tags workflow
 
-The separately bounded [MCP tags receipt](checks/phase-31-mcp-tags-live-attempt-01.json) for the 0.2.5 runtime
+The separately bounded [MCP tags receipt](checks/phase-31-mcp-tags-live-attempt-02.json) for the 0.2.5 runtime
 verified all 19 recorded steps and completed cleanup of both disposable fixtures:
 integration create, tags filter inclusion and exclusion, typed read-back,
 replacement and null clearing, workspace enablement, plus server create, read-back,

@@ -1,0 +1,41 @@
+{
+  "score": 7,
+  "summary": "Not accepted. The source fingerprint, 113-command passing report and both retained compiler archives are consistent, but release delivery has an incompatible review-path guard, phase completion omits delivery verification, and the packaged example introduces a Windows compilation regression.",
+  "findings": [
+    {
+      "severity": "high",
+      "path": "tools/release_delivery.py",
+      "line": 147,
+      "description": "The registry-readiness guard accepts only phase-31-attempt-NN.json, while phase 31 requires phase-31-chunk-release-readiness-codex-attempt-NN.json. I reproduced rejection of the required Codex path. Consequently, the documented delivery verifier cannot accept a valid 0.2.5 registry receipt.",
+      "required_fix": "Select the correct Codex chunk filename format for phase 31 while preserving historical formats. Add a regression covering registry-readiness verification with an accepted phase-31 Codex record."
+    },
+    {
+      "severity": "high",
+      "path": "tools/codex_review.py",
+      "line": 287,
+      "description": "Complete-phase acceptance checks chunk reviews and immediately marks phase 31 complete without invoking release_delivery.verify. The phase-31 command set also omits that verifier. Missing, stale or subsequently altered registry/tag/CI receipts therefore cannot prevent completion once reviews pass, unlike the existing release advancement path in review_phase.py.",
+      "required_fix": "Require successful current-source phase-31 delivery verification before recording completion. Add tests proving missing, stale and failed delivery evidence blocks advancement despite accepted reviews."
+    },
+    {
+      "severity": "medium",
+      "path": "crates/scm-sdk/examples/mcp_tags_live.rs",
+      "line": 322,
+      "description": "The new std::os::unix imports and permission methods are unconditional within a feature-gated module. Windows builds with gateway and reqwest-transport enabled cannot compile this packaged example, including the configured Windows native all-feature workflow.",
+      "required_fix": "Conditionally compile Unix permission handling and provide a secure non-Unix implementation or an explicit unsupported-platform fallback. Verify Windows example compilation without weakening private-file protections."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, the accepted Portkey plan and phase-31 status.",
+    "Independently recomputed fingerprint 8be0f8a5e75f100a42b57c5f9de330c3be7d8923ec9cfbfdd738f95725fc3bef; all 113 recorded commands exactly match commands_for(31), with zero exits and no timeouts.",
+    "Inspected both schema-3 package receipts and retained archives: archive hashes, sizes, member inventories and source/example bytes match; recorded extracted-package checks passed on Rust 1.89.0 and 1.99.0.",
+    "Inspected release scripts, review gates, related regression tests, workflow configuration, documentation and ledger changes against phase 30.",
+    "Executed a read-only reproduction of the phase-31 registry-readiness filename rejection.",
+    "Executed both offline live-receipt validators successfully. MCP evidence records 19 successful steps and complete cleanup; general live evidence verifies one native method."
+  ],
+  "limitations": [
+    "Did not rerun compiler, package or full test suites; inspected their recorded execution evidence and independently checked archive integrity.",
+    "Windows compilation failure is established by source inspection, not a Windows compiler run.",
+    "No network requests, tenant access, credential reads or checkout modifications occurred.",
+    "Remote publication, annotated tags, terminal CI and Docusaurus delivery remain pending later chunks; their absence alone was not treated as a readiness finding."
+  ]
+}

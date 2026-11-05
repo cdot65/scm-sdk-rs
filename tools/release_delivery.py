@@ -144,7 +144,10 @@ def verify_registry_readiness(root, registry, source_sha256, phase=PHASE):
     readiness = registry.get('releaseReadiness')
     require(isinstance(readiness, dict), 'Registry receipt must retain releaseReadiness provenance')
     relative = readiness.get('review')
-    require(isinstance(relative, str) and re.fullmatch(rf'docs/reviews/phase-{phase}-attempt-\d+\.json', relative),
+    # Phase 31 readiness is the maintainer-selected Codex release-readiness chunk record.
+    pattern = (r'docs/reviews/phase-31-chunk-release-readiness-codex-attempt-\d{2}\.json' if phase == 31
+               else rf'docs/reviews/phase-{phase}-attempt-\d+\.json')
+    require(isinstance(relative, str) and re.fullmatch(pattern, relative),
             'Registry readiness must reference its actual release phase review')
     path = root / relative
     require(not path.is_symlink() and path.resolve().is_relative_to(root.resolve()),

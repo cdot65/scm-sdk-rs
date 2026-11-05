@@ -208,6 +208,17 @@ def verify_release_readiness(root, path, source):
             and record.get('source_sha256') == source)
 
 
+RELEASE_PHASES = {31: '0.2.5'}
+
+
+def verify_release_delivery(root, phase, source):
+    """A release phase completes only after its registry, tag and CI delivery verify."""
+    if phase not in RELEASE_PHASES:
+        return
+    from release_delivery import verify as verify_delivery
+    verify_delivery(root, source, phase=phase, version=RELEASE_PHASES[phase])
+
+
 def mark_interrupted(root, phase, attempt, chunk):
     """Record an orphaned slot as a consumed failed attempt once no invocation holds its lock."""
     path = destination(root, phase, attempt, chunk)
@@ -285,6 +296,7 @@ def _apply_status(root, status, row, chunk, record_path, review, source, decisio
         row['latest_rejected_review'] = relative
     else:
         verify_chunk_acceptance(root, row, source)
+        verify_release_delivery(root, row['id'], source)
         row.update(status='complete', accepted_source_sha256=source, accepted_score=review['score'])
         row.setdefault('reviews', []).append(relative)
         row['milestones'] = {
@@ -326,6 +338,7 @@ def main(argv=None, root=ROOT, runner=invoke):
     source = fingerprint(root)
     if args.chunk is None:
         verify_chunk_acceptance(root, row, source)
+        verify_release_delivery(root, args.phase, source)
     checks = check_evidence(root, args.phase, source)
     attempt = next_attempt(root, args.phase, args.chunk)
     verify_prior_attempts(root, args.phase, attempt, args.chunk)

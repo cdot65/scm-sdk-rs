@@ -86,7 +86,7 @@ only `tags`, so frozen standalone schema names keep their historical 0.34.0
 acceptance. A filter must be a JSON object of unique keys with string values.
 Responses keep the historical tolerant roots.
 
-Live acceptance (goshawks tenant, [receipt](checks/phase-31-mcp-tags-live-attempt-01.json))
+Live acceptance (goshawks tenant, [receipt](checks/phase-31-mcp-tags-live-attempt-02.json))
 verified the following, then deleted both disposable fixtures:
 
 - integration create with tags

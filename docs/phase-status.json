@@ -9235,7 +9235,9 @@
                 "tools/test_release_025.py"
               ]
             }
-          ]
+          ],
+          "review_decision": "rejected",
+          "latest_review": "docs/reviews/phase-31-chunk-release-readiness-codex-attempt-01.json"
         },
         {
           "id": "remote-delivery",
@@ -9283,6 +9285,13 @@
         "Verified crates.io archive, remote annotated v0.2.5 tag and terminal CI",
         "Docusaurus site updated and building",
         "Chunk and complete-phase Codex reviews score at least 9/10 with no blocker/high finding"
+      ],
+      "review_findings_disposition": [
+        "release-readiness attempt 1 (7, rejected) is preserved.",
+        "High (registry readiness path): tools/release_delivery.py accepts phase 31's Codex chunk record path (phase-31-chunk-release-readiness-codex-attempt-NN.json) and keeps historical formats; regression in tools/test_release_025.py.",
+        "High (completion without delivery): codex_review requires release_delivery.verify(root, source, phase=31, version='0.2.5') both before reserving a phase-level attempt and before recording completion; regression proves a failing delivery blocks advancement and that non-release phases are unaffected.",
+        "Medium (Windows example build): Unix permission handling is confined to a #[cfg(unix)] open_private; a #[cfg(not(unix))] fallback refuses to write recovery ids rather than weaken privacy. A static guard test enforces the gating. A local x86_64-pc-windows-msvc check was attempted but cannot complete on this Linux host (aws-lc-sys needs MSVC/NASM); Windows compilation remains an unexecuted check, recorded as a limitation rather than claimed.",
+        "Runtime changed, so read-only (attempt 02) and MCP tags (attempt 02, 19/19, complete cleanup) receipts were refreshed for the release runtime."
       ]
     }
   ],

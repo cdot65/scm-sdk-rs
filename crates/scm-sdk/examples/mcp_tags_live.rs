@@ -314,11 +314,10 @@ mod live {
         tags.iter().map(|(k, v)| (k.clone(), v.clone())).collect()
     }
 
-    fn write_private(path: &PathBuf, value: &impl Serialize) -> Result<()> {
-        let bytes =
-            serde_json::to_vec_pretty(value).map_err(|_| Error::new(ErrorKind::Configuration))?;
-        // Recovery ids are private: refuse symlinks, non-regular files and any
-        // existing destination readable by others; create owner-only (0600).
+    /// Recovery ids are private: refuse symlinks, non-regular files and any
+    /// existing destination readable by others; create owner-only (0600).
+    #[cfg(unix)]
+    fn open_private(path: &PathBuf) -> Result<std::fs::File> {
         use std::os::unix::fs::{OpenOptionsExt, PermissionsExt};
         let unsafe_mode = |mode: u32| mode & 0o077 != 0;
         if let Ok(existing) = std::fs::symlink_metadata(path)
@@ -326,7 +325,7 @@ mod live {
         {
             return Err(Error::new(ErrorKind::Configuration));
         }
-        let mut file = OpenOptions::new()
+        let file = OpenOptions::new()
             .write(true)
             .create(true)
             .truncate(true)
@@ -341,6 +340,20 @@ mod live {
         if unsafe_mode(mode) {
             return Err(Error::new(ErrorKind::Configuration));
         }
+        Ok(file)
+    }
+
+    /// Owner-only file modes are not portable here; refuse rather than write
+    /// recovery identifiers with unknown permissions. Live acceptance is Linux-only.
+    #[cfg(not(unix))]
+    fn open_private(_path: &PathBuf) -> Result<std::fs::File> {
+        Err(Error::new(ErrorKind::Configuration))
+    }
+
+    fn write_private(path: &PathBuf, value: &impl Serialize) -> Result<()> {
+        let bytes =
+            serde_json::to_vec_pretty(value).map_err(|_| Error::new(ErrorKind::Configuration))?;
+        let mut file = open_private(path)?;
         file.write_all(&bytes)
             .map_err(|_| Error::new(ErrorKind::Configuration))
     }
