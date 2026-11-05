@@ -300,4 +300,3 @@ Record `registry_publication` and `delivery` in phase 31's status entry exactly 
 for phase 28, including `github_tag_receipt`. Only after the delivery guard passes
 can the `remote-delivery` and `docs-site` chunks and the final phase review complete
 phase 31. Publication uses the owner-controlled external Cargo credential.
-
