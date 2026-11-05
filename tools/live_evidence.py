@@ -287,7 +287,7 @@ def load(root=ROOT, required=False):
     require_keys(reference, {"schemaVersion", "baselineCommit", "report", "reportSha256"})
     if type(reference["schemaVersion"]) is not int or reference["schemaVersion"] != 1 or reference["baselineCommit"] != BASELINE:
         raise ValueError("Qualification baseline mismatch")
-    if not re.fullmatch(r"docs/checks/phase-(?:08|24|27|28)-live-attempt-\d{2}\.json", reference["report"]):
+    if not re.fullmatch(r"docs/checks/phase-(?:08|24|27|28|30|31)-live-attempt-\d{2}\.json", reference["report"]):
         raise ValueError("Unexpected controlled report path")
     path = regular(root, reference["report"])
     if digest(path) != reference["reportSha256"]:
@@ -297,7 +297,7 @@ def load(root=ROOT, required=False):
         "binarySha256", "toolchain", "hostTarget", "sourceUnchanged", "exitCode", "commandTemplate", "report"})
     if not (type(envelope["schemaVersion"]) is int and envelope["schemaVersion"] == 1 and envelope["baselineCommit"] == BASELINE
             and envelope["sourceUnchanged"] is True and type(envelope["exitCode"]) is int and envelope["exitCode"] == 0
-            and envelope["toolchain"] == "1.99.0" and envelope["hostTarget"] == "x86_64-unknown-linux-musl"
+            and envelope["toolchain"] == "1.99.0" and envelope["hostTarget"] in allowed_hosts(reference["report"])
             and envelope["runtimeInputsSha256"] == runtime_fingerprint(root)
             and re.fullmatch(r"[0-9a-f]{64}", envelope["binarySha256"])):
         raise ValueError("Native qualification is stale or lacks execution evidence")
@@ -321,13 +321,25 @@ def load(root=ROOT, required=False):
     return annotations, envelope
 
 
+# Phases 30–31 (Portkey MCP tags track) run on the maintainer's gnu host; every
+# earlier receipt retains its recorded musl-only qualification boundary.
+CURRENT_TRACK_PHASES = (30, 31)
+
+
+def allowed_hosts(report_path):
+    phase = int(re.search(r"phase-(\d{2})-", report_path).group(1))
+    if phase in CURRENT_TRACK_PHASES:
+        return {"x86_64-unknown-linux-musl", "x86_64-unknown-linux-gnu"}
+    return {"x86_64-unknown-linux-musl"}
+
+
 def selected_phase(args):
     """Select receipt ownership without expanding the probes' acceptance scope."""
     phase = getattr(args, "phase", None)
     read_only = getattr(args, "read_only", False)
-    if phase is not None and (type(phase) is not int or phase not in (24, 27, 28)
+    if phase is not None and (type(phase) is not int or phase not in (24, 27, 28, *CURRENT_TRACK_PHASES)
                               or not read_only or args.mutations):
-        raise ValueError("--phase requires --read-only and phase 24, 27 or 28")
+        raise ValueError("--phase requires --read-only and phase 24, 27, 28, 30 or 31")
     return str(phase or 24) if read_only else "08"
 
 
@@ -342,8 +354,8 @@ def run(args):
     toolchain = "1.99.0"
     native = subprocess.check_output([str(rustc), f"+{toolchain}", "-vV"], text=True)
     host = next(line[6:] for line in native.splitlines() if line.startswith("host: "))
-    if host != "x86_64-unknown-linux-musl":
-        raise ValueError("This controlled receipt currently qualifies the recorded musl host only")
+    if host not in allowed_hosts(f"docs/checks/phase-{phase}-live-attempt-01.json"):
+        raise ValueError("This controlled receipt qualifies only the reviewed host targets for its phase")
     report_path = ROOT / f"docs/checks/phase-{phase}-live-attempt-{args.attempt:02d}.json"
     if report_path.exists():
         raise ValueError("Preserve previous attempts and select a new attempt number")
@@ -402,7 +414,7 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--mutations", action="store_true")
     mode.add_argument("--read-only", action="store_true")
-    parser.add_argument("--phase", type=int, choices=(24, 27, 28),
+    parser.add_argument("--phase", type=int, choices=(24, 27, 28, *CURRENT_TRACK_PHASES),
                         help="Read-only receipt phase; defaults to 24 and does not qualify directional workflows")
     parser.add_argument("--attempt", type=int, default=1)
     args = parser.parse_args()

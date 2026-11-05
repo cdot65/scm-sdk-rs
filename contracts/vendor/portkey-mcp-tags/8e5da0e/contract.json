@@ -1,0 +1,739 @@
+{
+  "commit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+  "base": "a27feb9efaac3653d2d94eca5d7d210944b6e160",
+  "paths": {
+    "/mcp-integrations": {
+      "get": {
+        "operationId": "McpIntegrations_list",
+        "tags": [
+          "MCP Integrations"
+        ],
+        "summary": "List MCP Integrations",
+        "description": "List MCP Integrations for the organisation or workspace. Requires organisation_id (when using org admin API key) or x-portkey-api-key header.",
+        "parameters": [
+          {
+            "name": "organisation_id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Organisation ID (required when using org admin API key)"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "workspace",
+                "organisation",
+                "all"
+              ]
+            }
+          },
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 100
+            }
+          },
+          {
+            "name": "current_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JSON-encoded object of tag key/value pairs; only resources whose tags match are returned, e.g. {\"env\":\"prod\"}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpIntegrationListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mcp-servers": {
+      "get": {
+        "operationId": "McpServers_list",
+        "tags": [
+          "MCP Servers"
+        ],
+        "summary": "List MCP Servers",
+        "description": "List MCP Servers for the workspace. Requires workspace_id or x-portkey-api-key header.",
+        "parameters": [
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Workspace ID or slug. Required when using org admin API key; optional when API key is workspace-scoped."
+          },
+          {
+            "name": "current_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by MCP Server ID(s), comma-separated"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JSON-encoded object of tag key/value pairs; only resources whose tags match are returned, e.g. {\"env\":\"prod\"}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpServerListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateMcpIntegration": {
+        "type": "object",
+        "description": "Only include optional fields (slug, description, configurations) when you have values for them. The example and code samples show required fields plus workspace_id and organisation_id when scoping.",
+        "required": [
+          "name",
+          "url",
+          "auth_type",
+          "transport"
+        ],
+        "properties": {
+          "organisation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Organisation ID (optional; required when using org admin API key without workspace_id)"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Workspace ID (optional; to create at workspace level)"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Optional slug; must be unique within organisation"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the MCP integration"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "configurations": {
+            "type": "object",
+            "description": "Auth/config key-value pairs (e.g. headers, client credentials)",
+            "properties": {
+              "custom_headers": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Custom headers to send to the MCP server.",
+                "example": {
+                  "Authorization": "Bearer some-token",
+                  "x-foo": "bar"
+                }
+              },
+              "passthrough_header": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Headers to pass through from the incoming request to the MCP server.",
+                "example": {
+                  "x-user-id": {
+                    "type": "string",
+                    "example": "abc123"
+                  },
+                  "x-request-id": {
+                    "type": "string",
+                    "example": "req-0001"
+                  }
+                }
+              }
+            },
+            "additionalProperties": true
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags to attach to the MCP integration. Keys may contain only alphanumeric characters, underscores and hyphens."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "MCP server URL"
+          },
+          "auth_type": {
+            "type": "string",
+            "enum": [
+              "oauth_auto",
+              "headers",
+              "none"
+            ]
+          },
+          "transport": {
+            "type": "string",
+            "enum": [
+              "http",
+              "sse"
+            ]
+          },
+          "secret_mappings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecretMapping"
+            },
+            "description": "Dynamically resolve secrets from secret references at runtime. Valid target_field values are \"configurations.<field>\" (e.g. \"configurations.oauth_metadata\"). Each target_field must be unique."
+          }
+        }
+      },
+      "UpdateMcpIntegration": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "configurations": {
+            "type": "object",
+            "description": "Auth/config key-value pairs (e.g. headers, client credentials)",
+            "properties": {
+              "custom_headers": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Custom headers to send to the MCP server.",
+                "example": {
+                  "Authorization": "Bearer some-token",
+                  "x-foo": "bar"
+                }
+              },
+              "passthrough_header": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Headers to pass through from the incoming request to the MCP server.",
+                "example": {
+                  "x-user-id": {
+                    "type": "string",
+                    "example": "abc123"
+                  },
+                  "x-request-id": {
+                    "type": "string",
+                    "example": "req-0001"
+                  }
+                }
+              }
+            },
+            "additionalProperties": true
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags for the MCP integration. Replaces existing tags; pass null to clear."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "auth_type": {
+            "type": "string",
+            "enum": [
+              "oauth_auto",
+              "headers",
+              "none"
+            ]
+          },
+          "transport": {
+            "type": "string",
+            "enum": [
+              "http",
+              "sse"
+            ]
+          },
+          "secret_mappings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecretMapping"
+            },
+            "description": "Dynamically resolve secrets from secret references at runtime. Valid target_field values are \"configurations.<field>\" (e.g. \"configurations.oauth_metadata\"). Each target_field must be unique."
+          }
+        }
+      },
+      "CreateMcpServer": {
+        "type": "object",
+        "description": "Create an MCP Server (workspace instance of an MCP Integration).",
+        "required": [
+          "name",
+          "mcp_integration_id"
+        ],
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Workspace ID or slug (optional; required when using org admin API key)"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": "Display name of the MCP server"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 500
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags to attach to the MCP server. Keys may contain only alphanumeric characters, underscores and hyphens."
+          },
+          "mcp_integration_id": {
+            "type": "string",
+            "description": "MCP Integration ID (UUID) or slug"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "minLength": 3,
+            "maxLength": 50,
+            "description": "Optional slug; must be unique within organisation"
+          }
+        }
+      },
+      "UpdateMcpServer": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 500
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags for the MCP server. Replaces existing tags; pass null to clear."
+          }
+        }
+      },
+      "McpIntegration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "configurations": {
+            "type": "object",
+            "nullable": true
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags attached to the MCP integration"
+          },
+          "global_workspace_access": {
+            "type": "object",
+            "nullable": true
+          },
+          "workspace_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "Workspace ID or slug (when workspace-scoped)"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "auth_type": {
+            "type": "string",
+            "enum": [
+              "oauth_auto",
+              "oauth_client_credentials",
+              "headers",
+              "none"
+            ]
+          },
+          "transport": {
+            "type": "string",
+            "enum": [
+              "http",
+              "sse",
+              "interactive"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "workspace",
+              "organisation"
+            ]
+          },
+          "secret_mappings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecretMapping"
+            },
+            "description": "Secret reference mappings for this MCP integration. Valid target_field values are \"configurations.<field>\"."
+          }
+        }
+      },
+      "McpIntegrationListItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "workspace",
+              "organisation"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "auth_type": {
+            "type": "string",
+            "enum": [
+              "oauth_auto",
+              "headers",
+              "none"
+            ]
+          },
+          "transport": {
+            "type": "string",
+            "enum": [
+              "http",
+              "sse",
+              "interactive"
+            ]
+          },
+          "configurations": {
+            "type": "object"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags attached to the MCP integration"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "workspace_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "workspaces_count": {
+            "type": "number",
+            "nullable": true
+          },
+          "secret_mappings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecretMapping"
+            },
+            "description": "Secret reference mappings for this MCP integration. Valid target_field values are \"configurations.<field>\"."
+          }
+        }
+      },
+      "McpServer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags attached to the MCP server"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mcp_integration_id": {
+            "type": "string",
+            "description": "MCP Integration ID or slug"
+          },
+          "mcp_integration_details": {
+            "type": "object",
+            "nullable": true,
+            "description": "Present for system/service auth",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "configurations": {
+                "type": "object",
+                "nullable": true
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "transport": {
+                "type": "string"
+              },
+              "auth_type": {
+                "type": "string"
+              }
+            }
+          },
+          "workspace_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "Present for system/service auth"
+          }
+        }
+      },
+      "McpServerListItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organisation_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Key-value tags attached to the MCP server"
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "owner_id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "workspace_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "mcp_integration_id": {
+            "type": "string"
+          },
+          "mcp_integration_slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "mcp_integration_url": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "auth_type": {
+            "type": "string"
+          },
+          "workspace_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "workspace_slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Gateway URL for this MCP server (e.g. {gateway_base}/{slug}/mcp)"
+          }
+        }
+      }
+    }
+  }
+}

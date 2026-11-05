@@ -79,7 +79,8 @@ def audit():
     for name,sid in sorted(graph['roots'].items()):
         # Keep the historical 0.34.0 denominator; later versioned overlays
         # receive their own qualification rather than expanding frozen coverage.
-        if name.startswith(('vendor:', 'typescript:')):continue
+        # Portkey MCP tags roots (versioned clones and the new list options) likewise.
+        if name.startswith(('vendor:', 'typescript:', 'portkey:')) or sid.startswith('s_pk8e5_'):continue
         pending=[sid];seen=set();sites=[]
         while pending:
             current=pending.pop()

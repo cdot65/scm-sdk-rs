@@ -66,6 +66,52 @@ Pricing independently defaults to a 60-second total operation deadline and zero 
 
 Returned prices remain upstream catalog units (USD cents where declared), not tenant billing or Prisma cost telemetry. Calculation trees remain bounded, unevaluated data; no formula evaluation, conversion, caching, or price inference occurs. Unknown response fields are retained and known nested structure remains validated.
 
+## Portkey MCP tags (8e5da0e)
+
+Version 0.2.5 imports the MCP `tags` changes from `Portkey-AI/openapi`
+`8e5da0e756bc49ee3e82ca13df693b39fa541627` ([plan](portkey-mcp-tags-plan.md)).
+
+| Surface | Contract |
+| --- | --- |
+| `McpIntegrationCreateRequest`, `McpIntegrationUpdateRequest`, `GatewayMcpServersClientCreateRequest`, `GatewayMcpServersClientUpdateRequest` | `tags: Patch<TypedMap<String>>`. `Unset` omits the field, `Null` sends `null` (clears tags on update), and `Value` replaces them. Keys must match `^[a-zA-Z0-9_-]+$`; values are strings. |
+| `McpIntegrationDetail`, `McpIntegration` (list item), `GatewayMcpServer`, `GatewayMcpServerListItem` | `tags` decodes conforming string maps with any string keys. Non-conforming response JSON stays unchanged in `extensions`. |
+| `AIGatewayMcpServersClient::list` | `GatewayMcpServersClientListOptions.tags` sends the upstream JSON-object string after the frozen query keys. |
+| `AIGatewayMcpIntegrationsClient::list_with_options` | New method taking `GatewayMcpIntegrationsClientListOptions`, which carries the pinned query: `organisation_id` (UUID), `type` (`workspace`, `organisation` or `all`), `workspace_id`, `page_size` (1–1000), `current_page` (from 0), `search` and `tags`. The frozen `list` sends no query and is unchanged. |
+| `airs::gateway::mcp_tags_filter` | Builds the filter string with sorted keys from `(key, value)` pairs and rejects duplicate keys. |
+| `scm_sdk::data::TypedMap` / `Extensions` | Public names for the typed map. Build one with `collect()` or `From<BTreeMap>`. |
+
+Requests and query options validate against versioned `portkey:8e5da0e:` roots
+before authentication. Each versioned root clones its frozen original and adds
+only `tags`, so frozen standalone schema names keep their historical 0.34.0
+acceptance. A filter must be a JSON object of unique keys with string values.
+Responses keep the historical tolerant roots.
+
+Live acceptance (goshawks tenant, [receipt](checks/phase-31-mcp-tags-live-attempt-02.json))
+verified the following, then deleted both disposable fixtures:
+
+- integration create with tags
+- the integration tags filter, both including the fixture and excluding other integrations
+- typed read-back, replacement and null clearing
+- server create, read-back, filtered list, replacement and null clearing in a nonproduction workspace
+
+Service prerequisites observed on the way to that run:
+
+- The service rejects unresolvable integration hosts with 400 (`AB01`: "Invalid or unsafe custom host").
+- A workspace MCP server needs the integration to be enabled for that workspace first (`set_workspaces`); otherwise the service returns 403 (`AB03`).
+
+The frozen create schema still requires a numeric `organisation_id` and a
+`slug`, while the pinned upstream schema makes both optional and documents
+`organisation_id` as a UUID. The service accepted the tenant's numeric TSG, the
+organisation UUID and an omitted value. This pre-existing frozen constraint is
+outside the tags delta and is unchanged.
+
+The remaining upstream changes in this range are recorded but not imported:
+
+- analytics workspace aggregation parameters (the SDK has no analytics client)
+- Anthropic Messages routes (a deferred new capability)
+- a threads operationId rename
+- documentation navigation
+
 ## Evidence
 
 `crates/scm-sdk/tests/gateway_control_contracts.rs` independently specifies literal wire routes, planes, ordered queries, headers, body defaults, and schema-grounded responses for every method. Thirty control/pricing cases from the frozen OpenAPI corpus are executed with complete exact wire, response, and status assertions. An exhaustive 42-case consumption guard also binds all 12 sibling log-export/rate-limit cases to their separate execution suite. Methods outside that corpus use manually authored source-derived fixtures. Additional sweeps exercise all 44 uncertain transport mutations and all 38 typed mutation decoding failures without replay, strict pre-authentication rejection, UTF-16 identifiers, explicit patch states, overlapping union behavior, secret redaction, and public pricing retry/deadline/cancellation/redirect isolation.

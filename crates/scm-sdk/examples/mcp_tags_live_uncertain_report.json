@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "upstreamCommit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+  "tenantScopeMatched": true,
+  "serverWorkflowSelected": true,
+  "steps": [
+    {
+      "operation": "mcp_integrations.create",
+      "outcome": "error",
+      "errorKind": "Transport"
+    },
+    {
+      "operation": "mcp_integrations.create.reconcile",
+      "outcome": "error",
+      "errorKind": "Transport"
+    },
+    {
+      "operation": "mcp_servers.create.reconcile",
+      "outcome": "verification_failed",
+      "verified": false
+    }
+  ],
+  "fixturesCreated": 0,
+  "fixturesUncertain": 2,
+  "fixturesDeleted": 0,
+  "cleanupState": "incomplete",
+  "limitations": [
+    "Offline producer fixture."
+  ]
+}

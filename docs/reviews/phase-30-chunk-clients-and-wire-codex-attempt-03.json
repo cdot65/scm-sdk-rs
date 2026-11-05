@@ -1,0 +1,80 @@
+{
+  "phase": 30,
+  "chunk": "clients-and-wire",
+  "attempt": 3,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179",
+  "scope_evidence": [
+    "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+    "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+    "crates/scm-sdk/src/airs/gateway/mcp_tags.rs",
+    "crates/scm-sdk/src/airs/gateway/mod.rs",
+    "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs",
+    "crates/scm-sdk/examples/mcp_tags_live.rs",
+    "crates/scm-sdk/Cargo.toml",
+    "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+    "tools/portkey-mcp-tags.mjs",
+    "tools/mcp_tags_live.py",
+    "tools/test_mcp_tags_live.py",
+    "tools/live_evidence.py",
+    "tools/verify_gateway_bindings.py",
+    "tools/check_phase.py",
+    "contracts/native-gateway-bindings.json",
+    "contracts/native-operations.json",
+    "contracts/native-exports.json",
+    "contracts/qualification.json",
+    "contracts/live-evidence.json",
+    "contracts/typescript-035-management-compatibility.json",
+    "docs/GATEWAY_CONTROL.md",
+    "docs/LIVE_ACCEPTANCE.md",
+    "CHANGELOG.md",
+    "tools/test_management_phases.py",
+    "docs/CI.md",
+    "tools/g25_audit.py",
+    "contracts/compatibility/g25/comparison.json",
+    "tools/test_typescript035_implementation.py",
+    "crates/scm-sdk/examples/mcp_tags_live_uncertain_report.json",
+    "tools/native_operations.py",
+    "tools/native_exports.py"
+  ],
+  "prompt_sha256": "7b9dcff323613517e86acd2ccaec201722c7684a694a011fd5699edadf9e86da",
+  "checks_sha256": "fc5b3096a613b2cf9787cfde1aefb09af49e889cc6dec604b71d934722a6b1fb",
+  "requested_at": "2026-11-05T16:07:39.274862+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 9,
+    "summary": "Accept clients-and-wire attempt 3. Previous findings are resolved, implementation and recorded qualification support the scoped acceptance criteria, and no blocker/high findings remain. One low-severity recovery-file privacy issue remains.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "crates/scm-sdk/examples/mcp_tags_live.rs",
+        "line": 320,
+        "description": "write_private creates the recovery file using default permissions. Direct invocation of the documented example with a typical 022 umask can expose fixture and workspace identifiers through a 0644 file. The Python runner's private temporary directory protects the recorded qualification run.",
+        "required_fix": "Enforce owner-only recovery-file permissions and reject unsafe existing destinations, or require and verify a private containing directory."
+      }
+    ],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, the accepted MCP tags plan, implementation contract, PHASES.md, phase-30 status, and attempt-2 findings.",
+      "Recomputed the source fingerprint twice; both matched 77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179.",
+      "Inspected all 109 commands in docs/checks/phase-30.json. Their ordered list matches the current phase definition; every command records exit code 0 without timeout. Inspected detailed all-feature compiler reports for Rust 1.89.0 and 1.99.0.",
+      "Executed existing test binaries without rebuilding: four wire tests, seven model tests, and four example tests passed.",
+      "Executed read-only provenance and overlay checks successfully: 61 classified delta items, eight imported schemas, two imported list operations, and ten implementation bindings.",
+      "Verified client validation ordering, extension-supplied filters, omission/null/value bodies, frozen list behavior, response preservation, and bounded uncertain-create reconciliation.",
+      "Validated the shared failed-reconciliation producer fixture with the receipt validator; uncertainty remains explicit and cleanup incomplete.",
+      "Verified both native inventories contain the five supplemental capabilities and preserve the frozen 448-method denominator.",
+      "Validated live attempt 08 against current runtime inputs: 19 successful steps, two fixtures created, zero uncertain, two deleted. Also verified freshness of read-only attempt 04."
+    ],
+    "limitations": [
+      "The full compiler matrix was inspected through preserved reports, not rebuilt. Executed Rust tests used existing binaries.",
+      "Live execution was not reproduced; receipt consistency and runtime freshness were verified. Acceptance covers only the recorded workflows and Linux x86_64 GNU host.",
+      "No network requests, tenant contact, credential or registration reads, file edits, commits, or pushes were performed.",
+      "Phase-31 packaging, publication, remote delivery, and documentation-site work remain outside this review."
+    ]
+  },
+  "decision": "accepted",
+  "output_sha256": "cc5473233256fa00871a967440e58ab3207a5f004109dc29a4481d0d80c9309f",
+  "events_sha256": "b8c3c058139afefd22dd2c15ee9db4a8939fb191390804c93b1d7911729ec31b",
+  "completed_at": "2026-11-05T16:11:05.493229+00:00"
+}

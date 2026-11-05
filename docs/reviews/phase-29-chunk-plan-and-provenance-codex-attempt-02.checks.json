@@ -1,0 +1,454 @@
+{
+  "phase": 29,
+  "source_sha256": "d0bd336a3d0f67f2f82c58b46ed2400d4c800578e9b7aa942ec6b9768d9e2bcf",
+  "source_unchanged": true,
+  "checked_at": "2026-11-05T13:26:38.132749+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "56a88d2",
+        "--",
+        "crates/scm-sdk",
+        "Cargo.toml",
+        "Cargo.lock"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--exit-code",
+        "56a88d2",
+        "--",
+        "crates/scm-sdk",
+        "Cargo.toml",
+        "Cargo.lock"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.001
+    },
+    {
+      "command": [
+        "python",
+        "-c",
+        "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk']), 'Unexpected SDK implementation file before plan acceptance'"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-c",
+        "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk']), 'Unexpected SDK implementation file before plan acceptance'"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.012
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.004
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.001
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "56a88d2..HEAD",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "invocation": [
+        "git",
+        "diff",
+        "--check",
+        "56a88d2..HEAD",
+        "--",
+        ".",
+        ":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+        ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 0.001
+    },
+    {
+      "command": [
+        "node",
+        "tools/portkey-mcp-tags.mjs",
+        "--check"
+      ],
+      "invocation": [
+        "node",
+        "tools/portkey-mcp-tags.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"passed\":true,\"deltaItems\":61,\"dispositions\":{\"import\":10,\"already_supported\":1,\"not_applicable\":25,\"deferred_new_capability\":23,\"documentation_only\":2},\"importedSchemas\":8,\"importedListOperations\":2,\"bindings\":0}\n",
+      "stderr": "",
+      "duration_seconds": 0.112
+    },
+    {
+      "command": [
+        "node",
+        "tools/portkey-access.mjs",
+        "--check"
+      ],
+      "invocation": [
+        "node",
+        "tools/portkey-access.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"passed\":true,\"operations\":[{\"method\":\"POST\",\"path\":\"/policies/access\",\"operationId\":\"createAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"GET\",\"path\":\"/policies/access\",\"operationId\":\"listAccessPolicies\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"GET\",\"path\":\"/policies/access/{accessPolicyId}\",\"operationId\":\"getAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"PUT\",\"path\":\"/policies/access/{accessPolicyId}\",\"operationId\":\"updateAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]},{\"method\":\"DELETE\",\"path\":\"/policies/access/{accessPolicyId}\",\"operationId\":\"deleteAccessPolicy\",\"security\":[{\"Portkey-Key\":[]}]}],\"schemas\":9}\n{\"independentlyCheckedFixtures\":38}\n",
+      "stderr": "",
+      "duration_seconds": 0.148
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify-contracts.py"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "tools/verify-contracts.py"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"status\": \"verified\",\n  \"baseline\": \"0.34.0\",\n  \"commit\": \"4a80dbdb3dc14365e1c25d838ac0bd139485d48c\",\n  \"fixtures\": 76,\n  \"bundledSpecifications\": 9,\n  \"excludedUnlicensedSpecifications\": 1,\n  \"licenses\": 7,\n  \"references\": 34,\n  \"baselineSourceFiles\": 145,\n  \"baselineNonSourceInputs\": 3,\n  \"extractedBaselineVerified\": false,\n  \"excludedRemoteBytesVerified\": false\n}\n",
+      "stderr": "",
+      "duration_seconds": 0.352
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "tools/generate_models.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"outputs\": 20, \"graphNodes\": 13018, \"partialFamily\": null}\n",
+      "stderr": "",
+      "duration_seconds": 2.005
+    },
+    {
+      "command": [
+        "python",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "tools/generate_validation.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "Native semantic registry: 69 explicit bindings\n",
+      "stderr": "",
+      "duration_seconds": 0.152
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "tools/verify_gateway_bindings.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"checked\": true, \"gatewayPhaseSixMethods\": 194}\n",
+      "stderr": "",
+      "duration_seconds": 0.214
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check-private-material.py",
+        "--check",
+        "docs/checks/phase-29-private-material.json"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "scripts/check-private-material.py",
+        "--check",
+        "docs/checks/phase-29-private-material.json"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\"receiptFresh\": true, \"privateScanReexecuted\": false, \"gitVisibleFilesChecked\": 2460}\n",
+      "stderr": "",
+      "duration_seconds": 0.17
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_portkey_mcp_tags.py",
+        "-v"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_portkey_mcp_tags.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_already_supported_integration_tags_are_frozen_typed_fields (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_already_supported_integration_tags_are_frozen_typed_fields) ... ok\ntest_coordinated_byte_and_manifest_rewrite_is_rejected (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_coordinated_byte_and_manifest_rewrite_is_rejected) ... ok\ntest_exact_line_delta_against_the_existing_pin (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_exact_line_delta_against_the_existing_pin) ... ok\ntest_extracted_contract_drift_is_rejected (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_extracted_contract_drift_is_rejected) ... ok\ntest_imported_fragments_are_exactly_the_reviewed_tags_contract (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_imported_fragments_are_exactly_the_reviewed_tags_contract) ... ok\ntest_modified_pinned_bytes_are_rejected (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_modified_pinned_bytes_are_rejected) ... ok\ntest_pinned_delta_is_reproducible_and_fully_classified (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_pinned_delta_is_reproducible_and_fully_classified) ... ok\ntest_pins_identify_the_upstream_objects (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_pins_identify_the_upstream_objects) ... ok\ntest_plan_and_phase_registration_record_the_codex_review_policy (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_plan_and_phase_registration_record_the_codex_review_policy) ... ok\ntest_stale_classification_and_unknown_disposition_are_rejected (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_stale_classification_and_unknown_disposition_are_rejected) ... ok\ntest_unclassified_and_duplicate_delta_items_are_rejected (test_portkey_mcp_tags.PortkeyMcpTagsProvenanceTests.test_unclassified_and_duplicate_delta_items_are_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 1.752s\n\nOK\n",
+      "duration_seconds": 1.783
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_codex_review.py",
+        "-v"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_codex_review.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "{\n  \"decision\": \"accepted\",\n  \"score\": 9,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 10,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 5,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 5,\n  \"attempt\": 2,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 5,\n  \"attempt\": 3,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 5,\n  \"attempt\": 4,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 5,\n  \"attempt\": 5,\n  \"findings\": []\n}\n{\"decision\": \"invocation_failed\", \"reason\": \"interrupted\", \"attempt\": 1}\n{\"decision\": \"invocation_failed\", \"reason\": \"process_error\", \"attempt\": 1}\n{\"decision\": \"invocation_failed\", \"reason\": \"invalid_output\", \"attempt\": 2}\n{\"decision\": \"invocation_failed\", \"reason\": \"invalid_output\", \"attempt\": 3}\n{\n  \"decision\": \"accepted\",\n  \"score\": 9,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 6,\n  \"attempt\": 2,\n  \"findings\": []\n}\n{\"phase\": 29, \"chunk\": \"plan-and-provenance\", \"attempt\": 1, \"reviewer\": \"Codex CLI\", \"status\": \"invocation_failed\", \"reason\": \"interrupted\", \"prompt_sha256\": \"88f6811ab5d8fc6d3177f9b7609ae0fcebfda187e5046b62d38bb539e88b74d7\", \"checks_sha256\": \"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\", \"events_sha256\": null, \"recorded_at\": \"2026-11-05T13:26:34.203920+00:00\"}\n{\n  \"decision\": \"accepted\",\n  \"score\": 9,\n  \"attempt\": 2,\n  \"findings\": []\n}\n{\n  \"decision\": \"accepted\",\n  \"score\": 9,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"accepted\",\n  \"score\": 9,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"accepted\",\n  \"score\": 9,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 8,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"accepted\",\n  \"score\": 10,\n  \"attempt\": 2,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 5,\n  \"attempt\": 1,\n  \"findings\": []\n}\n{\n  \"decision\": \"rejected\",\n  \"score\": 5,\n  \"attempt\": 1,\n  \"findings\": []\n}\n",
+      "stderr": "test_accepted_chunk_records_evidence_and_updates_status (test_codex_review.CodexReviewTests.test_accepted_chunk_records_evidence_and_updates_status) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpm26bu_o5/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_changed_source_during_review_is_rejected (test_codex_review.CodexReviewTests.test_changed_source_during_review_is_rejected) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpda5yrmgs/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_five_attempt_budget_is_enforced (test_codex_review.CodexReviewTests.test_five_attempt_budget_is_enforced) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpltrgx_pb/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpltrgx_pb/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-02.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpltrgx_pb/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-03.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpltrgx_pb/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-04.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpltrgx_pb/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-05.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_interrupt_during_invocation_records_a_consumed_attempt (test_codex_review.CodexReviewTests.test_interrupt_during_invocation_records_a_consumed_attempt) ... /home/cdot/development/cdot65/scm-sdk-rs/.local/python/cpython-3.14.7-linux-x86_64-gnu/lib/python3.14/traceback.py:270: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpvfgnioiz/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  tb.tb_frame.clear()\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_invocation_failures_are_recorded_and_consume_attempts (test_codex_review.CodexReviewTests.test_invocation_failures_are_recorded_and_consume_attempts) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpc0i18ffy/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpc0i18ffy/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-02.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpc0i18ffy/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-03.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_later_rejection_supersedes_an_earlier_acceptance (test_codex_review.CodexReviewTests.test_later_rejection_supersedes_an_earlier_acceptance) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpls0szur2/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpls0szur2/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-02.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_orphaned_slot_is_never_reused_and_must_be_marked_interrupted (test_codex_review.CodexReviewTests.test_orphaned_slot_is_never_reused_and_must_be_marked_interrupted) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpyqlzj34p/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-02.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_output_schema_is_closed_and_fully_required (test_codex_review.CodexReviewTests.test_output_schema_is_closed_and_fully_required) ... ok\ntest_phase_review_rejects_stale_missing_or_superseded_chunk_acceptance (test_codex_review.CodexReviewTests.test_phase_review_rejects_stale_missing_or_superseded_chunk_acceptance) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpgzwn_ekm/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_phase_review_requires_accepted_chunks_then_advances (test_codex_review.CodexReviewTests.test_phase_review_requires_accepted_chunks_then_advances) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp9dq97sc_/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp9dq97sc_/.local/reviews/phase-29-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_rejection_consumes_an_attempt_and_leaves_status_pending (test_codex_review.CodexReviewTests.test_rejection_consumes_an_attempt_and_leaves_status_pending) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp70flvx97/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\n/home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp70flvx97/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-02.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_reservation_is_exclusive_and_live_attempts_cannot_be_marked (test_codex_review.CodexReviewTests.test_reservation_is_exclusive_and_live_attempts_cannot_be_marked) ... ok\ntest_tampered_accepted_decision_is_detected (test_codex_review.CodexReviewTests.test_tampered_accepted_decision_is_detected) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpq2pdw6tv/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_tampered_prior_evidence_blocks_the_next_attempt (test_codex_review.CodexReviewTests.test_tampered_prior_evidence_blocks_the_next_attempt) ... /home/cdot/development/cdot65/scm-sdk-rs/tools/test_codex_review.py:46: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpxpl4gp5s/.local/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-01.lock' mode='a' encoding='UTF-8'>\n  return codex_review.main(argv, root=self.root, runner=runner)\nResourceWarning: Enable tracemalloc to get the object allocation traceback\nok\ntest_threshold_is_nine_and_blocking_findings_reject (test_codex_review.CodexReviewTests.test_threshold_is_nine_and_blocking_findings_reject) ... ok\ntest_unregistered_or_inactive_phase_is_refused (test_codex_review.CodexReviewTests.test_unregistered_or_inactive_phase_is_refused) ... ok\n\n----------------------------------------------------------------------\nRan 16 tests in 0.242s\n\nOK\n",
+      "duration_seconds": 0.296
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_portkey_access.py",
+        "-v"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_portkey_access.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_authored_whitespace_is_not_dependent_on_staging (test_portkey_access.PortkeyPlanTests.test_authored_whitespace_is_not_dependent_on_staging) ... ok\ntest_exact_additions_without_deletions (test_portkey_access.PortkeyPlanTests.test_exact_additions_without_deletions) ... ok\ntest_exact_operation_and_parameter_inventory (test_portkey_access.PortkeyPlanTests.test_exact_operation_and_parameter_inventory) ... ok\ntest_full_contract_bounds_and_auth (test_portkey_access.PortkeyPlanTests.test_full_contract_bounds_and_auth) ... ok\ntest_independent_pins_references_and_plan_routes (test_portkey_access.PortkeyPlanTests.test_independent_pins_references_and_plan_routes) ... ok\ntest_no_sdk_implementation_before_plan_acceptance (test_portkey_access.PortkeyPlanTests.test_no_sdk_implementation_before_plan_acceptance) ... ok\ntest_plan_contains_release_and_security_requirements (test_portkey_access.PortkeyPlanTests.test_plan_contains_release_and_security_requirements) ... ok\ntest_release_documentation_and_receipt_are_version_bound (test_portkey_access.PortkeyPlanTests.test_release_documentation_and_receipt_are_version_bound) ... ok\ntest_source_and_document_delta_tampering_fails (test_portkey_access.PortkeyPlanTests.test_source_and_document_delta_tampering_fails) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 1.247s\n\nOK\n",
+      "duration_seconds": 1.276
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_review_phase.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage (test_review_phase.FiveCategoryReviewTests.test_accepted_fifth_chunk_can_retain_original_source_with_current_phase_coverage) ... ok\ntest_attempt_five_cannot_skip_previous_reviews (test_review_phase.FiveCategoryReviewTests.test_attempt_five_cannot_skip_previous_reviews) ... ok\ntest_blockers_still_block_fifth_attempt (test_review_phase.FiveCategoryReviewTests.test_blockers_still_block_fifth_attempt) ... ok\ntest_categories_cannot_be_fabricated (test_review_phase.FiveCategoryReviewTests.test_categories_cannot_be_fabricated) ... ok\ntest_chunk_followup_accepts_authorized_fifth_phase_exception (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_accepts_authorized_fifth_phase_exception) ... ok\ntest_chunk_followup_rejects_missing_rejected_stale_or_early_coverage (test_review_phase.FiveCategoryReviewTests.test_chunk_followup_rejects_missing_rejected_stale_or_early_coverage) ... ok\ntest_chunk_orchestration_accumulates_scope_and_binds_record (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_accumulates_scope_and_binds_record) ... ok\ntest_chunk_orchestration_rejects_advance_and_missing_scope (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_advance_and_missing_scope) ... ok\ntest_chunk_orchestration_rejects_historical_rubric (test_review_phase.FiveCategoryReviewTests.test_chunk_orchestration_rejects_historical_rubric) ... ok\ntest_chunk_scope_must_resolve_to_existing_repository_path (test_review_phase.FiveCategoryReviewTests.test_chunk_scope_must_resolve_to_existing_repository_path) ... ok\ntest_fifth_exception_is_explicit_and_requires_deficiency (test_review_phase.FiveCategoryReviewTests.test_fifth_exception_is_explicit_and_requires_deficiency) ... ok\ntest_fifth_followup_and_predecessor_survive_command_policy_changes (test_review_phase.FiveCategoryReviewTests.test_fifth_followup_and_predecessor_survive_command_policy_changes) ... ok\ntest_historical_policy_and_chunk_names (test_review_phase.FiveCategoryReviewTests.test_historical_policy_and_chunk_names) ... ok\ntest_live_new_rubric_record_and_snapshot (test_review_phase.FiveCategoryReviewTests.test_live_new_rubric_record_and_snapshot) ... ok\ntest_phase_advancement_never_selects_earlier_passing_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_never_selects_earlier_passing_chunk) ... ok\ntest_phase_advancement_records_all_verified_chunk_scores (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_records_all_verified_chunk_scores) ... ok\ntest_phase_advancement_rejects_missing_or_empty_chunk_declarations (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_missing_or_empty_chunk_declarations) ... ok\ntest_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_removed_or_undeclared_reviewed_chunk) ... ok\ntest_phase_advancement_rejects_stale_or_misbound_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_rejects_stale_or_misbound_chunk) ... ok\ntest_phase_advancement_requires_every_declared_chunk (test_review_phase.FiveCategoryReviewTests.test_phase_advancement_requires_every_declared_chunk) ... ok\ntest_phase_and_chunk_thresholds (test_review_phase.FiveCategoryReviewTests.test_phase_and_chunk_thresholds) ... ok\ntest_bad_scores_rejected (test_review_phase.ReviewGateTests.test_bad_scores_rejected) ... ok\ntest_below_threshold_is_rejected (test_review_phase.ReviewGateTests.test_below_threshold_is_rejected) ... ok\ntest_blank_evidence_rejected (test_review_phase.ReviewGateTests.test_blank_evidence_rejected) ... ok\ntest_discovery_accepts_an_executably_populated_suite (test_review_phase.ReviewGateTests.test_discovery_accepts_an_executably_populated_suite) ... ok\ntest_discovery_rejects_missing_and_empty_suites (test_review_phase.ReviewGateTests.test_discovery_rejects_missing_and_empty_suites) ... ok\ntest_high_finding_blocks_even_with_ten (test_review_phase.ReviewGateTests.test_high_finding_blocks_even_with_ten) ... ok\ntest_historical_phase_command_contracts_are_unchanged (test_review_phase.ReviewGateTests.test_historical_phase_command_contracts_are_unchanged) ... ok\ntest_missing_evidence_rejected (test_review_phase.ReviewGateTests.test_missing_evidence_rejected) ... ok\ntest_noncontiguous_maintenance_successors (test_review_phase.ReviewGateTests.test_noncontiguous_maintenance_successors) ... ok\ntest_phase19_gate_retains_privacy_ci_and_all_rust_combinations (test_review_phase.ReviewGateTests.test_phase19_gate_retains_privacy_ci_and_all_rust_combinations) ... ok\ntest_source_fingerprint_and_bookkeeping (test_review_phase.ReviewGateTests.test_source_fingerprint_and_bookkeeping) ... ok\ntest_successors_do_not_reopen_completed_independent_maintenance (test_review_phase.ReviewGateTests.test_successors_do_not_reopen_completed_independent_maintenance) ... ok\ntest_symlink_input_rejected (test_review_phase.ReviewGateTests.test_symlink_input_rejected) ... ok\ntest_unknown_fields_rejected (test_review_phase.ReviewGateTests.test_unknown_fields_rejected) ... ok\ntest_verified_nine_passes (test_review_phase.ReviewGateTests.test_verified_nine_passes) ... ok\ntest_advance_requires_review_path (test_review_phase.ReviewRecordTests.test_advance_requires_review_path) ... ok\ntest_authentication_failure_cannot_create_accepted_review (test_review_phase.ReviewRecordTests.test_authentication_failure_cannot_create_accepted_review) ... ok\ntest_cli_output_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_cli_output_tampering_rejects_review) ... ok\ntest_cli_payload_must_match_score (test_review_phase.ReviewRecordTests.test_cli_payload_must_match_score) ... ok\ntest_complete_record_verifies (test_review_phase.ReviewRecordTests.test_complete_record_verifies) ... ok\ntest_failed_check_rejected_even_with_pass_flag (test_review_phase.ReviewRecordTests.test_failed_check_rejected_even_with_pass_flag) ... ok\ntest_incomplete_check_set_rejected (test_review_phase.ReviewRecordTests.test_incomplete_check_set_rejected) ... ok\ntest_lower_score_cannot_advance (test_review_phase.ReviewRecordTests.test_lower_score_cannot_advance) ... ok\ntest_manual_predecessor_completion_is_rejected (test_review_phase.ReviewRecordTests.test_manual_predecessor_completion_is_rejected) ... ok\ntest_moved_review_path_rejected (test_review_phase.ReviewRecordTests.test_moved_review_path_rejected) ... ok\ntest_prompt_tampering_rejects_review (test_review_phase.ReviewRecordTests.test_prompt_tampering_rejects_review) ... ok\ntest_review_request_preserves_prompt_and_real_cli_result (test_review_phase.ReviewRecordTests.test_review_request_preserves_prompt_and_real_cli_result) ... ok\ntest_source_change_rejects_review (test_review_phase.ReviewRecordTests.test_source_change_rejects_review) ... ok\ntest_stale_check_source_rejected (test_review_phase.ReviewRecordTests.test_stale_check_source_rejected) ... ok\ntest_timeout_preserves_private_partial_diagnostics_without_accepted_review (test_review_phase.ReviewRecordTests.test_timeout_preserves_private_partial_diagnostics_without_accepted_review) ... ok\ntest_verify_and_advance_updates_active_phase (test_review_phase.ReviewRecordTests.test_verify_and_advance_updates_active_phase) ... ok\n\n----------------------------------------------------------------------\nRan 52 tests in 0.318s\n\nOK\n",
+      "duration_seconds": 0.363
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_phase_checkpoint.py",
+        "-v"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_phase_checkpoint.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_archive_bytes_also_bound (test_phase_checkpoint.CheckpointTests.test_archive_bytes_also_bound) ... ok\ntest_changed_earlier_receipt_rejected_before_final_report (test_phase_checkpoint.CheckpointTests.test_changed_earlier_receipt_rejected_before_final_report) ... ok\ntest_directional_phase_reuses_only_its_unchanged_executed_prefix (test_phase_checkpoint.CheckpointTests.test_directional_phase_reuses_only_its_unchanged_executed_prefix) ... ok\ntest_failed_timed_out_incomplete_or_reordered_records_rejected (test_phase_checkpoint.CheckpointTests.test_failed_timed_out_incomplete_or_reordered_records_rejected) ... ok\ntest_later_command_mutation_cannot_write_passing_report (test_phase_checkpoint.CheckpointTests.test_later_command_mutation_cannot_write_passing_report) ... ok\ntest_missing_binding_rejected (test_phase_checkpoint.CheckpointTests.test_missing_binding_rejected) ... ok\ntest_modified_or_missing_receipt_rejected (test_phase_checkpoint.CheckpointTests.test_modified_or_missing_receipt_rejected) ... ok\ntest_no_checkpoint_starts_empty_and_symlink_rejected (test_phase_checkpoint.CheckpointTests.test_no_checkpoint_starts_empty_and_symlink_rejected) ... ok\ntest_only_completed_prefix_restored (test_phase_checkpoint.CheckpointTests.test_only_completed_prefix_restored) ... ok\ntest_review_rechecks_current_receipts_but_preserves_history (test_phase_checkpoint.CheckpointTests.test_review_rechecks_current_receipts_but_preserves_history) ... ok\ntest_source_phase_command_changes_rejected (test_phase_checkpoint.CheckpointTests.test_source_phase_command_changes_rejected) ... ok\ntest_stale_and_future_checkpoints_rejected (test_phase_checkpoint.CheckpointTests.test_stale_and_future_checkpoints_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.003s\n\nOK\n",
+      "duration_seconds": 0.042
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_management_phases.py",
+        "-v"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_management_phases.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_chunk_record_rejects_scope_tampering_even_with_rehashed_prompt (test_management_phases.ManagementPhaseTests.test_chunk_record_rejects_scope_tampering_even_with_rehashed_prompt) ... ok\ntest_ci_subsets_cannot_replace_full_reports (test_management_phases.ManagementPhaseTests.test_ci_subsets_cannot_replace_full_reports) ... ok\ntest_cli_rejects_scope_mismatch_before_requesting_review (test_management_phases.ManagementPhaseTests.test_cli_rejects_scope_mismatch_before_requesting_review) ... ok\ntest_cumulative_gate_orders_clean_packages_before_final_receipt_checks (test_management_phases.ManagementPhaseTests.test_cumulative_gate_orders_clean_packages_before_final_receipt_checks) ... ok\ntest_current_dependency_audit_and_committed_hygiene_are_required (test_management_phases.ManagementPhaseTests.test_current_dependency_audit_and_committed_hygiene_are_required) ... ok\ntest_declared_chunk_scope_must_match_exactly (test_management_phases.ManagementPhaseTests.test_declared_chunk_scope_must_match_exactly) ... ok\ntest_every_manifest_reader_is_selected_or_explicitly_explained (test_management_phases.ManagementPhaseTests.test_every_manifest_reader_is_selected_or_explicitly_explained) ... ok\ntest_exhausted_failure_has_no_automatic_budget_reset (test_management_phases.ManagementPhaseTests.test_exhausted_failure_has_no_automatic_budget_reset) ... ok\ntest_failed_attempts_cannot_unlock_fifth_exception (test_management_phases.ManagementPhaseTests.test_failed_attempts_cannot_unlock_fifth_exception) ... ok\ntest_failed_invocation_consumes_attempt_without_dead_end (test_management_phases.ManagementPhaseTests.test_failed_invocation_consumes_attempt_without_dead_end) ... ok\ntest_future_milestones_require_explicit_complete_artifacts (test_management_phases.ManagementPhaseTests.test_future_milestones_require_explicit_complete_artifacts) ... ok\ntest_gateway_proof_allows_only_two_rebound_input_hashes (test_management_phases.ManagementPhaseTests.test_gateway_proof_allows_only_two_rebound_input_hashes) ... ok\ntest_missing_prior_artifacts_are_sanitized_gate_errors (test_management_phases.ManagementPhaseTests.test_missing_prior_artifacts_are_sanitized_gate_errors) ... ok\ntest_only_fixture_source_hash_can_be_rebound (test_management_phases.ManagementPhaseTests.test_only_fixture_source_hash_can_be_rebound) ... ok\ntest_phase24_reuses_compatibility_and_requires_current_release_proofs (test_management_phases.ManagementPhaseTests.test_phase24_reuses_compatibility_and_requires_current_release_proofs) ... ok\ntest_phase27_unittest_discovery_runs_each_suite_once (test_management_phases.ManagementPhaseTests.test_phase27_unittest_discovery_runs_each_suite_once) ... ok\ntest_phase_scope_set_covers_every_management_gate (test_management_phases.ManagementPhaseTests.test_phase_scope_set_covers_every_management_gate) ... ok\ntest_phases_registered_with_nonempty_scopes_and_order (test_management_phases.ManagementPhaseTests.test_phases_registered_with_nonempty_scopes_and_order) ... ok\ntest_plan_gate_covers_manifest_consumers_and_ci (test_management_phases.ManagementPhaseTests.test_plan_gate_covers_manifest_consumers_and_ci) ... ok\ntest_plan_gate_freezes_sdk_and_checks_provenance (test_management_phases.ManagementPhaseTests.test_plan_gate_freezes_sdk_and_checks_provenance) ... ok\ntest_plan_retains_static_closure_without_claiming_current_live_proof (test_management_phases.ManagementPhaseTests.test_plan_retains_static_closure_without_claiming_current_live_proof) ... ok\ntest_plan_score_floor_cannot_be_bypassed_by_category_total (test_management_phases.ManagementPhaseTests.test_plan_score_floor_cannot_be_bypassed_by_category_total) ... ok\ntest_provenance_guard_rejects_reformatting_and_other_bytes (test_management_phases.ManagementPhaseTests.test_provenance_guard_rejects_reformatting_and_other_bytes) ... ok\ntest_qualification_has_both_packaged_compilers (test_management_phases.ManagementPhaseTests.test_qualification_has_both_packaged_compilers) ... ok\ntest_scope_revision_history_preserves_old_reviews_and_rejects_rewrites (test_management_phases.ManagementPhaseTests.test_scope_revision_history_preserves_old_reviews_and_rejects_rewrites) ... ok\ntest_scoped_contract_ledgers_keep_their_declared_owning_checks (test_management_phases.ManagementPhaseTests.test_scoped_contract_ledgers_keep_their_declared_owning_checks) ... ok\ntest_vendor_whitespace_is_excluded_from_all_new_hygiene_checks (test_management_phases.ManagementPhaseTests.test_vendor_whitespace_is_excluded_from_all_new_hygiene_checks) ... ok\n\n----------------------------------------------------------------------\nRan 27 tests in 0.036s\n\nOK\n",
+      "duration_seconds": 0.076
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_typescript035_governance.py",
+        "-v"
+      ],
+      "invocation": [
+        "/home/cdot/development/cdot65/scm-sdk-rs/.local/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_typescript035_governance.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "timeout": false,
+      "stdout": "",
+      "stderr": "test_added_file_and_symlink_fail (test_typescript035_governance.DirectionalGovernanceTests.test_added_file_and_symlink_fail) ... ok\ntest_baseline_ledger_tamper_and_oracle_dependency (test_typescript035_governance.DirectionalGovernanceTests.test_baseline_ledger_tamper_and_oracle_dependency) ... ok\ntest_frozen_contract_bytes (test_typescript035_governance.DirectionalGovernanceTests.test_frozen_contract_bytes) ... ok\ntest_independent_dependency_checks_and_original_gate_remain (test_typescript035_governance.DirectionalGovernanceTests.test_independent_dependency_checks_and_original_gate_remain) ... ok\ntest_license_identity_and_digest_are_enforced (test_typescript035_governance.DirectionalGovernanceTests.test_license_identity_and_digest_are_enforced) ... ok\ntest_old_phase_records_preserved_and_new_chunks_bound (test_typescript035_governance.DirectionalGovernanceTests.test_old_phase_records_preserved_and_new_chunks_bound) ... ok\ntest_phase26_driver_freezes_sdk_independently_of_status (test_typescript035_governance.DirectionalGovernanceTests.test_phase26_driver_freezes_sdk_independently_of_status) ... ok\ntest_phase27_retains_governance_regressions (test_typescript035_governance.DirectionalGovernanceTests.test_phase27_retains_governance_regressions) ... ok\ntest_pinned_directory_symlink_rejected (test_typescript035_governance.DirectionalGovernanceTests.test_pinned_directory_symlink_rejected) ... ok\ntest_planning_sdk_bytes (test_typescript035_governance.DirectionalGovernanceTests.test_planning_sdk_bytes) ... skipped 'Phase 26 planning boundary only'\ntest_private_receipt_binding_detects_post_check_tamper (test_typescript035_governance.DirectionalGovernanceTests.test_private_receipt_binding_detects_post_check_tamper) ... ok\ntest_real_predecessor_evidence_and_publication_tamper (test_typescript035_governance.DirectionalGovernanceTests.test_real_predecessor_evidence_and_publication_tamper) ... ok\ntest_self_consistent_manifest_cannot_forge_git_origin (test_typescript035_governance.DirectionalGovernanceTests.test_self_consistent_manifest_cannot_forge_git_origin) ... ok\ntest_source_and_manifest_tampering_fail (test_typescript035_governance.DirectionalGovernanceTests.test_source_and_manifest_tampering_fail) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 1.964s\n\nOK (skipped=1)\n",
+      "duration_seconds": 2.009
+    }
+  ]
+}

@@ -24,6 +24,43 @@ impl AIGatewayMcpIntegrationsClient {
             )
             .await
     }
+    /// List MCP integrations with the pinned Portkey 8e5da0e query contract:
+    /// `organisation_id`, `type`, `workspace_id`, `page_size` (1–1000),
+    /// `current_page` (from 0), `search` and a JSON-object `tags` filter. All
+    /// inputs are checked before authentication. [`Self::list`] is unchanged.
+    pub async fn list_with_options(
+        &self,
+        query: &GatewayMcpIntegrationsClientListOptions,
+        options: Option<&RequestOptions>,
+    ) -> Result<ListMcpIntegrationsResponse> {
+        super::mcp_tags::check_filter(query)?;
+        let options = self.client.operation_options(options)?;
+        let query = common::query(
+            &self.client,
+            query,
+            "GatewayMcpIntegrationsClientListOptionsSchema",
+            &[
+                "organisation_id",
+                "type",
+                "workspace_id",
+                "page_size",
+                "current_page",
+                "search",
+                "tags",
+            ],
+            &options,
+        )
+        .await?;
+        self.client
+            .send_contract(
+                RawRequest::read("/mcp-integrations")
+                    .named("airs.gateway.mcp_integrations.list_with_options")
+                    .query(query),
+                "ListMcpIntegrationsResponseSchema",
+                Some(&options),
+            )
+            .await
+    }
     pub async fn get(
         &self,
         id: &str,
@@ -40,6 +77,8 @@ impl AIGatewayMcpIntegrationsClient {
             )
             .await
     }
+    /// Create an MCP integration. Optional `tags` keys match `^[a-zA-Z0-9_-]+$`
+    /// and values are strings; `Patch::Null` is sent as an explicit null.
     pub async fn create(
         &self,
         body: &McpIntegrationCreateRequest,
@@ -50,12 +89,14 @@ impl AIGatewayMcpIntegrationsClient {
                 RawRequest::new(Method::POST, "/mcp-integrations")
                     .named("airs.gateway.mcp_integrations.create"),
                 body,
-                "McpIntegrationCreateRequestSchema",
+                "portkey:8e5da0e:McpIntegrationCreateRequestSchema",
                 "GatewayWriteResponseSchema",
                 options,
             )
             .await
     }
+    /// Update an MCP integration. `tags` replaces existing tags, `Patch::Null`
+    /// clears them, and `Patch::Unset` leaves them unchanged.
     pub async fn update(
         &self,
         id: &str,
@@ -69,7 +110,7 @@ impl AIGatewayMcpIntegrationsClient {
                     .segment(id)?
                     .named("airs.gateway.mcp_integrations.update"),
                 body,
-                "McpIntegrationUpdateRequestSchema",
+                "portkey:8e5da0e:McpIntegrationUpdateRequestSchema",
                 "GatewayWriteResponseSchema",
                 options,
             )

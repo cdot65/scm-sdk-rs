@@ -38,6 +38,21 @@ impl<T> Extensions<T> {
         self.0
     }
 }
+impl<T> From<BTreeMap<String, T>> for Extensions<T> {
+    fn from(map: BTreeMap<String, T>) -> Self {
+        Self(map)
+    }
+}
+impl<K: Into<String>, T> FromIterator<(K, T)> for Extensions<T> {
+    fn from_iter<I: IntoIterator<Item = (K, T)>>(entries: I) -> Self {
+        Self(
+            entries
+                .into_iter()
+                .map(|(key, value)| (key.into(), value))
+                .collect(),
+        )
+    }
+}
 impl<T> fmt::Debug for Extensions<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str("Extensions([REDACTED])")

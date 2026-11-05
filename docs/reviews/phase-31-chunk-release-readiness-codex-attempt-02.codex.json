@@ -1,0 +1,20 @@
+{
+  "score": 9,
+  "summary": "Accept release-readiness attempt 2. The earlier findings are addressed, and the source-bound checks and retained archives support 0.2.5 readiness. This does not establish completion of phase 31; remote delivery and documentation-site acceptance remain pending.",
+  "findings": [],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, the accepted Portkey plan, phase-31 status and attempt-1 findings.",
+    "Independently recomputed fingerprint adbdec87ffba019d14c68d44c509e5cf6ab5cea1a3b638bc62565cb59a31612d. All 113 commands in docs/checks/phase-31.json exactly match commands_for(31), with zero exits and no timeouts.",
+    "Verified both retained compiler archives: hashes, sizes, all 145 file inventories, current source/example bytes and release-commit fingerprints match. Both archives contain identical file contents.",
+    "Inspected recorded extracted-package checks and external consumer execution on Rust 1.89.0 and 1.99.0, including directional-profile consumers.",
+    "Inspected release scripts, review gates and regression tests. Registry verification accepts the phase-31 Codex readiness path; complete-phase review and completion require delivery verification. Unix permission handling is conditionally compiled with a non-Unix refusal fallback.",
+    "Executed both credential-free live-receipt validators successfully. MCP evidence records 19 successful steps, two fixtures deleted and no uncertain fixtures. General live evidence verifies OAuth only; target-list probes retain their HTTP 403 limitations.",
+    "Inspected workflow and release-documentation changes; the configured delivery matrix contains 49 CI contexts."
+  ],
+  "limitations": [
+    "Compiler, package and full regression suites were not rerun; their recorded results were inspected and archive integrity independently checked.",
+    "Windows compilation remains unverified. Source inspection confirms platform gating, but the static regression does not replace native compilation.",
+    "Registry publication, remote annotated tags, terminal CI and Docusaurus build/deployment were not verified; they belong to pending chunks.",
+    "No files were modified, credentials or tenant registrations read, tenants contacted, or network requests made."
+  ]
+}

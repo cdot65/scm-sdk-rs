@@ -94,6 +94,8 @@ impl<T> Extensions<T> {
     pub fn len(&self) -> usize { self.0.len() }
     pub fn into_map(self) -> BTreeMap<String,T> { self.0 }
 }
+impl<T> From<BTreeMap<String, T>> for Extensions<T> { fn from(map: BTreeMap<String, T>) -> Self { Self(map) } }
+impl<K: Into<String>, T> FromIterator<(K, T)> for Extensions<T> { fn from_iter<I: IntoIterator<Item = (K, T)>>(entries: I) -> Self { Self(entries.into_iter().map(|(key, value)| (key.into(), value)).collect()) } }
 impl<T> fmt::Debug for Extensions<T> { fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result { f.write_str("Extensions([REDACTED])") } }
 
 /// A typed dictionary; key/value access is explicit and ordinary formatting is redacted.
@@ -261,6 +263,8 @@ class Generator:
         self.schemas = {entry["name"]: entry for entry in self.exports if entry["kind"] == "schema"}
         self.roots = {entry["name"]: entry["schema"]["$ref"] for entry in self.schemas.values()}
         self.names = {}
+        # Reviewed overlays may bind a frozen model to a versioned validation clone.
+        self.schema_overrides = {}
         self.used = set()
         self.declarations = {}
         self.dependencies = {}
@@ -508,7 +512,7 @@ class Generator:
         self.used.add(builder)
         body += f"impl {name} {{pub fn builder()->{builder}{{{builder}::default()}}\n"
         if sid.startswith("s"):
-            body += f"pub const SCHEMA:&'static str={quoted(sid)};\npub fn parse(value:serde_json::Value,mode:crate::validation::Mode)->crate::Result<Self>{{super::support::parse(Self::SCHEMA,value,mode)}}}}\n"
+            body += f"pub const SCHEMA:&'static str={quoted(self.schema_overrides.get(sid, sid))};\npub fn parse(value:serde_json::Value,mode:crate::validation::Mode)->crate::Result<Self>{{super::support::parse(Self::SCHEMA,value,mode)}}}}\n"
         else:
             body += "}\n"
         body += f"#[derive(Default)]\npub struct {builder} {{" + "".join(f"{field}:" + (typed if optional else f"Option<{typed}>") + "," for _, field, typed, optional in fields) + f"extensions:Extensions<{extension_type}>}}\n"
@@ -597,7 +601,7 @@ class Generator:
             if target in self.declarations:
                 body += f"/// Capability-preserving alias of the canonical native model.\npub type {name}={target};\n"
         outputs = {OUT / "generated.rs": body, OUT / "support.rs": SUPPORT}
-        module = "//! Native typed product and shared model namespaces.\nmod generated;\nmod support;\npub use support::BinaryFile;\n#[cfg(test)]\nmod tests;\n"
+        module = "//! Native typed product and shared model namespaces.\nmod generated;\nmod support;\npub use support::BinaryFile;\npub use support::{Extensions, TypedMap};\n#[cfg(test)]\nmod tests;\n"
         visible_names=set(self.declarations)|set(self.aliases)
         for declaration in self.declarations.values():
             visible_names.update(re.findall(r"pub struct (\w+Builder)\b",declaration))
@@ -1047,10 +1051,12 @@ def main():
     import red_team_dataplane as vendor
     import red_team_management_models as management
     import typescript035_profiles as profiles
+    import portkey_mcp_tags as portkey
     profiles_overlay = profiles.Overlay()
+    portkey_overlay = portkey.Overlay()
     management_overlay = management.Overlay()
     _, _, _, current, vendor_graph, _ = vendor.contract()
-    merged = profiles_overlay.extend_graph(management_overlay.extend_graph(vendor.extend_graph(compact_graph(inventory), vendor_graph)))
+    merged = portkey_overlay.extend_graph(profiles_overlay.extend_graph(management_overlay.extend_graph(vendor.extend_graph(compact_graph(inventory), vendor_graph))))
     outputs = {ROOT / "crates/scm-sdk/src/validation/schema_graph.json": json.dumps(merged, separators=(",", ":"), ensure_ascii=False) + "\n"}
     if not args.graph_only:
         generator = Generator(inventory)
@@ -1059,6 +1065,7 @@ def main():
         management_source, management_generator = management_overlay.model_outputs(Generator)
         management_overlay.augment_models(generator, management_generator)
         profiles_overlay.augment_models(generator)
+        portkey_overlay.augment_models(generator)
         rust = generator.generate(args.only)
         if not args.only:
             management_overlay.verify_model_names(generator)
@@ -1123,6 +1130,9 @@ def main():
         ledger["typescript035Schemas"] = profiles_overlay.supplemental_schemas()
         ledger["typescript035ModelExports"] = profiles_overlay.supplemental_models()
         outputs[profiles.LEDGER] = json.dumps(profiles_overlay.ledger(), indent=2) + "\n"
+        ledger["portkeyMcpTagsSchemas"] = portkey_overlay.supplemental_schemas()
+        ledger["portkeyMcpTagsModelExports"] = portkey_overlay.supplemental_models()
+        outputs[portkey.LEDGER] = json.dumps(portkey_overlay.ledger(), indent=2) + "\n"
         outputs[ROOT / "contracts/native-models.json"] = json.dumps(ledger, indent=2) + "\n"
     for file, content in outputs.items():
         if args.check:

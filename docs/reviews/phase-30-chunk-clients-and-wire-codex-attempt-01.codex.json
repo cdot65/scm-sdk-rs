@@ -1,0 +1,42 @@
+{
+  "score": 8,
+  "summary": "Not accepted. Client wiring, pre-authentication validation, provenance, and recorded compiler checks are sound. The live qualification workflow has an unsafe ambiguity-handling path, can falsely verify tag clearing, and omits the planned server replacement test.",
+  "findings": [
+    {
+      "severity": "high",
+      "path": "crates/scm-sdk/examples/mcp_tags_live.rs",
+      "line": 260,
+      "description": "Fixture accounting counts only successful create responses and ignores Error::remote_outcome(). If a create commits remotely but its response times out, an unsuccessful reconciliation list leaves fixtures_created at zero and cleanup_state as not_needed. Server creation has the same problem and no reconciliation lookup. If integration reconciliation does recover an ambiguous create, deletion increments fixtures_deleted without incrementing fixtures_created, causing the receipt validator to reject the resulting report. The run nonce and resource IDs are not retained for recovery.",
+      "required_fix": "Track potentially committed creates separately from confirmed rejections, reconcile both resource types using uniquely owned fixture identity, and report unresolved resources as uncertain/incomplete. Preserve private recovery information and consistent accounting, including when reconciliation succeeds. Add offline failure-path tests for committed-but-lost responses and failed reconciliation."
+    },
+    {
+      "severity": "medium",
+      "path": "crates/scm-sdk/examples/mcp_tags_live.rs",
+      "line": 339,
+      "description": "The clear verification treats any Patch::Unset as successful clearing through tags_of(...).is_none_or(...). Nonconforming responses such as tags: {\"count\": 3} deliberately decode as Patch::Unset while retaining the actual value in extensions, as the new contract test demonstrates. Consequently, both integration and server clearing checks can record verified=true while nonempty tags remain.",
+      "required_fix": "Distinguish actual omission from a nonconforming value retained in extensions. Accept only the explicitly supported cleared representations, and mark malformed or ambiguous responses unverified. Test null, empty maps, genuine omission, retained nonempty maps, and nonconforming extension values."
+    },
+    {
+      "severity": "medium",
+      "path": "crates/scm-sdk/examples/mcp_tags_live.rs",
+      "line": 408,
+      "description": "The server workflow goes directly from create/read/list to tags=null. It never replaces server tags with a new value or reads that replacement back, although the accepted phase-30 plan requires replacement followed by clearing for both fixtures. The current receipt therefore does not qualify server replacement semantics, and no service limitation explains the omission.",
+      "required_fix": "Add a server tags replacement and typed read-back before clearing, with corresponding receipt operations, bindings, and offline workflow tests. Obtain fresh live evidence through the authorized implementation workflow, or explicitly record the missing service qualification and its concrete limitation."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, docs/portkey-mcp-tags-plan.md, and the phase-30 status entry.",
+    "Recomputed source fingerprint: 6dc6e14ede94cff85e7946afc99ae60555caf8d6f1ea063d97ce97832b528e83.",
+    "Inspected docs/checks/phase-30.json: all 109 commands record exit code 0 without timeout; their ordered command set matches check_phase.commands_for(30).",
+    "Inspected recorded Rust 1.89.0 and 1.99.0 all-feature results, including successful execution of all four new MCP tags wire tests, and the gateway JSON-unification report.",
+    "Inspected MCP clients, filter validation, shared request dispatch, generated-model behavior, model/wire tests, live runner, receipt validation, operation bindings, and scoped ledger/documentation changes.",
+    "Executed the read-only Portkey provenance verifier successfully: 61 classified delta items, eight imported schemas, two list operations, and ten bindings.",
+    "Verified current-runtime freshness of live attempt 06 and inspected sanitized attempts 01\u201306. Attempt 06 records 17 successful steps and two fixtures created/deleted; earlier receipts preserve HTTP 400 and 403 limitations."
+  ],
+  "limitations": [
+    "Compiler and full test-suite results were inspected from preserved reports, not independently rebuilt or rerun.",
+    "No network requests, tenant access, credential reads, file edits, commits, or pushes were performed.",
+    "Live receipts were inspected and checked for consistency/freshness; their service executions were not independently reproduced.",
+    "Recorded compiler execution covers the stated Linux x86_64 GNU host. Phase-31 publication, remote delivery, and documentation-site work remain outside this review."
+  ]
+}

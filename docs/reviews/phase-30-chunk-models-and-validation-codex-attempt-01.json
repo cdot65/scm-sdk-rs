@@ -1,0 +1,76 @@
+{
+  "phase": 30,
+  "chunk": "models-and-validation",
+  "attempt": 1,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "6dc6e14ede94cff85e7946afc99ae60555caf8d6f1ea063d97ce97832b528e83",
+  "scope_evidence": [
+    "tools/portkey_mcp_tags.py",
+    "tools/generate_models.py",
+    "tools/generate_validation.py",
+    "tools/codex_review.py",
+    "tools/test_codex_review.py",
+    "tools/test_portkey_mcp_tags.py",
+    "contracts/portkey-mcp-tags-overlay.json",
+    "contracts/native-models.json",
+    "contracts/native-semantics.json",
+    "contracts/typescript-035-parity.json",
+    "contracts/red-team-management-model-overlay.json",
+    "contracts/response-defaults.json",
+    "contracts/compatibility/g25/audit.json",
+    "crates/scm-sdk/src/models/generated.rs",
+    "crates/scm-sdk/src/models/gateway.rs",
+    "crates/scm-sdk/src/models/mod.rs",
+    "crates/scm-sdk/src/models/support.rs",
+    "crates/scm-sdk/src/data.rs",
+    "crates/scm-sdk/src/validation/schema_graph.json",
+    "crates/scm-sdk/src/validation/semantics.json",
+    "crates/scm-sdk/tests/portkey_mcp_tags_models.rs"
+  ],
+  "prompt_sha256": "6271d861668fc7e2de1e6dd6a0e6ec2564eae52aae2a9c9e76d2091039360f61",
+  "checks_sha256": "f5adc7fca269ccb657064eaf71d31c0984bec00167194b07ee729d4d9546881c",
+  "requested_at": "2026-11-05T15:02:50.630968+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 8,
+    "summary": "Not accepted yet. Provenance, frozen-schema preservation, typed response compatibility, and recorded checks are strong, but two validation gaps remain in the public model APIs.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "crates/scm-sdk/src/models/generated.rs",
+        "line": 153605,
+        "description": "The four existing write models and GatewayMcpServersClientListOptions still route parse/build_validated through frozen schemas that reject tags. For example, McpIntegrationUpdateRequest::builder().tags(Patch::Null).build_validated(Mode::Request) fails although the corresponding client accepts that request. Tests exercise versioned standalone validators and serde construction, leaving this public construction path uncovered.",
+        "required_fix": "Generate tag-aware request validation for these model APIs while preserving the frozen standalone roots. Add parse and build_validated tests covering valid tags, null, omission, and invalid values across all five affected types."
+      },
+      {
+        "severity": "medium",
+        "path": "crates/scm-sdk/src/models/generated.rs",
+        "line": 124426,
+        "description": "GatewayMcpServersClientListOptions serializes extensions[\"tags\"] when its typed tags field is unset. A caller can supply the string \"not json\" or \"{\\\"env\\\":1}\" through the extension builder. The client's check_filter examines only query.tags, so it skips validation; the versioned schema accepts any string, and common::query forwards the invalid filter to authentication and transport.",
+        "required_fix": "Validate the effective serialized tags filter before authentication, including extension-supplied values, or reject this extension collision consistently. Add mocked wire tests asserting zero token-provider and transport calls for invalid extension-supplied filters."
+      }
+    ],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, the accepted MCP tags plan, and the phase-30 registration.",
+      "Independently recomputed fingerprint 6dc6e14ede94cff85e7946afc99ae60555caf8d6f1ea063d97ce97832b528e83.",
+      "Inspected all 109 command results in docs/checks/phase-30.json: all record exit code 0 without timeout, including the configured Rust 1.89.0/1.99.0 feature matrix, generators, contracts, and governance checks.",
+      "Compared the runtime graph against HEAD: all 2,712 historical roots and 17,039 historical nodes remain unchanged; six roots and 29 nodes were added.",
+      "Executed the read-only Portkey provenance and overlay checks, in-memory overlay tamper assertions, and cloned nonempty-object semantic-binding verification; all passed.",
+      "Executed the existing gateway test binaries identified by the recorded check report: six model tests and four mocked wire tests passed.",
+      "Inspected generator changes, generated serializers and builders, scoped ledger changes, client validation ordering, and review-tool regression changes.",
+      "Inspected sanitized live attempt 06: it records integration replacement/clearing, server creation/read/filter/clearing, and deletion of both fixtures."
+    ],
+    "limitations": [
+      "The full compiler matrix was inspected as recorded evidence, not rebuilt during this read-only review. Existing test binaries were executed without rebuilding.",
+      "The two findings were established by source and schema tracing; new reproducer tests were not compiled.",
+      "No network requests, credential access, tenant access, or filesystem changes were performed.",
+      "The inspected live receipt does not demonstrate server tag replacement with a new non-null value. Live execution and complete-phase acceptance were not independently established by this chunk review."
+    ]
+  },
+  "decision": "rejected",
+  "output_sha256": "2e15009c43c5617392543782f6bf9a7828a4a74ac6d8663d0d4f8bb5b965ed35",
+  "events_sha256": "524f2b2bc289c6ed2053a78313fdd98b300f0e7f7417fcf6d239f93bf979ac98",
+  "completed_at": "2026-11-05T15:08:47.252014+00:00"
+}

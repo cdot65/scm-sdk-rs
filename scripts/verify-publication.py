@@ -55,7 +55,7 @@ def require_proof(proof, clean=True, schema_version=2):
 
 def require_release_readiness(version, review_path):
     """Bind reviewed release registry receipt creation to actual current-source Claude approval."""
-    if version not in {"0.2.2", "0.2.3", "0.2.4"}:
+    if version not in {"0.2.2", "0.2.3", "0.2.4", "0.2.5"}:
         return None
     if review_path is None:
         raise ValueError(version + " requires --readiness-review before registry verification")
@@ -66,7 +66,7 @@ def require_release_readiness(version, review_path):
         raise ValueError("Readiness review must be retained inside the repository")
     source = fingerprint(ROOT)
     if not (verify_release_readiness(ROOT, path, source) if version == "0.2.2" else
-            verify_release_readiness(ROOT, path, source, phase=28 if version == "0.2.4" else 24)):
+            verify_release_readiness(ROOT, path, source, phase={"0.2.4": 28, "0.2.5": 31}.get(version, 24))):
         raise ValueError("Publication requires an accepted current-source release-readiness review")
     return {"review": path.relative_to(ROOT).as_posix(), "reviewSha256": sha(path.read_bytes()),
             "sourceSha256": source}
@@ -93,8 +93,8 @@ def verify_response_examples(proof, files):
 
 
 def verify(version, proof, metadata, owners, archive, msrv_proof=None):
-    require_proof(proof, schema_version=3 if version in {"0.2.3", "0.2.4"} else 2)
-    if version in {"0.2.3", "0.2.4"} and (msrv_proof is None or proof.get("toolchain") != "1.99.0"):
+    require_proof(proof, schema_version=3 if version in {"0.2.3", "0.2.4", "0.2.5"} else 2)
+    if version in {"0.2.3", "0.2.4", "0.2.5"} and (msrv_proof is None or proof.get("toolchain") != "1.99.0"):
         raise ValueError("Management registry verification requires development and MSRV proofs")
     if not (isinstance(metadata, dict) and isinstance(metadata.get("version"), dict)
             and isinstance(owners, dict) and isinstance(owners.get("users"), list)
@@ -118,7 +118,7 @@ def verify(version, proof, metadata, owners, archive, msrv_proof=None):
         raise ValueError("Published files or VCS metadata differ from the qualified archive")
     verify_response_examples(proof, files)
     if msrv_proof is not None:
-        require_proof(msrv_proof, schema_version=3 if version in {"0.2.3", "0.2.4"} else 2)
+        require_proof(msrv_proof, schema_version=3 if version in {"0.2.3", "0.2.4", "0.2.5"} else 2)
         if not (msrv_proof["toolchain"] == "1.89.0"
                 and msrv_proof["releaseCommit"] == proof["releaseCommit"]
                 and msrv_proof["files"] == rows and msrv_proof["vcs"] == vcs):
@@ -237,10 +237,10 @@ def main():
     proof = json.loads(args.proof.read_text())
     if args.delta:
         return check_delta(args.version, proof, args.output)
-    require_proof(proof, schema_version=3 if args.version in {"0.2.3", "0.2.4"} else 2)
+    require_proof(proof, schema_version=3 if args.version in {"0.2.3", "0.2.4", "0.2.5"} else 2)
     msrv = json.loads(args.msrv_proof.read_text()) if args.msrv_proof else None
-    if args.version in {"0.2.3", "0.2.4"}:
-        verify_management_proofs(args.proof, args.msrv_proof, require_directional=args.version == "0.2.4")
+    if args.version in {"0.2.3", "0.2.4", "0.2.5"}:
+        verify_management_proofs(args.proof, args.msrv_proof, require_directional=args.version in {"0.2.4", "0.2.5"})
     base = "https://crates.io/api/v1/crates/scm-sdk"
     version_url, owners_url = base + "/" + args.version, base + "/owners"
     download = base + "/" + args.version + "/download"
@@ -262,7 +262,7 @@ def main():
         "retainedArchive": retained.relative_to(ROOT).as_posix(),
         "sources": [version_url, owners_url, download],
     })
-    if args.version in {"0.2.2", "0.2.3", "0.2.4"}:
+    if args.version in {"0.2.2", "0.2.3", "0.2.4", "0.2.5"}:
         if require_release_readiness(args.version, args.readiness_review) != readiness:
             raise ValueError("Readiness or reviewed source changed during registry verification")
         report["releaseReadiness"] = readiness

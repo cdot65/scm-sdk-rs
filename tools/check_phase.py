@@ -62,6 +62,11 @@ CONTRACT_LEDGER_OWNERS = {
     'contracts/compatibility/g25/projection-bindings.json': ('tools/g25_fixtures.py', '--check'),
     'contracts/compatibility/g25/projections.json': ('tools/g25_fixtures.py', '--check'),
     'contracts/compatibility/g25/outcomes.json': ('tools/g25-oracle.mts', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/source.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/delta.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/contract.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json': ('tools/portkey-mcp-tags.mjs', '--check'),
+    'contracts/portkey-mcp-tags-overlay.json': ('tools/portkey_mcp_tags.py', '--check'),
 }
 
 
@@ -133,7 +138,7 @@ def run_check(command):
 
 
 MANAGEMENT_PHASES = (21, 22, 23, 24, 25)
-CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES, 28)
+CONTRACT_CI_PHASES = (12, 17, 20, *MANAGEMENT_PHASES, 28, 31)
 MANAGEMENT_BASELINE = "0a213fe79c7f0c5758f05f53d04a5c577a4f3f4e"
 
 
@@ -315,7 +320,87 @@ def management_commands(phase):
     return commands
 
 
+PORTKEY_MCP_BASELINE = "56a88d2"
+PORTKEY_MCP_YAML_EXCLUSIONS = (":(exclude)contracts/vendor/portkey-mcp-tags/8e5da0e/*.yaml",
+                               ":(exclude)contracts/vendor/portkey-access/a27feb9/*.yaml")
+
+
+def portkey_mcp_planning_commands(phase):
+    """Phase 29 planning/provenance gate; the SDK runtime stays byte-identical."""
+    unit = lambda name: ["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+    return [
+        ["git", "diff", "--exit-code", PORTKEY_MCP_BASELINE, "--", "crates/scm-sdk", "Cargo.toml", "Cargo.lock"],
+        ["python", "-c", "import subprocess; assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', 'crates/scm-sdk']), 'Unexpected SDK implementation file before plan acceptance'"],
+        ["git", "diff", "--check", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS],
+        ["git", "diff", "--cached", "--check", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS],
+        ["git", "diff", "--check", PORTKEY_MCP_BASELINE + "..HEAD", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS],
+        ["node", "tools/portkey-mcp-tags.mjs", "--check"],
+        ["node", "tools/portkey-access.mjs", "--check"],
+        ["python", "tools/verify-contracts.py"],
+        ["python", "tools/generate_models.py", "--check"],
+        ["python", "tools/generate_validation.py", "--check"],
+        ["python", "tools/verify_gateway_bindings.py", "--check"],
+        ["python", "scripts/check-private-material.py", "--check", f"docs/checks/phase-{phase}-private-material.json"],
+        *[unit(name) for name in ("test_portkey_mcp_tags.py", "test_codex_review.py", "test_portkey_access.py",
+                                  "test_review_phase.py", "test_phase_checkpoint.py", "test_management_phases.py",
+                                  "test_typescript035_governance.py")],
+    ]
+
+
+def portkey_mcp_live_receipt():
+    """The implementation-binding ledger names the single current live receipt."""
+    ledger = ROOT / "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json"
+    return json.loads(ledger.read_text())["liveReceipt"]
+
+
+def portkey_mcp_implementation_commands(phase):
+    """Phase 30: the cumulative phase-27 offline gate plus the Portkey MCP tags checks."""
+    commands = []
+    for original in commands_for(27):
+        command = [value.replace("phase-27-", f"phase-{phase}-") for value in original]
+        if command[:2] == ["git", "diff"] and "--check" in command:
+            if "--" not in command:
+                command += ["--", "."]
+            for exclusion in PORTKEY_MCP_YAML_EXCLUSIONS:
+                if exclusion not in command:
+                    command.append(exclusion)
+        if command not in commands:
+            commands.append(command)
+    portkey = [
+        ["git", "diff", "--check", PORTKEY_MCP_BASELINE + "..HEAD", "--", ".", *PORTKEY_MCP_YAML_EXCLUSIONS,
+         ":(exclude)contracts/sources/typescript-0.35.0/*", ":(exclude)contracts/vendor/red-team-management/0.86.0/*.yaml"],
+        ["node", "tools/portkey-mcp-tags.mjs", "--check"],
+        ["python", "tools/portkey_mcp_tags.py", "--check"],
+        ["python", "tools/mcp_tags_live.py", "--check", portkey_mcp_live_receipt()],
+    ]
+    # Cheap provenance and overlay checks precede the costly Rust matrix.
+    first_rust = next(i for i, c in enumerate(commands) if "scripts/check-rust.py" in c)
+    commands[first_rust:first_rust] = [c for c in portkey if c not in commands]
+    return commands
+
+
+def portkey_mcp_release_commands(phase):
+    """Phase 31: cumulative phase-30 qualification on the 0.2.5 source, then both
+    clean extracted archives and the version-specific readiness receipt."""
+    # The MCP tags receipt path always comes from the implementation-binding ledger.
+    commands = [command if command[:2] == ["python", "tools/mcp_tags_live.py"]
+                else [value.replace("phase-30-", f"phase-{phase}-") for value in command]
+                for command in portkey_mcp_implementation_commands(30)]
+    for compiler in ("1.89.0", "1.99.0"):
+        commands.append(["python", "scripts/check-management-package.py", "--require-directional",
+                         "--toolchain", compiler, "--output", f"docs/checks/phase-{phase}-release-package-{compiler}.json"])
+    commands.append(["python", "scripts/check-access-release.py", "--phase", str(phase), "--version", "0.2.5",
+                     "--output", f"docs/checks/phase-{phase}-release-readiness.json"])
+    return commands
+
+
 def commands_for(phase):
+    if phase == 31:
+        return portkey_mcp_release_commands(31)
+    if phase == 29:
+        return portkey_mcp_planning_commands(29)
+    if phase == 30:
+        return portkey_mcp_implementation_commands(30)
     if phase == 28:
         commands = [[value.replace("phase-27-", "phase-28-") for value in command]
                     for command in commands_for(27)]

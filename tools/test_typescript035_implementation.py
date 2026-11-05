@@ -113,6 +113,13 @@ class TypeScript035ImplementationTests(unittest.TestCase):
     def test_graph_preserves_historical_nodes_and_roots(self):
         path = 'crates/scm-sdk/src/validation/schema_graph.json'
         before, after = json.loads(old(path)), load(path)
+        # The later Portkey MCP tags overlay is verified by its own checks; remove it here.
+        import portkey_mcp_tags
+        portkey = portkey_mcp_tags.Overlay()
+        for sid in set(portkey.mapping.values()) | set(portkey.nodes):
+            after['nodes'].pop(sid)
+        for name in portkey.roots:
+            after['roots'].pop(name)
         for section in ('nodes', 'roots'):
             for key, value in before[section].items():
                 self.assertEqual(after[section].get(key), value, section + ':' + key)

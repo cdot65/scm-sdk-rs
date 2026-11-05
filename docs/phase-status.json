@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 28,
+  "active_phase": 31,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations); additive Prisma AIRS OpenAPI reconciliation at pan.dev 582e30543bf2adfd8b0ee457170d22b5c380dfbe with retained SDK capabilities",
   "review_threshold": 9,
   "phases": [
@@ -9246,6 +9246,617 @@
         "protected_assets": 10,
         "deployment_status": "not_deployed"
       }
+    },
+    {
+      "id": 29,
+      "name": "Portkey MCP tags delta plan and provenance",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-29-codex-attempt-02.json"
+      ],
+      "plan": "docs/portkey-mcp-tags-plan.md",
+      "depends_on": [],
+      "authorization": "Maintainer instruction 2026-11-05: import the Portkey-AI/openapi AI Gateway changes since the a27feb9 pin, implement, test and validate end to end, then release a version bump and update the Docusaurus site. Independent maintenance track; phases 24, 25 and 28 retain their incomplete records and are not rebound.",
+      "review_policy": {
+        "reviewer": "codex",
+        "tool": "tools/codex_review.py",
+        "score_range": [
+          1,
+          10
+        ],
+        "minimum_score": 9,
+        "max_attempts": 5,
+        "authorization": "Maintainer instruction 2026-11-05: hand each phase's scoped work to a Codex agent for review, scoring 1-10 with 9 as the minimum; supersedes the Claude reviewer and 46/50 rubric for phases 29-31 only."
+      },
+      "final_in_sequence": false,
+      "scope_evidence": [
+        "docs/portkey-mcp-tags-plan.md",
+        "docs/PHASES.md",
+        "contracts/vendor/portkey-mcp-tags/8e5da0e",
+        "tools/portkey-mcp-tags.mjs",
+        "tools/test_portkey_mcp_tags.py",
+        "tools/codex_review.py",
+        "tools/test_codex_review.py",
+        "tools/check_phase.py",
+        "tools/test_typescript035_governance.py",
+        "tools/test_management_phases.py"
+      ],
+      "chunks": [
+        {
+          "id": "plan-and-provenance",
+          "status": "accepted",
+          "scope_evidence": [
+            "docs/portkey-mcp-tags-plan.md",
+            "docs/PHASES.md",
+            "contracts/vendor/portkey-mcp-tags/8e5da0e",
+            "tools/portkey-mcp-tags.mjs",
+            "tools/test_portkey_mcp_tags.py",
+            "tools/codex_review.py",
+            "tools/test_codex_review.py",
+            "tools/check_phase.py",
+            "tools/test_typescript035_governance.py",
+            "tools/test_management_phases.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/portkey-mcp-tags-plan.md",
+                "docs/PHASES.md",
+                "contracts/vendor/portkey-mcp-tags/8e5da0e",
+                "tools/portkey-mcp-tags.mjs",
+                "tools/test_portkey_mcp_tags.py",
+                "tools/codex_review.py",
+                "tools/test_codex_review.py",
+                "tools/check_phase.py",
+                "tools/test_typescript035_governance.py",
+                "tools/test_management_phases.py"
+              ]
+            }
+          ],
+          "review_decision": "accepted",
+          "accepted_review": "docs/reviews/phase-29-chunk-plan-and-provenance-codex-attempt-04.json",
+          "accepted_score": 9,
+          "accepted_source_sha256": "56dbaa471fec8ba55523b1d53f643d80751df7d93a419fc79b664a6ca6caf220"
+        }
+      ],
+      "acceptance_criteria": [
+        "Exact upstream bytes pinned and verified; complete structural delta classified fail-closed with tamper tests",
+        "Plan settles Rust design, phases, chunks, checks and live/release boundaries",
+        "No SDK runtime change",
+        "All phase 29 checks pass for the reviewed source",
+        "Chunk and complete-phase Codex reviews score at least 9/10 with no blocker/high finding"
+      ],
+      "review_findings_disposition": [
+        "Attempt 1 (score 7, rejected) is preserved unchanged.",
+        "High (phase advancement): tools/codex_review.py verify_chunk_acceptance now requires each declared chunk's latest attempt to be a verified, unchanged accepted record of the current source and declared scope, with matching status fields; a later rejected chunk review resets the chunk to pending and removes its acceptance. Phase review and advancement both run this check. Tests: stale source, forged/missing review, superseded acceptance, tampered decision.",
+        "High (attempt reuse): any artifact sharing an attempt stem occupies the slot; prompts are reserved with O_CREAT|O_EXCL under a per-slot flock; interrupted invocations record a consumed 'interrupted' failure, and orphaned slots block further review until recorded with --mark-interrupted, which refuses while the slot lock is held. Tests cover orphan non-reuse, exclusive reservation, live-lock refusal and interrupt recording.",
+        "Medium (provenance anchor): tools/portkey-mcp-tags.mjs now verifies reviewed sha256/Git-blob/byte constants for openapi.yaml, LICENSE and the base independently of source.json (blob ids confirmed against GitHub contents API at the pinned commits). New regression test rewrites bytes and recomputes the manifest while retaining the commit, and requires rejection.",
+        "Attempt 2 (score 8, rejected) is preserved unchanged.",
+        "High (attempt 2, record binding): verify_bindings now parses the preserved prompt (target, attempt, source fingerprint, exact scope JSON) and check snapshot (phase, passed, source, unchanged, every exit code 0) and requires them to match the record; chunk acceptance additionally requires the snapshot's command list to equal the phase's current command set. Regression test rebinds record/status metadata, then also the prompt, while leaving original evidence, and requires rejection.",
+        "Medium (attempt 2, prompt-only interruption): a failed record may omit checks_sha256 only for reason 'interrupted' when no snapshot exists; a null hash cannot hide an existing snapshot. Failed records need integrity only, since they never confer acceptance. Test covers reservation-only interruption, recovery and next-attempt allocation.",
+        "Chunk attempt 3 accepted at 9/10 for the previous source; complete-phase attempt 1 (score 8) rejected and preserved.",
+        "High (phase attempt 1, missing/empty chunks): tools/codex_review.py REQUIRED_CHUNKS pins each track phase's chunk identities in reviewed source; phase review and advancement reject missing, empty, reordered or renamed declarations before any attempt is reserved, and --chunk accepts only required names. Tests cover None/[]/renamed declarations and bind the registry to phase-status. The source change makes chunk attempt 3 stale, so the chunk is re-reviewed before the phase.",
+        "Chunk attempt 4 accepted at 9/10 for the current source. Low (stale latest_review on acceptance): the stale status field was removed from this record; the code fix (clear latest_review on acceptance) is scheduled in phase 30 scope with a regression test, avoiding a source change after chunk acceptance."
+      ],
+      "latest_rejected_review": "docs/reviews/phase-29-codex-attempt-01.json",
+      "accepted_source_sha256": "56dbaa471fec8ba55523b1d53f643d80751df7d93a419fc79b664a6ca6caf220",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-29-codex-attempt-02.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/reviews/phase-29-codex-attempt-02.checks.json"
+          ],
+          "source_sha256": "56dbaa471fec8ba55523b1d53f643d80751df7d93a419fc79b664a6ca6caf220"
+        },
+        "codex_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-29-codex-attempt-02.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": 30,
+      "name": "Portkey MCP tags implementation and qualification",
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-30-codex-attempt-01.json"
+      ],
+      "plan": "docs/portkey-mcp-tags-plan.md",
+      "depends_on": [
+        29
+      ],
+      "authorization": "Maintainer instruction 2026-11-05: import the Portkey-AI/openapi AI Gateway changes since the a27feb9 pin, implement, test and validate end to end, then release a version bump and update the Docusaurus site. Independent maintenance track; phases 24, 25 and 28 retain their incomplete records and are not rebound.",
+      "review_policy": {
+        "reviewer": "codex",
+        "tool": "tools/codex_review.py",
+        "score_range": [
+          1,
+          10
+        ],
+        "minimum_score": 9,
+        "max_attempts": 5,
+        "authorization": "Maintainer instruction 2026-11-05: hand each phase's scoped work to a Codex agent for review, scoring 1-10 with 9 as the minimum; supersedes the Claude reviewer and 46/50 rubric for phases 29-31 only."
+      },
+      "final_in_sequence": false,
+      "scope_evidence": [
+        "tools/portkey_mcp_tags.py",
+        "tools/generate_models.py",
+        "tools/generate_validation.py",
+        "tools/codex_review.py",
+        "tools/test_codex_review.py",
+        "tools/test_portkey_mcp_tags.py",
+        "contracts/portkey-mcp-tags-overlay.json",
+        "contracts/native-models.json",
+        "contracts/native-semantics.json",
+        "contracts/typescript-035-parity.json",
+        "contracts/red-team-management-model-overlay.json",
+        "contracts/response-defaults.json",
+        "contracts/compatibility/g25/audit.json",
+        "crates/scm-sdk/src/models/generated.rs",
+        "crates/scm-sdk/src/models/gateway.rs",
+        "crates/scm-sdk/src/models/mod.rs",
+        "crates/scm-sdk/src/models/support.rs",
+        "crates/scm-sdk/src/data.rs",
+        "crates/scm-sdk/src/validation/schema_graph.json",
+        "crates/scm-sdk/src/validation/semantics.json",
+        "crates/scm-sdk/tests/portkey_mcp_tags_models.rs",
+        "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+        "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+        "crates/scm-sdk/src/airs/gateway/mcp_tags.rs",
+        "crates/scm-sdk/src/airs/gateway/mod.rs",
+        "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs",
+        "crates/scm-sdk/examples/mcp_tags_live.rs",
+        "crates/scm-sdk/Cargo.toml",
+        "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+        "tools/portkey-mcp-tags.mjs",
+        "tools/mcp_tags_live.py",
+        "tools/test_mcp_tags_live.py",
+        "tools/live_evidence.py",
+        "tools/verify_gateway_bindings.py",
+        "tools/check_phase.py",
+        "contracts/native-gateway-bindings.json",
+        "contracts/native-operations.json",
+        "contracts/native-exports.json",
+        "contracts/qualification.json",
+        "contracts/live-evidence.json",
+        "contracts/typescript-035-management-compatibility.json",
+        "docs/GATEWAY_CONTROL.md",
+        "docs/LIVE_ACCEPTANCE.md",
+        "CHANGELOG.md",
+        "tools/test_management_phases.py",
+        "docs/CI.md",
+        "tools/g25_audit.py",
+        "contracts/compatibility/g25/comparison.json",
+        "tools/test_typescript035_implementation.py",
+        "crates/scm-sdk/examples/mcp_tags_live_uncertain_report.json",
+        "tools/native_operations.py",
+        "tools/native_exports.py"
+      ],
+      "chunks": [
+        {
+          "id": "models-and-validation",
+          "status": "accepted",
+          "scope_evidence": [
+            "tools/portkey_mcp_tags.py",
+            "tools/generate_models.py",
+            "tools/generate_validation.py",
+            "tools/codex_review.py",
+            "tools/test_codex_review.py",
+            "tools/test_portkey_mcp_tags.py",
+            "contracts/portkey-mcp-tags-overlay.json",
+            "contracts/native-models.json",
+            "contracts/native-semantics.json",
+            "contracts/typescript-035-parity.json",
+            "contracts/red-team-management-model-overlay.json",
+            "contracts/response-defaults.json",
+            "contracts/compatibility/g25/audit.json",
+            "crates/scm-sdk/src/models/generated.rs",
+            "crates/scm-sdk/src/models/gateway.rs",
+            "crates/scm-sdk/src/models/mod.rs",
+            "crates/scm-sdk/src/models/support.rs",
+            "crates/scm-sdk/src/data.rs",
+            "crates/scm-sdk/src/validation/schema_graph.json",
+            "crates/scm-sdk/src/validation/semantics.json",
+            "crates/scm-sdk/tests/portkey_mcp_tags_models.rs"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "tools/portkey_mcp_tags.py",
+                "tools/generate_models.py",
+                "tools/generate_validation.py",
+                "tools/codex_review.py",
+                "tools/test_codex_review.py",
+                "tools/test_portkey_mcp_tags.py",
+                "contracts/portkey-mcp-tags-overlay.json",
+                "contracts/native-models.json",
+                "contracts/native-semantics.json",
+                "contracts/typescript-035-parity.json",
+                "contracts/red-team-management-model-overlay.json",
+                "contracts/response-defaults.json",
+                "contracts/compatibility/g25/audit.json",
+                "crates/scm-sdk/src/models/generated.rs",
+                "crates/scm-sdk/src/models/gateway.rs",
+                "crates/scm-sdk/src/models/mod.rs",
+                "crates/scm-sdk/src/models/support.rs",
+                "crates/scm-sdk/src/data.rs",
+                "crates/scm-sdk/src/validation/schema_graph.json",
+                "crates/scm-sdk/src/validation/semantics.json",
+                "crates/scm-sdk/tests/portkey_mcp_tags_models.rs"
+              ]
+            }
+          ],
+          "review_decision": "accepted",
+          "accepted_review": "docs/reviews/phase-30-chunk-models-and-validation-codex-attempt-03.json",
+          "accepted_score": 9,
+          "accepted_source_sha256": "77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179"
+        },
+        {
+          "id": "clients-and-wire",
+          "status": "accepted",
+          "scope_evidence": [
+            "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+            "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+            "crates/scm-sdk/src/airs/gateway/mcp_tags.rs",
+            "crates/scm-sdk/src/airs/gateway/mod.rs",
+            "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs",
+            "crates/scm-sdk/examples/mcp_tags_live.rs",
+            "crates/scm-sdk/Cargo.toml",
+            "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+            "tools/portkey-mcp-tags.mjs",
+            "tools/mcp_tags_live.py",
+            "tools/test_mcp_tags_live.py",
+            "tools/live_evidence.py",
+            "tools/verify_gateway_bindings.py",
+            "tools/check_phase.py",
+            "contracts/native-gateway-bindings.json",
+            "contracts/native-operations.json",
+            "contracts/native-exports.json",
+            "contracts/qualification.json",
+            "contracts/live-evidence.json",
+            "contracts/typescript-035-management-compatibility.json",
+            "docs/GATEWAY_CONTROL.md",
+            "docs/LIVE_ACCEPTANCE.md",
+            "CHANGELOG.md",
+            "tools/test_management_phases.py",
+            "docs/CI.md",
+            "tools/g25_audit.py",
+            "contracts/compatibility/g25/comparison.json",
+            "tools/test_typescript035_implementation.py",
+            "crates/scm-sdk/examples/mcp_tags_live_uncertain_report.json",
+            "tools/native_operations.py",
+            "tools/native_exports.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+                "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+                "crates/scm-sdk/src/airs/gateway/mcp_tags.rs",
+                "crates/scm-sdk/src/airs/gateway/mod.rs",
+                "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs",
+                "crates/scm-sdk/examples/mcp_tags_live.rs",
+                "crates/scm-sdk/Cargo.toml",
+                "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+                "tools/portkey-mcp-tags.mjs",
+                "tools/mcp_tags_live.py",
+                "tools/test_mcp_tags_live.py",
+                "tools/live_evidence.py",
+                "tools/verify_gateway_bindings.py",
+                "tools/check_phase.py",
+                "contracts/native-gateway-bindings.json",
+                "contracts/native-operations.json",
+                "contracts/native-exports.json",
+                "contracts/qualification.json",
+                "contracts/live-evidence.json",
+                "contracts/typescript-035-management-compatibility.json",
+                "docs/GATEWAY_CONTROL.md",
+                "docs/LIVE_ACCEPTANCE.md",
+                "CHANGELOG.md",
+                "tools/test_management_phases.py",
+                "docs/CI.md",
+                "tools/g25_audit.py",
+                "contracts/compatibility/g25/comparison.json",
+                "tools/test_typescript035_implementation.py"
+              ]
+            },
+            {
+              "from_attempt": 3,
+              "scope_evidence": [
+                "crates/scm-sdk/src/airs/gateway/mcp_integrations.rs",
+                "crates/scm-sdk/src/airs/gateway/mcp_servers.rs",
+                "crates/scm-sdk/src/airs/gateway/mcp_tags.rs",
+                "crates/scm-sdk/src/airs/gateway/mod.rs",
+                "crates/scm-sdk/tests/portkey_mcp_tags_contracts.rs",
+                "crates/scm-sdk/examples/mcp_tags_live.rs",
+                "crates/scm-sdk/Cargo.toml",
+                "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+                "tools/portkey-mcp-tags.mjs",
+                "tools/mcp_tags_live.py",
+                "tools/test_mcp_tags_live.py",
+                "tools/live_evidence.py",
+                "tools/verify_gateway_bindings.py",
+                "tools/check_phase.py",
+                "contracts/native-gateway-bindings.json",
+                "contracts/native-operations.json",
+                "contracts/native-exports.json",
+                "contracts/qualification.json",
+                "contracts/live-evidence.json",
+                "contracts/typescript-035-management-compatibility.json",
+                "docs/GATEWAY_CONTROL.md",
+                "docs/LIVE_ACCEPTANCE.md",
+                "CHANGELOG.md",
+                "tools/test_management_phases.py",
+                "docs/CI.md",
+                "tools/g25_audit.py",
+                "contracts/compatibility/g25/comparison.json",
+                "tools/test_typescript035_implementation.py",
+                "crates/scm-sdk/examples/mcp_tags_live_uncertain_report.json",
+                "tools/native_operations.py",
+                "tools/native_exports.py"
+              ]
+            }
+          ],
+          "review_decision": "accepted",
+          "accepted_review": "docs/reviews/phase-30-chunk-clients-and-wire-codex-attempt-03.json",
+          "accepted_score": 9,
+          "accepted_source_sha256": "77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179"
+        }
+      ],
+      "acceptance_criteria": [
+        "Typed tags on every imported write/read model with omission/null/value distinctions and pre-auth key/value validation",
+        "List tags filters and list_with_options with exact wire tests; frozen methods byte-identical",
+        "Cumulative offline gate on both compilers and all feature sets passes",
+        "Bounded disposable live MCP tags workflow recorded with cleanup or explicit service limitation",
+        "Chunk and complete-phase Codex reviews score at least 9/10 with no blocker/high finding"
+      ],
+      "review_findings_disposition": [
+        "models-and-validation attempt 1 (8, rejected) and clients-and-wire attempt 1 (8, rejected; source changed during review because fixes began early) are preserved.",
+        "Medium (typed validation paths): the generator's reviewed schema_overrides bind the five request/query models' SCHEMA to their portkey:8e5da0e clones, so parse/build_validated accept exactly what clients accept; frozen standalone schema names still reject tags. Test typed_model_validation_paths_accept_exactly_what_clients_accept covers value/null/omission/invalid for all five types plus builders.",
+        "Medium (extension-supplied filter): check_filter validates the effective serialized tags value, so typed and extension-supplied filters are both checked before authentication; wire test asserts zero transport/token calls for invalid extension filters.",
+        "High (live ambiguous creates): mcp_tags_live reconciles Unknown-outcome creates through the fixture's unique tag/name, counts reconciled fixtures as created and unresolved ones as fixturesUncertain, never reports complete cleanup while uncertain, and writes the nonce and ids to a private recovery file before and after each mutation. Rules are offline unit tested (cargo test --examples) and the receipt validator mirrors them.",
+        "Medium (false clear verification): clearing verifies only explicit null, empty map or genuine omission with no tags retained in extensions; replacements require the exact typed value. Unit tested.",
+        "Medium (server replacement): the workflow now replaces server tags and reads them back before clearing; receipt attempt 07 verified all 19 steps with complete cleanup, and the UpdateMcpServer binding names those steps.",
+        "Tooling: codex_review.update_status rereads phase-status under an exclusive lock so concurrent chunk reviews cannot overwrite each other.",
+        "models-and-validation attempt 2 accepted at 9/10; clients-and-wire attempt 2 (8, rejected) preserved. The fixes below change source, so both chunks are re-reviewed.",
+        "Medium (failed reconciliation receipt): Report::record omits `verified` on error outcomes, matching the receipt schema. The example's offline producer test equals the shared packaged fixture examples/mcp_tags_live_uncertain_report.json, which tools/test_mcp_tags_live.py validates with the runner's receipt validator (unknown-outcome integration and server creates, failed and empty reconciliation, uncertain accounting, incomplete cleanup).",
+        "Medium (native inventories): native-operations.json and native-exports.json now carry portkeyMcpTagsSupplemental, generated from portkey_mcp_tags.supplemental_capabilities(): list_with_options, mcp_tags_filter, GatewayMcpIntegrationsClientListOptions, data::TypedMap and data::Extensions, each verified against its source and test, with live steps from the bound receipt, the implementation-binding ledger digest for the eight field projections, and the frozen 448-method denominator unchanged. A drift test covers it. Live receipt attempt 08 (19/19 steps, complete cleanup) and read-only attempt 04 bind the final runtime.",
+        "Both chunks accepted at 9/10 (attempt 3). Low (example recovery-file permissions under a permissive umask; the runner's private 0700 directory protected the recorded run): scheduled for phase 31, which changes the runtime for the version bump and reruns live qualification, so the owner-only file mode and destination check land with fresh evidence instead of invalidating accepted phase-30 receipts."
+      ],
+      "accepted_source_sha256": "77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179",
+      "accepted_score": 9,
+      "milestones": {
+        "implemented_scope": {
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-30-codex-attempt-01.json"
+          ]
+        },
+        "independent_verification": {
+          "status": "passed",
+          "evidence": [
+            "docs/reviews/phase-30-codex-attempt-01.checks.json"
+          ],
+          "source_sha256": "77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179"
+        },
+        "codex_review": {
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-30-codex-attempt-01.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": 31,
+      "name": "SDK 0.2.5 release, delivery and documentation site",
+      "status": "in_progress",
+      "reviews": [],
+      "plan": "docs/portkey-mcp-tags-plan.md",
+      "depends_on": [
+        30
+      ],
+      "authorization": "Maintainer instruction 2026-11-05: import the Portkey-AI/openapi AI Gateway changes since the a27feb9 pin, implement, test and validate end to end, then release a version bump and update the Docusaurus site. Independent maintenance track; phases 24, 25 and 28 retain their incomplete records and are not rebound.",
+      "review_policy": {
+        "reviewer": "codex",
+        "tool": "tools/codex_review.py",
+        "score_range": [
+          1,
+          10
+        ],
+        "minimum_score": 9,
+        "max_attempts": 5,
+        "authorization": "Maintainer instruction 2026-11-05: hand each phase's scoped work to a Codex agent for review, scoring 1-10 with 9 as the minimum; supersedes the Claude reviewer and 46/50 rubric for phases 29-31 only."
+      },
+      "final_in_sequence": true,
+      "scope_evidence": [
+        ".forgejo/workflows/ci.yml",
+        ".local/docs-site-worktree/docs-site",
+        "CHANGELOG.md",
+        "Cargo.lock",
+        "README.md",
+        "contracts/live-evidence.json",
+        "contracts/native-exports.json",
+        "contracts/native-gateway-bindings.json",
+        "contracts/native-operations.json",
+        "contracts/native-probes/Cargo.lock",
+        "contracts/qualification.json",
+        "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+        "crates/scm-sdk/Cargo.toml",
+        "crates/scm-sdk/examples/mcp_tags_live.rs",
+        "docs/CI.md",
+        "docs/GATEWAY_CONTROL.md",
+        "docs/LIVE_ACCEPTANCE.md",
+        "docs/RELEASE.md",
+        "docs/STABILITY.md",
+        "docs/portkey-mcp-tags-plan.md",
+        "scripts/check-access-release.py",
+        "scripts/check-prepublication.py",
+        "scripts/observe-release.py",
+        "scripts/verify-publication.py",
+        "tools/check_phase.py",
+        "tools/codex_review.py",
+        "tools/mcp_tags_live.py",
+        "tools/release_delivery.py",
+        "tools/review_phase.py",
+        "tools/test_ci.py",
+        "tools/test_mcp_tags_live.py",
+        "tools/test_release_022.py",
+        "tools/test_release_024.py",
+        "tools/test_release_025.py"
+      ],
+      "chunks": [
+        {
+          "id": "release-readiness",
+          "status": "accepted",
+          "scope_evidence": [
+            ".forgejo/workflows/ci.yml",
+            "CHANGELOG.md",
+            "Cargo.lock",
+            "README.md",
+            "contracts/live-evidence.json",
+            "contracts/native-exports.json",
+            "contracts/native-gateway-bindings.json",
+            "contracts/native-operations.json",
+            "contracts/native-probes/Cargo.lock",
+            "contracts/qualification.json",
+            "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+            "crates/scm-sdk/Cargo.toml",
+            "crates/scm-sdk/examples/mcp_tags_live.rs",
+            "docs/CI.md",
+            "docs/GATEWAY_CONTROL.md",
+            "docs/LIVE_ACCEPTANCE.md",
+            "docs/RELEASE.md",
+            "docs/STABILITY.md",
+            "docs/portkey-mcp-tags-plan.md",
+            "scripts/check-access-release.py",
+            "scripts/check-prepublication.py",
+            "scripts/observe-release.py",
+            "scripts/verify-publication.py",
+            "tools/check_phase.py",
+            "tools/codex_review.py",
+            "tools/mcp_tags_live.py",
+            "tools/release_delivery.py",
+            "tools/review_phase.py",
+            "tools/test_ci.py",
+            "tools/test_mcp_tags_live.py",
+            "tools/test_release_022.py",
+            "tools/test_release_024.py",
+            "tools/test_release_025.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                ".forgejo/workflows/ci.yml",
+                "CHANGELOG.md",
+                "Cargo.lock",
+                "README.md",
+                "contracts/live-evidence.json",
+                "contracts/native-exports.json",
+                "contracts/native-gateway-bindings.json",
+                "contracts/native-operations.json",
+                "contracts/native-probes/Cargo.lock",
+                "contracts/qualification.json",
+                "contracts/vendor/portkey-mcp-tags/8e5da0e/operations.json",
+                "crates/scm-sdk/Cargo.toml",
+                "crates/scm-sdk/examples/mcp_tags_live.rs",
+                "docs/CI.md",
+                "docs/GATEWAY_CONTROL.md",
+                "docs/LIVE_ACCEPTANCE.md",
+                "docs/RELEASE.md",
+                "docs/STABILITY.md",
+                "docs/portkey-mcp-tags-plan.md",
+                "scripts/check-access-release.py",
+                "scripts/check-prepublication.py",
+                "scripts/observe-release.py",
+                "scripts/verify-publication.py",
+                "tools/check_phase.py",
+                "tools/codex_review.py",
+                "tools/mcp_tags_live.py",
+                "tools/release_delivery.py",
+                "tools/review_phase.py",
+                "tools/test_ci.py",
+                "tools/test_mcp_tags_live.py",
+                "tools/test_release_022.py",
+                "tools/test_release_024.py",
+                "tools/test_release_025.py"
+              ]
+            }
+          ],
+          "review_decision": "accepted",
+          "accepted_review": "docs/reviews/phase-31-chunk-release-readiness-codex-attempt-02.json",
+          "accepted_score": 9,
+          "accepted_source_sha256": "adbdec87ffba019d14c68d44c509e5cf6ab5cea1a3b638bc62565cb59a31612d"
+        },
+        {
+          "id": "remote-delivery",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/RELEASE.md",
+            "tools/release_delivery.py",
+            "scripts/observe-release.py",
+            "scripts/verify-publication.py",
+            "scripts/check-prepublication.py"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/RELEASE.md",
+                "tools/release_delivery.py",
+                "scripts/observe-release.py",
+                "scripts/verify-publication.py",
+                "scripts/check-prepublication.py"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "docs-site",
+          "status": "pending",
+          "scope_evidence": [
+            "docs/portkey-mcp-tags-plan.md",
+            ".local/docs-site-worktree/docs-site"
+          ],
+          "scope_revisions": [
+            {
+              "from_attempt": 1,
+              "scope_evidence": [
+                "docs/portkey-mcp-tags-plan.md",
+                ".local/docs-site-worktree/docs-site"
+              ]
+            }
+          ]
+        }
+      ],
+      "acceptance_criteria": [
+        "Version 0.2.5 qualified by clean extracted packages on 1.89.0 and 1.99.0",
+        "Verified crates.io archive, remote annotated v0.2.5 tag and terminal CI",
+        "Docusaurus site updated and building",
+        "Chunk and complete-phase Codex reviews score at least 9/10 with no blocker/high finding"
+      ],
+      "review_findings_disposition": [
+        "release-readiness attempt 1 (7, rejected) is preserved.",
+        "High (registry readiness path): tools/release_delivery.py accepts phase 31's Codex chunk record path (phase-31-chunk-release-readiness-codex-attempt-NN.json) and keeps historical formats; regression in tools/test_release_025.py.",
+        "High (completion without delivery): codex_review requires release_delivery.verify(root, source, phase=31, version='0.2.5') both before reserving a phase-level attempt and before recording completion; regression proves a failing delivery blocks advancement and that non-release phases are unaffected.",
+        "Medium (Windows example build): Unix permission handling is confined to a #[cfg(unix)] open_private; a #[cfg(not(unix))] fallback refuses to write recovery ids rather than weaken privacy. A static guard test enforces the gating. A local x86_64-pc-windows-msvc check was attempted but cannot complete on this Linux host (aws-lc-sys needs MSVC/NASM); Windows compilation remains an unexecuted check, recorded as a limitation rather than claimed.",
+        "Runtime changed, so read-only (attempt 02) and MCP tags (attempt 02, 19/19, complete cleanup) receipts were refreshed for the release runtime."
+      ]
     }
   ],
   "active_followup_plan": "docs/red-team-management-0.86-plan.md",

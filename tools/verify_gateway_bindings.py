@@ -11,6 +11,15 @@ import pathlib
 import re
 import sys
 
+def _portkey_versioned_roots():
+    import portkey_mcp_tags
+    overlay = portkey_mcp_tags.Overlay()
+    return {versioned: versioned.removeprefix(portkey_mcp_tags.PREFIX) for versioned in overlay.roots
+            if versioned.startswith(portkey_mcp_tags.PREFIX)}
+
+
+PORTKEY_VERSIONED = _portkey_versioned_roots()
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "contracts/native-gateway-bindings.json"
 # Reviewed RuntimeClient::request preserves ordered segment insertion and shared
@@ -212,6 +221,11 @@ def validate_operation(operation, mapping, source, schema_inventory=None):
         raise ValueError("Gateway complete route topology differs: " + operation["id"] + " " + str(sorted(actual_routes)))
     frozen_schemas = source_schemas(operation)
     native_schemas = {value.removesuffix("[]") for value in native_strings if re.fullmatch(r"[A-Z]\w*Schema(?:\[\])?", value)}
+    # Reviewed Portkey 8e5da0e substitution: a versioned request/query root is a
+    # clone of exactly one frozen root plus the pinned `tags` field. The overlay
+    # verifies clone identity and ancestor closure before it is counted.
+    versioned = sorted(value for value in native_strings if value in PORTKEY_VERSIONED)
+    native_schemas |= {PORTKEY_VERSIONED[value] for value in versioned}
     missing = frozen_schemas - native_schemas
     extra = native_schemas - frozen_schemas
     decompositions = []
@@ -247,6 +261,9 @@ def validate_operation(operation, mapping, source, schema_inventory=None):
         "implementationSha256": digest(operation["implementationSource"]),
         "namedHelperProofs": helper_proofs,
         "schemaDecompositions": decompositions,
+        **({"versionedSchemaRoots": [{"versionedRoot": value, "frozenRoot": PORTKEY_VERSIONED[value],
+                                      "source": "contracts/portkey-mcp-tags-overlay.json"} for value in versioned]}
+           if versioned else {}),
         "frozenSchemaRoots": sorted(frozen_schemas), "nativeSchemaRoots": sorted(native_schemas),
         "nativeMethods": native_methods, "nativeSource": mapping["source"], "nativeSourceSha256": digest(source),
         "nativeRouteTemplates": sorted(actual_routes),

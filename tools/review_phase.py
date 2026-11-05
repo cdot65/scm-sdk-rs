@@ -329,6 +329,10 @@ def verify_record(root, path, phase, source_sha256, chunk=None):
 
 def verify_release_readiness(root, path, source_sha256, phase=20):
     """Publication helpers must require this accepted, current-source assessment."""
+    if phase == 31:
+        # The Portkey MCP tags release uses the maintainer-selected Codex reviewer.
+        from codex_review import verify_release_readiness as codex_readiness
+        return codex_readiness(root, path, source_sha256)
     record = json.loads(path.read_text())
     return (record.get("review_scope") == "release_readiness"
             and phase in {20, 24, 28}

@@ -12,6 +12,7 @@ import re
 import sys
 
 from typescript035_profiles import default_aliases
+from portkey_mcp_tags import semantic_aliases as portkey_semantic_aliases
 
 ROOT = Path(__file__).resolve().parents[1]
 source = json.loads((ROOT / "contracts/typescript.json").read_text())
@@ -144,6 +145,7 @@ payload = {"schemaVersion": 1, "baselineCommit": source["baseline"]["commit"],
            "policy": "Every binding has concrete native behavior; registry generation alone is not test evidence. JSON fakes for typed runtime inputs are rejected.",
            "bindings": sorted(entries, key=lambda entry: entry["schema"])}
 payload["runtimeAliases"] = default_aliases()
+payload["portkeyMcpTagsRuntimeAliases"] = portkey_semantic_aliases()
 serialized = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
 destination = ROOT / "contracts/native-semantics.json"
 runtime = ROOT / "crates/scm-sdk/src/validation/semantics.json"
@@ -151,6 +153,11 @@ runtime_entries = {entry["schema"]: {k:entry[k] for k in ["binding", "default"] 
 for alias, original in default_aliases().items():
     if alias in runtime_entries or runtime_entries[original] != {"binding": "default", "default": []}:
         raise ValueError("Unreviewed TypeScript default alias")
+    runtime_entries[alias] = dict(runtime_entries[original])
+for alias, original in portkey_semantic_aliases().items():
+    # The cloned update-request refinement keeps its exact reviewed binding.
+    if alias in runtime_entries or runtime_entries.get(original) != {"binding": "nonempty_object"}:
+        raise ValueError("Unreviewed Portkey MCP semantic alias")
     runtime_entries[alias] = dict(runtime_entries[original])
 runtime_bytes = json.dumps(runtime_entries, separators=(",", ":"), sort_keys=True) + "\n"
 if "--check" in sys.argv:

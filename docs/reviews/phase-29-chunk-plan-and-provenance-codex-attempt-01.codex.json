@@ -1,0 +1,40 @@
+{
+  "score": 7,
+  "summary": "The plan clearly separates implementation, live acceptance, and release work. The requested fingerprint matches, recorded checks pass, and SDK runtime bytes remain unchanged. Acceptance is blocked by review-gate defects that permit stale chunk acceptance and overwrite in-flight attempts; provenance verification also lacks an independent byte anchor.",
+  "findings": [
+    {
+      "severity": "high",
+      "path": "tools/codex_review.py",
+      "line": 134,
+      "description": "Phase advancement checks only each chunk's status string. It does not verify the accepted review, preserved evidence, current source/scope, or latest attempt. A later rejected chunk review also leaves its previous accepted status intact. An in-memory probe advanced phase 29 with an accepted chunk pointing to a nonexistent review and an old source fingerprint.",
+      "required_fix": "Verify every declared chunk's latest review and preserved prompt/output/check evidence against the current source and scope before phase review and advancement. Reject missing, stale, tampered, or superseded acceptance. Add regression tests covering these cases."
+    },
+    {
+      "severity": "high",
+      "path": "tools/codex_review.py",
+      "line": 95,
+      "description": "Attempt allocation ignores existing prompts, check snapshots, and other in-flight artifacts. The current attempt-01 prompt exists, but next_attempt still returns 1. A concurrent invocation or restart after interruption can overwrite that attempt's prompt, checks, output, and event log, defeating evidence preservation and the five-attempt budget.",
+      "required_fix": "Reserve attempt slots atomically and refuse to reuse any slot containing in-flight or orphaned artifacts. Preserve interrupted attempts through explicit failure/recovery handling. Test concurrent allocation and interruption before the final receipt."
+    },
+    {
+      "severity": "medium",
+      "path": "tools/portkey-mcp-tags.mjs",
+      "line": 28,
+      "description": "Byte verification compares files only with mutable hashes in source.json; the fixed upstream commit is never bound independently to those hashes. An in-memory probe changed AnthropicTextContent.text from string to number, recomputed the manifest hashes, retained the claimed commit, and passed --check with the same 61 classifications. Existing tamper tests do not cover coordinated source/manifest changes.",
+      "required_fix": "Anchor expected file hashes independently, or preserve and verify commit/tree-to-blob provenance. Add a regression test that changes upstream bytes and recomputes manifest metadata while retaining the pinned commit, and require rejection."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, the MCP tags plan, and phase 29\u201331 registrations.",
+    "Inspected scoped tooling/tests and vendored source metadata, license, structural ledger, extracted contract, and relevant OpenAPI fragments.",
+    "Verified fingerprint 0bb4b535fe5b12a94b12ed69545823232ce9ec2a146383865348fc6645bc16ab before and after inspection; the preserved check snapshot matches docs/checks/phase-29.json.",
+    "Inspected all 19 recorded commands: all exited successfully without timeout. Seven recorded test suites report 134 cases, including one skip.",
+    "Independently reran the delta verifier, contract verification, model/validation generation checks, Gateway binding verification, and SDK/Cargo comparison against 56a88d2; all passed.",
+    "Executed read-only, in-memory probes demonstrating stale chunk advancement, in-flight attempt reuse, and coordinated upstream-byte/manifest tampering."
+  ],
+  "limitations": [
+    "Did not rerun mutation-based unit suites or private-material scanning; their results were inspected from recorded evidence.",
+    "No network requests, credential or tenant-registration reads, checkout edits, commits, or pushes occurred. Upstream origin was not independently authenticated.",
+    "Phase 30 implementation/live workflows and phase 31 publication/delivery remain future work and were not treated as completed."
+  ]
+}

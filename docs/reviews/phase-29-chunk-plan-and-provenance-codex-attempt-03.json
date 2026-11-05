@@ -1,0 +1,48 @@
+{
+  "phase": 29,
+  "chunk": "plan-and-provenance",
+  "attempt": 3,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "44895279d852f4eca035c42fc9e8963f8d75bcb597aeced0aed9559f259072e3",
+  "scope_evidence": [
+    "docs/portkey-mcp-tags-plan.md",
+    "docs/PHASES.md",
+    "contracts/vendor/portkey-mcp-tags/8e5da0e",
+    "tools/portkey-mcp-tags.mjs",
+    "tools/test_portkey_mcp_tags.py",
+    "tools/codex_review.py",
+    "tools/test_codex_review.py",
+    "tools/check_phase.py",
+    "tools/test_typescript035_governance.py",
+    "tools/test_management_phases.py"
+  ],
+  "prompt_sha256": "5f61bd89465ebc0ad8e0f2dd45ec206023f75a765c6424d26bab1acd3e3feeff",
+  "checks_sha256": "1f3dd07b5b4b33a573a480e6226509060e070331d168fe9f03f16d3c9041820f",
+  "requested_at": "2026-11-05T13:30:54.744784+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 9,
+    "summary": "The chunk meets phase-29 acceptance requirements. Earlier findings are addressed, provenance and classification checks pass, and SDK runtime bytes remain unchanged. No blocker or high finding remains. Complete-phase review is still required.",
+    "findings": [],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, the accepted plan, PHASES.md, implementation-plan.md and phase registrations.",
+      "Verified fingerprint 44895279d852f4eca035c42fc9e8963f8d75bcb597aeced0aed9559f259072e3 and identical attempt-03/current check snapshots.",
+      "Inspected all 19 recorded checks: successful exits without timeouts. Seven unittest suites report 143 cases, including one intentional skip.",
+      "Inspected provenance anchors, vendored delta, classification ledger, extracted contract, review tooling and regression tests.",
+      "Independently reran delta verification, contract verification, model/validation generation checks and Gateway binding verification; all passed.",
+      "Confirmed 61 classified structural changes and unchanged SDK/Cargo files against 56a88d2, with no untracked SDK files.",
+      "Verified preserved attempts 1 and 2 remain rejected. Read-only in-memory probes confirmed that rebinding record metadata or metadata plus prompt cannot bypass the preserved evidence checks."
+    ],
+    "limitations": [
+      "Mutation-based unit suites and private-material scanning were not rerun; their recorded evidence was inspected.",
+      "No network requests, credential or tenant-registration reads, edits, commits or pushes occurred. Upstream origin was not independently authenticated.",
+      "Phase 30 implementation/live acceptance and phase 31 release/delivery remain future work and received no completion credit."
+    ]
+  },
+  "decision": "accepted",
+  "output_sha256": "71877281ecceea67b386c2384497d38fe7a8ba4619a8c934a57ce40aad94f60c",
+  "events_sha256": "5375ea5180fb3c33f786fc2b340d8cfdbded68fccbd4550400a91ba4f56073bd",
+  "completed_at": "2026-11-05T13:33:32.311831+00:00"
+}

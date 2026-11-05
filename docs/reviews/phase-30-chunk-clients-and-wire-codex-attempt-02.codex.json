@@ -1,0 +1,36 @@
+{
+  "score": 8,
+  "summary": "Not accepted yet. Client wiring, validation, compatibility tests, and successful live evidence are strong. Two medium gaps remain: failed reconciliation prevents preservation of the sanitized receipt, and the native operation/export ledgers omit the new capabilities required by the plan.",
+  "findings": [
+    {
+      "severity": "medium",
+      "path": "crates/scm-sdk/examples/mcp_tags_live.rs",
+      "line": 472,
+      "description": "After an unknown-outcome create, a failed reconciliation request produces outcome=\"error\" with verified=false. The server reconciliation branch does the same at line 593. tools/mcp_tags_live.py rejects this combination because verified=false requires outcome=\"verification_failed\". Consequently, the runner aborts before writing the sanitized receipt precisely when an unresolved fixture needs recorded cleanup status. The private recovery file remains, but the claimed failure-path reporting is incomplete. Existing tests exercise accounting rules rather than this producer/validator interaction.",
+      "required_fix": "Make error-step verification fields consistent with the receipt schema, preferably omitting verified when the reconciliation request fails. Add offline tests for unknown-outcome integration and server creates followed by failed reconciliation, proving that the resulting report validates and retains fixturesUncertain and cleanupState=\"incomplete\"."
+    },
+    {
+      "severity": "medium",
+      "path": "contracts/native-operations.json",
+      "line": 0,
+      "description": "The accepted plan requires the native operation and export ledgers to record Portkey-delta capabilities separately from frozen TypeScript parity. Neither this ledger nor contracts/native-exports.json registers list_with_options, mcp_tags_filter, or GatewayMcpIntegrationsClientListOptions, or links to the supplemental operations ledger. Their changes principally refresh existing hashes and live references. The supplemental operations.json provides useful bindings, but the planned native inventory integration is missing.",
+      "required_fix": "Add separately identified supplemental capability records or explicit verified links to the Portkey ledger in the native operation/export inventories. Include the new method, helper, and options type with implementation and test evidence, while preserving frozen parity denominators and separate live status."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, the accepted MCP tags plan, phase-30 status, and both earlier review results.",
+    "Recomputed the source fingerprint twice; both matched 657cb80dfdf08e944b411b06f6a6aa71b6d1dcf8735f1b80c1e7a8e85525d977.",
+    "Inspected all 109 commands in docs/checks/phase-30.json: every result records exit code 0 without timeout, and the ordered command set matches check_phase.commands_for(30). Inspected detailed Rust 1.89.0/1.99.0 all-feature and gateway JSON-unification reports.",
+    "Executed existing recorded test binaries without rebuilding: four MCP wire tests, seven model tests, and three example rule tests passed.",
+    "Executed the read-only provenance verifier successfully: 61 classified delta items, eight imported schemas, two list operations, and ten bindings.",
+    "Validated current-runtime freshness of live attempt 07: 19 successful steps, two fixtures created, zero uncertain, and two deleted. Inspected earlier receipts preserving HTTP 400 host and HTTP 403 workspace prerequisites.",
+    "Reproduced the reconciliation-report rejection in memory using validate_report; it raised 'Verification outcome differs from its recorded result'.",
+    "Inspected scoped clients, shared validation/dispatch, filter serialization, workflow recovery, receipt tooling, binding ledgers, governance changes, and documentation."
+  ],
+  "limitations": [
+    "The full compiler matrix was inspected through preserved reports, not rebuilt during this review. Executed Rust tests used existing binaries.",
+    "Live executions were not independently reproduced; receipt consistency and runtime freshness were verified.",
+    "No network requests, tenant contact, credential or registration reads, file edits, commits, or pushes were performed.",
+    "Recorded compiler execution covers Linux x86_64 GNU. Phase-31 packaging, publication, remote delivery, and documentation-site work remain outside this review."
+  ]
+}

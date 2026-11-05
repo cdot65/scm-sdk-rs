@@ -1,0 +1,61 @@
+{
+  "phase": 30,
+  "chunk": "models-and-validation",
+  "attempt": 3,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179",
+  "scope_evidence": [
+    "tools/portkey_mcp_tags.py",
+    "tools/generate_models.py",
+    "tools/generate_validation.py",
+    "tools/codex_review.py",
+    "tools/test_codex_review.py",
+    "tools/test_portkey_mcp_tags.py",
+    "contracts/portkey-mcp-tags-overlay.json",
+    "contracts/native-models.json",
+    "contracts/native-semantics.json",
+    "contracts/typescript-035-parity.json",
+    "contracts/red-team-management-model-overlay.json",
+    "contracts/response-defaults.json",
+    "contracts/compatibility/g25/audit.json",
+    "crates/scm-sdk/src/models/generated.rs",
+    "crates/scm-sdk/src/models/gateway.rs",
+    "crates/scm-sdk/src/models/mod.rs",
+    "crates/scm-sdk/src/models/support.rs",
+    "crates/scm-sdk/src/data.rs",
+    "crates/scm-sdk/src/validation/schema_graph.json",
+    "crates/scm-sdk/src/validation/semantics.json",
+    "crates/scm-sdk/tests/portkey_mcp_tags_models.rs"
+  ],
+  "prompt_sha256": "2bf0d15cdfdf734d165aeea8907a62f9099bb2ab4d80f6f5f1c3594b12d7f5ee",
+  "checks_sha256": "fc5b3096a613b2cf9787cfde1aefb09af49e889cc6dec604b71d934722a6b1fb",
+  "requested_at": "2026-11-05T16:07:39.274857+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 9,
+    "summary": "Accept models-and-validation attempt 3 for fingerprint 77f1add283c24e289987e300148383685dd80e948308bbe62979e926ee96a179. Typed tags, patch distinctions, validation clones, tolerant response preservation, and supplemental inventories satisfy the scoped plan. No actionable findings remain.",
+    "findings": [],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/portkey-mcp-tags-plan.md, implementation context, and the phase-30 status entry.",
+      "Independently recomputed the requested source fingerprint and confirmed it remained unchanged at review completion.",
+      "Inspected overlay generation, generated models, semantic aliases, public containers, exports, and scoped ledger changes. Compared validation artifacts against HEAD: zero historical nodes, roots, or semantic bindings changed.",
+      "Executed read-only checks successfully: portkey_mcp_tags.py --check and generate_validation.py --check. Independently confirmed both native supplemental capability inventories match their implementation bindings.",
+      "Inspected model and wire tests covering omission/null/value, invalid keys and values, typed parse/builders, response preservation, frozen roots, exact queries, and pre-auth rejection.",
+      "Inspected all 109 command results in docs/checks/phase-30.json: all succeeded without timeout. Both compiler all-feature reports explicitly record the seven model tests and four wire tests passing.",
+      "Inspected review-status locking changes and regression tests; the recorded tooling suite reports 21 passing review tests and 14 passing Portkey tests.",
+      "Inspected live attempt 08 and independently passed its offline receipt check: 19 successful steps, two fixtures created and deleted, zero uncertain fixtures, complete cleanup, and current runtime binding."
+    ],
+    "limitations": [
+      "Rust builds and tests were not rerun; their execution evidence comes from the inspected source-bound reports.",
+      "No network requests, tenant access, credential reads, or checkout mutations occurred. Live results were assessed through sanitized receipts, not independently repeated.",
+      "Acceptance is limited to this chunk. Complete-phase review and phase-31 release, package, remote-delivery, and documentation gates remain separate.",
+      "Recorded Rust execution covers Linux x86_64. Live evidence qualifies only the recorded MCP tags workflow; unrelated workflows and service-side discovery remain unqualified."
+    ]
+  },
+  "decision": "accepted",
+  "output_sha256": "c677cd1f8e6c6a1c3240702c6835db313568ccafb280bd188e38773cd6b4e93e",
+  "events_sha256": "c33d10bb0c3413485a3612379816cc9bda68bc2bb176bf7c72a2588b611fd37b",
+  "completed_at": "2026-11-05T16:10:20.538080+00:00"
+}

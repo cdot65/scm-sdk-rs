@@ -207,7 +207,8 @@ class DirectionalGovernanceTests(unittest.TestCase):
 
     def test_old_phase_records_preserved_and_new_chunks_bound(self):
         old = json.loads(subprocess.check_output(['git', 'show', '578f2e6:docs/phase-status.json'], cwd=ROOT))
-        self.assertEqual(old['phases'], [p for p in self.status['phases'] if p['id'] not in {26, 27, 28}])
+        # Phases 29–31 are the separately authorized Portkey MCP tags track.
+        self.assertEqual(old['phases'], [p for p in self.status['phases'] if p['id'] not in {26, 27, 28, 29, 30, 31}])
         for phase in [26, 27, 28]:
             row = next(p for p in self.status['phases'] if p['id'] == phase)
             self.assertTrue(row['scope_evidence'])

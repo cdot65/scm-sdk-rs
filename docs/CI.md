@@ -5,13 +5,13 @@ verification for pushes and pull requests. Its 49 required jobs use the ordinary
 Linux runner. [The separate native workflow](../.forgejo/workflows/native-platforms.yml)
 runs only when explicitly dispatched after its three native runner labels are
 registered. A public source mirror exists at
-[GitHub](https://github.com/cdot65/scm-sdk-rs). Phase 28 requires its annotated
+[GitHub](https://github.com/cdot65/scm-sdk-rs). Phases 28 and 31 require their annotated
 release tag to match the qualified canonical tag and source. Registry publication,
 release tokens, service registration, and live service workflows are not configured
 in this credential-free CI workflow.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
-CI now executes the Phase 28 contracts gate, whose invocation and current
+CI now executes the Phase 31 contracts gate (Portkey MCP tags, 0.2.5), whose invocation and current
 script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
 Phase 12, maintenance Phase 92 and access-policy Phase 17 gates remain historical.
 See [the G25 plan](g25-response-compatibility-plan.md).
@@ -110,7 +110,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 28 --verification-only --contracts-only. Its 83 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-28-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 31 --verification-only --contracts-only. Its 91 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-31-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
 | rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -159,8 +159,10 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
-The complete local Phase 28 gate has 105 commands.
-CI's 83-command subset writes `phase-28-contracts.json`. The full local gate
+The complete local Phase 31 gate has 113 commands: the cumulative phase-30 set (which inherits
+phase 27's discovery of every `tools/test_*.py`), both clean extracted archives and the 0.2.5
+readiness receipt. The historical Phase 28 gate now has 109 commands for the same discovery reason.
+CI's 91-command subset writes `phase-31-contracts.json`. The full local gate
 additionally executes fourteen compiler/feature combinations, native export probes,
 generated model fixture compilation, and two source-matched clean package checks.
 The final gates verify both package receipts and the version-specific release candidate after those checks execute. Actual publication and terminal remote CI are separate delivery requirements.
@@ -170,7 +172,7 @@ Both new integration suites are included by the Red Team cargo test commands.
 The Red Team and combined Red Team/JSON runner selections also execute the offline
 `red_team_management` example with `cargo run` on both 1.89.0 and 1.99.0;
 `cargo test --examples` alone only compiles its main function.
-Only a complete source-bound `phase-28.json` receipt can qualify the current release review; the
+Only a complete source-bound `phase-31.json` receipt can qualify the current release review; the
 contracts-only scope marker cannot substitute for it. Full Git history supplies
 the frozen baseline used by the committed hygiene check.
 The independent 48-job Rust matrix remains unchanged: 24 feature selections on both
@@ -345,7 +347,17 @@ accepted review snapshots retain their original hashes and are not rebound to
 later runs' output files.
 Archive the partial receipt before beginning a new source or expired run.
 Phase 28 does not permit `--resume`: its release qualification requires a single
-complete run without reusing a checkpointed command prefix.
+complete run without reusing a checkpointed command prefix. Phase 31 likewise
+requires a single complete run.
+
+### Portkey MCP tags 0.2.5 delivery
+
+Phase 31 inherits the phase 30 MCP tags qualification on the 0.2.5 source. It requires
+both compiler archives with their directional-profile consumers and a fresh read-only
+service receipt plus MCP tags live receipt for the release runtime. It binds 0.2.5 to the
+accepted Codex release-readiness chunk review, the registry artifact, the annotated tag
+(canonical and GitHub mirror) and terminal CI. The CI job count follows the
+workflow-derived inventory enforced by `tools/test_ci.py`.
 
 ### TypeScript 0.35.0 patch delivery
 

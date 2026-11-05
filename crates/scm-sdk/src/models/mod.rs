@@ -2,6 +2,7 @@
 mod generated;
 mod support;
 pub use support::BinaryFile;
+pub use support::{Extensions, TypedMap};
 pub mod agentguard;
 pub mod dlp;
 pub mod gateway;
