@@ -34,8 +34,8 @@ transport failure; reconcile service state before retrying a write.
 
 ## Models and signatures
 
-The [management module](https://docs.rs/scm-sdk/0.2.4/scm_sdk/airs/management/index.html)
-contains its model namespace. Hosted 0.2.4 rustdoc omits optional management client
+The [management module](https://docs.rs/scm-sdk/0.2.5/scm_sdk/airs/management/index.html)
+contains its model namespace. Hosted 0.2.5 rustdoc omits optional management client
 signatures; generate documentation with `--all-features` as described in the
 [API reference overview](./index.md).
 

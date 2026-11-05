@@ -2,8 +2,8 @@
 title: Stability and Compatibility
 ---
 
-The current Rust crate version is [**0.2.4**](https://crates.io/crates/scm-sdk/0.2.4), the [directional security-profile patch](/airs/directional-profiles).
-The retained registry receipt (`docs/checks/release-registry-0.2.4.json`)
+The current Rust crate version is [**0.2.5**](https://crates.io/crates/scm-sdk/0.2.5), the [MCP tags patch](/airs/gateway-control#mcp-tags-portkey-8e5da0e); it retains the 0.2.4 [directional security-profile patch](/airs/directional-profiles).
+The retained registry receipt (`docs/checks/release-registry-0.2.5.json`)
 records the verified archive and source identity. Publication remains separate
 from directional live acceptance.
 The [access-policy family](/airs/access-policies) remains experimental/live-unverified;

@@ -30,5 +30,5 @@ project-owned Apache license.
 
 Read the distributed license and attribution in the published source:
 
-- [LICENSE for 0.2.4](https://docs.rs/crate/scm-sdk/0.2.4/source/LICENSE)
-- [NOTICE for 0.2.4](https://docs.rs/crate/scm-sdk/0.2.4/source/NOTICE)
+- [LICENSE for 0.2.5](https://docs.rs/crate/scm-sdk/0.2.5/source/LICENSE)
+- [NOTICE for 0.2.5](https://docs.rs/crate/scm-sdk/0.2.5/source/NOTICE)

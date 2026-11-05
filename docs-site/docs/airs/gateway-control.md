@@ -73,3 +73,40 @@ Returned prices remain upstream catalog units (USD cents where declared), not te
 `crates/scm-sdk/tests/gateway_control_contracts.rs` independently specifies literal wire routes, planes, ordered queries, headers, body defaults, and schema-grounded responses for every method. Thirty control/pricing cases from the frozen OpenAPI corpus are executed with complete exact wire, response, and status assertions. An exhaustive 42-case consumption guard also binds all 12 sibling log-export/rate-limit cases to their separate execution suite. Methods outside that corpus use manually authored source-derived fixtures. Additional sweeps exercise all 44 uncertain transport mutations and all 38 typed mutation decoding failures without replay, strict pre-authentication rejection, UTF-16 identifiers, explicit patch states, overlapping union behavior, secret redaction, and public pricing retry/deadline/cancellation/redirect isolation.
 
 `contracts/native-operation-mappings/gateway-control.json` binds all 79 baseline methods to concrete native source and named tests. These checks do not assert live acceptance. Live qualification remains Phase 8. Gateway runtime/telemetry and the Phase 7 realtime/provisioning/export-closure work have separate ownership records.
+
+## MCP tags (Portkey 8e5da0e)
+
+Since **0.2.5**, MCP integrations and servers carry the `tags` contract from
+`Portkey-AI/openapi` [`8e5da0e`](https://github.com/Portkey-AI/openapi/commit/8e5da0e756bc49ee3e82ca13df693b39fa541627).
+
+| Surface | Contract |
+| --- | --- |
+| Create/update requests for integrations and servers | `tags: Patch<TypedMap<String>>`. `Unset` omits the field, `Null` sends `null` (clears tags on update), and `Value` replaces them. Keys match `^[a-zA-Z0-9_-]+$`; values are strings. |
+| Integration/server responses and list items | `tags` decodes conforming string maps. Non-conforming JSON stays in `extensions`. |
+| `AIGatewayMcpServersClient::list` | `GatewayMcpServersClientListOptions.tags` sends the upstream JSON-object filter. |
+| `AIGatewayMcpIntegrationsClient::list_with_options` | `organisation_id`, `type`, `workspace_id`, `page_size` (1–1000), `current_page`, `search` and `tags`. The frozen `list` is unchanged. |
+| `airs::gateway::mcp_tags_filter` | Builds a filter string with sorted keys and rejects duplicate keys. |
+
+```rust
+use scm_sdk::{airs::gateway::{mcp_tags_filter, models::*}, data::{Patch, TypedMap}};
+
+# fn build() -> scm_sdk::Result<()> {
+let tags: TypedMap<String> = [("env", "prod".to_owned()), ("team", "sec".to_owned())].into_iter().collect();
+let update = GatewayMcpServersClientUpdateRequest::builder()
+    .tags(Patch::Value(tags))
+    .build_validated(scm_sdk::validation::Mode::Request)?;
+let filter = mcp_tags_filter([("env", "prod")])?; // {"env":"prod"}
+let query = GatewayMcpServersClientListOptions::builder()
+    .tags(scm_sdk::data::Optional::Value(filter))
+    .build()?;
+# let _ = (update, query); Ok(()) }
+```
+
+All requests and filters are validated before authentication. A filter must be a
+JSON object of unique keys with string values; that applies to filters supplied
+through the open extensions map as well. The service rejects unresolvable
+integration hosts (400 `AB01`). It also requires an integration to be enabled for a
+workspace (`set_workspaces`) before that workspace's MCP server can reference it
+(403 `AB03`). The [live receipt](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-mcp-tags-live-attempt-01.json)
+verified creation, filtering, read-back, replacement and null clearing for both
+resource types. Both disposable fixtures were deleted afterwards.

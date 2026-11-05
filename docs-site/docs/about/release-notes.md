@@ -9,6 +9,27 @@ slug: /about/release-notes
 These notes summarize consumer-facing changes in published `scm-sdk` releases.
 The [crate registry](https://crates.io/crates/scm-sdk) provides published versions.
 
+## 0.2.5 — Portkey MCP tags
+
+[Published crate](https://crates.io/crates/scm-sdk/0.2.5)
+
+- Adds `tags: Patch<TypedMap<String>>` to MCP integration and server create and
+  update requests. Omitted, `null` and value stay distinct: on update, `null` clears
+  the tags and a value replaces them. Keys must match `^[a-zA-Z0-9_-]+$` and values
+  must be strings; both are checked before authentication.
+- Adds typed `tags` to MCP integration and server responses and list items.
+  Non-conforming response values stay unchanged in `extensions`.
+- Adds the `tags` filter to `GatewayMcpServersClientListOptions` and the new
+  `AIGatewayMcpIntegrationsClient::list_with_options` with
+  `GatewayMcpIntegrationsClientListOptions`. Adds `airs::gateway::mcp_tags_filter`
+  for building filters.
+- Makes `scm_sdk::data::TypedMap` and `Extensions` publicly nameable, with
+  `collect()` and `From<BTreeMap>` constructors.
+- Frozen standalone schema names are unchanged. MCP requests validate against
+  versioned `portkey:8e5da0e:` roots that add only `tags`.
+- Live acceptance verified the complete integration and server tags workflow and
+  cleaned up both fixtures. See the [MCP tags guide](/airs/gateway-control#mcp-tags-portkey-8e5da0e).
+
 ## 0.2.4 — Directional security profiles
 
 [Published crate](https://crates.io/crates/scm-sdk/0.2.4)

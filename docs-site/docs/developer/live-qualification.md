@@ -14,8 +14,8 @@ compiled executable, Rust version, host target, and execution time.
 
 ## Current read-only qualification
 
-The current maintenance run is [phase 28 attempt 01](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/checks/phase-28-live-attempt-01.json).
-The probe ran against the prepublication 0.2.4 runtime. Registry publication
+The current maintenance run is [phase 31 attempt 01](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-live-attempt-01.json).
+The probe ran against the prepublication 0.2.5 runtime. Registry publication
 is established separately in the [release notes](/about/release-notes).
 It verified **1 exact native method**, OAuth token exchange. All four single-page
 Red Team target-list probes (`NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`, `FAILED`)
@@ -33,8 +33,18 @@ realtime provider workflows remain live-unqualified. Offline fixture and consume
 checks establish implementation compatibility separately from these service results.
 
 Phase 27 attempts 01 through 05 recorded the same bounded probe outcomes. Phase 28
-attempt 01 binds the 0.2.4 version and patched TLS dependencies. None of these attempts
-promotes the 17 historical successes to the current runtime.
+attempt 01 binds the 0.2.4 version and patched TLS dependencies; phase 31 attempt 01 binds
+0.2.5. None of these attempts promotes the 17 historical successes to the current runtime.
+
+## MCP tags workflow
+
+The separately bounded [MCP tags receipt](https://github.com/cdot65/scm-sdk-rs/blob/v0.2.5/docs/checks/phase-31-mcp-tags-live-attempt-01.json)
+for the 0.2.5 runtime verified all 19 recorded steps and completed cleanup of both
+disposable fixtures. The steps cover integration create, tags filter inclusion and
+exclusion, typed read-back, replacement, null clearing, workspace enablement, and server
+create, read-back, filtered list, replacement and null clearing. Creates whose remote outcome
+is unknown are reconciled through the fixture's unique tag; unresolved fixtures are
+reported as uncertain, never as clean.
 
 ## Historical qualification
 
