@@ -322,6 +322,13 @@ release commit, to change only allowlisted paths, and to match its own committed
 The workflow, crate, contracts and lockfiles that CI exercised therefore match the published
 source byte for byte.
 
+The delivery check still verifies everything that qualifies the published source:
+- both schema-3 clean package proofs, against the published fingerprint, with packaging scripts
+  whose bytes must equal the published ones;
+- both retained compiler archives;
+- the retained crates.io archive and its file inventory;
+- the canonical and GitHub annotated tags.
+
 `observe-release.py ci` keeps the newest status per CI context (the highest status id).
 Forgejo can write several statuses for one job in the same second and returns ties in
 arbitrary order. Run 35 (`da5aa02`) had a stale `pending` row listed ahead of its final
