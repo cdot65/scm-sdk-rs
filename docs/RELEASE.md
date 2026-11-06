@@ -348,3 +348,12 @@ succeeds for the docs branch commit, retain its per-commit deployment and push r
 `--check` before and after each docs-site review, records the binding digest in the prompt
 and record, and verifies it again at chunk acceptance and phase completion. A site-only
 commit, an uncommitted site edit, or a replaced receipt invalidates acceptance.
+
+## Drift detection (phase 25)
+
+Phase 25 publishes nothing. Its cumulative local qualification is
+`python3 tools/check_phase.py --phase 25`, which proves the SDK crate and dependency inputs are
+unchanged from the drift baseline, and its CI subset runs
+`tools/check_phase.py --phase 25 --verification-only --contracts-only`. Upstream drift found by
+`tools/airs_drift.py compare` is reported for review and never adopted into a release
+automatically; adopting it needs a new reviewed pin and a new release phase.

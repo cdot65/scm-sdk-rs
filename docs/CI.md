@@ -11,7 +11,7 @@ release tokens, service registration, and live service workflows are not configu
 in this credential-free CI workflow.
 
 The G10 0.1.1 source was qualified with the source-bound Phase 91 gate.
-CI now executes the Phase 31 contracts gate (Portkey MCP tags, 0.2.5), whose invocation and current
+CI now executes the Phase 25 contracts gate (Prisma AIRS upstream drift detection), whose invocation and current
 script inventory are enforced by `tools/test_ci.py`. The initial Phase 8, vendor
 Phase 12, maintenance Phase 92 and access-policy Phase 17 gates remain historical.
 See [the G25 plan](g25-response-compatibility-plan.md).
@@ -110,7 +110,7 @@ request runs contain only the required Linux jobs.
 
 | Job | Qualification |
 | --- | --- |
-| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 31 --verification-only --contracts-only. Its 92 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, dependency policy and privacy. The phase-31-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
+| contracts-and-package | Fetches full Git history, installs pinned tools, restores verified frozen inputs, and runs tools/check_phase.py --phase 25 --verification-only --contracts-only. Its 97 credential-free commands verify management adoption, generated models, native capability ledgers, preserved contracts and G25 behavior, upstream drift detection, dependency policy and privacy. The phase-25-contracts.json receipt cannot qualify a phase review. Historical live evidence is archived; current live annotations require a fresh source-bound read-only receipt. |
 | rust | Rust 1.89.0 and 1.99.0 each run 24 feature selections (48 jobs total), including red-team-json-unification, through scripts/check-rust.py: formatting, all-target checks, warning-denied Clippy, tests, and warning-denied documentation. |
 | additional-native-platforms | Manual-only native execution on explicitly registered Linux ARM64, Apple Silicon, and Windows x86_64 runners. The actual rustc host is asserted before checks. |
 
@@ -159,6 +159,13 @@ still rejects any byte change to that vendor input.
 - `scripts/check-private-material.py`
 
 The workflow-derived test requires this inventory to equal the executed CI subset.
+The complete local Phase 25 gate has 116 commands: the cumulative phase-30 offline and Rust
+qualification on the current source, plus upstream drift detection (`tools/airs_drift.py --check`,
+its regression suite, the historical-delivery suite and `tools/red_team_management.py --check
+--require-through-phase 25`) and a `git diff --exit-code` proof that the SDK crate, Cargo files,
+LICENSE and NOTICE are unchanged from the drift baseline. Phase 25 publishes nothing, so it has
+no package or readiness receipts. CI's 97-command subset writes `phase-25-contracts.json`.
+
 The complete local Phase 31 gate has 113 commands. 0.2.5 is published, so the gate is the
 post-publication set: the cumulative phase-30 set (which inherits phase 27's discovery of
 every `tools/test_*.py`), then the offline delivery guard
