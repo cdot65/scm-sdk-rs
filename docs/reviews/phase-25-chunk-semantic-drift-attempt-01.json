@@ -1,0 +1,90 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 25,
+  "attempt": 1,
+  "reviewed_at": "2026-11-06T16:27:54.623396+00:00",
+  "source_sha256": "cc3bcb43edd77c437243802dfbeb81a7f398276de1d29eb33acea98603ad7f3e",
+  "source_unchanged": true,
+  "checks_sha256": "11f7267334c1899fa6a743f85573b5f78dc8aad77bcc4e58c6d31c7af929d49e",
+  "prompt_sha256": "c012db1cd28bb54d2e7956e8d68b0d47ce78a112a558683cb0704a18abb6dcdc",
+  "cli_output_sha256": "c58643d575f4c51a23f90e800c36d3678abf98a142990dfa699f889ff4a5f853",
+  "gate_passed": true,
+  "review": {
+    "score": 8.5,
+    "summary": "The semantic-drift chunk is well built and backed by real evidence. The checks file records `airs_drift.py --check`, 37 `test_airs_drift` tests and `--require-through-phase 25`, all exit 0 with the source unchanged. Offline comparison is deterministic. The candidate hash chain, file-set, symlink, mode and tampering checks are strict. Refresh is the only networked path, it is isolated, and it refuses redirects and never records the token. All of the plan's change classes are wired. The main gap is in the fail-closed contract: added content is never scanned for unknown keywords. A new operation, component, property or source that contains `x-*`, `discriminator`, `not` or `callbacks` is classified as additive instead of failing. Also, `operation_added` binds its change id to the operationId alone, so the reviewed digest does not cover the new operation's content. There are no blockers or high findings. Total 43/50, which passes the chunk threshold of 42.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/airs_drift.py",
+        "line": 559,
+        "description": "Added content is emitted without checking it for unknown keywords. This applies to component_added (559-560), property_added (633-634), operation_added (693-695) and source_added (874-881). The fail-closed rule for x- extensions, discriminator, not, callbacks, deprecated and webhooks is only enforced when an existing structure is modified. A newly added schema or operation containing them comes out as 'additive', which contradicts docs/red-team-management-0.86-plan.md:290-292.",
+        "required_fix": "Add a recursive residual-keyword scan using the same known-keyword sets as compare_schema, compare_operation and compare_body. Run it on every added component, property, operation and new source, and call fail() on unknown keys. Add UnknownChangeTests cases where the keyword sits inside a newly added component and inside a newly added operation."
+      },
+      {
+        "severity": "medium",
+        "path": "tools/airs_drift.py",
+        "line": 694,
+        "description": "operation_added sets new={'operationId': ...}, so the change id (the digest a reviewer binds to) and the receipt leave out the new operation's parameters, body, responses, security and servers. Two candidates whose added operations differ in substance get the same id. This weakens the plan's requirement that every delta, including a whole added subtree, has an exact reviewed identity binding (plan:327-333).",
+        "required_fix": "Include the normalized operation model (or its digest) in `new` for operation_added; doing the same for operation_removed would keep them symmetric. Add a test showing that changing the body of an added operation changes its change id."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 867,
+        "description": "source_removed rows carry affectedOperations and retainedCapability but no nativeBindings. The plan (line 286-287) says every class carries native bindings for removed operations, and operation_removed does include them.",
+        "required_fix": "Add nativeBindings for every operation of the removed source, as sorted (operation, bindings) pairs, and assert it in DeletionTests.test_deletions_retain_native_capability."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 673,
+        "description": "compare_union identifies branches by their whole stripped content. A nested change inside one branch is reported as union_variant_removed plus union_variant_inserted rather than a scoped type or constraint change. The result is safe (breaking) but imprecise for reviewers.",
+        "required_fix": "When a branch at the same index differs and the branch count is unchanged, recurse with compare_schema at parts+[index] instead of emitting removed plus inserted. Add a test for it."
+      }
+    ],
+    "evidence": [
+      "The checks file (`phase-25-chunk-semantic-drift-attempt-01.checks.json`) records source_sha256 cc3bcb43\u2026 with passed=true. Every check I sampled exits 0 with source_unchanged=true.",
+      "checks.json:2303-2320 records `airs_drift.py --check`, exit 0: 'pinned baseline verified; ledger current; baseline self-compare unchanged'.",
+      "checks.json:2322-2352: test_airs_drift ran 37 tests, all OK. They cover additions, deletions, renames (exact, edited, ambiguous, dangling), type and requiredness in both directions, unions, security and servers, same-version changes, unknown changes, tampering, refresh and the output guard.",
+      "checks.json:2391-2408: `red_team_management.py --check --require-through-phase 25`, exit 0, '...upstream drift baseline verified; drift reported, never adopted'.",
+      "checks.json:2273-2293: `git diff --exit-code b66133892b\u2026 -- crates/scm-sdk Cargo.* LICENSE NOTICE` exited 0, so the SDK was not mutated.",
+      "tools/check_phase.py:417-439 adds the drift commands to the phase 25 gate ahead of the Rust matrix; red_team_management.py:876-880 calls airs_drift.verify.",
+      "airs_drift.py:975-1067 verifies the candidate end to end: tree hash, contentSha256, mode 100644 only, safe paths, symlink rejection, exact file set, sha256/blob/size, and rejection of the pinned commit with differing bytes.",
+      "airs_drift.py:1200-1304: refresh refuses redirects, allows only the GitHub API and raw hosts, enforces size limits, rejects truncation, recomputes tree hashes, sends the token only to API requests, and writes outputs with exclusive creation.",
+      "airs_drift.py:1167-1186: guarded_output limits writes to docs/checks/airs-drift/ or .local/airs-drift/ and rejects symlinks along the path.",
+      "contracts/airs-drift.json binds five artifacts by sha256 and has seven source rows. There is no baselineTree, as the test at test_airs_drift.py:119 expects.",
+      "test_airs_drift.py:392-414: unknown-change cases modify only the existing Channel schema or GET operation; there is no case for an added subtree."
+    ],
+    "limitations": [
+      "Read-only review: I did not run any tests or tools myself. Execution evidence comes only from the recorded checks file.",
+      "I could not check whether the live pan.dev product directories contain only the seven spec files. A real refresh against a tree with other files would fail comparison by design, and the inventory reports includedSpecFiles=7.",
+      "No remote CI evidence was examined. The plan's 'remote CI' finish step is outside this chunk.",
+      "I did not inspect `git_tree_hash` in tools/verify-contracts.py, the js-yaml subprocess reader, or the historical phase 21-24 infrastructure in depth.",
+      "I sampled only part of the 3278-line checks file and grepped the rest for failures and timeouts; none were found."
+    ],
+    "categories": {
+      "implementation": 8.5,
+      "code_quality": 8,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 8.5
+    },
+    "total": 43
+  },
+  "rubric": "five-category-v1",
+  "chunk": "semantic-drift",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "tools/airs_drift.py",
+    "tools/test_airs_drift.py",
+    "contracts/airs-drift.json",
+    "tools/red_team_management.py",
+    "tools/test_red_team_management.py",
+    "contracts/vendor/red-team-management/0.86.0",
+    "tools/check_phase.py",
+    "tools/test_management_phases.py",
+    "docs/red-team-management-0.86-plan.md",
+    "docs/PHASES.md"
+  ]
+}
