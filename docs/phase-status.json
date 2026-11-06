@@ -6791,7 +6791,34 @@
       },
       "final_in_sequence": true,
       "plan": "docs/red-team-management-0.86-plan.md",
-      "authorization": "Maintainer instruction 2026-11-06: complete the missing parts of phases 24, 28 and 25 (phase 24 closed as superseded by 0.2.4; phase 28 completed via historical delivery)."
+      "authorization": "Maintainer instruction 2026-11-06: complete the missing parts of phases 24, 28 and 25 (phase 24 closed as superseded by 0.2.4; phase 28 completed via historical delivery).",
+      "remote_ci": {
+        "status": "success",
+        "receipt": "docs/checks/phase-25-remote-ci-run-48.json",
+        "run": 48,
+        "source_commit": "22c06a1",
+        "note": "Run 47 on ebf34ec (identical fingerprint) failed rust (management, 1.89.0) and (management, 1.99.0) at the same second after ~22 min, consistent with a runner-side event; the SDK crate is unchanged since b661338 (git diff --exit-code in the gate) and both feature sets passed in the local gate. Run 45 on 81a68d8 failed contracts on a CI-only test defect (governance test needing gitignored retained archives), fixed in ebf34ec."
+      },
+      "limitations": [
+        {
+          "id": "drift-low-findings",
+          "status": "accepted_limitation",
+          "scope": "Phase review attempt 2 lows: a duplicated oneOf branch is labelled additive (still review_required); the coverage net is per operation/component, not per field. Semantic-drift attempt 5 lows: reviewedCandidateChanges is always empty and unread; benign edits such as an explicit required:false fail closed through the coverage net; the module is large and mutually referencing renames are classified as removed plus added.",
+          "evidence": [
+            "docs/reviews/phase-25-attempt-02.json",
+            "docs/reviews/phase-25-chunk-semantic-drift-attempt-05.json"
+          ]
+        },
+        {
+          "id": "baseline-tree-unpopulated",
+          "status": "deferred",
+          "scope": "contracts/airs-drift.json has no baselineTree: populating it needs one explicit maintainer-invoked online refresh of the pinned pan.dev commit (tools/airs_drift.py refresh), which was not run; the refresh path is tested only with an injected fetcher.",
+          "evidence": [
+            "contracts/airs-drift.json",
+            "tools/test_airs_drift.py"
+          ]
+        }
+      ]
     },
     {
       "id": 26,
