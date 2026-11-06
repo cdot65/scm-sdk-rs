@@ -209,9 +209,10 @@ independent transport/parser/contract checks remain recorded. Red Team permissio
 and DLP service deployment are similarly assessed from actual receipts without
 assuming that management-console access grants product permissions.
 
-Native execution currently covers Linux x86_64 musl. See [platform evidence](/developer/platforms)
-for the separately labeled compile checks and [phase status](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/phase-status.json)
-for retained remote Forgejo qualification. The [registry publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/6f18529a47cc273feca1000af6e4fc0d96da757e/docs/checks/release-registry-0.1.0.json)
+The 0.2.5 live receipts were produced on Linux x86_64 (`x86_64-unknown-linux-gnu`). See
+[platform evidence](/developer/platforms) for the separately labeled compile checks and
+[phase status](https://github.com/cdot65/scm-sdk-rs/blob/4290325/docs/phase-status.json) for retained
+remote Forgejo qualification. The [0.2.5 registry publication receipt](https://github.com/cdot65/scm-sdk-rs/blob/5538ecb/docs/checks/release-registry-0.2.5.json)
 separately records the published artifact and its exact source; publication does
 not expand live or native platform acceptance.
 
