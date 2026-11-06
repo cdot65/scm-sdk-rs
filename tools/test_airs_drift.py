@@ -117,7 +117,9 @@ class IdentityAndDeterminismTests(DriftTestCase):
         self.assertEqual(document['changeClasses'], drift.CHANGE_CLASSES)
         self.assertEqual(document['reviewedCandidateChanges'], [])
         self.assertEqual(document['policy'], drift.POLICY)
-        self.assertNotIn('baselineTree', document)
+        # Populated from an explicit refresh of the pinned commit (2026-11-06) and rechecked by --check.
+        self.assertEqual(document['baselineTree']['commit'], rtm.COMMIT)
+        self.assertEqual({tree['path'] for tree in document['baselineTree']['productTrees']}, set(drift.PRODUCT_DIRECTORIES))
         self.assertEqual({row['upstreamPath'] for row in document['sources']}, set(rtm.COUNTS))
         for row in document['sources']:
             data = self.base[row['upstreamPath']]['bytes']

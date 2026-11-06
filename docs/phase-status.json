@@ -6837,11 +6837,12 @@
         },
         {
           "id": "baseline-tree-unpopulated",
-          "status": "deferred",
-          "scope": "contracts/airs-drift.json has no baselineTree: populating it needs one explicit maintainer-invoked online refresh of the pinned pan.dev commit (tools/airs_drift.py refresh), which was not run; the refresh path is tested only with an injected fetcher.",
+          "status": "resolved",
+          "scope": "Resolved 2026-11-06: explicit online refresh of pinned pan.dev 582e305 verified unchanged and populated contracts/airs-drift.json baselineTree; a refresh of pan.dev HEAD b5ef166 (2026-11-05) reports no drift.",
           "evidence": [
             "contracts/airs-drift.json",
-            "tools/test_airs_drift.py"
+            "docs/checks/airs-drift/582e30543bf2adfd8b0ee457170d22b5c380dfbe.json",
+            "docs/checks/airs-drift/b5ef166409511d5c7d894352b1a578249787d6dc.json"
           ]
         }
       ],
