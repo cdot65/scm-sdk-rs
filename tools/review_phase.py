@@ -402,6 +402,30 @@ def accepted_chunks(root, phase, declared, source_sha256, phase_review=None):
     return accepted
 
 
+def validate_superseded(root, status, item):
+    """A superseded phase satisfies a later gate only through its completed successor.
+
+    Maintainer-authorized closure (phase 24 by 0.2.4): the superseding phase must be a
+    later phase that is itself complete with valid accepted review evidence, and the
+    closure must state its reason and retain existing evidence files.
+    """
+    rows = {row["id"]: row for row in status["phases"]}
+    closure = item.get("superseded_by")
+    if (not isinstance(closure, dict) or type(closure.get("phase")) is not int or closure["phase"] <= item["id"]
+            or not isinstance(closure.get("version"), str) or not closure.get("reason")
+            or not closure.get("authorization")):
+        raise ValueError("Superseded phase must name a later superseding phase, version, reason and authorization")
+    evidence = closure.get("evidence")
+    if (not isinstance(evidence, list) or not evidence
+            or not all(isinstance(path, str) and (root / path).is_file() for path in evidence)):
+        raise ValueError("Superseded phase closure evidence is missing")
+    successor = rows.get(closure["phase"], {})
+    if successor.get("status") != "complete" or not successor.get("reviews"):
+        raise ValueError("Superseding phase has not passed its gate")
+    if not verify_record(root, root / successor["reviews"][-1], successor["id"], successor.get("accepted_source_sha256")):
+        raise ValueError("Superseding phase review evidence is invalid")
+
+
 def validate_predecessors(root, status, phase):
     # Independently authorized 0.35.0 maintenance; never reset phase 24/25 gates.
     maintenance_dependencies = {26: [23], 27: [26], 28: [27]}
@@ -425,6 +449,9 @@ def validate_predecessors(root, status, phase):
         return
     for item in status["phases"]:
         if item["id"] >= phase:
+            continue
+        if item.get("status") == "superseded":
+            validate_superseded(root, status, item)
             continue
         if item["status"] != "complete" or not item.get("reviews"):
             raise ValueError("Earlier phases have not passed their gates")

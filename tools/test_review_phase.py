@@ -246,6 +246,35 @@ class ReviewRecordTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_predecessors(self.root, self.status, 2)
 
+    def test_superseded_predecessor_requires_a_completed_later_successor(self):
+        evidence = self.root / "docs/checks/closure.json"
+        evidence.parent.mkdir(parents=True, exist_ok=True)
+        evidence.write_text("{}")
+        status = copy.deepcopy(self.status)
+        status["phases"][0]["status"] = "superseded"
+        closure = {"phase": 2, "version": "9.9.9", "reason": "post-release advisory", "authorization": "maintainer",
+                   "evidence": ["docs/checks/closure.json"]}
+        status["phases"][0]["superseded_by"] = closure
+        with self.assertRaisesRegex(ValueError, "Superseding phase has not passed"):
+            validate_predecessors(self.root, status, 3)
+        status["phases"][1].update({"status": "complete", "reviews": ["docs/reviews/phase-01-attempt-01.json"]})
+        from review_phase import validate_superseded
+        with patch("review_phase.verify_record", return_value=True) as verified:
+            validate_superseded(self.root, status, status["phases"][0])
+            verified.assert_called_once()
+            validate_predecessors(self.root, status, 2)  # the superseded phase no longer blocks a later gate
+        with patch("review_phase.verify_record", return_value=False):
+            with self.assertRaisesRegex(ValueError, "review evidence is invalid"):
+                validate_superseded(self.root, status, status["phases"][0])
+        for broken in ({**closure, "phase": 1}, {**closure, "reason": ""}, {**closure, "evidence": ["absent.json"]},
+                       {k: v for k, v in closure.items() if k != "authorization"}):
+            status["phases"][0]["superseded_by"] = broken
+            with self.assertRaises(ValueError):
+                validate_superseded(self.root, status, status["phases"][0])
+        del status["phases"][0]["superseded_by"]
+        with self.assertRaises(ValueError):
+            validate_superseded(self.root, status, status["phases"][0])
+
     def test_advance_requires_review_path(self):
         with self.assertRaises(ValueError):
             main(["--phase", "1", "--advance"], self.root)
