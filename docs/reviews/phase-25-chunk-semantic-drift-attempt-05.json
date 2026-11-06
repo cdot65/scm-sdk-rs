@@ -1,0 +1,89 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 25,
+  "attempt": 5,
+  "reviewed_at": "2026-11-06T17:44:52.984154+00:00",
+  "source_sha256": "b591553db03c917721321833125a11551d59009966893871acd1a0ee42e3586d",
+  "source_unchanged": true,
+  "checks_sha256": "35e63838ada9f2798300d5caf76b0522ebe07746c277a1a74acb897770a5226b",
+  "prompt_sha256": "61c6a58d8d1ad8a0c75c36ad43d1076992a3f71a87dd95af4059ee3ca744b9da",
+  "cli_output_sha256": "8855a5f2ec19ca351404e1291ad5e1c61acd032a1e3e79c2b85481858a154b20",
+  "gate_passed": true,
+  "review": {
+    "summary": "The semantic-drift chunk meets the attempt-5 bar: 43/50, every category at least 8, no blocker or high findings. The checks file is bound to the reviewed source hash and every check passed (0 failures, no timeouts), including `airs_drift.py --check` and 52 drift unit tests. The classifier models operations, components, unions, security and servers. Unknown keywords and unrecognised extensions fail closed. Candidate trees are hash-chained and checked for tampering. The online refresh is opt-in, never runs in checks, refuses redirects and is size-capped. A coverage net now catches operation or component differences that a compare method misses. One narrow gap remains: the check that decides whether a root-level servers or security change was already reported per operation matches on the pointer's ending. That can silently drop a real root-level change. Other findings are low: dead ledger field, overly strict failures, single-file layout.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/airs_drift.py",
+        "line": 638,
+        "description": "`inherited()` treats any change whose pointer starts with /paths/ and ends with /servers or /security as proof that a root-level change was already reported per operation. Suppose every operation overrides servers/security and one override changes, or an inline schema property named `servers` or `security` changes under /paths. Then a real root-level change is never emitted. `require_coverage` does not check rootServers/rootSecurity, and the final 'no changes' net (line 650) does not fire because other changes exist. The difference is silently dropped, against the chunk's never-drop guarantee.",
+        "required_fix": "Decide inheritance from the model, not pointer text. Report the root change at /servers or /security unless at least one operation actually inherits it, i.e. has no operation- or path-level override. Also add rootServers/rootSecurity to `require_coverage`, and add a test that combines an override change with a root change."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 1329,
+        "description": "`reviewedCandidateChanges` is always written as []. Nothing reads it, so a candidate already reviewed still reports review_required on every compare. The field implies a review mechanism that does not exist.",
+        "required_fix": "Either remove the field, or document that reviewed drift is recorded only through REVIEWED_DELTAS in red_team_management.py and that this field is reserved."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 990,
+        "description": "Some benign edits produce no classified change and then hit the coverage net: adding an explicit `required: false` to a parameter or body, or a schema/operation `deprecated`/`summary` edit, which is listed as an annotation in CHANGE_CLASSES. The run fails closed. That is safe but noisy, and the CHANGE_CLASSES meaning for annotation_changed overstates what schemas accept.",
+        "required_fix": "Classify missing vs. false `required` as annotation, or document it as fail-closed. Align the annotation_changed meaning with rtm.ANNOTATIONS, or add `summary`/`deprecated` explicitly."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 1,
+        "description": "About 1,600 lines in one module mix the classifier, tree verification, the output guard, network refresh and the CLI. Rename detection only maps self-references, so mutually referencing renames are classified as removed plus added. That is conservative but undocumented.",
+        "required_fix": "Optionally split refresh/tree verification from the classifier, and document the limits of rename detection in docs/red-team-management-0.86-plan.md."
+      }
+    ],
+    "evidence": [
+      "The checks file is bound to source_sha256 b591553d\u2026586d with passed=true and source_unchanged=true. Grepping for non-zero exit codes and timeouts found none.",
+      "`python tools/airs_drift.py --check` exit 0: 'pinned baseline verified; ledger current; baseline self-compare unchanged' (checks.json:2302-2321).",
+      "`test_airs_drift.py` ran 52 tests, all OK. They cover additions, deletions, renames, same-version changes, whitespace-only diffs, tree/candidate tampering, refresh failures, the output guard, network isolation and the coverage net (checks.json:2348).",
+      "`test_red_team_management.py` passed 51 tests, `test_management_phases.py` 28 and `test_review_phase.py` 54. `red_team_management.py --check` and `--current-source-compatibility` both passed.",
+      "airs_drift.py:654-677 `require_coverage` fails when an operation or component model differs without a classified change; this resolves the prior silent-drop finding (commit 530dc9d).",
+      "airs_drift.py:1197-1289 verifies the tree: mode 100644 only, safe_relative paths, git tree and blob hashes, the content digest, exact file set, symlink rejection, and pinned-commit byte equality.",
+      "airs_drift.py:1422-1526 refresh: commit must be 40 hex, redirects refused via NoRedirect, read(limit+1) size cap, token sent only to the API host and never written to the output, files created with exclusive mode under guarded roots.",
+      "Inventory.json confirms the pinned tree holds exactly 7 files across the three product directories, matching the exact-set check at line 1275.",
+      "check_phase.py:42 and 431-432 wire `contracts/airs-drift.json` to `airs_drift.py --check` and the test suite. red_team_management.py:879-880 calls `airs_drift.verify` for the phase 25 gate.",
+      "contracts/airs-drift.json records classifierVersion 5 and no baselineTree; the baseline tree is optional per the plan."
+    ],
+    "limitations": [
+      "Review is read-only static inspection; I did not run any tools. The edge cases I describe come from reading the code, not from running them.",
+      "The online refresh was not exercised against GitHub; the tests use a mocked fetcher.",
+      "Remote CI completion and the phase-level review are out of scope for this chunk and not verified here.",
+      "I read the checks file selectively, via grep and targeted ranges, not every one of its 3,278 lines.",
+      "`baselineTree` is not populated, so the ledger does not yet contain upstream tree-hash binding for the pinned commit."
+    ],
+    "categories": {
+      "implementation": 8,
+      "code_quality": 8,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 43,
+    "score": 8.6
+  },
+  "rubric": "five-category-v1",
+  "chunk": "semantic-drift",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "tools/airs_drift.py",
+    "tools/test_airs_drift.py",
+    "contracts/airs-drift.json",
+    "tools/red_team_management.py",
+    "tools/test_red_team_management.py",
+    "contracts/vendor/red-team-management/0.86.0",
+    "tools/check_phase.py",
+    "tools/test_management_phases.py",
+    "docs/red-team-management-0.86-plan.md",
+    "docs/PHASES.md"
+  ]
+}
