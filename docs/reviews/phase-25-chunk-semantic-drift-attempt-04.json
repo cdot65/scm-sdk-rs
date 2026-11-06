@@ -1,0 +1,83 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 25,
+  "attempt": 4,
+  "reviewed_at": "2026-11-06T17:26:00.756314+00:00",
+  "source_sha256": "a220e2a0649ae77fe61940145f6699e84315dcb6fa8a2451a941cc0a58c189a2",
+  "source_unchanged": true,
+  "checks_sha256": "85c93e8bda2175a46bf3e4aa74bd903ad6a2d47ec76b298ea98a40a08777999a",
+  "prompt_sha256": "a0e1566a06dd3ba0bb964b8b9b4dffb11658a28c981170e49835f67af3c96d48",
+  "cli_output_sha256": "5fff5a9c8c8299406805697c5c70dd9f9b5a73af95a75d14c24b4662f9573000",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Attempt 4 closes the three low findings from attempt 3. compare_reference now scans an inline replacement of a parameter, body or response $ref before emitting. Existing security schemes fail closed on unknown keys. Added operations have their servers and security scanned, and changed servers are scanned too. CLASSIFIER_VERSION is 4 and the ledger matches it. In the recorded checks for source a220e2a\u2026, every exit code is 0: airs_drift --check, 46 drift tests including the new reference/servers/security/schemes test, --require-through-phase 25, and an unchanged SDK diff. One minor gap from attempt 3 is still open: a non-dict schema that becomes a dict at a property-name pointer is not scanned. There are also smaller unscanned shapes in security changes on existing operations and in security-scheme flows. All are low. Total 45/50.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 724,
+        "description": "compare_schema's non-dict branch emits type_changed at the caller's pointer. When that pointer ends in a property name (for example a boolean schema `true` becoming a dict with discriminator or x-*), line 438 does not scan the new side, because the last pointer part is not in SCHEMA_SUBTREES and is not an int. The attempt-3 finding named this case explicitly, and it is still unresolved.",
+        "required_fix": "In the non-dict branch, call self.scan_schema(new, parts) when new is a dict before emitting. Add a test that changes a property from `true` to `{discriminator: ...}` and expects 'no receipt written'."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 882,
+        "description": "When an existing operation's security changes, it is emitted as security_changed without scan_security. A malformed requirement (for example non-list scopes) is classified instead of failing closed, while the same shape on an added operation fails.",
+        "required_fix": "Call self.scan_security(new['security'], parts + ['security']) before emitting security_changed. Add one test."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 715,
+        "description": "SECURITY_SCHEME_KNOWN checks only top-level scheme keys. An x-* key or an unknown key inside 'flows' (or inside a flow object) on an added or changed scheme is classified as security_scheme_changed or treated as additive.",
+        "required_fix": "Validate flow names (implicit, password, clientCredentials, authorizationCode) and flow keys (authorizationUrl, tokenUrl, refreshUrl, scopes) in both scan_component and compare_security_scheme."
+      }
+    ],
+    "evidence": [
+      "attempt-04.checks.json: passed=true and source_sha256 a220e2a\u2026. Grepping for non-zero exit codes found none.",
+      "checks.json:2302-2320: `airs_drift.py --check` exit 0, 'pinned baseline verified; ledger current; baseline self-compare unchanged'.",
+      "checks.json:2322-2348: test_airs_drift ran 46 tests OK (45 in attempt 3), including test_reference_replacements_servers_security_and_schemes_fail_closed.",
+      "checks.json:2386-2403: --require-through-phase 25 exit 0, 'upstream drift baseline verified; drift reported, never adopted'.",
+      "checks.json:2268-2293: `git diff --exit-code b66133892b\u2026 -- crates/scm-sdk Cargo.* LICENSE NOTICE` exit 0, so the SDK was not mutated.",
+      "airs_drift.py:899-909: compare_reference takes a scan callable and runs it on the new side before emitting type_changed. Callers pass scan_parameter (912) and scan_body or scan_response (938-939). This resolves attempt-3 low #1 for parameters, bodies and responses.",
+      "airs_drift.py:711-718: compare_security_scheme fails on keys outside SECURITY_SCHEME_KNOWN, which resolves attempt-3 low #2. The test case 'existing-scheme-extension' is at test_airs_drift.py:485-486.",
+      "airs_drift.py:512-536 with SERVER_KNOWN and SERVER_VARIABLE_KNOWN (123-124): scan_operation scans servers and security, and compare_servers (889) scans the new servers. This resolves attempt-3 low #3. Test cases are at test_airs_drift.py:479-484.",
+      "The 'response-ref-to-inline' test replaces the existing GET /v1/channels 400 response (a $ref to BadRequest in the pinned network-broker YAML, lines 190 and 252) with inline content, so it exercises the compare_reference scan path.",
+      "airs_drift.py:37 sets CLASSIFIER_VERSION = 4, and contracts/airs-drift.json:245 records classifierVersion 4. check_phase.py:42 and 431-432 bind the ledger and the drift suite to the phase gate.",
+      "The behavior in plan lines 254-303 (offline check and compare, refresh as the only networked path, unknown changes fail with no receipt) matches the implementation and the test classes."
+    ],
+    "limitations": [
+      "Read-only review. I did not run tests or tools myself; all execution evidence comes from the recorded checks file.",
+      "I read about 600 lines of the 3278-line checks file and used grep for the rest (exit codes, test counts, airs_drift entries).",
+      "I did not re-audit red_team_management.py, check_phase.py, test_management_phases.py or the vendor 0.86.0 bytes beyond their passing recorded checks. Earlier attempts accepted them, and this attempt's changes are in airs_drift.py and its tests.",
+      "I found the remaining gaps by reading the code and did not reproduce them with a run.",
+      "I did not examine remote CI or a live pan.dev refresh."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8.5,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9.5
+    },
+    "total": 45
+  },
+  "rubric": "five-category-v1",
+  "chunk": "semantic-drift",
+  "decision": "accepted",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    "tools/airs_drift.py",
+    "tools/test_airs_drift.py",
+    "contracts/airs-drift.json",
+    "tools/red_team_management.py",
+    "tools/test_red_team_management.py",
+    "contracts/vendor/red-team-management/0.86.0",
+    "tools/check_phase.py",
+    "tools/test_management_phases.py",
+    "docs/red-team-management-0.86-plan.md",
+    "docs/PHASES.md"
+  ]
+}
