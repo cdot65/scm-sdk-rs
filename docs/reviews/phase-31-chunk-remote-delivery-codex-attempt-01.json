@@ -1,0 +1,59 @@
+{
+  "phase": 31,
+  "chunk": "remote-delivery",
+  "attempt": 1,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "b9f08c9ee2541474d4d43d960972c822931d7e25c5352ab4e273c56faf63d5fa",
+  "scope_evidence": [
+    "docs/RELEASE.md",
+    "tools/release_delivery.py",
+    "tools/test_release_delivery.py",
+    "tools/test_release_025.py",
+    "scripts/observe-release.py",
+    "tools/test_release_023.py",
+    "scripts/verify-publication.py",
+    "scripts/check-prepublication.py",
+    "docs/checks/release-registry-0.2.5.json",
+    "docs/checks/release-tag-v0.2.5.json",
+    "docs/checks/release-tag-github-v0.2.5.json",
+    "docs/checks/phase-31-remote-ci-run-37.json"
+  ],
+  "prompt_sha256": "426a0f8111ba1c1663bf6c4cfa6241c5bea06881f2283dfb5beeca0d6e4e9b22",
+  "checks_sha256": "057509e197ba42ed304251aaad6b85fb23c4b32c4ca5af1735443383b4277d96",
+  "requested_at": "2026-11-06T03:39:23.798804+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 8,
+    "summary": "The recorded delivery evidence is internally consistent, but phase 31 skips retained registry archive verification. This regression in the completion gate requires correction before acceptance.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "tools/release_delivery.py",
+        "line": 359,
+        "description": "The governance-successor branch verifies the package proofs but bypasses verify_retained_registry(), which now runs only for phases 24 and 28. Consequently, phase 31 can complete with missing or corrupted retained registry evidence. In a read-only reproduction, replacing only the registry receipt's retainedArchive value in memory with a nonexistent path still returned passed=true; verify_retained_registry was never called. The actual retained archive independently verified successfully, so this is a gate regression rather than evidence of incorrect publication.",
+        "required_fix": "Run verify_retained_registry for phase 31 after verifying its published-source package proofs. Add a regression exercising the complete phase-31 verify path that rejects missing, corrupted and improperly located registry archives."
+      }
+    ],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/portkey-mcp-tags-plan.md and the phase-31 status entry.",
+      "Inspected every scoped source, test and receipt artifact, including publication/readiness guards and newest-status CI selection.",
+      "Recomputed source fingerprint b9f08c9ee2541474d4d43d960972c822931d7e25c5352ab4e273c56faf63d5fa. Verified docs/checks/phase-31.json contains the required 113 commands, all recorded successful without timeouts.",
+      "Executed the offline delivery verifier successfully: published commit 4adbe971bce30b129bbd9a1a858540f4bca6c22b, CI commit bcbab09acb983838068cf987f8cf4ad93e423b3f, 49 successful contexts.",
+      "Verified both retained clean-package proofs through the delivery verifier; inspected their 18 successful command records per compiler and matching 145-file inventories.",
+      "Independently verified the retained registry archive and registry receipt's package-proof and publication-verifier hashes. Inspected matching canonical/GitHub annotated-tag receipts and run-37 evidence.",
+      "Executed seven read-only delivery validation tests successfully and reproduced the missing-registry-archive bypass using an in-memory receipt substitution.",
+      "Executed the offline site-binding check successfully for site commit cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720."
+    ],
+    "limitations": [
+      "No network requests, credential access, tenant contact or checkout changes were performed. Remote publication, tags and CI were assessed through retained observations.",
+      "The full Rust, package, Python and Docusaurus build suites were not rerun; their recorded results were inspected. Only the specified read-only verifications and seven tests were executed.",
+      "Windows compilation remains unverified as documented. This chunk review does not establish complete-phase acceptance."
+    ]
+  },
+  "decision": "rejected",
+  "output_sha256": "0817b66a21d96e4f634865078bad34fa153b83e19c2bafa3a3fc9b0b7179c498",
+  "events_sha256": "5bdc616ccaad5b4401f06affc72184735032abf907980e91de1de03d5459a5aa",
+  "completed_at": "2026-11-06T03:42:09.587588+00:00"
+}
