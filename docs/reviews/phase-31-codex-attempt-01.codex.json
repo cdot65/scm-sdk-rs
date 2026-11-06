@@ -1,0 +1,29 @@
+{
+  "score": 9,
+  "summary": "Phase 31 meets the acceptance threshold. The exact source fingerprint, package qualification, retained registry archive, annotated tags, terminal CI and deployed documentation binding verify offline. No blocker or high finding remains; one documented low-severity documentation inconsistency persists.",
+  "findings": [
+    {
+      "severity": "low",
+      "path": ".local/docs-site-worktree/docs-site/docs/developer/live-qualification.md",
+      "line": 212,
+      "description": "The evidence footer names Linux musl and links historical phase status and the 0.1.0 registry receipt, whereas the current phase-31 receipts identify x86_64-unknown-linux-gnu and version 0.2.5.",
+      "required_fix": "In the next documentation update, identify the current GNU target and 0.2.5 evidence, label historical references explicitly, and refresh deployment receipts and the site binding."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, the accepted phases 29\u201331 plan and phase-31 status.",
+    "Recomputed fingerprint 0c6408af8120ffd046fe12554f5a31ebcc0572b058651321527b161718106c9b; check_evidence and all three chunk-acceptance verifications passed.",
+    "Inspected docs/checks/phase-31.json: 113 commands, all exit codes zero without timeouts; command inventory matches the current gate.",
+    "Inspected both clean extracted-package receipts: Rust 1.89.0 and 1.99.0 each record 18 successful checks, including examples and external consumers.",
+    "Executed the offline release-delivery verifier successfully: published commit 4adbe971bce30b129bbd9a1a858540f4bca6c22b, retained archives, canonical and mirror tags, and 49 successful CI contexts on governance successor bcbab09acb983838068cf987f8cf4ad93e423b3f.",
+    "Executed site-binding verification successfully for cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720; inspected deployment receipts recording successful typecheck, Docusaurus build, deployment and page/artifact comparisons.",
+    "Reviewed release, publication, observation, review-gate and site-binding code and regression tests. Recorded results include 23 Codex-harness, 17 release-0.2.5, 8 site-binding and 11 release-observation tests passing.",
+    "Inspected phase-31 attempt-02 live receipts and ledger changes; offline MCP receipt verification passed with 19 successful steps, two fixtures deleted and no uncertain fixtures."
+  ],
+  "limitations": [
+    "No network requests, credential access, tenant access or checkout edits occurred. Remote outcomes were assessed through retained receipts and local artifacts.",
+    "Compilation, test suites and the documentation build were not rerun; their recorded results were inspected. Only read-only evidence verifiers were executed.",
+    "Windows compilation remains unverified. Successful delivery CI ran on an allowlisted governance successor, not the published commit.",
+    "Read-only service evidence verifies OAuth only; four Red Team probes returned permission prerequisites. MCP acceptance covers the recorded workflow, not broader provider or service functionality."
+  ]
+}
