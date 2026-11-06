@@ -212,6 +212,21 @@ class Release025Tests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'does not descend'):
                 release_delivery.verify_governance_successor_commit(root, 31, release, published, run('rev-parse', 'HEAD'))
 
+    def test_successor_delivery_verifies_package_proofs_against_the_published_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            (root / 'scripts').mkdir()
+            (root / 'scripts/check-management-package.py').write_text(
+                'import json, pathlib\n'
+                'def verify_receipt(root, path, toolchain, source_sha=None, *, require_directional=False):\n'
+                '    log = pathlib.Path(root) / "calls.jsonl"\n'
+                '    log.write_text((log.read_text() if log.exists() else "") + json.dumps(\n'
+                '        [pathlib.Path(path).name, toolchain, source_sha, require_directional]) + "\\n")\n')
+            release_delivery.verify_management_receipts(root, 31, 'p' * 64)
+            calls = [json.loads(line) for line in (root / 'calls.jsonl').read_text().splitlines()]
+        self.assertEqual(calls, [['phase-31-release-package-1.99.0.json', '1.99.0', 'p' * 64, True],
+                                 ['phase-31-release-package-1.89.0.json', '1.89.0', 'p' * 64, True]])
+
     def test_delivery_binds_receipts_to_the_published_source_for_a_governance_successor(self):
         with mock.patch.object(release_delivery, 'fingerprint', return_value='c' * 64), \
                 mock.patch.object(release_delivery, 'published_source', return_value=('a' * 40, 'p' * 64)), \

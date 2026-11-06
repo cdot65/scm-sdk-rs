@@ -300,6 +300,16 @@ def verify_github_tag(root, delivery, canonical, phase, version):
             'GitHub annotated tag differs from qualified canonical release')
 
 
+def verify_management_receipts(root, phase_id, published_sha256):
+    """Verify both schema-3 clean package proofs against the published source fingerprint."""
+    spec = importlib.util.spec_from_file_location('delivery_management_package', root / 'scripts/check-management-package.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    for toolchain in ('1.99.0', '1.89.0'):
+        module.verify_receipt(root, root / f'docs/checks/phase-{phase_id}-release-package-{toolchain}.json', toolchain,
+                              published_sha256, require_directional=True)
+
+
 def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
     require((phase, version) in RELEASES, "Unreviewed release phase/version pair")
     phase_id = phase
@@ -346,11 +356,14 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
         require(publication.file_rows(files) == proof['files']
                 and publication.policy.validate_vcs(files, proof['releaseCommit'], True) == proof['vcs'],
                 'Retained archive files or VCS differ from clean proof')
-    if phase_id in (24, 28, 31):
+    if phase_id in GOVERNANCE_SUCCESSOR_PATHS:
+        # The clean package proofs qualify the published source, not a later governance successor.
+        verify_management_receipts(root, phase_id, source_sha256)
+    elif phase_id in (24, 28):
         publication.verify_management_proofs(
             root / f"docs/checks/phase-{phase_id}-release-package-1.99.0.json",
             root / f"docs/checks/phase-{phase_id}-release-package-1.89.0.json",
-            **({"require_directional": True} if phase_id in (28, 31) else {}))
+            **({"require_directional": True} if phase_id == 28 else {}))
         verify_retained_registry(root, registry, publication)
     ci_source_sha256 = source_sha256
     if phase_id in GOVERNANCE_SUCCESSOR_PATHS and ci.get('reviewedSourceSha256') != source_sha256:
