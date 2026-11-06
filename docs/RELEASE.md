@@ -312,6 +312,15 @@ commit, and every changed fingerprint input must be in the reviewed allowlist
 (`GOVERNANCE_SUCCESSOR_PATHS`: release/review tooling, their tests and release documents).
 Changes to the packaged crate, contracts, publication scripts, lockfiles or CI are refused.
 
+The terminal CI run may also be on a committed governance successor. Before the fix in
+`tools/codex_review.py`, `contracts-and-package` failed on every runner without the Codex CLI.
+That covers every commit since phase 29, including the release commit. So no CI run can pass on
+the exact published source. When the CI receipt's `reviewedSourceSha256` differs from the
+published fingerprint, `tools/release_delivery.py` requires the CI commit to descend from the
+release commit, to change only allowlisted paths, and to match its own committed fingerprint.
+The workflow, crate, contracts and lockfiles that CI exercised therefore match the published
+source byte for byte.
+
 Once `docs/checks/release-registry-0.2.5.json` exists, `tools/check_phase.py --phase 31` runs the
 post-publication gate. It contains the cumulative offline set, the delivery guard and the
 docs-site binding check. It never regenerates the release-bound package proofs or readiness

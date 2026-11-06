@@ -155,6 +155,9 @@ source and receipts, which are outside the SDK fingerprint. Phase 31 therefore a
 - governance successors in `tools/release_delivery.py`, which keep 0.2.5 delivery bound to the
   published fingerprint while only allowlisted governance paths change; and
 - the post-publication phase 31 gate in `tools/check_phase.py`.
+- a Codex CLI-free review harness: `contracts-and-package` failed from phase 29 onwards because
+  `tools/codex_review.py` probed `codex --version` unguarded. 0.2.5 delivery CI therefore runs
+  on a committed governance successor (see `docs/RELEASE.md`).
 
 `docs/RELEASE.md` ("After 0.2.5 publication") states the rules.
 
