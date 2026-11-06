@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 31,
+  "active_phase": 25,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations); additive Prisma AIRS OpenAPI reconciliation at pan.dev 582e30543bf2adfd8b0ee457170d22b5c380dfbe with retained SDK capabilities",
   "review_threshold": 9,
   "phases": [
@@ -6721,25 +6721,58 @@
     {
       "id": 25,
       "name": "Prisma AIRS upstream drift detection",
-      "status": "pending",
+      "status": "in_progress",
       "reviews": [],
       "scope_evidence": [
-        "docs/red-team-management-0.86-plan.md"
+        ".forgejo/workflows/ci.yml",
+        "contracts/airs-drift.json",
+        "contracts/vendor/red-team-management/0.86.0",
+        "docs/CI.md",
+        "docs/PHASES.md",
+        "docs/RELEASE.md",
+        "docs/red-team-management-0.86-plan.md",
+        "tools/airs_drift.py",
+        "tools/check_phase.py",
+        "tools/historical_delivery.py",
+        "tools/red_team_management.py",
+        "tools/review_phase.py",
+        "tools/test_airs_drift.py",
+        "tools/test_ci.py",
+        "tools/test_historical_delivery.py",
+        "tools/test_management_phases.py",
+        "tools/test_red_team_management.py",
+        "tools/test_review_phase.py"
       ],
       "chunks": [
         {
           "id": "semantic-drift",
           "status": "pending",
           "scope_evidence": [
+            "tools/airs_drift.py",
+            "tools/test_airs_drift.py",
+            "contracts/airs-drift.json",
             "tools/red_team_management.py",
-            "contracts/vendor/red-team-management/0.86.0"
+            "tools/test_red_team_management.py",
+            "contracts/vendor/red-team-management/0.86.0",
+            "tools/check_phase.py",
+            "tools/test_management_phases.py",
+            "docs/red-team-management-0.86-plan.md",
+            "docs/PHASES.md"
           ],
           "scope_revisions": [
             {
               "from_attempt": 1,
               "scope_evidence": [
+                "tools/airs_drift.py",
+                "tools/test_airs_drift.py",
+                "contracts/airs-drift.json",
                 "tools/red_team_management.py",
-                "contracts/vendor/red-team-management/0.86.0"
+                "tools/test_red_team_management.py",
+                "contracts/vendor/red-team-management/0.86.0",
+                "tools/check_phase.py",
+                "tools/test_management_phases.py",
+                "docs/red-team-management-0.86-plan.md",
+                "docs/PHASES.md"
               ]
             }
           ]
@@ -6757,7 +6790,8 @@
         }
       },
       "final_in_sequence": true,
-      "plan": "docs/red-team-management-0.86-plan.md"
+      "plan": "docs/red-team-management-0.86-plan.md",
+      "authorization": "Maintainer instruction 2026-11-06: complete the missing parts of phases 24, 28 and 25 (phase 24 closed as superseded by 0.2.4; phase 28 completed via historical delivery)."
     },
     {
       "id": 26,
