@@ -228,7 +228,8 @@ class HistoricalDeliveryTests(unittest.TestCase):
         rules.parent.mkdir()
         rules.write_text(pathlib.Path(hd.RULES).read_text())
         out = io.StringIO()
-        self.addCleanup(hd.bind_rules, pathlib.Path(hd.__file__).resolve().parents[1])
+        bound = pathlib.Path(hd.RULES).resolve()
+        self.addCleanup(hd.bind_rules, bound.parents[1])  # restore the rules bound before this test
         with mock.patch.dict(hd.RELEASES, {VERSION: self.spec}), mock.patch('sys.stdout', out):
             for argv in (['verify', '--version', VERSION, '--root', str(self.root)],
                          ['verify', '--version', VERSION, f'--root={self.root}']):
