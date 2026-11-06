@@ -6856,7 +6856,18 @@
         "architecture": 9.5,
         "feature_delivery": 9
       },
-      "review_decision": "accepted"
+      "review_decision": "accepted",
+      "post_completion_ci": [
+        {
+          "run": 51,
+          "commit": "4290325",
+          "status": "failure",
+          "failed": [
+            "rust (native-probes, 1.89.0)"
+          ],
+          "note": "Only the drift ledger, a Python test and receipts changed since 728d355 (run 50, 49/49); the same check passed locally on 4290325. Retried with an evidence-only commit."
+        }
+      ]
     },
     {
       "id": 26,
