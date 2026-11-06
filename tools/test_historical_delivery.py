@@ -222,7 +222,6 @@ class HistoricalDeliveryTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'manifest identity'):
                 self.verify()
 
-
     def test_cli_honours_both_root_forms_and_binds_that_trees_rules(self):
         rules = self.root / 'tools/release_delivery.py'
         rules.parent.mkdir()
