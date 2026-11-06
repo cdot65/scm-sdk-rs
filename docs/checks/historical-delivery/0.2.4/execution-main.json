@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "executedAt": "2026-11-06T13:51:21.728745+00:00",
+  "repositoryRoot": "/home/cdot/development/cdot65/scm-sdk-rs",
+  "headCommit": "e229c13a48bff0c8e31096b108fc9a8d1e69fb6a",
+  "workingTreeClean": true,
+  "tool": {
+    "path": "tools/historical_delivery.py",
+    "sha256": "73c05267d35132f4719c8dd67581f39e7d233faa45df629ea789bb57c7a2177c"
+  },
+  "tests": {
+    "path": "test_historical_delivery.py",
+    "sha256": "24d145b7a80f5b2b475eb75ff16da9188bae4d9d919c98ae616be5b7ac43d3a3",
+    "exitCode": 0,
+    "summary": [
+      "Ran 11 tests in 0.303s",
+      "OK"
+    ]
+  },
+  "verify": {
+    "command": [
+      "python",
+      "historical_delivery.py",
+      "verify",
+      "--version",
+      "0.2.4",
+      "--root",
+      "."
+    ],
+    "exitCode": 0,
+    "result": {
+      "version": "0.2.4",
+      "phase": 28,
+      "releaseCommit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+      "sourceSha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+      "ciCommit": "7dd0fffae49bca59776dfbe7f8271d56fd37ac7f",
+      "ciRun": 44,
+      "jobs": 49,
+      "failedContexts": [],
+      "status": "delivered"
+    },
+    "stderrTail": ""
+  }
+}
