@@ -1,0 +1,329 @@
+{
+  "bindings": [
+    {
+      "path": "contracts/airs-active-sources.json",
+      "sha256": "d3daba136c330e5682800b88086c7f4ae1f63f49083998df6a14e30fc0d561fa"
+    },
+    {
+      "path": "contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json",
+      "sha256": "9dbda6c467c10aa029021508e6e93c39e916fbdce34302b7b7277eb9bb3085a1"
+    },
+    {
+      "path": "contracts/vendor/red-team-management/0.86.0/source.json",
+      "sha256": "1f1959718dbd43cbfc1467e685a65515f9535bf9ca04a89f5e59a45aef9a1316"
+    },
+    {
+      "path": "contracts/airs-retained-capabilities.json",
+      "sha256": "a7a9f13ef70c6baa85abc915e7907f5bffab14260e46c456f0c5b0c4b98ac78c"
+    },
+    {
+      "path": "contracts/compatibility/airs-0.2.2-retention.json",
+      "sha256": "25a772562bc033381c21099850b46bea3392d8cfdd8454f21ef7e977523a6e86"
+    }
+  ],
+  "changeClasses": {
+    "annotation_changed": {
+      "dispositions": [
+        "annotation"
+      ],
+      "meaning": "description/title/example(s)/summary/tags documentation only."
+    },
+    "byte_only": {
+      "dispositions": [
+        "annotation"
+      ],
+      "meaning": "Bytes differ but the semantic model is identical (formatting, key or set order)."
+    },
+    "component_added": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "New named component."
+    },
+    "component_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Named component absent upstream; public names are retained."
+    },
+    "component_renamed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Exactly one removed and one added component with equal bodies after reference substitution."
+    },
+    "constraint_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Validation constraint, default or serialization differs."
+    },
+    "enum_order_changed": {
+      "dispositions": [
+        "annotation"
+      ],
+      "meaning": "Same enum value set in a different order."
+    },
+    "enum_value_added": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "New enum value."
+    },
+    "enum_value_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Enum value absent upstream."
+    },
+    "license_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "info.license differs; redistribution terms need review."
+    },
+    "media_type_added": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "New request or response media type."
+    },
+    "media_type_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Request or response media type absent upstream."
+    },
+    "operation_added": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "New METHOD path; no native binding exists yet."
+    },
+    "operation_id_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "operationId differs for the same METHOD path."
+    },
+    "operation_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "METHOD path absent upstream; native binding and retained capability remain."
+    },
+    "parameter_added": {
+      "dispositions": [
+        "additive",
+        "breaking"
+      ],
+      "meaning": "New parameter; breaking when required."
+    },
+    "parameter_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Parameter (in, name) absent upstream."
+    },
+    "property_added": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "New schema property."
+    },
+    "property_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Schema property absent upstream."
+    },
+    "request_body_added": {
+      "dispositions": [
+        "additive",
+        "breaking"
+      ],
+      "meaning": "New request body; breaking when required."
+    },
+    "request_body_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Request body absent upstream."
+    },
+    "requiredness_changed": {
+      "dispositions": [
+        "additive",
+        "breaking"
+      ],
+      "meaning": "Becomes-required is breaking; becomes-optional is additive."
+    },
+    "response_status_added": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "New response status."
+    },
+    "response_status_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Response status absent upstream."
+    },
+    "security_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Effective operation security requirement differs."
+    },
+    "security_scheme_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Security scheme definition differs."
+    },
+    "server_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Effective operation server URL or variables differ."
+    },
+    "source_added": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "New OpenAPI document under an AIRS product directory."
+    },
+    "source_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Pinned document absent upstream; SDK capability is retained."
+    },
+    "type_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "type/format/nullable/$ref/content type or schema shape differs."
+    },
+    "union_order_changed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "Same branches in a different precedence order."
+    },
+    "union_variant_appended": {
+      "dispositions": [
+        "additive"
+      ],
+      "meaning": "Old branches, ignoring a trailing {type: null}, remain an exact prefix."
+    },
+    "union_variant_inserted": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "New branch before an existing branch changes precedence."
+    },
+    "union_variant_removed": {
+      "dispositions": [
+        "breaking"
+      ],
+      "meaning": "anyOf/oneOf branch absent upstream."
+    },
+    "unknown": {
+      "dispositions": [
+        "fail_closed"
+      ],
+      "meaning": "Residual/extension/webhook/discriminator/not/external or dangling $ref/ambiguous rename: raises, no receipt."
+    },
+    "version_label_changed": {
+      "dispositions": [
+        "annotation"
+      ],
+      "meaning": "info.version differs; never used to classify content."
+    }
+  },
+  "classifierVersion": 1,
+  "evidenceLimit": "Offline comparison of committed pins and verified candidate trees; refresh is explicit and never runs in --check; reported drift is not adopted, live or runtime evidence.",
+  "policy": "Drift is reported, never adopted. Adoption requires a new reviewed pin via REVIEWED_DELTAS; upstream removals never authorize SDK removal.",
+  "productDirectories": [
+    "openapi-specs/prisma-airs",
+    "openapi-specs/prisma-airs-redteam",
+    "openapi-specs/prisma-airs-model-security"
+  ],
+  "repository": "https://github.com/PaloAltoNetworks/pan.dev",
+  "reviewedCandidateChanges": [],
+  "schemaVersion": 1,
+  "snapshotCommit": "582e30543bf2adfd8b0ee457170d22b5c380dfbe",
+  "sources": [
+    {
+      "activeSpecificationPath": "contracts/sources/pan-dev/openapi-specs/prisma-airs-model-security/dataplane/data-plane.yml",
+      "activeSpecificationSha256": "1a581d23ceb7456b9a5f978b212235e2149dadf917eae7d31e1463667339d6dc",
+      "componentCount": 40,
+      "gitBlobSha1": "22c3fc568112b3cf4cb6b44510989da2f5cb215f",
+      "operationCount": 18,
+      "semanticModelSha256": "3b2b1403f845640a9a72dc9ec0aef86f13406b4f25fcc862d925706347489c3b",
+      "upstreamPath": "openapi-specs/prisma-airs-model-security/dataplane/data-plane.yml",
+      "version": "0.1.0"
+    },
+    {
+      "activeSpecificationPath": "contracts/sources/pan-dev/openapi-specs/prisma-airs-model-security/management/mgmt-plane.yml",
+      "activeSpecificationSha256": "92b010dbe1b2ba96984aaaadfca95e4a2ff68a1fa98209765cfa1b0bcffcc808",
+      "componentCount": 46,
+      "gitBlobSha1": "edc9c968a08ae6751ac400b152c6817b9adbff2d",
+      "operationCount": 23,
+      "semanticModelSha256": "bf303675801f51bd4f861c31d24a77dfd6c33190ada091768e572e1459936d96",
+      "upstreamPath": "openapi-specs/prisma-airs-model-security/management/mgmt-plane.yml",
+      "version": "0.1.0"
+    },
+    {
+      "activeSpecificationPath": "contracts/vendor/red-team-data-plane/0.93.0/dp-openapi.yaml",
+      "activeSpecificationSha256": "77f015de78f2dfe9eee944601b94b541c8f111da35f847e40a36084829451ca1",
+      "componentCount": 153,
+      "gitBlobSha1": "f9761d0ae59f4ab1d3d64d5c9e28aba760532161",
+      "operationCount": 47,
+      "semanticModelSha256": "e6658bf0a5064e5bfcc974b837a187a7480bc26875a50ef826e0a56010a2d479",
+      "upstreamPath": "openapi-specs/prisma-airs-redteam/data-plane/dp-openapi.yaml",
+      "version": "0.93.0"
+    },
+    {
+      "activeSpecificationPath": "contracts/vendor/red-team-management/0.86.0/mp-openapi.yaml",
+      "activeSpecificationSha256": "5fbb533bd5f0156bf85c0a549b962aaf2f96cf09d0b6d9d82ac2d2afe87509a0",
+      "componentCount": 115,
+      "gitBlobSha1": "9959caca7e8010e26f8701704647901bcb75aef5",
+      "operationCount": 42,
+      "semanticModelSha256": "cee39a37c7476e48c6fdfe83edc518c23bcd8f140f6a220827e8e20575a5ba23",
+      "upstreamPath": "openapi-specs/prisma-airs-redteam/management/mp-openapi.yaml",
+      "version": "0.86.0"
+    },
+    {
+      "activeSpecificationPath": "contracts/sources/pan-dev/openapi-specs/prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+      "activeSpecificationSha256": "0cf2176db90da796fdd086a5f8bd6b3dcf3dcd9065d42c4230e10603bb1ea4b5",
+      "componentCount": 12,
+      "gitBlobSha1": "a60cb028d706987c43fc4c60fe8b9722da0c4b24",
+      "operationCount": 5,
+      "semanticModelSha256": "311cd7a92c8175afd3e96eabdd0de588190d4465cdeb31e5a71b44b6ebe561bf",
+      "upstreamPath": "openapi-specs/prisma-airs-redteam/network-broker/AIRS-Red-Teaming-Network-Broker.yaml",
+      "version": "1.0.0"
+    },
+    {
+      "activeSpecificationPath": "contracts/sources/pan-dev/openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "activeSpecificationSha256": "7ee421fd6ba31bd4f1c88d233ea032a52cd29ad59b71f2c3cbea9bc033fc215f",
+      "componentCount": 32,
+      "gitBlobSha1": "a5aec37c1859c8fa83de7aac4a1fb1ff093a432d",
+      "operationCount": 21,
+      "semanticModelSha256": "0401028a6d577b45d249eb237783960e74e89da146658ac3105f043dd05ff821",
+      "upstreamPath": "openapi-specs/prisma-airs/management/mgmt-service_latest.yaml",
+      "version": "0.0.0"
+    },
+    {
+      "activeSpecificationPath": "contracts/sources/pan-dev/openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "activeSpecificationSha256": "e97a5a75d5a6073c56af022452d65197c2c474597a569f628fe1d7de0f63e7c3",
+      "componentCount": 68,
+      "gitBlobSha1": "548e84c28815b0d785d7f6cec0e752202651c176",
+      "operationCount": 4,
+      "semanticModelSha256": "4a82d6d638e9c4db245aa5071da903bf1e795fa96165136e9579f0f0316ab79c",
+      "upstreamPath": "openapi-specs/prisma-airs/scan/scan-service_latest.yaml",
+      "version": "0.0.0"
+    }
+  ]
+}
