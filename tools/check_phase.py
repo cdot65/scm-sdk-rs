@@ -39,6 +39,7 @@ CONTRACT_LEDGER_OWNERS = {
     'contracts/airs-active-sources.json': ('tools/red_team_management.py', '--check'),
     'contracts/airs-operations.json': ('tools/red_team_management.py', '--check'),
     'contracts/airs-retained-capabilities.json': ('tools/red_team_management.py', '--check'),
+    'contracts/airs-drift.json': ('tools/airs_drift.py', '--check'),
     'contracts/historical/0.2.2-live-evidence.json': ('tools/red_team_management.py', '--check'),
     'contracts/vendor/red-team-management/0.86.0/operations.json': ('tools/red_team_management.py', '--check'),
     'contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json': ('tools/red_team_management.py', '--check'),
@@ -407,6 +408,36 @@ def portkey_mcp_post_publication_commands(phase):
     return commands
 
 
+DRIFT_BASELINE = "b66133892b4f58f541897d62296ea3f918227dd7"
+# Suites added after the phase 27-31 command plans were accepted. Their own phase
+# gate selects them explicitly, so historical command lists stay unchanged.
+PHASE_OWNED_SUITES = frozenset({"test_airs_drift.py"})
+
+
+def drift_commands(phase=25):
+    """Phase 25: the cumulative phase-30 offline/Rust qualification on current source,
+    plus upstream drift detection. Drift is reported, never adopted, so the SDK and
+    dependency/legal inputs stay byte-identical to the drift baseline. No package
+    receipts: phase 25 publishes nothing."""
+    unit = lambda name: ["python", "-m", "unittest", "discover", "-s", "tools", "-p", name, "-v"]
+    commands = []
+    for original in commands_for(30):
+        command = [value.replace("phase-30-", f"phase-{phase}-") for value in original]
+        if command not in commands:
+            commands.append(command)
+    drift = [
+        ["git", "diff", "--exit-code", DRIFT_BASELINE, "--", "crates/scm-sdk", "Cargo.toml", "Cargo.lock",
+         "LICENSE", "NOTICE"],
+        ["python", "tools/airs_drift.py", "--check"],
+        unit("test_airs_drift.py"),
+        ["python", "tools/red_team_management.py", "--check", "--require-through-phase", str(phase)],
+    ]
+    # Cheap drift checks precede the costly Rust matrix.
+    first_rust = next(i for i, c in enumerate(commands) if "scripts/check-rust.py" in c)
+    commands[first_rust:first_rust] = [c for c in drift if c not in commands]
+    return commands
+
+
 def published(version, root=None):
     return ((ROOT if root is None else root) / f"docs/checks/release-registry-{version}.json").is_file()
 
@@ -441,6 +472,8 @@ def commands_for(phase):
                 # Governance tests isolate their planning-only assertions; keep
                 # all supplemental source and evidence tamper checks cumulative.
                 for path in sorted((ROOT / "tools").glob("test_*.py")):
+                    if path.name in PHASE_OWNED_SUITES:
+                        continue
                     command = ["python", "-m", "unittest", "discover", "-s", "tools", "-p", path.name, "-v"]
                     if command not in commands:
                         commands.append(command)
@@ -479,6 +512,8 @@ def commands_for(phase):
                 ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_typescript035_governance.py", "-v"],
                 ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_review_phase.py", "-v"],
                 ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_management_phases.py", "-v"]]
+    if phase == 25:
+        return drift_commands(25)
     if phase in MANAGEMENT_PHASES:
         return management_commands(phase)
     if phase == 20:

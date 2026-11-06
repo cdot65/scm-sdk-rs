@@ -356,10 +356,42 @@ class ManagementPlanTests(unittest.TestCase):
         self.assertNotIn('sourceLedgerSha256', result)
 
     def test_future_phase_cannot_pass_on_plan_artifacts(self):
-        for phase in range(25, 26):
-            result = subprocess.run([sys.executable, str(subject.ROOT / 'tools/red_team_management.py'), '--check', '--require-through-phase', str(phase)], capture_output=True, text=True)
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn('static plan evidence cannot advance', result.stderr)
+        """Phase 25 passes only with current qualification plus a current drift ledger."""
+        import airs_drift
+        result = subprocess.run([sys.executable, str(subject.ROOT / 'tools/red_team_management.py'), '--check',
+                                 '--require-through-phase', '25'], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('drift reported, never adopted', result.stdout)
+        current = airs_drift.current_ledger_text()
+        tampered = current.replace('"classifierVersion": 1', '"classifierVersion": 2')
+        stale = json.loads(current)
+        stale['sources'][0]['semanticModelSha256'] = '0' * 64
+        cases = (('missing', dict(current_ledger_text=None), 'Missing drift ledger'),
+                 ('tampered', dict(current_ledger_text=tampered), 'Stale or tampered drift ledger'),
+                 ('stale', dict(ledger=stale), 'Stale or tampered drift ledger'))
+        for name, replacement, message in cases:
+            with self.subTest(name=name), \
+                    patch.object(sys, 'argv', ['audit', '--check', '--require-through-phase', '25']), \
+                    patch.object(subject, 'build', return_value={}), \
+                    patch.object(subject, 'verify_runtime_adoption') as runtime, \
+                    patch.object(subject, 'verify_service_qualification') as service, \
+                    patch.object(subject, 'verify_offline_live_boundary') as historical, \
+                    patch.object(subject, 'verify_cumulative_qualification') as cumulative, \
+                    patch.object(airs_drift, next(iter(replacement)), return_value=next(iter(replacement.values()))), \
+                    contextlib.redirect_stderr(io.StringIO()) as stderr:
+                with self.assertRaises(SystemExit) as exit_code:
+                    subject.main()
+                self.assertEqual(exit_code.exception.code, 1)
+                self.assertIn(message, stderr.getvalue())
+                runtime.assert_called_once_with()
+                service.assert_called_once_with()
+                cumulative.assert_called_once_with(package_receipts=False)
+                historical.assert_not_called()
+        with patch.object(sys, 'argv', ['audit', '--check', '--require-through-phase', '25', '--verify-package-receipts']), \
+                patch.object(subject, 'build') as build, contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                subject.main()
+            build.assert_not_called()
 
     def test_service_qualification_requires_read_only_source_bound_receipt(self):
         import live_evidence

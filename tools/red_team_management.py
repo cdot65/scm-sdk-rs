@@ -856,24 +856,28 @@ def main():
             raise ValueError('Current-source compatibility requires --check with default phase 21 and no package or retention verification')
         if args.verify_package_receipts and args.require_through_phase not in (23, 24):
             raise ValueError('Package receipt verification requires phase 23 or 24')
-        if args.require_through_phase > 24:
-            raise ValueError('Phase 25 qualification evidence is not implemented; static plan evidence cannot advance this phase')
         if args.verify_retention_origin:
             verify_retention_origin()
         outputs = build()
-        if args.current_source_compatibility or args.require_through_phase in (22, 23, 24):
+        if args.current_source_compatibility or args.require_through_phase in (22, 23, 24, 25):
             source = next(row for row in load('contracts/manifest.json')['sources'] if row['id'] == SOURCE_ID)
             if source['usedForGeneration'] is not True:
                 raise ValueError('Management runtime adoption is not declared')
             verify_runtime_adoption()
-            if args.current_source_compatibility or args.require_through_phase == 24:
+            if args.current_source_compatibility or args.require_through_phase in (24, 25):
                 verify_service_qualification()
             else:
                 verify_offline_live_boundary()
-        if args.current_source_compatibility:
+        if args.current_source_compatibility or args.require_through_phase == 25:
+            # Phase 25 retains current-source compatibility without package receipts.
             verify_cumulative_qualification(package_receipts=False)
         elif args.require_through_phase in (23, 24):
             verify_cumulative_qualification(package_receipts=args.verify_package_receipts, phase=args.require_through_phase)
+        if args.require_through_phase == 25:
+            # Drift is reported, never adopted: the ledger must equal regeneration
+            # and the pinned baseline must self-compare as unchanged.
+            import airs_drift
+            airs_drift.verify(ROOT)
         for path, value in outputs.items():
             content = encoded(value)
             if args.check:
@@ -884,7 +888,9 @@ def main():
                 (ROOT / path).write_text(content)
         print('AIRS contracts: 7 source pins, 160 operation mappings, 42 management operations; '
               + ('current-source compatibility and bounded reads verified; release acceptance not assessed'
-                 if args.current_source_compatibility else 'static evidence only'))
+                 if args.current_source_compatibility else
+                 'current-source compatibility, bounded reads and upstream drift baseline verified; drift reported, never adopted'
+                 if args.require_through_phase == 25 else 'static evidence only'))
     except (ValueError, KeyError, OSError) as exc:
         parser.exit(1, str(exc) + '\n')
 

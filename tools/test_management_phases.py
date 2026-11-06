@@ -182,6 +182,7 @@ class ManagementPhaseTests(unittest.TestCase):
             "tools/check_phase.py": "This is the executing phase driver; its hash guards bind current manifest provenance.",
             "tools/extract-operations.mts": "Reads frozen baseline, references and fixtures only; verify-contracts checks their unchanged hashes. New vendor sources are not extraction inputs.",
             "tools/g25_audit.py": "Reads only the frozen baseline commit, validated by verify-contracts; no vendor-source consumption.",
+            "tools/airs_drift.py": "Phase 25 drift reporter: reads manifest source identities only to verify the pinned AIRS baseline chain; executed by its own phase 25 gate, never a historical phase 21 input.",
         }
         self.assertFalse(readers - selected - exemptions.keys())
         self.assertTrue(exemptions.keys() <= readers)
@@ -192,8 +193,12 @@ class ManagementPhaseTests(unittest.TestCase):
         active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
         scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
         verify_scoped_ledger_owners(scope, commands_for(active['id']))
-        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p != 'contracts/live-evidence.json' and not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/') or p == 'contracts/portkey-mcp-tags-overlay.json')], commands_for(23))
-        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/') or p == 'contracts/portkey-mcp-tags-overlay.json')], commands_for(24))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p not in {'contracts/live-evidence.json', 'contracts/airs-drift.json'} and not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/') or p == 'contracts/portkey-mcp-tags-overlay.json')], commands_for(23))
+        verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json', 'contracts/airs-drift.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/') or p == 'contracts/portkey-mcp-tags-overlay.json')], commands_for(24))
+        # Phase 25 is cumulative over the phase 30 gate and owns the drift ledger.
+        verify_scoped_ledger_owners(list(CONTRACT_LEDGER_OWNERS), commands_for(25))
+        with self.assertRaisesRegex(ValueError, 'Missing ledger owning check'):
+            verify_scoped_ledger_owners(['contracts/airs-drift.json'], commands_for(24))
         # The Portkey MCP tags pin is owned from its own phase 29 gate onward.
         verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p.startswith('contracts/vendor/portkey-mcp-tags/')], commands_for(29))
         verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p.startswith('contracts/vendor/portkey-mcp-tags/') or p == 'contracts/portkey-mcp-tags-overlay.json'], commands_for(30))
@@ -259,11 +264,38 @@ class ManagementPhaseTests(unittest.TestCase):
         self.assertFalse(any('--run' in command or '--mutations' in command for command in commands))
 
     def test_qualification_has_both_packaged_compilers(self):
-        for phase in range(23, 26):
+        for phase in (23, 24):
             release_prefix = "release-" if phase == 24 else ""
             for compiler in ("1.89.0", "1.99.0"):
-                self.assertIn(["python", "scripts/check-management-package.py" if phase in (23, 24) else "scripts/check-package.py", "--toolchain", compiler,
+                self.assertIn(["python", "scripts/check-management-package.py", "--toolchain", compiler,
                                "--output", f"docs/checks/phase-{phase}-{release_prefix}package-{compiler}.json"], commands_for(phase))
+        # Phase 25 reports drift and publishes nothing: no package receipts.
+        self.assertFalse(any(tool in command for command in commands_for(25) for tool in
+                             ("scripts/check-package.py", "scripts/check-management-package.py",
+                              "scripts/check-access-release.py", "--verify-package-receipts")))
+
+    def test_phase25_is_cumulative_drift_detection_on_current_source(self):
+        commands = commands_for(25)
+        from check_phase import DRIFT_BASELINE
+        drift = [["git", "diff", "--exit-code", DRIFT_BASELINE, "--", "crates/scm-sdk", "Cargo.toml", "Cargo.lock",
+                  "LICENSE", "NOTICE"],
+                 ["python", "tools/airs_drift.py", "--check"],
+                 ["python", "-m", "unittest", "discover", "-s", "tools", "-p", "test_airs_drift.py", "-v"],
+                 ["python", "tools/red_team_management.py", "--check", "--require-through-phase", "25"]]
+        first_rust = next(i for i, c in enumerate(commands) if "scripts/check-rust.py" in c)
+        for command in drift:
+            self.assertEqual(commands.count(command), 1)
+            self.assertLess(commands.index(command), first_rust)
+        self.assertRegex(DRIFT_BASELINE, r"^[0-9a-f]{40}$")
+        self.assertEqual(len(commands), len({tuple(c) for c in commands}))
+        for original in commands_for(30):
+            if original[:2] == ["python", "tools/mcp_tags_live.py"]:
+                self.assertIn(original, commands)
+            else:
+                self.assertIn([v.replace("phase-30-", "phase-25-") for v in original], commands)
+        self.assertFalse(any("phase-30-" in value for command in commands for value in command))
+        self.assertFalse(any("airs_drift.py" in value and "refresh" in command for command in commands for value in command))
+        self.assertIn(["python", "tools/airs_drift.py", "--check"], ci_commands_for(25))
 
     @patch("review_phase.fingerprint", new=lambda root: "fixed")
     def test_ci_subsets_cannot_replace_full_reports(self):
