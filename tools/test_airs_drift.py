@@ -472,6 +472,24 @@ class AddedContentFailsClosedTests(DriftTestCase):
                 with self.assertRaisesRegex(ValueError, 'no receipt written'):
                     drift.compare_candidate(self.candidate({NB: mutate}, name=name))
 
+    def test_reference_replacements_servers_security_and_schemes_fail_closed(self):
+        cases = {
+            'response-ref-to-inline': lambda spec: (spec['paths']['/v1/channels']['get']['responses'].update(
+                {'400': {**drift.resolve(spec, '#/components/responses/BadRequest'), 'x-shape': 1}}), spec)[1],
+            'added-operation-server-extension': lambda spec: (spec['paths'].update({'/v1/x': {'get': {
+                'operationId': 'x', 'servers': [{'url': 'https://example.invalid', 'x-region': 'eu'}],
+                'responses': {'200': {'description': 'ok'}}}}}), spec)[1],
+            'added-operation-security-shape': lambda spec: (spec['paths'].update({'/v1/x': {'get': {
+                'operationId': 'x', 'security': [{'bearerAuth': 'not-a-list'}],
+                'responses': {'200': {'description': 'ok'}}}}}), spec)[1],
+            'existing-scheme-extension': lambda spec: (next(iter(spec['components']['securitySchemes'].values())).update(
+                {'x-rotation': 'daily'}), spec)[1],
+        }
+        for name, mutate in cases.items():
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(ValueError, 'no receipt written'):
+                    drift.compare_candidate(self.candidate({NB: mutate}, name=name))
+
     def test_operation_removed_identity_binds_the_whole_operation(self):
         def remove(spec):
             del spec['paths']['/v1/channels']['get']
@@ -616,7 +634,7 @@ class BaselineTamperingTests(DriftTestCase):
             (self.base[NB]['row']['activeSpecificationPath'], lambda b: b.replace(b'Channels', b'Channelz', 1), 'Pinned bytes changed'),
             ('contracts/vendor/red-team-management/0.86.0/source.json', lambda b: b.replace(b'"usedForGeneration": true', b'"usedForGeneration": false'), 'Pinned bytes changed|metadata mismatch'),
             ('contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json', lambda b: b + b' ', 'Pinned bytes changed'),
-            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 3', b'"classifierVersion": 4'), 'Stale or tampered'),
+            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 4', b'"classifierVersion": 5'), 'Stale or tampered'),
             ('contracts/airs-active-sources.json', lambda b: b.replace(rtm.COMMIT.encode(), b'f' * 40, 1), 'Pinned bytes changed|snapshot commit'),
         )
         for relative, tamper, message in cases:

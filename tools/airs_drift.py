@@ -34,7 +34,7 @@ from pathlib import Path
 import red_team_management as rtm
 from red_team_dataplane import read_yaml
 
-CLASSIFIER_VERSION = 3
+CLASSIFIER_VERSION = 4
 REPOSITORY = 'https://github.com/PaloAltoNetworks/pan.dev'
 GITHUB_API = 'https://api.github.com/repos/PaloAltoNetworks/pan.dev'
 RAW_BASE = 'https://raw.githubusercontent.com/PaloAltoNetworks/pan.dev'
@@ -120,6 +120,8 @@ MEDIA_KNOWN = ANNOTATIONS | {'schema'}
 SCHEMA_SUBTREES = {'anyOf', 'oneOf', 'allOf', 'prefixItems', 'items', 'additionalProperties', 'propertyNames',
                    'schema'}
 SECURITY_SCHEME_KNOWN = {'type', 'description', 'name', 'in', 'scheme', 'bearerFormat', 'flows', 'openIdConnectUrl'}
+SERVER_KNOWN = {'url', 'description', 'variables'}
+SERVER_VARIABLE_KNOWN = {'default', 'enum', 'description'}
 COMPONENT_SECTIONS = {'schemas', 'parameters', 'requestBodies', 'responses', 'securitySchemes', 'examples'}
 MISSING = object()
 HEX40 = re.compile(r'[0-9a-f]{40}')
@@ -507,7 +509,31 @@ class SourceComparison:
     def scan_response(self, body, parts):
         self.scan_body(body, parts, response=True)
 
+    def scan_servers(self, servers, parts):
+        if servers is None:
+            return
+        if not isinstance(servers, list):
+            self.fail(parts, new=servers, reason='Unclassified keyword in added content')
+        for index, server in enumerate(servers):
+            at = parts + [index]
+            if not isinstance(server, dict) or set(server) - SERVER_KNOWN:
+                self.fail(at, new=server, reason='Unclassified keyword in added content')
+            variables = server.get('variables', {})
+            if not isinstance(variables, dict) or any(not isinstance(v, dict) or set(v) - SERVER_VARIABLE_KNOWN
+                                                      for v in variables.values()):
+                self.fail(at + ['variables'], new=variables, reason='Unclassified keyword in added content')
+
+    def scan_security(self, security, parts):
+        if security is None:
+            return
+        if not isinstance(security, list) or any(
+                not isinstance(row, dict) or any(not isinstance(scopes, list) or not all(isinstance(x, str) for x in scopes)
+                                                 for scopes in row.values()) for row in security):
+            self.fail(parts, new=security, reason='Unclassified keyword in added content')
+
     def scan_operation(self, operation, parts):
+        self.scan_servers(operation['servers'], parts + ['servers'])
+        self.scan_security(operation['security'], parts + ['security'])
         for field, at in (('residual', parts), ('pathResidual', parts[:2])):
             if operation[field]:
                 self.fail(at, new=operation[field], reason='Unclassified keyword in added content')
@@ -686,6 +712,8 @@ class SourceComparison:
             before, after = old.get(key, MISSING), new.get(key, MISSING)
             if before is not MISSING and after is not MISSING and rtm.encoded(before) == rtm.encoded(after):
                 continue
+            if key not in SECURITY_SCHEME_KNOWN:
+                self.fail(parts + [key], before, after)
             self.emit('annotation_changed' if key == 'description' else 'security_scheme_changed',
                       self.kind(before, after), parts + [key], before, after)
 
@@ -858,6 +886,7 @@ class SourceComparison:
     def compare_servers(self, old, new, parts):
         if rtm.encoded(old) == rtm.encoded(new):
             return
+        self.scan_servers(new, parts)
         def bare(servers):
             if not isinstance(servers, list):
                 return servers
@@ -867,10 +896,12 @@ class SourceComparison:
         else:
             self.emit('annotation_changed', 'changed', parts, old, new)
 
-    def compare_reference(self, old, new, parts):
-        """True when either side is a $ref (kept, not inlined)."""
+    def compare_reference(self, old, new, parts, scan=None):
+        """True when either side is a $ref (kept, not inlined); inline replacements are scanned."""
         if isinstance(old, dict) and '$ref' in old or isinstance(new, dict) and '$ref' in new:
             if rtm.encoded(old) != rtm.encoded(new):
+                if scan is not None:
+                    scan(new, parts)
                 self.emit('type_changed', 'changed', parts, old, new)
             return True
         if not isinstance(old, dict) or not isinstance(new, dict):
@@ -878,7 +909,7 @@ class SourceComparison:
         return False
 
     def compare_parameter(self, old, new, parts):
-        if rtm.encoded(old) == rtm.encoded(new) or self.compare_reference(old, new, parts):
+        if rtm.encoded(old) == rtm.encoded(new) or self.compare_reference(old, new, parts, self.scan_parameter):
             return
         for key in sorted(old.keys() | new.keys()):
             before, after = old.get(key, MISSING), new.get(key, MISSING)
@@ -904,7 +935,8 @@ class SourceComparison:
                 self.fail(at, before, after)
 
     def compare_body(self, old, new, parts, response=False):
-        if rtm.encoded(old) == rtm.encoded(new) or self.compare_reference(old, new, parts):
+        if rtm.encoded(old) == rtm.encoded(new) or self.compare_reference(
+                old, new, parts, self.scan_response if response else self.scan_body):
             return
         for key in sorted(old.keys() | new.keys()):
             before, after = old.get(key, MISSING), new.get(key, MISSING)
