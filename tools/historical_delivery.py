@@ -82,7 +82,8 @@ RELEASES = {
               'proofs': 'docs/checks/phase-24-release-package-{toolchain}.json'},
     '0.2.4': {'phase': 28, 'release': '6f18529a47cc273feca1000af6e4fc0d96da757e', 'branch': 'delivery/v0.2.4',
               'github_tag': True, 'registry': 'docs/checks/release-registry-0.2.4.json',
-              'proofs': 'docs/checks/phase-28-published-package-{toolchain}.json'},
+              'proofs': 'docs/checks/phase-28-published-package-{toolchain}.json',
+              'publication_exception_required': True},
 }
 TOOLCHAINS = ('1.99.0', '1.89.0')
 
@@ -377,15 +378,136 @@ def execute(root, version, output, label):
     return path
 
 
+RELEASE_TREE_CHECK = r"""
+import json, pathlib, subprocess, sys
+root = pathlib.Path('.').resolve()
+sys.path.insert(0, str(root / 'tools'))
+import review_phase as rp
+phase = int(sys.argv[1])
+source = rp.fingerprint(root)
+status = json.loads((root / 'docs/phase-status.json').read_text())
+row = next(item for item in status['phases'] if item['id'] == phase)
+attempts = sorted(root.glob(f'docs/reviews/phase-{phase:02d}-attempt-*.json'))
+attempts = [path for path in attempts if path.name.count('.') == 1]
+review = max(attempts, key=lambda path: int(path.stem.rsplit('-', 1)[1]))
+record = json.loads(review.read_text())
+valid = rp.verify_record(root, review, phase, source)
+chunks = rp.accepted_chunks(root, phase, row['chunks'], source, phase_review=review)
+print(json.dumps({'source_sha256': source, 'phase_review': review.relative_to(root).as_posix(), 'phase_review_valid': valid,
+                  'scope': record.get('review_scope'), 'decision': record.get('decision'), 'review': record['review'],
+                  'chunks': chunks, 'publication_exception': row.get('publication_exception'),
+                  'limitations': row.get('limitations', []), 'review_dispositions': row.get('review_dispositions', []),
+                  'head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+                  'clean': not subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=no'], text=True).strip()}))
+"""
+
+
+def complete(root, version, tree, attempt_note=None):
+    """Record completion of a historically delivered phase from its release tree's own review gate.
+
+    The release tree (the fingerprint-identical delivery branch worktree) validates its final
+    phase review and every declared chunk with that release's tools/review_phase.py. This
+    checkout's verify() must report `delivered`, a required publication exception must be
+    present, and the reviewed records are copied byte-for-byte with their digests receipted.
+    """
+    root, tree = pathlib.Path(root).resolve(), pathlib.Path(tree).resolve()
+    spec = RELEASES[version]
+    delivered = verify(root, version)
+    require(delivered['status'] == 'delivered', 'Delivery must verify without exceptions before completion')
+    require(git(tree, 'rev-parse', '--abbrev-ref', 'HEAD').strip() == spec['branch'], 'Release tree is not the delivery branch')
+    head = git(tree, 'rev-parse', 'HEAD').strip()
+    require(commit_fingerprint(root, head) == delivered['sourceSha256'], 'Release tree does not carry the published source')
+    result = json.loads(subprocess.run([sys.executable, '-c', RELEASE_TREE_CHECK, str(spec['phase'])], cwd=tree,
+                                       capture_output=True, text=True, check=True, timeout=600).stdout)
+    require(result['clean'] and result['head'] == head, 'Release tree must be clean at its committed head')
+    require(result['source_sha256'] == delivered['sourceSha256'], 'Release tree review source differs from the published source')
+    require(result['phase_review_valid'] is True and result['scope'] == 'phase'
+            and result['decision'] in ('accepted', 'accepted_with_deficiencies'), 'Final phase review is not accepted')
+    require(all(chunk.get('status') in ('accepted', 'accepted_with_deficiencies') for chunk in result['chunks']),
+            'Every declared chunk must be accepted')
+    exception = result.get('publication_exception')
+    if spec.get('publication_exception_required'):
+        require(isinstance(exception, dict) and exception.get('facts') and exception.get('authorization')
+                and exception.get('remediation'), 'A structured publication exception is required for this release')
+    # The release tree's attempt numbering is its own lineage, so its review artifacts are kept
+    # in a per-release namespace and never overwrite same-named records on this checkout.
+    namespace = f'docs/reviews/historical-delivery/{version}'
+    copied = []
+    for source_path in sorted((tree / 'docs/reviews').glob(f"phase-{spec['phase']:02d}-*")):
+        target = root / namespace / source_path.name
+        data = source_path.read_bytes()
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if target.exists():
+            require(target.read_bytes() == data, 'Review artifact differs from the retained copy: ' + source_path.name)
+        else:
+            target.write_bytes(data)
+        copied.append({'path': f'{namespace}/{source_path.name}', 'sha256': sha256(data)})
+    result['phase_review'] = f"{namespace}/{pathlib.PurePosixPath(result['phase_review']).name}"
+    for chunk in result['chunks']:
+        if chunk.get('accepted_review'):
+            chunk['accepted_review'] = f"{namespace}/{pathlib.PurePosixPath(chunk['accepted_review']).name}"
+    receipt = {'schemaVersion': 1, 'version': version, 'phase': spec['phase'], 'releaseTreeHead': head,
+               'sourceSha256': delivered['sourceSha256'], 'delivery': delivered, 'phaseReview': result['phase_review'],
+               'decision': result['decision'], 'total': result['review'].get('total'),
+               'categories': result['review'].get('categories'),
+               'chunks': [{'id': c['id'], 'status': c['status'], 'accepted_review': c.get('accepted_review'),
+                           'accepted_total': c.get('accepted_total')} for c in result['chunks']],
+               'publicationException': bool(exception), 'reviewArtifacts': copied, 'attemptNote': attempt_note}
+    path = write_new(root, f'{evidence_dir(version)}/completion.json', receipt)
+    status_path = root / 'docs/phase-status.json'
+    status = json.loads(status_path.read_text())
+    row = next(item for item in status['phases'] if item['id'] == spec['phase'])
+    review_record = json.loads((root / result['phase_review']).read_text())
+    row.update({'status': 'complete', 'chunks': result['chunks'], 'accepted_source_sha256': delivered['sourceSha256'],
+                'accepted_score': review_record['review'].get('score'), 'accepted_total': review_record['review'].get('total'),
+                'accepted_categories': review_record['review'].get('categories'), 'review_decision': result['decision'],
+                'publication_exception': exception, 'limitations': result['limitations'],
+                'review_dispositions': result['review_dispositions'],
+                'historical_completion': path.relative_to(root).as_posix(),
+                'review_attempt_note': attempt_note,
+                'delivery': {'status': 'complete_historical', 'release_commit': spec['release'],
+                             'ci_commit': delivered['ciCommit'], 'ci_run': delivered['ciRun'],
+                             'registry_receipt': spec['registry'], 'evidence': evidence_dir(version)}})
+    if result['phase_review'] not in row.setdefault('reviews', []):
+        row['reviews'].append(result['phase_review'])
+    status_path.write_text(json.dumps(status, indent=2) + '\n')
+    return path
+
+
+def verify_completion(root, row):
+    """Recheck a historical completion receipt: delivery, review digests and decisions."""
+    root = pathlib.Path(root).resolve()
+    receipt = read_json(root, row['historical_completion'])
+    version = receipt.get('version')
+    require(version in RELEASES and RELEASES[version]['phase'] == row['id'] == receipt.get('phase'),
+            'Historical completion identity differs')
+    delivered = verify(root, version)
+    require(delivered['status'] == 'delivered' and delivered['sourceSha256'] == receipt['sourceSha256']
+            == row.get('accepted_source_sha256'), 'Historical completion no longer verifies delivery')
+    for item in receipt['reviewArtifacts']:
+        path = root / item['path']
+        require(path.is_file() and sha256(path.read_bytes()) == item['sha256'], 'Review artifact changed: ' + item['path'])
+    record = json.loads((root / receipt['phaseReview']).read_text())
+    require(record.get('decision') == receipt['decision'] in ('accepted', 'accepted_with_deficiencies')
+            and record.get('source_sha256') == receipt['sourceSha256'] and receipt['phaseReview'] in row.get('reviews', []),
+            'Historical completion phase review differs')
+    if RELEASES[version].get('publication_exception_required'):
+        require(receipt.get('publicationException') is True and row.get('publication_exception'),
+                'Historical completion lacks its publication exception')
+    return receipt
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['verify', 'execute', 'observe-registry', 'observe-ci', 'observe-branch'])
+    parser.add_argument('command', choices=['verify', 'execute', 'complete', 'observe-registry', 'observe-ci', 'observe-branch'])
     parser.add_argument('--version', required=True, choices=sorted(RELEASES))
     parser.add_argument('--commit')
     parser.add_argument('--run', type=int)
     parser.add_argument('--root', type=pathlib.Path, help='Repository root whose rules and evidence apply')
     parser.add_argument('--output', help='execute: receipt path under the evidence directory')
     parser.add_argument('--label', default='main', help='execute: where this run happened')
+    parser.add_argument('--release-tree', type=pathlib.Path, help='complete: the clean delivery-branch worktree')
+    parser.add_argument('--attempt-note', help='complete: JSON file recording an attempt-numbering decision')
     args = parser.parse_args(argv)
     root = (args.root or ROOT).resolve()
     if (root / 'tools/release_delivery.py').is_file() and RULES != (root / 'tools/release_delivery.py'):
@@ -398,6 +520,12 @@ def main(argv=None):
         require(args.output, 'execute requires --output')
         path = execute(root, args.version, args.output, args.label)
         print(json.dumps({'receipt': path.relative_to(root).as_posix(), 'executed': True}))
+        return 0
+    if args.command == 'complete':
+        require(args.release_tree, 'complete requires --release-tree')
+        note = json.loads(pathlib.Path(args.attempt_note).read_text()) if args.attempt_note else None
+        path = complete(root, args.version, args.release_tree, note)
+        print(json.dumps({'receipt': path.relative_to(root).as_posix(), 'completed': True}))
         return 0
     if args.command == 'observe-registry':
         path = observe_registry(root, args.version)

@@ -422,6 +422,12 @@ def validate_superseded(root, status, item):
     successor = rows.get(closure["phase"], {})
     if successor.get("status") != "complete" or not successor.get("reviews"):
         raise ValueError("Superseding phase has not passed its gate")
+    if successor.get("historical_completion"):
+        # Completed from its fingerprint-identical delivery branch, whose own review gate
+        # validated the records (tools/historical_delivery.py complete); recheck the receipt.
+        from historical_delivery import verify_completion
+        verify_completion(root, successor)
+        return
     if not verify_record(root, root / successor["reviews"][-1], successor["id"], successor.get("accepted_source_sha256")):
         raise ValueError("Superseding phase review evidence is invalid")
 

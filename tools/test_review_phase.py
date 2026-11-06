@@ -275,6 +275,23 @@ class ReviewRecordTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_superseded(self.root, status, status["phases"][0])
 
+    def test_superseded_successor_with_historical_completion_is_rechecked_by_its_receipt(self):
+        from review_phase import validate_superseded
+        evidence = self.root / "docs/checks/closure.json"
+        evidence.parent.mkdir(parents=True, exist_ok=True)
+        evidence.write_text("{}")
+        status = copy.deepcopy(self.status)
+        status["phases"][0].update({"status": "superseded", "superseded_by": {
+            "phase": 2, "version": "9.9.9", "reason": "r", "authorization": "a", "evidence": ["docs/checks/closure.json"]}})
+        status["phases"][1].update({"status": "complete", "reviews": ["x.json"], "historical_completion": "c.json"})
+        with patch("historical_delivery.verify_completion") as rechecked, patch("review_phase.verify_record") as record:
+            validate_superseded(self.root, status, status["phases"][0])
+            rechecked.assert_called_once()
+            record.assert_not_called()
+        with patch("historical_delivery.verify_completion", side_effect=ValueError("Review artifact changed")):
+            with self.assertRaisesRegex(ValueError, "Review artifact changed"):
+                validate_superseded(self.root, status, status["phases"][0])
+
     def test_advance_requires_review_path(self):
         with self.assertRaises(ValueError):
             main(["--phase", "1", "--advance"], self.root)

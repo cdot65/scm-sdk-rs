@@ -146,8 +146,13 @@ class DirectionalGovernanceTests(unittest.TestCase):
         phase26.update(status='in_progress', reviews=[])
         with patch.object(review_phase, 'verify_record', return_value=True):
             review_phase.validate_predecessors(ROOT, self.status, 26)
-            with self.assertRaisesRegex(ValueError, 'Earlier phases'):
-                review_phase.validate_predecessors(ROOT, self.status, 25)
+            # Maintainer decision 2026-11-06: phase 24 is superseded by 0.2.4, so phase 25 follows
+            # the completed phase 28 and fails again if that completion is withdrawn.
+            review_phase.validate_predecessors(ROOT, self.status, 25)
+            withdrawn = copy.deepcopy(self.status)
+            next(p for p in withdrawn['phases'] if p['id'] == 28)['status'] = 'in_progress'
+            with self.assertRaisesRegex(ValueError, 'Superseding phase has not passed'):
+                review_phase.validate_predecessors(ROOT, withdrawn, 25)
             with self.assertRaisesRegex(ValueError, 'Maintenance predecessor'):
                 review_phase.validate_predecessors(ROOT, planning, 27)
         with patch.object(review_phase, 'verify_record', return_value=False):
@@ -207,8 +212,17 @@ class DirectionalGovernanceTests(unittest.TestCase):
 
     def test_old_phase_records_preserved_and_new_chunks_bound(self):
         old = json.loads(subprocess.check_output(['git', 'show', '578f2e6:docs/phase-status.json'], cwd=ROOT))
-        # Phases 29–31 are the separately authorized Portkey MCP tags track.
-        self.assertEqual(old['phases'], [p for p in self.status['phases'] if p['id'] not in {26, 27, 28, 29, 30, 31}])
+        # Phases 29–31 are the separately authorized Portkey MCP tags track. Phase 24 was closed
+        # as superseded and phase 25 implemented by maintainer decision on 2026-11-06; phase 24
+        # may differ from its original record only in that closure.
+        untouched = {26, 27, 28, 29, 30, 31, 24, 25}
+        self.assertEqual([p for p in old['phases'] if p['id'] not in untouched],
+                         [p for p in self.status['phases'] if p['id'] not in untouched])
+        old24 = next(p for p in old['phases'] if p['id'] == 24)
+        new24 = next(p for p in self.status['phases'] if p['id'] == 24)
+        self.assertEqual((old24['status'], new24['status'], new24['superseded_by']['phase']), ('in_progress', 'superseded', 28))
+        self.assertEqual({k: v for k, v in new24.items() if k not in ('status', 'superseded_by')},
+                         {k: v for k, v in old24.items() if k != 'status'})
         for phase in [26, 27, 28]:
             row = next(p for p in self.status['phases'] if p['id'] == phase)
             self.assertTrue(row['scope_evidence'])

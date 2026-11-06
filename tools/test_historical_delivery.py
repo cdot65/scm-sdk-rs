@@ -251,5 +251,29 @@ class HistoricalDeliveryTests(unittest.TestCase):
                 hd.execute(self.root, VERSION, 'docs/checks/elsewhere.json', 'test')
 
 
+    def test_completion_receipt_is_rechecked_for_delivery_digests_decision_and_exception(self):
+        namespace = self.root / 'docs/reviews/historical-delivery' / VERSION
+        namespace.mkdir(parents=True)
+        review = namespace / 'phase-28-attempt-05.json'
+        review.write_text(json.dumps({'decision': 'accepted_with_deficiencies', 'source_sha256': self.published}))
+        artifact = {'path': review.relative_to(self.root).as_posix(),
+                    'sha256': hashlib.sha256(review.read_bytes()).hexdigest()}
+        receipt = {'version': VERSION, 'phase': 28, 'sourceSha256': self.published, 'decision': 'accepted_with_deficiencies',
+                   'phaseReview': artifact['path'], 'reviewArtifacts': [artifact], 'publicationException': True}
+        receipt_path = self.root / hd.evidence_dir(VERSION) / 'completion.json'
+        receipt_path.write_text(json.dumps(receipt))
+        row = {'id': 28, 'historical_completion': receipt_path.relative_to(self.root).as_posix(),
+               'accepted_source_sha256': self.published, 'reviews': [artifact['path']], 'publication_exception': {'facts': ['x']}}
+        with mock.patch.dict(hd.RELEASES, {VERSION: self.spec}):
+            self.assertEqual(hd.verify_completion(self.root, row)['decision'], 'accepted_with_deficiencies')
+            for broken in ({**row, 'publication_exception': None}, {**row, 'accepted_source_sha256': 'f' * 64},
+                           {**row, 'reviews': []}):
+                with self.assertRaises(ValueError):
+                    hd.verify_completion(self.root, broken)
+            review.write_text(json.dumps({'decision': 'rejected', 'source_sha256': self.published}))
+            with self.assertRaisesRegex(ValueError, 'Review artifact changed'):
+                hd.verify_completion(self.root, row)
+
+
 if __name__ == '__main__':
     unittest.main()
