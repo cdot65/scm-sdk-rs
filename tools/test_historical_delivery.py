@@ -177,5 +177,52 @@ class HistoricalDeliveryTests(unittest.TestCase):
             self.verify()
 
 
+    def test_proof_commit_must_be_retained_on_main_or_the_delivery_branch(self):
+        git(self.root, 'checkout', '-q', '--orphan', 'stray')
+        git(self.root, 'commit', '-q', '-m', 'stray', '--allow-empty')
+        stray = git(self.root, 'rev-parse', 'HEAD')
+        git(self.root, 'checkout', '-q', '-f', 'main')
+        manifest_path = self.root / hd.evidence_dir(VERSION) / 'manifest.json'
+        manifest = json.loads(manifest_path.read_text())
+        manifest['proofCommit'] = stray
+        manifest_path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, 'not retained'):
+            self.verify()
+
+    def test_proof_must_qualify_a_commit_with_the_published_fingerprint(self):
+        git(self.root, 'checkout', '-q', 'delivery/v0.2.4')
+        (self.root / 'src.rs').write_text('other source\n')
+        git(self.root, 'commit', '-q', '-am', 'different source')
+        other = git(self.root, 'rev-parse', 'HEAD')
+        for toolchain in hd.TOOLCHAINS:
+            path = self.root / f'docs/checks/proof-{toolchain}.json'
+            proof = json.loads(path.read_text())
+            proof['releaseCommit'] = other
+            path.write_text(json.dumps(proof))
+        git(self.root, 'commit', '-q', '-am', 'proofs naming another source')
+        self.proof_commit = git(self.root, 'rev-parse', 'HEAD')
+        git(self.root, 'checkout', '-q', 'main')
+        self.write_evidence()
+        with self.assertRaisesRegex(ValueError, 'does not qualify the published source'):
+            self.verify()
+
+    def test_registry_identity_must_be_unyanked_owned_and_the_release(self):
+        registry_path = self.root / 'docs/checks/registry.json'
+        original = json.loads(registry_path.read_text())
+        for change in ({'yanked': True}, {'ownerLogins': ['someone-else']}, {'version': '9.9.9'},
+                       {'sourceCommit': self.ci_commit}):
+            registry_path.write_text(json.dumps({**original, **change}))
+            with self.assertRaisesRegex(ValueError, 'Registry identity'):
+                self.verify()
+
+    def test_manifest_identity_must_match_the_release(self):
+        manifest_path = self.root / hd.evidence_dir(VERSION) / 'manifest.json'
+        original = json.loads(manifest_path.read_text())
+        for change in ({'phase': 24}, {'version': '0.2.3'}, {'releaseCommit': self.ci_commit}):
+            manifest_path.write_text(json.dumps({**original, **change}))
+            with self.assertRaisesRegex(ValueError, 'manifest identity'):
+                self.verify()
+
+
 if __name__ == '__main__':
     unittest.main()

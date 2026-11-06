@@ -41,7 +41,17 @@ import sys
 import tarfile
 import urllib.request
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+def _root(argv):
+    """Repository root: `--root DIR` (for an evidence-only copy run inside a historical
+    release tree) or the checkout containing tools/historical_delivery.py."""
+    if '--root' in argv[:-1]:
+        return pathlib.Path(argv[argv.index('--root') + 1]).resolve()
+    return pathlib.Path(__file__).resolve().parents[1]
+
+
+ROOT = _root(sys.argv)
+# Fingerprint and CI-matrix rules come from the repository being verified, so a copy run
+# inside a historical release tree applies that release's own definitions.
 sys.path.insert(0, str(ROOT / 'tools'))
 from release_delivery import GITHUB_REMOTE, REMOTE, commit_fingerprint, expected_contexts  # noqa: E402
 
@@ -319,6 +329,7 @@ def main(argv=None):
     parser.add_argument('--version', required=True, choices=sorted(RELEASES))
     parser.add_argument('--commit')
     parser.add_argument('--run', type=int)
+    parser.add_argument('--root', type=pathlib.Path, help='Repository root (default: this checkout)')
     args = parser.parse_args(argv)
     if args.command == 'verify':
         print(json.dumps(verify(ROOT, args.version)))
