@@ -57,9 +57,12 @@ def commit_fingerprint(root, commit):
 # After publication the published SDK identity is immutable, but release governance
 # may still evolve (for example docs-site acceptance enforcement). A successor may
 # differ from the published inputs only in these reviewed governance paths; the
-# packaged crate, contracts, publication scripts, lockfiles and CI are excluded.
+# packaged crate, contracts, packaging/publication-verification scripts, lockfiles and
+# CI are excluded. scripts/observe-release.py only observes remote evidence after
+# publication (it chose a stale same-second CI status before the highest-id fix).
 GOVERNANCE_SUCCESSOR_PATHS = {31: frozenset({
     'docs/CI.md', 'docs/PHASES.md', 'docs/RELEASE.md', 'docs/portkey-mcp-tags-plan.md',
+    'scripts/observe-release.py', 'tools/test_release_023.py', 'tools/test_release_024.py',
     'tools/check_phase.py', 'tools/codex_review.py', 'tools/release_delivery.py', 'tools/site_binding.py',
     'tools/test_codex_review.py', 'tools/test_release_025.py', 'tools/test_release_delivery.py',
     'tools/test_site_binding.py',

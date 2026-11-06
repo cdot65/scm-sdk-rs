@@ -95,15 +95,21 @@ def terminal_ci(source, run_number, output):
         raise ValueError('Workflow URL differs')
     contexts = expected_contexts((ROOT / '.forgejo/workflows/ci.yml').read_text())
     prefix = f'/cdot/scm-sdk-rs/actions/runs/{run_number}/jobs/'
-    jobs = {}
+    # Forgejo can write several statuses for one job in the same second and returns ties in
+    # arbitrary order, so the newest status per context is the one with the highest id.
+    jobs, newest = {}, {}
     for page in range(1, 21):
         rows = get(f'/statuses/{source}?limit=50&page={page}')
         for row in rows:
             target = row.get('target_url', '')
             if not re.fullmatch(re.escape(prefix) + r'\d+', target):
                 continue
+            identity = row.get('id')
+            if type(identity) is not int or identity < 1:
+                raise ValueError('CI status lacks a positive id')
             context = row.get('context')
-            if context not in jobs:
+            if context not in newest or identity > newest[context]:
+                newest[context] = identity
                 jobs[context] = {key: row.get(key) for key in ('context', 'status', 'target_url')}
         if len(rows) < 50:
             break

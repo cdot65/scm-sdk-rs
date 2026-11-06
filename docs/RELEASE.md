@@ -309,8 +309,9 @@ fingerprint, the release commit `4adbe97`, both clean package proofs and the acc
 `tools/release_delivery.py` binds every receipt to that published fingerprint and accepts a
 different current source only as a **governance successor**: it must descend from the release
 commit, and every changed fingerprint input must be in the reviewed allowlist
-(`GOVERNANCE_SUCCESSOR_PATHS`: release/review tooling, their tests and release documents).
-Changes to the packaged crate, contracts, publication scripts, lockfiles or CI are refused.
+(`GOVERNANCE_SUCCESSOR_PATHS`: release/review tooling, the post-publication observer
+`scripts/observe-release.py`, their tests and release documents). Changes to the packaged
+crate, contracts, packaging and publication-verification scripts, lockfiles or CI are refused.
 
 The terminal CI run may also be on a committed governance successor. Before the fix in
 `tools/codex_review.py`, `contracts-and-package` failed on every runner without the Codex CLI.
@@ -320,6 +321,12 @@ published fingerprint, `tools/release_delivery.py` requires the CI commit to des
 release commit, to change only allowlisted paths, and to match its own committed fingerprint.
 The workflow, crate, contracts and lockfiles that CI exercised therefore match the published
 source byte for byte.
+
+`observe-release.py ci` keeps the newest status per CI context (the highest status id).
+Forgejo can write several statuses for one job in the same second and returns ties in
+arbitrary order. Run 35 (`da5aa02`) had a stale `pending` row listed ahead of its final
+`success`, and an earlier first-seen rule refused that run although all 49 jobs had
+succeeded.
 
 Once `docs/checks/release-registry-0.2.5.json` exists, `tools/check_phase.py --phase 31` runs the
 post-publication gate. It contains the cumulative offline set, the delivery guard and the

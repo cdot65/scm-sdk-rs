@@ -198,17 +198,25 @@ class ManagementDeliveryTests(unittest.TestCase):
         contexts = release_delivery.expected_contexts(workflow)
         run = {'index_in_repo': 42, 'commit_sha': source, 'status': 'success',
                'html_url': 'https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/42'}
-        statuses = [{'context': name, 'status': 'success',
+        statuses = [{'id': 100 + index, 'context': name, 'status': 'success',
                      'target_url': f'/cdot/scm-sdk-rs/actions/runs/42/jobs/{index}'}
                     for index, name in enumerate(sorted(contexts))]
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
             (root / '.forgejo/workflows').mkdir(parents=True)
             (root / '.forgejo/workflows/ci.yml').write_text(workflow)
-            for mode in ('success', 'pending', 'missing', 'wrong-run', 'duplicate-job'):
+            for mode in ('success', 'stale-pending-first', 'pending', 'newest-pending', 'missing', 'wrong-run',
+                         'duplicate-job', 'missing-id'):
                 rows = copy.deepcopy(statuses)
                 if mode == 'pending':
                     rows[0]['status'] = 'pending'
+                elif mode == 'stale-pending-first':
+                    # Same-second statuses arrive out of order: an older pending row precedes the newest success.
+                    rows.insert(0, {**rows[0], 'id': rows[0]['id'] - 50, 'status': 'pending'})
+                elif mode == 'newest-pending':
+                    rows.append({**rows[0], 'id': rows[0]['id'] + 50, 'status': 'pending'})
+                elif mode == 'missing-id':
+                    del rows[0]['id']
                 elif mode == 'missing':
                     rows.pop()
                 elif mode == 'wrong-run':
@@ -230,7 +238,7 @@ class ManagementDeliveryTests(unittest.TestCase):
                         patch.dict(observer.os.environ, {'FORGEJO_TOKEN': 'synthetic-test-token'}), \
                         patch.object(observer.urllib.request, 'build_opener', return_value=opener):
                     output = root / (mode + '.json')
-                    if mode == 'success':
+                    if mode in ('success', 'stale-pending-first'):
                         observer.terminal_ci(source, 42, output)
                         receipt = json.loads(output.read_text())
                         self.assertEqual(receipt['expectedJobCount'], 3)

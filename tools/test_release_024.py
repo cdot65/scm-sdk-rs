@@ -237,7 +237,7 @@ class Release024Tests(unittest.TestCase):
         run = {'index_in_repo': 42, 'status': 'success', 'commit_sha': source,
                'html_url': 'https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/42'}
         unrelated = [{'context': 'other', 'status': 'success', 'target_url': '/other'}] * 50
-        rows = [{'context': name, 'status': 'success',
+        rows = [{'id': 10 + i, 'context': name, 'status': 'success',
                  'target_url': f'/cdot/scm-sdk-rs/actions/runs/42/jobs/{i}'}
                 for i, name in enumerate(sorted(contexts))]
         with tempfile.TemporaryDirectory() as directory:
