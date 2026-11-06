@@ -9252,9 +9252,16 @@
           "scope_evidence": [
             "docs/RELEASE.md",
             "tools/release_delivery.py",
+            "tools/test_release_delivery.py",
+            "tools/test_release_025.py",
             "scripts/observe-release.py",
+            "tools/test_release_023.py",
             "scripts/verify-publication.py",
-            "scripts/check-prepublication.py"
+            "scripts/check-prepublication.py",
+            "docs/checks/release-registry-0.2.5.json",
+            "docs/checks/release-tag-v0.2.5.json",
+            "docs/checks/release-tag-github-v0.2.5.json",
+            "docs/checks/phase-31-remote-ci-run-37.json"
           ],
           "scope_revisions": [
             {
@@ -9262,9 +9269,16 @@
               "scope_evidence": [
                 "docs/RELEASE.md",
                 "tools/release_delivery.py",
+                "tools/test_release_delivery.py",
+                "tools/test_release_025.py",
                 "scripts/observe-release.py",
+                "tools/test_release_023.py",
                 "scripts/verify-publication.py",
-                "scripts/check-prepublication.py"
+                "scripts/check-prepublication.py",
+                "docs/checks/release-registry-0.2.5.json",
+                "docs/checks/release-tag-v0.2.5.json",
+                "docs/checks/release-tag-github-v0.2.5.json",
+                "docs/checks/phase-31-remote-ci-run-37.json"
               ]
             }
           ]
@@ -9342,7 +9356,8 @@
         "Governance successor: tools/release_delivery.py keeps 0.2.5 delivery bound to the published fingerprint adbdec87... and release commit 4adbe97, and accepts a current or CI source only when it descends from 4adbe97 and differs solely in GOVERNANCE_SUCCESSOR_PATHS (release/review tooling, their tests and release documents); crate, contracts, publication scripts, lockfiles and workflow changes are refused.",
         "CI defect found during delivery: contracts-and-package failed on every run since phase 29 (runs 26-29, 32-34) because tools/codex_review.py probed `codex --version` unguarded and the runner has no Codex CLI (14 FileNotFoundError errors in test_codex_review). Fixed in 3e78ec8 (absent CLI records codex_version None; a real invocation still fails closed) with regressions, and reproduced green locally in a clean clone with codex hidden (92/92 CI commands). Because the published source carries the defect, delivery CI runs on a committed governance successor, verified by verify_governance_successor_commit.",
         "CI observation defect found during delivery: run 35 (da5aa02) passed all 49 jobs, but Forgejo returned a stale same-second pending status for rust (default, 1.99.0) ahead of its final success and observe-release.py ci (first-seen per context) refused it. Fixed in 7050534: the newest status per context (highest positive id) is kept; regressions for stale-pending-first, newest-pending and missing-id in tools/test_release_023.py. scripts/observe-release.py and its tests joined GOVERNANCE_SUCCESSOR_PATHS; packaging and publication-verification scripts remain excluded. Delivery CI therefore runs on c7461c0 (local clean-clone repro with codex hidden: 92/92).",
-        "Run 36 (c7461c0) failed only rust (probe-base, 1.89.0), a scripts/check-rust.py job whose inputs are byte-identical to run 35 (da5aa02), where it passed, as it did in every run from 30 to 35; c7461c0 changed only Python observation tooling, docs and excluded receipts. Forgejo exposes no re-run API and its job logs need a browser session, so the cause is not captured; the check was rerun locally on c7461c0, and delivery CI is a fresh run on the next commit, whose fingerprinted inputs equal c7461c0's."
+        "Run 36 (c7461c0) failed only rust (probe-base, 1.89.0), a scripts/check-rust.py job whose inputs are byte-identical to run 35 (da5aa02), where it passed, as it did in every run from 30 to 35; c7461c0 changed only Python observation tooling, docs and excluded receipts. Forgejo exposes no re-run API and its job logs need a browser session, so the cause is not captured; the check was rerun locally on c7461c0, and delivery CI is a fresh run on the next commit, whose fingerprinted inputs equal c7461c0's.",
+        "Delivery recorded: run 37 (bcbab09, fingerprint equal to c7461c0) passed all 49 jobs; canonical and GitHub v0.2.5 tag receipts re-observed with refs/heads/main == bcbab09 and v0.2.5^{} == 4adbe97. Delivery verification then exposed that schema-3 management package proofs were checked against the current (successor) fingerprint; tools/release_delivery.py now verifies both proofs with check-management-package.verify_receipt bound to the published fingerprint (regression in tools/test_release_025.py). This later governance-only commit does not change the delivery CI binding, which remains run 37 on bcbab09."
       ],
       "limitations": [
         {
@@ -9356,7 +9371,23 @@
             "docs/reviews/github-pages/release-0.2.5/binding.json"
           ]
         }
-      ]
+      ],
+      "registry_publication": {
+        "status": "published_and_verified",
+        "version": "0.2.5",
+        "evidence": "docs/checks/release-registry-0.2.5.json",
+        "source_commit": "4adbe971bce30b129bbd9a1a858540f4bca6c22b"
+      },
+      "delivery": {
+        "status": "complete",
+        "source_commit": "bcbab09acb983838068cf987f8cf4ad93e423b3f",
+        "published_source_commit": "4adbe971bce30b129bbd9a1a858540f4bca6c22b",
+        "registry_receipt": "docs/checks/release-registry-0.2.5.json",
+        "tag_receipt": "docs/checks/release-tag-v0.2.5.json",
+        "github_tag_receipt": "docs/checks/release-tag-github-v0.2.5.json",
+        "ci_receipt": "docs/checks/phase-31-remote-ci-run-37.json",
+        "ci_source": "governance successor of the release commit (tools/release_delivery.py verify_governance_successor_commit)"
+      }
     }
   ],
   "active_followup_plan": "docs/red-team-management-0.86-plan.md"
