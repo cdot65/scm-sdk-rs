@@ -440,6 +440,46 @@ class AddedContentFailsClosedTests(DriftTestCase):
                 with self.assertRaisesRegex(ValueError, r'(?s)no receipt written.*digest=[0-9a-f]{64}'):
                     drift.compare_candidate(self.candidate({NB: mutate}, name=name))
 
+    def test_added_source_structures_outside_operations_and_components_fail_closed(self):
+        base = {'openapi': '3.1.0', 'info': {'title': 'New', 'version': '1.0.0'}, 'paths': {}}
+        cases = {
+            'webhooks': {**base, 'webhooks': {'w': {'post': {'responses': {'200': {'description': 'ok'}}}}}},
+            'root-extension': {**base, 'x-internal': True},
+            'info-extension': {**base, 'info': {**base['info'], 'x-audience': 'internal'}},
+            'unknown-component-section': {**base, 'components': {'callbacks': {'c': {}}}},
+            'security-scheme-extension': {**base, 'components': {'securitySchemes': {
+                'k': {'type': 'apiKey', 'name': 'k', 'in': 'header', 'x-rotation': 'daily'}}}},
+        }
+        for name, spec in cases.items():
+            with self.subTest(name=name):
+                candidate = self.candidate(extra={'openapi-specs/prisma-airs/new/new-service.yaml': dumps(spec)}, name=name)
+                with self.assertRaisesRegex(ValueError, 'no receipt written'):
+                    drift.compare_candidate(candidate)
+        clean = self.compare(extra={'openapi-specs/prisma-airs/new/new-service.yaml': dumps(
+            {**base, 'components': {'securitySchemes': {'k': {'type': 'apiKey', 'name': 'k', 'in': 'header'}}}})}, name='clean')
+        self.assertClass(clean, 'source_added', 'additive')
+
+    def test_new_subtrees_reported_as_type_or_constraint_changes_are_scanned(self):
+        cases = {
+            'added-anyOf': lambda spec: (spec['components']['schemas']['Channel'].update(
+                {'anyOf': [{'type': 'object'}, {'not': {'type': 'null'}}]}), spec)[1],
+            'added-media-schema': lambda spec: (spec['paths']['/v1/channels']['get']['responses']['200']['content'].update(
+                {'application/json': {**spec['paths']['/v1/channels']['get']['responses']['200']['content'].get(
+                    'application/json', {}), 'schema': {'type': 'object', 'x-shape': 'opaque'}}}), spec)[1],
+        }
+        for name, mutate in cases.items():
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(ValueError, 'no receipt written'):
+                    drift.compare_candidate(self.candidate({NB: mutate}, name=name))
+
+    def test_operation_removed_identity_binds_the_whole_operation(self):
+        def remove(spec):
+            del spec['paths']['/v1/channels']['get']
+            return spec
+        removed = self.assertClass(self.compare({NB: remove}, name='rm'), 'operation_removed')
+        self.assertIn('responses', removed['old'])
+        self.assertIn('parameters', removed['old'])
+
     def test_added_source_is_scanned_too(self):
         spec = {'openapi': '3.1.0', 'info': {'title': 'New', 'version': '1.0.0'},
                 'paths': {'/v1/x': {'get': {'operationId': 'getX', 'responses': {'200': {'description': 'ok'}}}}},
@@ -576,7 +616,7 @@ class BaselineTamperingTests(DriftTestCase):
             (self.base[NB]['row']['activeSpecificationPath'], lambda b: b.replace(b'Channels', b'Channelz', 1), 'Pinned bytes changed'),
             ('contracts/vendor/red-team-management/0.86.0/source.json', lambda b: b.replace(b'"usedForGeneration": true', b'"usedForGeneration": false'), 'Pinned bytes changed|metadata mismatch'),
             ('contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json', lambda b: b + b' ', 'Pinned bytes changed'),
-            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 2', b'"classifierVersion": 3'), 'Stale or tampered'),
+            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 3', b'"classifierVersion": 4'), 'Stale or tampered'),
             ('contracts/airs-active-sources.json', lambda b: b.replace(rtm.COMMIT.encode(), b'f' * 40, 1), 'Pinned bytes changed|snapshot commit'),
         )
         for relative, tamper, message in cases:

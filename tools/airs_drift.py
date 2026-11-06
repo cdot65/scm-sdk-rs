@@ -34,7 +34,7 @@ from pathlib import Path
 import red_team_management as rtm
 from red_team_dataplane import read_yaml
 
-CLASSIFIER_VERSION = 2
+CLASSIFIER_VERSION = 3
 REPOSITORY = 'https://github.com/PaloAltoNetworks/pan.dev'
 GITHUB_API = 'https://api.github.com/repos/PaloAltoNetworks/pan.dev'
 RAW_BASE = 'https://raw.githubusercontent.com/PaloAltoNetworks/pan.dev'
@@ -117,6 +117,9 @@ SCHEMA_KNOWN = (ANNOTATIONS | TYPE_KEYWORDS | CONSTRAINT_KEYWORDS
                    'propertyNames', 'allOf', 'prefixItems'})
 PARAMETER_KNOWN = ANNOTATIONS | SERIALIZATION | {'in', 'name', 'required', 'schema', 'content'}
 MEDIA_KNOWN = ANNOTATIONS | {'schema'}
+SCHEMA_SUBTREES = {'anyOf', 'oneOf', 'allOf', 'prefixItems', 'items', 'additionalProperties', 'propertyNames',
+                   'schema'}
+SECURITY_SCHEME_KNOWN = {'type', 'description', 'name', 'in', 'scheme', 'bearerFormat', 'flows', 'openIdConnectUrl'}
 COMPONENT_SECTIONS = {'schemas', 'parameters', 'requestBodies', 'responses', 'securitySchemes', 'examples'}
 MISSING = object()
 HEX40 = re.compile(r'[0-9a-f]{40}')
@@ -429,6 +432,10 @@ class SourceComparison:
             raise ValueError(f'Invalid disposition for {cls}: {disposition}')
         if new is not MISSING and cls in ADDED_SCANS:
             getattr(self, ADDED_SCANS[cls])(new, parts)
+        elif new is not MISSING and cls in ('type_changed', 'constraint_changed') and parts and (
+                parts[-1] in SCHEMA_SUBTREES or isinstance(parts[-1], int)):
+            for index, item in (enumerate(new) if isinstance(new, list) else [(None, new)]):
+                self.scan_schema(item, parts if index is None else parts + [index])
         identity = identity_of(self.source, parts, kind, old, new)
         affected = sorted(self.affected(parts))
         retained = set()
@@ -522,6 +529,10 @@ class SourceComparison:
             self.scan_body(value, parts)
         elif section == 'responses':
             self.scan_response(value, parts)
+        elif section == 'securitySchemes' and isinstance(value, dict):
+            for key, item in value.items():
+                if key not in SECURITY_SCHEME_KNOWN:
+                    self.fail(parts + [key], new=item, reason='Unclassified keyword in added content')
 
     def fail(self, parts, old=MISSING, new=MISSING, reason='Unclassified upstream change'):
         kind = 'added' if old is MISSING else 'removed' if new is MISSING else 'changed'
@@ -794,7 +805,7 @@ class SourceComparison:
             if key not in old:
                 self.emit('operation_added', 'added', parts, new=new[key], nativeBindings=[])
             elif key not in new:
-                self.emit('operation_removed', 'removed', parts, old={'operationId': old[key]['operationId']},
+                self.emit('operation_removed', 'removed', parts, old=old[key],
                           nativeBindings=native_bindings(self.source, key), sdkRetention='retained')
             else:
                 self.compare_operation(old[key], new[key], parts)
@@ -975,14 +986,11 @@ def compare_sources(old_sources, new_sources):
                             'oldVersion': source_summary(old['spec'])['version']})
             continue
         if old is None:
-            comparison = SourceComparison(upstream, new['spec'], new['spec'])
-            for key, operation in comparison.new['operations'].items():
-                method, route = key.split(' ', 1)
-                comparison.scan_operation(operation, ['paths', route, method.lower()])
-            for section, entries in comparison.new['components'].items():
-                if isinstance(entries, dict):
-                    for name, value in entries.items():
-                        comparison.scan_component(value, ['components', section, name])
+            # Classify every structure of the new source against an empty document of the same
+            # OpenAPI version, so document, info, component-section and addition rules all apply.
+            empty = {'openapi': new['spec'].get('openapi') if isinstance(new['spec'], dict) else None,
+                     'info': {}, 'paths': {}}
+            SourceComparison(upstream, empty, new['spec']).compare()
             summary = source_summary(new['spec'])
             value = {'sha256': sha(new['bytes']), **summary}
             identity = identity_of(upstream, [], 'added', new=value)
