@@ -6190,7 +6190,7 @@
     {
       "id": 24,
       "name": "AIRS management service qualification and release",
-      "status": "in_progress",
+      "status": "superseded",
       "reviews": [],
       "scope_evidence": [
         ".forgejo/workflows/ci.yml",
@@ -6698,6 +6698,24 @@
         "total": 46,
         "source_sha256": "726ed2c973d3b59cfefec63fa1de921bda31cf275c9397c2d4d16c65a880e313",
         "phase_completion": false
+      },
+      "superseded_by": {
+        "phase": 28,
+        "version": "0.2.4",
+        "authorization": "Maintainer instruction 2026-11-06: close phase 24 as superseded by 0.2.4 rather than complete it.",
+        "reason": "0.2.3 (release commit 14a6754) is published and registry-verified, but its delivery criterion of a terminal successful 49-job CI run on the release source is unmet and cannot be met: no run on 14a6754-equivalent source ever passed (runs 26-29 failed; delivery/v0.2.3 run 40 (fingerprint-identical to 14a6754) passed 48/49 jobs and failed only contracts-and-package), and RUSTSEC-2026-0382/0383, published after release, affect its locked webpki-root-certs 1.0.9. Published source is immutable; 0.2.4 (phase 28) remediates the advisories (webpki-root-certs 1.0.10) and carries the 0.2.3 management changes forward. Phase 24 is not complete and makes no delivery claim.",
+        "unmet_criteria": [
+          "terminal successful configured CI run on the published 0.2.3 source",
+          "accepted delivery chunk review",
+          "accepted complete-phase review after delivery"
+        ],
+        "evidence": [
+          "docs/checks/release-registry-0.2.3.json",
+          "docs/checks/historical-delivery/0.2.3/tag.json",
+          "docs/checks/historical-delivery/0.2.3/branch.json",
+          "docs/reviews/phase-24-delivery-handoff.md",
+          "docs/checks/historical-delivery/0.2.3/ci-run-40.json"
+        ]
       }
     },
     {
