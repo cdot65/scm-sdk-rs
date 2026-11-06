@@ -1,0 +1,125 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 1,
+  "reviewed_at": "2026-11-06T13:49:40.512285+00:00",
+  "source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "source_unchanged": true,
+  "checks_sha256": "90ef80778dad5fff0ec54791ef41bf0d290a638256624adbada8d4cc398b04e1",
+  "prompt_sha256": "6d45ab01e0de2b1eeec8b3627543f4b303887d2150e91c2e09eb147261d41ef9",
+  "cli_output_sha256": "9e46d68fa44fc6c15d60afd11a4243fa309a2d1fde3af45b7fa28b4ccbf40751",
+  "gate_passed": false,
+  "review": {
+    "score": 7,
+    "summary": "The remote-delivery receipts hang together. The registry receipt names 6f18529 with archive sha 533294fe and not yanked. The canonical and GitHub v0.2.4 annotated tags peel to 6f18529. CI run 44 on 7dd0fff shows 49/49 success with fingerprint f9cebee\u2026, and branch.json observes 7dd0fff on delivery/v0.2.4. The readiness-gate bypass is candidly disclosed. However, the chunk's decisive artifact, verify.json, is an unbound transcription from main. None of the 105 recorded checks executes historical_delivery.py or its tests. The evidence copy cannot run in this tree, and the retained registry archive is not in the repository, so archive equality cannot be independently confirmed. The disclosure also omits that the only passing readiness chunk review (45/50) covers source a61ee87\u2026, not the published f9cebee\u2026. Some notes are stale after the gate rewrote the release-package proofs to b40409e.",
+    "findings": [
+      {
+        "severity": "high",
+        "path": "docs/checks/historical-delivery/0.2.4/verify.json",
+        "line": 11,
+        "description": "The chunk's central acceptance result ('status: delivered') was copied from main. It records no main commit, verifier hash or execution timestamp. The recorded check set (docs/reviews/phase-28-chunk-remote-delivery-attempt-01.checks.json) never runs `historical_delivery.py verify --version 0.2.4` or test_historical_delivery.py. As far as this review's evidence shows, the delivery verification was never executed.",
+        "required_fix": "Add the verifier and its unittest suite to the remote-delivery chunk's recorded checks. Run them from a location where they execute, or record a main-side checks receipt bound by commit and sha256. Bind verify.json to the verifier's file hash and main commit, plus a checkedAt timestamp."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/reviews/historical-delivery/historical_delivery.py",
+        "line": 44,
+        "description": "ROOT = parents[1] resolves to docs/reviews, and the import of release_delivery from ROOT/tools fails. The 'evidence-only copy' therefore cannot run or be tested in the reviewed tree. verify() also depends on a gitignored .local/artifacts archive that is not present, so byte-level archive equality (and docs/checks/phase-28-published-archive-comparison.json) cannot be reproduced offline from the repository.",
+        "required_fix": "Make the copy runnable by deriving ROOT from the repository root, or document and pin the exact main blob sha256. Record the retained archive's sha256 as an independent check, or commit a reproducible extraction listing so the comparison can be re-verified without the network."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/reviews/phase-28-historical-delivery.md",
+        "line": 14,
+        "description": "The disclosure lists the three rejected phase-level readiness reviews but omits that the only passing release-readiness chunk review (phase-28-chunk-release-readiness-attempt-03.json, 45/50) was bound to source a61ee873\u2026, not the published f9cebee5\u2026. phase-status.json:7796 still shows release-readiness 'pending'. Phase completion requires every declared chunk to be accepted for the current source.",
+        "required_fix": "Disclose the readiness chunk's fingerprint mismatch. Either obtain a release-readiness chunk review bound to f9cebee5\u2026, or record an explicit maintainer disposition before the final phase review."
+      },
+      {
+        "severity": "low",
+        "path": "docs/checks/phase-28-published-archive-comparison.json",
+        "line": 35,
+        "description": "The note says the retained phase-28-release-package proofs qualify 69eb33e. The gate run has since rewritten them (and phase-28-release-readiness.json:5) to releaseCommit b40409e, an evidence-only post-publication commit. A reader could mistake this for pre-publication readiness.",
+        "required_fix": "Update the note and historical-delivery.md:20-23 to state that the current release-package and readiness receipts are post-publication requalifications at b40409e. Point to the git history for the original 69eb33e receipts."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 8698,
+        "description": "active_followup_plan names docs/red-team-management-0.86-plan.md, while the phase-28 plan and the review instructions name docs/typescript-035-parity-plan.md.",
+        "required_fix": "Reconcile active_followup_plan with the active phase-28 plan, or document why it intentionally differs."
+      },
+      {
+        "severity": "low",
+        "path": "docs/reviews/historical-delivery/test_historical_delivery.py",
+        "line": 118,
+        "description": "The tests omit negative cases for: a proof commit that isn't an ancestor of either branch; a proof whose releaseCommit fingerprint differs; a yanked or wrong-owner registry receipt; a manifest identity mismatch.",
+        "required_fix": "Add rejection tests for these branches of verify()."
+      }
+    ],
+    "evidence": [
+      "docs/checks/release-registry-0.2.4.json:5-15: version 0.2.4, yanked false, owner cdot65, archiveSha256 533294fe\u2026, sourceCommit 6f18529, sourceSha256 f9cebee\u2026",
+      "docs/checks/historical-delivery/0.2.4/tag-github.json:5-10: tagObject 2f7ad29\u2026 and refs/tags/v0.2.4^{} = 6f18529",
+      "docs/checks/historical-delivery/0.2.4/ci-run-44.json:4-10,308-310: sourceCommit and commit_sha 7dd0fff, sourceSha256 f9cebee\u2026, expectedJobCount 49, counts success 49",
+      "docs/checks/historical-delivery/0.2.4/branch.json:5-6: refs/heads/delivery/v0.2.4 at 7dd0fff",
+      "docs/checks/historical-delivery/0.2.4/manifest.json:5-7: proofCommit b40409e, ciRun 44, no exceptions",
+      "docs/checks/phase-28-published-package-{1.99.0,1.89.0}.json:8,1140: releaseCommit 424407a, sourceSha256 f9cebee\u2026; comparison file reports only .cargo_vcs_info.json differing",
+      "Recorded checks: passed=true, source f9cebee\u2026, all commands exit 0; the command list contains no historical_delivery invocation or test",
+      "phase-28-chunk-release-readiness-attempt-03.prompt.md:16: reviewed source a61ee873\u2026 (total 45), which differs from the published fingerprint",
+      "phase-status.json:8187-8188 remote-delivery pending; 7795-7796 release-readiness pending",
+      "docs/PHASES.md:296-303: acceptance requires registry bytes, annotated tag, and 49 terminal successful contexts on matching source"
+    ],
+    "limitations": [
+      "Read-only review; no commands executed and no network access, so the registry, tag and CI receipts were checked only for internal consistency.",
+      "The retained crates.io archive (.local/artifacts) is not available here, so the byte equality of its 142 files with the clean proofs was not independently verified.",
+      "main's tools/historical_delivery.py was not inspected; only the evidence copy in docs/reviews was.",
+      "Did not re-audit unrelated historical infrastructure or SDK runtime code, which is unchanged from the published source."
+    ],
+    "categories": {
+      "implementation": 8,
+      "code_quality": 8,
+      "supportability": 7,
+      "architecture": 8,
+      "feature_delivery": 8
+    },
+    "total": 39
+  },
+  "rubric": "five-category-v1",
+  "chunk": "remote-delivery",
+  "decision": "rejected",
+  "review_scope": "chunk",
+  "scope_evidence": [
+    ".forgejo/workflows/ci.yml",
+    "CHANGELOG.md",
+    "README.md",
+    "docs/CI.md",
+    "docs/DIRECTIONAL_PROFILES.md",
+    "docs/PHASES.md",
+    "docs/RELEASE.md",
+    "docs/STABILITY.md",
+    "docs/phase-status.json",
+    "docs/typescript-035-parity-plan.md",
+    "scripts/check-access-release.py",
+    "scripts/check-management-package.py",
+    "scripts/check-package.py",
+    "scripts/check-prepublication.py",
+    "scripts/observe-release.py",
+    "scripts/verify-publication.py",
+    "tools/check_phase.py",
+    "tools/release_delivery.py",
+    "tools/review_phase.py",
+    "tools/test_ci.py",
+    "tools/test_management_package.py",
+    "tools/test_package_policy.py",
+    "tools/test_release_023.py",
+    "tools/test_release_024.py",
+    "tools/test_release_delivery.py",
+    "docs/reviews/phase-28-historical-delivery.md",
+    "docs/reviews/historical-delivery/historical_delivery.py",
+    "docs/reviews/historical-delivery/test_historical_delivery.py",
+    "docs/checks/release-registry-0.2.4.json",
+    "docs/checks/historical-delivery/0.2.4",
+    "docs/checks/phase-28-published-package-1.99.0.json",
+    "docs/checks/phase-28-published-package-1.89.0.json",
+    "docs/checks/phase-28-published-archive-comparison.json"
+  ]
+}

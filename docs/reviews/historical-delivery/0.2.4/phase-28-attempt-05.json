@@ -1,0 +1,68 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 5,
+  "reviewed_at": "2026-11-06T14:01:23.418114+00:00",
+  "source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "source_unchanged": true,
+  "checks_sha256": "90ef80778dad5fff0ec54791ef41bf0d290a638256624adbada8d4cc398b04e1",
+  "prompt_sha256": "4ebc1946cd825ebd3e97c7b098f718f3f3bc11205f3a2e799a6bac6328d14f5c",
+  "cli_output_sha256": "9eab339bae056af41d79f4ed6dfa22a85b76afb69d42a4f010f0ccb31612b89b",
+  "gate_passed": true,
+  "review": {
+    "score": 8,
+    "summary": "Phase 28 delivery is evidenced on the published fingerprint f9cebee5. The checks file shows 105 commands, all exit 0 with no timeouts or source changes, including both --require-directional package runs and check-access-release. Both chunks are accepted (readiness 44/50, remote-delivery 43/50). CI run 44 is 49/49, both v0.2.4 tags peel to 6f18529, and the published-archive comparison matches all 142 files apart from .cargo_vcs_info.json. Attempt 4's findings were handled. The publication bypass is now a structured publication_exception that explicitly does not claim retroactive approval. The receipts that no gate re-checks are recorded as an accepted limitation. Dispositions were added and the blank line was fixed (receipts regenerated with 13 tests). Two items remain. No tool or test reads the publication_exception. The execution receipts' hashes are still checked only by a reader, not by a recorded gate command. Neither blocks the attempt-5 exception.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "docs/phase-status.json",
+        "line": 8712,
+        "description": "The publication_exception record is well formed (rule, facts, explicit non-retroactive authorization, remediation). But no tool or test in this tree consumes or validates it; grepping for publication_exception outside phase-status.json finds nothing. Phase completion could still be recorded without it, so the second half of attempt-4's required fix (the completion step must require the record, and a test must check it) is not done here.",
+        "required_fix": "When phase 28 completion is recorded on main, make the completion/advance step require a publication_exception with non-empty facts, authorization and remediation paths that exist for phase 28 / 0.2.4, and add a negative test that removes it."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 8731,
+        "description": "The accepted limitation 'historical-delivery-receipts-not-gate-bound' is honest, but it leaves the receipts' tool sha f2ecd7f0\u2026, tests sha 5b12ab38\u2026 and rules sha fe28a6fa\u2026/f0d8b35c\u2026 (execution-release-tree.json:8-18, execution-main.json:8-18) to be checked by the reader. The checks file (90ef8077\u2026, executed 10:23) predates both receipts (13:59).",
+        "required_fix": "On main, before or during completion, run a recorded check bound to source and checks sha256 that re-hashes each receipt's tool, tests and rules against the committed blobs at headCommit and re-runs `historical_delivery.py verify --version 0.2.4`."
+      },
+      {
+        "severity": "low",
+        "path": "docs/reviews/historical-delivery/historical_delivery.py",
+        "line": 70,
+        "description": "Rules are still bound at import time from the HISTORICAL_DELIVERY_ROOT environment variable into module globals (bind_rules, line 55). Tests have to restore this by hand (test_historical_delivery.py:231). The double-blank-line part of the earlier finding is fixed.",
+        "required_fix": "Optional hardening: pass the bound rules explicitly (for example, a context object returned by bind_rules) instead of mutating module globals."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-28-attempt-05.checks.json:2-6: phase 28, source f9cebee5\u2026, passed true. Grep finds 105 'exit_code: 0', no non-zero exits, no timeouts and no source_unchanged:false. Lines 2866-2937 contain both --require-directional runs and check-access-release.py.",
+      "phase-status.json:8682-8711: review_dispositions now cover phase attempts 1-4, readiness chunk attempt 4 and remote-delivery chunk attempts 1-2. This resolves attempt-4's low disposition finding.",
+      "phase-status.json:8712-8728: publication_exception names the PHASES.md/RELEASE.md rule, the 2026-10-22 publish from 6f18529, the rejected readiness attempts 1-3, the 69eb33e proof mismatch, explicit 'not retroactive approval' wording and the remediation artifacts.",
+      "phase-status.json:8729-8741: accepted_limitation historical-delivery-receipts-not-gate-bound, with its rationale (check_phase.py is fingerprinted) and its evidence paths.",
+      "test_historical_delivery.py:224-239: the stray double blank line is removed. 13 test methods match 'Ran 13 tests' in both execution receipts.",
+      "execution-release-tree.json:6-38 (head 127382a, clean, rules tools/release_delivery.py) and execution-main.json:6-38 (head 33e2640) share tool sha f2ecd7f0\u2026 and tests sha 5b12ab38\u2026, and both report verify status 'delivered', ciRun 44, jobs 49, failedContexts [].",
+      "phase-28-chunk-remote-delivery-attempt-02.json:6,11,75: accepted 43/50 on f9cebee5\u2026. Readiness chunk attempt 4 was accepted 44/50 on the same fingerprint (phase-status.json:8696-8697).",
+      "PHASES.md:291-303 acceptance criteria (both chunks, clean packages on 1.89/1.99 with directional examples, registry bytes, annotated tag, 49 terminal CI successes) are matched by the receipts. The pre-publication readiness ordering was breached, and that is now formally disclosed.",
+      "review_phase.py:15-16: docs/reviews/, docs/checks/ and docs/phase-status.json are excluded from the fingerprint, so the evidence-only commits do not change the reviewed source."
+    ],
+    "limitations": [
+      "Read-only review: I ran no commands and recomputed no SHA-256 values (source fingerprint, checks file, the receipts' tool/tests/rules hashes, archive digests).",
+      "I did not inspect main's tools/historical_delivery.py, main's release_delivery.py (rules sha f0d8b35\u2026) or main's completion tooling. Whether the completion step on main will require publication_exception could not be assessed.",
+      "No network access, so the crates.io, Forgejo and GitHub tag/CI state comes from the committed receipts only. The gitignored .local/artifacts archive was not inspected.",
+      "The fingerprinted SDK, directional-profile and release-tool sources are unchanged since 0.2.4 and were assessed in earlier readiness reviews, so I did not re-audit them here."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "accepted_with_deficiencies",
+  "review_scope": "phase"
+}

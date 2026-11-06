@@ -1,0 +1,77 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 28,
+  "attempt": 4,
+  "reviewed_at": "2026-11-06T13:58:32.433591+00:00",
+  "source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+  "source_unchanged": true,
+  "checks_sha256": "90ef80778dad5fff0ec54791ef41bf0d290a638256624adbada8d4cc398b04e1",
+  "prompt_sha256": "aa12bf391d4b76307b0752ce5ba714f24f1d9bc33d0f78c089203c62eb9801af",
+  "cli_output_sha256": "212e659ba4a8e7f9daa78df1cdb671f630afaa5d1049efd19bd91d380c0aa9af",
+  "gate_passed": false,
+  "review": {
+    "score": 8,
+    "summary": "Phase 28's work is verified: 105/105 checks pass on f9cebee5\u2026, CI run 44 is 49/49 success, both v0.2.4 tags point to 6f18529, and both compilers' package proofs match the 142 published files except VCS info. The GitHub tag now exists, so the old README-link medium is resolved. The remote-delivery fixes are done: receipts are tool-written with repo-relative paths, --root uses args.root and has a CLI test, and verify.json is removed. Two mediums keep this phase below 46/50. First, 0.2.4 was published before an accepted readiness review (PHASES.md:297-298); this is disclosed only in prose, with no exception recorded in phase-status.json. Second, the historical-delivery receipts are not re-checked by any recorded gate command, so their tool and test hashes are self-reported. Low gaps: review dispositions for the remote-delivery and readiness-4 findings are missing, and a stray blank line remains in a test file.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "docs/phase-status.json",
+        "line": 8682,
+        "description": "PHASES.md:297-299 requires the release-readiness chunk and the full release-readiness review to pass before publication. 0.2.4 was published on 2026-10-22 while phase readiness attempts 1-3 were all rejected; phase-28-historical-delivery.md:12-19 admits this. The only record is prose. Phase 28's entry has no structured, maintainer-authorized exception (unlike manifest.ciExceptions or the phase-24 'superseded' decision), so phase completion would look as if it met a criterion it broke.",
+        "required_fix": "Add a publication-exception record to the phase 28 entry. It should name the breached criterion (PHASES.md:297-299), the maintainer authorization, the remediation evidence (phase-28-published-archive-comparison.json, phase-28-published-package-*.json, execution-*.json) and the rejected readiness reviews. The completion step on main should require that record, and a test should check it."
+      },
+      {
+        "severity": "medium",
+        "path": "docs/checks/historical-delivery/0.2.4/execution-release-tree.json",
+        "line": 12,
+        "description": "The receipts are now written by the tool, but they are still the only proof the delivery verifier ran. The phase checks (90ef8077\u2026) are the same 105 commands as the chunk runs and contain no historical_delivery command. Nothing re-checks that tool.sha256 f2ecd7f0\u2026, tests.sha256 742065ab\u2026 or rules.sha256 fe28a6fa\u2026 match the committed files. The doc's claim (phase-28-historical-delivery.md:89) is unverified prose. Archive-byte equality also depends on the gitignored .local/artifacts crate.",
+        "required_fix": "Before recording completion on main, run a recorded check (bound to source and checks sha256) that re-hashes the tool, tests and rules named in each execution receipt against the committed blobs at headCommit, and re-runs `historical_delivery.py verify --version 0.2.4 --root .`."
+      },
+      {
+        "severity": "low",
+        "path": "docs/phase-status.json",
+        "line": 8693,
+        "description": "review_dispositions stops at phase attempt 3. Nothing records how the findings from remote-delivery chunk attempts 1-2 and readiness chunk attempt 4 were handled (receipt production, --root fix, verify.json removal, post-publication proof disclosure). Both chunks still read 'pending' (lines 7796, 8188); this is explained only in historical-delivery.md:30-31.",
+        "required_fix": "Add disposition entries for remote-delivery attempts 1-2 and readiness chunk attempt 4, pointing to the fixing commits (1f83858, 38f7010)."
+      },
+      {
+        "severity": "low",
+        "path": "docs/reviews/historical-delivery/test_historical_delivery.py",
+        "line": 224,
+        "description": "The stray double blank line between test methods, raised in remote-delivery attempt 2, is still there. The module also binds rules at import time from the HISTORICAL_DELIVERY_ROOT environment variable, a mutable global that tests must restore by hand (line 232).",
+        "required_fix": "Remove the extra blank line. Consider passing the bound rules explicitly instead of rebinding module globals."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-28-attempt-04.checks.json:2-6: phase 28, source f9cebee5\u2026, passed true. Grep finds 105 'exit_code: 0' and zero non-zero exits, timeouts or source_unchanged:false. Lines 2866-2937 contain both --require-directional package runs and check-access-release.py.",
+      "docs/checks/historical-delivery/0.2.4/ci-run-44.json:308-311: expectedJobCount 49, counts {success: 49}. branch.json:5-6: refs/heads/delivery/v0.2.4 at 7dd0fff, the CI commit.",
+      "tag-github.json:6-10: tag object 2f7ad298\u2026, with refs/tags/v0.2.4^{} = 6f18529. The packaged README.md:31 GitHub v0.2.4 link (the attempt-3 medium) therefore points to an existing tag.",
+      "phase-28-published-archive-comparison.json:6-32: published archive 533294fe\u2026, 142 files, identicalExceptVcsInfo true for both 1.99.0 and 1.89.0. phase-28-published-package-1.89.0.json:4-16: passed, requireClean true, effectiveDirty false.",
+      "historical_delivery.py:380-393: main() resolves root from args.root and rebinds rules. test_historical_delivery.py:226-238 covers both the '--root X' and '--root=X' forms, and 240-252 covers create-only receipts confined to the evidence directory. This resolves the earlier --root and main() test findings.",
+      "historical_delivery.py:346-377: execute() runs verify plus its own test suite and records HEAD, clean tree, rules/tool/tests sha256 and repo-relative paths. execution-release-tree.json:6-24 (head 1f83858, 13 tests OK, rules = in-tree tools/release_delivery.py) and execution-main.json:6-24 both report status 'delivered', ciRun 44, failedContexts [].",
+      "historical_delivery.py:255-339: verify checks registry identity and ownership, retained archive checksum and inventory, VCS sha1 = release, proof fingerprint and ancestry, byte equality except VCS info, annotated-tag peeling, mirror tag equality, CI matrix completeness, unique job URLs and an exact-exception rule.",
+      "Glob shows verify.json removed from docs/checks/historical-delivery/0.2.4/. phase-28-historical-delivery.md:89-90 records the removal.",
+      "phase-28-historical-delivery.md:12-37 discloses the publication bypass, the proofs qualifying 69eb33e instead of 6f18529, failed run 32 and the stale private-material receipt. A grep of docs/phase-status.json finds no structured exception or waiver for the bypass.",
+      "phase-28-chunk-remote-delivery-attempt-02.json:6,71,75 is accepted 43/50 on f9cebee5\u2026. phase-28-chunk-release-readiness-attempt-04 (accepted 44/50) is bound to the same source, per historical-delivery.md:27-29 and the prior chunk evidence."
+    ],
+    "limitations": [
+      "Read-only review: I ran no commands and recomputed no SHA-256 (source fingerprint, checks file, the tool/tests/rules hashes in the receipts, or the archive digests).",
+      "I did not inspect the gitignored .local/artifacts registry archive or the package worktrees. Byte equality rests on the committed inventories and receipts.",
+      "I did not inspect main's tools/historical_delivery.py or main's tools/release_delivery.py (rules sha f0d8b35\u2026). I confirmed only that main's tool sha in execution-main.json equals the in-tree copy's recorded sha.",
+      "No network access, so I could not independently confirm the crates.io, Forgejo or GitHub state. Those facts come from the committed receipts.",
+      "Fingerprinted SDK and release-tool source is unchanged since 0.2.4 and was assessed in prior readiness reviews, so I did not re-audit models, the oracle or package scripts."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 8,
+      "supportability": 8,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 43
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "phase"
+}

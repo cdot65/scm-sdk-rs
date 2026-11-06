@@ -7806,12 +7806,14 @@
     {
       "id": 28,
       "name": "Directional profile release and delivery",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/historical-delivery/0.2.4/phase-28-attempt-05.json"
+      ],
       "chunks": [
         {
           "id": "release-readiness",
-          "status": "pending",
+          "status": "accepted",
           "scope_evidence": [
             ".forgejo/workflows/ci.yml",
             "CHANGELOG.md",
@@ -8199,11 +8201,22 @@
                 "tools/verify_typescript035_source.py"
               ]
             }
-          ]
+          ],
+          "accepted_total": 42,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 8,
+            "supportability": 8,
+            "architecture": 9,
+            "feature_delivery": 8
+          },
+          "accepted_review": "docs/reviews/historical-delivery/0.2.4/phase-28-chunk-release-readiness-attempt-05.json",
+          "accepted_source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+          "review_decision": "accepted"
         },
         {
           "id": "remote-delivery",
-          "status": "pending",
+          "status": "accepted",
           "scope_evidence": [
             ".forgejo/workflows/ci.yml",
             "CHANGELOG.md",
@@ -8229,7 +8242,15 @@
             "tools/test_package_policy.py",
             "tools/test_release_023.py",
             "tools/test_release_024.py",
-            "tools/test_release_delivery.py"
+            "tools/test_release_delivery.py",
+            "docs/reviews/phase-28-historical-delivery.md",
+            "docs/reviews/historical-delivery/historical_delivery.py",
+            "docs/reviews/historical-delivery/test_historical_delivery.py",
+            "docs/checks/release-registry-0.2.4.json",
+            "docs/checks/historical-delivery/0.2.4",
+            "docs/checks/phase-28-published-package-1.99.0.json",
+            "docs/checks/phase-28-published-package-1.89.0.json",
+            "docs/checks/phase-28-published-archive-comparison.json"
           ],
           "scope_revisions": [
             {
@@ -8259,10 +8280,29 @@
                 "tools/test_package_policy.py",
                 "tools/test_release_023.py",
                 "tools/test_release_024.py",
-                "tools/test_release_delivery.py"
+                "tools/test_release_delivery.py",
+                "docs/reviews/phase-28-historical-delivery.md",
+                "docs/reviews/historical-delivery/historical_delivery.py",
+                "docs/reviews/historical-delivery/test_historical_delivery.py",
+                "docs/checks/release-registry-0.2.4.json",
+                "docs/checks/historical-delivery/0.2.4",
+                "docs/checks/phase-28-published-package-1.99.0.json",
+                "docs/checks/phase-28-published-package-1.89.0.json",
+                "docs/checks/phase-28-published-archive-comparison.json"
               ]
             }
-          ]
+          ],
+          "accepted_total": 43,
+          "accepted_categories": {
+            "implementation": 9,
+            "code_quality": 8,
+            "supportability": 8,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/historical-delivery/0.2.4/phase-28-chunk-remote-delivery-attempt-02.json",
+          "accepted_source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+          "review_decision": "accepted"
         }
       ],
       "authorization": "User explicitly requested FIX IT NOW after the 0.35.0 parity audit; independent maintenance scope. Existing phase24/25 records remain incomplete and are not rebound.",
@@ -8693,6 +8733,30 @@
         {
           "review": "docs/reviews/phase-28-attempt-03.json",
           "disposition": "Explicitly require identical canonical and GitHub annotated v0.2.4 tags with independent bounded receipts, preserving historical defaults and the public packaged guide link. All seven external package consumer runs now record the executed main.rs digest and before/after unchanged status; verifier binds each run to its frozen or archived source rather than stdout markers. Negative regressions reject missing/wrong hashes, swapped identical-command rows, source mutation/deletion, and absent/tampered mirror receipts. SDK runtime inputs remain unchanged."
+        },
+        {
+          "review": "docs/reviews/phase-28-chunk-release-readiness-attempt-04.json",
+          "disposition": "Accepted 44/50 on the published fingerprint f9cebee5 (recorded on main after 6f18529); a byte-identical copy is retained on delivery/v0.2.4 so the readiness chunk's latest review covers the published source. Chunk statuses remain pending in this file until phase completion records accepted chunks on main."
+        },
+        {
+          "review": "docs/reviews/phase-28-chunk-remote-delivery-attempt-01.json",
+          "disposition": "Rejected 39/50. High (unbound verify.json): replaced by tool-produced execution receipts. Mediums: evidence copy made runnable with --root and executed inside this tree; readiness-chunk source binding disclosed. Lows: comparison note corrected; active_followup_plan explained; four negative tests added."
+        },
+        {
+          "review": "docs/reviews/phase-28-chunk-remote-delivery-attempt-02.json",
+          "disposition": "Accepted 43/50. Medium (hand-assembled receipts): historical_delivery.py execute now writes the receipt itself (HEAD, clean tree, rules/tool/test sha256, test summary, verify result). Lows: --root parsed via args.root (both forms) with CLI and execute tests; superseded verify.json removed; whitespace fixed."
+        },
+        {
+          "review": "docs/reviews/phase-28-attempt-04.json",
+          "disposition": "Rejected 43/50 (all categories >= 8, no blocker/high). Medium (publication bypass only in prose): structured publication_exception added (facts, explicit no-retroactive-approval authorization, remediation evidence). Medium (receipts not gate-bound): unfixable without changing fingerprinted check_phase.py; recorded as limitation historical-delivery-receipts-not-gate-bound. Lows: dispositions added for chunk attempts; stray blank lines removed (both receipts regenerated)."
+        },
+        {
+          "review": "docs/reviews/phase-28-attempt-05.json",
+          "disposition": "Accepted with deficiencies 44/50 under the attempt-5 rule (categories 9/8/9/9/9, no blocker/high). Recorded deficiencies: publication_exception is a disclosure record consumed only by the main-side completion recorder (tools/historical_delivery.py complete / verify_completion require it), not by this tree; execution receipts are not re-checked by a recorded gate command (limitation historical-delivery-receipts-not-gate-bound); rules binding is module-global."
+        },
+        {
+          "review": "docs/reviews/phase-28-chunk-release-readiness-attempt-05.json",
+          "disposition": "Accepted 42/50 on the published fingerprint. Run because readiness attempt 4 binds checkpoint receipts in a deleted checkout (/home/cdot/development/cdot65/scm-sdk-rs-ts035) and cannot be re-verified. Recorded deficiencies: the post-publication gate regenerated docs/checks/phase-28-release-package-*.json and phase-28-release-readiness.json bound to b40409e (archives c0bf5219/cab74247), which are not the published archive; the published-source qualification is docs/checks/phase-28-published-package-*.json plus the archive comparison, and the published identity is docs/checks/release-registry-0.2.4.json (6f18529, 533294fe). AGENTS.md naming only the Forgejo remote and the untested README mirror link remain open in this immutable release."
         }
       ],
       "release_preflight": {
@@ -8701,6 +8765,64 @@
         "mirror_remote": "https://github.com/cdot65/scm-sdk-rs.git",
         "publication_order": "Observe identical annotated release tags on both remotes before irreversible crates.io publication; obtain the accepted phase-level readiness record and successful CI before upload.",
         "disclosure": "Ordinary mirror pushes expose full reachable repository history, including contracts/sources and docs/reviews. Current selected-credential scan found no credential matches; the three tenant-identifier source files are unchanged pinned public upstream fixtures, not selected tenant registrations."
+      },
+      "accepted_source_sha256": "f9cebee5703f3d14f79b91dbbbadcbc538a61cf76ce077ce604a1d69e47c2e58",
+      "accepted_score": 8,
+      "accepted_total": 44,
+      "accepted_categories": {
+        "implementation": 9,
+        "code_quality": 8,
+        "supportability": 9,
+        "architecture": 9,
+        "feature_delivery": 9
+      },
+      "review_decision": "accepted_with_deficiencies",
+      "publication_exception": {
+        "status": "disclosed_post_publication",
+        "rule": "docs/PHASES.md and docs/RELEASE.md require an accepted release-readiness chunk and an accepted phase-level release-readiness review before cargo publish.",
+        "facts": [
+          "scm-sdk 0.2.4 was published to crates.io on 2026-10-22T17:49:15Z by cdot65 from 6f18529 (archive sha256 533294fe...).",
+          "At publication, phase-level readiness attempts 1-3 were rejected (43, 44, 44/50); readiness chunk attempts 1-3 were accepted but bound to earlier candidate sources.",
+          "The retained pre-publication clean package proofs qualified 69eb33e, not the published 6f18529."
+        ],
+        "authorization": "No pre-publication authorization for the bypass is recorded. The maintainer instruction of 2026-11-06 (\"complete everything the missing parts for 24, 28, and 25\") authorizes completing phase 28 post-publication; it is recorded here as a disclosure, not as retroactive approval of publishing before readiness.",
+        "remediation": [
+          "docs/reviews/phase-28-chunk-release-readiness-attempt-04.json: readiness chunk accepted 44/50 bound to the published fingerprint f9cebee5...",
+          "docs/checks/phase-28-published-package-1.99.0.json and -1.89.0.json: clean extracted-package proofs of the published source",
+          "docs/checks/phase-28-published-archive-comparison.json: all 142 published files byte-identical except .cargo_vcs_info.json",
+          "docs/checks/phase-28.json: 105/105 gate on the published source",
+          "docs/checks/historical-delivery/0.2.4/: CI run 44 49/49, branch, canonical and GitHub tag, manifest and execution receipts"
+        ]
+      },
+      "limitations": [
+        {
+          "id": "historical-delivery-receipts-not-gate-bound",
+          "status": "accepted_limitation",
+          "scope": "The historical delivery verifier (docs/reviews/historical-delivery/historical_delivery.py, a copy of tools/historical_delivery.py on main) cannot be added to this release's recorded 105-command gate, because tools/check_phase.py is fingerprinted published source. Its execution is evidenced by tool-produced receipts (execution-main.json, execution-release-tree.json) whose tool, test and rules sha256 values must be compared with the committed files by the reader; no recorded gate command re-checks them.",
+          "evidence": [
+            "docs/checks/historical-delivery/0.2.4/execution-main.json",
+            "docs/checks/historical-delivery/0.2.4/execution-release-tree.json",
+            "docs/reviews/historical-delivery/historical_delivery.py",
+            "docs/reviews/historical-delivery/test_historical_delivery.py"
+          ]
+        }
+      ],
+      "historical_completion": "docs/checks/historical-delivery/0.2.4/completion.json",
+      "review_attempt_note": {
+        "issue": "main commit 56a88d2 (2026-10-22T16:06Z) retains a reserved phase-28 phase-level attempt 4 (docs/reviews/phase-28-attempt-04.prompt.md and .checks.json; review_scope release_readiness; source f9cebee5; no reviewer result or CLI output). delivery/v0.2.4 branches from 6f18529, which does not contain it, so its final phase reviews were numbered attempt 4 (rejected 43/50) and attempt 5 (accepted_with_deficiencies 44/50). Counting the reservation, those were the fifth and sixth phase-level invocations.",
+        "decision": "Maintainer decision 2026-11-06: a reservation that produced no reviewer result does not consume a review attempt; phase 28 is completed on the accepted attempt-5 review. The reservation files on main are preserved unchanged; the delivery branch's review records are kept under docs/reviews/historical-delivery/0.2.4/ so no same-named record is overwritten.",
+        "reservation": [
+          "docs/reviews/phase-28-attempt-04.prompt.md",
+          "docs/reviews/phase-28-attempt-04.checks.json"
+        ]
+      },
+      "delivery": {
+        "status": "complete_historical",
+        "release_commit": "6f18529a47cc273feca1000af6e4fc0d96da757e",
+        "ci_commit": "7dd0fffae49bca59776dfbe7f8271d56fd37ac7f",
+        "ci_run": 44,
+        "registry_receipt": "docs/checks/release-registry-0.2.4.json",
+        "evidence": "docs/checks/historical-delivery/0.2.4"
       }
     },
     {
