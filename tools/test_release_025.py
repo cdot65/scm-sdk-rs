@@ -212,6 +212,22 @@ class Release025Tests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'does not descend'):
                 release_delivery.verify_governance_successor_commit(root, 31, release, published, run('rev-parse', 'HEAD'))
 
+    @unittest.skipUnless((ROOT / 'docs/checks/release-registry-0.2.5.json').is_file() and (ROOT / json.loads(
+        (ROOT / 'docs/checks/release-registry-0.2.5.json').read_text()).get('retainedArchive', 'absent')).is_file(),
+        'retained 0.2.5 registry archive is local release evidence')
+    def test_successor_delivery_still_verifies_the_retained_registry_archive(self):
+        release_delivery.verify(ROOT, phase=31, version='0.2.5')
+        original = release_delivery.read_record
+
+        def tampered(root, relative):
+            record = original(root, relative)
+            if relative == 'docs/checks/release-registry-0.2.5.json':
+                record = {**record, 'retainedArchive': '.local/artifacts/absent-scm-sdk-0.2.5.crate'}
+            return record
+        with mock.patch.object(release_delivery, 'read_record', side_effect=tampered):
+            with self.assertRaises((ValueError, FileNotFoundError)):
+                release_delivery.verify(ROOT, phase=31, version='0.2.5')
+
     def test_successor_delivery_verifies_package_proofs_against_the_published_source(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
