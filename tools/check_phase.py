@@ -411,7 +411,7 @@ def portkey_mcp_post_publication_commands(phase):
 DRIFT_BASELINE = "b66133892b4f58f541897d62296ea3f918227dd7"
 # Suites added after the phase 27-31 command plans were accepted. Their own phase
 # gate selects them explicitly, so historical command lists stay unchanged.
-PHASE_OWNED_SUITES = frozenset({"test_airs_drift.py"})
+PHASE_OWNED_SUITES = frozenset({"test_airs_drift.py", "test_historical_delivery.py"})
 
 
 def drift_commands(phase=25):
@@ -430,6 +430,7 @@ def drift_commands(phase=25):
          "LICENSE", "NOTICE"],
         ["python", "tools/airs_drift.py", "--check"],
         unit("test_airs_drift.py"),
+        unit("test_historical_delivery.py"),
         ["python", "tools/red_team_management.py", "--check", "--require-through-phase", str(phase)],
     ]
     # Cheap drift checks precede the costly Rust matrix.
