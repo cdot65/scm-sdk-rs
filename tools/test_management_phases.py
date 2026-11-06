@@ -190,9 +190,11 @@ class ManagementPhaseTests(unittest.TestCase):
 
     def test_scoped_contract_ledgers_keep_their_declared_owning_checks(self):
         status = json.loads((ROOT / 'docs/phase-status.json').read_text())
-        active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
-        scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
-        verify_scoped_ledger_owners(scope, commands_for(active['id']))
+        # Once every phase sequence is complete there is no active phase to check.
+        if status['active_phase'] is not None:
+            active = next(row for row in status['phases'] if row['id'] == status['active_phase'])
+            scope = active.get('scope_evidence', []) + [path for chunk in active.get('chunks', []) for path in chunk['scope_evidence']]
+            verify_scoped_ledger_owners(scope, commands_for(active['id']))
         verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if p not in {'contracts/live-evidence.json', 'contracts/airs-drift.json'} and not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/') or p == 'contracts/portkey-mcp-tags-overlay.json')], commands_for(23))
         verify_scoped_ledger_owners([p for p in CONTRACT_LEDGER_OWNERS if not (p.startswith('contracts/sources/typescript-0.35.0/') or p in {'contracts/typescript-035-parity.json', 'contracts/typescript-035-oracle.json', 'contracts/airs-drift.json'} or p.startswith('contracts/vendor/portkey-mcp-tags/') or p == 'contracts/portkey-mcp-tags-overlay.json')], commands_for(24))
         # Phase 25 is cumulative over the phase 30 gate and owns the drift ledger.

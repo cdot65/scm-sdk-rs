@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "active_phase": 25,
+  "active_phase": null,
   "completion_target": "Full frozen TypeScript SDK exported capability parity; secure independent Rust SCM crate; vendor Red Team dataplane 0.93.0 follow-up (47 operations); additive Prisma AIRS OpenAPI reconciliation at pan.dev 582e30543bf2adfd8b0ee457170d22b5c380dfbe with retained SDK capabilities",
   "review_threshold": 9,
   "phases": [
@@ -6721,8 +6721,10 @@
     {
       "id": 25,
       "name": "Prisma AIRS upstream drift detection",
-      "status": "in_progress",
-      "reviews": [],
+      "status": "complete",
+      "reviews": [
+        "docs/reviews/phase-25-attempt-02.json"
+      ],
       "scope_evidence": [
         ".forgejo/workflows/ci.yml",
         "contracts/airs-drift.json",
@@ -6746,7 +6748,7 @@
       "chunks": [
         {
           "id": "semantic-drift",
-          "status": "pending",
+          "status": "accepted",
           "scope_evidence": [
             "tools/airs_drift.py",
             "tools/test_airs_drift.py",
@@ -6775,18 +6777,42 @@
                 "docs/PHASES.md"
               ]
             }
-          ]
+          ],
+          "phase_followup_review": "docs/reviews/phase-25-attempt-02.json",
+          "phase_followup_current_source_sha256": "a4afcf0763e75c7e361bb824d431254c3081a42d9f2287f1303f4edc82f253a0",
+          "accepted_total": 43,
+          "accepted_categories": {
+            "implementation": 8,
+            "code_quality": 8,
+            "supportability": 9,
+            "architecture": 9,
+            "feature_delivery": 9
+          },
+          "accepted_review": "docs/reviews/phase-25-chunk-semantic-drift-attempt-05.json",
+          "accepted_source_sha256": "b591553db03c917721321833125a11551d59009966893871acd1a0ee42e3586d",
+          "review_decision": "accepted"
         }
       ],
       "milestones": {
         "implemented_scope": {
-          "status": "pending"
+          "status": "accepted_by_review",
+          "evidence": [
+            "docs/reviews/phase-25-attempt-02.json"
+          ]
         },
         "independent_verification": {
-          "status": "pending"
+          "status": "passed",
+          "evidence": [
+            "docs/reviews/phase-25-attempt-02.checks.json"
+          ],
+          "source_sha256": "a4afcf0763e75c7e361bb824d431254c3081a42d9f2287f1303f4edc82f253a0"
         },
         "claude_review": {
-          "status": "pending"
+          "status": "accepted",
+          "score": 9,
+          "evidence": [
+            "docs/reviews/phase-25-attempt-02.json"
+          ]
         }
       },
       "final_in_sequence": true,
@@ -6818,7 +6844,18 @@
             "tools/test_airs_drift.py"
           ]
         }
-      ]
+      ],
+      "accepted_source_sha256": "a4afcf0763e75c7e361bb824d431254c3081a42d9f2287f1303f4edc82f253a0",
+      "accepted_score": 9,
+      "accepted_total": 46,
+      "accepted_categories": {
+        "implementation": 9,
+        "code_quality": 9,
+        "supportability": 9.5,
+        "architecture": 9.5,
+        "feature_delivery": 9
+      },
+      "review_decision": "accepted"
     },
     {
       "id": 26,
