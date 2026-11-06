@@ -31,6 +31,7 @@ import argparse
 import collections
 import datetime
 import hashlib
+import importlib.util
 import io
 import json
 import os
@@ -41,19 +42,34 @@ import sys
 import tarfile
 import urllib.request
 
-def _root(argv):
-    """Repository root: `--root DIR` (for an evidence-only copy run inside a historical
-    release tree) or the checkout containing tools/historical_delivery.py."""
-    if '--root' in argv[:-1]:
-        return pathlib.Path(argv[argv.index('--root') + 1]).resolve()
-    return pathlib.Path(__file__).resolve().parents[1]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+RULES = None  # path of the release_delivery module whose rules are bound
 
 
-ROOT = _root(sys.argv)
-# Fingerprint and CI-matrix rules come from the repository being verified, so a copy run
-# inside a historical release tree applies that release's own definitions.
-sys.path.insert(0, str(ROOT / 'tools'))
-from release_delivery import GITHUB_REMOTE, REMOTE, commit_fingerprint, expected_contexts  # noqa: E402
+def bind_rules(root):
+    """Bind fingerprint and CI-matrix rules from `<root>/tools/release_delivery.py`.
+
+    A copy run inside a historical release tree (`--root DIR`) therefore applies that
+    release's own definitions rather than those of the checkout it was copied from.
+    """
+    global GITHUB_REMOTE, REMOTE, commit_fingerprint, expected_contexts, RULES
+    path = pathlib.Path(root).resolve() / 'tools/release_delivery.py'
+    spec = importlib.util.spec_from_file_location(f'release_delivery_{abs(hash(str(path)))}', path)
+    module = importlib.util.module_from_spec(spec)
+    sys.path.insert(0, str(path.parent))
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        sys.path.remove(str(path.parent))
+    GITHUB_REMOTE, REMOTE = module.GITHUB_REMOTE, module.REMOTE
+    commit_fingerprint, expected_contexts = module.commit_fingerprint, module.expected_contexts
+    RULES = path
+    return path
+
+
+_BOUND_ROOT = pathlib.Path(os.environ.get('HISTORICAL_DELIVERY_ROOT') or ROOT)
+if (_BOUND_ROOT / 'tools/release_delivery.py').is_file():
+    bind_rules(_BOUND_ROOT)
 
 FORGEJO = 'https://git.cdot.io/api/v1/repos/cdot/scm-sdk-rs'
 RUN_URL = 'https://git.cdot.io/cdot/scm-sdk-rs/actions/runs/'
@@ -323,26 +339,75 @@ def verify(root, version):
             'status': 'delivered_with_exception' if failed else 'delivered'}
 
 
+def run_suite(command, root, env):
+    return subprocess.run(command, cwd=root, capture_output=True, text=True, env=env, timeout=600)
+
+
+def execute(root, version, output, label):
+    """Run verify and this tool's own regression suite, then write a bound receipt."""
+    root = pathlib.Path(root).resolve()
+    relative = pathlib.PurePosixPath(output)
+    require(str(relative).startswith(f'{evidence_dir(version)}/execution-') and relative.suffix == '.json'
+            and '..' not in relative.parts, 'Execution receipts belong in the historical delivery evidence directory')
+    tool = pathlib.Path(__file__).resolve()
+    tests = tool.with_name('test_historical_delivery.py')
+    status = git(root, 'status', '--porcelain', '--untracked-files=no')
+    try:
+        result, error = verify(root, version), None
+    except (ValueError, OSError, subprocess.CalledProcessError) as exc:
+        result, error = None, str(exc)
+    env = {**os.environ, 'HISTORICAL_DELIVERY_ROOT': str(root)}
+    run = run_suite([sys.executable, '-m', 'unittest', 'discover', '-s', str(tool.parent), '-p', tests.name], root, env)
+    summary = [line for line in run.stderr.strip().splitlines() if line.startswith(('Ran ', 'OK', 'FAILED'))]
+    receipt = {'schemaVersion': 1, 'label': label, 'version': version,
+               'executedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+               'headCommit': git(root, 'rev-parse', 'HEAD').strip(), 'workingTreeClean': not status.strip(),
+               'rules': {'path': RULES.relative_to(root).as_posix() if RULES and RULES.is_relative_to(root) else str(RULES),
+                         'sha256': sha256(RULES.read_bytes()) if RULES else None},
+               'tool': {'path': tool.relative_to(root).as_posix() if tool.is_relative_to(root) else tool.name,
+                        'sha256': sha256(tool.read_bytes())},
+               'tests': {'path': tests.relative_to(root).as_posix() if tests.is_relative_to(root) else tests.name,
+                         'sha256': sha256(tests.read_bytes()), 'exitCode': run.returncode, 'summary': summary},
+               'verify': {'result': result, 'error': error}}
+    path = root / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open('x') as stream:
+        stream.write(json.dumps(receipt, indent=2) + '\n')
+    require(error is None and run.returncode == 0, 'Historical delivery execution failed; receipt retained: ' + str(relative))
+    return path
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['verify', 'observe-registry', 'observe-ci', 'observe-branch'])
+    parser.add_argument('command', choices=['verify', 'execute', 'observe-registry', 'observe-ci', 'observe-branch'])
     parser.add_argument('--version', required=True, choices=sorted(RELEASES))
     parser.add_argument('--commit')
     parser.add_argument('--run', type=int)
-    parser.add_argument('--root', type=pathlib.Path, help='Repository root (default: this checkout)')
+    parser.add_argument('--root', type=pathlib.Path, help='Repository root whose rules and evidence apply')
+    parser.add_argument('--output', help='execute: receipt path under the evidence directory')
+    parser.add_argument('--label', default='main', help='execute: where this run happened')
     args = parser.parse_args(argv)
+    root = (args.root or ROOT).resolve()
+    if (root / 'tools/release_delivery.py').is_file() and RULES != (root / 'tools/release_delivery.py'):
+        bind_rules(root)
+    require(RULES is not None, 'No release_delivery rules found under ' + str(root / 'tools'))
     if args.command == 'verify':
-        print(json.dumps(verify(ROOT, args.version)))
+        print(json.dumps(verify(root, args.version)))
+        return 0
+    if args.command == 'execute':
+        require(args.output, 'execute requires --output')
+        path = execute(root, args.version, args.output, args.label)
+        print(json.dumps({'receipt': path.relative_to(root).as_posix(), 'executed': True}))
         return 0
     if args.command == 'observe-registry':
-        path = observe_registry(ROOT, args.version)
+        path = observe_registry(root, args.version)
     elif args.command == 'observe-branch':
-        path = observe_branch(ROOT, args.version)
+        path = observe_branch(root, args.version)
     else:
         token = os.environ.get('FORGEJO_TOKEN') or os.environ.get('CDOT_ENV_FORGEJO_TOKEN')
         require(token, 'Existing Forgejo read credential is unavailable')
-        path = observe_ci(ROOT, args.version, args.commit or '', args.run or 0, token)
-    print(json.dumps({'receipt': str(path.relative_to(ROOT)), 'observed': True}))
+        path = observe_ci(root, args.version, args.commit or '', args.run or 0, token)
+    print(json.dumps({'receipt': str(path.relative_to(root)), 'observed': True}))
     return 0
 
 

@@ -176,7 +176,6 @@ class HistoricalDeliveryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'ancestry'):
             self.verify()
 
-
     def test_proof_commit_must_be_retained_on_main_or_the_delivery_branch(self):
         git(self.root, 'checkout', '-q', '--orphan', 'stray')
         git(self.root, 'commit', '-q', '-m', 'stray', '--allow-empty')
@@ -222,6 +221,34 @@ class HistoricalDeliveryTests(unittest.TestCase):
             manifest_path.write_text(json.dumps({**original, **change}))
             with self.assertRaisesRegex(ValueError, 'manifest identity'):
                 self.verify()
+
+
+    def test_cli_honours_both_root_forms_and_binds_that_trees_rules(self):
+        rules = self.root / 'tools/release_delivery.py'
+        rules.parent.mkdir()
+        rules.write_text(pathlib.Path(hd.RULES).read_text())
+        out = io.StringIO()
+        self.addCleanup(hd.bind_rules, pathlib.Path(hd.__file__).resolve().parents[1])
+        with mock.patch.dict(hd.RELEASES, {VERSION: self.spec}), mock.patch('sys.stdout', out):
+            for argv in (['verify', '--version', VERSION, '--root', str(self.root)],
+                         ['verify', '--version', VERSION, f'--root={self.root}']):
+                self.assertEqual(hd.main(argv), 0)
+                self.assertEqual(hd.RULES, rules.resolve())
+        self.assertEqual([json.loads(line)['status'] for line in out.getvalue().splitlines()], ['delivered'] * 2)
+
+    def test_execute_writes_a_bound_receipt_only_inside_the_evidence_directory(self):
+        with mock.patch.dict(hd.RELEASES, {VERSION: self.spec}), \
+                mock.patch.object(hd, 'run_suite', return_value=subprocess.CompletedProcess(
+                    [], 0, '', 'Ran 3 tests in 0.1s\n\nOK\n')):
+            path = hd.execute(self.root, VERSION, f'{hd.evidence_dir(VERSION)}/execution-test.json', 'test')
+            receipt = json.loads(path.read_text())
+            self.assertEqual((receipt['verify']['result']['status'], receipt['tests']['exitCode'], receipt['label']),
+                             ('delivered', 0, 'test'))
+            self.assertEqual(receipt['tool']['sha256'], hashlib.sha256(pathlib.Path(hd.__file__).read_bytes()).hexdigest())
+            with self.assertRaises(FileExistsError):
+                hd.execute(self.root, VERSION, f'{hd.evidence_dir(VERSION)}/execution-test.json', 'test')
+            with self.assertRaisesRegex(ValueError, 'evidence directory'):
+                hd.execute(self.root, VERSION, 'docs/checks/elsewhere.json', 'test')
 
 
 if __name__ == '__main__':
