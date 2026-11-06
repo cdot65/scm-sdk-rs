@@ -1,0 +1,54 @@
+{
+  "phase": 31,
+  "chunk": "docs-site",
+  "attempt": 3,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "b9f08c9ee2541474d4d43d960972c822931d7e25c5352ab4e273c56faf63d5fa",
+  "scope_evidence": [
+    "docs/portkey-mcp-tags-plan.md",
+    ".local/docs-site-worktree/docs-site",
+    "docs/reviews/github-pages/release-0.2.5/binding.json",
+    "docs/reviews/github-pages/release-0.2.5/cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+    "tools/site_binding.py",
+    "tools/test_site_binding.py",
+    "tools/codex_review.py",
+    "tools/test_release_025.py",
+    "docs/RELEASE.md"
+  ],
+  "prompt_sha256": "4b0d396d078be4d49b31b3eb0f5e8f1ee65d6732bf1b932a7d000394424fa6c3",
+  "checks_sha256": "057509e197ba42ed304251aaad6b85fb23c4b32c4ca5af1735443383b4277d96",
+  "site_binding": {
+    "version": "0.2.5",
+    "siteCommit": "cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720",
+    "docsSiteTree": "61f8093efe0b80f4cd7cfe125d98cb7c9ae73538",
+    "binding": "docs/reviews/github-pages/release-0.2.5/binding.json",
+    "bindingSha256": "b590c8b281dc8af3e1d19efcfcd469d62ba9565f70a19e796d7127e06d625fca"
+  },
+  "requested_at": "2026-11-06T03:35:37.903055+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "site_unchanged": true,
+  "review": {
+    "score": 9,
+    "summary": "Accept docs-site attempt 3. The earlier acceptance-binding defect is resolved with enforcement and regression coverage. Release documentation, corrected examples, and deployed-site evidence are consistent. No blocker or high finding remains in this chunk.",
+    "findings": [],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, the accepted plan, phase 31 status, and both previous docs-site reviews.",
+      "Recomputed fingerprint b9f08c9ee2541474d4d43d960972c822931d7e25c5352ab4e273c56faf63d5fa; verified the check snapshot and exact command set. All 113 recorded commands passed.",
+      "Inspected tools/site_binding.py, tools/codex_review.py and their regression coverage: 8 site-binding tests and 16 release-guard tests passed in the retained report.",
+      "Executed the offline site-binding check successfully for commit cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720. The docs worktree is clean.",
+      "Inspected deployment workflow, push/deployment receipts, documentation changes and corrected Rust examples. All five retained local HTML pages match the deployment receipt hashes; release-specific evidence links exist in v0.2.5.",
+      "Executed offline release-delivery verification successfully: published commit 4adbe97, CI commit bcbab09, 49 successful jobs. Independently matched the retained registry archive digest and size; both compiler package receipts record 18 successful checks."
+    ],
+    "limitations": [
+      "Builds, unit tests and Rust snippets were not rerun; their execution results are retained evidence.",
+      "No network requests, credential access, tenant access or file changes occurred. Current remote state was not independently re-observed.",
+      "Windows compilation remains unverified as recorded. This chunk acceptance does not complete phase 31."
+    ]
+  },
+  "decision": "accepted",
+  "output_sha256": "75d493031d3d2b071c30c94971e0f63a5f9638762467e256be9bc87ba6e0d43f",
+  "events_sha256": "64f5495c047acd86d2d5a482832363d20c7ae3f7e207a4f6e079b41aeb60bccc",
+  "completed_at": "2026-11-06T03:39:08.268215+00:00"
+}
