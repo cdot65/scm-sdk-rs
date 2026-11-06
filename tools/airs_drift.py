@@ -34,7 +34,7 @@ from pathlib import Path
 import red_team_management as rtm
 from red_team_dataplane import read_yaml
 
-CLASSIFIER_VERSION = 1
+CLASSIFIER_VERSION = 2
 REPOSITORY = 'https://github.com/PaloAltoNetworks/pan.dev'
 GITHUB_API = 'https://api.github.com/repos/PaloAltoNetworks/pan.dev'
 RAW_BASE = 'https://raw.githubusercontent.com/PaloAltoNetworks/pan.dev'
@@ -110,6 +110,13 @@ PATH_KNOWN = rtm.METHODS | {'parameters', 'servers', 'summary', 'description'}
 INFO_ANNOTATIONS = {'title', 'summary', 'description', 'contact', 'termsOfService'}
 DOCUMENT_ANNOTATIONS = {'tags', 'ExternalTags', 'externalDocs'}
 DOCUMENT_KNOWN = {'openapi', 'info', 'paths', 'components', 'security', 'servers'}
+# Keywords each compare method classifies; anything else fails closed. Added content is
+# scanned against the same sets so new structures cannot bypass classification.
+SCHEMA_KNOWN = (ANNOTATIONS | TYPE_KEYWORDS | CONSTRAINT_KEYWORDS
+                | {'properties', 'required', 'enum', 'anyOf', 'oneOf', 'items', 'additionalProperties',
+                   'propertyNames', 'allOf', 'prefixItems'})
+PARAMETER_KNOWN = ANNOTATIONS | SERIALIZATION | {'in', 'name', 'required', 'schema', 'content'}
+MEDIA_KNOWN = ANNOTATIONS | {'schema'}
 COMPONENT_SECTIONS = {'schemas', 'parameters', 'requestBodies', 'responses', 'securitySchemes', 'examples'}
 MISSING = object()
 HEX40 = re.compile(r'[0-9a-f]{40}')
@@ -397,6 +404,13 @@ def prior_decision(source, parts):
 # Comparison
 
 
+ADDED_SCANS = {'component_added': 'scan_component', 'property_added': 'scan_schema',
+               'union_variant_appended': 'scan_schema', 'union_variant_inserted': 'scan_schema',
+               'parameter_added': 'scan_parameter', 'request_body_added': 'scan_body',
+               'response_status_added': 'scan_response', 'media_type_added': 'scan_media',
+               'operation_added': 'scan_operation'}
+
+
 class SourceComparison:
     def __init__(self, source, old_spec, new_spec):
         self.source = source
@@ -413,6 +427,8 @@ class SourceComparison:
         disposition = disposition or allowed[0]
         if disposition not in allowed or cls == 'unknown':
             raise ValueError(f'Invalid disposition for {cls}: {disposition}')
+        if new is not MISSING and cls in ADDED_SCANS:
+            getattr(self, ADDED_SCANS[cls])(new, parts)
         identity = identity_of(self.source, parts, kind, old, new)
         affected = sorted(self.affected(parts))
         retained = set()
@@ -427,6 +443,85 @@ class SourceComparison:
         if new is not MISSING:
             change['new'] = new
         self.changes.append(change)
+
+    # -- added-content scans (fail closed on keywords no compare method classifies) --------
+    def scan_schema(self, schema, parts):
+        if not isinstance(schema, dict):
+            return
+        for key, value in schema.items():
+            at = parts + [key]
+            if key not in SCHEMA_KNOWN:
+                self.fail(at, new=value, reason='Unclassified keyword in added content')
+            if key == 'properties':
+                if not isinstance(value, dict):
+                    self.fail(at, new=value, reason='Unclassified keyword in added content')
+                for name, item in value.items():
+                    self.scan_schema(item, at + [name])
+            elif key in ('items', 'additionalProperties', 'propertyNames'):
+                self.scan_schema(value, at)
+            elif key in ('anyOf', 'oneOf', 'allOf', 'prefixItems') and isinstance(value, list):
+                for index, item in enumerate(value):
+                    self.scan_schema(item, at + [index])
+
+    def scan_media(self, media, parts):
+        if not isinstance(media, dict):
+            return
+        for key, value in media.items():
+            if key not in MEDIA_KNOWN:
+                self.fail(parts + [key], new=value, reason='Unclassified keyword in added content')
+        self.scan_schema(media.get('schema'), parts + ['schema'])
+
+    def scan_content(self, content, parts):
+        if content is None:
+            return
+        if not isinstance(content, dict):
+            self.fail(parts, new=content, reason='Unclassified keyword in added content')
+        for media, value in content.items():
+            self.scan_media(value, parts + [media])
+
+    def scan_parameter(self, parameter, parts):
+        if not isinstance(parameter, dict) or '$ref' in parameter:
+            return
+        for key, value in parameter.items():
+            if key not in PARAMETER_KNOWN:
+                self.fail(parts + [key], new=value, reason='Unclassified keyword in added content')
+        self.scan_schema(parameter.get('schema'), parts + ['schema'])
+        self.scan_content(parameter.get('content'), parts + ['content'])
+
+    def scan_body(self, body, parts, response=False):
+        if not isinstance(body, dict) or '$ref' in body:
+            return
+        known = {'content', 'description'} | (set() if response else {'required'})
+        for key, value in body.items():
+            if key not in known:
+                self.fail(parts + [key], new=value, reason='Unclassified keyword in added content')
+        self.scan_content(body.get('content'), parts + ['content'])
+
+    def scan_response(self, body, parts):
+        self.scan_body(body, parts, response=True)
+
+    def scan_operation(self, operation, parts):
+        for field, at in (('residual', parts), ('pathResidual', parts[:2])):
+            if operation[field]:
+                self.fail(at, new=operation[field], reason='Unclassified keyword in added content')
+        for key, parameter in operation['parameters'].items():
+            location, name = key.split(':', 1)
+            self.scan_parameter(parameter, parts + ['parameters', location, name])
+        if operation['requestBody'] is not None:
+            self.scan_body(operation['requestBody'], parts + ['requestBody'])
+        for status, response in operation['responses'].items():
+            self.scan_response(response, parts + ['responses', status])
+
+    def scan_component(self, value, parts):
+        section = parts[1]
+        if section == 'schemas':
+            self.scan_schema(value, parts)
+        elif section == 'parameters':
+            self.scan_parameter(value, parts)
+        elif section == 'requestBodies':
+            self.scan_body(value, parts)
+        elif section == 'responses':
+            self.scan_response(value, parts)
 
     def fail(self, parts, old=MISSING, new=MISSING, reason='Unclassified upstream change'):
         kind = 'added' if old is MISSING else 'removed' if new is MISSING else 'changed'
@@ -668,6 +763,12 @@ class SourceComparison:
             for index, (left, right) in enumerate(zip(old, new)):
                 self.compare_schema(left, right, parts + [index])
             return
+        if len(old_keys) == len(new_keys):
+            differing = [index for index, (left, right) in enumerate(zip(old_keys, new_keys)) if left != right]
+            if len(differing) == 1 and new_keys[differing[0]] not in old_keys and old_keys[differing[0]] not in new_keys:
+                for index, (left, right) in enumerate(zip(old, new)):
+                    self.compare_schema(left, right, parts + [index])
+                return
         null = rtm.encoded({'type': 'null'})
         core = old_keys[:-1] if old_keys and old_keys[-1] == null else old_keys
         removed = [branch for branch, key in zip(old, old_keys) if key not in new_keys]
@@ -691,8 +792,7 @@ class SourceComparison:
             method, route = key.split(' ', 1)
             parts = ['paths', route, method.lower()]
             if key not in old:
-                self.emit('operation_added', 'added', parts, new={'operationId': new[key]['operationId']},
-                          nativeBindings=[])
+                self.emit('operation_added', 'added', parts, new=new[key], nativeBindings=[])
             elif key not in new:
                 self.emit('operation_removed', 'removed', parts, old={'operationId': old[key]['operationId']},
                           nativeBindings=native_bindings(self.source, key), sdkRetention='retained')
@@ -860,19 +960,29 @@ def compare_sources(old_sources, new_sources):
         old, new = old_sources.get(upstream), new_sources.get(upstream)
         if new is None:
             comparison = SourceComparison(upstream, old['spec'], old['spec'])
-            retained = set()
+            retained, bindings = set(), {}
             for key in comparison.old['operations']:
                 retained |= retained_capability(upstream, key)
+                for binding in native_bindings(upstream, key):
+                    bindings[rtm.encoded(binding)] = binding
             identity = identity_of(upstream, [], 'removed', old={'sha256': sha(old['bytes'])})
             changes.append({'id': digest(identity), 'source': upstream, 'class': 'source_removed',
                             'disposition': 'breaking', 'pointer': '', 'kind': 'removed',
                             'old': {'sha256': sha(old['bytes'])}, 'affectedOperations': sorted(comparison.old['operations']),
-                            'priorDecision': None, 'retainedCapability': sorted(retained), 'sdkRetention': 'retained'})
+                            'priorDecision': None, 'retainedCapability': sorted(retained), 'sdkRetention': 'retained',
+                            'nativeBindings': [bindings[key] for key in sorted(bindings)]})
             sources.append({'upstreamPath': upstream, 'status': 'removed', 'oldSha256': sha(old['bytes']),
                             'oldVersion': source_summary(old['spec'])['version']})
             continue
         if old is None:
-            document_model(upstream, new['spec'])
+            comparison = SourceComparison(upstream, new['spec'], new['spec'])
+            for key, operation in comparison.new['operations'].items():
+                method, route = key.split(' ', 1)
+                comparison.scan_operation(operation, ['paths', route, method.lower()])
+            for section, entries in comparison.new['components'].items():
+                if isinstance(entries, dict):
+                    for name, value in entries.items():
+                        comparison.scan_component(value, ['components', section, name])
             summary = source_summary(new['spec'])
             value = {'sha256': sha(new['bytes']), **summary}
             identity = identity_of(upstream, [], 'added', new=value)

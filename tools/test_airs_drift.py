@@ -414,6 +414,69 @@ class UnknownChangeTests(DriftTestCase):
                 self.assertFalse(receipt.exists())
 
 
+class AddedContentFailsClosedTests(DriftTestCase):
+    """Added structures are scanned with the same keyword sets the compare methods classify."""
+    NEW_OPERATION = {'operationId': 'restartChannel', 'responses': {'204': {'description': 'ok'}}}
+    CASES = {
+        'component-extension': lambda spec: (spec['components']['schemas'].update(
+            {'Region': {'type': 'string', 'x-internal': True}}), spec)[1],
+        'property-discriminator': lambda spec: (spec['components']['schemas']['Channel']['properties'].update(
+            {'region': {'type': 'object', 'discriminator': {'propertyName': 'kind'}}}), spec)[1],
+        'nested-not-in-added-property': lambda spec: (spec['components']['schemas']['Channel']['properties'].update(
+            {'region': {'type': 'object', 'properties': {'code': {'not': {'type': 'null'}}}}}), spec)[1],
+        'operation-callbacks': lambda spec: (spec['paths'].update({'/v1/channels/{id}/restart': {'post': {
+            **AddedContentFailsClosedTests.NEW_OPERATION, 'callbacks': {}}}}), spec)[1],
+        'operation-deprecated': lambda spec: (spec['paths'].update({'/v1/channels/{id}/restart': {'post': {
+            **AddedContentFailsClosedTests.NEW_OPERATION, 'deprecated': True}}}), spec)[1],
+        'added-parameter-extension': lambda spec: (spec['paths']['/v1/channels']['get']['parameters'].append(
+            {'in': 'query', 'name': 'region', 'schema': {'type': 'string'}, 'x-flag': 1}), spec)[1],
+        'added-media-schema-not': lambda spec: (spec['paths']['/v1/channels']['get']['responses']['200']['content'].update(
+            {'application/x-ndjson': {'schema': {'not': {'type': 'string'}}}}), spec)[1],
+    }
+
+    def test_unclassified_keywords_in_added_content_raise_without_receipt(self):
+        for name, mutate in self.CASES.items():
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(ValueError, r'(?s)no receipt written.*digest=[0-9a-f]{64}'):
+                    drift.compare_candidate(self.candidate({NB: mutate}, name=name))
+
+    def test_added_source_is_scanned_too(self):
+        spec = {'openapi': '3.1.0', 'info': {'title': 'New', 'version': '1.0.0'},
+                'paths': {'/v1/x': {'get': {'operationId': 'getX', 'responses': {'200': {'description': 'ok'}}}}},
+                'components': {'schemas': {'X': {'type': 'object', 'not': {'required': ['a']}}}}}
+        candidate = self.candidate(extra={'openapi-specs/prisma-airs/new/new-service.yaml': dumps(spec)})
+        with self.assertRaisesRegex(ValueError, 'no receipt written'):
+            drift.compare_candidate(candidate)
+
+    def test_operation_added_identity_binds_the_whole_operation(self):
+        def add(responses):
+            def mutate(spec):
+                spec['paths']['/v1/channels/{id}/restart'] = {'post': {'operationId': 'restartChannel', 'responses': responses}}
+                return spec
+            return mutate
+        first = self.assertClass(self.compare({NB: add({'204': {'description': 'ok'}})}, name='a'), 'operation_added')
+        second = self.assertClass(self.compare({NB: add({'202': {'description': 'accepted'}})}, name='b'), 'operation_added')
+        self.assertNotEqual(first['id'], second['id'])
+        self.assertIn('responses', first['new'])
+
+    def test_removed_source_carries_native_bindings(self):
+        source = self.assertClass(self.compare(drop=(SCAN,)), 'source_removed', 'breaking')
+        self.assertTrue(source['nativeBindings'])
+        self.assertTrue(all(isinstance(binding, dict) for binding in source['nativeBindings']))
+
+    def test_single_in_place_union_branch_change_is_scoped(self):
+        def mutate(spec):
+            branches = audio_format(spec)['anyOf']
+            index = next(i for i, branch in enumerate(branches) if branch != NULL)
+            branches[index] = {**branches[index], 'maxLength': 64}
+            return spec
+        report = self.compare({MP: mutate})
+        self.assertFalse(self.only(report, 'union_variant_removed'))
+        self.assertFalse(self.only(report, 'union_variant_inserted'))
+        change = self.assertClass(report, 'constraint_changed', 'breaking')
+        self.assertTrue(change['pointer'].endswith('/maxLength'))
+
+
 class CandidateTamperingTests(DriftTestCase):
     def expect(self, message, **options):
         with self.assertRaisesRegex(ValueError, message):
@@ -513,7 +576,7 @@ class BaselineTamperingTests(DriftTestCase):
             (self.base[NB]['row']['activeSpecificationPath'], lambda b: b.replace(b'Channels', b'Channelz', 1), 'Pinned bytes changed'),
             ('contracts/vendor/red-team-management/0.86.0/source.json', lambda b: b.replace(b'"usedForGeneration": true', b'"usedForGeneration": false'), 'Pinned bytes changed|metadata mismatch'),
             ('contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json', lambda b: b + b' ', 'Pinned bytes changed'),
-            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 1', b'"classifierVersion": 2'), 'Stale or tampered'),
+            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 2', b'"classifierVersion": 3'), 'Stale or tampered'),
             ('contracts/airs-active-sources.json', lambda b: b.replace(rtm.COMMIT.encode(), b'f' * 40, 1), 'Pinned bytes changed|snapshot commit'),
         )
         for relative, tamper, message in cases:
