@@ -1,0 +1,63 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 25,
+  "attempt": 2,
+  "reviewed_at": "2026-11-06T18:11:40.359490+00:00",
+  "source_sha256": "a4afcf0763e75c7e361bb824d431254c3081a42d9f2287f1303f4edc82f253a0",
+  "source_unchanged": true,
+  "checks_sha256": "2a4e1553f42099253d4ec1a2fdf24f503de2a8c331b211cba211ed0486cc08c7",
+  "prompt_sha256": "b368eb51c5283d7b8a6e39a8ee8b5c6e2c656b20d7b1b7bb4a9df67f6bc56a4f",
+  "cli_output_sha256": "064120e61c373cc0c5c07a2b9b6f8450248e875d2b688fc2f929d089033aaf87",
+  "gate_passed": true,
+  "review": {
+    "score": 9,
+    "summary": "Attempt 2 fixes all five findings from phase attempt 1. compare_union now matches branches by multiplicity (Counter), so duplicated branches show up as extras. Root servers and security are compared explicitly whenever no operation inherits the root in both documents. A new require_coverage net fails any operation or component whose model changed but has no classified change. Changed-type schemas and changed operation security are now scanned, and flow names and keys are validated. A new source lists its operations. Seven new regression tests cover these cases. Every recorded check on source a4afcf07\u2026 exits 0, including 53 drift tests, `airs_drift --check`, `--require-through-phase 25` and the SDK-unchanged diff. Three low gaps remain: the coverage net only works per operation or component, a duplicated oneOf branch can be labelled additive, and there is no remote CI evidence yet. Total 46/50.",
+    "findings": [
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 896,
+        "description": "A duplicated branch (old [A,B] \u2192 new [A,B,A]) now goes through the prefix-append path and gets the disposition 'additive' (union_variant_appended). Under oneOf, a duplicate makes every value that matches A invalid, so it is a breaking change. The change is still reported as review_required, so nothing is dropped, but it is mislabelled. test_union_duplication_is_classified_even_beside_other_changes (test_airs_drift.py:550) accepts either class.",
+        "required_fix": "Under oneOf, or whenever an appended extra repeats an existing branch, emit union_variant_inserted or another breaking class. Make the test require that exact class."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 664,
+        "description": "require_coverage works per operation or component. Inside an operation or component that already has a classified change, it cannot catch a second difference that a compare method drops. Today every model field is compared explicitly, so this is a latent gap, not a reproduced hole. The stronger reconstruction check suggested in attempt 1 was not adopted.",
+        "required_fix": "Optionally tighten the net to the field level. For example, compare model sub-keys (parameters, requestBody, responses, security, servers, annotations) for each operation, or schema keywords for each component, against the change pointers. Add a mock-dropped-difference test that also carries another classified change in the same operation."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-25-attempt-02.checks.json: source_sha256 a4afcf07\u2026, passed=true. Grep found no non-zero exit_code.",
+      "checks.json:2302-2321: `airs_drift.py --check` exit 0: 'pinned baseline verified; ledger current; baseline self-compare unchanged'.",
+      "checks.json:2322-2348: test_airs_drift ran 53 tests OK (46 in attempt 1). The 7 new PhaseReviewFollowupTests cover union duplication, root servers/security overridden by every operation, root change alongside an overriding operation, boolean\u2192object scan, changed operation security and flows, source_added operations, and the coverage net under a mocked compare_union.",
+      "checks.json:2386-2409: `--require-through-phase 25` exit 0. checks.json:2272-2285: `git diff --exit-code` against b661338. Cumulative suites pass: test_red_team_management 51, test_management_phases 28, test_review_phase 54.",
+      "airs_drift.py:880-905: Counter-based removed/extra computation fixes the attempt-1 medium for [A,B]\u2192[A,B,A].",
+      "airs_drift.py:636-658: root servers/security are compared explicitly unless some operation inherits the root in both documents (operation_models:326-327 carries the effective values).",
+      "airs_drift.py:664-687: require_coverage fails operations or components whose model changed but has no classified pointer underneath.",
+      "airs_drift.py:790-792 (scan_schema on non-dict\u2192dict), 961-963 (scan_security on changed op security), 567-576 and 781-782 (scan_flows with FLOW_NAMES/FLOW_KNOWN), 1105-1112 (source_added affectedOperations from the full comparison) resolve the four lows from attempt 1.",
+      "docs/reviews/phase-25-attempt-01.json: rejected 44/50 with one medium and four lows. All are addressed in current source.",
+      "docs/phase-status.json:6722-6794: phase 25 in_progress, chunk semantic-drift pending (filled in at advancement), no remote CI record. ci.yml:73 runs the phase 25 contracts-only subset."
+    ],
+    "limitations": [
+      "This was a read-only review: I ran no tests. Execution evidence comes only from the recorded checks file, which I read in part and grepped for the rest. I did not recompute its SHA-256.",
+      "No live `refresh` run or remote CI run was inspected. The plan's remote-CI finishing step (plan:262) is not yet evidenced for this source, which is expected after review.",
+      "The oneOf-duplication and coverage-granularity findings come from reading the code, not from reproduction.",
+      "I did not re-audit the vendor 0.86.0 bytes, historical_delivery.py or red_team_management.py internals beyond their passing recorded checks.",
+      "Phase 25's entry in phase-status.json has no acceptance_criteria array, unlike sibling phases. I judged acceptance from the plan's phase 25 section."
+    ],
+    "categories": {
+      "implementation": 9,
+      "code_quality": 9,
+      "supportability": 9.5,
+      "architecture": 9.5,
+      "feature_delivery": 9
+    },
+    "total": 46
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "accepted",
+  "review_scope": "phase"
+}
