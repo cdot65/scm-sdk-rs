@@ -1,0 +1,84 @@
+{
+  "reviewer": "Claude Code",
+  "phase": 25,
+  "attempt": 1,
+  "reviewed_at": "2026-11-06T17:28:40.409768+00:00",
+  "source_sha256": "a220e2a0649ae77fe61940145f6699e84315dcb6fa8a2451a941cc0a58c189a2",
+  "source_unchanged": true,
+  "checks_sha256": "85c93e8bda2175a46bf3e4aa74bd903ad6a2d47ec76b298ea98a40a08777999a",
+  "prompt_sha256": "16e8e1d46d06f4a7a3e222e2985445384f8a25fa6b4b80442cd966fb106249f1",
+  "cli_output_sha256": "395a9660c2f9a1a799d958f92ca1eddd7d290ecea9589900738ffa20605846e7",
+  "gate_passed": false,
+  "review": {
+    "score": 8.5,
+    "summary": "Phase 25 provides a sound offline drift detector. It verifies the pin chain for all seven sources, checks candidate tree hashes and blobs, keeps refresh as the only networked path with guarded output, and reports drift without adopting it. Recorded checks for source a220e2a\u2026 all exit 0, including `airs_drift --check`, 46 drift tests, `--require-through-phase 25` and an unchanged-SDK diff against b661338. This phase review covers the same source as the accepted chunk attempt 4 (45/50), so attempt 4's three low gaps are still in the code. I also found a medium hole in the fail-closed rule: union-branch duplication, and root-level server/security changes that every operation overrides, are dropped whenever any other change is classified. Remote CI for this phase is not yet evidenced. Total 44/50, below the 46 phase threshold.",
+    "findings": [
+      {
+        "severity": "medium",
+        "path": "tools/airs_drift.py",
+        "line": 817,
+        "description": "compare_union can drop a semantic change without failing. Example: old [A,B] and new [A,B,A]. Nothing is removed, `extra` is empty (A already exists), and the prefix matches, so the append branch runs with nothing to emit. The only safety net is line 621, and it fires only when the source has zero changes. If any other change is classified in the same source, this change is silently dropped. That breaks the plan rule that unknown changes fail classification (plan:290). The same residual-masking applies to document_model's rootServers/rootSecurity (line 345). compare() never compares them directly, so a root change that every operation overrides goes unreported once any other change exists.",
+        "required_fix": "Replace the zero-changes-only fallback with a coverage check. One option: after compare(), apply the classified changes to the old model and require the result to equal the new model, or fail closed. A simpler option is an explicit check for each residual. In compare_union, fail (or emit union_variant_inserted) when len(new) > len(old) but `extra` is empty. Compare rootServers and rootSecurity explicitly. Add regressions that pair a duplicated union branch, and a root-server change overridden by every operation, with an unrelated classified change."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 724,
+        "description": "Still open from chunk attempt 4. When a non-dict schema becomes a dict (for example a property `true` becoming `{discriminator:\u2026}`), it is emitted as type_changed at a pointer that ends in a property name. Line 437 does not scan that new side, so unknown keywords in it get classified instead of failing.",
+        "required_fix": "Call self.scan_schema(new, parts) in that branch whenever new is a dict. Add a test for `true` \u2192 `{discriminator: \u2026}` that expects 'no receipt written'."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 882,
+        "description": "Still open from attempt 4. When an existing operation's security changes, it is emitted without scan_security, so a malformed requirement (for example non-list scopes) is classified. The same shape on an added operation fails.",
+        "required_fix": "Call self.scan_security(new['security'], parts + ['security']) before emitting, and add a regression test."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 558,
+        "description": "Still open from attempt 4. Scheme keys are validated only at the top level. Unknown keys inside `flows` or inside individual flow objects are classified on both added schemes (558-561) and changed schemes (715).",
+        "required_fix": "Validate flow names and flow-object keys (authorizationUrl, tokenUrl, refreshUrl, scopes) in both scan_component and compare_security_scheme, and add tests."
+      },
+      {
+        "severity": "low",
+        "path": "tools/airs_drift.py",
+        "line": 1025,
+        "description": "For a newly added source, the SourceComparison changes are computed and then thrown away. Only one source_added row with empty affectedOperations is reported. The plan says every class carries its affected operations; a new AIRS spec would list none of its operations for review.",
+        "required_fix": "Set affectedOperations on the source_added row to the operation keys of the new source (or attach the per-operation additions), and assert this in test_added_source_is_scanned_too."
+      }
+    ],
+    "evidence": [
+      "docs/reviews/phase-25-attempt-01.checks.json: phase 25, source_sha256 a220e2a\u2026, passed=true. Grep found no non-zero exit_code.",
+      "checks.json:2302-2320: `airs_drift.py --check` exit 0, 'pinned baseline verified; ledger current; baseline self-compare unchanged'.",
+      "checks.json:2322-2348: test_airs_drift ran 46 tests, all OK. They cover additions, deletions, renames (exact, edited, ambiguous), same-version changes, byte-only changes, union order, security/servers, candidate and baseline tampering, the output guard and refresh failures.",
+      "checks.json:2386-2403: `--require-through-phase 25` exit 0. The cumulative regression suites also pass (test_red_team_management 51, test_management_phases 28, test_review_phase 54).",
+      "tools/check_phase.py:411-439: drift_commands adds a `git diff --exit-code` against DRIFT_BASELINE b661338 over the crate, Cargo files, LICENSE and NOTICE, plus the drift suites, all ahead of the Rust matrix. No package receipts.",
+      "docs/reviews/phase-25-chunk-semantic-drift-attempt-04.json: accepted 45/50 on the same source a220e2a\u2026, with three low findings. Inspection of airs_drift.py:437-440, 724-726, 882-883 and 558-561/715 shows all three are unchanged.",
+      "airs_drift.py:1373-1454: refresh refuses redirects (NoRedirect plus a final_url check), enforces size limits, recomputes the root, openapi-specs and product tree hashes and the blob SHA-1s, and creates output only through exclusive `xb` writes under the guarded roots. The token goes only in the Authorization header and is never recorded.",
+      "airs_drift.py:1166-1217: verify_candidate rejects symlinks, non-regular files, file-set differences, byte/SHA-256/blob mismatches, and a candidate that claims the pinned commit with different bytes.",
+      "airs_drift.py:811-821 and 621: traced old [A,B] \u2192 new [A,B,A]. Nothing is emitted, and only the zero-change fallback catches it.",
+      "docs/phase-status.json:6721-6795: phase 25 is in_progress, the chunk is still pending (review_phase.accepted_chunks fills it in at advancement), and there is no phase-25 remote CI record. .forgejo/workflows/ci.yml:73 runs the phase 25 contracts-only subset."
+    ],
+    "limitations": [
+      "Read-only review: I ran no tools or tests. Execution evidence comes only from the recorded checks file, which I read in part and searched with grep for the rest.",
+      "The medium and new low findings come from reading the code. I did not reproduce them by running anything.",
+      "No live refresh against pan.dev and no remote CI run was inspected. The plan's 'remote CI' completion step is unevidenced for this source, which is expected to come after the review.",
+      "I did not re-audit the vendor 0.86.0 bytes, red_team_management.py internals or historical_delivery.py beyond their passing recorded checks and earlier accepted reviews.",
+      "No baselineTree is populated in contracts/airs-drift.json, so the tree-level identity of the pinned commit is not recorded. The design allows this, but a real compare still depends on the product directories holding only the seven spec files, as the inventory states."
+    ],
+    "categories": {
+      "implementation": 8.5,
+      "code_quality": 8.5,
+      "supportability": 9,
+      "architecture": 9,
+      "feature_delivery": 9
+    },
+    "total": 44
+  },
+  "rubric": "five-category-v1",
+  "chunk": null,
+  "decision": "rejected",
+  "review_scope": "phase"
+}
