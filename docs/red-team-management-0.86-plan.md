@@ -261,6 +261,47 @@ SDK automatically. Preserve source revisions, compatibility floor and all retain
 capabilities; test simulated additions, deletions, renamed components, same-version
 changes and source tampering. Finish with independent review and remote CI.
 
+Implemented in `tools/airs_drift.py` (stdlib only; YAML through the pinned
+js-yaml reader) with the owned ledger `contracts/airs-drift.json`:
+
+- `--check` is offline. It re-verifies the seven pinned rows of
+  `contracts/airs-active-sources.json` (pinned bytes, identity resolution,
+  management metadata, semantic JSON digest and operation counts at pan.dev
+  `582e30543bf2adfd8b0ee457170d22b5c380dfbe`), the ledger bindings
+  (active sources, compatibility decisions, management `source.json`, retained
+  capabilities and the 0.2.2 retention floor) and that the ledger equals its
+  regeneration. The baseline must self-compare as unchanged with zero changes.
+  An optional `baselineTree` is verified when present; it is populated only from
+  a maintainer-run refresh of the pinned commit (`--baseline-tree DIR`).
+- `compare --candidate DIR [--output PATH]` is offline and deterministic (no
+  timestamps). A candidate is `tree.json` plus `files/<upstreamPath>`; the tool
+  rejects tree-hash, content-digest, per-file SHA-256/blob mismatches, extra or
+  missing files, symlinks, unsafe paths, non-regular modes, truncated or foreign
+  trees, and the pinned commit with differing bytes. Sources are compared by
+  upstream path on a semantic model (operations by METHOD path with merged
+  parameters, effective security/servers, components by name with `$ref`
+  retained, `required` as a set, ordered unions). Version strings only produce
+  `version_label_changed` and the `sameVersionContentChange` flag; identical
+  models with different bytes are `byte_only`. Every class in the ledger's
+  `changeClasses` table carries a disposition, affected operations, retained
+  capability, native bindings for removed operations and any prior decision.
+  Exit 0 is unchanged/byte_only, 2 is classified review_required, 1 is a
+  classification failure, tampering or path error.
+- Unknown changes (residual keywords such as `not` or `discriminator`, `x-`
+  extensions, webhooks, external or dangling `$ref`, ambiguous renames) raise
+  with their identity and digest and write no receipt.
+- `refresh --commit <40-hex>` is the only networked path and is never run by any
+  check. It walks commit, root, `openapi-specs` and the three product trees,
+  recomputes each tree hash, refuses truncation, redirects, oversize responses,
+  unsupported modes and blob mismatches, never records the token, and writes a new
+  directory under `.local/airs-drift/` with exclusive creation. Receipts may only
+  be written beneath `docs/checks/airs-drift/` or `.local/airs-drift/`.
+
+Drift is reported, never adopted. Adoption requires a new reviewed pin through
+REVIEWED_DELTAS; upstream removals never authorize SDK removal. The
+`--require-through-phase 25` gate adds this verification to current-source
+runtime, bounded-read and cumulative qualification without package receipts.
+
 ## Review contract and evidence limits
 
 Use actual Claude Code, read-only repository tools, preserved prompt/result and
@@ -270,7 +311,7 @@ strictly > 40 with every category >= 8 advance, recording every deficiency and n
 blocker/high finding. Scores do not replace tests, immutable publication or CI.
 
 Phase 21 checks concern source inventory and planning tools only. They cannot
-certify runtime behavior or tenant permissions. The `--require-through-phase` values 22 through 25 intentionally fail until implementation extends their evidence requirements.
+certify runtime behavior or tenant permissions. Each `--require-through-phase` value from 22 through 25 passes only with that phase's implemented evidence; phase 25 requires a current drift ledger and an unchanged baseline self-comparison.
 
 ### Retention ordering decision
 
