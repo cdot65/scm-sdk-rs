@@ -93,18 +93,38 @@ def commit_inputs(root, commit):
     return inputs
 
 
-def verify_governance_successor(root, phase, release_commit, published_sha256):
-    """The current source is the published source plus reviewed governance-only changes."""
+def governance_changes(phase, before, after):
     allowed = GOVERNANCE_SUCCESSOR_PATHS.get(phase)
     require(allowed is not None, 'This release phase does not permit governance successors')
-    require(commit_fingerprint(root, release_commit) == published_sha256, 'Release commit differs from the published source')
-    require(subprocess.run(['git', 'merge-base', '--is-ancestor', release_commit, 'HEAD'], cwd=root).returncode == 0,
-            'Current source does not descend from the published release commit')
-    before, after = commit_inputs(root, release_commit), source_inputs(root)
     changed = {name for name in before.keys() | after.keys() if before.get(name) != after.get(name)}
     outside = sorted(changed - allowed)
     require(not outside, 'Post-publication changes outside reviewed governance paths: ' + ', '.join(outside[:10]))
     return sorted(changed)
+
+
+def verify_release_commit(root, phase, release_commit, published_sha256, descendant):
+    require(phase in GOVERNANCE_SUCCESSOR_PATHS, 'This release phase does not permit governance successors')
+    require(commit_fingerprint(root, release_commit) == published_sha256, 'Release commit differs from the published source')
+    require(subprocess.run(['git', 'merge-base', '--is-ancestor', release_commit, descendant], cwd=root).returncode == 0,
+            'Successor source does not descend from the published release commit')
+
+
+def verify_governance_successor(root, phase, release_commit, published_sha256):
+    """The current source is the published source plus reviewed governance-only changes."""
+    verify_release_commit(root, phase, release_commit, published_sha256, 'HEAD')
+    return governance_changes(phase, commit_inputs(root, release_commit), source_inputs(root))
+
+
+def verify_governance_successor_commit(root, phase, release_commit, published_sha256, commit):
+    """A committed successor (for example the CI commit) differs only in reviewed governance paths.
+
+    The published release commit's own CI cannot pass on a runner without the Codex
+    CLI (fixed only in a governance successor), so post-publication CI may run on a
+    successor whose packaged crate, contracts, scripts, lockfiles and workflow are
+    byte-identical to the published source.
+    """
+    verify_release_commit(root, phase, release_commit, published_sha256, commit)
+    return governance_changes(phase, commit_inputs(root, release_commit), commit_inputs(root, commit))
 
 
 def published_source(root, version):
@@ -135,7 +155,7 @@ def expected_contexts(workflow):
         for feature in matrix('features') for toolchain in matrix('toolchain')}
 
 
-def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256, version=VERSION):
+def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256, version=VERSION, ci_source_sha256=None):
     """Cross-check independently recorded observations; never trust summary flags alone."""
     require(len(proofs) == 2 and [p.get('toolchain') for p in proofs] == ['1.89.0', '1.99.0'],
             'Both compiler package proofs are required')
@@ -158,7 +178,7 @@ def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256, versio
             and isinstance(tag.get('tagObject'), str) and re.fullmatch('[0-9a-f]{40}', tag['tagObject'])
             and refs.get('refs/tags/v' + version) == tag['tagObject'], 'Remote annotated tag does not match publication')
     run = ci.get('run', {})
-    require(ci.get('reviewedSourceSha256') == source_sha256
+    require(ci.get('reviewedSourceSha256') == (ci_source_sha256 or source_sha256)
             and run.get('status') == 'success' and run.get('commit_sha') == ci.get('sourceCommit')
             and refs.get('refs/heads/main') == ci.get('sourceCommit'), 'CI source, remote main, or terminal run differs')
     run_number = run.get('index_in_repo')
@@ -183,9 +203,9 @@ def validate_receipts(registry, tag, ci, proofs, contexts, source_sha256, versio
             'ciCommit': ci['sourceCommit'], 'jobs': len(contexts), 'passed': True}
 
 
-def verify_source_commits(root, result, source_sha256):
-    for commit in (result['sourceCommit'], result['ciCommit']):
-        require(commit_fingerprint(root, commit) == source_sha256, 'Published or CI source differs from reviewed inputs')
+def verify_source_commits(root, result, source_sha256, ci_source_sha256=None):
+    for commit, expected in ((result['sourceCommit'], source_sha256), (result['ciCommit'], ci_source_sha256 or source_sha256)):
+        require(commit_fingerprint(root, commit) == expected, 'Published or CI source differs from reviewed inputs')
         subprocess.run(['git', 'merge-base', '--is-ancestor', commit, 'HEAD'], cwd=root, check=True)
     subprocess.run(['git', 'merge-base', '--is-ancestor', result['sourceCommit'], result['ciCommit']],
                    cwd=root, check=True)
@@ -329,10 +349,17 @@ def verify(root, source_sha256=None, phase=PHASE, version=VERSION):
             root / f"docs/checks/phase-{phase_id}-release-package-1.89.0.json",
             **({"require_directional": True} if phase_id in (28, 31) else {}))
         verify_retained_registry(root, registry, publication)
+    ci_source_sha256 = source_sha256
+    if phase_id in GOVERNANCE_SUCCESSOR_PATHS and ci.get('reviewedSourceSha256') != source_sha256:
+        ci_source_sha256 = ci.get('reviewedSourceSha256')
+        require(isinstance(ci_source_sha256, str) and re.fullmatch('[0-9a-f]{64}', ci_source_sha256),
+                'CI receipt lacks its source fingerprint')
+        verify_governance_successor_commit(root, phase_id, registry['sourceCommit'], source_sha256, ci.get('sourceCommit'))
     result = validate_receipts(registry, tag, ci, proofs,
-                               expected_contexts((root / '.forgejo/workflows/ci.yml').read_text()), source_sha256, version)
+                               expected_contexts((root / '.forgejo/workflows/ci.yml').read_text()), source_sha256, version,
+                               ci_source_sha256)
     verify_github_tag(root, delivery, tag, phase_id, version)
-    verify_source_commits(root, result, source_sha256)
+    verify_source_commits(root, result, source_sha256, ci_source_sha256)
     return result
 
 

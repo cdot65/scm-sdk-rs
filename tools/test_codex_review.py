@@ -55,6 +55,23 @@ class CodexReviewTests(unittest.TestCase):
     def status_now(self):
         return json.loads((self.root / 'docs/phase-status.json').read_text())
 
+    def test_review_harness_runs_on_hosts_without_the_codex_cli(self):
+        # CI runners have no Codex CLI: the version probe must not crash the gate's unit tests.
+        with mock.patch.object(codex_review, 'CODEX', 'scm-sdk-absent-codex-cli'):
+            self.assertIsNone(codex_review.codex_version())
+            self.assertEqual(self.run_review(review(9)), 0)
+            record = json.loads(codex_review.destination(self.root, 29, 1, 'plan-and-provenance').read_text())
+        self.assertIsNone(record['codex_version'])
+
+    def test_real_invocation_without_the_codex_cli_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory, \
+                mock.patch.object(codex_review, 'CODEX', 'scm-sdk-absent-codex-cli'):
+            prompt = pathlib.Path(directory) / 'prompt'
+            prompt.write_text('p')
+            with self.assertRaises(FileNotFoundError):
+                codex_review.invoke(prompt, pathlib.Path(directory) / 'o', pathlib.Path(directory) / 'e',
+                                    pathlib.Path(directory) / 's', self.root)
+
     def test_threshold_is_nine_and_blocking_findings_reject(self):
         self.assertEqual(codex_review.decide(review(9)), 'accepted')
         self.assertEqual(codex_review.decide(review(8)), 'rejected')

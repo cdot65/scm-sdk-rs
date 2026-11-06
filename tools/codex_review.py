@@ -26,6 +26,7 @@ from review_phase import SCHEMA, check_evidence, fingerprint, validate_review  #
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PHASES = (29, 30, 31)
 REVIEWER = 'Codex CLI'
+CODEX = 'codex'
 # Chunk identities are reviewed source: phase-status.json is excluded from the
 # fingerprint, so its declarations alone cannot define which reviews are required.
 REQUIRED_CHUNKS = {29: ('plan-and-provenance',), 30: ('models-and-validation', 'clients-and-wire'),
@@ -371,8 +372,16 @@ def _apply_status(root, status, row, chunk, record_path, review, source, decisio
     (root / 'docs/phase-status.json').write_text(json.dumps(status, indent=2) + '\n')
 
 
+def codex_version():
+    """Record the reviewer CLI version; a host without it records None and the review invocation fails closed."""
+    try:
+        return subprocess.run([CODEX, '--version'], capture_output=True, text=True).stdout.strip() or None
+    except FileNotFoundError:
+        return None
+
+
 def invoke(prompt_path, output_path, events_path, schema_path, root):
-    command = ['codex', 'exec', '--sandbox', 'read-only', '--cd', str(root), '--ephemeral', '--json',
+    command = [CODEX, 'exec', '--sandbox', 'read-only', '--cd', str(root), '--ephemeral', '--json',
                '--output-schema', str(schema_path), '--output-last-message', str(output_path), '-']
     with prompt_path.open('rb') as stdin, events_path.open('wb') as events:
         return subprocess.run(command, stdin=stdin, stdout=events, stderr=subprocess.STDOUT, timeout=TIMEOUT_SECONDS).returncode
@@ -417,7 +426,7 @@ def main(argv=None, root=ROOT, runner=invoke):
     events_path, schema_path = private / f'{stem}.events.jsonl', private / f'{stem}.schema.json'
     output_path = record_path.with_suffix('.codex.json')
     schema_path.write_text(json.dumps(OUTPUT_SCHEMA))
-    version = subprocess.run(['codex', '--version'], capture_output=True, text=True).stdout.strip()
+    version = codex_version()
     base = {'phase': args.phase, 'chunk': args.chunk, 'attempt': attempt, 'reviewer': REVIEWER, 'codex_version': version,
             'source_sha256': source, 'scope_evidence': scope, 'prompt_sha256': sha256(prompt_path),
             'checks_sha256': sha256(checks_copy), **({'site_binding': site} if site else {}), 'requested_at': datetime.datetime.now(datetime.timezone.utc).isoformat()}

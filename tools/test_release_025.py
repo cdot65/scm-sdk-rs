@@ -174,6 +174,44 @@ class Release025Tests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'does not descend'):
                 release_delivery.verify_governance_successor(root, 31, release, published)
 
+    def test_ci_may_run_on_a_committed_governance_successor_only(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            run = lambda *args: subprocess.check_output(['git', *args], cwd=root, text=True).strip()
+            run('init', '-q', '-b', 'main')
+            run('config', 'user.email', 't@example.invalid')
+            run('config', 'user.name', 't')
+            for name in ('crates/scm-sdk/src/lib.rs', 'tools/codex_review.py', '.forgejo/workflows/ci.yml'):
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
+                (root / name).write_text('v1\n')
+            run('add', '.')
+            run('commit', '-q', '-m', 'release')
+            release = run('rev-parse', 'HEAD')
+            published = release_delivery.commit_fingerprint(root, release)
+            (root / 'tools/codex_review.py').write_text('v2\n')
+            run('commit', '-q', '-am', 'governance fix')
+            successor = run('rev-parse', 'HEAD')
+            self.assertEqual(release_delivery.verify_governance_successor_commit(root, 31, release, published, successor),
+                             ['tools/codex_review.py'])
+            result = {'sourceCommit': release, 'ciCommit': successor}
+            ci_sha = release_delivery.commit_fingerprint(root, successor)
+            release_delivery.verify_source_commits(root, result, published, ci_sha)
+            with self.assertRaisesRegex(ValueError, 'differs from reviewed inputs'):
+                release_delivery.verify_source_commits(root, result, published)  # CI fingerprint is not the published one
+            for name in ('crates/scm-sdk/src/lib.rs', '.forgejo/workflows/ci.yml'):
+                run('checkout', '-q', successor)
+                (root / name).write_text('changed\n')
+                run('commit', '-q', '-am', 'outside')
+                with self.assertRaisesRegex(ValueError, 'outside reviewed governance paths'):
+                    release_delivery.verify_governance_successor_commit(root, 31, release, published,
+                                                                        run('rev-parse', 'HEAD'))
+            with self.assertRaisesRegex(ValueError, 'does not permit'):
+                release_delivery.verify_governance_successor_commit(root, 28, release, published, successor)
+            run('checkout', '-q', '--orphan', 'unrelated')
+            run('commit', '-q', '-m', 'unrelated')
+            with self.assertRaisesRegex(ValueError, 'does not descend'):
+                release_delivery.verify_governance_successor_commit(root, 31, release, published, run('rev-parse', 'HEAD'))
+
     def test_delivery_binds_receipts_to_the_published_source_for_a_governance_successor(self):
         with mock.patch.object(release_delivery, 'fingerprint', return_value='c' * 64), \
                 mock.patch.object(release_delivery, 'published_source', return_value=('a' * 40, 'p' * 64)), \
