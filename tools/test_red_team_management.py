@@ -363,7 +363,7 @@ class ManagementPlanTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('drift reported, never adopted', result.stdout)
         current = airs_drift.current_ledger_text()
-        tampered = current.replace('"classifierVersion": 4', '"classifierVersion": 5')
+        tampered = current.replace('"classifierVersion": 5', '"classifierVersion": 6')
         stale = json.loads(current)
         stale['sources'][0]['semanticModelSha256'] = '0' * 64
         cases = (('missing', dict(current_ledger_text=None), 'Missing drift ledger'),

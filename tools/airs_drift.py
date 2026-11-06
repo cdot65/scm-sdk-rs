@@ -22,6 +22,7 @@ REVIEWED_DELTAS process in tools/red_team_management.py, and upstream removals n
 authorize SDK removal.
 """
 import argparse
+import collections
 import hashlib
 import importlib.util
 import json
@@ -34,7 +35,7 @@ from pathlib import Path
 import red_team_management as rtm
 from red_team_dataplane import read_yaml
 
-CLASSIFIER_VERSION = 4
+CLASSIFIER_VERSION = 5
 REPOSITORY = 'https://github.com/PaloAltoNetworks/pan.dev'
 GITHUB_API = 'https://api.github.com/repos/PaloAltoNetworks/pan.dev'
 RAW_BASE = 'https://raw.githubusercontent.com/PaloAltoNetworks/pan.dev'
@@ -121,6 +122,8 @@ SCHEMA_SUBTREES = {'anyOf', 'oneOf', 'allOf', 'prefixItems', 'items', 'additiona
                    'schema'}
 SECURITY_SCHEME_KNOWN = {'type', 'description', 'name', 'in', 'scheme', 'bearerFormat', 'flows', 'openIdConnectUrl'}
 SERVER_KNOWN = {'url', 'description', 'variables'}
+FLOW_NAMES = {'implicit', 'password', 'clientCredentials', 'authorizationCode'}
+FLOW_KNOWN = {'authorizationUrl', 'tokenUrl', 'refreshUrl', 'scopes'}
 SERVER_VARIABLE_KNOWN = {'default', 'enum', 'description'}
 COMPONENT_SECTIONS = {'schemas', 'parameters', 'requestBodies', 'responses', 'securitySchemes', 'examples'}
 MISSING = object()
@@ -559,6 +562,18 @@ class SourceComparison:
             for key, item in value.items():
                 if key not in SECURITY_SCHEME_KNOWN:
                     self.fail(parts + [key], new=item, reason='Unclassified keyword in added content')
+            self.scan_flows(value.get('flows'), parts + ['flows'])
+
+    def scan_flows(self, flows, parts):
+        if flows is None:
+            return
+        if not isinstance(flows, dict):
+            self.fail(parts, new=flows, reason='Unclassified keyword in added content')
+        for name, flow in flows.items():
+            if (name not in FLOW_NAMES or not isinstance(flow, dict) or set(flow) - FLOW_KNOWN
+                    or not isinstance(flow.get('scopes', {}), dict)
+                    or not all(isinstance(v, str) for v in flow.get('scopes', {}).values())):
+                self.fail(parts + [name], new=flow, reason='Unclassified keyword in added content')
 
     def fail(self, parts, old=MISSING, new=MISSING, reason='Unclassified upstream change'):
         kind = 'added' if old is MISSING else 'removed' if new is MISSING else 'changed'
@@ -618,9 +633,48 @@ class SourceComparison:
         new_operations = substitute(new['operations'], mapping)
         self.compare_components(old['components'], new_components)
         self.compare_operations(old['operations'], new_operations)
+        # A root change inherited by operations is already reported per operation; when every
+        # operation overrides it, report it once at the document level instead of dropping it.
+        def inherited(field):
+            return any(change['pointer'].startswith('/paths/') and change['pointer'].endswith('/' + field)
+                       for change in self.changes)
+        if rtm.encoded(old['rootServers']) != rtm.encoded(new['rootServers']):
+            self.scan_servers(new['rootServers'], ['servers'])
+            if not inherited('servers'):
+                self.compare_servers(old['rootServers'], new['rootServers'], ['servers'])
+        if rtm.encoded(old['rootSecurity']) != rtm.encoded(new['rootSecurity']):
+            self.scan_security(new['rootSecurity'], ['security'])
+            if not inherited('security'):
+                self.emit('security_changed', 'changed', ['security'], old['rootSecurity'], new['rootSecurity'])
+        self.require_coverage(old, new_operations, new_components, mapping)
         if not self.changes and rtm.encoded(old) != rtm.encoded(new):
             self.fail([], digest(old), digest(new), reason='Semantic model differs without a classified change')
         return self.changes
+
+    def require_coverage(self, old, new_operations, new_components, mapping):
+        """Every operation or component whose model differs must carry a classified change."""
+        pointers = [change['pointer'] for change in self.changes]
+        def covered(parts):
+            prefix = pointer(parts)
+            return any(item == prefix or item.startswith(prefix + '/') for item in pointers)
+        for key in old['operations'].keys() | new_operations.keys():
+            before, after = old['operations'].get(key), new_operations.get(key)
+            if rtm.encoded(before) != rtm.encoded(after):
+                method, route = key.split(' ', 1)
+                if not covered(['paths', route, method.lower()]):
+                    self.fail(['paths', route, method.lower()], before, after,
+                              reason='Operation model differs without a classified change')
+        renamed = {(section, name) for section, names in self.renames.items() for pair in names.items() for name in pair}
+        for section in old['components'].keys() | new_components.keys():
+            before, after = old['components'].get(section, {}), new_components.get(section, {})
+            if not isinstance(before, dict) or not isinstance(after, dict):
+                continue
+            for name in before.keys() | after.keys():
+                if (section, name) in renamed:
+                    continue
+                if rtm.encoded(before.get(name)) != rtm.encoded(after.get(name)) and not covered(['components', section, name]):
+                    self.fail(['components', section, name], before.get(name), after.get(name),
+                              reason='Component model differs without a classified change')
 
     @staticmethod
     def kind(before, after):
@@ -714,6 +768,8 @@ class SourceComparison:
                 continue
             if key not in SECURITY_SCHEME_KNOWN:
                 self.fail(parts + [key], before, after)
+            if key == 'flows' and after is not MISSING:
+                self.scan_flows(after, parts + [key])
             self.emit('annotation_changed' if key == 'description' else 'security_scheme_changed',
                       self.kind(before, after), parts + [key], before, after)
 
@@ -722,6 +778,7 @@ class SourceComparison:
         if rtm.encoded(old) == rtm.encoded(new):
             return
         if not isinstance(old, dict) or not isinstance(new, dict):
+            self.scan_schema(new, parts)
             self.emit('type_changed', 'changed', parts, old, new)
             return
         for key in sorted(old.keys() | new.keys()):
@@ -810,8 +867,20 @@ class SourceComparison:
                 return
         null = rtm.encoded({'type': 'null'})
         core = old_keys[:-1] if old_keys and old_keys[-1] == null else old_keys
-        removed = [branch for branch, key in zip(old, old_keys) if key not in new_keys]
-        extra = [branch for branch, key in zip(new, new_keys) if key not in old_keys]
+        remaining = collections.Counter(new_keys)
+        removed = []
+        for branch, key in zip(old, old_keys):
+            if remaining[key]:
+                remaining[key] -= 1
+            else:
+                removed.append(branch)
+        seen = collections.Counter(old_keys)
+        extra = []
+        for branch, key in zip(new, new_keys):
+            if seen[key]:
+                seen[key] -= 1
+            else:
+                extra.append(branch)
         for branch in removed:
             self.emit('union_variant_removed', 'removed', parts, old=branch)
         if not removed and new_keys[:len(core)] == core and len(new_keys) > len(core):
@@ -880,6 +949,7 @@ class SourceComparison:
             else:
                 self.compare_response(old['responses'][status], new['responses'][status], at)
         if rtm.encoded(old['security']) != rtm.encoded(new['security']):
+            self.scan_security(new['security'], parts + ['security'])
             self.emit('security_changed', 'changed', parts + ['security'], old['security'], new['security'])
         self.compare_servers(old['servers'], new['servers'], parts + ['servers'])
 
@@ -1022,13 +1092,15 @@ def compare_sources(old_sources, new_sources):
             # OpenAPI version, so document, info, component-section and addition rules all apply.
             empty = {'openapi': new['spec'].get('openapi') if isinstance(new['spec'], dict) else None,
                      'info': {}, 'paths': {}}
-            SourceComparison(upstream, empty, new['spec']).compare()
+            added = SourceComparison(upstream, empty, new['spec'])
+            added.compare()
             summary = source_summary(new['spec'])
             value = {'sha256': sha(new['bytes']), **summary}
             identity = identity_of(upstream, [], 'added', new=value)
             changes.append({'id': digest(identity), 'source': upstream, 'class': 'source_added',
                             'disposition': 'additive', 'pointer': '', 'kind': 'added', 'new': value,
-                            'affectedOperations': [], 'priorDecision': None, 'retainedCapability': []})
+                            'affectedOperations': sorted(added.new['operations']), 'priorDecision': None,
+                            'retainedCapability': []})
             sources.append({'upstreamPath': upstream, 'status': 'added', 'newSha256': sha(new['bytes']),
                             'newVersion': summary['version']})
             continue

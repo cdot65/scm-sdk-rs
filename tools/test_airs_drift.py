@@ -8,6 +8,7 @@ import shutil
 import socket
 import tempfile
 import unittest
+from unittest import mock
 import uuid
 from pathlib import Path
 from unittest.mock import patch
@@ -535,6 +536,79 @@ class AddedContentFailsClosedTests(DriftTestCase):
         self.assertTrue(change['pointer'].endswith('/maxLength'))
 
 
+class PhaseReviewFollowupTests(DriftTestCase):
+    """Phase 25 review attempt 1: no semantic difference may be dropped while others are classified."""
+
+    def test_union_duplication_is_classified_even_beside_other_changes(self):
+        def mutate(spec):
+            branches = audio_format(spec)['anyOf']
+            branches.insert(len(branches) - 1 if branches[-1] == NULL else len(branches), copy.deepcopy(branches[0]))
+            spec['components']['schemas'].setdefault('UnrelatedNew', {'type': 'string'})
+            return spec
+        report = self.compare({MP: mutate})
+        self.assertClass(report, 'component_added')
+        self.assertTrue(self.only(report, 'union_variant_appended') or self.only(report, 'union_variant_inserted'))
+
+    def test_root_servers_and_security_overridden_by_every_operation_are_still_reported(self):
+        def mutate(spec):
+            for item in spec['paths'].values():
+                for method, operation in item.items():
+                    if method in rtm.METHODS:
+                        operation['servers'] = copy.deepcopy(spec.get('servers', [{'url': 'https://pinned.invalid'}]))
+                        operation['security'] = copy.deepcopy(spec.get('security', []))
+            return spec
+        def changed(spec):
+            spec = mutate(spec)
+            spec['servers'] = [{'url': 'https://elsewhere.invalid'}]
+            spec['security'] = [{'bearerAuth': ['admin']}]
+            return spec
+        baseline = self.compare({NB: mutate}, name='overrides')
+        report = self.compare({NB: changed}, name='root-change')
+        new = {c['pointer'] for c in report['changes']} - {c['pointer'] for c in baseline['changes']}
+        self.assertIn('/servers', new)
+        self.assertIn('/security', new)
+
+    def test_boolean_schema_becoming_an_object_is_scanned(self):
+        def spec(flag):
+            return {'openapi': '3.1.0', 'info': {'title': 'T', 'version': '1'}, 'paths': {},
+                    'components': {'schemas': {'S': {'type': 'object', 'properties': {'flag': flag}}}}}
+        clean = drift.SourceComparison('synthetic.yaml', spec(True), spec({'type': 'string'})).compare()
+        self.assertEqual([c['class'] for c in clean], ['type_changed'])
+        with self.assertRaisesRegex(ValueError, 'no receipt written'):
+            drift.SourceComparison('synthetic.yaml', spec(True), spec({'type': 'object', 'x-later': 1})).compare()
+
+    def test_changed_operation_security_and_scheme_flows_fail_closed(self):
+        def bad_security(spec):
+            spec['paths']['/v1/channels']['get']['security'] = [{'bearerAuth': 'not-a-list'}]
+            return spec
+        def added_flow(spec):
+            spec['components']['securitySchemes']['oauth'] = {'type': 'oauth2', 'flows': {
+                'clientCredentials': {'tokenUrl': 'https://t.invalid', 'scopes': {}, 'x-audience': 'a'}}}
+            return spec
+        def unknown_flow(spec):
+            spec['components']['securitySchemes']['oauth'] = {'type': 'oauth2', 'flows': {'deviceCode': {'scopes': {}}}}
+            return spec
+        for name, mutate in (('security', bad_security), ('flow-key', added_flow), ('flow-name', unknown_flow)):
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(ValueError, 'no receipt written'):
+                    drift.compare_candidate(self.candidate({NB: mutate}, name=name))
+
+    def test_added_source_lists_its_operations(self):
+        spec = {'openapi': '3.1.0', 'info': {'title': 'New', 'version': '1.0.0'},
+                'paths': {'/v1/x': {'get': {'operationId': 'getX', 'responses': {'200': {'description': 'ok'}}}}}}
+        report = self.compare(extra={'openapi-specs/prisma-airs/new/new-service.yaml': dumps(spec)})
+        self.assertEqual(self.assertClass(report, 'source_added')['affectedOperations'], ['GET /v1/x'])
+
+    def test_coverage_net_fails_when_a_compare_method_drops_a_difference(self):
+        def mutate(spec):
+            audio_format(spec)['anyOf'].reverse()
+            spec['components']['schemas'].setdefault('UnrelatedNew', {'type': 'string'})
+            return spec
+        with mock.patch.object(drift.SourceComparison, 'compare_union', lambda self, old, new, parts: None):
+            with self.assertRaisesRegex(ValueError, 'without a classified change'):
+                drift.compare_candidate(self.candidate({MP: mutate}, name='net'))
+
+
 class CandidateTamperingTests(DriftTestCase):
     def expect(self, message, **options):
         with self.assertRaisesRegex(ValueError, message):
@@ -634,7 +708,7 @@ class BaselineTamperingTests(DriftTestCase):
             (self.base[NB]['row']['activeSpecificationPath'], lambda b: b.replace(b'Channels', b'Channelz', 1), 'Pinned bytes changed'),
             ('contracts/vendor/red-team-management/0.86.0/source.json', lambda b: b.replace(b'"usedForGeneration": true', b'"usedForGeneration": false'), 'Pinned bytes changed|metadata mismatch'),
             ('contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json', lambda b: b + b' ', 'Pinned bytes changed'),
-            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 4', b'"classifierVersion": 5'), 'Stale or tampered'),
+            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 5', b'"classifierVersion": 6'), 'Stale or tampered'),
             ('contracts/airs-active-sources.json', lambda b: b.replace(rtm.COMMIT.encode(), b'f' * 40, 1), 'Pinned bytes changed|snapshot commit'),
         )
         for relative, tamper, message in cases:
