@@ -148,7 +148,11 @@ class DirectionalGovernanceTests(unittest.TestCase):
             review_phase.validate_predecessors(ROOT, self.status, 26)
             # Maintainer decision 2026-11-06: phase 24 is superseded by 0.2.4, so phase 25 follows
             # the completed phase 28 and fails again if that completion is withdrawn.
-            review_phase.validate_predecessors(ROOT, self.status, 25)
+            # The decision graph is checked here; the completion receipt's own verification
+            # (which needs the gitignored retained archives) is tested in test_historical_delivery.
+            with patch('historical_delivery.verify_completion') as completion:
+                review_phase.validate_predecessors(ROOT, self.status, 25)
+                completion.assert_called_once()
             withdrawn = copy.deepcopy(self.status)
             next(p for p in withdrawn['phases'] if p['id'] == 28)['status'] = 'in_progress'
             with self.assertRaisesRegex(ValueError, 'Superseding phase has not passed'):

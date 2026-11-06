@@ -568,6 +568,22 @@ class PhaseReviewFollowupTests(DriftTestCase):
         self.assertIn('/servers', new)
         self.assertIn('/security', new)
 
+    def test_root_change_is_reported_even_when_an_overriding_operation_also_changes(self):
+        def overrides(spec):
+            for item in spec['paths'].values():
+                for method, operation in item.items():
+                    if method in rtm.METHODS:
+                        operation['servers'] = [{'url': 'https://pinned.invalid'}]
+            return spec
+        def both(spec):
+            spec = overrides(spec)
+            first = next(op for item in spec['paths'].values() for m, op in item.items() if m in rtm.METHODS)
+            first['servers'] = [{'url': 'https://moved.invalid'}]
+            spec['servers'] = [{'url': 'https://elsewhere.invalid'}]
+            return spec
+        report = self.compare({NB: both}, name='both')
+        self.assertIn('/servers', {c['pointer'] for c in report['changes']})
+
     def test_boolean_schema_becoming_an_object_is_scanned(self):
         def spec(flag):
             return {'openapi': '3.1.0', 'info': {'title': 'T', 'version': '1'}, 'paths': {},
@@ -708,7 +724,7 @@ class BaselineTamperingTests(DriftTestCase):
             (self.base[NB]['row']['activeSpecificationPath'], lambda b: b.replace(b'Channels', b'Channelz', 1), 'Pinned bytes changed'),
             ('contracts/vendor/red-team-management/0.86.0/source.json', lambda b: b.replace(b'"usedForGeneration": true', b'"usedForGeneration": false'), 'Pinned bytes changed|metadata mismatch'),
             ('contracts/vendor/red-team-management/0.86.0/compatibility-decisions.json', lambda b: b + b' ', 'Pinned bytes changed'),
-            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 5', b'"classifierVersion": 6'), 'Stale or tampered'),
+            ('contracts/airs-drift.json', lambda b: b.replace(b'"classifierVersion": 6', b'"classifierVersion": 7'), 'Stale or tampered'),
             ('contracts/airs-active-sources.json', lambda b: b.replace(rtm.COMMIT.encode(), b'f' * 40, 1), 'Pinned bytes changed|snapshot commit'),
         )
         for relative, tamper, message in cases:

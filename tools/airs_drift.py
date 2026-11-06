@@ -35,7 +35,7 @@ from pathlib import Path
 import red_team_management as rtm
 from red_team_dataplane import read_yaml
 
-CLASSIFIER_VERSION = 5
+CLASSIFIER_VERSION = 6
 REPOSITORY = 'https://github.com/PaloAltoNetworks/pan.dev'
 GITHUB_API = 'https://api.github.com/repos/PaloAltoNetworks/pan.dev'
 RAW_BASE = 'https://raw.githubusercontent.com/PaloAltoNetworks/pan.dev'
@@ -635,9 +635,19 @@ class SourceComparison:
         self.compare_operations(old['operations'], new_operations)
         # A root change inherited by operations is already reported per operation; when every
         # operation overrides it, report it once at the document level instead of dropping it.
+        def inheriting(spec, field):
+            found = set()
+            for route, item in spec.get('paths', {}).items():
+                for method, operation in item.items():
+                    if (method in rtm.METHODS and isinstance(operation, dict) and field not in operation
+                            and (field != 'servers' or 'servers' not in item)):
+                        found.add((route, method))
+            return found
+
         def inherited(field):
-            return any(change['pointer'].startswith('/paths/') and change['pointer'].endswith('/' + field)
-                       for change in self.changes)
+            # The per-operation report covers a root change only through an operation that
+            # inherits the root value in both documents, so its effective value moved with it.
+            return bool(inheriting(self.old_spec, field) & inheriting(self.new_spec, field))
         if rtm.encoded(old['rootServers']) != rtm.encoded(new['rootServers']):
             self.scan_servers(new['rootServers'], ['servers'])
             if not inherited('servers'):
