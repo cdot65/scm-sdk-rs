@@ -9334,9 +9334,9 @@
             }
           ],
           "review_decision": "accepted",
-          "accepted_review": "docs/reviews/phase-31-chunk-docs-site-codex-attempt-03.json",
+          "accepted_review": "docs/reviews/phase-31-chunk-docs-site-codex-attempt-04.json",
           "accepted_score": 9,
-          "accepted_source_sha256": "b9f08c9ee2541474d4d43d960972c822931d7e25c5352ab4e273c56faf63d5fa"
+          "accepted_source_sha256": "0c6408af8120ffd046fe12554f5a31ebcc0572b058651321527b161718106c9b"
         }
       ],
       "acceptance_criteria": [
@@ -9363,7 +9363,8 @@
         "Run 36 (c7461c0) failed only rust (probe-base, 1.89.0), a scripts/check-rust.py job whose inputs are byte-identical to run 35 (da5aa02), where it passed, as it did in every run from 30 to 35; c7461c0 changed only Python observation tooling, docs and excluded receipts. Forgejo exposes no re-run API and its job logs need a browser session, so the cause is not captured; the check was rerun locally on c7461c0, and delivery CI is a fresh run on the next commit, whose fingerprinted inputs equal c7461c0's.",
         "Delivery recorded: run 37 (bcbab09, fingerprint equal to c7461c0) passed all 49 jobs; canonical and GitHub v0.2.5 tag receipts re-observed with refs/heads/main == bcbab09 and v0.2.5^{} == 4adbe97. Delivery verification then exposed that schema-3 management package proofs were checked against the current (successor) fingerprint; tools/release_delivery.py now verifies both proofs with check-management-package.verify_receipt bound to the published fingerprint (regression in tools/test_release_025.py). This later governance-only commit does not change the delivery CI binding, which remains run 37 on bcbab09.",
         "remote-delivery attempt 1 (8, rejected) is preserved.",
-        "High (retained registry archive not verified for phase 31): c59bd7d moved verify_retained_registry() into the non-successor branch. It now runs for phases 24, 28 and 31 again, after the package-proof check (published-fingerprint receipts for phase 31). Regression in tools/test_release_025.py: the recorded delivery verifies, and the same delivery with a nonexistent registry retainedArchive is refused; the test fails without the fix and skips where the local retained archive is absent (CI)."
+        "High (retained registry archive not verified for phase 31): c59bd7d moved verify_retained_registry() into the non-successor branch. It now runs for phases 24, 28 and 31 again, after the package-proof check (published-fingerprint receipts for phase 31). Regression in tools/test_release_025.py: the recorded delivery verifies, and the same delivery with a nonexistent registry retainedArchive is refused; the test fails without the fix and skips where the local retained archive is absent (CI).",
+        "docs-site attempt 4 (9, accepted). Low (live-qualification evidence footer still names Linux musl and links historical phase status and the 0.1.0 registry receipt): not fixed in phase 31, because a site change requires a new Pages deployment, receipts and binding and voids the accepted, bound review; the page body already cites the phase 31 attempt-02 receipts (x86_64-unknown-linux-gnu). Deferred to the next documentation update."
       ],
       "limitations": [
         {

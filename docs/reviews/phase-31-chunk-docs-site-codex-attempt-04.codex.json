@@ -1,0 +1,28 @@
+{
+  "score": 9,
+  "summary": "The docs-site chunk meets the acceptance threshold. Source and deployment bindings verify offline, acceptance enforces the binding, and retained evidence supports the 0.2.5 documentation update. No blocker or high finding remains; one historical footer needs clarification.",
+  "findings": [
+    {
+      "severity": "low",
+      "path": ".local/docs-site-worktree/docs-site/docs/developer/live-qualification.md",
+      "line": 212,
+      "description": "The evidence footer still describes current native execution as Linux musl and links to historical phase status and the 0.1.0 registry receipt. Both phase-31 attempt-02 receipts identify x86_64-unknown-linux-gnu, making this footer inconsistent with the current qualification described above.",
+      "required_fix": "Identify GNU as the phase-31 execution target and link the current release evidence. Label retained musl and 0.1.0 references explicitly as historical."
+    }
+  ],
+  "evidence": [
+    "Read AGENTS.md, CLAUDE.md, docs/PHASES.md, docs/implementation-plan.md, the accepted phases 29\u201331 plan, and phase 31's status entry.",
+    "Recomputed source fingerprint: 0c6408af8120ffd046fe12554f5a31ebcc0572b058651321527b161718106c9b. check_evidence accepted the complete 113-command passing report.",
+    "Inspected tools/site_binding.py, tools/codex_review.py, and their regression coverage in tools/test_site_binding.py and tools/test_release_025.py. Recorded results show 8 and 17 passing tests respectively.",
+    "Executed the offline binding check: binding SHA-256 b590c8b281dc8af3e1d19efcfcd469d62ba9565f70a19e796d7127e06d625fca, site commit cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720, docs tree 61f8093efe0b80f4cd7cfe125d98cb7c9ae73538.",
+    "Inspected site changes, configuration, pinned deployment workflow, and per-commit push/deployment receipts. All five retained local HTML pages and three protected images match the deployment receipt hashes.",
+    "Verified the updated qualification links resolve to files in the local v0.2.5 Git tag; inspected both attempt-02 live receipts and their GNU target identities.",
+    "Executed offline release_delivery.verify successfully: published source 4adbe971bce30b129bbd9a1a858540f4bca6c22b, CI successor bcbab09acb983838068cf987f8cf4ad93e423b3f, 49 successful contexts. Both schema-3 compiler package proofs and retained archives verified."
+  ],
+  "limitations": [
+    "No network requests, tenant access, credential reads, or checkout modifications were performed.",
+    "Builds, compiler tests, and mutation-based regression tests were not rerun; their preserved results were inspected. Offline source, binding, delivery, and artifact-hash verification were executed.",
+    "Deployment and service outcomes rely on retained observations; current remote availability and browser rendering were not independently checked.",
+    "This score covers the docs-site chunk, not complete-phase acceptance."
+  ]
+}
