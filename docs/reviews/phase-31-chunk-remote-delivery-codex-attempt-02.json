@@ -1,0 +1,50 @@
+{
+  "phase": 31,
+  "chunk": "remote-delivery",
+  "attempt": 2,
+  "reviewer": "Codex CLI",
+  "codex_version": "codex-cli 0.166.0",
+  "source_sha256": "0c6408af8120ffd046fe12554f5a31ebcc0572b058651321527b161718106c9b",
+  "scope_evidence": [
+    "docs/RELEASE.md",
+    "tools/release_delivery.py",
+    "tools/test_release_delivery.py",
+    "tools/test_release_025.py",
+    "scripts/observe-release.py",
+    "tools/test_release_023.py",
+    "scripts/verify-publication.py",
+    "scripts/check-prepublication.py",
+    "docs/checks/release-registry-0.2.5.json",
+    "docs/checks/release-tag-v0.2.5.json",
+    "docs/checks/release-tag-github-v0.2.5.json",
+    "docs/checks/phase-31-remote-ci-run-37.json"
+  ],
+  "prompt_sha256": "c25f81ecc58509e2f7db95e49cb8519b93342558f80060895fc1e28e8a408f6a",
+  "checks_sha256": "a860bf80297354b523155daa32b403a87e19aaca1cac50421c2da1d060711583",
+  "requested_at": "2026-11-06T03:58:05.080946+00:00",
+  "status": "completed",
+  "source_unchanged": true,
+  "review": {
+    "score": 9,
+    "summary": "Remote-delivery attempt 2 meets the chunk acceptance threshold. The previous retained-registry verification defect is fixed, and offline verification confirms consistent package, registry, tag and terminal CI evidence. No blocker or high findings remain.",
+    "findings": [],
+    "evidence": [
+      "Read AGENTS.md, CLAUDE.md, the accepted phases 29\u201331 plan, docs/PHASES.md and phase 31's status entry.",
+      "Recomputed fingerprint 0c6408af8120ffd046fe12554f5a31ebcc0572b058651321527b161718106c9b. Confirmed docs/checks/phase-31.json contains exactly the required 113 commands, all recorded successful without timeouts.",
+      "Inspected delivery/publication guards, governance-successor restrictions, CI status selection, release instructions and relevant regression tests.",
+      "Executed the offline delivery verifier successfully: published commit 4adbe971bce30b129bbd9a1a858540f4bca6c22b, CI commit bcbab09acb983838068cf987f8cf4ad93e423b3f, and 49 successful CI contexts.",
+      "Verified both retained compiler archives and schema-3 proofs, each recording 18 successful commands and matching 145-file inventories; verified retained registry bytes and receipt hashes for both proofs and the publication verifier.",
+      "Confirmed complete delivery verification rejects missing, misplaced and corrupted registry archives through in-memory substitutions. Seven read-only delivery validation tests passed.",
+      "Executed the offline site-binding check successfully for site commit cce6cb2c5cc3346aa60e4a89f5f1dcacb01bf720."
+    ],
+    "limitations": [
+      "No network requests, credential access, tenant contact or filesystem changes were performed. Remote registry, tag and CI states were assessed through retained observations.",
+      "Full Rust, package, Python and Docusaurus suites were not rerun; their recorded evidence was inspected. CI qualifies an explicitly permitted governance successor, not the exact published commit.",
+      "Windows compilation remains unverified as documented. This chunk review does not establish complete-phase acceptance."
+    ]
+  },
+  "decision": "accepted",
+  "output_sha256": "f4d203b0889bed4d5a082636bce408845ad598d67b96b3ab37e47edcf12f3ff7",
+  "events_sha256": "402b91f057fd8e3b44105cdd7e9f515e4027548e9fd512fdb5537dcebb67331a",
+  "completed_at": "2026-11-06T03:59:37.195131+00:00"
+}
