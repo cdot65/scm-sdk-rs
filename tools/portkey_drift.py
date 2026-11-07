@@ -120,8 +120,12 @@ def ledger(baseline_root=None, root=ROOT):
     return document
 
 
+def text(value):
+    return rtm.encoded(value).rstrip('\n') + '\n'
+
+
 def ledger_text(document):
-    return rtm.encoded(document) + '\n'
+    return text(document)
 
 
 def check(root=ROOT):
@@ -242,7 +246,7 @@ def refresh(commit, output_dir=None, *, fetch=None, token=None):
         drift.write_new(target / 'files' / name, data)
     tree = {'schemaVersion': 1, 'repository': REPOSITORY, 'commit': commit, 'rootTreeSha': root_tree,
             'committedAt': meta['commit']['committer']['date'], 'rootEntries': entries}
-    drift.write_new(target / 'tree.json', (rtm.encoded(tree) + '\n').encode())
+    drift.write_new(target / 'tree.json', text(tree).encode())
     verify_candidate(target)
     return target
 
@@ -266,13 +270,13 @@ def main(argv=None):
             return 0
         if args.command == 'compare':
             report = compare_candidate(args.candidate)
-            text = rtm.encoded(report) + '\n'
+            rendered = text(report)
             if args.output:
-                drift.write_new(guarded(args.output), text.encode())
+                drift.write_new(guarded(args.output), rendered.encode())
             print(f"Portkey drift: {report['status']}; {report['specification']['summary']['changes']} classified "
                   f"specification changes, {len(report['codeSamples'])} code-sample annotations, "
                   f"{len(report['repositoryFiles'])} repository file changes; not adopted")
-            print(text, end='')
+            print(rendered, end='')
             return 2 if report['status'] == 'review_required' else 0
         if args.check:
             check()
