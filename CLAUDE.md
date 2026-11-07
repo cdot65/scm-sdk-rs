@@ -6,15 +6,19 @@ Apply the current maintainer rubric in docs/PHASES.md: five category scores and 
 
 During review, keep the checkout read-only and avoid credential files, tenant registrations, network mutations, commits, and pushes. Distinguish verified test evidence from unexecuted checks and service limitations.
 
+## Issue tracking: BonBon
+
+This project tracks work as Cards on its own BonBon Board, **SCM SDK** (`01a1b59d-587f-706b-b318-9c8e9fb450e3`), as described in `AGENTS.md` ("Issue tracking: BonBon") and `docs/agents/issue-tracker.md`. Claude Code is the only BonBon interface; other agents hand Card changes to a Claude Code session. Only the Owner validates.
+
 ## Agent skills
 
 ### Issue tracker
 
-Issues live in Forgejo at `git.cdot.io/cdot/scm-sdk-rs`, driven through the `tea` CLI (login `cdot`); GitHub is a push mirror only. See `docs/agents/issue-tracker.md`.
+BonBon: Cards on the **SCM SDK** Board, through the `bonbon` MCP server and skill (Claude Code only); Forgejo Issues and GitHub Issues are not used. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-The five default triage labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`) exist in the Forgejo repo. See `docs/agents/triage-labels.md`.
+The five default triage roles map to identical BonBon Label strings (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 

@@ -11,3 +11,23 @@ Keep credentials and tenant registrations outside git and published packages. Lo
 Public Rust is async, uses application-owned runtimes, and has no desktop-specific types. Preserve unknown response values, distinguish patch omission/null/value, and report uncertain remote outcomes. Public formatting and tracing omit sensitive bodies. Project-owned Rust forbids unsafe code.
 
 The authorized push destination is `ssh://git@git-ssh.cdot.io/cdot/scm-sdk-rs.git`. Preserve remote history and push ordinary commits after the corresponding phase gate passes.
+
+## Issue tracking: BonBon
+
+This project tracks work as Cards on its own BonBon Board, **SCM SDK** (`01a1b59d-587f-706b-b318-9c8e9fb450e3`).
+Every Card carries the Label `scm-sdk`, one triage Label and at least one kind Label
+(see `docs/agents/triage-labels.md`), and its title starts with `[SCM SDK] `. Never put
+this project's work on any other Board.
+
+- **Claude Code is the only BonBon interface** (the `bonbon` skill and MCP server; the
+  `bonbon-owner-api` skill as a fallback). Other agents never connect to BonBon. They write
+  the Card changes they need into their handoff, and a Claude Code session applies them.
+- In Claude Code: `whoami` first, then search this Board before creating anything. Read a
+  Card fully before working it. Claim before executing, heartbeat at least every 20 minutes,
+  and finish with `complete_card` and a Result.
+- Only the Owner validates: never mark work DONE or VALIDATED, and preserve other agents'
+  Claims.
+- Keep secrets, device identifiers and personal or household data out of Cards.
+- Board activity alone authorizes no implementation, deploy, commit, push or message.
+
+Details: `docs/agents/issue-tracker.md`.

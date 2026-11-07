@@ -1,15 +1,45 @@
 # Triage Labels
 
-The skills speak in terms of five canonical triage roles. This file maps those roles to the actual label strings used in this repo's issue tracker.
+The engineering skills speak in terms of five canonical triage roles. BonBon Labels are
+global and use the same strings, so the mapping is the identity. At most one triage Label per
+Card.
 
-| Label in mattpocock/skills | Label in our tracker | Meaning                                  |
-| -------------------------- | -------------------- | ---------------------------------------- |
-| `needs-triage`             | `needs-triage`       | Maintainer needs to evaluate this issue  |
-| `needs-info`               | `needs-info`         | Waiting on reporter for more information |
-| `ready-for-agent`          | `ready-for-agent`    | Fully specified, ready for an AFK agent  |
-| `ready-for-human`          | `ready-for-human`    | Requires human implementation            |
-| `wontfix`                  | `wontfix`            | Will not be actioned                     |
+| Label in mattpocock/skills | Label in BonBon  | Meaning                                                            |
+| -------------------------- | ---------------- | ------------------------------------------------------------------ |
+| `needs-triage`             | `needs-triage`   | The Owner or a maintainer needs to evaluate it                      |
+| `needs-info`               | `needs-info`     | Waiting for information                                             |
+| `ready-for-agent`          | `ready-for-agent`| Fully specified; an agent may claim and do it                       |
+| `ready-for-human`          | `ready-for-human`| Needs the Owner or a human (also set `assignee_rule: human`)        |
+| `wontfix`                  | `wontfix`        | Will not be actioned                                                |
 
-When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
+Every Card also carries the project Label `scm-sdk` and at least one kind Label. Reuse these
+exact strings; never invent near-duplicates such as `bugs`, `Bug` or `doc`.
 
-Edit the "Label in our tracker" column to match whatever vocabulary you actually use.
+## Kind Labels (at least one per Card)
+
+| Label         | Use for                                        |
+| ------------- | ---------------------------------------------- |
+| `bug`         | Something is broken                            |
+| `feature`     | New capability                                 |
+| `maintenance` | Upkeep, refactors, dependency bumps            |
+| `docs`        | Documentation                                  |
+| `testing`     | Tests, qualification, verification             |
+| `research`    | Investigation or comparison; no implementation |
+| `tooling`     | Build, scripts, developer tooling              |
+| `security`    | Security-relevant work                         |
+| `ops`         | Deploys, infrastructure, operations            |
+
+Project-specific kind Labels already in use on the Board: `ci`.
+
+## Modifier Labels (optional, any number)
+
+| Label          | Use for                                                        |
+| -------------- | -------------------------------------------------------------- |
+| `epic`         | A parent Card split into child Cards                           |
+| `decision`     | Records or needs an Owner decision                             |
+| `owner-action` | Only the Owner can do it (purchases, accounts, physical access)|
+| `upstream`     | Tracks or reports an issue in a third-party project            |
+| `idea`         | Optional; authorizes nothing                                   |
+| `superseded`   | Replaced by another Card (say which in a comment)              |
+
+Priority uses the Card's `priority` field (`low|medium|high|urgent`), not Labels.

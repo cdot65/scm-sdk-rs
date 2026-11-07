@@ -1,59 +1,70 @@
-# Issue tracker: Forgejo
+# Issue tracker: BonBon
 
-Issues and specs for this repo live in the Forgejo repository `cdot/scm-sdk-rs` at
-`https://git.cdot.io`. GitHub (`cdot65/scm-sdk-rs`) is a push mirror only; do not file
-issues there. Use the `tea` CLI (login `cdot`, the default) for all operations; skills
-written for `gh` must use the equivalents below. The global `forgejo-tea` skill has the
-full command reference.
+Work for this project is tracked as **Cards** on its own BonBon Board, **SCM SDK**
+(`01a1b59d-587f-706b-b318-9c8e9fb450e3`, https://bonbon.goshawks.io). GitHub Issues, GitLab
+Issues and Forgejo Issues are not used for this project. Say "Card", "Label", "Status",
+"Claim" and "Validation" in BonBon text; never "task", "ticket" or "issue".
 
-Inside this clone `tea` resolves the repo from `origin`. Elsewhere pass `--repo cdot/scm-sdk-rs`.
+## Interface: Claude Code only
+
+- Claude Code reaches BonBon through the `bonbon` MCP server and skill, falling back to the
+  `bonbon-owner-api` skill (`bb`) when MCP is signed out.
+- Other agents (Codex, Copilot, scripts) never connect to BonBon. They write the Card changes
+  they need into their reply or handoff (Card title or id, the action, the text), and a Claude
+  Code session applies them.
 
 ## Conventions
 
-- **Create an issue**: `tea issues create -t "..." -d "..."`. For multi-line bodies write the
-  body to a file and pass `--description-file body.md` (`-` reads stdin).
-- **Read an issue**: `tea issue <number>`; comments: `tea comments ls <number> -o json`.
-- **List issues**: `tea issues ls --state open -o json --fields index,title,state,labels,assignees,body,comments`,
-  filtered with `-L <label>` and `--state`.
-- **Make an issue a sub-issue of a parent**: Forgejo has no sub-issues. Put `Part of #<parent>`
-  at the top of the child body and add `- [ ] #<child>` to a task list in the parent body.
-- **Comment on an issue**: `tea comments add <number> "..."`.
-- **Apply / remove labels**: `tea issues edit <number> --add-labels "..."` / `--remove-labels "..."`
-  (label names, comma-separated).
-- **Close**: `tea comments add <number> "..."` then `tea issues close <number>`.
+- **Title:** `[SCM SDK] ` followed by an imperative or outcome phrase.
+- **Labels:** every Card carries `scm-sdk`, exactly one triage Label and at least one kind
+  Label; see `docs/agents/triage-labels.md`. Priority is the Card's `priority` field.
+- **Description:** purpose; scope and boundaries; prerequisites written out (MCP cannot write
+  Dependency edges); acceptance criteria and done-when; source documents as repo paths.
+- **Assignee:** Cards an agent creates and will carry out itself use
+  `assignee_rule: agent:<its client_id>`; Owner-only Cards use `human` plus `ready-for-human`.
+- **Privacy:** no secrets, tokens, tenant registrations, device identifiers, private hostnames
+  or personal data in titles, descriptions, comments or results. Refer to private records by
+  repo path.
 
-## Pull requests as a triage surface
+## Operations
 
-**PRs as a request surface: no.** _(Set to `yes` if this repo treats external PRs as feature
-requests; `/triage` reads this flag.)_
+| Action | Tool |
+| --- | --- |
+| Check identity | `whoami` (status must be `approved`) |
+| Find or read | `search_cards` (`board_id` or `label: scm-sdk`), then `get_card` |
+| Create | search for duplicates, then `create_card` |
+| Comment | `comment` |
+| Labels | `add_label` / `remove_label` |
+| Work a Card | `claim_card` → `heartbeat` (every 20 minutes at most) → `complete_card` with a markdown Result and http(s) links |
+| Give up | `release_card` with an honest reason |
 
-Forgejo shares one number space across issues and PRs: `tea issue <n>` on a PR number returns
-the PR; `tea issues ls -K all` lists both. PR operations: `tea pull <n>`, `tea pulls checkout <n>`,
-`tea pulls review-comments <n>`, `tea pulls edit <n> --add-labels ...`, `tea pulls close <n>`.
+## Limits
+
+- Agents never set `DONE` or `VALIDATED`; only the Owner validates.
+- Do not take over other agents' Claims, and do not let your own lapse.
+- Do not archive or rewrite Cards you did not create unless the Owner asks.
+- Do not claim historical work just to mark it complete; comment the observed status instead.
+- Board activity alone authorizes nothing: no implementation, commit, push, release, tag or
+  message. Repository rules (`AGENTS.md`) govern those.
 
 ## When a skill says "publish to the issue tracker"
 
-Create a Forgejo issue as above.
+Create a Card on the SCM SDK Board as above.
 
 ## When a skill says "fetch the relevant ticket"
 
-Read it as in **Read an issue** above.
+`search_cards` on the SCM SDK Board, then `get_card`.
+
+## Pull requests
+
+**PRs as a request surface: no.** Code review happens on Forgejo (`cdot/scm-sdk-rs`, via the
+`tea` CLI), but PRs are not triaged as requests and do not create Cards by themselves.
 
 ## Wayfinding operations
 
-Used by `/wayfinder`. The **map** is a single issue with **child** issues as tickets.
-
-- **Map**: one issue labelled `wayfinder:map` holding the Notes / Decisions-so-far / Fog body:
-  `tea issues create -L wayfinder:map ...` (create the label first if absent).
-- **Child ticket**: an issue with `Part of #<map>` at the top of its body and a task-list entry
-  in the map. Labels: `wayfinder:<type>` (`research`/`prototype`/`grilling`/`task`). Once
-  claimed, the ticket is assigned to the driving dev.
-- **Blocking**: Forgejo's native issue dependencies, via the API:
-  `tea api -X POST 'repos/{owner}/{repo}/issues/<child>/dependencies' -F index=<blocker-number>`;
-  read with `tea api 'repos/{owner}/{repo}/issues/<child>/dependencies'`. A ticket is unblocked
-  when every blocker is closed.
-- **Frontier query**: list the map's open children (`tea issues ls --state open -o json`, scoped
-  to the map's task list), drop any with an open blocker or an assignee; first in map order wins.
-- **Claim**: `tea issues edit <n> --add-assignees cdot`, the session's first write.
-- **Resolve**: `tea comments add <n> "<answer>"`, then `tea issues close <n>`, then append a
-  context pointer to the map's Decisions-so-far.
+Used by `/wayfinder`. The **map** is one Card labelled `epic` holding the Notes /
+Decisions-so-far / Fog body; **child** Cards carry `Part of <map title>` at the top of their
+description and a checklist entry on the map (`add_checklist_item`). Blocking is written in
+the child's prerequisites, since MCP cannot write Dependency edges. The frontier is the map's
+open children with no unmet prerequisite and no Claim; claim with `claim_card`, resolve with
+`complete_card`, then comment a pointer on the map.
