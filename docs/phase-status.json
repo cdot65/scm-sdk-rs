@@ -6866,6 +6866,14 @@
             "rust (native-probes, 1.89.0)"
           ],
           "note": "Only the drift ledger, a Python test and receipts changed since 728d355 (run 50, 49/49); the same check passed locally on 4290325. Retried with an evidence-only commit."
+        },
+        {
+          "commit": "4452e3d",
+          "status": "failure",
+          "failed": [
+            "rust (probe-base, 1.89.0)"
+          ],
+          "note": "No Rust or Cargo input changed (Portkey drift tooling, ledger and docs only); the same job failed once in run 36 and passed on retry. Retried with an evidence-only commit."
         }
       ]
     },
