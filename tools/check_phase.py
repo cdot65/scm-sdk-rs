@@ -411,7 +411,7 @@ def portkey_mcp_post_publication_commands(phase):
 DRIFT_BASELINE = "b66133892b4f58f541897d62296ea3f918227dd7"
 # Suites added after the phase 27-31 command plans were accepted. Their own phase
 # gate selects them explicitly, so historical command lists stay unchanged.
-PHASE_OWNED_SUITES = frozenset({"test_airs_drift.py", "test_historical_delivery.py"})
+PHASE_OWNED_SUITES = frozenset({"test_airs_drift.py", "test_historical_delivery.py", "test_portkey_drift.py"})
 
 
 def drift_commands(phase=25):

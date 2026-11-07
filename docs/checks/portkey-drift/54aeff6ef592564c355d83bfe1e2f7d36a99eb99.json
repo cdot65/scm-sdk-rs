@@ -1,0 +1,66 @@
+{
+  "adoption": "not_adopted",
+  "baseline": {
+    "commit": "8e5da0e756bc49ee3e82ca13df693b39fa541627",
+    "repository": "https://github.com/Portkey-AI/openapi"
+  },
+  "candidate": {
+    "commit": "54aeff6ef592564c355d83bfe1e2f7d36a99eb99",
+    "repository": "https://github.com/Portkey-AI/openapi",
+    "rootTreeSha": "4bd910d1b0ff564a6e358a468d082d25a631f720"
+  },
+  "classifierVersion": 6,
+  "codeSamples": [
+    {
+      "class": "code_samples_changed",
+      "disposition": "annotation",
+      "id": "55b30d3fe1d70ddaaf6f5e2e138e4e77ff577c6cb193a1bc30c8866269fa82fc",
+      "pointer": "/paths/~1ocr/post/x-code-samples",
+      "source": "openapi.yaml"
+    }
+  ],
+  "policy": "Drift is reported, never adopted. Adoption requires a new reviewed pin via REVIEWED_DELTAS; upstream removals never authorize SDK removal.",
+  "repositoryFiles": [],
+  "schemaVersion": 1,
+  "specification": {
+    "changes": [
+      {
+        "affectedOperations": [],
+        "class": "byte_only",
+        "disposition": "annotation",
+        "id": "e02aa38d9c94079283cbe2817380e142dfcc9f511cd5dfd6e8c7d331ac81a0c8",
+        "kind": "changed",
+        "new": "9ce3f14f5c96b4670a3918c1afb147f2d1e4ac24c9e136e7097701f05cd47c68",
+        "old": "6013532cdc5f46dd18d57053ec240b3b723e8e60b5042b3ce8a7023d4127f50e",
+        "pointer": "",
+        "priorDecision": null,
+        "retainedCapability": [],
+        "source": "openapi.yaml"
+      }
+    ],
+    "sources": [
+      {
+        "newSha256": "9ce3f14f5c96b4670a3918c1afb147f2d1e4ac24c9e136e7097701f05cd47c68",
+        "newVersion": "2.0.0",
+        "oldSha256": "6013532cdc5f46dd18d57053ec240b3b723e8e60b5042b3ce8a7023d4127f50e",
+        "oldVersion": "2.0.0",
+        "sameVersionContentChange": true,
+        "status": "byte_only",
+        "upstreamPath": "openapi.yaml"
+      }
+    ],
+    "status": "byte_only",
+    "summary": {
+      "byClass": {
+        "byte_only": 1
+      },
+      "byDisposition": {
+        "annotation": 1
+      },
+      "changes": 1
+    }
+  },
+  "status": "annotation_only",
+  "tool": "tools/portkey_drift.py"
+}
+
